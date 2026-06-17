@@ -76,6 +76,25 @@ export default async function ProductPage({ params }: Props) {
           ),
         }}
       />
+      {product.faqs && product.faqs.length > 0 && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "FAQPage",
+              mainEntity: product.faqs.map((faq) => ({
+                "@type": "Question",
+                name: faq.question,
+                acceptedAnswer: {
+                  "@type": "Answer",
+                  text: faq.answer,
+                },
+              })),
+            }),
+          }}
+        />
+      )}
 
       {/* Breadcrumb */}
       <nav className="bg-neutral-50 border-b border-border py-3">
@@ -234,6 +253,25 @@ export default async function ProductPage({ params }: Props) {
                   </span>
                 </Link>
               ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Product FAQs */}
+      {product.faqs && product.faqs.length > 0 && (
+        <section className="section bg-white">
+          <div className="container-site">
+            <div className="max-w-3xl">
+              <h2 className="text-2xl font-bold mb-6">Frequently Asked Questions</h2>
+              <div className="space-y-4">
+                {product.faqs.map((faq, i) => (
+                  <div key={i} className="card p-5">
+                    <h3 className="font-semibold mb-2">{faq.question}</h3>
+                    <p className="text-sm text-neutral-600 leading-relaxed">{faq.answer}</p>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </section>
