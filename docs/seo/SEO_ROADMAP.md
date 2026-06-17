@@ -60,13 +60,20 @@ Product pages should link to related blog posts. Blog posts link to products. Ca
 
 ## 🟠 Tier 2 — Medium Impact, Medium Effort
 
-### 2.1 i18n — Spanish translations (EN/ES)
-**Impact**: 🟠 High · **Effort**: 4-6 hours · **Status**: Open
+### 2.1 i18n — Phased multilingual rollout
+**Impact**: 🟠 High · **Effort**: 4-6 hours per language · **Status**: Open
 
-Valencia is Spain. Spanish content is essential for domestic visitors and Google.es ranking.
+Spain receives 97M international visitors/year. Language priority based on verified INE tourist volume:
+
+| Phase | Language | Tourist Volume | Effort | Status |
+|-------|----------|---------------|--------|--------|
+| 1 | **Spanish** | Domestic + LATAM | 4-6h | 🔲 Next |
+| 2 | **German** | ~11M visitors/yr (#3 market) | 4-6h | 🔲 Future |
+| 3 | **French** | ~12M visitors/yr (#2 market) | 4-6h | 🔲 Future |
+| 4 | **Dutch** | 1M+ in 5 months 2026 | 4-6h | 🔲 Future |
 
 **Architecture**: next-intl with locale routing (`/es/product/[slug]`)
-**Priority pages**: Homepage, category pages, top 5 products, contact
+**Priority pages per locale**: Homepage, category pages, top 5 products, contact
 
 ---
 
@@ -124,18 +131,25 @@ Target backlinks from:
 
 ## 🟢 Tier 4 — Lower Priority / Future
 
-### 4.1 Additional product verticals
+### 4.1 Marketplace platform (third-party provider listings)
+Enable third-party rental providers to list products. Commission model. Expands inventory without owning every item.
+
+### 4.2 Spain-wide expansion
+**Path**: Valencia → Costa Blanca (Alicante, Benidorm) → Barcelona → Málaga → Madrid
+Create city landing pages as SEO land-grab before entering markets.
+
+### 4.3 Additional product verticals
 - Camping gear
 - Kitchen equipment (blenders, instant pots)
 - Exercise equipment (yoga mats, resistance bands)
 
-### 4.2 Reviews/testimonials system
+### 4.4 Reviews/testimonials system
 Connect to Google Reviews or build custom review collection.
 
-### 4.3 Multi-city expansion pages
-Template for: Alicante, Málaga, Barcelona (SEO land-grab before entering).
+### 4.5 Distribution channel listings
+List our products on Babonbo, BabyQuip, Cloud of Goods (20% commission) as secondary distribution. Always prefer direct organic traffic.
 
-### 4.4 Partner/affiliate page
+### 4.6 Partner/affiliate page
 Backlink opportunities from travel bloggers and influencers.
 
 ---

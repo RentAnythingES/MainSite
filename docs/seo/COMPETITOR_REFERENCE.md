@@ -9,25 +9,30 @@
 
 RentAnything.es competes across 4 verticals. Unlike competitors who specialize in ONE category, we cover ALL of them — that's our positioning advantage.
 
-| Vertical | Key Competitors | Our Edge |
-|----------|----------------|----------|
-| Baby gear | Babonbo, BabyQuip, Cloud of Goods, Baby Roller, Valencia Location | All-in-one platform (baby + mobility + work + home) |
-| Mobility | Amigo 24, Motion4rent, Freedom Mobility, Scooter a Domicilio, Movi24 | Modern UX, instant booking, English-first |
-| Remote work | Monis.rent, coworking spaces (Wayco, ExpresHub) | Delivered to your door, not tied to coworking |
-| Home/Outdoors | Beach chiringuitos, property managers | Curated premium gear, not generic beach loungers |
+> [!IMPORTANT]
+> **Many "competitors" are also distribution channels.** Babonbo, BabyQuip, and Cloud of Goods are marketplace platforms where we can list our own products (typically 20% commission). They are competitors for organic search traffic, but partners for marketplace distribution. **Always prefer direct bookings** (0% vs 20% commission). Our SEO strategy should make direct discovery the primary channel.
+
+| Vertical | Key Competitors | Relationship | Our Edge |
+|----------|----------------|-------------|----------|
+| Baby gear | Babonbo, BabyQuip, Cloud of Goods, Baby Roller, Valencia Location | Mixed (competitor + distribution) | All-in-one platform (baby + mobility + work + home) |
+| Mobility | Amigo 24, Motion4rent, Freedom Mobility, Scooter a Domicilio, Movi24 | Pure competitor | Modern UX, instant booking, English-first |
+| Remote work | Monis.rent, coworking spaces (Wayco, ExpresHub) | Indirect | Delivered to your door, not tied to coworking |
+| Home/Outdoors | Beach chiringuitos, property managers | Indirect | Curated premium gear, not generic beach loungers |
 
 ---
 
 ## Baby Gear Competitors
 
-### Babonbo (babonbo.com)
+### Babonbo (babonbo.com) — DISTRIBUTION CHANNEL + COMPETITOR
 - **Type**: Marketplace platform connecting travellers with local providers
+- **Relationship**: We CAN list on Babonbo, but they take ~20% commission. Prefer direct.
 - **Coverage**: Multi-city (Valencia, Madrid, Barcelona, Europe-wide)
 - **Products**: Strollers, car seats, cribs, high chairs, toys
 - **Delivery**: To hotel/apartment/airport
 - **Languages**: EN, ES, DE, FR, IT + more
-- **Strengths**: Large provider network, airport delivery, established brand
+- **Strengths**: Large provider network, airport delivery, established brand, strong SEO
 - **Weaknesses**: Marketplace model = variable quality, no own inventory
+- **Strategy**: List on Babonbo for discovery, but optimise our own SEO to capture direct traffic
 
 ### BabyQuip (babyquip.com)
 - **Type**: Marketplace (US-based, expanding internationally)
