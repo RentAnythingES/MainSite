@@ -1,5 +1,5 @@
-import Link from "next/link";
 import type { Metadata } from "next";
+import ContactForm from "@/components/ContactForm";
 
 export const metadata: Metadata = {
   title: "Contact Us",
@@ -65,67 +65,11 @@ export default function ContactPage() {
           {/* Contact Form */}
           <div className="max-w-2xl mx-auto">
             <h2 className="text-2xl font-bold text-center mb-8">Send Us a Message</h2>
-            <form className="space-y-5" id="contact-form">
-              <div className="grid sm:grid-cols-2 gap-5">
-                <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-neutral-700 mb-1.5">Name</label>
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    required
-                    className="w-full px-4 py-3 rounded-xl border border-border bg-neutral-50 text-sm focus:outline-none focus:ring-2 focus:ring-brand/30 focus:border-brand transition-all"
-                    placeholder="Your name"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-neutral-700 mb-1.5">Email</label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    required
-                    className="w-full px-4 py-3 rounded-xl border border-border bg-neutral-50 text-sm focus:outline-none focus:ring-2 focus:ring-brand/30 focus:border-brand transition-all"
-                    placeholder="you@example.com"
-                  />
-                </div>
-              </div>
-              <div>
-                <label htmlFor="subject" className="block text-sm font-medium text-neutral-700 mb-1.5">Subject</label>
-                <select
-                  id="subject"
-                  name="subject"
-                  className="w-full px-4 py-3 rounded-xl border border-border bg-neutral-50 text-sm focus:outline-none focus:ring-2 focus:ring-brand/30 focus:border-brand transition-all"
-                >
-                  <option value="">Select a topic...</option>
-                  <option value="booking">Booking enquiry</option>
-                  <option value="product">Product question</option>
-                  <option value="b2b">B2B / Partnership</option>
-                  <option value="support">Support / Issue</option>
-                  <option value="other">Other</option>
-                </select>
-              </div>
-              <div>
-                <label htmlFor="message" className="block text-sm font-medium text-neutral-700 mb-1.5">Message</label>
-                <textarea
-                  id="message"
-                  name="message"
-                  rows={5}
-                  required
-                  className="w-full px-4 py-3 rounded-xl border border-border bg-neutral-50 text-sm focus:outline-none focus:ring-2 focus:ring-brand/30 focus:border-brand transition-all resize-none"
-                  placeholder="Tell us how we can help..."
-                />
-              </div>
-              <button type="submit" className="btn btn-primary btn-lg w-full" id="contact-submit">
-                Send Message
-              </button>
-              <p className="text-xs text-neutral-400 text-center">
-                By submitting, you agree to our <Link href="/privacy" className="underline hover:text-brand">Privacy Policy</Link>.
-              </p>
-            </form>
+            <ContactForm />
           </div>
         </div>
       </section>
     </>
   );
 }
+
