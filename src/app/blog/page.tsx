@@ -1,56 +1,28 @@
 import Link from "next/link";
+import Image from "next/image";
 import type { Metadata } from "next";
+import { getPublishedPosts } from "@/content/blog";
 
 export const metadata: Metadata = {
-  title: "Blog — Travel Tips, Guides & Rental Advice",
+  title: "Blog — Travel Tips, Guides & Rental Advice | RentAnything.es",
   description:
     "Practical tips for travelling to Valencia. Guides for families, mobility needs, digital nomads & more. From the RentAnything.es team.",
+  alternates: {
+    canonical: "https://rentanything.es/blog",
+  },
 };
 
-const posts = [
-  {
-    slug: "valencia-with-kids-complete-guide",
-    title: "Valencia With Kids: The Complete Family Guide (2026)",
-    excerpt:
-      "Everything you need to know about visiting Valencia with children — from the best beaches to kid-friendly restaurants and what gear to bring.",
-    category: "Family Travel",
-    date: "2026-06-15",
-    readTime: "8 min read",
-    emoji: "👨‍👩‍👧‍👦",
-  },
-  {
-    slug: "wheelchair-accessibility-valencia",
-    title: "Wheelchair Accessibility in Valencia: An Honest Guide",
-    excerpt:
-      "A practical guide to navigating Valencia with a wheelchair or mobility scooter — accessible attractions, transport tips, and what to expect.",
-    category: "Mobility",
-    date: "2026-06-10",
-    readTime: "6 min read",
-    emoji: "♿",
-  },
-  {
-    slug: "digital-nomad-guide-valencia",
-    title: "Digital Nomad Guide to Valencia: Work & Live Well",
-    excerpt:
-      "Why Valencia is one of Europe's top digital nomad hubs — co-working spaces, internet speeds, cost of living, and setting up your remote office.",
-    category: "Remote Work",
-    date: "2026-06-05",
-    readTime: "7 min read",
-    emoji: "💻",
-  },
-  {
-    slug: "what-to-pack-for-valencia",
-    title: "What to Pack (and What to Rent) for a Valencia Trip",
-    excerpt:
-      "The definitive packing list for Valencia — plus what you should leave at home and rent instead to save luggage space and airline fees.",
-    category: "Travel Tips",
-    date: "2026-06-01",
-    readTime: "5 min read",
-    emoji: "🧳",
-  },
-];
+const categoryEmoji: Record<string, string> = {
+  guide: "📖",
+  tutorial: "🛠️",
+  seasonal: "☀️",
+  comparison: "⚖️",
+  update: "📢",
+};
 
 export default function BlogPage() {
+  const posts = getPublishedPosts();
+
   return (
     <>
       {/* Hero */}
@@ -72,44 +44,74 @@ export default function BlogPage() {
       {/* Posts Grid */}
       <section className="section bg-white">
         <div className="container-site">
-          <div className="grid md:grid-cols-2 gap-8">
-            {posts.map((post) => (
-              <article key={post.slug} className="card group p-0">
-                <div className="aspect-[2/1] bg-gradient-to-br from-neutral-100 to-neutral-50 flex items-center justify-center">
-                  <span className="text-5xl group-hover:scale-110 transition-transform duration-300">
-                    {post.emoji}
-                  </span>
-                </div>
-                <div className="p-6">
-                  <div className="flex items-center gap-3 mb-3">
-                    <span className="badge badge-brand">{post.category}</span>
-                    <span className="text-xs text-neutral-400">{post.readTime}</span>
+          {posts.length === 0 ? (
+            <div className="text-center py-16">
+              <p className="text-xl text-neutral-400 mb-4">
+                Blog posts coming soon!
+              </p>
+              <p className="text-neutral-500">
+                We&apos;re working on guides for families, accessibility, remote
+                work, and more.
+              </p>
+            </div>
+          ) : (
+            <div className="grid md:grid-cols-2 gap-8">
+              {posts.map((post) => (
+                <article key={post.slug} className="card group p-0 overflow-hidden">
+                  {post.heroImage ? (
+                    <div className="aspect-[2/1] relative">
+                      <Image
+                        src={post.heroImage}
+                        alt={post.heroImageAlt || post.title}
+                        fill
+                        className="object-cover group-hover:scale-105 transition-transform duration-500"
+                      />
+                    </div>
+                  ) : (
+                    <div className="aspect-[2/1] bg-gradient-to-br from-neutral-100 to-neutral-50 flex items-center justify-center">
+                      <span className="text-5xl group-hover:scale-110 transition-transform duration-300">
+                        {categoryEmoji[post.category] || "📝"}
+                      </span>
+                    </div>
+                  )}
+                  <div className="p-6">
+                    <div className="flex items-center gap-3 mb-3">
+                      <span className="badge badge-brand capitalize">
+                        {post.category}
+                      </span>
+                      <span className="text-xs text-neutral-400">
+                        {post.readTime}
+                      </span>
+                    </div>
+                    <h2 className="text-xl font-bold mb-2 group-hover:text-brand transition-colors">
+                      <Link href={`/blog/${post.slug}`}>{post.title}</Link>
+                    </h2>
+                    <p className="text-sm text-neutral-500 leading-relaxed mb-4">
+                      {post.excerpt}
+                    </p>
+                    <div className="flex items-center justify-between">
+                      <time
+                        className="text-xs text-neutral-400"
+                        dateTime={post.date}
+                      >
+                        {new Date(post.date).toLocaleDateString("en-GB", {
+                          day: "numeric",
+                          month: "long",
+                          year: "numeric",
+                        })}
+                      </time>
+                      <Link
+                        href={`/blog/${post.slug}`}
+                        className="text-sm font-semibold text-brand hover:underline"
+                      >
+                        Read more →
+                      </Link>
+                    </div>
                   </div>
-                  <h2 className="text-xl font-bold mb-2 group-hover:text-brand transition-colors">
-                    <Link href={`/blog/${post.slug}`}>{post.title}</Link>
-                  </h2>
-                  <p className="text-sm text-neutral-500 leading-relaxed mb-4">
-                    {post.excerpt}
-                  </p>
-                  <div className="flex items-center justify-between">
-                    <time className="text-xs text-neutral-400" dateTime={post.date}>
-                      {new Date(post.date).toLocaleDateString("en-GB", {
-                        day: "numeric",
-                        month: "long",
-                        year: "numeric",
-                      })}
-                    </time>
-                    <Link
-                      href={`/blog/${post.slug}`}
-                      className="text-sm font-semibold text-brand hover:underline"
-                    >
-                      Read more →
-                    </Link>
-                  </div>
-                </div>
-              </article>
-            ))}
-          </div>
+                </article>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 
