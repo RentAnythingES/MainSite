@@ -5,6 +5,7 @@ import type { Metadata } from "next";
 import { products, getProductBySlug, getAllSlugs } from "@/data/products";
 import { getProductJsonLd, getBreadcrumbJsonLd } from "@/lib/jsonld";
 import ProductCard from "@/components/ProductCard";
+import BookingWidget from "@/components/BookingWidget";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -78,75 +79,64 @@ export default async function ProductPage({ params }: Props) {
       {/* Product Detail */}
       <section className="section bg-white">
         <div className="container-site">
-          <div className="grid lg:grid-cols-2 gap-10 lg:gap-16">
-            {/* Image */}
-            <div className="bg-gradient-to-br from-neutral-100 to-neutral-50 rounded-2xl flex items-center justify-center aspect-square relative overflow-hidden">
-              <Image
-                src={product.image}
-                alt={product.name}
-                fill
-                className="object-contain p-6"
-                sizes="(max-width: 1024px) 100vw, 50vw"
-                priority
-              />
-            </div>
-
-            {/* Info */}
-            <div>
-              <div className="flex items-center gap-2 mb-3">
-                <span className="badge badge-brand">{product.subcategory}</span>
-                <span className="text-xs text-neutral-400">{product.brand}</span>
-              </div>
-
-              <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight mb-4">
-                {product.name}
-              </h1>
-
-              <p className="text-neutral-600 leading-relaxed mb-6">
-                {product.description}
-              </p>
-
-              {/* Pricing Table */}
-              <div className="bg-neutral-50 rounded-xl p-6 mb-6">
-                <h3 className="font-bold text-sm text-neutral-800 mb-3">Rental Pricing</h3>
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                  {product.pricing.map((tier) => (
-                    <div
-                      key={tier.days}
-                      className="bg-white rounded-lg border border-border p-3 text-center hover:border-brand/30 transition-colors"
-                    >
-                      <p className="text-xs text-neutral-500 mb-1">
-                        {tier.days === 1 ? "1 day" : `${tier.days}+ days`}
-                      </p>
-                      <p className="text-xl font-bold text-brand">€{tier.perDay}</p>
-                      <p className="text-xs text-neutral-400">/ day</p>
-                    </div>
-                  ))}
+          <div className="grid lg:grid-cols-3 gap-10">
+            {/* Left: Product Info (2 cols) */}
+            <div className="lg:col-span-2">
+              <div className="grid md:grid-cols-2 gap-8 mb-8">
+                {/* Image */}
+                <div className="bg-gradient-to-br from-neutral-100 to-neutral-50 rounded-2xl flex items-center justify-center aspect-square relative overflow-hidden">
+                  <Image
+                    src={product.image}
+                    alt={product.name}
+                    fill
+                    className="object-contain p-6"
+                    sizes="(max-width: 1024px) 100vw, 33vw"
+                    priority
+                  />
                 </div>
-                <p className="text-xs text-neutral-400 mt-3">
-                  Longer rental = lower daily rate. Security deposit applies.
-                </p>
-              </div>
 
-              {/* CTA */}
-              <div className="flex flex-col sm:flex-row gap-3 mb-8">
-                <a
-                  href={`https://wa.me/34600000000?text=Hi!%20I'd%20like%20to%20rent%20the%20${encodeURIComponent(product.name)}%20in%20Valencia.`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn btn-primary btn-lg flex-1"
-                  id="product-book-whatsapp"
-                >
-                  💬 Book via WhatsApp
-                </a>
-                <Link href="/contact" className="btn btn-outline btn-lg" id="product-enquire">
-                  Enquire
-                </Link>
+                {/* Core Info */}
+                <div>
+                  <div className="flex items-center gap-2 mb-3">
+                    <span className="badge badge-brand">{product.subcategory}</span>
+                    <span className="text-xs text-neutral-400">{product.brand}</span>
+                  </div>
+
+                  <h1 className="text-3xl font-extrabold tracking-tight mb-4">
+                    {product.name}
+                  </h1>
+
+                  <p className="text-neutral-600 leading-relaxed mb-6">
+                    {product.description}
+                  </p>
+
+                  {/* Pricing Table */}
+                  <div className="bg-neutral-50 rounded-xl p-5">
+                    <h3 className="font-bold text-sm text-neutral-800 mb-3">Rental Pricing</h3>
+                    <div className="grid grid-cols-2 gap-2">
+                      {product.pricing.map((tier) => (
+                        <div
+                          key={tier.days}
+                          className="bg-white rounded-lg border border-border p-2.5 text-center hover:border-brand/30 transition-colors"
+                        >
+                          <p className="text-xs text-neutral-500 mb-0.5">
+                            {tier.days === 1 ? "1 day" : `${tier.days}+ days`}
+                          </p>
+                          <p className="text-lg font-bold text-brand">€{tier.perDay}</p>
+                          <p className="text-xs text-neutral-400">/ day</p>
+                        </div>
+                      ))}
+                    </div>
+                    <p className="text-xs text-neutral-400 mt-2">
+                      Longer rental = lower daily rate.
+                    </p>
+                  </div>
+                </div>
               </div>
 
               {/* Features */}
-              <div className="mb-6">
-                <h3 className="font-bold text-sm text-neutral-800 mb-3">Features</h3>
+              <div className="mb-8">
+                <h3 className="font-bold text-neutral-800 mb-3">Features</h3>
                 <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                   {product.features.map((f) => (
                     <li key={f} className="flex items-center gap-2 text-sm text-neutral-600">
@@ -159,7 +149,7 @@ export default async function ProductPage({ params }: Props) {
 
               {/* Specs */}
               <div>
-                <h3 className="font-bold text-sm text-neutral-800 mb-3">Specifications</h3>
+                <h3 className="font-bold text-neutral-800 mb-3">Specifications</h3>
                 <dl className="divide-y divide-border">
                   {Object.entries(product.specs).map(([key, val]) => (
                     <div key={key} className="flex justify-between py-2.5 text-sm">
@@ -168,6 +158,13 @@ export default async function ProductPage({ params }: Props) {
                     </div>
                   ))}
                 </dl>
+              </div>
+            </div>
+
+            {/* Right: Booking Widget (sticky) */}
+            <div className="lg:col-span-1">
+              <div className="lg:sticky lg:top-24">
+                <BookingWidget product={product} />
               </div>
             </div>
           </div>
