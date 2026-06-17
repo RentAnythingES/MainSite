@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { products, getProductBySlug, getAllSlugs } from "@/data/products";
 import { getProductJsonLd, getBreadcrumbJsonLd } from "@/lib/jsonld";
+import { getPublishedPosts } from "@/content/blog";
 import ProductCard from "@/components/ProductCard";
 import BookingWidget from "@/components/BookingWidget";
 
@@ -31,6 +32,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
+// Map product categories to relevant blog post tags
+const categoryBlogTags: Record<string, string[]> = {
+  "baby-gear": ["family", "kids"],
+  "mobility": ["mobility", "accessibility"],
+  "remote-work": ["digital nomad", "remote work"],
+  "home-living": ["summer", "seasonal"],
+  "travel-outdoors": ["summer", "beach"],
+};
+
 export default async function ProductPage({ params }: Props) {
   const { slug } = await params;
   const product = getProductBySlug(slug);
@@ -39,6 +49,12 @@ export default async function ProductPage({ params }: Props) {
   const related = products
     .filter((p) => p.categorySlug === product.categorySlug && p.slug !== product.slug)
     .slice(0, 3);
+
+  // Find related blog posts for this product's category
+  const relevantTags = categoryBlogTags[product.categorySlug] || [];
+  const relatedPosts = getPublishedPosts()
+    .filter((post) => post.tags.some((tag) => relevantTags.includes(tag)))
+    .slice(0, 2);
 
   return (
     <>
@@ -194,9 +210,38 @@ export default async function ProductPage({ params }: Props) {
         </div>
       </section>
 
+      {/* Related Guides */}
+      {relatedPosts.length > 0 && (
+        <section className="section bg-white">
+          <div className="container-site">
+            <h2 className="text-2xl font-bold mb-6">Valencia Guides</h2>
+            <div className="grid sm:grid-cols-2 gap-6">
+              {relatedPosts.map((post) => (
+                <Link
+                  key={post.slug}
+                  href={`/blog/${post.slug}`}
+                  className="card p-6 hover:shadow-md transition-shadow group"
+                >
+                  <span className="badge badge-brand capitalize mb-2">{post.category}</span>
+                  <h3 className="font-bold text-lg mb-2 group-hover:text-brand transition-colors">
+                    {post.title}
+                  </h3>
+                  <p className="text-sm text-neutral-500 leading-relaxed">
+                    {post.excerpt}
+                  </p>
+                  <span className="text-sm font-semibold text-brand mt-3 inline-block">
+                    Read guide →
+                  </span>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* Related Products */}
       {related.length > 0 && (
-        <section className="section bg-white">
+        <section className="section bg-neutral-50">
           <div className="container-site">
             <h2 className="text-2xl font-bold mb-6">You Might Also Need</h2>
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -210,3 +255,4 @@ export default async function ProductPage({ params }: Props) {
     </>
   );
 }
+
