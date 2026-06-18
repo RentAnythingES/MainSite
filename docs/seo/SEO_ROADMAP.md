@@ -74,7 +74,7 @@ Spain receives 97M international visitors/year. Language priority based on verif
 
 | Phase | Language | Tourist Volume | Effort | Status |
 |-------|----------|---------------|--------|--------|
-| 1 | **Spanish** | Domestic + LATAM | 4-6h | 🔲 Next |
+| 1 | **Spanish** | Domestic + LATAM | 4-6h | ✅ Done (Phase 1: homepage, products, categories, Valencia) |
 | 2 | **German** | ~11M visitors/yr (#3 market) | 4-6h | 🔲 Future |
 | 3 | **French** | ~12M visitors/yr (#2 market) | 4-6h | 🔲 Future |
 | 4 | **Dutch** | 1M+ in 5 months 2026 | 4-6h | 🔲 Future |
@@ -189,12 +189,12 @@ Backlink opportunities from travel bloggers and influencers.
 
 | Metric | Pre-session (June 17) | Current (June 18) | Target (90 days) |
 |--------|----------------------|-------------------|------------------|
-| Total pages | ~37 | ~55+ | ~80+ (with ES + more discover) |
+| Total pages | ~37 | ~77+ (22 ES pages added) | ~100+ (with more discover + DE) |
 | Blog posts | 0 | 4 | 8+ |
 | Discover guides | 0 | 5 | 15+ |
 | Photo assets | 0 | 22+ (hero, category, hub, destination) | 50+ |
-| Languages | EN only | EN only | EN + ES |
-| Products | 16 | 16 | 16 (expand later) |
+| Languages | EN only | EN + ES (Phase 1) | EN + ES + DE |
+| Products | 16 | 16 (× 2 locales) | 16 (expand later) |
 | Categories | 5 | 5 | 5 |
 | Product FAQs | 0 | ~40 | ~40 |
 | Google Search Console | Not verified | Not verified | Verified, sitemap submitted |
