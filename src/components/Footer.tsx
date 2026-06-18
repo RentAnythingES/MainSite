@@ -3,6 +3,7 @@ import Link from "next/link";
 const footerLinks = {
   "Info & Help": [
     { name: "How It Works", href: "/how-it-works" },
+    { name: "Discover Valencia", href: "/discover" },
     { name: "About Us", href: "/about" },
     { name: "FAQ", href: "/faq" },
     { name: "Blog", href: "/blog" },

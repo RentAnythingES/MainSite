@@ -377,6 +377,82 @@ export default async function DiscoverPage({ params }: Props) {
         </section>
       )}
 
+      {/* Staying Here (neighbourhood-specific) */}
+      {dest.stayingHere && (
+        <section className="section bg-neutral-50">
+          <div className="container-site">
+            <h2 className="text-2xl font-bold mb-4">Staying in {dest.name}</h2>
+            <p className="text-neutral-600 mb-6">{dest.stayingHere.summary}</p>
+            <div className="grid sm:grid-cols-2 gap-6 mb-6">
+              <div className="card p-5">
+                <h3 className="font-semibold text-green-700 text-sm mb-3">✅ Why stay here</h3>
+                <ul className="space-y-2">
+                  {dest.stayingHere.pros.map((pro, i) => (
+                    <li key={i} className="flex items-start gap-2 text-sm text-neutral-600">
+                      <span className="text-green-500 mt-0.5">+</span>
+                      {pro}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className="card p-5">
+                <h3 className="font-semibold text-red-700 text-sm mb-3">⚠️ Things to know</h3>
+                <ul className="space-y-2">
+                  {dest.stayingHere.cons.map((con, i) => (
+                    <li key={i} className="flex items-start gap-2 text-sm text-neutral-600">
+                      <span className="text-red-400 mt-0.5">–</span>
+                      {con}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+            {dest.stayingHere.gettingElsewhere.length > 0 && (
+              <div className="card p-5">
+                <h3 className="font-semibold text-sm mb-3">🚀 Getting to other places from {dest.name}</h3>
+                <ul className="space-y-2">
+                  {dest.stayingHere.gettingElsewhere.map((route, i) => (
+                    <li key={i} className="flex items-start gap-2 text-sm text-neutral-600">
+                      <span className="text-brand mt-0.5">→</span>
+                      {route}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
+        </section>
+      )}
+      {renderWidgets("Staying Here")}
+
+      {/* Visiting Here (neighbourhood-specific) */}
+      {dest.visitingHere && (
+        <section className="section bg-white">
+          <div className="container-site max-w-3xl">
+            <h2 className="text-2xl font-bold mb-4">Visiting {dest.name}</h2>
+            <p className="text-neutral-600 mb-4">{dest.visitingHere.summary}</p>
+            <div className="flex flex-wrap gap-4 mb-6">
+              <div className="bg-neutral-50 rounded-lg px-4 py-2 border border-border">
+                <span className="text-xs text-neutral-500 block">How long</span>
+                <span className="text-sm font-semibold">{dest.visitingHere.idealDuration}</span>
+              </div>
+              <div className="bg-neutral-50 rounded-lg px-4 py-2 border border-border">
+                <span className="text-xs text-neutral-500 block">Best time</span>
+                <span className="text-sm font-semibold">{dest.visitingHere.bestTimeOfDay}</span>
+              </div>
+            </div>
+            <ul className="space-y-2">
+              {dest.visitingHere.tips.map((tip, i) => (
+                <li key={i} className="flex items-start gap-2 text-sm text-neutral-600">
+                  <span className="text-brand mt-0.5">•</span>
+                  {tip}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+      )}
+
       {/* Audience Tips */}
       {dest.audienceTips && dest.audienceTips.length > 0 && (
         <section className="section bg-neutral-50">

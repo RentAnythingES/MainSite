@@ -1,5 +1,5 @@
 # RentAnything.es — SEO Roadmap
-> **Last updated**: 2026-06-17 · Prioritized by estimated traffic impact × effort
+> **Last updated**: 2026-06-18 · Prioritized by estimated traffic impact × effort
 
 ---
 
@@ -17,7 +17,14 @@
 - [x] Contact form (Resend-powered)
 - [x] Google Analytics integration (env var ready)
 - [x] Supabase backend (schema, seed, API)
-- [x] SEO documentation framework (this file + strategy + competitor ref + blog strategy)
+- [x] SEO documentation framework
+- [x] Blog architecture + 4 launch posts (data-driven, Article + FAQ JSON-LD)
+- [x] Cross-cluster internal linking (products ↔ blog ↔ categories)
+- [x] Category page editorial enrichment (3 paragraphs per category)
+- [x] FAQ schema on all 16 product pages (~40 FAQs)
+- [x] Discover section: infrastructure + 5 destination guides (Ruzafa, Malvarrosa, Fallas, Albufera, City of Arts & Sciences)
+- [x] Discover hub pages (neighbourhoods, day-trips, attractions, events)
+- [x] Inline contextual product widgets in discover pages
 
 ---
 
@@ -52,9 +59,9 @@ Verify domain, submit sitemap. Monitor crawl errors and indexing.
 ---
 
 ### 1.4 Cross-cluster internal linking audit
-**Impact**: 🟠 High · **Effort**: 30 min · **Status**: Open
+**Impact**: 🟠 High · **Effort**: 30 min · **Status**: ✅ Done
 
-Product pages should link to related blog posts. Blog posts link to products. Category pages should have editorial prose sections.
+Product → blog, blog → products, categories → blog. Bidirectional linking implemented.
 
 ---
 
@@ -78,23 +85,30 @@ Spain receives 97M international visitors/year. Language priority based on verif
 ---
 
 ### 2.2 Category page editorial enrichment
-**Impact**: 🟡 Medium · **Effort**: 1 hour · **Status**: Open
+**Impact**: 🟡 Medium · **Effort**: 1 hour · **Status**: ✅ Done
 
-Add 2 editorial H2 prose sections to each category page. Target category-level keywords ("baby equipment rental Valencia", "mobility hire Spain").
+3 editorial paragraphs per category + blog cross-links.
 
 ---
 
 ### 2.3 FAQ schema on product pages
-**Impact**: 🟡 Medium · **Effort**: 1 hour · **Status**: Open
+**Impact**: 🟡 Medium · **Effort**: 1 hour · **Status**: ✅ Done
 
-Add FAQ sections to product pages with JSON-LD FAQSchema. Target PAA questions.
+~40 FAQs across 16 products with FAQPage JSON-LD.
 
 ---
 
-### 2.4 Valencia neighbourhood pages
-**Impact**: 🟡 Medium · **Effort**: 2-3 hours · **Status**: Future
+### 2.4 Discover section — Travel guide content engine
+**Impact**: 🟡 Medium · **Effort**: 2-3 hours · **Status**: ✅ Infrastructure done, populating
 
-Create `/valencia/[neighbourhood]` pages for: Ruzafa, El Carmen, Malvarrosa, Cabanyal, Benimaclet. Each page: what to do, what to rent, delivery info.
+Data-driven `/discover/[slug]` pages. 5 destinations live. Hub pages for neighbourhoods, day-trips, attractions, events.
+
+**Open design items (from user review):**
+- [ ] **Real photos** — Replace generated images with sourced photography for trust
+- [ ] **Valencia map widget** — Interactive or visual map showing destination locations and transport connections
+- [ ] **Restaurant source tracking** — Add `sourceNote` to food recommendations to document why each is recommended
+- [ ] **Staying vs Visiting angle** — Neighbourhood pages need both "staying here" (accommodation, commute to other areas) and "visiting here" (what to do for a few hours) perspectives
+- [ ] **Product widget visual variety** — Multiple widget styles (small inline box, banner, sidebar) depending on context and placement
 
 ---
 
@@ -166,13 +180,14 @@ Backlink opportunities from travel bloggers and influencers.
 
 ## Metrics to Track
 
-| Metric | Current (June 2026) | Target (90 days) |
-|--------|---------|-----------------|
-| Total pages | ~37 | ~50+ (with blog + ES) |
-| Blog posts | 0 | 8+ |
-| Languages | EN only | EN + ES |
-| Products | 16 | 16 (expand later) |
-| Categories | 5 | 5 |
-| Google Search Console | Not verified | Verified, sitemap submitted |
-| Internal links per page | ~3 | 6+ |
-| Homepage word count | ~400w | ~500w |
+| Metric | Pre-session (June 17) | Current (June 18) | Target (90 days) |
+|--------|----------------------|-------------------|------------------|
+| Total pages | ~37 | ~50+ (5 discover + 5 hubs) | ~65+ (with ES + more discover) |
+| Blog posts | 4 | 4 | 8+ |
+| Discover guides | 0 | 5 | 15+ |
+| Languages | EN only | EN only | EN + ES |
+| Products | 16 | 16 | 16 (expand later) |
+| Categories | 5 | 5 | 5 |
+| Product FAQs | 0 | ~40 | ~40 |
+| Google Search Console | Not verified | Not verified | Verified, sitemap submitted |
+| Internal links per page | ~3 | 6+ | 8+ |

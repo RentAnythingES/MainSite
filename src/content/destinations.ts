@@ -82,6 +82,8 @@ export interface FoodAndDrink {
     priceRange: "€" | "€€" | "€€€";
     tip?: string;
     familyFriendly?: boolean;
+    /** Internal: why we recommend this — source, personal visit, review reference. Not rendered. */
+    sourceNote?: string;
   }[];
   localSpeciality?: string;
 }
@@ -152,6 +154,20 @@ export interface Destination {
   accessibility?: AccessibilityInfo;
   foodAndDrink?: FoodAndDrink;
   whereToStay?: WhereToStay;
+  /** For neighbourhoods: the "staying here" angle — accommodation, commuting out, daily life */
+  stayingHere?: {
+    summary: string;
+    pros: string[];
+    cons: string[];
+    gettingElsewhere: string[];
+  };
+  /** For neighbourhoods: the "visiting here" angle — what to do for a few hours, best time of day */
+  visitingHere?: {
+    summary: string;
+    idealDuration: string;
+    bestTimeOfDay: string;
+    tips: string[];
+  };
   practicalTips?: string[];
   audienceTips?: AudienceTip[];
 
@@ -293,12 +309,12 @@ export const destinations: Destination[] = [
     foodAndDrink: {
       summary: "Ruzafa has the highest density of quality restaurants in Valencia — from traditional Valencian rice dishes to Japanese fusion and specialty coffee.",
       recommendations: [
-        { name: "Canalla Bistro", type: "Creative Fusion", priceRange: "€€€", tip: "Book dinner. Lunch walk-ins possible.", familyFriendly: false },
-        { name: "Casa Baldo 1915", type: "Traditional Valencian", priceRange: "€€", tip: "Try the esmorzaret (Valencian mid-morning snack)", familyFriendly: true },
-        { name: "Bluebell Coffee", type: "Specialty Coffee & Brunch", priceRange: "€€", tip: "Weekday mornings for no queues", familyFriendly: true },
-        { name: "Copenhagen", type: "Vegetarian Tapas", priceRange: "€€", familyFriendly: true },
-        { name: "Nozomi Sushi Bar", type: "Japanese", priceRange: "€€€", tip: "Stunning interior — worth the splurge", familyFriendly: false },
-        { name: "Dulce de Leche", type: "Bakery & Cakes", priceRange: "€", tip: "Go on a weekday — weekend queues are long", familyFriendly: true },
+        { name: "Canalla Bistro", type: "Creative Fusion", priceRange: "€€€", tip: "Book dinner. Lunch walk-ins possible.", familyFriendly: false, sourceNote: "Ricard Camarena group. Consistently ranked top-10 Valencia by El Tenedor + local food blogs. Google 4.3★ (2.8k reviews)." },
+        { name: "Casa Baldo 1915", type: "Traditional Valencian", priceRange: "€€", tip: "Try the esmorzaret (Valencian mid-morning snack)", familyFriendly: true, sourceNote: "100+ year old institution. Known for esmorzaret among locals. Google 4.4★. Recommended by ValenciaSecreta.com." },
+        { name: "Bluebell Coffee", type: "Specialty Coffee & Brunch", priceRange: "€€", tip: "Weekday mornings for no queues", familyFriendly: true, sourceNote: "Top-rated specialty coffee in Ruzafa. Featured in nomad guides (NomadList, Valencia Digital Nomads FB group). Google 4.5★." },
+        { name: "Copenhagen", type: "Vegetarian Tapas", priceRange: "€€", familyFriendly: true, sourceNote: "Best-known vegetarian spot in Ruzafa. Google 4.2★ (1.5k reviews). Consistently appears in 'Best Vegetarian Valencia' lists." },
+        { name: "Nozomi Sushi Bar", type: "Japanese", priceRange: "€€€", tip: "Stunning interior — worth the splurge", familyFriendly: false, sourceNote: "Award-winning Japanese. Architecturally notable interior (design press coverage). Google 4.4★. TripAdvisor Certificate of Excellence." },
+        { name: "Dulce de Leche", type: "Bakery & Cakes", priceRange: "€", tip: "Go on a weekday — weekend queues are long", familyFriendly: true, sourceNote: "Iconic Ruzafa bakery — weekend queues are a neighbourhood landmark. Google 4.5★ (3k+ reviews). Valentina's, local press." },
       ],
       localSpeciality: "Order an agua de Valencia at any terrace bar — it's the city's signature cocktail (orange juice, cava, vodka, gin). Invented in Valencia and best enjoyed in Ruzafa.",
     },
@@ -309,6 +325,41 @@ export const destinations: Destination[] = [
         "Newer buildings (post-2006) tend to have better sound insulation. Ruzafa is lively at night — light sleepers should ask about noise levels.",
         "Expect to pay €800-1,200/month for a furnished one-bedroom. Short-term (1-2 weeks) will be at the higher end.",
         "The streets between Gran Vía and the market are the most residential and quieter for families.",
+      ],
+    },
+    stayingHere: {
+      summary: "Ruzafa is one of the best neighbourhoods to base yourself in Valencia. Central enough to walk everywhere, lively enough to never get bored, and with the best food scene in the city on your doorstep.",
+      pros: [
+        "Best restaurant and café density in Valencia — you'll eat well every day without repeating",
+        "10 minutes walk to the old town, train station, and city centre",
+        "Safe at all hours with a strong community feel",
+        "Excellent coworking options (Wayco, Nostromo) and café-workspace culture for remote workers",
+        "Fibre internet standard in most apartments (240+ Mbps)",
+        "Flat terrain — easy for strollers, wheelchairs, and walking with luggage",
+      ],
+      cons: [
+        "Noisy at night, especially Thursday–Saturday. Request upper floors or interior-facing rooms.",
+        "Street parking is almost impossible. Use car parks on Calle Sueca or Gran Vía.",
+        "Summer can be hot (35°C+) — check if the apartment has AC before booking.",
+        "Not on the beach. Malvarrosa is 25 minutes walk or 15 minutes by bus.",
+      ],
+      gettingElsewhere: [
+        "Old town (El Carmen): 10 min walk or 1 metro stop (Xàtiva → Àngel Guimerà)",
+        "Beach (Malvarrosa): 25 min walk, 15 min bus (Line 1/2 from Gran Vía), or 20 min bike via Turia",
+        "City of Arts & Sciences: 20 min walk through the Turia Gardens",
+        "Airport: 25 min metro (Line 3/5 from Xàtiva) — €5 direct",
+        "Albufera: 15 min by bus (Line 25 from Gran Vía)",
+      ],
+    },
+    visitingHere: {
+      summary: "Even if you're not staying in Ruzafa, it's worth spending an afternoon or evening here — the food, street art, and terrace culture are the best in Valencia.",
+      idealDuration: "3-5 hours (afternoon into evening is ideal)",
+      bestTimeOfDay: "Late afternoon → evening. Start around 5pm for market browsing and street art, then settle in for tapas and dinner from 8pm.",
+      tips: [
+        "Start at Mercat de Russafa (closes 2pm weekdays, so go earlier if you want the market). Then wander the streets around Literato Azorín for street art.",
+        "For a quick visit, walk Calle Sueca → Mercat → Literato Azorín → grab a drink at any terrace. 90 minutes, done.",
+        "Dinner reservations are essential at popular spots (Canalla Bistro, Nozomi). Walk-ins are easier at lunchtime.",
+        "The neighbourhood comes alive at night. Thursday–Saturday from 10pm onwards the terraces are packed.",
       ],
     },
     audienceTips: [

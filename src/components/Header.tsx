@@ -14,6 +14,7 @@ const categories = [
 
 const navLinks = [
   { name: "Valencia", href: "/valencia" },
+  { name: "Discover", href: "/discover" },
   { name: "How It Works", href: "/how-it-works" },
   { name: "About", href: "/about" },
   { name: "FAQ", href: "/faq" },
