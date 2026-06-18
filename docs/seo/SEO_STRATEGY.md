@@ -1,5 +1,5 @@
 # RentAnything.es — SEO Strategy & Audit
-> **Last updated**: 2026-06-17 · **Build**: ✅ Clean · **Total pages**: ~37
+> **Last updated**: 2026-06-18 · **Build**: ✅ Clean · **Total pages**: ~55+
 
 This is the **living SEO strategy document** for rentanything.es. Updated after every SEO-related change. For prioritized fixes, see [SEO_ROADMAP.md](./SEO_ROADMAP.md).
 
@@ -20,7 +20,7 @@ This is the **living SEO strategy document** for rentanything.es. Updated after 
 
 ```
 rentanything.es/
-├── /                               Homepage (hero, categories, value props, trust)
+├── /                               Homepage (photo carousel hero, photo categories)
 │
 ├── /product/                       Product pages (16 products)
 │   └── /product/[slug]             Individual product + BookingWidget
@@ -32,10 +32,17 @@ rentanything.es/
 │   ├── /rental/home-living
 │   └── /rental/travel-outdoors
 │
-├── /blog/                          Blog hub (planned — data-driven)
-│   └── /blog/[slug]                Individual posts
+├── /blog/                          Blog hub (4 posts live)
+│   └── /blog/[slug]                Individual posts (Article + FAQ JSON-LD)
 │
-├── /valencia                       Valencia landing page (local SEO)
+├── /discover/                      Discover hub (photo-backed)
+│   ├── /discover/neighbourhoods    Hub: neighbourhood guides
+│   ├── /discover/day-trips         Hub: day trip guides
+│   ├── /discover/attractions       Hub: attraction guides
+│   ├── /discover/events            Hub: event guides
+│   └── /discover/[slug]            Individual destination guides (5 live)
+│
+├── /valencia                       Valencia landing page (photo hero)
 ├── /about                          About page
 ├── /contact                        Contact form (Resend-powered)
 │
@@ -69,10 +76,10 @@ rentanything.es/
 - Rendered from product data, grouped by category
 - Each page: category description, product grid, internal links
 
-### 📝 Blog (0 live, 4 planned) — 🔲 Not Started
-- Data-driven architecture planned (`src/content/blog.ts`)
-- 4 initial posts identified (see BLOG_CONTENT_STRATEGY.md)
-- Article JSON-LD + FAQ schema planned
+### 📝 Blog (4 posts live) — ✅ Complete
+- Data-driven architecture (`src/content/blog.ts`)
+- 4 launch posts live with Article JSON-LD + FAQ schema
+- Cross-linked to products, categories, and discover pages
 
 ### 📍 Valencia Landing (1 page) — ✅ Live
 - Local SEO landing page
@@ -91,13 +98,14 @@ rentanything.es/
 | Title tags | ✅ All ≤60 | Using `| RentAnything.es` suffix |
 | Canonical tags | ✅ | Set in `generateMetadata()` |
 | JSON-LD (Product) | ✅ | Product pages have structured data |
-| JSON-LD (Article) | 🔲 | Planned for blog posts |
+| JSON-LD (Article) | ✅ | Blog posts have Article + FAQ JSON-LD |
 | Open Graph / Twitter | ✅ | Title, description, image on all pages |
 | Robots.txt | ✅ | Standard allow-all with sitemap reference |
 | Google Search Console | 🔲 | Needs verification + sitemap submission |
-| Internal linking | ⚠️ | Products link to categories, needs cross-cluster expansion |
+| Internal linking | ✅ | Products ↔ blog ↔ categories ↔ discover all cross-linked |
 | i18n / hreflang | 🔲 | Planned (EN + ES) — not yet implemented |
-| Blog | 🔲 | Data-driven blog architecture not yet built |
+| Blog | ✅ | 4 posts live with Article + FAQ JSON-LD |
+| Discover guides | ✅ | 5 destination guides live with photo heroes + product widgets |
 
 ---
 
@@ -158,6 +166,12 @@ rentanything.es/
 
 | Date | Change |
 |------|--------|
+| 2026-06-18 | Homepage: photo carousel hero, photo-backed category cards |
+| 2026-06-18 | Valencia page: photo hero + photo category cards |
+| 2026-06-18 | Discover hub: photo hero + photo-backed hub cards |
+| 2026-06-18 | Discover guides: compact category-based product widget strips |
+| 2026-06-18 | Fixed heading color override in globals.css (was blocking text-white) |
+| 2026-06-18 | Two-layer photo overlay pattern established (bg-black/50 + gradient) |
 | 2026-06-17 | Initial SEO strategy document created |
 | 2026-06-17 | Competitor research completed — see COMPETITOR_REFERENCE.md |
 | 2026-06-17 | Keyword map established (Tier 1-3) |

@@ -31,16 +31,16 @@
 ## 🔴 Tier 1 — High Impact, Low-Medium Effort
 
 ### 1.1 Build data-driven blog architecture
-**Impact**: 🔴 Critical · **Effort**: 2 hours · **Status**: Next up
+**Impact**: 🔴 Critical · **Effort**: 2 hours · **Status**: ✅ Done
 
-Create `src/content/blog.ts` with BlogPost interface and auto-publishing gate. Build `/blog/[slug]` template with Article JSON-LD, FAQ schema, hero image, internal links.
+Blog architecture live with `src/content/blog.ts`, `/blog/[slug]` template with Article JSON-LD, FAQ schema, hero images, internal links.
 
 **Files**: `src/content/blog.ts`, `src/app/blog/[slug]/page.tsx`, `src/app/blog/page.tsx`
 
 ---
 
 ### 1.2 Publish 4 launch blog posts
-**Impact**: 🔴 High · **Effort**: 2-3 hours · **Status**: Blocked on 1.1
+**Impact**: 🔴 High · **Effort**: 2-3 hours · **Status**: ✅ Done
 
 | Post | Primary Keyword | Est. Impact |
 |------|----------------|-------------|
@@ -103,12 +103,18 @@ Spain receives 97M international visitors/year. Language priority based on verif
 
 Data-driven `/discover/[slug]` pages. 5 destinations live. Hub pages for neighbourhoods, day-trips, attractions, events.
 
-**Open design items (from user review):**
-- [ ] **Real photos** — Replace generated images with sourced photography for trust
-- [ ] **Valencia map widget** — Interactive or visual map showing destination locations and transport connections
-- [ ] **Restaurant source tracking** — Add `sourceNote` to food recommendations to document why each is recommended
-- [ ] **Staying vs Visiting angle** — Neighbourhood pages need both "staying here" (accommodation, commute to other areas) and "visiting here" (what to do for a few hours) perspectives
-- [ ] **Product widget visual variety** — Multiple widget styles (small inline box, banner, sidebar) depending on context and placement
+**Completed design items:**
+- [x] **Photo heroes** — AI-generated hero images for all 5 destinations
+- [x] **Category-based product strips** — Compact, thematic horizontal scrolling widgets (mobility, baby, remote work)
+- [x] **Two-layer overlay** — Consistent `bg-black/50` + gradient pattern on all photo heroes
+- [x] **Widget spacing** — No two product strips adjacent; contextually placed after relevant sections
+- [x] **Photo-backed hub cards** — Discover index uses lifestyle photos instead of emojis
+
+**Open design items:**
+- [ ] **Real photos** — Replace AI-generated images with sourced photography for trust
+- [ ] **Valencia map widget** — Interactive or visual map showing destination locations and transport
+- [ ] **Restaurant source tracking** — `sourceNote` fields exist but need populating with research
+- [ ] **Staying vs Visiting** — Data model supports both angles; content needs fleshing out
 
 ---
 
@@ -170,11 +176,12 @@ Backlink opportunities from travel bloggers and influencers.
 
 ## Priority Execution Order (Next Session)
 
-1. **1.1** — Blog architecture (`blog.ts` + template)
-2. **1.2** — 4 launch blog posts
-3. **1.3** — Google Search Console (user action)
-4. **1.4** — Internal linking audit
-5. **2.1** — Spanish translations
+1. **1.3** — Google Search Console setup (user action)
+2. **2.1** — Spanish translations (i18n)
+3. **3.1** — Blog cadence — next 2 posts
+4. **3.2** — Stripe payment integration
+5. **Discover** — Add more destination guides (10+ target)
+6. **Visual** — Replace AI images with real photography
 
 ---
 
@@ -182,9 +189,10 @@ Backlink opportunities from travel bloggers and influencers.
 
 | Metric | Pre-session (June 17) | Current (June 18) | Target (90 days) |
 |--------|----------------------|-------------------|------------------|
-| Total pages | ~37 | ~50+ (5 discover + 5 hubs) | ~65+ (with ES + more discover) |
-| Blog posts | 4 | 4 | 8+ |
+| Total pages | ~37 | ~55+ | ~80+ (with ES + more discover) |
+| Blog posts | 0 | 4 | 8+ |
 | Discover guides | 0 | 5 | 15+ |
+| Photo assets | 0 | 22+ (hero, category, hub, destination) | 50+ |
 | Languages | EN only | EN only | EN + ES |
 | Products | 16 | 16 | 16 (expand later) |
 | Categories | 5 | 5 | 5 |
