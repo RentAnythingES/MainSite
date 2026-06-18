@@ -129,7 +129,8 @@ export default function HomePage() {
         {/* Carousel background */}
         <div className="absolute inset-0">
           <HeroCarousel />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/50 to-black/30 z-10" />
+          <div className="absolute inset-0 bg-black/50 z-10" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent z-10" />
         </div>
 
         <div className="container-site relative z-20 py-20 md:py-28">
@@ -186,12 +187,12 @@ export default function HomePage() {
                   className="object-cover group-hover:scale-105 transition-transform duration-500"
                   sizes="(max-width: 640px) 50vw, 33vw"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
                 <div className="absolute bottom-0 left-0 right-0 p-4 md:p-5">
-                  <h3 className="text-sm md:text-base font-bold text-white mb-0.5">
+                  <h3 className="text-sm md:text-base font-bold text-white mb-0.5" style={{ textShadow: '0 1px 4px rgba(0,0,0,0.5)' }}>
                     {cat.name}
                   </h3>
-                  <p className="text-xs md:text-sm text-white/75">
+                  <p className="text-xs md:text-sm text-white/80" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.4)' }}>
                     {cat.description}
                   </p>
                 </div>
