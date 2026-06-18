@@ -61,5 +61,27 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
 
-  return [...staticPages, ...categoryPages, ...productPages, ...blogPages, ...discoverHubs, ...discoverPages];
+  // Spanish static pages
+  const spanishStaticPages: MetadataRoute.Sitemap = [
+    { url: `${BASE_URL}/es`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
+    { url: `${BASE_URL}/es/valencia`, lastModified: now, changeFrequency: "weekly", priority: 0.8 },
+  ];
+
+  // Spanish product pages
+  const spanishProductPages: MetadataRoute.Sitemap = products.map((p) => ({
+    url: `${BASE_URL}/es/product/${p.slug}`,
+    lastModified: now,
+    changeFrequency: "weekly" as const,
+    priority: 0.6,
+  }));
+
+  // Spanish category pages
+  const spanishCategoryPages: MetadataRoute.Sitemap = categories.map((cat) => ({
+    url: `${BASE_URL}/es/rental/${cat}`,
+    lastModified: now,
+    changeFrequency: "weekly" as const,
+    priority: 0.7,
+  }));
+
+  return [...staticPages, ...categoryPages, ...productPages, ...blogPages, ...discoverHubs, ...discoverPages, ...spanishStaticPages, ...spanishProductPages, ...spanishCategoryPages];
 }

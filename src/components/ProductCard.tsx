@@ -5,12 +5,13 @@ import type { Product } from "@/data/products";
 interface ProductCardProps {
   product: Product;
   id?: string;
+  basePath?: string;
 }
 
-export default function ProductCard({ product, id }: ProductCardProps) {
+export default function ProductCard({ product, id, basePath = "/product" }: ProductCardProps) {
   return (
     <Link
-      href={`/product/${product.slug}`}
+      href={`${basePath}/${product.slug}`}
       className="card group bg-white"
       id={id}
     >

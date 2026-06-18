@@ -1,0 +1,96 @@
+import Link from "next/link";
+import Image from "next/image";
+import type { Metadata } from "next";
+import { products } from "@/data/products";
+import ProductCard from "@/components/ProductCard";
+import { getDictionary } from "@/i18n/getDictionary";
+
+const t = getDictionary("es");
+
+export const metadata: Metadata = {
+  title: "Alquiler de Cochecitos, Sillas de Ruedas y Equipos en Valencia",
+  description: t.valencia.subtitle,
+  alternates: {
+    canonical: "https://rentanything.es/es/valencia",
+    languages: { en: "https://rentanything.es/valencia", es: "https://rentanything.es/es/valencia" },
+  },
+};
+
+const categoryCards = [
+  { ...t.categories.babyGear, slug: "baby-gear", image: "/categories/baby-gear.png" },
+  { ...t.categories.mobility, slug: "mobility", image: "/categories/mobility.png" },
+  { ...t.categories.remoteWork, slug: "remote-work", image: "/categories/remote-work.png" },
+  { ...t.categories.homeLiving, slug: "home-living", image: "/categories/home-living.png" },
+  { ...t.categories.travelOutdoors, slug: "travel-outdoors", image: "/categories/travel-outdoors.png" },
+];
+
+export default function ValenciaPageES() {
+  return (
+    <>
+      <section className="relative overflow-hidden">
+        <div className="absolute inset-0">
+          <Image src="/hero/valencia-3.png" alt="Paseo marítimo de Valencia al atardecer" fill className="object-cover" priority sizes="100vw" />
+          <div className="absolute inset-0 bg-black/50" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+        </div>
+        <div className="container-site relative z-10 py-16 md:py-24">
+          <div className="max-w-3xl">
+            <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/15 backdrop-blur-md text-white/90 text-sm font-medium mb-6 border border-white/20">
+              {t.valencia.badge}
+            </span>
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white tracking-tight mb-6" style={{ textShadow: '0 2px 8px rgba(0,0,0,0.4)' }}>
+              {t.valencia.headline}{" "}
+              <span className="text-amber-400">{t.valencia.headlineAccent}</span>
+            </h1>
+            <p className="text-lg text-white/90 leading-relaxed mb-8 max-w-2xl" style={{ textShadow: '0 1px 4px rgba(0,0,0,0.3)' }}>
+              {t.valencia.subtitle}
+            </p>
+            <div className="flex flex-wrap gap-3">
+              <a href="#products" className="btn btn-primary btn-lg">{t.valencia.ctaPrimary}</a>
+              <Link href="/es" className="btn btn-lg bg-white/15 text-white hover:bg-white/25 border border-white/20">{t.valencia.ctaSecondary}</Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-neutral-900 py-4">
+        <div className="container-site">
+          <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-2 text-sm text-neutral-300">
+            {t.valencia.deliveryBar.map((item) => (
+              <span key={item}>{item}</span>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="section bg-white" id="categories">
+        <div className="container-site">
+          <h2 className="text-3xl font-bold mb-8">{t.valencia.browseByCategory}</h2>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+            {categoryCards.map((cat) => (
+              <Link key={cat.slug} href={`/es/rental/${cat.slug}`} className="group relative rounded-2xl overflow-hidden aspect-[3/4]" id={`val-cat-${cat.slug}`}>
+                <Image src={cat.image} alt={cat.name} fill className="object-cover group-hover:scale-105 transition-transform duration-500" sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+                <div className="absolute bottom-0 left-0 right-0 p-3">
+                  <h3 className="font-bold text-sm text-white mb-0.5" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>{cat.name}</h3>
+                  <p className="text-xs text-white/75" style={{ textShadow: '0 1px 2px rgba(0,0,0,0.4)' }}>{cat.desc}</p>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="section bg-neutral-50" id="products">
+        <div className="container-site">
+          <h2 className="text-3xl font-bold mb-8">{t.valencia.allProducts}</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            {products.map((product) => (
+              <ProductCard key={product.slug} product={product} id={`val-${product.slug}`} basePath="/es/product" />
+            ))}
+          </div>
+        </div>
+      </section>
+    </>
+  );
+}
