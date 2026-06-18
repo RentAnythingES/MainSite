@@ -62,33 +62,120 @@ export default async function DiscoverPage({ params }: Props) {
   const dest = getDestinationBySlug(slug);
   if (!dest) notFound();
 
-  // Resolve product widgets
-  const resolvedWidgets = dest.productWidgets
-    .map((w) => ({ ...w, product: getProductBySlug(w.productSlug) }))
-    .filter((w) => w.product);
+  // Resolve product widgets — each widget can have multiple products
+  const resolvedWidgets = dest.productWidgets.map((w) => ({
+    ...w,
+    products: w.productSlugs
+      .map((slug) => getProductBySlug(slug))
+      .filter(Boolean) as import("@/data/products").Product[],
+  })).filter((w) => w.products.length > 0);
 
   // Helper: render inline product widgets that match a section
   const renderWidgets = (sectionName: string) => {
     const matching = resolvedWidgets.filter((w) => w.afterSection === sectionName);
     if (matching.length === 0) return null;
     return (
-      <div className="container-site max-w-3xl py-4">
-        {matching.map((w) => (
-          <Link
-            key={w.productSlug}
-            href={`/product/${w.productSlug}`}
-            className="flex items-start gap-4 rounded-xl border-l-4 border-brand/40 bg-teal-50/40 p-4 hover:bg-teal-50/70 transition-colors group mb-3"
-          >
-            <span className="text-2xl flex-shrink-0">🏷️</span>
-            <div className="flex-1 min-w-0">
-              <p className="text-sm text-neutral-700 leading-relaxed">{w.context}</p>
-              <span className="text-xs font-semibold text-brand mt-1 inline-block group-hover:underline">
-                {w.product!.name} — from €{w.product!.pricing[w.product!.pricing.length - 1].perDay}/day →
-              </span>
+      <>
+        {matching.map((w, idx) => {
+          // Card Row — horizontal scrolling strip of ProductCards
+          if (w.style === "card-row") {
+            return (
+              <section key={idx} className="py-10 bg-neutral-50 border-y border-border">
+                <div className="container-site">
+                  {w.heading && (
+                    <h3 className="text-lg font-bold mb-1">{w.heading}</h3>
+                  )}
+                  <p className="text-sm text-neutral-500 mb-5">{w.context}</p>
+                  <div className="flex gap-5 overflow-x-auto pb-4 -mx-2 px-2 snap-x snap-mandatory scrollbar-hide">
+                    {w.products.map((product) => (
+                      <div key={product.slug} className="min-w-[260px] max-w-[280px] flex-shrink-0 snap-start">
+                        <ProductCard product={product} />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </section>
+            );
+          }
+
+          // Card Grid — 2-column (or 3 on lg) grid of ProductCards
+          if (w.style === "card-grid") {
+            return (
+              <section key={idx} className="py-10 bg-neutral-50 border-y border-border">
+                <div className="container-site">
+                  {w.heading && (
+                    <h3 className="text-lg font-bold mb-1">{w.heading}</h3>
+                  )}
+                  <p className="text-sm text-neutral-500 mb-5">{w.context}</p>
+                  <div className={`grid gap-5 ${w.products.length <= 2 ? "sm:grid-cols-2" : "sm:grid-cols-2 lg:grid-cols-3"}`}>
+                    {w.products.map((product) => (
+                      <ProductCard key={product.slug} product={product} />
+                    ))}
+                  </div>
+                </div>
+              </section>
+            );
+          }
+
+          // Featured — single large hero product card with side-by-side context
+          if (w.style === "featured" && w.products[0]) {
+            const product = w.products[0];
+            return (
+              <section key={idx} className="py-10 bg-neutral-50 border-y border-border">
+                <div className="container-site">
+                  <div className="grid md:grid-cols-2 gap-6 items-center">
+                    <div className="order-2 md:order-1">
+                      {w.heading && (
+                        <h3 className="text-lg font-bold mb-2">{w.heading}</h3>
+                      )}
+                      <p className="text-neutral-600 leading-relaxed mb-4">{w.context}</p>
+                      <Link
+                        href={`/product/${product.slug}`}
+                        className="btn btn-primary btn-sm inline-flex items-center gap-2"
+                      >
+                        {product.name} — from €{product.pricing[product.pricing.length - 1].perDay}/day →
+                      </Link>
+                    </div>
+                    <div className="order-1 md:order-2">
+                      <ProductCard product={product} />
+                    </div>
+                  </div>
+                </div>
+              </section>
+            );
+          }
+
+          // Compact — subtle inline mention (fallback)
+          return (
+            <div key={idx} className="container-site max-w-3xl py-4">
+              {w.products.map((product) => (
+                <Link
+                  key={product.slug}
+                  href={`/product/${product.slug}`}
+                  className="flex items-center gap-4 rounded-xl bg-neutral-50 border border-border p-4 hover:shadow-sm transition-shadow group mb-3"
+                >
+                  <div className="w-16 h-16 bg-white rounded-lg border border-border flex-shrink-0 relative overflow-hidden">
+                    <Image
+                      src={product.image}
+                      alt={product.name}
+                      fill
+                      className="object-contain p-1"
+                      sizes="64px"
+                    />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm font-semibold group-hover:text-brand transition-colors">{product.name}</p>
+                    <p className="text-xs text-neutral-500 line-clamp-1">{w.context}</p>
+                    <span className="text-xs font-semibold text-brand mt-0.5 inline-block">
+                      From €{product.pricing[product.pricing.length - 1].perDay}/day →
+                    </span>
+                  </div>
+                </Link>
+              ))}
             </div>
-          </Link>
-        ))}
-      </div>
+          );
+        })}
+      </>
     );
   };
 

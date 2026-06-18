@@ -111,9 +111,16 @@ export interface EventInfo {
 }
 
 export interface ProductWidget {
-  productSlug: string;
+  /** One or more product slugs to display */
+  productSlugs: string[];
+  /** Editorial context — why these products are relevant here */
   context: string;
+  /** Which section this widget appears after */
   afterSection: string;
+  /** Visual style of the widget */
+  style: "card-row" | "card-grid" | "featured" | "compact";
+  /** Optional heading for the widget group */
+  heading?: string;
 }
 
 export interface DestinationFAQ {
@@ -398,14 +405,17 @@ export const destinations: Destination[] = [
     ],
     productWidgets: [
       {
-        productSlug: "ergonomic-chair",
-        context: "Working from your Ruzafa apartment? Most rentals come with a kitchen chair that's painful after 2 hours. An ergonomic office chair transforms your productivity — and your back.",
+        productSlugs: ["ergonomic-chair", "standing-desk-converter", "usb-portable-monitor"],
+        context: "Working from your Ruzafa apartment? Most rentals come with a kitchen chair that's painful after 2 hours. Set up a proper workspace without buying anything.",
         afterSection: "Tips by Traveller Type",
+        style: "card-row",
+        heading: "Remote work gear — delivered to your Ruzafa apartment",
       },
       {
-        productSlug: "compact-stroller",
+        productSlugs: ["compact-stroller"],
         context: "Ruzafa's flat, wide streets are ideal for strollers. Our compact model folds one-handed — perfect for hopping between cafes and the market.",
         afterSection: "Accessibility",
+        style: "featured",
       },
     ],
     relatedDestinations: [],
@@ -514,14 +524,11 @@ export const destinations: Destination[] = [
     ],
     productWidgets: [
       {
-        productSlug: "beach-umbrella-set",
-        context: "Chiringuito sunbed rental costs €9-10 per item and fills up fast. Our beach set (XL umbrella + 2 chairs + cooler bag) means you can set up wherever you want, arrive whenever suits you.",
-        afterSection: "Practical Tips",
-      },
-      {
-        productSlug: "standard-wheelchair",
-        context: "The Malvarrosa promenade is fully wheelchair-accessible with smooth surfaces the entire 1.8 km. The Red Cross provides free amphibious chairs for water access June-September.",
+        productSlugs: ["beach-umbrella-set", "standard-wheelchair"],
+        context: "Chiringuito sunbed rental costs €9-10 per item and fills up fast. Bring your own gear instead — and the promenade is fully wheelchair-accessible.",
         afterSection: "Accessibility",
+        style: "card-grid",
+        heading: "Beach essentials — delivered to your accommodation",
       },
     ],
     relatedDestinations: ["ruzafa"],
@@ -634,9 +641,10 @@ export const destinations: Destination[] = [
     ],
     productWidgets: [
       {
-        productSlug: "compact-stroller",
-        context: "Fallas crowds are dense and unpredictable. A compact stroller that folds one-handed (7.5 kg) is essential — you'll be folding it constantly to navigate packed streets and plazas.",
+        productSlugs: ["compact-stroller"],
+        context: "Fallas crowds are dense and unpredictable. A compact stroller that folds one-handed (7.5 kg) is essential — you'll be folding it constantly to navigate packed streets.",
         afterSection: "Accessibility",
+        style: "featured",
       },
     ],
     relatedDestinations: ["ruzafa", "malvarrosa-beach"],
@@ -732,9 +740,10 @@ export const destinations: Destination[] = [
     ],
     productWidgets: [
       {
-        productSlug: "mobility-scooter-lightweight",
-        context: "The main paths around Albufera are flat and paved — ideal for a mobility scooter. The 20 km range easily covers the visitor centre, El Palmar village, and lakeside trails.",
+        productSlugs: ["mobility-scooter-lightweight"],
+        context: "The main paths around Albufera are flat and paved — ideal for a mobility scooter. The 20 km range covers the visitor centre, El Palmar, and lakeside trails.",
         afterSection: "Accessibility",
+        style: "featured",
       },
     ],
     relatedDestinations: ["malvarrosa-beach"],
@@ -831,9 +840,11 @@ export const destinations: Destination[] = [
     ],
     productWidgets: [
       {
-        productSlug: "compact-stroller",
-        context: "The City of Arts and Sciences is fully flat and stroller-friendly — one of the easiest major attractions to navigate with kids. Our compact stroller handles the smooth paths perfectly and won't slow you down.",
+        productSlugs: ["compact-stroller", "standard-wheelchair"],
+        context: "The entire complex is flat and fully accessible — one of the easiest major attractions in Valencia for families and wheelchair users.",
         afterSection: "Accessibility",
+        style: "card-grid",
+        heading: "Family & accessibility gear for the day",
       },
     ],
     relatedDestinations: ["malvarrosa-beach", "ruzafa"],
