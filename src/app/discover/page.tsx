@@ -66,7 +66,7 @@ export default function DiscoverHub() {
         </div>
       </nav>
 
-      {/* Hero — uses first hero image as background */}
+      {/* Hero — matches Valencia page style */}
       <section className="relative overflow-hidden">
         <div className="absolute inset-0">
           <Image
@@ -81,44 +81,59 @@ export default function DiscoverHub() {
           <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
         </div>
         <div className="container-site relative z-10 py-16 md:py-24">
-          <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-3 text-white" style={{ textShadow: '0 2px 8px rgba(0,0,0,0.4)' }}>
-            Discover Valencia
-          </h1>
-          <p className="text-lg text-white/90 max-w-2xl" style={{ textShadow: '0 1px 4px rgba(0,0,0,0.3)' }}>
-            Honest, detailed guides to Valencia&apos;s neighbourhoods, day trips, beaches, and events — written by locals who actually live here.
-          </p>
+          <div className="max-w-3xl">
+            <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/15 backdrop-blur-md text-white/90 text-sm font-medium mb-6 border border-white/20">
+              🗺️ Local Travel Guides
+            </span>
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white tracking-tight mb-6" style={{ textShadow: '0 2px 8px rgba(0,0,0,0.4)' }}>
+              Discover{" "}
+              <span className="text-amber-400">Valencia</span>
+            </h1>
+            <p className="text-lg text-white/90 leading-relaxed mb-8 max-w-2xl" style={{ textShadow: '0 1px 4px rgba(0,0,0,0.3)' }}>
+              Honest, detailed guides to Valencia&apos;s neighbourhoods, day trips, beaches, and events — written by locals who actually live here.
+            </p>
+            <div className="flex flex-wrap gap-3">
+              <a href="#guides" className="btn btn-primary btn-lg">
+                Browse Guides ↓
+              </a>
+              <Link href="/valencia" className="btn btn-lg bg-white/15 text-white hover:bg-white/25 border border-white/20">
+                Rent Equipment
+              </Link>
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* Hub Cards — photo-backed */}
-      <section className="py-10 bg-white">
+      {/* Hub Categories */}
+      <section className="section bg-white">
         <div className="container-site">
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <h2 className="text-3xl font-bold mb-8">Explore by Theme</h2>
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
             {hubs.map((hub) => {
               const count = getDestinationsByHub(hub.hubKey).length;
               return (
                 <Link
                   key={hub.hubKey}
                   href={hub.href}
-                  className="group relative rounded-2xl overflow-hidden aspect-[4/3]"
+                  className="group relative rounded-2xl overflow-hidden aspect-[3/4]"
                 >
                   <Image
                     src={hub.image}
                     alt={hub.title}
                     fill
                     className="object-cover group-hover:scale-105 transition-transform duration-500"
-                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                    sizes="(max-width: 640px) 50vw, 25vw"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
-                  <div className="absolute bottom-0 left-0 right-0 p-4">
-                    <h2 className="font-bold text-lg text-white mb-0.5" style={{ textShadow: '0 1px 4px rgba(0,0,0,0.5)' }}>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+                  <div className="absolute bottom-0 left-0 right-0 p-3 md:p-4">
+                    <h3 className="font-bold text-sm md:text-base text-white mb-0.5" style={{ textShadow: '0 1px 4px rgba(0,0,0,0.5)' }}>
                       {hub.title}
-                    </h2>
-                    <p className="text-xs text-white/80" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.4)' }}>
+                    </h3>
+                    <p className="text-xs text-white/75 hidden sm:block" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.4)' }}>
                       {hub.description}
                     </p>
                     {count > 0 && (
-                      <span className="inline-block mt-2 text-xs font-semibold text-white/60">
+                      <span className="inline-block mt-1.5 text-xs font-semibold text-white/60">
                         {count} {count === 1 ? "guide" : "guides"} →
                       </span>
                     )}
@@ -130,12 +145,12 @@ export default function DiscoverHub() {
         </div>
       </section>
 
-      {/* All Guides — photo cards */}
+      {/* All Guides */}
       {allDestinations.length > 0 && (
-        <section className="py-10 bg-neutral-50">
+        <section className="section bg-neutral-50" id="guides">
           <div className="container-site">
-            <h2 className="text-2xl font-bold mb-6">All Guides</h2>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            <h2 className="text-3xl font-bold mb-8">All Guides</h2>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {allDestinations.map((dest) => (
                 <Link
                   key={dest.slug}
@@ -143,7 +158,7 @@ export default function DiscoverHub() {
                   className="card overflow-hidden hover:shadow-md transition-shadow group"
                 >
                   {dest.heroImage && (
-                    <div className="relative h-44 w-full">
+                    <div className="relative h-48 w-full">
                       <Image
                         src={dest.heroImage}
                         alt={dest.heroImageAlt || dest.name}
@@ -153,16 +168,16 @@ export default function DiscoverHub() {
                       />
                     </div>
                   )}
-                  <div className="p-4">
-                    <div className="flex items-center gap-2 mb-1.5">
+                  <div className="p-5">
+                    <div className="flex items-center gap-2 mb-2">
                       <span className="badge badge-brand text-xs">{typeLabels[dest.type]}</span>
                       {dest.distanceFromValencia && (
                         <span className="text-xs text-neutral-400">📍 {dest.distanceFromValencia}</span>
                       )}
                     </div>
-                    <h3 className="font-bold text-base mb-1 group-hover:text-brand transition-colors">{dest.name}</h3>
+                    <h3 className="font-bold text-lg mb-1 group-hover:text-brand transition-colors">{dest.name}</h3>
                     <p className="text-sm text-neutral-500 line-clamp-2">{dest.tagline}</p>
-                    <span className="text-sm font-semibold text-brand mt-2 inline-block">Explore →</span>
+                    <span className="text-sm font-semibold text-brand mt-3 inline-block">Explore →</span>
                   </div>
                 </Link>
               ))}
