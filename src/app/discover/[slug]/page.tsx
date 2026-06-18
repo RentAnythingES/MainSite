@@ -187,7 +187,8 @@ export default async function DiscoverPage({ params }: Props) {
                 priority
                 sizes="100vw"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/60 to-black/40" />
+              <div className="absolute inset-0 bg-black/50" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
             </div>
             <div className="container-site relative z-10 py-20 md:py-28">
               <div className="flex items-center gap-3 mb-4">
