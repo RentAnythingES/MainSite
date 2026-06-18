@@ -111,16 +111,12 @@ export interface EventInfo {
 }
 
 export interface ProductWidget {
-  /** One or more product slugs to display */
-  productSlugs: string[];
-  /** Editorial context — why these products are relevant here */
-  context: string;
-  /** Which section this widget appears after */
+  /** Category slug to pull products from (e.g. "mobility", "baby-gear", "remote-work") */
+  categorySlug: string;
+  /** Short thematic heading (e.g. "Travelling with kids?", "Need mobility support?") */
+  heading: string;
+  /** Which section this strip appears after */
   afterSection: string;
-  /** Visual style of the widget */
-  style: "card-row" | "card-grid" | "featured" | "compact";
-  /** Optional heading for the widget group */
-  heading?: string;
 }
 
 export interface DestinationFAQ {
@@ -404,19 +400,9 @@ export const destinations: Destination[] = [
       "The Mercat de Russafa closes by 2pm and is closed on Sundays. Don't show up at 3pm expecting to shop.",
     ],
     productWidgets: [
-      {
-        productSlugs: ["ergonomic-chair", "standing-desk-converter", "usb-portable-monitor"],
-        context: "Working from your Ruzafa apartment? Most rentals come with a kitchen chair that's painful after 2 hours. Set up a proper workspace without buying anything.",
-        afterSection: "Tips by Traveller Type",
-        style: "card-row",
-        heading: "Remote work gear — delivered to your Ruzafa apartment",
-      },
-      {
-        productSlugs: ["compact-stroller"],
-        context: "Ruzafa's flat, wide streets are ideal for strollers. Our compact model folds one-handed — perfect for hopping between cafes and the market.",
-        afterSection: "Accessibility",
-        style: "featured",
-      },
+      { categorySlug: "remote-work", heading: "Working remotely from Ruzafa?", afterSection: "Staying Here" },
+      { categorySlug: "baby-gear", heading: "Travelling with kids?", afterSection: "Accessibility" },
+      { categorySlug: "mobility", heading: "Need mobility support?", afterSection: "Accessibility" },
     ],
     relatedDestinations: [],
     relatedBlogPosts: ["digital-nomad-guide-valencia", "valencia-with-kids-complete-guide"],
@@ -523,13 +509,8 @@ export const destinations: Destination[] = [
       "If you're coming with kids, the southern end near the port is slightly less crowded than the main central section.",
     ],
     productWidgets: [
-      {
-        productSlugs: ["beach-umbrella-set", "standard-wheelchair"],
-        context: "Chiringuito sunbed rental costs €9-10 per item and fills up fast. Bring your own gear instead — and the promenade is fully wheelchair-accessible.",
-        afterSection: "Accessibility",
-        style: "card-grid",
-        heading: "Beach essentials — delivered to your accommodation",
-      },
+      { categorySlug: "travel-outdoors", heading: "Beach day essentials", afterSection: "Practical Tips" },
+      { categorySlug: "mobility", heading: "Need mobility support?", afterSection: "Accessibility" },
     ],
     relatedDestinations: ["ruzafa"],
     relatedBlogPosts: ["valencia-summer-survival-guide", "wheelchair-accessible-valencia"],
@@ -640,12 +621,7 @@ export const destinations: Destination[] = [
       "Banks and shops in the city centre may have reduced hours during Fallas week. Stock up on cash.",
     ],
     productWidgets: [
-      {
-        productSlugs: ["compact-stroller"],
-        context: "Fallas crowds are dense and unpredictable. A compact stroller that folds one-handed (7.5 kg) is essential — you'll be folding it constantly to navigate packed streets.",
-        afterSection: "Accessibility",
-        style: "featured",
-      },
+      { categorySlug: "baby-gear", heading: "Bringing kids to Fallas?", afterSection: "Accessibility" },
     ],
     relatedDestinations: ["ruzafa", "malvarrosa-beach"],
     relatedBlogPosts: ["valencia-with-kids-complete-guide"],
@@ -739,12 +715,7 @@ export const destinations: Destination[] = [
       "Don't swim in the lagoon. It's a freshwater ecosystem, not a swimming lake.",
     ],
     productWidgets: [
-      {
-        productSlugs: ["mobility-scooter-lightweight"],
-        context: "The main paths around Albufera are flat and paved — ideal for a mobility scooter. The 20 km range covers the visitor centre, El Palmar, and lakeside trails.",
-        afterSection: "Accessibility",
-        style: "featured",
-      },
+      { categorySlug: "mobility", heading: "Need mobility support?", afterSection: "Accessibility" },
     ],
     relatedDestinations: ["malvarrosa-beach"],
     relatedBlogPosts: ["valencia-with-kids-complete-guide"],
@@ -839,13 +810,8 @@ export const destinations: Destination[] = [
       "The restaurant inside the Oceanogràfic (Submarino) lets you eat surrounded by fish — worth booking for the novelty, though the food is average.",
     ],
     productWidgets: [
-      {
-        productSlugs: ["compact-stroller", "standard-wheelchair"],
-        context: "The entire complex is flat and fully accessible — one of the easiest major attractions in Valencia for families and wheelchair users.",
-        afterSection: "Accessibility",
-        style: "card-grid",
-        heading: "Family & accessibility gear for the day",
-      },
+      { categorySlug: "baby-gear", heading: "Visiting with kids?", afterSection: "Accessibility" },
+      { categorySlug: "mobility", heading: "Need mobility support?", afterSection: "Accessibility" },
     ],
     relatedDestinations: ["malvarrosa-beach", "ruzafa"],
     relatedBlogPosts: ["valencia-with-kids-complete-guide"],
