@@ -401,8 +401,8 @@ export const destinations: Destination[] = [
     ],
     productWidgets: [
       { categorySlug: "remote-work", heading: "Working remotely from Ruzafa?", afterSection: "Staying Here" },
-      { categorySlug: "baby-gear", heading: "Travelling with kids?", afterSection: "Accessibility" },
       { categorySlug: "mobility", heading: "Need mobility support?", afterSection: "Accessibility" },
+      { categorySlug: "baby-gear", heading: "Travelling with kids?", afterSection: "Where to Eat & Drink" },
     ],
     relatedDestinations: [],
     relatedBlogPosts: ["digital-nomad-guide-valencia", "valencia-with-kids-complete-guide"],
@@ -810,8 +810,8 @@ export const destinations: Destination[] = [
       "The restaurant inside the Oceanogràfic (Submarino) lets you eat surrounded by fish — worth booking for the novelty, though the food is average.",
     ],
     productWidgets: [
-      { categorySlug: "baby-gear", heading: "Visiting with kids?", afterSection: "Accessibility" },
       { categorySlug: "mobility", heading: "Need mobility support?", afterSection: "Accessibility" },
+      { categorySlug: "baby-gear", heading: "Visiting with kids?", afterSection: "Practical Tips" },
     ],
     relatedDestinations: ["malvarrosa-beach", "ruzafa"],
     relatedBlogPosts: ["valencia-with-kids-complete-guide"],

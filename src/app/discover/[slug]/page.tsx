@@ -187,7 +187,7 @@ export default async function DiscoverPage({ params }: Props) {
                 priority
                 sizes="100vw"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-black/20" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/60 to-black/40" />
             </div>
             <div className="container-site relative z-10 py-20 md:py-28">
               <div className="flex items-center gap-3 mb-4">
@@ -196,7 +196,7 @@ export default async function DiscoverPage({ params }: Props) {
                   <span className="text-sm text-white/80">📍 {dest.distanceFromValencia}</span>
                 )}
               </div>
-              <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-3 text-white drop-shadow-lg">{dest.name}</h1>
+              <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-3 text-white" style={{ textShadow: '0 2px 8px rgba(0,0,0,0.5)' }}>{dest.name}</h1>
               <p className="text-lg text-white/90 max-w-2xl drop-shadow">{dest.tagline}</p>
               {dest.overview?.quickFacts && (
                 <div className="flex flex-wrap gap-3 mt-6">
