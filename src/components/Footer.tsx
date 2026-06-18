@@ -1,45 +1,57 @@
+"use client";
+
 import Link from "next/link";
-
-const footerLinks = {
-  "Info & Help": [
-    { name: "How It Works", href: "/how-it-works" },
-    { name: "Discover Valencia", href: "/discover" },
-    { name: "About Us", href: "/about" },
-    { name: "FAQ", href: "/faq" },
-    { name: "Blog", href: "/blog" },
-    { name: "Contact", href: "/contact" },
-  ],
-  "Categories": [
-    { name: "Baby & Children", href: "/rental/baby-gear" },
-    { name: "Mobility Aid", href: "/rental/mobility" },
-    { name: "Remote Work", href: "/rental/remote-work" },
-    { name: "Home & Living", href: "/rental/home-living" },
-    { name: "Travel & Outdoors", href: "/rental/travel-outdoors" },
-  ],
-  "Cities": [
-    { name: "Valencia", href: "/valencia" },
-    { name: "Barcelona", href: "#", disabled: true },
-    { name: "Madrid", href: "#", disabled: true },
-  ],
-};
-
-const legalLinks = [
-  { name: "Privacy Policy", href: "/privacy" },
-  { name: "Cookies", href: "/cookies" },
-  { name: "T&Cs", href: "/terms" },
-  { name: "Refunds & Cancellations", href: "/refunds" },
-  { name: "Hojas de Reclamaciones", href: "https://www.hojasderereclamaciones.com/", external: true },
-];
+import { usePathname } from "next/navigation";
 
 export default function Footer() {
+  const pathname = usePathname();
+  const isSpanish = pathname.startsWith("/es");
+  const prefix = isSpanish ? "/es" : "";
+
+  const footerLinks = {
+    [isSpanish ? "Información" : "Info & Help"]: [
+      { name: isSpanish ? "Cómo Funciona" : "How It Works", href: "/how-it-works" },
+      { name: isSpanish ? "Descubrir Valencia" : "Discover Valencia", href: "/discover" },
+      { name: isSpanish ? "Sobre Nosotros" : "About Us", href: "/about" },
+      { name: isSpanish ? "Preguntas Frecuentes" : "FAQ", href: "/faq" },
+      { name: "Blog", href: "/blog" },
+      { name: isSpanish ? "Contacto" : "Contact", href: "/contact" },
+    ],
+    [isSpanish ? "Categorías" : "Categories"]: [
+      { name: isSpanish ? "Bebé y Niños" : "Baby & Children", href: `${prefix}/rental/baby-gear` },
+      { name: isSpanish ? "Movilidad" : "Mobility Aid", href: `${prefix}/rental/mobility` },
+      { name: isSpanish ? "Teletrabajo" : "Remote Work", href: `${prefix}/rental/remote-work` },
+      { name: isSpanish ? "Hogar y Confort" : "Home & Living", href: `${prefix}/rental/home-living` },
+      { name: isSpanish ? "Playa y Aire Libre" : "Travel & Outdoors", href: `${prefix}/rental/travel-outdoors` },
+    ],
+    [isSpanish ? "Ciudades" : "Cities"]: [
+      { name: "Valencia", href: `${prefix}/valencia` },
+      { name: "Barcelona", href: "#", disabled: true },
+      { name: "Madrid", href: "#", disabled: true },
+    ],
+  };
+
+  const legalLinks = [
+    { name: isSpanish ? "Privacidad" : "Privacy Policy", href: "/privacy" },
+    { name: "Cookies", href: "/cookies" },
+    { name: isSpanish ? "Condiciones" : "T&Cs", href: "/terms" },
+    { name: isSpanish ? "Devoluciones" : "Refunds & Cancellations", href: "/refunds" },
+    { name: "Hojas de Reclamaciones", href: "https://www.hojasderereclamaciones.com/", external: true },
+  ];
+
+  const tagline = isSpanish
+    ? "Viaja ligero, disfruta de todo. Equipos de alquiler de primera calidad entregados en tu alojamiento en Valencia."
+    : "Travel light, experience everything. Premium rental equipment delivered to your door in Valencia.";
+
+  const soonLabel = isSpanish ? "Pronto" : "Soon";
+
   return (
     <footer className="bg-neutral-900 text-neutral-300 mt-auto" id="site-footer">
       <div className="container-site">
-        {/* Main Footer */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 py-16">
           {/* Brand Column */}
           <div className="lg:col-span-1">
-            <Link href="/" className="inline-block mb-4">
+            <Link href={isSpanish ? "/es" : "/"} className="inline-block mb-4">
               <span className="text-2xl font-bold font-[var(--font-outfit)]">
                 <span className="text-brand-light">Rent</span>
                 <span className="text-white">Anything</span>
@@ -47,10 +59,8 @@ export default function Footer() {
               </span>
             </Link>
             <p className="text-sm text-neutral-400 leading-relaxed mb-6">
-              Travel light, experience everything. Premium rental equipment
-              delivered to your door in Valencia.
+              {tagline}
             </p>
-            {/* Social Links */}
             <div className="flex items-center gap-3">
               <a
                 href="https://instagram.com/rentanything.es"
@@ -76,7 +86,6 @@ export default function Footer() {
                   <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
                 </svg>
               </a>
-              {/* WhatsApp */}
               <a
                 href="https://wa.me/34600000000?text=Hi!%20I%27m%20interested%20in%20renting%20equipment%20in%20Valencia"
                 target="_blank"
@@ -105,7 +114,7 @@ export default function Footer() {
                       <span className="text-sm text-neutral-600 flex items-center gap-1.5">
                         {link.name}
                         <span className="text-[10px] px-1.5 py-0.5 rounded bg-neutral-800 text-neutral-500 font-medium">
-                          Soon
+                          {soonLabel}
                         </span>
                       </span>
                     ) : (
