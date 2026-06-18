@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import type { Metadata } from "next";
 import { products } from "@/data/products";
 import ProductCard from "@/components/ProductCard";
@@ -10,34 +11,46 @@ export const metadata: Metadata = {
 };
 
 const categoryCards = [
-  { name: "Baby & Children", slug: "baby-gear", emoji: "👶", desc: "Strollers, cribs, car seats, high chairs" },
-  { name: "Mobility Aid", slug: "mobility", emoji: "♿", desc: "Wheelchairs, scooters, walkers" },
-  { name: "Remote Work", slug: "remote-work", emoji: "💻", desc: "Monitors, desks, ergonomic chairs" },
-  { name: "Home & Living", slug: "home-living", emoji: "🏠", desc: "Air purifiers, AC units, kitchen" },
-  { name: "Travel & Outdoors", slug: "travel-outdoors", emoji: "🏖️", desc: "Beach gear, camping, recreation" },
+  { name: "Baby & Children", slug: "baby-gear", image: "/categories/baby-gear.png", desc: "Strollers, cribs, car seats, high chairs" },
+  { name: "Mobility Aid", slug: "mobility", image: "/categories/mobility.png", desc: "Wheelchairs, scooters, walkers" },
+  { name: "Remote Work", slug: "remote-work", image: "/categories/remote-work.png", desc: "Monitors, desks, ergonomic chairs" },
+  { name: "Home & Living", slug: "home-living", image: "/categories/home-living.png", desc: "Air purifiers, AC units, kitchen" },
+  { name: "Travel & Outdoors", slug: "travel-outdoors", image: "/categories/travel-outdoors.png", desc: "Beach gear, camping, recreation" },
 ];
 
 export default function ValenciaPage() {
   return (
     <>
       {/* Hero */}
-      <section className="relative bg-gradient-to-br from-brand-dark via-brand to-brand-light py-16 md:py-24 overflow-hidden">
-        <div className="container-site relative z-10">
+      <section className="relative overflow-hidden">
+        <div className="absolute inset-0">
+          <Image
+            src="/hero/valencia-3.png"
+            alt="Valencia beach promenade at golden hour"
+            fill
+            className="object-cover"
+            priority
+            sizes="100vw"
+          />
+          <div className="absolute inset-0 bg-black/50" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+        </div>
+        <div className="container-site relative z-10 py-16 md:py-24">
           <div className="max-w-3xl">
-            <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/15 text-white/90 text-sm font-medium mb-6">
+            <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/15 backdrop-blur-md text-white/90 text-sm font-medium mb-6 border border-white/20">
               📍 Valencia, Spain
             </span>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white tracking-tight mb-6">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white tracking-tight mb-6" style={{ textShadow: '0 2px 8px rgba(0,0,0,0.4)' }}>
               Rental Equipment{" "}
-              <span className="text-accent-light">in Valencia</span>
+              <span className="text-amber-400">in Valencia</span>
             </h1>
-            <p className="text-lg text-teal-100 leading-relaxed mb-8 max-w-2xl">
+            <p className="text-lg text-white/90 leading-relaxed mb-8 max-w-2xl" style={{ textShadow: '0 1px 4px rgba(0,0,0,0.3)' }}>
               Everything you need for your Valencia trip — baby gear, mobility aids,
               remote work setups & more. Premium brands, delivered to your hotel,
               Airbnb, or apartment.
             </p>
             <div className="flex flex-wrap gap-3">
-              <a href="#products" className="btn btn-accent btn-lg">
+              <a href="#products" className="btn btn-primary btn-lg">
                 Browse All Products ↓
               </a>
               <Link href="/how-it-works" className="btn btn-lg bg-white/15 text-white hover:bg-white/25 border border-white/20">
@@ -46,8 +59,6 @@ export default function ValenciaPage() {
             </div>
           </div>
         </div>
-        <div className="absolute -top-20 -right-20 w-80 h-80 bg-white/5 rounded-full blur-3xl" />
-        <div className="absolute -bottom-32 -left-32 w-96 h-96 bg-accent/10 rounded-full blur-3xl" />
       </section>
 
       {/* Delivery Info Bar */}
@@ -71,12 +82,21 @@ export default function ValenciaPage() {
               <Link
                 key={cat.slug}
                 href={`/rental/${cat.slug}`}
-                className="card p-5 text-center group hover:border-brand/30"
+                className="group relative rounded-2xl overflow-hidden aspect-[3/4]"
                 id={`val-cat-${cat.slug}`}
               >
-                <span className="text-3xl block mb-2 group-hover:scale-110 transition-transform">{cat.emoji}</span>
-                <h3 className="font-bold text-sm mb-1">{cat.name}</h3>
-                <p className="text-xs text-neutral-500">{cat.desc}</p>
+                <Image
+                  src={cat.image}
+                  alt={cat.name}
+                  fill
+                  className="object-cover group-hover:scale-105 transition-transform duration-500"
+                  sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+                <div className="absolute bottom-0 left-0 right-0 p-3">
+                  <h3 className="font-bold text-sm text-white mb-0.5" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>{cat.name}</h3>
+                  <p className="text-xs text-white/75" style={{ textShadow: '0 1px 2px rgba(0,0,0,0.4)' }}>{cat.desc}</p>
+                </div>
               </Link>
             ))}
           </div>
