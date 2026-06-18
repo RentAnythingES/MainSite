@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import {
@@ -151,28 +152,67 @@ export default async function DiscoverPage({ params }: Props) {
       </nav>
 
       {/* Hero */}
-      <section className="bg-gradient-to-br from-teal-50/40 to-amber-50/20 py-14 md:py-20">
-        <div className="container-site">
-          <div className="flex items-center gap-3 mb-4">
-            <span className="badge badge-brand">{typeLabels[dest.type]}</span>
-            {dest.distanceFromValencia && (
-              <span className="text-sm text-neutral-500">📍 {dest.distanceFromValencia}</span>
-            )}
-          </div>
-          <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-3">{dest.name}</h1>
-          <p className="text-lg text-neutral-600 max-w-2xl">{dest.tagline}</p>
-          {dest.overview?.quickFacts && (
-            <div className="flex flex-wrap gap-4 mt-6">
-              {dest.overview.quickFacts.map((fact) => (
-                <div key={fact.label} className="bg-white/80 backdrop-blur rounded-lg px-4 py-2 border border-border">
-                  <span className="text-xs text-neutral-500 block">{fact.label}</span>
-                  <span className="text-sm font-semibold">{fact.value}</span>
-                </div>
-              ))}
+      <section className="relative overflow-hidden">
+        {dest.heroImage ? (
+          <>
+            <div className="absolute inset-0">
+              <Image
+                src={dest.heroImage}
+                alt={dest.heroImageAlt || dest.name}
+                fill
+                className="object-cover"
+                priority
+                sizes="100vw"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-black/20" />
             </div>
-          )}
-          <p className="text-xs text-neutral-400 mt-4">Last updated: {dest.lastUpdated}</p>
-        </div>
+            <div className="container-site relative z-10 py-20 md:py-28">
+              <div className="flex items-center gap-3 mb-4">
+                <span className="badge badge-brand">{typeLabels[dest.type]}</span>
+                {dest.distanceFromValencia && (
+                  <span className="text-sm text-white/80">📍 {dest.distanceFromValencia}</span>
+                )}
+              </div>
+              <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-3 text-white drop-shadow-lg">{dest.name}</h1>
+              <p className="text-lg text-white/90 max-w-2xl drop-shadow">{dest.tagline}</p>
+              {dest.overview?.quickFacts && (
+                <div className="flex flex-wrap gap-3 mt-6">
+                  {dest.overview.quickFacts.map((fact) => (
+                    <div key={fact.label} className="bg-white/15 backdrop-blur-md rounded-lg px-4 py-2 border border-white/20">
+                      <span className="text-xs text-white/70 block">{fact.label}</span>
+                      <span className="text-sm font-semibold text-white">{fact.value}</span>
+                    </div>
+                  ))}
+                </div>
+              )}
+              <p className="text-xs text-white/50 mt-4">Last updated: {dest.lastUpdated}</p>
+            </div>
+          </>
+        ) : (
+          <div className="bg-gradient-to-br from-teal-50/40 to-amber-50/20 py-14 md:py-20">
+            <div className="container-site">
+              <div className="flex items-center gap-3 mb-4">
+                <span className="badge badge-brand">{typeLabels[dest.type]}</span>
+                {dest.distanceFromValencia && (
+                  <span className="text-sm text-neutral-500">📍 {dest.distanceFromValencia}</span>
+                )}
+              </div>
+              <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-3">{dest.name}</h1>
+              <p className="text-lg text-neutral-600 max-w-2xl">{dest.tagline}</p>
+              {dest.overview?.quickFacts && (
+                <div className="flex flex-wrap gap-4 mt-6">
+                  {dest.overview.quickFacts.map((fact) => (
+                    <div key={fact.label} className="bg-white/80 backdrop-blur rounded-lg px-4 py-2 border border-border">
+                      <span className="text-xs text-neutral-500 block">{fact.label}</span>
+                      <span className="text-sm font-semibold">{fact.value}</span>
+                    </div>
+                  ))}
+                </div>
+              )}
+              <p className="text-xs text-neutral-400 mt-4">Last updated: {dest.lastUpdated}</p>
+            </div>
+          </div>
+        )}
       </section>
 
       {/* Overview */}

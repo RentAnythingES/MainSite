@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import type { Metadata } from "next";
 import { getPublishedDestinations, getDestinationsByHub } from "@/content/destinations";
 
@@ -112,17 +113,30 @@ export default function DiscoverHub() {
                 <Link
                   key={dest.slug}
                   href={`/discover/${dest.slug}`}
-                  className="card p-6 hover:shadow-md transition-shadow group"
+                  className="card overflow-hidden hover:shadow-md transition-shadow group"
                 >
-                  <div className="flex items-center gap-2 mb-2">
-                    <span className="badge badge-brand text-xs">{typeLabels[dest.type]}</span>
-                    {dest.distanceFromValencia && (
-                      <span className="text-xs text-neutral-400">📍 {dest.distanceFromValencia}</span>
-                    )}
+                  {dest.heroImage && (
+                    <div className="relative h-40 w-full">
+                      <Image
+                        src={dest.heroImage}
+                        alt={dest.heroImageAlt || dest.name}
+                        fill
+                        className="object-cover group-hover:scale-105 transition-transform duration-300"
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      />
+                    </div>
+                  )}
+                  <div className="p-5">
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className="badge badge-brand text-xs">{typeLabels[dest.type]}</span>
+                      {dest.distanceFromValencia && (
+                        <span className="text-xs text-neutral-400">📍 {dest.distanceFromValencia}</span>
+                      )}
+                    </div>
+                    <h3 className="font-bold text-lg mb-1 group-hover:text-brand transition-colors">{dest.name}</h3>
+                    <p className="text-sm text-neutral-500">{dest.tagline}</p>
+                    <span className="text-sm font-semibold text-brand mt-3 inline-block">Explore →</span>
                   </div>
-                  <h3 className="font-bold text-lg mb-1 group-hover:text-brand transition-colors">{dest.name}</h3>
-                  <p className="text-sm text-neutral-500">{dest.tagline}</p>
-                  <span className="text-sm font-semibold text-brand mt-3 inline-block">Explore →</span>
                 </Link>
               ))}
             </div>
