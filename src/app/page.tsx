@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import type { Metadata } from "next";
 import { getLocalBusinessJsonLd } from "@/lib/jsonld";
+import HeroCarousel from "@/components/HeroCarousel";
 
 export const metadata: Metadata = {
   title: "Rent Baby Gear, Mobility & Tech in Valencia | RentAnything.es",
@@ -11,46 +12,40 @@ export const metadata: Metadata = {
 
 const heroCategories = [
   {
-    name: "Strollers & Wagons",
-    href: "/rental/baby-gear/strollers",
-    emoji: "🍼",
-    description: "Compact & double strollers, wagons",
-    color: "from-teal-500/10 to-teal-600/5",
+    name: "Baby & Children",
+    href: "/rental/baby-gear",
+    image: "/categories/baby-gear.png",
+    description: "Strollers, cribs, car seats & high chairs",
   },
   {
-    name: "Wheelchairs",
-    href: "/rental/mobility/wheelchairs",
-    emoji: "♿",
-    description: "Standard, transport & bariatric",
-    color: "from-blue-500/10 to-blue-600/5",
+    name: "Mobility Aid",
+    href: "/rental/mobility",
+    image: "/categories/mobility.png",
+    description: "Wheelchairs, scooters & walkers",
   },
   {
-    name: "Remote Working",
+    name: "Remote Work",
     href: "/rental/remote-work",
-    emoji: "💻",
-    description: "Monitors, desks, chairs & keyboards",
-    color: "from-purple-500/10 to-purple-600/5",
+    image: "/categories/remote-work.png",
+    description: "Monitors, desks, chairs & accessories",
   },
   {
-    name: "Sleep & Nursery",
-    href: "/rental/baby-gear/sleep-nursery",
-    emoji: "😴",
-    description: "Cribs, bassinets, travel cots",
-    color: "from-pink-500/10 to-pink-600/5",
+    name: "Home & Living",
+    href: "/rental/home-living",
+    image: "/categories/home-living.png",
+    description: "Air purifiers, heaters & comfort",
   },
   {
-    name: "Home Air Quality",
-    href: "/rental/home-living/air-quality",
-    emoji: "🌬️",
-    description: "Purifiers, dehumidifiers, heaters",
-    color: "from-sky-500/10 to-sky-600/5",
+    name: "Travel & Outdoors",
+    href: "/rental/travel-outdoors",
+    image: "/categories/travel-outdoors.png",
+    description: "Beach gear, coolers & umbrellas",
   },
   {
-    name: "Mobility Scooters",
-    href: "/rental/mobility/scooters",
-    emoji: "🛵",
-    description: "Lightweight & heavy-duty scooters",
-    color: "from-emerald-500/10 to-emerald-600/5",
+    name: "Pregnancy",
+    href: "/rental/pregnancy",
+    image: "/categories/pregnancy.png",
+    description: "Support pillows, comfort essentials",
   },
 ];
 
@@ -130,19 +125,25 @@ export default function HomePage() {
       />
 
       {/* ===== HERO SECTION ===== */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-neutral-50 via-white to-teal-50/30" id="hero">
-        <div className="container-site py-16 md:py-24 lg:py-28">
+      <section className="relative overflow-hidden min-h-[520px] md:min-h-[600px] flex items-center" id="hero">
+        {/* Carousel background */}
+        <div className="absolute inset-0">
+          <HeroCarousel />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/50 to-black/30 z-10" />
+        </div>
+
+        <div className="container-site relative z-20 py-20 md:py-28">
           <div className="max-w-3xl mx-auto text-center">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand/10 text-brand text-sm font-semibold mb-6">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/15 backdrop-blur-md text-white text-sm font-semibold mb-6 border border-white/20">
               <span>📍</span> Now serving Valencia
             </div>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight mb-6">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight mb-6 text-white" style={{ textShadow: '0 2px 12px rgba(0,0,0,0.4)' }}>
               Travel light.{" "}
-              <span className="bg-gradient-to-r from-brand to-brand-light bg-clip-text text-transparent">
+              <span className="text-amber-400">
                 Rent everything.
               </span>
             </h1>
-            <p className="text-lg md:text-xl text-neutral-600 leading-relaxed mb-10 max-w-2xl mx-auto">
+            <p className="text-lg md:text-xl text-white/90 leading-relaxed mb-10 max-w-2xl mx-auto" style={{ textShadow: '0 1px 4px rgba(0,0,0,0.3)' }}>
               Premium baby gear, mobility aids, remote work setups & more —
               delivered to your door in Valencia. No heavy luggage, no stress.
             </p>
@@ -150,16 +151,12 @@ export default function HomePage() {
               <Link href="/valencia" className="btn btn-primary btn-lg" id="hero-cta-primary">
                 Browse Valencia Rentals
               </Link>
-              <Link href="/how-it-works" className="btn btn-outline btn-lg" id="hero-cta-secondary">
+              <Link href="/how-it-works" className="btn btn-lg bg-white/15 text-white hover:bg-white/25 border border-white/20" id="hero-cta-secondary">
                 How It Works
               </Link>
             </div>
           </div>
         </div>
-
-        {/* Decorative gradient blobs */}
-        <div className="absolute -top-24 -right-24 w-96 h-96 bg-brand/5 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute -bottom-32 -left-32 w-96 h-96 bg-accent/5 rounded-full blur-3xl pointer-events-none" />
       </section>
 
       {/* ===== CATEGORIES GRID ===== */}
@@ -179,18 +176,25 @@ export default function HomePage() {
               <Link
                 key={cat.href}
                 href={cat.href}
-                className={`card group p-6 md:p-8 bg-gradient-to-br ${cat.color} border-transparent hover:border-brand/20`}
+                className="group relative rounded-2xl overflow-hidden aspect-[4/3] md:aspect-[3/2]"
                 id={`cat-${cat.href.split("/").pop()}`}
               >
-                <span className="text-3xl md:text-4xl mb-3 block group-hover:scale-110 transition-transform duration-300">
-                  {cat.emoji}
-                </span>
-                <h3 className="text-sm md:text-base font-bold text-neutral-800 mb-1">
-                  {cat.name}
-                </h3>
-                <p className="text-xs md:text-sm text-neutral-500">
-                  {cat.description}
-                </p>
+                <Image
+                  src={cat.image}
+                  alt={cat.name}
+                  fill
+                  className="object-cover group-hover:scale-105 transition-transform duration-500"
+                  sizes="(max-width: 640px) 50vw, 33vw"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+                <div className="absolute bottom-0 left-0 right-0 p-4 md:p-5">
+                  <h3 className="text-sm md:text-base font-bold text-white mb-0.5">
+                    {cat.name}
+                  </h3>
+                  <p className="text-xs md:text-sm text-white/75">
+                    {cat.description}
+                  </p>
+                </div>
               </Link>
             ))}
           </div>
