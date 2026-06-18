@@ -66,6 +66,31 @@ export default async function DiscoverPage({ params }: Props) {
     .map((w) => ({ ...w, product: getProductBySlug(w.productSlug) }))
     .filter((w) => w.product);
 
+  // Helper: render inline product widgets that match a section
+  const renderWidgets = (sectionName: string) => {
+    const matching = resolvedWidgets.filter((w) => w.afterSection === sectionName);
+    if (matching.length === 0) return null;
+    return (
+      <div className="container-site max-w-3xl py-4">
+        {matching.map((w) => (
+          <Link
+            key={w.productSlug}
+            href={`/product/${w.productSlug}`}
+            className="flex items-start gap-4 rounded-xl border-l-4 border-brand/40 bg-teal-50/40 p-4 hover:bg-teal-50/70 transition-colors group mb-3"
+          >
+            <span className="text-2xl flex-shrink-0">🏷️</span>
+            <div className="flex-1 min-w-0">
+              <p className="text-sm text-neutral-700 leading-relaxed">{w.context}</p>
+              <span className="text-xs font-semibold text-brand mt-1 inline-block group-hover:underline">
+                {w.product!.name} — from €{w.product!.pricing[w.product!.pricing.length - 1].perDay}/day →
+              </span>
+            </div>
+          </Link>
+        ))}
+      </div>
+    );
+  };
+
   // Resolve related blog posts
   const resolvedBlogPosts = dest.relatedBlogPosts
     .map((slug) => getBlogPostBySlug(slug))
@@ -269,6 +294,42 @@ export default async function DiscoverPage({ params }: Props) {
           </div>
         </section>
       )}
+      {renderWidgets("Accessibility")}
+
+      {/* What to Bring */}
+      {dest.whatToBring && (
+        <section className="section bg-neutral-50">
+          <div className="container-site max-w-3xl">
+            <h2 className="text-2xl font-bold mb-4">What to Bring</h2>
+            <div className="grid sm:grid-cols-3 gap-6">
+              <div>
+                <h3 className="font-semibold text-sm text-green-700 mb-2">✅ Bring</h3>
+                <ul className="space-y-1">
+                  {dest.whatToBring.bring.map((item, i) => (
+                    <li key={i} className="text-sm text-neutral-600">{item}</li>
+                  ))}
+                </ul>
+              </div>
+              <div>
+                <h3 className="font-semibold text-sm text-red-700 mb-2">❌ Don&apos;t Bring</h3>
+                <ul className="space-y-1">
+                  {dest.whatToBring.dontBring.map((item, i) => (
+                    <li key={i} className="text-sm text-neutral-600">{item}</li>
+                  ))}
+                </ul>
+              </div>
+              <div>
+                <h3 className="font-semibold text-sm text-brand mb-2">🏷️ Rent Instead</h3>
+                <ul className="space-y-1">
+                  {dest.whatToBring.rentInstead.map((item, i) => (
+                    <li key={i} className="text-sm text-neutral-600">{item}</li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Food & Drink */}
       {dest.foodAndDrink && (
@@ -339,8 +400,8 @@ export default async function DiscoverPage({ params }: Props) {
           </div>
         </section>
       )}
+      {renderWidgets("Tips by Traveller Type")}
 
-      {/* Practical Tips */}
       {dest.practicalTips && dest.practicalTips.length > 0 && (
         <section className="section bg-white">
           <div className="container-site max-w-3xl">
@@ -357,33 +418,7 @@ export default async function DiscoverPage({ params }: Props) {
         </section>
       )}
 
-      {/* Product Widgets (rendered inline) */}
-      {resolvedWidgets.length > 0 && (
-        <section className="section bg-teal-50/30">
-          <div className="container-site">
-            <h2 className="text-2xl font-bold mb-6">Useful Rentals for {dest.name}</h2>
-            <div className="grid sm:grid-cols-2 gap-6">
-              {resolvedWidgets.map((w) => (
-                <Link
-                  key={w.productSlug}
-                  href={`/product/${w.productSlug}`}
-                  className="card p-5 hover:shadow-md transition-shadow group flex gap-4 items-start"
-                >
-                  <div className="flex-1">
-                    <h3 className="font-bold group-hover:text-brand transition-colors mb-1">
-                      {w.product!.name}
-                    </h3>
-                    <p className="text-sm text-neutral-600 leading-relaxed">{w.context}</p>
-                    <span className="text-sm font-semibold text-brand mt-2 inline-block">
-                      From €{w.product!.pricing[w.product!.pricing.length - 1].perDay}/day →
-                    </span>
-                  </div>
-                </Link>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
+      {renderWidgets("Practical Tips")}
 
       {/* FAQs */}
       {dest.faqs.length > 0 && (

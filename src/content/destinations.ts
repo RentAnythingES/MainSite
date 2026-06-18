@@ -347,12 +347,12 @@ export const destinations: Destination[] = [
       {
         productSlug: "ergonomic-chair",
         context: "Working from your Ruzafa apartment? Most rentals come with a kitchen chair that's painful after 2 hours. An ergonomic office chair transforms your productivity — and your back.",
-        afterSection: "Neighbourhoods for Remote Workers",
+        afterSection: "Tips by Traveller Type",
       },
       {
         productSlug: "compact-stroller",
         context: "Ruzafa's flat, wide streets are ideal for strollers. Our compact model folds one-handed — perfect for hopping between cafes and the market.",
-        afterSection: "For Families",
+        afterSection: "Accessibility",
       },
     ],
     relatedDestinations: [],
@@ -579,7 +579,7 @@ export const destinations: Destination[] = [
       {
         productSlug: "compact-stroller",
         context: "Fallas crowds are dense and unpredictable. A compact stroller that folds one-handed (7.5 kg) is essential — you'll be folding it constantly to navigate packed streets and plazas.",
-        afterSection: "For Families",
+        afterSection: "Accessibility",
       },
     ],
     relatedDestinations: ["ruzafa", "malvarrosa-beach"],
