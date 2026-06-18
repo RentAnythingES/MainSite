@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { products } from "@/data/products";
 import { getPublishedPosts } from "@/content/blog";
+import { getPublishedDestinations } from "@/content/destinations";
 
 const BASE_URL = "https://rentanything.es";
 
@@ -43,5 +44,22 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.6,
   }));
 
-  return [...staticPages, ...categoryPages, ...productPages, ...blogPages];
+  // Discover hub pages
+  const discoverHubs: MetadataRoute.Sitemap = [
+    { url: `${BASE_URL}/discover`, lastModified: now, changeFrequency: "weekly" as const, priority: 0.8 },
+    { url: `${BASE_URL}/discover/neighbourhoods`, lastModified: now, changeFrequency: "weekly" as const, priority: 0.7 },
+    { url: `${BASE_URL}/discover/day-trips`, lastModified: now, changeFrequency: "weekly" as const, priority: 0.7 },
+    { url: `${BASE_URL}/discover/attractions`, lastModified: now, changeFrequency: "weekly" as const, priority: 0.7 },
+    { url: `${BASE_URL}/discover/events`, lastModified: now, changeFrequency: "weekly" as const, priority: 0.7 },
+  ];
+
+  // Discover destination pages (only published)
+  const discoverPages: MetadataRoute.Sitemap = getPublishedDestinations().map((dest) => ({
+    url: `${BASE_URL}/discover/${dest.slug}`,
+    lastModified: dest.lastUpdated,
+    changeFrequency: "monthly" as const,
+    priority: 0.7,
+  }));
+
+  return [...staticPages, ...categoryPages, ...productPages, ...blogPages, ...discoverHubs, ...discoverPages];
 }

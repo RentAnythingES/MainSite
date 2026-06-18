@@ -59,9 +59,9 @@ export function getAllBlogSlugsForBuild(): string[] {
   return blogPosts.map((p) => p.slug);
 }
 
-// Get a single post by slug
+// Get a specific published blog post by slug
 export function getBlogPostBySlug(slug: string): BlogPost | undefined {
-  return blogPosts.find((p) => p.slug === slug);
+  return blogPosts.find((p) => p.slug === slug && isPublished(p));
 }
 
 // ===== BLOG POSTS =====
