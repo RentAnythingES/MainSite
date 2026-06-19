@@ -67,7 +67,7 @@ export default function DiscoverHub() {
       </nav>
 
       {/* Hero — matches Valencia page style */}
-      <section className="relative overflow-hidden">
+      <section className="relative overflow-hidden min-h-[420px] md:min-h-[480px] flex items-center">
         <div className="absolute inset-0">
           <Image
             src="/hero/valencia-1.png"
@@ -82,9 +82,11 @@ export default function DiscoverHub() {
         </div>
         <div className="container-site relative z-10 py-16 md:py-24">
           <div className="max-w-3xl">
-            <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/15 backdrop-blur-md text-white/90 text-sm font-medium mb-6 border border-white/20">
-              🗺️ Local Travel Guides
-            </span>
+            <div className="mb-6">
+              <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/15 backdrop-blur-md text-white/90 text-sm font-medium border border-white/20">
+                🗺️ Local Travel Guides
+              </span>
+            </div>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white tracking-tight mb-6" style={{ textShadow: '0 2px 8px rgba(0,0,0,0.4)' }}>
               Discover{" "}
               <span className="text-amber-400">Valencia</span>
