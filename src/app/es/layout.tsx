@@ -1,23 +1,4 @@
 import type { Metadata } from "next";
-import { Inter, Outfit } from "next/font/google";
-import "../globals.css";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-import WhatsAppButton from "@/components/WhatsAppButton";
-import GoogleAnalytics from "@/components/GoogleAnalytics";
-
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"],
-  display: "swap",
-});
-
-const outfit = Outfit({
-  variable: "--font-outfit",
-  subsets: ["latin"],
-  display: "swap",
-  weight: ["400", "500", "600", "700", "800"],
-});
 
 export const metadata: Metadata = {
   title: {
@@ -34,7 +15,6 @@ export const metadata: Metadata = {
     "alquiler scooter movilidad Valencia",
     "alquiler equipo teletrabajo Valencia",
   ],
-  metadataBase: new URL("https://rentanything.es"),
   openGraph: {
     type: "website",
     locale: "es_ES",
@@ -53,23 +33,15 @@ export const metadata: Metadata = {
   },
 };
 
+/**
+ * Spanish layout — metadata-only wrapper.
+ * Header, Footer, fonts, and <html>/<body> are provided by the root layout (app/layout.tsx).
+ * The Header/Footer auto-detect the /es/ prefix and switch labels accordingly.
+ */
 export default function SpanishLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return (
-    <html
-      lang="es"
-      className={`${inter.variable} ${outfit.variable} h-full antialiased`}
-    >
-      <body className="min-h-full flex flex-col bg-background text-foreground">
-        <GoogleAnalytics />
-        <Header />
-        <main className="flex-1">{children}</main>
-        <Footer />
-        <WhatsAppButton />
-      </body>
-    </html>
-  );
+  return <>{children}</>;
 }
