@@ -61,7 +61,7 @@ Every task follows this cycle:
 RentAnything serves two primary languages: **English** (international tourists, digital nomads) and **Spanish** (domestic + LATAM visitors).
 
 > [!IMPORTANT]
-> i18n infrastructure is not yet implemented. When it is, per-locale translation reference docs will live at `docs/seo/{LOCALE}_TRANSLATION_REFERENCE.md`.
+> i18n is implemented via `src/i18n/` with prefix routing (`/es/`). Dictionary files live at `src/i18n/dictionaries/{locale}.ts`. Header and Footer auto-detect locale via `usePathname()`. When adding a new locale, create the dictionary file and duplicate the page templates under `src/app/{locale}/`.
 
 ---
 
@@ -74,15 +74,26 @@ Product data lives in `src/data/products.ts`. Templates render from this data.
 |---------------|----------|-------|
 | `products.ts` | `product/[slug]/page.tsx` | 16 products |
 | `products.ts` (categories) | `rental/[category]/page.tsx` | 5 categories |
-| `blog.ts` (planned) | `blog/[slug]/page.tsx` | 4 posts (planned) |
+| `blog.ts` | `blog/[slug]/page.tsx` | 4 posts live |
+| `destinations.ts` | `discover/[slug]/page.tsx` | 5 destinations |
+| ES dictionary | `es/product/[slug]/page.tsx` | 16 ES products |
+| ES dictionary | `es/rental/[category]/page.tsx` | 5 ES categories |
 
 ### Adding New Products
+
+**Via Admin Dashboard (preferred):**
+1. Go to `/admin/products` → "+ Add Product"
+2. Fill in name, brand, category, description, features, specs, pricing tiers
+3. The slug is auto-generated from the name
+4. Add a product image to `public/products/` and set the image URL
+5. Product is immediately live on the site
+
+**Via Code (for bulk/seed data):**
 1. Add the data entry to `src/data/products.ts`
 2. The template auto-renders it (no new page file needed)
 3. The sitemap auto-includes it
-4. Add a product image to `public/products/`
-5. Update `supabase/seed_2_products.sql` with the database row
-6. Update `docs/seo/SEO_STRATEGY.md` with new counts
+4. Add the database row to `supabase/seed_2_products.sql`
+5. Update `docs/seo/SEO_STRATEGY.md` with new counts
 
 ### Adding Blog Posts
 1. Add the entry to `src/content/blog.ts` (data-driven, auto-publishes by date)
@@ -117,6 +128,8 @@ After any SEO-related code change, verify:
 
 > [!CAUTION]
 > **Git identity**: Always push as `Johannes Schiefer <johannes.schiefer1@gmail.com>`. Verify with `git config user.email` before pushing. Vercel will reject pushes from other identities.
+>
+> **GitHub account**: Run `gh auth status` before pushing. If EscaleraAI is active, switch with `gh auth switch --user Johannes-Schiefer`.
 
 1. **Build before pushing** — Always run `npx next build` and verify it passes before any git push.
 2. **Batch commits** — Combine related fixes into a SINGLE commit. Don't push 5 incremental commits that trigger 5 Vercel builds.

@@ -1,5 +1,5 @@
 # RentAnything.es — SEO Strategy & Audit
-> **Last updated**: 2026-06-18 · **Build**: ✅ Clean · **Total pages**: ~55+
+> **Last updated**: 2026-06-19 · **Build**: ✅ Clean · **Total pages**: ~80+
 
 This is the **living SEO strategy document** for rentanything.es. Updated after every SEO-related change. For prioritized fixes, see [SEO_ROADMAP.md](./SEO_ROADMAP.md).
 
@@ -57,8 +57,26 @@ rentanything.es/
 
 ### API Routes (not indexed)
 ```
-/api/bookings    POST — Create booking + block dates
-/api/contact     POST — Send contact email via Resend
+Public:
+  /api/bookings       POST — Create booking + block dates
+  /api/contact        POST — Send contact email via Resend
+  /api/availability   GET  — Check product availability for date range
+
+Admin (Supabase Auth protected):
+  /api/admin/login        POST     — Authenticate, set httpOnly cookies
+  /api/admin/logout       POST     — Clear auth cookies
+  /api/admin/products     GET/POST — List / create products
+  /api/admin/products/[id] PUT/DEL — Update / deactivate product
+  /api/admin/bookings     GET      — List bookings (optional status filter)
+  /api/admin/bookings/[id] PUT     — Update booking status
+  /api/admin/categories   GET      — List categories (for dropdowns)
+
+Admin Dashboard:
+  /admin                  Dashboard overview (stats, quick actions)
+  /admin/login            Supabase Auth email/password login
+  /admin/products         Product table (edit, toggle, pricing tiers)
+  /admin/products/new     Add new product form
+  /admin/bookings         Booking list with lifecycle management
 ```
 
 ---

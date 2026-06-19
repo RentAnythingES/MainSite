@@ -1,5 +1,5 @@
 # RentAnything.es — SEO Roadmap
-> **Last updated**: 2026-06-18 · Prioritized by estimated traffic impact × effort
+> **Last updated**: 2026-06-19 · Prioritized by estimated traffic impact × effort
 
 ---
 
@@ -25,6 +25,13 @@
 - [x] Discover section: infrastructure + 5 destination guides (Ruzafa, Malvarrosa, Fallas, Albufera, City of Arts & Sciences)
 - [x] Discover hub pages (neighbourhoods, day-trips, attractions, events)
 - [x] Inline contextual product widgets in discover pages
+- [x] Spanish (ES) localization — homepage, products, categories, Valencia (Phase 1)
+- [x] Locale-aware Header/Footer with language switcher
+- [x] Admin dashboard with Supabase Auth (`/admin`)
+- [x] Product CRUD (list, edit, add new, toggle active, pricing tiers)
+- [x] Booking management (list, filter, lifecycle transitions)
+- [x] Availability API + 3-step BookingWidget (dates → form → success)
+- [x] `hreflang` alternates + Spanish sitemap routes
 
 ---
 
@@ -74,12 +81,12 @@ Spain receives 97M international visitors/year. Language priority based on verif
 
 | Phase | Language | Tourist Volume | Effort | Status |
 |-------|----------|---------------|--------|--------|
-| 1 | **Spanish** | Domestic + LATAM | 4-6h | ✅ Done (Phase 1: homepage, products, categories, Valencia) |
+| 1 | **Spanish** | Domestic + LATAM | 4-6h | ✅ Done (homepage, products, categories, Valencia, Header/Footer) |
 | 2 | **German** | ~11M visitors/yr (#3 market) | 4-6h | 🔲 Future |
 | 3 | **French** | ~12M visitors/yr (#2 market) | 4-6h | 🔲 Future |
 | 4 | **Dutch** | 1M+ in 5 months 2026 | 4-6h | 🔲 Future |
 
-**Architecture**: next-intl with locale routing (`/es/product/[slug]`)
+**Architecture**: Custom dictionary system (`src/i18n/`) with prefix routing (`/es/product/[slug]`)
 **Priority pages per locale**: Homepage, category pages, top 5 products, contact
 
 ---
@@ -132,9 +139,9 @@ Maintain publishing cadence. Seasonal content planned around:
 ---
 
 ### 3.2 Stripe payment integration
-**Impact**: 🟡 Medium · **Effort**: 2-3 hours · **Status**: Open
+**Impact**: 🟡 Medium · **Effort**: 2-3 hours · **Status**: Deferred (pending entity decision)
 
-Payment flow for deposit holds. Currently booking is WhatsApp/contact only.
+Payment flow for deposit holds. BookingWidget now submits booking requests directly to Supabase; Stripe will be wired when the business entity is finalized.
 
 ---
 
@@ -177,25 +184,27 @@ Backlink opportunities from travel bloggers and influencers.
 ## Priority Execution Order (Next Session)
 
 1. **1.3** — Google Search Console setup (user action)
-2. **2.1** — Spanish translations (i18n)
-3. **3.1** — Blog cadence — next 2 posts
-4. **3.2** — Stripe payment integration
-5. **Discover** — Add more destination guides (10+ target)
-6. **Visual** — Replace AI images with real photography
+2. **3.1** — Blog cadence — next 2 posts (summer content)
+3. **Discover** — Add more destination guides (5 live, target 15+)
+4. **Visual** — Replace AI images with real photography
+5. **2.1** — German localization (Phase 2)
+6. **Supabase** — Configure `.env.local` and test admin dashboard
 
 ---
 
 ## Metrics to Track
 
-| Metric | Pre-session (June 17) | Current (June 18) | Target (90 days) |
+| Metric | Pre-session (June 17) | Current (June 19) | Target (90 days) |
 |--------|----------------------|-------------------|------------------|
-| Total pages | ~37 | ~77+ (22 ES pages added) | ~100+ (with more discover + DE) |
+| Total pages | ~37 | ~80+ (22 ES + admin pages) | ~100+ (with more discover + DE) |
 | Blog posts | 0 | 4 | 8+ |
 | Discover guides | 0 | 5 | 15+ |
 | Photo assets | 0 | 22+ (hero, category, hub, destination) | 50+ |
 | Languages | EN only | EN + ES (Phase 1) | EN + ES + DE |
-| Products | 16 | 16 (× 2 locales) | 16 (expand later) |
+| Products | 16 | 16 (× 2 locales) | 16+ (expandable via admin) |
 | Categories | 5 | 5 | 5 |
 | Product FAQs | 0 | ~40 | ~40 |
+| Admin dashboard | None | Full CRUD (products, bookings, pricing) | — |
+| Booking flow | WhatsApp only | 3-step form + WhatsApp fallback | + Stripe payments |
 | Google Search Console | Not verified | Not verified | Verified, sitemap submitted |
 | Internal links per page | ~3 | 6+ | 8+ |
