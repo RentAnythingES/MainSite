@@ -193,7 +193,7 @@ export default async function ProductPageES({ params }: Props) {
             {/* Right sidebar: Booking */}
             <div className="lg:col-span-1">
               <div className="sticky top-24">
-                <BookingWidget product={product} />
+                <BookingWidget product={product} locale="es" />
                 <p className="text-xs text-neutral-400 text-center mt-3">{t.product.deliveryNote}</p>
               </div>
             </div>
