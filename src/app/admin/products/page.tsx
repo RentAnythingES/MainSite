@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
+import Link from "next/link";
 
 interface PricingTier {
   id: string;
@@ -137,6 +138,10 @@ export default function AdminProductsPage() {
             {products.length} products · {products.filter((p) => p.is_active).length} active
           </p>
         </div>
+        <Link href="/admin/products/new"
+          className="px-4 py-2 rounded-lg bg-teal-600 hover:bg-teal-500 text-white text-sm font-semibold transition-colors">
+          + Add Product
+        </Link>
       </div>
 
       {error && (
@@ -274,11 +279,18 @@ export default function AdminProductsPage() {
 
               {/* Pricing Tiers */}
               <div>
-                <label className="block text-xs font-medium text-neutral-400 mb-2">Pricing Tiers</label>
+                <div className="flex items-center justify-between mb-2">
+                  <label className="text-xs font-medium text-neutral-400">Pricing Tiers</label>
+                  <button type="button"
+                    onClick={() => setEditForm({ ...editForm, pricing_tiers: [...(editForm.pricing_tiers || []), { id: '', min_days: 30, per_day_cents: 500 }] })}
+                    className="text-xs px-2 py-0.5 rounded bg-neutral-800 text-teal-400 hover:bg-neutral-700 transition-colors">
+                    + Add Tier
+                  </button>
+                </div>
                 <div className="space-y-2">
                   {(editForm.pricing_tiers || []).map((tier, i) => (
-                    <div key={i} className="grid grid-cols-2 gap-3">
-                      <div className="relative">
+                    <div key={i} className="flex gap-2 items-center">
+                      <div className="relative flex-1">
                         <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs text-neutral-500">≥</span>
                         <input
                           type="number"
@@ -289,7 +301,7 @@ export default function AdminProductsPage() {
                         />
                         <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-neutral-500">days</span>
                       </div>
-                      <div className="relative">
+                      <div className="relative flex-1">
                         <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs text-neutral-500">€</span>
                         <input
                           type="number"
@@ -301,6 +313,11 @@ export default function AdminProductsPage() {
                         />
                         <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-neutral-500">/day</span>
                       </div>
+                      {(editForm.pricing_tiers || []).length > 1 && (
+                        <button type="button"
+                          onClick={() => setEditForm({ ...editForm, pricing_tiers: (editForm.pricing_tiers || []).filter((_, idx) => idx !== i) })}
+                          className="px-2 text-neutral-600 hover:text-red-400 transition-colors">✕</button>
+                      )}
                     </div>
                   ))}
                 </div>
