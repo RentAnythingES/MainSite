@@ -471,4 +471,203 @@ export const blogPosts: BlogPost[] = [
       }
     ]
   },
+
+  // ===== POST 5: BEST DAY TRIPS FROM VALENCIA =====
+  {
+    slug: "best-day-trips-from-valencia",
+    title: "Best Day Trips from Valencia: 4 Unforgettable Escapes",
+    h1: "The best day trips from Valencia — castles, wine, lakes, and history",
+    description: "Discover the 4 best day trips from Valencia by train or car. From Sagunto's Roman castle to Requena's wine caves, Xàtiva's epic fortress, and Albufera's paella by the lake.",
+    category: "guide",
+    keywords: ["day trips from Valencia", "Valencia day trips", "Sagunto from Valencia", "Xàtiva day trip", "Requena wine", "Albufera Valencia", "things to do near Valencia"],
+    date: "2026-06-20",
+    readTime: "7 min read",
+    excerpt: "Four unforgettable day trips from Valencia — hilltop castles, underground wine caves, Borgia family history, and paella by the lake. All reachable by train for under €6.",
+    tags: ["day trips", "Valencia", "travel", "guide", "Sagunto", "Xàtiva", "Requena", "Albufera"],
+    sections: [
+      {
+        heading: "Why Day-Trip from Valencia?",
+        paragraphs: [
+          "Valencia is a brilliant base for exploring the wider Comunitat Valenciana. Within an hour by train or car, you can visit 2,000-year-old Roman ruins, taste wine in underground medieval caves, walk along one of Spain's most dramatic castle ridges, or eat authentic paella in a lakeside village where it was invented.",
+          "The best part: all four of these trips are easy, affordable, and don't require a rental car (though having one opens up more options). Spain's Cercanías commuter trains connect Valencia Nord station to each destination for under €6 return. You can leave after breakfast and be back for dinner.",
+          "Here are our four favourite escapes from Valencia, ranked by how impressive they are to first-time visitors."
+        ]
+      },
+      {
+        heading: "1. Xàtiva — Spain's Most Dramatic Castle",
+        paragraphs: [
+          "<strong>Distance:</strong> 60 km south · <strong>Train:</strong> Cercanías C-2, 1 hour · <strong>Cost:</strong> ~€5.50 return + €6 castle entry",
+          "If you only do one day trip, make it Xàtiva (pronounced 'SHA-tee-va'). This ancient city — birthplace of two Borgia popes — is crowned by a jaw-dropping castle that stretches along an entire mountain ridge. The views from the walls encompass the Valencian plain from the Sierra mountains to the distant Mediterranean.",
+          "The castle is actually two linked fortifications (Castell Menor and Castell Major) built over 2,000 years by Iberians, Romans, Moors, and Christians. Below it, the old town hides a Renaissance basilica, 25 historic fountains, and Spain's most defiant artwork: a portrait of King Philip V hung deliberately upside down since the 18th century, Xàtiva's eternal protest against his order to burn the city in 1707.",
+          "The climb from town to castle takes about 30 minutes (or take the tourist road train for €3). Reward yourself with arroz al forn and the unique arnadí pumpkin dessert at Casa La Abuela — you won't find either dish in Valencia city. Read our <a href=\"/discover/xativa\">full Xàtiva guide</a> for the complete itinerary."
+        ]
+      },
+      {
+        heading: "2. Sagunto — Roman Theatre & Hilltop Fortress",
+        paragraphs: [
+          "<strong>Distance:</strong> 30 km north · <strong>Train:</strong> Cercanías C-5/C-6, 30 min · <strong>Cost:</strong> ~€3.60 return (castle free)",
+          "Sagunto is the quickest and cheapest day trip — 30 minutes by train, under €4 return, and both the castle and Roman theatre are completely free. It's perfect for a half-day when you want culture without commitment.",
+          "The hilltop castle stretches nearly a kilometre along the ridge, with walls built by every civilisation that's passed through — Iberians, Romans, Moors, and medieval Christians. Below it, the beautifully restored 1st-century Roman theatre still hosts summer performances (the Sagunt a Escena festival in August is outstanding).",
+          "The old town is a charming tangle of narrow streets including one of Spain's best-preserved medieval Jewish quarters (Judería). Have lunch at a café on Plaça Major — the food is excellent and prices are half of what you'd pay in Valencia's tourist areas. See our <a href=\"/discover/sagunto\">complete Sagunto day trip guide</a> for details."
+        ]
+      },
+      {
+        heading: "3. Requena — Wine Caves & Medieval Streets",
+        paragraphs: [
+          "<strong>Distance:</strong> 70 km west · <strong>Train:</strong> Cercanías C-3, 1h 10min · <strong>Cost:</strong> ~€5 return",
+          "Requena is the most surprising day trip — and the one most visitors miss. This fortified medieval town, perched on a plateau surrounded by vineyards, offers underground Arabic caves, a gorgeously preserved old quarter, and wine tastings at a fraction of what you'd pay in Tuscany or Napa.",
+          "The star attraction is the Cuevas de la Villa — an underground network of caves beneath the old town dating from Moorish times. They maintain a constant 15°C year-round (welcome relief in summer). After the caves, wander the medieval La Villa quarter with its narrow streets, Moorish castle ruins, and Gothic churches.",
+          "The surrounding DO Utiel-Requena wine region produces excellent reds and rosados from the indigenous Bobal grape — a variety most visitors have never heard of but that's rapidly gaining international recognition. A bodega tasting costs €10-15 for 4-5 wines. Our <a href=\"/discover/requena\">Requena day trip guide</a> has the full itinerary."
+        ]
+      },
+      {
+        heading: "4. Albufera Natural Park — Paella at Its Birthplace",
+        paragraphs: [
+          "<strong>Distance:</strong> 12 km south · <strong>Bus:</strong> Line 25 from Valencia, 30 min · <strong>Cost:</strong> ~€1.50 bus",
+          "The Albufera is the closest day trip and arguably the most delicious. This freshwater lagoon — Spain's largest — is surrounded by rice paddies where paella was literally invented. The village of El Palmar, accessible by bus or car, has a single main street lined with family-run restaurants serving authentic arroz dishes that make the tourist paella on Valencia's beach look amateur.",
+          "Beyond the food, the Albufera is a protected natural park. Take a traditional wooden boat (albuferenc) across the lake at sunset — the reflections and birdlife are extraordinary. The park is home to over 300 bird species and the surrounding farmland produces the prized bomba and senia rice varieties used in true Valencian paella.",
+          "This is the easiest trip on the list — no train required, just the 25 bus from Valencia's centre. You can be eating paella by the lake within an hour of leaving your apartment. Read our <a href=\"/discover/albufera-natural-park\">full Albufera guide</a> for boat tour bookings and restaurant recommendations."
+        ]
+      },
+      {
+        heading: "Planning Tips for Day Trips from Valencia",
+        paragraphs: [
+          "<strong>Start early.</strong> All four destinations are better in the morning, especially in summer when afternoon heat makes castle climbs and outdoor walks miserable. Aim to be on a train by 9:30-10am.",
+          "<strong>Bring water.</strong> Sagunto Castle, Xàtiva Castle, and Requena's old town have limited (or zero) facilities for buying drinks. Carry at least 1 litre per person.",
+          "<strong>Check Monday closings.</strong> Museums and some restaurants in Sagunto, Xàtiva, and Requena close on Mondays. Tuesday-Saturday is the safest bet.",
+          "<strong>Train vs car.</strong> All four destinations are reachable by train/bus, but Requena's bodegas and the Albufera's more remote spots are easier with a car. For Sagunto and Xàtiva, the train is ideal — scenic, cheap, and drops you close to the old town.",
+          "Travelling with kids or mobility needs? A <a href=\"/rental/baby-gear\">compact stroller</a> works well in the flat parts of each town, but leave it at the base if you're climbing to Sagunto or Xàtiva castles. For mobility equipment options, check our <a href=\"/rental/mobility\">mobility rental range</a>."
+        ]
+      }
+    ],
+    faqs: [
+      { question: "What is the best day trip from Valencia?", answer: "Xàtiva is the most impressive overall — its castle stretching along a mountain ridge is one of Spain's most dramatic. For a quicker, budget-friendly trip, Sagunto (30 min train, free castle and theatre) is hard to beat." },
+      { question: "Can you do day trips from Valencia without a car?", answer: "Yes. Sagunto (30 min), Xàtiva (1 hour), and Requena (1h 10 min) are all reachable by Cercanías commuter trains from Valencia Nord station. The Albufera is accessible by bus line 25. Return fares are €3-6." },
+      { question: "How far is Sagunto from Valencia?", answer: "30 km north, about 30 minutes by Cercanías train (C-5 or C-6) from Valencia Nord station. The return fare is approximately €3.60. The castle and Roman theatre are both free to enter." },
+      { question: "Is Xàtiva worth visiting from Valencia?", answer: "Absolutely. The twin castle stretching along a mountain ridge has 360° views, the old town is beautiful, and the Borgia family history adds fascinating context. Take the Cercanías C-2 train (1 hour, ~€5.50 return)." },
+    ],
+    crossLinks: [
+      {
+        title: "Discover Sagunto",
+        href: "/discover/sagunto",
+        description: "Full guide to the castle, Roman theatre, and old town"
+      },
+      {
+        title: "Discover Xàtiva",
+        href: "/discover/xativa",
+        description: "Complete Xàtiva day trip itinerary and Borgia history"
+      },
+      {
+        title: "Discover Requena",
+        href: "/discover/requena",
+        description: "Wine caves, bodega tours, and medieval streets"
+      },
+      {
+        title: "Discover Albufera",
+        href: "/discover/albufera-natural-park",
+        description: "Sunset boat rides and authentic paella"
+      },
+      {
+        title: "Baby gear rentals",
+        href: "/rental/baby-gear",
+        description: "Compact strollers and car seats for day trips"
+      }
+    ]
+  },
+
+  // ===== POST 6: BEST BEACHES IN VALENCIA FOR FAMILIES =====
+  {
+    slug: "best-beaches-valencia-families",
+    title: "Best Beaches in Valencia for Families (2026 Guide)",
+    h1: "The best beaches in Valencia for families with kids",
+    description: "Find the perfect family beach in Valencia. Compare Malvarrosa, Patacona, El Saler, and Cabanyal — with tips on facilities, accessibility, shallow water, and what to bring.",
+    category: "guide",
+    keywords: ["best beaches Valencia families", "Valencia family beach", "Malvarrosa beach kids", "Patacona beach", "Valencia beach guide", "beaches near Valencia"],
+    date: "2026-06-21",
+    readTime: "6 min read",
+    excerpt: "Which Valencia beach is best for your family? We compare Malvarrosa, Patacona, El Saler, and Cabanyal — from toddler safety to paella quality.",
+    tags: ["beaches", "family", "Valencia", "summer", "guide"],
+    sections: [
+      {
+        heading: "How to Choose a Family Beach in Valencia",
+        paragraphs: [
+          "Valencia has over 20km of coastline and a dozen distinct beaches — but not all are equal when you've got kids in tow. The difference between a great family beach day and a stressful one often comes down to practical details: how shallow is the water? Are there lifeguards? Can I park a stroller? Is there shade?",
+          "We've tested every major beach in the Valencia area with families. Here's the honest breakdown — because the internet is full of generic beach lists, and what you really need to know is where the water stays knee-deep for 50 metres and which chiringuito has high chairs."
+        ]
+      },
+      {
+        heading: "Patacona — The Best All-Round Family Beach",
+        paragraphs: [
+          "<strong>Distance from centre:</strong> 20 min by tram (L4/L6) · <strong>Our rating:</strong> ⭐⭐⭐⭐⭐",
+          "Patacona is the beach Valencians recommend to families — and there's a reason. It's wider and less crowded than Malvarrosa, the water stays shallow for a long way out (perfect for toddlers), and the seafront paella restaurants serve to locals, not tourist coaches.",
+          "The northern end (towards Alboraya) is the quietest section. Beach volleyball nets dominate the southern end, giving older kids something to watch or join. The promenade is flat and wide — excellent for strollers. And Alboraya, the town where horchata was literally invented, is a 10-minute walk inland.",
+          "Read our <a href=\"/discover/patacona-beach\">full Patacona Beach guide</a> for restaurant recommendations and the best arrival times."
+        ]
+      },
+      {
+        heading: "Malvarrosa — The Classic City Beach",
+        paragraphs: [
+          "<strong>Distance from centre:</strong> 15 min by tram · <strong>Our rating:</strong> ⭐⭐⭐⭐",
+          "Malvarrosa is Valencia's most famous beach and it earns its reputation. Wide golden sand, gentle waves, a lively promenade with restaurants and playgrounds, and lifeguards throughout summer. It's the easiest beach to reach and has the most facilities.",
+          "The trade-off is crowds. In July and August, Malvarrosa fills up fast — arrive before 10am for a good spot. Sunbed rental runs €9-10 per day. The promenade restaurants are more tourist-oriented than Patacona's, but there are gems if you know where to look.",
+          "For families, the best section is the northern end near the Cabanyal border, where it's slightly less packed. The beach playground near the port end is a useful fallback when kids tire of sand."
+        ]
+      },
+      {
+        heading: "El Saler — The Wild Beach for Adventures",
+        paragraphs: [
+          "<strong>Distance from centre:</strong> 20 min by car · <strong>Our rating:</strong> ⭐⭐⭐⭐ (older kids), ⭐⭐⭐ (toddlers)",
+          "El Saler is a completely different experience — wild dunes, pine forests, and beautiful isolation. Part of the Albufera Natural Park, this beach has minimal infrastructure and a nature-reserve atmosphere. It feels like a different world from the city beaches.",
+          "The sand is clean, the water is clear, and you might have stretches entirely to yourself outside peak summer. The catch: no lifeguards in many sections, no sunbed rental, no chiringuitos. You need a car, your own shade, and self-sufficiency. Better for families with older kids who don't need constant water supervision.",
+          "Combine it with a paella lunch at El Palmar (15 min drive) for the perfect Albufera day."
+        ]
+      },
+      {
+        heading: "Cabanyal / Las Arenas — Beach with Culture",
+        paragraphs: [
+          "<strong>Distance from centre:</strong> 10 min by tram · <strong>Our rating:</strong> ⭐⭐⭐⭐",
+          "Las Arenas and the Cabanyal stretch are Valencia's most central beaches — and the most 'resort-like'. The Marina beach club area has deck chairs, cocktail service, and a more curated atmosphere. The Cabanyal neighbourhood behind it is one of Valencia's most fascinating — Art Nouveau tiled facades, local markets, and a rich maritime history.",
+          "For families, Las Arenas is good but can feel corporate. The sand is well-maintained, lifeguards are always present, and the iconic Restaurante La Pepica serves excellent paella with beach views. But it's the most crowded option, especially near the port.",
+          "The Cabanyal end is better value and more authentic. See our <a href=\"/discover/cabanyal\">Cabanyal neighbourhood guide</a> for the full experience."
+        ]
+      },
+      {
+        heading: "Beach Day Essentials: What to Bring (and Rent)",
+        paragraphs: [
+          "A great beach day with kids requires surprisingly specific gear. Here's what we've learned after dozens of family beach days in Valencia:",
+          "<strong>Must-bring:</strong> High-factor sun cream (reapply every 2 hours), water bottles (freezable ones are genius), snacks, change of clothes for the journey home, and a wet bag for sandy swimwear.",
+          "<strong>Nice to have:</strong> A UV beach tent or pop-up shade (the Valencia sun is no joke, especially June-September), sand toys, and a waterproof phone pouch.",
+          "<strong>Worth renting:</strong> If you're flying in, lugging beach umbrellas, chairs, and a week's worth of gear is impractical. A <a href=\"/rental/travel-outdoors\">beach equipment set</a> makes life easier — and you don't have to find space in your suitcase. Similarly, a <a href=\"/product/compact-stroller\">lightweight stroller</a> handles the promenade perfectly without the weight of your travel system."
+        ]
+      }
+    ],
+    faqs: [
+      { question: "Which is the best family beach in Valencia?", answer: "Patacona. It's wider and less crowded than Malvarrosa, the water stays shallow for a long way out (safe for toddlers), and the seafront restaurants serve excellent paella to locals. The tram gets you there in 20 minutes." },
+      { question: "Is Malvarrosa Beach good for kids?", answer: "Yes — it's wide, sandy, has gentle waves, lifeguards all summer, and a promenade with playgrounds and restaurants. The main downside is crowds in July-August. Arrive before 10am for the best spots." },
+      { question: "Are Valencia beaches safe for children?", answer: "Very safe. The main city beaches (Malvarrosa, Patacona, Las Arenas) have lifeguards June-September, shallow water that extends far out, and a flag warning system. Glass bottles are banned on all Valencia beaches." },
+      { question: "Can you rent beach equipment in Valencia?", answer: "Sunbeds and umbrellas are available for rent directly on Malvarrosa and Las Arenas (€9-10/day each). For a full beach set including shade tent and toys — especially useful for families — check our travel and outdoors rental range." },
+    ],
+    crossLinks: [
+      {
+        title: "Discover Patacona Beach",
+        href: "/discover/patacona-beach",
+        description: "Complete guide to Valencia's best family beach"
+      },
+      {
+        title: "Discover Malvarrosa Beach",
+        href: "/discover/malvarrosa-beach",
+        description: "Guide to Valencia's classic city beach"
+      },
+      {
+        title: "Beach & outdoor gear",
+        href: "/rental/travel-outdoors",
+        description: "Beach sets, shade tents, and outdoor equipment"
+      },
+      {
+        title: "Compact strollers",
+        href: "/product/compact-stroller",
+        description: "Lightweight strollers for beach promenades"
+      }
+    ]
+  },
 ];
