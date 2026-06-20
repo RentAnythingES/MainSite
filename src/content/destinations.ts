@@ -821,4 +821,323 @@ export const destinations: Destination[] = [
       { question: "How long do you need at the City of Arts and Sciences?", answer: "3-5 hours for a good visit. The Oceanogràfic alone takes 2-3 hours. If you add the Hemisfèric or Science Museum, plan a full day." },
     ],
   },
+
+  // ===== EL CARMEN =====
+  {
+    slug: "el-carmen",
+    name: "El Carmen",
+    type: "neighbourhood",
+    tagline: "Medieval walls, street art, and the beating heart of Valencia's old town",
+    heroImage: "/discover/el-carmen-hero.jpg",
+    heroImageAlt: "Narrow cobblestone streets of El Carmen with colourful street art and historic buildings in Valencia",
+    title: "El Carmen, Valencia — Guide to the Historic Old Town",
+    description: "Explore El Carmen, Valencia's atmospheric old quarter. Medieval towers, world-class street art, tapas bars, and family-friendly plazas. Everything you need to know for your visit.",
+    keywords: ["El Carmen Valencia", "Valencia old town", "Barrio del Carmen", "Valencia historic centre", "street art Valencia"],
+    date: "2026-06-20",
+    lastUpdated: "2026-06-20",
+    audiences: ["families", "couples", "digital-nomads", "elderly"],
+    region: "Valencia Centre",
+    hubs: ["neighbourhoods"],
+    overview: {
+      paragraphs: [
+        "El Carmen is Valencia's oldest neighbourhood — a labyrinth of narrow medieval streets tucked between the Torres de Serranos and Torres de Quart, two of the city's iconic 14th-century gate towers. This is where Valencia's 2,000-year history comes alive, layered with Roman ruins, Arabic walls, Gothic churches, and an explosion of modern street art.",
+        "By day, El Carmen is a family-friendly stroll through history: the Central Market (one of Europe's largest fresh food markets), the Silk Exchange (UNESCO World Heritage), and the Cathedral where some believe the Holy Grail is kept. By evening, the neighbourhood transforms into Valencia's most vibrant bar and tapas district, with terraces spilling onto every plaza.",
+        "For visitors, El Carmen is the quintessential Valencia experience. The cobblestoned streets are pedestrian-friendly (though uneven surfaces can challenge strollers and wheelchairs), the food is outstanding, and you can walk to most major attractions. It's busy and noisy — that's the charm.",
+      ],
+      quickFacts: [
+        { label: "Getting there", value: "Metro L3/L5 Àngel Guimerà or walk from Plaça de l'Ajuntament" },
+        { label: "Best for", value: "History, food, nightlife, street art, photography" },
+        { label: "Vibe", value: "Bohemian, historic, lively" },
+        { label: "Walkability", value: "Excellent (all pedestrian)" },
+      ],
+    },
+    highlights: [
+      {
+        name: "Torres de Serranos",
+        description: "Valencia's most impressive medieval gate tower. Climb to the top for panoramic views of the old town and Turia Gardens. Free on Sundays.",
+        icon: "🏰",
+        tip: "Go at sunset for golden light. The view is worth the stairs (no lift).",
+        googleMapsUrl: "https://maps.google.com/?q=Torres+de+Serranos+Valencia",
+      },
+      {
+        name: "Mercado Central",
+        description: "Europe's largest operating fresh food market in a stunning Art Nouveau building. Over 1,200 stalls selling Valencia's finest produce, jamón, seafood, and spices.",
+        icon: "🍊",
+        tip: "Go before 11am to beat the crowds. The freshly squeezed Valencia orange juice is the best in the city.",
+        googleMapsUrl: "https://maps.google.com/?q=Mercado+Central+Valencia",
+      },
+      {
+        name: "Street Art Walking Route",
+        description: "El Carmen has one of Spain's best street art scenes. Start at Plaça del Tossal, wander through Calle de Caballeros, and explore the streets around IVAM (the modern art museum). New murals appear regularly.",
+        icon: "🎨",
+        tip: "The best murals are on Carrer de Dalt, Carrer dels Horts, and around the old Arabic wall ruins.",
+      },
+      {
+        name: "La Lonja de la Seda",
+        description: "The 15th-century Silk Exchange is a UNESCO World Heritage Site and one of the finest Gothic civic buildings in Europe. The spiral columns in the main hall are architectural poetry.",
+        icon: "🏛️",
+        tip: "Free entry on Sundays. The interior takes 20 minutes — well worth combining with a Mercado Central visit next door.",
+        googleMapsUrl: "https://maps.google.com/?q=La+Lonja+de+la+Seda+Valencia",
+      },
+      {
+        name: "Valencia Cathedral & Holy Grail",
+        description: "The cathedral blends Romanesque, Gothic, Baroque, and Neoclassical styles. Climb the Miguelete bell tower (207 steps) for the best 360° view in Valencia. The chapel houses what the Vatican recognises as the Holy Grail.",
+        icon: "⛪",
+        tip: "Buy combined ticket for cathedral + Miguelete tower. Go early — the tower queue gets long after 11am.",
+        googleMapsUrl: "https://maps.google.com/?q=Valencia+Cathedral",
+      },
+    ],
+    gettingThere: {
+      summary: "El Carmen is in the absolute centre. Most visitors walk in from wherever they're staying.",
+      options: [
+        { mode: "walk", description: "From Plaça de l'Ajuntament: 10 minutes north through pedestrian streets", duration: "10 min" },
+        { mode: "metro", description: "Àngel Guimerà (L3/L5) or Colón (L3/L5/L7), then 5-10 minute walk", duration: "5-10 min walk from station", cost: "€1.50" },
+        { mode: "bus", description: "Lines 5, 28, 95 stop on the perimeter. The centre is car-free.", duration: "Varies", cost: "€1.50" },
+      ],
+      parkingNotes: "Driving into El Carmen is nearly impossible — most streets are pedestrianised. Park at Parking Porta de la Mar or Parking Blanquerías on the perimeter (€15-20/day).",
+    },
+    bestTimeToVisit: {
+      summary: "El Carmen is good year-round but busiest in summer evenings.",
+      seasons: [
+        { season: "spring", description: "Perfect — Las Fallas energy lingers, terraces are open, manageable crowds.", rating: 5 },
+        { season: "summer", description: "Hot during the day (35°C+). Come early morning for the market, late evening for tapas. Siesta hours (2-5pm) are quiet.", rating: 3 },
+        { season: "autumn", description: "Ideal temperatures, fewer tourists, all attractions open. The local favourite season.", rating: 5 },
+        { season: "winter", description: "Mild (10-16°C). Christmas markets around the Cathedral. Some outdoor terraces close.", rating: 4 },
+      ],
+    },
+    whatToBring: {
+      bring: ["Comfortable walking shoes (cobblestones!)", "Camera for street art", "Small daypack", "Water bottle in summer"],
+      dontBring: ["Heavy luggage", "High heels", "Car (pedestrianised)"],
+      rentInstead: ["Stroller with good suspension for cobblestones", "Wheelchair (cobblestones are challenging — plan routes)", "Portable Wi-Fi for navigation"],
+    },
+    accessibility: {
+      overallRating: 2,
+      summary: "El Carmen's medieval charm comes with accessibility challenges. Cobblestone streets, narrow alleys, and stepped entrances are common. The main plazas and market are accessible, but side streets can be very difficult for wheelchairs.",
+      wheelchairNotes: "Stick to the main streets: Calle de Caballeros, Plaça de la Verge, and Plaça de la Reina are the smoothest routes. The Mercado Central has step-free access. Torres de Serranos and Miguelete tower are stairs only.",
+      strollerNotes: "A compact stroller with good suspension is essential. Bulky pushchairs struggle on the narrow cobblestone streets. The market and main plazas are manageable.",
+      publicTransportAccess: "Metro stations have lifts. Once in El Carmen, it's all on foot.",
+    },
+    foodAndDrink: {
+      summary: "El Carmen is tapas paradise. From traditional Valencian bars with €2 cañas to trendy wine bars, every price point is represented.",
+      recommendations: [
+        { name: "Mercado Central", type: "Market / Fresh food", priceRange: "€", tip: "Best for breakfast: fresh juice, pastries, and a stand-up coffee.", familyFriendly: true },
+        { name: "Café de las Horas", type: "Cocktail bar / Baroque café", priceRange: "€€", tip: "Famous for its Agua de Valencia cocktail. The ornate interior is worth a visit even for non-drinkers.", familyFriendly: true },
+        { name: "La Pilareta", type: "Traditional tapas bar", priceRange: "€", tip: "Operating since 1917. Famous for mussels (clóchinas) in summer. Cash only, standing room mostly.", familyFriendly: false },
+        { name: "Dulce de Leche", type: "Brunch / Café", priceRange: "€€", tip: "Best brunch in El Carmen. Arrive before 11am on weekends or expect a wait.", familyFriendly: true },
+      ],
+      localSpeciality: "Horchata and fartons — a sweet tiger nut milk drink with elongated pastries. Try it at Horchatería Santa Catalina, the most famous in the city.",
+    },
+    stayingHere: {
+      summary: "Staying in El Carmen puts you at the centre of everything. You can walk to every major sight, eat incredible food on your doorstep, and experience Valencia's nightlife without a taxi. The trade-off: noise and narrow streets.",
+      pros: ["Walk to everything", "Best food and bar scene", "Atmospheric historical setting", "Central location for day trips"],
+      cons: ["Noisy at night (especially Thursday-Saturday)", "Cobblestones challenging for mobility", "Limited parking", "Apartments can be small and old"],
+      gettingElsewhere: ["Walk to Turia Gardens in 5 minutes", "Metro to beach in 15 minutes", "Walk to Ruzafa in 15 minutes"],
+    },
+    visitingHere: {
+      summary: "A half-day minimum to see the main sights. A full day to properly explore the streets, eat well, and soak in the atmosphere.",
+      idealDuration: "4-6 hours",
+      bestTimeOfDay: "Morning for the market and sights, evening for tapas and atmosphere",
+      tips: [
+        "Start at Mercado Central (opens 7:30am), then La Lonja next door, then the Cathedral.",
+        "After lunch, wander the street art around IVAM and the Arabic wall ruins.",
+        "Come back at sunset for Torres de Serranos views, then stay for dinner.",
+      ],
+    },
+    practicalTips: [
+      "Wear flat shoes with grip — cobblestones are uneven and slippery when wet.",
+      "The Central Market closes at 3pm and is closed Sundays. Plan accordingly.",
+      "Free walking tours depart from Plaça de la Verge daily at 10am — tip-based, excellent quality.",
+      "Pickpockets operate around the market and cathedral. Keep valuables in front pockets.",
+      "Most tapas bars have limited seating — standing at the bar is normal and expected.",
+    ],
+    audienceTips: [
+      {
+        audience: "families",
+        tips: [
+          "The puppet museum (Museu de l'Iber) near Plaça del Carme is a hidden gem for kids.",
+          "The Cathedral has a lift to a viewing level (not the tower), useful with little ones.",
+          "Kids love the Mercado Central — let them pick fruits and pastries.",
+        ],
+      },
+      {
+        audience: "mobility-needs",
+        tips: [
+          "Stick to the main east-west street (Calle de Caballeros) for the smoothest route.",
+          "The Mercado Central is accessible. La Lonja has step-free access to the main hall.",
+          "Consider renting a lightweight wheelchair — heavier models struggle on cobblestones.",
+        ],
+      },
+      {
+        audience: "digital-nomads",
+        tips: [
+          "Ubik Café (Calle del Literat Azorín, technically Ruzafa) is the closest top-tier work café.",
+          "Many bars in El Carmen have Wi-Fi but it's unreliable. A portable hotspot is safer.",
+          "The IVAM museum has a quiet café with decent Wi-Fi.",
+        ],
+      },
+    ],
+    productWidgets: [
+      { categorySlug: "mobility", heading: "Navigating cobblestones? We can help", afterSection: "Accessibility" },
+      { categorySlug: "baby-gear", heading: "Exploring El Carmen with little ones?", afterSection: "Practical Tips" },
+    ],
+    relatedDestinations: ["ruzafa", "fallas", "city-of-arts-and-sciences"],
+    relatedBlogPosts: ["valencia-with-kids-complete-guide", "accessible-valencia-complete-guide"],
+    faqs: [
+      { question: "Is El Carmen safe at night?", answer: "Generally yes. The main streets and plazas are busy and well-lit until late. As with any city centre, be aware of your belongings and avoid completely deserted alleys very late at night." },
+      { question: "Can I drive in El Carmen?", answer: "Most of El Carmen is pedestrianised or restricted. Park on the perimeter (Parking Blanquerías or Porta de la Mar) and walk in. It's only a few minutes on foot." },
+      { question: "What's the best time to visit Mercado Central?", answer: "Go between 8-10am for the best atmosphere with fewer tourists. The market closes at 3pm Monday-Saturday and is closed all day Sunday." },
+    ],
+  },
+
+  // ===== CABANYAL =====
+  {
+    slug: "cabanyal",
+    name: "Cabanyal",
+    type: "neighbourhood",
+    tagline: "Valencia's colourful maritime village reborn as the city's coolest beach quarter",
+    heroImage: "/discover/cabanyal-hero.jpg",
+    heroImageAlt: "Colourful tiled facades of traditional fishermen's houses in Cabanyal neighbourhood, Valencia",
+    title: "Cabanyal, Valencia — Guide to the Maritime Beach Quarter",
+    description: "Discover Cabanyal, Valencia's bohemian beach neighbourhood. Colourful tiled facades, craft beer bars, the best paella restaurants in the city, and Las Arenas beach on your doorstep.",
+    keywords: ["Cabanyal Valencia", "Valencia beach neighbourhood", "Cabanyal guide", "Poblats Marítims Valencia", "Las Arenas beach"],
+    date: "2026-06-20",
+    lastUpdated: "2026-06-20",
+    audiences: ["families", "couples", "digital-nomads", "budget"],
+    region: "Maritime Valencia",
+    hubs: ["neighbourhoods"],
+    overview: {
+      paragraphs: [
+        "Cabanyal is Valencia's historic fishermen's quarter — a grid of low-rise streets just behind Las Arenas beach, famous for its spectacular colourful tiled facades. Once threatened by demolition plans, the neighbourhood fought back and won protected heritage status. Today it's one of Valencia's most exciting areas: gritty, authentic, and rapidly evolving with craft beer bars, independent galleries, and some of the best seafood restaurants in the city.",
+        "The neighbourhood feels like a seaside village within a city. Streets are wide and flat (excellent for strollers and wheelchairs), the Mercado del Cabanyal is a local-only affair with zero tourist inflation, and you can walk to the beach in under 5 minutes from anywhere. The tram runs straight to the city centre in 15 minutes.",
+        "Cabanyal is where Valencians actually go to eat paella. The beachfront restaurants (La Pepica, Casa Carmela) are institutions, and the neighbourhood's back streets hide some of the city's best-value tapas. If you want to live like a local near the beach, this is the place.",
+      ],
+      quickFacts: [
+        { label: "Getting there", value: "Tram L4/L6 to La Marina or Eugenia Viñes (15 min from centre)" },
+        { label: "Best for", value: "Beach life, paella, architecture, families" },
+        { label: "Vibe", value: "Bohemian, maritime, evolving" },
+        { label: "Beach access", value: "Las Arenas beach, 2-5 min walk" },
+      ],
+    },
+    highlights: [
+      {
+        name: "Tiled Facades of Cabanyal",
+        description: "The neighbourhood's signature feature: rows of early 20th-century fishermen's houses covered in vibrant ceramic tiles. Each house has a unique design — Art Nouveau, Modernista, geometric, floral. Walk along Calle de la Reina and Calle de los Ángeles for the best concentration.",
+        icon: "🎨",
+        tip: "The most photogenic stretch is along Calle de la Reina between Calle San Pedro and Calle Padre Luis Navarro.",
+      },
+      {
+        name: "Las Arenas Beach",
+        description: "Valencia's main city beach — wide, golden sand, and well-serviced with chiringuitos (beach bars), showers, and lifeguards in summer. The promenade (Paseo Marítimo) runs 3km and is fully accessible.",
+        icon: "🏖️",
+        tip: "Go early (before 10am) in July-August for your spot. The beach gets packed after midday. Sunsets from here are spectacular.",
+        googleMapsUrl: "https://maps.google.com/?q=Playa+Las+Arenas+Valencia",
+      },
+      {
+        name: "Mercado del Cabanyal",
+        description: "A real neighbourhood market — no tourist stalls, just locals buying fish straight off the boats, seasonal vegetables, and bakery goods. The building itself is a 1950s modernist gem.",
+        icon: "🐟",
+        tip: "Go on Saturday morning for the best atmosphere. Try the fish stalls — fresher seafood doesn't exist in Valencia.",
+        googleMapsUrl: "https://maps.google.com/?q=Mercado+del+Cabanyal+Valencia",
+      },
+      {
+        name: "La Fábrica de Hielo",
+        description: "A converted ice factory turned cultural space with a rooftop terrace bar, live music venue, and rotating art exhibitions. The rooftop views over the port and neighbourhood are excellent.",
+        icon: "🎵",
+        tip: "Check their Instagram for event listings. The rooftop is best at sunset. Craft beers on tap.",
+      },
+    ],
+    gettingThere: {
+      summary: "The tram is the easiest way. Lines 4 and 6 connect Cabanyal to the city centre in about 15 minutes.",
+      options: [
+        { mode: "tram", description: "Lines L4/L6 from Pont de Fusta (near Turia Gardens) to La Marina or Eugenia Viñes", duration: "15 min", cost: "€1.50" },
+        { mode: "bus", description: "Lines 1, 2, 19, 32 from the city centre to various Cabanyal stops", duration: "20 min", cost: "€1.50" },
+        { mode: "bike", description: "Flat, easy ride from the city centre via Turia Gardens bike path. Valenbisi bike-share stations throughout the area.", duration: "20 min", cost: "€2 (Valenbisi)" },
+        { mode: "walk", description: "From the City of Arts and Sciences, follow the Turia park east. Pleasant 30-minute stroll.", duration: "30 min" },
+      ],
+      parkingNotes: "Street parking is available but metered and fills fast in summer. The Marina Juan Carlos I car park has ample space (€10-15/day).",
+    },
+    bestTimeToVisit: {
+      summary: "Summer is beach season, but autumn is when the neighbourhood is at its most pleasant without the crowds.",
+      seasons: [
+        { season: "spring", description: "Lovely — warm enough for beach walks, terraces are open, no summer crowds yet.", rating: 5 },
+        { season: "summer", description: "Peak beach season. Hot (35°C+), crowded beaches, but buzzing atmosphere. Come early or late.", rating: 4 },
+        { season: "autumn", description: "The best-kept secret: still warm enough to swim (September-October), empty beaches, locals take over.", rating: 5 },
+        { season: "winter", description: "Quiet but atmospheric. Paella restaurants are still open. Beach walks are peaceful.", rating: 3 },
+      ],
+    },
+    whatToBring: {
+      bring: ["Swimwear and towel", "Sun cream", "Camera for the tiled houses", "Appetite for paella"],
+      dontBring: ["Umbrella (it rarely rains)", "Expensive jewellery (beach area)"],
+      rentInstead: ["Beach set (umbrella, chairs, toys)", "Stroller for the promenade", "Portable fan for hot days"],
+    },
+    accessibility: {
+      overallRating: 4,
+      summary: "Cabanyal is one of Valencia's most accessible neighbourhoods. The streets are flat, wide, and on a grid. The beach promenade is fully paved and accessible. Most restaurants have ground-floor seating.",
+      wheelchairNotes: "Excellent accessibility on the main streets. The beach has wooden walkways to the water's edge in summer. The tram has step-free access.",
+      strollerNotes: "Very easy with any stroller. Flat streets, wide pavements, accessible beach. One of the best areas for families with buggies.",
+      publicTransportAccess: "Tram stops are fully accessible with ramps. Bus stops have low-floor vehicles.",
+    },
+    foodAndDrink: {
+      summary: "Cabanyal is THE place for paella and seafood in Valencia. The beachfront restaurants are institutions — expect to queue on weekends. The back streets have excellent budget tapas.",
+      recommendations: [
+        { name: "Casa Carmela", type: "Traditional paella restaurant", priceRange: "€€", tip: "Wood-fired paella cooked the traditional way. Reservations essential, especially weekends. Ask for the socarrat (crispy rice bottom).", familyFriendly: true },
+        { name: "La Pepica", type: "Historic seafood restaurant", priceRange: "€€€", tip: "Hemingway's favourite. On the beachfront since 1898. Tourist-priced but the fideuà (noodle paella) is excellent.", familyFriendly: true },
+        { name: "La Más Bonita", type: "Beachfront brunch bar", priceRange: "€€", tip: "The most Instagram-famous spot in Cabanyal. Great açaí bowls and cocktails. Queue on weekends.", familyFriendly: true },
+        { name: "Bodega Casa Montaña", type: "Wine bar / Tapas", priceRange: "€€", tip: "Operating since 1836. Some of the best traditional tapas in Valencia. The anchovies and mussels are outstanding.", familyFriendly: false },
+      ],
+      localSpeciality: "Paella Valenciana cooked over wood fire — this is the neighbourhood where the tradition lives. Sunday paella lunch is a Valencian institution.",
+    },
+    stayingHere: {
+      summary: "Cabanyal offers the best of both worlds: beach on your doorstep and the city centre 15 minutes away by tram. Accommodation is generally more affordable than the old town, and the neighbourhood has a genuine local feel.",
+      pros: ["Beach 2-5 minutes walk", "Flat and accessible streets", "Best paella in the city", "More affordable than the centre", "Authentic neighbourhood feel"],
+      cons: ["15-20 minutes from old town sights", "Can be noisy on summer nights", "Some streets still rough around the edges", "Limited nightlife compared to El Carmen/Ruzafa"],
+      gettingElsewhere: ["Tram to city centre: 15 min", "Walk to City of Arts: 25 min", "Bus to airport: 40 min"],
+    },
+    visitingHere: {
+      summary: "A half-day is perfect: morning at the market and walking the tiled streets, then lunch paella and afternoon on the beach.",
+      idealDuration: "Half day (4-5 hours)",
+      bestTimeOfDay: "Morning for the architecture walk, lunch for paella, afternoon for the beach",
+      tips: [
+        "Start with the tiled facades on Calle de la Reina — best light is morning.",
+        "Book paella lunch at Casa Carmela or La Pepica by noon (paella takes 30 min to cook).",
+        "Spend the afternoon on Las Arenas beach, then sunset drinks at La Fábrica de Hielo rooftop.",
+      ],
+    },
+    practicalTips: [
+      "Paella is a lunch dish in Valencia. Most restaurants only serve it 1-3pm. Don't ask for paella at dinner — you'll mark yourself as a tourist.",
+      "The neighbourhood is safe but undergoing gentrification. Some blocks are rough — just use normal city awareness.",
+      "In summer, beach restaurants fill up fast. Arrive before 1:30pm or make a reservation.",
+      "The tiled facades are fragile heritage — don't touch or lean against them.",
+    ],
+    audienceTips: [
+      {
+        audience: "families",
+        tips: [
+          "Las Arenas beach has lifeguards in summer and a shallow, gradual entry — safe for kids.",
+          "Rent a beach set (umbrella, chairs, toys) rather than lugging everything from your accommodation.",
+          "The promenade is perfect for scooters, trikes, and running around.",
+        ],
+      },
+      {
+        audience: "digital-nomads",
+        tips: [
+          "La Más Bonita has Wi-Fi but it's a social spot, not a work spot.",
+          "For serious work, head to a coworking space in the centre (tram: 15 min).",
+          "The neighbourhood has excellent value long-stay apartments — cheaper than Ruzafa with better beach access.",
+        ],
+      },
+    ],
+    productWidgets: [
+      { categorySlug: "travel-outdoors", heading: "Beach day essentials", afterSection: "Highlights" },
+      { categorySlug: "baby-gear", heading: "Beach holiday with little ones?", afterSection: "Practical Tips" },
+    ],
+    relatedDestinations: ["malvarrosa-beach", "city-of-arts-and-sciences", "ruzafa"],
+    relatedBlogPosts: ["valencia-with-kids-complete-guide", "valencia-summer-guide"],
+    faqs: [
+      { question: "Is Cabanyal safe?", answer: "Yes, increasingly so. The neighbourhood has gentrified significantly. Main streets and the waterfront are busy and safe. Use normal city awareness on quieter back streets, especially at night." },
+      { question: "Where is the best paella in Valencia?", answer: "Many locals say Casa Carmela in Cabanyal. It's cooked over wood fire in the traditional way. Book in advance — it's well known and fills up, especially on Sundays." },
+      { question: "Can you swim at Las Arenas beach?", answer: "Yes, from approximately May to October. The water is warm enough for comfortable swimming from June to September. Lifeguards are on duty in summer months." },
+    ],
+  },
 ];
+
