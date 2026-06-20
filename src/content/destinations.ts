@@ -1734,5 +1734,419 @@ export const destinations: Destination[] = [
       { question: "Is Sagunto Castle free?", answer: "Yes, completely free to enter. Open daily, though winter hours may be shorter. The Roman theatre below is also free." },
     ],
   },
+
+  // ===== REQUENA =====
+  {
+    slug: "requena",
+    name: "Requena",
+    type: "day-trip",
+    tagline: "Medieval wine town with underground caves, Bobal vineyards, and unforgettable gastronomy",
+    heroImage: "/discover/requena-hero.jpg",
+    heroImageAlt: "Panoramic view of Requena's medieval old town with terracotta rooftops and vineyards in the background",
+    title: "Requena Day Trip from Valencia — Wine Country, Caves & Medieval Old Town",
+    description: "Plan a day trip to Requena from Valencia. Underground wine caves, Bobal wine tastings, a medieval old town, and some of the best food outside the city — all 1 hour by car or train.",
+    keywords: ["Requena day trip", "Requena wine", "Valencia wine country", "Bobal wine", "day trips from Valencia"],
+    date: "2026-06-20",
+    lastUpdated: "2026-06-20",
+    audiences: ["couples", "luxury", "budget"],
+    region: "Utiel-Requena",
+    distanceFromValencia: "70 km west (1 hour)",
+    hubs: ["day-trips"],
+    overview: {
+      paragraphs: [
+        "Requena is Valencia's wine country — a fortified medieval town perched on a plateau 70km inland, surrounded by vineyards that produce Spain's finest Bobal wines. While tourists crowd the coast, this atmospheric little city offers underground Arabic caves, a beautifully preserved old quarter (La Villa), excellent restaurants, and wine tastings that cost a fraction of comparable experiences in Tuscany or Napa.",
+        "The town's secret weapon is its underground cave network — the Cuevas de la Villa. During Moorish rule, these interconnected cellars beneath the old town were used for wine storage and, legend has it, for hiding during sieges. Today you can tour them with a guide, wandering through atmospheric tunnels that maintain a constant cool temperature even in summer.",
+        "Beyond the caves, Requena rewards wandering. The medieval quarter has a Moorish castle, Gothic churches, and streets so narrow you can touch both walls. The surrounding DO Utiel-Requena wine region produces excellent reds and rosados from the indigenous Bobal grape — visit a bodega for a tasting and you'll discover a wine most visitors have never heard of.",
+      ],
+      quickFacts: [
+        { label: "Distance", value: "70 km west (1 hour by car or train)" },
+        { label: "Transport", value: "Cercanías C-3 from Valencia or A-3 motorway" },
+        { label: "Best for", value: "Wine lovers, couples, foodies, history" },
+        { label: "Time needed", value: "Full day recommended" },
+      ],
+    },
+    highlights: [
+      {
+        name: "Cuevas de la Villa",
+        description: "An underground network of caves beneath Requena's old town, dating from Moorish times. Used for centuries as wine cellars, storage, and refuge. Guided tours take you through atmospheric tunnels with constant cool temperatures.",
+        icon: "🕳️",
+        tip: "Book the guided tour at the tourist office in Plaza del Albornoz. Tours run several times daily. In summer, the caves are a refreshing 15°C — bring a light layer.",
+      },
+      {
+        name: "La Villa (Medieval Quarter)",
+        description: "Requena's walled old town — a tangle of narrow medieval streets, the Moorish alcázar ruins, Gothic churches, and noble houses with ornate doorways. Remarkably well-preserved and almost empty of tourists.",
+        icon: "🏰",
+        tip: "Enter through the Arco de la Villa gateway. The Iglesia de El Salvador has a beautifully carved Gothic portal. Don't miss the views from the castle ruins.",
+      },
+      {
+        name: "Wine Tastings & Bodegas",
+        description: "The DO Utiel-Requena wine region surrounds the town. Several bodegas offer tastings, from boutique family operations to larger estates. The indigenous Bobal grape produces outstanding reds and rosados.",
+        icon: "🍷",
+        tip: "Bodega Murviedro and Bodegas Vegalfaro are excellent and offer tours in English. Book ahead. Expect to pay €10-15 for a tasting with 4-5 wines.",
+      },
+      {
+        name: "Museo del Vino",
+        description: "A well-curated wine museum inside the Palacio del Cid, explaining the history of winemaking in the region from Roman times. Includes tastings and a shop with local wines at bodega prices.",
+        icon: "🏛️",
+        tip: "Good starting point to understand Bobal before visiting a bodega. The shop has excellent wines at €5-15 a bottle — much cheaper than Valencia.",
+      },
+    ],
+    gettingThere: {
+      summary: "Car gives the most flexibility for visiting bodegas. The train works for the town itself.",
+      options: [
+        { mode: "train", description: "Cercanías C-3 from Valencia Nord to Requena-Utiel", duration: "1 hour 10 min", cost: "~€5 return" },
+        { mode: "car", description: "A-3 motorway west. Fast, easy drive through orange groves and vineyards.", duration: "1 hour", cost: "Toll-free" },
+      ],
+      parkingNotes: "Free parking outside the old town walls. The streets inside La Villa are too narrow for cars.",
+    },
+    bestTimeToVisit: {
+      summary: "Autumn (harvest season) is magical, but spring is equally lovely with comfortable temperatures.",
+      seasons: [
+        { season: "spring", description: "Vineyards are green, temperatures perfect for walking the old town. Wildflowers in the countryside.", rating: 5 },
+        { season: "summer", description: "Hot inland (38°C+), but the caves are a cool 15°C. Go early, taste wine, hide in caves during afternoon heat.", rating: 3 },
+        { season: "autumn", description: "Harvest season (vendimia) — September/October. Bodegas buzz with activity. Grape-treading festivals. The best time to visit.", rating: 5 },
+        { season: "winter", description: "Cold for Spain (5-10°C). Few tourists. Wine bars and restaurants are cosy. Good for a focused wine weekend.", rating: 3 },
+      ],
+    },
+    whatToBring: {
+      bring: ["Light layer for the caves (15°C inside)", "Comfortable shoes", "Designated driver or train tickets", "Appetite"],
+      dontBring: ["Expectations of Napa-style glitz — this is rustic, authentic Spain"],
+      rentInstead: ["Car (if you want to visit rural bodegas outside town)"],
+    },
+    accessibility: {
+      overallRating: 2,
+      summary: "The medieval old town has steep, narrow streets and uneven surfaces. The caves have steps. The newer part of town is flat and accessible.",
+      wheelchairNotes: "La Villa is largely inaccessible — steep cobblestone streets and no ramps. The Museo del Vino and some bodegas outside town are accessible.",
+      strollerNotes: "Very difficult in the old town. Leave the buggy at the car and carry. The newer town is fine.",
+      publicTransportAccess: "Requena-Utiel train station has step-free access. Taxi or walk to old town (15 min).",
+    },
+    foodAndDrink: {
+      summary: "Requena's food is hearty inland Valencian cuisine — game, cured meats, mushrooms in autumn, and excellent wine at every table.",
+      recommendations: [
+        { name: "Mesón de la Villa", type: "Traditional / Game", priceRange: "€€", tip: "Inside the old town. Wild boar, venison, and lamb cooked in wood-fired ovens. Outstanding value.", familyFriendly: true },
+        { name: "Casa Paco", type: "Traditional Valencian", priceRange: "€", tip: "The menú del día is absurdly good value. Local wines by the glass for €2-3.", familyFriendly: true },
+      ],
+      localSpeciality: "Embutidos (cured meats) and gazpachos manchegos — a hearty game stew with unleavened bread, not to be confused with the cold Andalusian soup.",
+    },
+    visitingHere: {
+      summary: "A full day lets you explore the old town, tour the caves, taste wine, and have a proper long lunch. You can do a shorter half-day focused on the caves and old town.",
+      idealDuration: "Full day (6-8 hours)",
+      bestTimeOfDay: "Morning for the old town and caves, lunch by 2pm, afternoon for bodega visits",
+      tips: [
+        "Start with the Cuevas de la Villa tour (book at tourist office in Plaza del Albornoz).",
+        "Wander La Villa medieval quarter after the caves — it's compact and beautiful.",
+        "Lunch at Mesón de la Villa or Casa Paco. Order local wine — it's excellent and cheap.",
+        "Afternoon: visit a bodega outside town (need car) or browse the Museo del Vino.",
+      ],
+    },
+    practicalTips: [
+      "If driving, designate a non-drinking driver or plan to spit at tastings. Spanish drink-driving limits are strict.",
+      "The caves maintain 15°C year-round — bring a light jacket even in summer.",
+      "Book bodega visits in advance, especially on weekends. Many are family-run with limited capacity.",
+      "The town is very quiet on Mondays — some restaurants and the museum may be closed.",
+    ],
+    audienceTips: [
+      {
+        audience: "couples",
+        tips: [
+          "This is one of the most romantic day trips from Valencia. Wine tasting, medieval streets, long lunches.",
+          "Book a private bodega tour for two — several offer this with cheese and charcuterie pairings.",
+          "Stay for sunset over the vineyards if you have a car. The light is extraordinary.",
+        ],
+      },
+    ],
+    productWidgets: [],
+    relatedDestinations: ["sagunto", "albufera-natural-park"],
+    relatedBlogPosts: [],
+    faqs: [
+      { question: "How do I get to Requena from Valencia?", answer: "Drive the A-3 motorway west (1 hour, toll-free) or take the Cercanías C-3 train from Valencia Nord (1 hour 10 min, ~€5 return). Car is better if you want to visit rural bodegas." },
+      { question: "What wine is Requena known for?", answer: "The indigenous Bobal grape — Spain's third most planted red variety. It produces excellent reds and rosados. The DO Utiel-Requena region is increasingly recognized as one of Spain's best-value wine areas." },
+      { question: "Are the Requena caves worth visiting?", answer: "Absolutely. The underground cave network beneath the medieval old town is unique. Tours take about 45 minutes and the constant 15°C temperature is a welcome escape from summer heat." },
+    ],
+  },
+
+  // ===== PATACONA BEACH =====
+  {
+    slug: "patacona-beach",
+    name: "Patacona Beach",
+    type: "beach",
+    tagline: "Valencia's quieter, more local beach — families, volleyball, and sunset paella",
+    heroImage: "/discover/patacona-hero.jpg",
+    heroImageAlt: "Wide golden sand beach at Patacona with beach volleyball nets, families, and Valencia skyline in the background",
+    title: "Patacona Beach, Valencia — Guide to the Local Beach Alternative",
+    description: "Discover Patacona Beach, Valencia's relaxed local alternative to the busy city beaches. Wide sand, beach volleyball, excellent paella restaurants, and a calmer family atmosphere.",
+    keywords: ["Patacona beach Valencia", "best beaches Valencia", "quiet beach Valencia", "Alboraya beach", "Valencia beaches guide"],
+    date: "2026-06-20",
+    lastUpdated: "2026-06-20",
+    audiences: ["families", "couples", "digital-nomads", "budget"],
+    region: "Alboraya / North Coast",
+    hubs: ["neighbourhoods"],
+    overview: {
+      paragraphs: [
+        "Patacona is the beach Valencians recommend when tourists ask where to go. Just north of the city's main Las Arenas and Malvarrosa beaches, Patacona technically belongs to the municipality of Alboraya but is seamlessly connected — you can walk here from Malvarrosa in 15 minutes along the promenade.",
+        "The difference is immediately noticeable: wider sand, fewer sunbeds-for-rent, more space between towels, and a distinctly local atmosphere. Families set up camp for the day with cooler boxes and beach games. Beach volleyball nets line the southern end. The chiringuitos (beach bars) are friendlier and less corporate. And the paella restaurants along the seafront serve some of the best rice dishes in the region.",
+        "Patacona is where you come when you want a proper beach day without the tourist intensity of Las Arenas. The water is the same clean Mediterranean blue, the sand is the same golden quality, but the vibe is noticeably more relaxed. For families with kids, it's the best beach in the Valencia area.",
+      ],
+      quickFacts: [
+        { label: "Getting there", value: "Tram L4/L6 to La Patacona or walk from Malvarrosa (15 min)" },
+        { label: "Best for", value: "Families, locals, beach volleyball, paella" },
+        { label: "Vibe", value: "Relaxed, local, spacious" },
+        { label: "Facilities", value: "Chiringuitos, showers, lifeguards (summer)" },
+      ],
+    },
+    highlights: [
+      {
+        name: "Wide, Spacious Beach",
+        description: "Patacona's beach is noticeably wider and less crowded than the city beaches to the south. Even in peak summer, you can find space. The sand is clean and golden, the water shallow and safe for children.",
+        icon: "🏖️",
+        tip: "The northern end (towards Alboraya) is the quietest. Walk past the volleyball nets for the most space.",
+      },
+      {
+        name: "Beach Volleyball Hub",
+        description: "The southern end of Patacona has permanent volleyball nets and is Valencia's unofficial beach volleyball capital. Pick-up games happen every evening in summer. There's usually room to join.",
+        icon: "🏐",
+        tip: "Evening games start around 6-7pm. Bring your own ball or ask to join — the regulars are welcoming.",
+      },
+      {
+        name: "Seafront Paella Restaurants",
+        description: "A row of excellent paella restaurants lines the Paseo Marítimo. Unlike the more touristy Las Arenas strip, these serve to a primarily local crowd and the quality reflects it.",
+        icon: "🥘",
+        tip: "La Alegría and Restaurante Patacona are local favourites. Book for Sunday lunch — paella by the sea is a weekend ritual here.",
+      },
+      {
+        name: "Horchata in Alboraya",
+        description: "Patacona borders Alboraya, the town where horchata was invented. The surrounding farms still grow the tiger nuts (chufas) used to make Valencia's signature drink. Several traditional horchaterías are a short walk from the beach.",
+        icon: "🥛",
+        tip: "Horchatería Daniel (the original, not the Mercado de Colón branch) is a 10-minute walk into Alboraya. The horchata is made fresh from locally-grown chufas.",
+      },
+    ],
+    gettingThere: {
+      summary: "Walk from Malvarrosa, take the tram, or cycle the promenade.",
+      options: [
+        { mode: "tram", description: "Lines L4/L6 to La Patacona stop — direct from the city centre via Pont de Fusta", duration: "20 min from centre", cost: "€1.50" },
+        { mode: "walk", description: "Walk north along the promenade from Malvarrosa beach. Flat, paved, scenic.", duration: "15 min from Malvarrosa" },
+        { mode: "bike", description: "Flat cycle along the seafront. Valenbisi stations available. One of Valencia's best rides.", duration: "25 min from centre", cost: "€2 (Valenbisi)" },
+      ],
+      parkingNotes: "Free street parking in the residential streets behind the beach. Easier to find than at Las Arenas, especially on weekdays.",
+    },
+    bestTimeToVisit: {
+      summary: "June-September for swimming. May and October still warm enough for comfortable beach days without the crowds.",
+      seasons: [
+        { season: "spring", description: "Warm enough for sunbathing from May. Beach is quiet. Water still cool for swimming.", rating: 4 },
+        { season: "summer", description: "Peak season. Arrive before 10am for the best spot. Water is warm and perfect. Lifeguards on duty.", rating: 5 },
+        { season: "autumn", description: "September-October is the secret season — warm water, empty beach, golden light. Locals' favourite time.", rating: 5 },
+        { season: "winter", description: "Cool but sunny. Pleasant for walks along the promenade. Some chiringuitos close.", rating: 2 },
+      ],
+    },
+    whatToBring: {
+      bring: ["Sun cream", "Water and snacks", "Beach towel", "Cash for chiringuitos"],
+      dontBring: ["Valuables (no lockers)", "Glass bottles (banned on all Valencia beaches)"],
+      rentInstead: ["Beach umbrella and chairs set", "Stroller for the promenade", "Beach toys for kids"],
+    },
+    accessibility: {
+      overallRating: 4,
+      summary: "The promenade is fully paved and accessible. The beach has wooden walkways extending to the sand in summer. The tram stop has step-free access.",
+      wheelchairNotes: "The promenade is excellent. Wooden beach walkways provide access to the sand line. Some chiringuitos have accessible terraces.",
+      strollerNotes: "Very easy. Flat promenade, wide paths, no obstacles. One of the best beaches for buggies.",
+      publicTransportAccess: "Tram stop La Patacona has step-free platform access.",
+    },
+    foodAndDrink: {
+      summary: "Patacona has a better food-to-tourist ratio than the city beaches. The seafront restaurants serve excellent rice dishes to a mostly local crowd.",
+      recommendations: [
+        { name: "La Alegría", type: "Seafood / Paella", priceRange: "€€", tip: "One of the best paella spots on this stretch. The arroz a banda and fideuà are excellent. Book for weekend lunch.", familyFriendly: true },
+        { name: "Chiringuito El Pirata", type: "Beach bar", priceRange: "€", tip: "Cold beers, snacks, and music right on the sand. The sunset views are free.", familyFriendly: true },
+      ],
+      localSpeciality: "Arroz a banda — a rich fish stock rice dish where the fish is served separately. A fisherman's dish originally from this coast, and it's outstanding here.",
+    },
+    visitingHere: {
+      summary: "A beach day at Patacona is a full-day affair. Arrive mid-morning, swim, eat paella for lunch, siesta on the sand, sunset drinks.",
+      idealDuration: "Half day to full day",
+      bestTimeOfDay: "Arrive by 10am in summer, stay for sunset",
+      tips: [
+        "Arrive early in summer to claim your spot. The northern end is always quietest.",
+        "Book a seafront paella lunch for 1:30-2pm — the traditional time.",
+        "After lunch, walk into Alboraya for horchata at the original Daniel horchatería.",
+        "Stay for sunset — Patacona faces east but the evening light on the water is beautiful.",
+      ],
+    },
+    practicalTips: [
+      "Glass bottles are banned on all Valencia beaches. Bring cans or plastic.",
+      "Lifeguards are on duty June-September. Red flag = no swimming, yellow = caution, green = safe.",
+      "The water is shallow for a long way out — excellent for kids but you need to wade far to swim properly.",
+      "Jellyfish occasionally appear in late summer. Check the flag system at lifeguard towers.",
+    ],
+    audienceTips: [
+      {
+        audience: "families",
+        tips: [
+          "Patacona is Valencia's best family beach — wider, calmer, and more spacious than Las Arenas.",
+          "The shallow water extends far out, making it very safe for small children.",
+          "Rent a beach set (umbrella + chairs + toys) and you're sorted for the day.",
+        ],
+      },
+      {
+        audience: "digital-nomads",
+        tips: [
+          "Morning work at a café in Alboraya, afternoon beach break at Patacona — the nomad dream.",
+          "Several chiringuitos have Wi-Fi, but it's unreliable. Bring a hotspot for serious work.",
+          "Long-term rentals near Patacona are cheaper than Cabanyal and quieter.",
+        ],
+      },
+    ],
+    productWidgets: [
+      { categorySlug: "travel-outdoors", heading: "Beach day sorted", afterSection: "Highlights" },
+      { categorySlug: "baby-gear", heading: "Beach day with the little ones?", afterSection: "Practical Tips" },
+    ],
+    relatedDestinations: ["malvarrosa-beach", "cabanyal", "turia-gardens"],
+    relatedBlogPosts: ["valencia-with-kids-complete-guide"],
+    faqs: [
+      { question: "Is Patacona Beach better than Malvarrosa?", answer: "For families and anyone wanting more space, yes. Patacona is wider, less crowded, and has a more local atmosphere. Malvarrosa is closer to the city and has more nightlife. Both have the same water quality." },
+      { question: "How do I get to Patacona from Valencia centre?", answer: "Tram L4/L6 to La Patacona (20 min from centre), or walk north along the promenade from Malvarrosa (15 min). Cycling the seafront is also easy and enjoyable." },
+      { question: "Are there restaurants at Patacona Beach?", answer: "Yes — a row of excellent paella and seafood restaurants line the seafront. They're less touristy than the Las Arenas strip and serve to a primarily local crowd." },
+    ],
+  },
+
+  // ===== XÀTIVA =====
+  {
+    slug: "xativa",
+    name: "Xàtiva",
+    type: "day-trip",
+    tagline: "Dramatic hilltop castle, Borgia family history, and one of Spain's most beautiful small towns",
+    heroImage: "/discover/xativa-hero.jpg",
+    heroImageAlt: "Xàtiva Castle perched on a dramatic rocky ridge above the town with mountains and plains stretching behind",
+    title: "Xàtiva Day Trip from Valencia — Castle, Borgia History & Old Town",
+    description: "Plan a day trip to Xàtiva from Valencia. Visit Spain's most dramatic castle perched on a mountain ridge, explore the Borgia family's hometown, and discover a stunning old town — 1 hour by train.",
+    keywords: ["Xàtiva day trip", "Xàtiva castle", "Xàtiva from Valencia", "Borgia family", "day trips Valencia Spain"],
+    date: "2026-06-20",
+    lastUpdated: "2026-06-20",
+    audiences: ["families", "couples", "budget"],
+    region: "La Costera",
+    distanceFromValencia: "60 km south (1 hour)",
+    hubs: ["day-trips"],
+    overview: {
+      paragraphs: [
+        "Xàtiva (pronounced 'SHA-tee-va') is arguably the most spectacular day trip from Valencia. This ancient city, birthplace of two Borgia popes and once the second city of the Kingdom of Valencia, is crowned by a jaw-dropping castle that stretches along an entire mountain ridge — one of the most dramatic fortifications in Spain.",
+        "The castle alone would justify the trip, but Xàtiva's old town is equally rewarding. The Colegiata basilica, the narrow streets climbing towards the castle, the Almudín (medieval grain exchange) housing a museum, and the famous upside-down portrait of Philip V in the town museum — hung inverted as revenge for his burning of the city in 1707 and never righted since.",
+        "Xàtiva sits in a fertile valley surrounded by mountains, orange groves, and rice paddies. The town has excellent restaurants serving local cuisine (the arnadí dessert is unique to the area), and the pace of life is wonderfully slow. The Cercanías train from Valencia takes about an hour and costs under €6 return.",
+      ],
+      quickFacts: [
+        { label: "Distance", value: "60 km south (1 hour by train)" },
+        { label: "Train", value: "Cercanías C-2 from Valencia Nord to Xàtiva" },
+        { label: "Cost", value: "~€5.50 return + €6 castle entry" },
+        { label: "Time needed", value: "Full day recommended" },
+      ],
+    },
+    highlights: [
+      {
+        name: "Xàtiva Castle",
+        description: "One of Spain's most spectacular castles — actually two linked fortifications (Castell Menor and Castell Major) stretching along a dramatic rocky ridge. Views from the walls encompass the entire Valencian plain from the mountains to the sea. Hannibal reportedly passed through, and the Borgias were born in its shadow.",
+        icon: "🏰",
+        tip: "The castle is a 30-minute steep uphill walk from the old town, or take the tourist road train (€3 return). Go early morning in summer — there's limited shade. Bring water.",
+        googleMapsUrl: "https://maps.google.com/?q=Castillo+de+Xàtiva",
+      },
+      {
+        name: "The Upside-Down Portrait",
+        description: "In the Museo de Bellas Artes, a portrait of King Philip V hangs deliberately upside down — Xàtiva's centuries-long protest against his order to burn the city during the War of Spanish Succession in 1707. The museum has refused to right it ever since. It's petty, magnificent, and very Spanish.",
+        icon: "🖼️",
+        tip: "The museum is in the Almudín (medieval grain exchange). The building itself is beautiful. Ask the staff about the portrait — they love telling the story.",
+      },
+      {
+        name: "Colegiata Basílica",
+        description: "A massive Renaissance basilica that was never finished — the planned nave was to be the largest in Spain. What exists is still imposing: a beautiful apse, carved stonework, and a serene interior. The views from the square outside are lovely.",
+        icon: "⛪",
+        tip: "Free entry. The basilica is on the walking route from town to castle — perfect for a rest stop on the way up.",
+        googleMapsUrl: "https://maps.google.com/?q=Colegiata+de+Xàtiva",
+      },
+      {
+        name: "Old Town & Fountains",
+        description: "Xàtiva is famous for its 25 historic fountains scattered through the old town. The main street (Calle Montcada) is lined with noble houses, and the climb towards the castle passes through increasingly atmospheric medieval streets.",
+        icon: "⛲",
+        tip: "Pick up a fountain walking route map from the tourist office. The Fuente de los 25 Caños (25 Spouts Fountain) at the town entrance is the most photogenic.",
+      },
+    ],
+    gettingThere: {
+      summary: "The Cercanías train runs hourly from Valencia Nord. Easy, comfortable, and scenic.",
+      options: [
+        { mode: "train", description: "Cercanías C-2 from Valencia Nord to Xàtiva. Scenic ride through orange groves and rice paddies.", duration: "1 hour", cost: "~€5.50 return" },
+        { mode: "car", description: "A-7 motorway south, then CV-40 to Xàtiva. Easy drive.", duration: "50 min", cost: "Toll-free" },
+      ],
+      parkingNotes: "Free parking near the Alameda park at the base of town. The old town streets are narrow — park and walk.",
+    },
+    bestTimeToVisit: {
+      summary: "Spring and autumn are ideal. Summer is very hot — the castle climb in full sun is gruelling after 11am.",
+      seasons: [
+        { season: "spring", description: "Perfect — wildflowers on the castle hill, comfortable climbing temperatures, orange blossoms in the valley.", rating: 5 },
+        { season: "summer", description: "Brutally hot (38°C+). The castle climb is exposed. Go at 9am opening or don't go. The tourist train helps.", rating: 2 },
+        { season: "autumn", description: "Excellent — golden light, comfortable temperatures, harvest season in the surrounding fields.", rating: 5 },
+        { season: "winter", description: "Mild (8-15°C). Clear views from the castle. The town is quiet and atmospheric. Some restaurants close Monday.", rating: 4 },
+      ],
+    },
+    whatToBring: {
+      bring: ["Water (1L minimum per person)", "Comfortable shoes with grip", "Sun protection in summer", "Camera"],
+      dontBring: ["Heels or flip-flops (the castle path is rough)", "Heavy bags"],
+      rentInstead: ["Compact stroller (only useful in the flat old town, not the castle)"],
+    },
+    accessibility: {
+      overallRating: 2,
+      summary: "The castle is not accessible — steep climb with uneven terrain. The old town is partially accessible on main streets. The tourist road train makes the castle approachable for those with limited mobility.",
+      wheelchairNotes: "The castle is not wheelchair accessible. The flat parts of the old town (Calle Montcada, Plaça del Mercat) are manageable. The tourist road train reaches the castle car park — from there, the castle grounds are rough.",
+      strollerNotes: "The old town is fine with a compact stroller. Don't attempt the castle walk with a pushchair — it's too steep and rough. The tourist train is the alternative.",
+      publicTransportAccess: "Xàtiva train station has step-free access. The walk to the old town is flat (10 minutes).",
+    },
+    foodAndDrink: {
+      summary: "Xàtiva's food scene is excellent and affordable. The local specialities are distinctive and not easily found in Valencia city.",
+      recommendations: [
+        { name: "Casa La Abuela", type: "Traditional Valencian", priceRange: "€€", tip: "The most popular restaurant in Xàtiva. Outstanding arròs al forn and local specialities. Book ahead for weekend lunch.", familyFriendly: true },
+        { name: "Hostal Murta", type: "Traditional / Regional", priceRange: "€€", tip: "A classic with a beautiful garden terrace. The menú del día is excellent value. Try the arnadí dessert.", familyFriendly: true },
+      ],
+      localSpeciality: "Arnadí — a unique Xàtiva dessert made from pumpkin, almonds, sugar, and egg. Found almost nowhere else. Also try the coca de llanda (simple sponge cake) that every bakery makes.",
+    },
+    visitingHere: {
+      summary: "Start early (especially in summer), see the castle, then descend through the old town for lunch. The tourist road train saves energy for the castle itself.",
+      idealDuration: "5-7 hours (full day)",
+      bestTimeOfDay: "Arrive by 10am, castle first (before heat), old town and lunch after descending",
+      tips: [
+        "Take the tourist road train (trenecito) up, walk down through the old town. Saves energy for exploring the castle itself.",
+        "The castle has two sections — Castell Menor (ruined, atmospheric) and Castell Major (restored, museum). Both are worth exploring.",
+        "Descend through the old town streets (not the road). Stop at the Colegiata and museum on the way down.",
+        "Lunch at Casa La Abuela or Hostal Murta. Order arnadí dessert — you won't find it anywhere else.",
+      ],
+    },
+    practicalTips: [
+      "Castle entry is €6 adults, free under 12. The tourist road train is €3 return (runs from near the tourist office).",
+      "The castle is open 10am-6pm (winter) / 10am-7pm (summer). Closed Mondays.",
+      "Bring at least 1L of water per person. There's a small café at the castle with drinks and snacks.",
+      "The walk from train station to old town is flat (10 min). From old town to castle is 30 min uphill.",
+      "Ask the museum staff about the upside-down portrait — they take genuine pride in telling the story.",
+    ],
+    audienceTips: [
+      {
+        audience: "families",
+        tips: [
+          "Kids love the castle — it's massive, explorable, and feels like a real adventure. The views keep them engaged.",
+          "The tourist train up is fun for children and saves the climb for exploring the castle itself.",
+          "Pack a picnic — the castle grounds have spots with views where you can eat.",
+        ],
+      },
+      {
+        audience: "couples",
+        tips: [
+          "One of the most romantic day trips from Valencia. The castle views are breathtaking, the old town is atmospheric.",
+          "Lunch at Hostal Murta's garden terrace is a highlight. Book ahead on weekends.",
+          "The walk down from the castle through the medieval streets at golden hour is magical.",
+        ],
+      },
+    ],
+    productWidgets: [
+      { categorySlug: "baby-gear", heading: "Day trip with little ones?", afterSection: "Practical Tips" },
+    ],
+    relatedDestinations: ["sagunto", "requena", "albufera-natural-park"],
+    relatedBlogPosts: ["valencia-with-kids-complete-guide"],
+    faqs: [
+      { question: "How do I get to Xàtiva from Valencia?", answer: "Take the Cercanías C-2 train from Valencia Nord station. It runs hourly, takes about 1 hour, and costs ~€5.50 return. The scenic ride passes through orange groves and rice paddies." },
+      { question: "Is Xàtiva Castle worth visiting?", answer: "Absolutely — it's one of Spain's most dramatic castles. The twin fortifications stretch along an entire mountain ridge with 360° views from mountains to sea. Combined with the charming old town and Borgia history, it's the best full-day trip from Valencia." },
+      { question: "What is the upside-down portrait in Xàtiva?", answer: "A portrait of King Philip V in the town museum, hung deliberately upside down since the 18th century. It's Xàtiva's protest against his order to burn the city in 1707 during the War of Spanish Succession. The museum has never righted it." },
+    ],
+  },
 ];
 
