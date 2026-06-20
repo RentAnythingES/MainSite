@@ -1139,5 +1139,315 @@ export const destinations: Destination[] = [
       { question: "Can you swim at Las Arenas beach?", answer: "Yes, from approximately May to October. The water is warm enough for comfortable swimming from June to September. Lifeguards are on duty in summer months." },
     ],
   },
+
+  // ===== BENIMACLET =====
+  {
+    slug: "benimaclet",
+    name: "Benimaclet",
+    type: "neighbourhood",
+    tagline: "Valencia's village-within-a-city — students, street markets, and authentic neighbourhood life",
+    heroImage: "/discover/benimaclet-hero.jpg",
+    heroImageAlt: "Quiet tree-lined plaza in Benimaclet with locals at outdoor café terraces in Valencia",
+    title: "Benimaclet, Valencia — Guide to the Student & Alternative Quarter",
+    description: "Explore Benimaclet, Valencia's authentic village neighbourhood. Student bars, weekly street markets, multicultural food, and a genuine local atmosphere away from tourist crowds.",
+    keywords: ["Benimaclet Valencia", "Valencia student neighbourhood", "Benimaclet guide", "alternative Valencia", "local Valencia"],
+    date: "2026-06-20",
+    lastUpdated: "2026-06-20",
+    audiences: ["digital-nomads", "budget", "couples"],
+    region: "North Valencia",
+    hubs: ["neighbourhoods"],
+    overview: {
+      paragraphs: [
+        "Benimaclet feels like a village that happens to be inside a city. This former farming hamlet, swallowed by Valencia's expansion but never quite absorbed, retains its own character: a central plaza with old men playing dominoes, a weekly street market, tiny tapas bars where regulars know each other by name, and a fiercely independent community that has successfully blocked corporate development for decades.",
+        "The neighbourhood sits between the University of Valencia campus and the northern edge of Turia Gardens, making it a natural hub for students, academics, and young professionals. This means excellent value eating and drinking — you can have a three-course menú del día for €10-12 — alongside a vibrant multicultural food scene: Indian, Senegalese, Chinese, and Middle Eastern restaurants line the main streets.",
+        "For visitors, Benimaclet offers something the tourist areas can't: a genuine slice of Valencian daily life. There are no monuments, no museums, no Instagram spots. Just good food, cheap drinks, friendly people, and the comforting rhythm of a real neighbourhood. It's also surprisingly well-connected — the metro has you in the city centre in 8 minutes.",
+      ],
+      quickFacts: [
+        { label: "Getting there", value: "Metro L1 Benimaclet (8 min from centre)" },
+        { label: "Best for", value: "Budget food, local life, long-stay living, students" },
+        { label: "Vibe", value: "Village-like, alternative, multicultural" },
+        { label: "Tourist factor", value: "Almost zero — this is local Valencia" },
+      ],
+    },
+    highlights: [
+      {
+        name: "Plaça de Benimaclet",
+        description: "The heart of the neighbourhood — a leafy square with the parish church, café terraces, and a playground. This is where locals gather for morning coffee, evening vermouth, and Sunday strolls. The weekly flea market happens here on Saturdays.",
+        icon: "🌳",
+        tip: "Saturday morning is the best time to visit — the market is bustling and the café terraces are full of locals reading the paper.",
+      },
+      {
+        name: "Benimaclet Street Market",
+        description: "Every Saturday morning, Benimaclet's streets fill with stalls selling fresh produce, artisan bread, cheese, honey, vintage clothes, and handmade crafts. It's entirely local — no tourist tat.",
+        icon: "🛍️",
+        tip: "Arrive by 10am for the best produce. The organic vegetable stalls sell out fast. Bring a reusable bag.",
+      },
+      {
+        name: "Horts Urbans de Benimaclet",
+        description: "A community urban garden on reclaimed land at the neighbourhood's edge. Locals maintain plots growing vegetables and flowers. It's a symbol of Benimaclet's community spirit and resistance to development.",
+        icon: "🌱",
+        tip: "Walk through in the late afternoon when gardeners are tending plots — they're friendly and happy to chat.",
+      },
+      {
+        name: "Multicultural Food Mile",
+        description: "Carrer de Mistral and surrounding streets pack an incredible diversity of cuisines into a few blocks. Indian thalis, Senegalese thieboudienne, Chinese hand-pulled noodles, and classic Spanish tapas — all at student-friendly prices.",
+        icon: "🍛",
+        tip: "Ask any student for their favourite spot — they all have strong opinions. The Indian restaurants along Carrer de Mistral are particularly good value.",
+      },
+    ],
+    gettingThere: {
+      summary: "Metro Line 1 makes Benimaclet quick and easy to reach from the centre.",
+      options: [
+        { mode: "metro", description: "Line L1 to Benimaclet station — direct from Àngel Guimerà or Colón", duration: "8 min from centre", cost: "€1.50" },
+        { mode: "tram", description: "Tram L4 connects to the eastern end of the neighbourhood", duration: "12 min", cost: "€1.50" },
+        { mode: "bike", description: "Easy flat ride from the city centre or Turia Gardens. Valenbisi stations available.", duration: "15 min", cost: "€2 (Valenbisi)" },
+        { mode: "walk", description: "Follow Turia Gardens north-east from the City of Arts and Sciences area", duration: "25 min" },
+      ],
+      parkingNotes: "Free street parking is still available in some residential streets, but it's increasingly metered. The metro is easier.",
+    },
+    bestTimeToVisit: {
+      summary: "Benimaclet is best during the university term (September-June) when the neighbourhood is buzzing with students.",
+      seasons: [
+        { season: "spring", description: "Perfect weather, the Saturday market is at its best, students are in term — most lively.", rating: 5 },
+        { season: "summer", description: "Quieter — many students leave. But the terraces are open and it's cheaper than ever.", rating: 3 },
+        { season: "autumn", description: "University starts again in September. The neighbourhood wakes up. Excellent weather.", rating: 5 },
+        { season: "winter", description: "Mild and cosy. The indoor tapas bars come into their own. Saturday market still runs.", rating: 4 },
+      ],
+    },
+    whatToBring: {
+      bring: ["Reusable bag for the market", "Cash for small bars (some don't take cards)", "Appetite for cheap, good food"],
+      dontBring: ["Expectations of tourist attractions", "Fancy clothes — it's casual"],
+      rentInstead: ["Bike to explore the area and ride into Turia Gardens"],
+    },
+    accessibility: {
+      overallRating: 3,
+      summary: "Benimaclet has flat streets and good pavements on the main roads. Some side streets are narrow with uneven surfaces. The metro station has lift access.",
+      wheelchairNotes: "Main streets around the plaza are accessible. The market can be crowded and harder to navigate. The metro station has step-free access.",
+      strollerNotes: "Generally easy on the main streets. The playground in the main plaza is a plus for families.",
+      publicTransportAccess: "Metro L1 Benimaclet has lifts. Tram stops are accessible.",
+    },
+    foodAndDrink: {
+      summary: "Benimaclet's food scene punches well above its weight. Student economics mean excellent value — this is where locals eat when they want good food without tourist prices.",
+      recommendations: [
+        { name: "Kaf Café", type: "Speciality coffee / Brunch", priceRange: "€", tip: "The best third-wave coffee in the neighbourhood. Small, cosy, and popular with remote workers in the morning.", familyFriendly: true },
+        { name: "La Finestra", type: "Italian / Pizza", priceRange: "€", tip: "Massive portions at student prices. The four-cheese pizza is legendary among locals.", familyFriendly: true },
+        { name: "Rincón de Diego", type: "Traditional Valencian", priceRange: "€", tip: "The €10 menú del día (three courses + drink) is outstanding value. Packed with locals at lunchtime.", familyFriendly: true },
+        { name: "Punjab Palace", type: "Indian", priceRange: "€", tip: "Authentic north Indian cuisine. The butter chicken and garlic naan are excellent. Very generous portions.", familyFriendly: true },
+      ],
+      localSpeciality: "The menú del día — a three-course lunch with bread and drink, typically €10-12. This working-class tradition is strongest in neighbourhoods like Benimaclet where locals, not tourists, set the prices.",
+    },
+    stayingHere: {
+      summary: "Benimaclet is ideal for long-stay visitors, digital nomads, and anyone who wants to experience real Valencian life. Rents are 30-40% cheaper than the centre or Ruzafa, and you're 8 minutes from everything by metro.",
+      pros: ["Most affordable central neighbourhood", "Genuine local atmosphere", "Excellent value food and drink", "Metro to city centre in 8 min", "Near university and Turia Gardens"],
+      cons: ["No tourist attractions nearby", "Quieter nightlife than Ruzafa/El Carmen", "Some streets feel residential and empty at night", "Limited English spoken in local bars"],
+      gettingElsewhere: ["Metro to city centre: 8 min", "Walk to Turia Gardens: 10 min", "Tram to beach: 20 min"],
+    },
+    visitingHere: {
+      summary: "Benimaclet is best as a half-day immersion into local life rather than a sightseeing destination. Come on Saturday for the market and stay for lunch.",
+      idealDuration: "3-4 hours (Saturday morning ideal)",
+      bestTimeOfDay: "Saturday morning 9am-1pm for market + lunch",
+      tips: [
+        "Come on Saturday for the street market — it's the neighbourhood at its most vibrant.",
+        "Have a late breakfast coffee at a terrace on the main plaza, browse the market, then stay for a menú del día lunch.",
+        "Walk south through the neighbourhood to reach Turia Gardens for an afternoon stroll.",
+      ],
+    },
+    practicalTips: [
+      "Bring cash — several small bars and market stalls don't accept cards.",
+      "The Saturday market runs approximately 9am-2pm. Best selection is before 11am.",
+      "Spanish is the main language here. A few words of Spanish go a long way with local bar owners.",
+      "The neighbourhood has a strong community identity — respect the urban garden spaces and local initiatives.",
+    ],
+    audienceTips: [
+      {
+        audience: "digital-nomads",
+        tips: [
+          "Kaf Café is the best work-friendly café with good Wi-Fi and outlets.",
+          "Benimaclet has the cheapest quality accommodation for long stays — many nomads base here for months.",
+          "The university library (Biblioteca de la Universitat) is nearby and open to the public.",
+        ],
+      },
+      {
+        audience: "budget",
+        tips: [
+          "This is Valencia's best neighbourhood for eating well on a budget. The menú del día tradition is alive here.",
+          "The Saturday market has excellent produce for self-catering at local prices.",
+          "Accommodation here costs 30-40% less than Ruzafa or the centre.",
+        ],
+      },
+    ],
+    productWidgets: [
+      { categorySlug: "remote-work", heading: "Setting up your remote office in Valencia?", afterSection: "Highlights" },
+    ],
+    relatedDestinations: ["ruzafa", "el-carmen", "city-of-arts-and-sciences"],
+    relatedBlogPosts: ["digital-nomad-valencia-guide"],
+    faqs: [
+      { question: "Is Benimaclet worth visiting as a tourist?", answer: "If you want to see how Valencians actually live — yes. There are no museums or monuments, but the Saturday market, local tapas bars, and neighbourhood atmosphere are a refreshing contrast to the tourist centre." },
+      { question: "Is Benimaclet safe?", answer: "Yes, it's a residential neighbourhood with a strong community. Like any area, use normal awareness at night on quiet streets, but overall it's very safe." },
+      { question: "What is Benimaclet known for?", answer: "Its village atmosphere, student culture (near the university), Saturday street market, multicultural food scene, and its community's successful resistance to corporate development." },
+    ],
+  },
+
+  // ===== TURIA GARDENS =====
+  {
+    slug: "turia-gardens",
+    name: "Turia Gardens",
+    type: "attraction",
+    tagline: "Europe's largest urban park — 9km of green in Valencia's old riverbed",
+    heroImage: "/discover/turia-gardens-hero.jpg",
+    heroImageAlt: "Lush green Turia Gardens park with cyclists on paths, palm trees, and Valencia's medieval bridges overhead",
+    title: "Turia Gardens, Valencia — Complete Guide to the Jardín del Turia",
+    description: "Everything you need to know about Turia Gardens (Jardín del Turia), Valencia's stunning 9km urban park. Cycling routes, Gulliver playground, running paths, and how to explore this unique green space.",
+    keywords: ["Turia Gardens Valencia", "Jardín del Turia", "Valencia park", "Gulliver playground Valencia", "cycling Valencia"],
+    date: "2026-06-20",
+    lastUpdated: "2026-06-20",
+    audiences: ["families", "couples", "digital-nomads", "elderly", "budget"],
+    region: "Central Valencia",
+    hubs: ["attractions"],
+    overview: {
+      paragraphs: [
+        "The Turia Gardens is Valencia's masterpiece of urban planning. After a catastrophic flood in 1957, the River Turia was diverted south and the old riverbed was transformed into a 9-kilometre serpentine park that cuts through the entire city. Today it's one of Europe's largest urban green spaces — and it's completely free.",
+        "The park runs from the Bioparc zoo in the west to the City of Arts and Sciences in the east, passing under 18 historic bridges along the way. It contains football pitches, running paths, cycling lanes, botanical gardens, playgrounds (including the famous Gulliver playground), cafés, and thousands of orange and palm trees. Whether you're jogging, cycling, pushing a stroller, or just sitting under a tree with a book, the Turia is where Valencia relaxes.",
+        "For visitors, the Turia is the city's connective tissue — use it instead of the metro. Walking or cycling from the old town to the beach, or from Ruzafa to Benimaclet, is faster and infinitely more pleasant through the park than on the streets above. It's flat, shaded, and car-free.",
+      ],
+      quickFacts: [
+        { label: "Length", value: "9 km (5.6 miles) end to end" },
+        { label: "Access", value: "Free, open 24 hours" },
+        { label: "Best for", value: "Cycling, jogging, families, picnics" },
+        { label: "Key landmarks", value: "Gulliver playground, Bioparc, City of Arts & Sciences" },
+      ],
+    },
+    highlights: [
+      {
+        name: "Gulliver Playground",
+        description: "A massive sculpture of Gulliver lying on the ground, 70 metres long, covered in slides, ramps, steps, and climbing surfaces. Kids (and adults) scramble all over this Lilliputian-scale playground. It's one of Valencia's most iconic experiences.",
+        icon: "🛝",
+        tip: "Go early morning or late afternoon to avoid summer heat and crowds. It's fully free and there are no age restrictions — adults are welcome to climb too.",
+        googleMapsUrl: "https://maps.google.com/?q=Parque+Gulliver+Valencia",
+      },
+      {
+        name: "Bioparc Valencia",
+        description: "A modern, barrier-free zoo at the western end of the Turia. Animals are grouped by African ecosystem (savannah, equatorial forest, Madagascar, wetlands) rather than species. The gorilla and elephant enclosures are outstanding.",
+        icon: "🦁",
+        tip: "Buy tickets online to save time. The feeding schedules (check at entrance) add a lot to the experience. Allow 3-4 hours.",
+        googleMapsUrl: "https://maps.google.com/?q=Bioparc+Valencia",
+      },
+      {
+        name: "Cycling the Full 9km",
+        description: "The entire park has a dedicated bike lane running end to end. From Bioparc to the City of Arts takes about 40 minutes at a leisurely pace — one of the best urban cycling experiences in Europe. Flat, shaded, and completely car-free.",
+        icon: "🚲",
+        tip: "Use Valenbisi (bike share) stations — there are dozens along the park. Or rent a better bike from a local shop for a half-day.",
+      },
+      {
+        name: "Palau de la Música",
+        description: "Valencia's main concert venue sits in the middle of the park surrounded by a lake and gardens. Even without a concert, the grounds are beautiful for a stroll. In summer, there are free outdoor performances.",
+        icon: "🎵",
+        tip: "Check their website for free summer concerts — they're a lovely evening out in the park.",
+        googleMapsUrl: "https://maps.google.com/?q=Palau+de+la+Musica+Valencia",
+      },
+      {
+        name: "Jardí Botànic",
+        description: "The university's botanical garden, technically just outside the Turia but connected to its western section. Over 3,000 plant species, an orchid greenhouse, and a remarkably peaceful atmosphere. One of the oldest in Europe (founded 1567).",
+        icon: "🌺",
+        tip: "Costs €2.50. The cactus collection and tropical greenhouse are the highlights. It's a perfect cool escape on hot summer days.",
+        googleMapsUrl: "https://maps.google.com/?q=Jardí+Botànic+Valencia",
+      },
+    ],
+    gettingThere: {
+      summary: "You don't really 'go to' the Turia Gardens — you're always near them. The park runs through the entire city and has dozens of access points via staircases and ramps from the bridges above.",
+      options: [
+        { mode: "walk", description: "Accessible from virtually anywhere in central Valencia. Staircases and ramps descend from every bridge.", duration: "0-15 min from most locations" },
+        { mode: "metro", description: "Alameda (L3/L5) exits directly into the park. Àngel Guimerà is also close.", duration: "Direct" },
+        { mode: "bike", description: "Valenbisi stations are at many entry points. The park itself is the bike route.", duration: "Varies", cost: "€2 (Valenbisi)" },
+      ],
+      parkingNotes: "Street parking above the park on surrounding roads. Or use underground car parks at Porta de la Mar or near the City of Arts.",
+    },
+    bestTimeToVisit: {
+      summary: "The Turia is enjoyable year-round, but spring and autumn are perfect. Summer is hot — go early morning or late afternoon.",
+      seasons: [
+        { season: "spring", description: "Ideal — orange blossoms everywhere, comfortable temperatures, everything in bloom.", rating: 5 },
+        { season: "summer", description: "Hot (35°C+). Go before 10am or after 7pm. Shade from the trees helps, but midday is brutal.", rating: 3 },
+        { season: "autumn", description: "Beautiful — warm, golden light, the oranges are ripening on the trees. Perfect cycling weather.", rating: 5 },
+        { season: "winter", description: "Mild (10-16°C). Less greenery but pleasant for jogging and walking. Park is quiet and peaceful.", rating: 4 },
+      ],
+    },
+    whatToBring: {
+      bring: ["Water bottle (essential in summer)", "Sun cream", "Comfortable shoes or running kit", "Picnic blanket"],
+      dontBring: ["Heavy bags — you'll be walking/cycling distances"],
+      rentInstead: ["Bike for the full park experience", "Stroller for families with young children", "Running watch/tracker for the jogging paths"],
+    },
+    accessibility: {
+      overallRating: 5,
+      summary: "The Turia Gardens is one of the most accessible green spaces in any European city. The park is entirely flat (it's a riverbed), paths are wide and paved, and ramp access is available from most bridge entry points.",
+      wheelchairNotes: "Excellent. The main paths are smooth, flat, and wide enough for any wheelchair. Most bridge crossings have ramp access (a few older bridges are stairs only — check the western end). The Gulliver playground has accessible sections.",
+      strollerNotes: "Perfect for strollers of any size. Flat, smooth paths, shaded sections, multiple playgrounds, and café stops along the way. This is Valencia's best family walk.",
+      publicTransportAccess: "Metro Alameda exits at park level. Multiple bus stops along the bridges above have ramp access down.",
+    },
+    foodAndDrink: {
+      summary: "Several cafés and kiosks are scattered along the park. The areas near Pont de Fusta and around the Palau de la Música have the most options.",
+      recommendations: [
+        { name: "La Pérgola (Palau area)", type: "Café / Terrace", priceRange: "€", tip: "The most popular park café. Good for coffee and a sandwich mid-walk. Terrace seating overlooking the lake.", familyFriendly: true },
+        { name: "Kiosco near Gulliver", type: "Snack bar", priceRange: "€", tip: "Basic drinks and ice creams — exactly what you need after the kids have been climbing Gulliver for an hour.", familyFriendly: true },
+        { name: "Pont de Fusta area", type: "Multiple restaurants", priceRange: "€€", tip: "Climb up to street level at Pont de Fusta bridge for a cluster of restaurants and a Mercadona supermarket for picnic supplies.", familyFriendly: true },
+      ],
+      localSpeciality: "Pack a picnic with supplies from Mercado Central or Mercadona — eating under the orange trees in the Turia is a quintessential Valencia experience.",
+    },
+    visitingHere: {
+      summary: "The full 9km is a half-day by bike or a full day on foot. Most visitors pick a section — the eastern end (City of Arts to Gulliver) is the most popular.",
+      idealDuration: "2-4 hours (one section) or full day (end to end by bike)",
+      bestTimeOfDay: "Early morning for joggers, mid-morning for families, late afternoon for cyclists and walkers",
+      tips: [
+        "The eastern section (Gulliver → City of Arts) is the most popular and scenic. Start here if time is limited.",
+        "Rent a bike and cycle the full 9km — it's flat, shaded, and one of the best urban rides in Europe.",
+        "Pack water and sun cream in summer. The park has trees for shade but midday sun is intense.",
+        "Use the park as your daily commute — walking through the Turia is faster and nicer than taking the street above.",
+      ],
+    },
+    practicalTips: [
+      "The park is below street level (it's a riverbed), so you need to descend via stairs or ramps from the bridges. Most bridges have both.",
+      "Don't pick the oranges — they're bitter Seville oranges used for marmalade, not eating. You will regret it.",
+      "Cycling lanes and pedestrian paths are separated — stay in the right lane. Cyclists move fast.",
+      "The park is safe day and night, though the western end is quieter and less lit after dark.",
+      "Public toilets are near the Gulliver playground and at some café kiosks. They're not abundant — plan ahead.",
+    ],
+    audienceTips: [
+      {
+        audience: "families",
+        tips: [
+          "Gulliver playground is the headline, but there are 6+ smaller playgrounds scattered throughout the park.",
+          "The Bioparc (western end) is excellent for kids — the barrier-free design means animals feel very close.",
+          "Bring a picnic — the grassy areas near Gulliver are perfect for spreading a blanket.",
+        ],
+      },
+      {
+        audience: "digital-nomads",
+        tips: [
+          "Morning jog in the Turia, then work at a café above — this is the Valencia digital nomad lifestyle.",
+          "The Pont de Fusta area has good cafés with Wi-Fi just above the park.",
+          "The park's eastern end is near Ruzafa — combine a park run with a Ruzafa brunch.",
+        ],
+      },
+      {
+        audience: "elderly",
+        tips: [
+          "The flat paths make this ideal for gentle walks. The section near the Palau de la Música has benches and shade.",
+          "Mobility scooters work well on the main paths — they're wide, flat, and smooth.",
+          "The botanical garden (Jardí Botànic) is a peaceful, slow-paced alternative to the main park.",
+        ],
+      },
+    ],
+    productWidgets: [
+      { categorySlug: "mobility", heading: "Exploring the park with mobility support?", afterSection: "Accessibility" },
+      { categorySlug: "baby-gear", heading: "Park day with little ones?", afterSection: "Practical Tips" },
+    ],
+    relatedDestinations: ["city-of-arts-and-sciences", "el-carmen", "ruzafa", "benimaclet"],
+    relatedBlogPosts: ["valencia-with-kids-complete-guide", "accessible-valencia-complete-guide"],
+    faqs: [
+      { question: "How long are the Turia Gardens?", answer: "9 kilometres (5.6 miles) from Bioparc in the west to the City of Arts and Sciences in the east. Cycling takes about 40 minutes end to end; walking takes 2-3 hours at a leisurely pace." },
+      { question: "Is the Turia park free?", answer: "Yes, completely free, open 24 hours, 365 days a year. Individual attractions within or beside it (Bioparc, Botanical Garden) have their own admission fees." },
+      { question: "Can you cycle in Turia Gardens?", answer: "Yes — there are dedicated cycling lanes running the full length. Use Valenbisi (city bike share, €2/day) or rent from a local shop. It's flat and car-free." },
+      { question: "Is the Gulliver playground free?", answer: "Yes, completely free. Open daily from approximately 10am-8pm (hours vary seasonally). No age restrictions — adults can climb too. Best visited early morning or late afternoon to avoid crowds." },
+    ],
+  },
 ];
 
