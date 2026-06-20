@@ -1449,5 +1449,290 @@ export const destinations: Destination[] = [
       { question: "Is the Gulliver playground free?", answer: "Yes, completely free. Open daily from approximately 10am-8pm (hours vary seasonally). No age restrictions — adults can climb too. Best visited early morning or late afternoon to avoid crowds." },
     ],
   },
+
+  // ===== EL ENSANCHE =====
+  {
+    slug: "el-ensanche",
+    name: "El Ensanche",
+    type: "neighbourhood",
+    tagline: "Wide boulevards, designer shopping, and Valencia's most elegant dining quarter",
+    heroImage: "/discover/el-ensanche-hero.jpg",
+    heroImageAlt: "Elegant tree-lined Calle Colón shopping boulevard with Art Nouveau buildings in Valencia's Ensanche district",
+    title: "El Ensanche, Valencia — Guide to the Shopping & Dining District",
+    description: "Discover El Ensanche, Valencia's elegant modern district. Calle Colón shopping, Mercado de Colón, upscale restaurants, and tree-lined boulevards. The perfect base for first-time visitors.",
+    keywords: ["El Ensanche Valencia", "Calle Colón Valencia", "shopping Valencia", "Mercado de Colón", "Valencia shopping guide"],
+    date: "2026-06-20",
+    lastUpdated: "2026-06-20",
+    audiences: ["families", "couples", "elderly", "luxury"],
+    region: "Central Valencia",
+    hubs: ["neighbourhoods"],
+    overview: {
+      paragraphs: [
+        "El Ensanche (\"the expansion\") is Valencia's 19th-century grid district — the Eixample to El Carmen's Gothic Quarter. Built when Valencia outgrew its medieval walls, El Ensanche is defined by wide tree-lined boulevards, elegant Art Nouveau and Modernista facades, and Calle Colón, one of Spain's busiest shopping streets.",
+        "This is Valencia's most polished neighbourhood. The streets are wide and flat (excellent for wheelchairs and strollers), the shops range from Zara to luxury boutiques, and the dining scene spans Michelin-starred restaurants to the stunning Mercado de Colón — an Art Nouveau gem converted into an upmarket food hall.",
+        "For visitors, El Ensanche is the safe, comfortable, centrally-located option. You're equidistant from El Carmen (10 min walk north), Ruzafa (10 min south), and the Turia Gardens (5 min east). Hotels here tend to be higher-end, and the neighbourhood feels calm and well-maintained — a welcome contrast to the beautiful chaos of the old town.",
+      ],
+      quickFacts: [
+        { label: "Getting there", value: "Metro L3/L5/L7 Colón (city centre)" },
+        { label: "Best for", value: "Shopping, fine dining, first-time visitors" },
+        { label: "Vibe", value: "Elegant, modern, polished" },
+        { label: "Key street", value: "Calle Colón — Valencia's main shopping artery" },
+      ],
+    },
+    highlights: [
+      {
+        name: "Calle Colón",
+        description: "Valencia's premier shopping street — a wide, pedestrian-friendly boulevard lined with Spanish and international brands. From Zara and Mango to El Corte Inglés (Spain's iconic department store), this is where Valencians shop.",
+        icon: "🛍️",
+        tip: "Sales seasons (rebajas) start in January and July. El Corte Inglés has a great rooftop restaurant with city views.",
+        googleMapsUrl: "https://maps.google.com/?q=Calle+Colón+Valencia",
+      },
+      {
+        name: "Mercado de Colón",
+        description: "A breathtaking Art Nouveau market building from 1916, restored and converted into an upmarket food hall. The ceramic-tiled facade and iron-and-glass interior are architectural wonders. Inside: gourmet coffee, wine bars, tapas, and Valencia's best horchata.",
+        icon: "🏛️",
+        tip: "Come for mid-morning coffee or an aperitivo. The horchata at Daniel is outstanding. The building is worth visiting for the architecture alone.",
+        googleMapsUrl: "https://maps.google.com/?q=Mercado+de+Colón+Valencia",
+      },
+      {
+        name: "Calle Jorge Juan",
+        description: "Valencia's most fashionable street for independent boutiques, art galleries, and upscale dining. Quieter and more refined than Calle Colón. The side streets hide some of the city's best restaurants.",
+        icon: "✨",
+        tip: "The stretch between Colón and Ruzafa has the best boutiques. Thursday and Friday evenings are the most atmospheric for a paseo (evening stroll).",
+      },
+      {
+        name: "Plaza del Ayuntamiento",
+        description: "Valencia's grand main square, anchored by the imposing City Hall with its ornate facade and clock tower. The square hosts the Mascletà during Fallas — the deafening daytime fireworks that shake windows across the city.",
+        icon: "🏛️",
+        tip: "Visit the City Hall balcony for views (free entry, limited hours). The square has a large fountain that's beautifully lit at night.",
+        googleMapsUrl: "https://maps.google.com/?q=Plaza+del+Ayuntamiento+Valencia",
+      },
+    ],
+    gettingThere: {
+      summary: "You're probably already here — El Ensanche is the geographical centre of modern Valencia.",
+      options: [
+        { mode: "metro", description: "Colón (L3/L5/L7) is in the heart of El Ensanche. Xàtiva (L3/L5) covers the southern end.", duration: "Direct", cost: "€1.50" },
+        { mode: "walk", description: "10 minutes from El Carmen, 10 minutes from Ruzafa. Central to everything.", duration: "10 min from most areas" },
+        { mode: "bus", description: "Dozens of bus lines pass through. Any bus heading to 'Centro' or 'Colón' will work.", duration: "Varies", cost: "€1.50" },
+      ],
+      parkingNotes: "Underground parking at Calle Colón and Plaza del Ayuntamiento. Expect €15-20/day. Traffic in the centre is slow — metro or walking is faster.",
+    },
+    bestTimeToVisit: {
+      summary: "Year-round, but the shopping and outdoor dining are best in spring and autumn.",
+      seasons: [
+        { season: "spring", description: "Perfect temperatures for strolling and outdoor dining. Fallas in March transforms the area.", rating: 5 },
+        { season: "summer", description: "Hot but air-conditioned shops provide relief. El Corte Inglés and Mercado de Colón are cool retreats.", rating: 3 },
+        { season: "autumn", description: "Ideal — pleasant weather, fashion season, terrace dining still comfortable.", rating: 5 },
+        { season: "winter", description: "Christmas lights along Calle Colón are stunning. Mild enough for outdoor coffee.", rating: 4 },
+      ],
+    },
+    whatToBring: {
+      bring: ["Comfortable walking shoes", "Shopping bags (or buy one)", "Appetite for Mercado de Colón"],
+      dontBring: ["Heavy luggage", "Impatience (shops close 2-5pm for siesta)"],
+      rentInstead: ["Stroller for family shopping trips", "Wheelchair for comfortable exploring"],
+    },
+    accessibility: {
+      overallRating: 5,
+      summary: "El Ensanche is Valencia's most accessible neighbourhood. The 19th-century grid layout means wide, flat pavements, dropped kerbs at every crossing, and step-free access to most shops and restaurants.",
+      wheelchairNotes: "Excellent throughout. Wide pavements, flat terrain, step-free shop entrances on Calle Colón. Mercado de Colón and El Corte Inglés are fully accessible.",
+      strollerNotes: "The easiest neighbourhood for strollers. Wide, flat pavements without cobblestones. Lifts in metro stations and department stores.",
+      publicTransportAccess: "Metro Colón has lifts. All bus stops on the main routes have low-floor vehicles.",
+    },
+    foodAndDrink: {
+      summary: "El Ensanche has Valencia's widest range of dining — from Michelin-starred restaurants to the gorgeous Mercado de Colón food hall.",
+      recommendations: [
+        { name: "Mercado de Colón", type: "Gourmet food hall", priceRange: "€€", tip: "Not a traditional market — more an Art Nouveau food court. The horchata at Daniel and the tapas at Ma Khin are highlights.", familyFriendly: true },
+        { name: "Canalla Bistro by Ricard Camarena", type: "Michelin-starred fusion", priceRange: "€€€", tip: "Ricard Camarena's casual concept. Asian-Mediterranean fusion that works. Book 2-3 days ahead.", familyFriendly: false },
+        { name: "El Corte Inglés Rooftop", type: "Restaurant / Views", priceRange: "€€", tip: "The rooftop restaurant has panoramic views and surprisingly decent food. Good for a special lunch without Michelin prices.", familyFriendly: true },
+        { name: "Horchatería Daniel", type: "Traditional / Horchata", priceRange: "€", tip: "Inside Mercado de Colón. The best horchata and fartons in the city. A must-try Valencian experience.", familyFriendly: true },
+      ],
+      localSpeciality: "Horchata and fartons at Mercado de Colón — Valencia's signature sweet drink made from tiger nuts, served ice-cold with sugar-glazed pastries.",
+    },
+    stayingHere: {
+      summary: "El Ensanche is the best base for first-time visitors who want comfort, convenience, and easy access to everything. Hotels tend to be modern and well-equipped. You can walk to El Carmen, Ruzafa, and the Turia in minutes.",
+      pros: ["Central location — walk everywhere", "Wide, accessible streets", "Best shopping in the city", "High-quality hotels and restaurants", "Safe, polished, comfortable"],
+      cons: ["More expensive than Ruzafa or Benimaclet", "Less atmospheric than El Carmen", "Can feel corporate/generic in parts", "Limited nightlife"],
+      gettingElsewhere: ["Walk to El Carmen: 10 min", "Walk to Ruzafa: 10 min", "Walk to Turia Gardens: 5 min", "Metro to beach: 15 min"],
+    },
+    visitingHere: {
+      summary: "El Ensanche is best combined with other areas. Spend a morning shopping and having coffee at Mercado de Colón, then walk into El Carmen or Ruzafa for the afternoon.",
+      idealDuration: "2-3 hours",
+      bestTimeOfDay: "Morning for shopping (10am-2pm), evening for dining",
+      tips: [
+        "Start at Mercado de Colón for coffee, then walk Calle Colón for shopping.",
+        "Shops close 2-5pm for siesta — plan lunch or visit El Carmen during this window.",
+        "Evening: Calle Jorge Juan and its side streets for upscale dining.",
+      ],
+    },
+    practicalTips: [
+      "Spanish shops close 2-5pm for siesta. Department stores (El Corte Inglés) stay open all day.",
+      "Sales seasons (rebajas) start in January and July — prices drop 30-70% across all shops.",
+      "Mercado de Colón is not a traditional market — don't expect cheap produce. It's a food hall experience.",
+      "The area around Plaza del Ayuntamiento can be very crowded during Fallas (March).",
+    ],
+    audienceTips: [
+      {
+        audience: "families",
+        tips: [
+          "El Corte Inglés has a children's floor with toys, clothes, and a family-friendly restaurant.",
+          "Mercado de Colón has high chairs and space for strollers — one of the easier family dining spots.",
+          "The Turia Gardens (Gulliver playground) is a 5-minute walk east — perfect afternoon activity.",
+        ],
+      },
+      {
+        audience: "elderly",
+        tips: [
+          "The flat, wide pavements make this Valencia's easiest neighbourhood to navigate.",
+          "Mercado de Colón has seating, air conditioning, and accessible toilets.",
+          "El Corte Inglés has lifts to every floor and accessible facilities throughout.",
+        ],
+      },
+    ],
+    productWidgets: [
+      { categorySlug: "mobility", heading: "Exploring Valencia in comfort?", afterSection: "Accessibility" },
+      { categorySlug: "baby-gear", heading: "Shopping trip with little ones?", afterSection: "Practical Tips" },
+    ],
+    relatedDestinations: ["el-carmen", "ruzafa", "turia-gardens"],
+    relatedBlogPosts: ["valencia-with-kids-complete-guide"],
+    faqs: [
+      { question: "What is the main shopping street in Valencia?", answer: "Calle Colón in the Ensanche district. It's a wide, pedestrian-friendly boulevard with Spanish and international brands, plus El Corte Inglés department store." },
+      { question: "Is Mercado de Colón a real market?", answer: "Not in the traditional sense — it's a beautifully restored Art Nouveau building converted into an upscale food hall with cafés, wine bars, and gourmet stalls. Worth visiting for the architecture alone." },
+      { question: "Where is the best area to stay in Valencia for first-time visitors?", answer: "El Ensanche (around Calle Colón) is ideal — central, safe, accessible, with easy walking access to El Carmen, Ruzafa, and the Turia Gardens." },
+    ],
+  },
+
+  // ===== SAGUNTO =====
+  {
+    slug: "sagunto",
+    name: "Sagunto",
+    type: "day-trip",
+    tagline: "Ancient hilltop castle, Roman theatre, and a charming old town — 30 minutes from Valencia",
+    heroImage: "/discover/sagunto-hero.jpg",
+    heroImageAlt: "Panoramic view of Sagunto Castle ruins on the hilltop with the town and Mediterranean coast visible below",
+    title: "Sagunto Day Trip from Valencia — Castle, Roman Theatre & Old Town",
+    description: "Plan a day trip to Sagunto from Valencia. Visit the hilltop castle with panoramic views, the restored Roman theatre, and the medieval Jewish quarter — all 30 minutes by train.",
+    keywords: ["Sagunto day trip", "Sagunto castle", "Sagunto from Valencia", "Roman theatre Sagunto", "day trips from Valencia"],
+    date: "2026-06-20",
+    lastUpdated: "2026-06-20",
+    audiences: ["families", "couples", "budget"],
+    region: "Camp de Morvedre",
+    distanceFromValencia: "30 km north",
+    hubs: ["day-trips"],
+    overview: {
+      paragraphs: [
+        "Sagunto is the easiest and most rewarding day trip from Valencia. Just 30 minutes by regional train (Cercanías), this ancient town has been inhabited for over 2,000 years. The Iberian settlement here famously resisted Hannibal's siege in 219 BC, triggering the Second Punic War between Rome and Carthage. Those layers of history are visible everywhere.",
+        "The town is dominated by its hilltop castle — or rather, the sprawling ruins of multiple fortifications built by Iberians, Romans, Moors, and Christians over two millennia. The 1-kilometre-long walls offer breathtaking 360° views of the surrounding orange groves, the Mediterranean coast, and the Sierra Calderona mountains. Below the castle, the beautifully restored Roman theatre hosts summer performances.",
+        "Beyond the headline sights, Sagunto's old town is a delightful tangle of narrow streets, the medieval Jewish quarter (Judería), small museums, and local restaurants serving paella at half Valencia's tourist prices. It's a genuine small Spanish town — unhurried, affordable, and deeply atmospheric.",
+      ],
+      quickFacts: [
+        { label: "Distance", value: "30 km north of Valencia (30 min train)" },
+        { label: "Train", value: "Cercanías C-5/C-6 from Valencia Nord to Sagunto" },
+        { label: "Cost", value: "~€3.60 return train fare" },
+        { label: "Time needed", value: "Half day (4-5 hours)" },
+      ],
+    },
+    highlights: [
+      {
+        name: "Sagunto Castle",
+        description: "A massive hilltop fortification stretching nearly 1km along the ridge. Built and rebuilt over 2,000 years by Iberians, Romans, Moors, and Christians. The views from the walls are extraordinary — coast to mountains in every direction.",
+        icon: "🏰",
+        tip: "Start from the Roman theatre and walk up. The climb takes 15-20 minutes. Bring water. Go early in summer — there's no shade on the walls.",
+        googleMapsUrl: "https://maps.google.com/?q=Castillo+de+Sagunto",
+      },
+      {
+        name: "Roman Theatre",
+        description: "A beautifully restored 1st-century Roman theatre that still hosts summer performances (the Sagunt a Escena festival in August). The semicircular auditorium seats 4,000 and the mountain backdrop is stunning.",
+        icon: "🏛️",
+        tip: "Free entry. If you're visiting in August, check for evening performances — watching theatre in a 2,000-year-old venue is unforgettable.",
+        googleMapsUrl: "https://maps.google.com/?q=Teatro+Romano+Sagunto",
+      },
+      {
+        name: "Jewish Quarter (Judería)",
+        description: "One of the best-preserved medieval Jewish quarters in Spain. Narrow alleys, arched passageways, and the remains of a medieval mikveh (ritual bath). The Jewish community here was one of the largest in medieval Valencia.",
+        icon: "✡️",
+        tip: "The Centro de Interpretación de la Judería has a small but excellent exhibit explaining the community's history. Ask about the medieval Hebrew inscriptions.",
+      },
+      {
+        name: "Old Town & Plaça Major",
+        description: "Sagunto's old town is a quiet, atmospheric collection of narrow streets, small churches, and local shops. The Plaça Major has café terraces perfect for a post-castle coffee. The Museo Histórico has archaeological finds from the Iberian to Moorish periods.",
+        icon: "🏘️",
+        tip: "Have lunch in the old town — the restaurants serve excellent local food at prices much lower than Valencia. Try arroz al horno (oven-baked rice).",
+      },
+    ],
+    gettingThere: {
+      summary: "The Cercanías commuter train is the easiest way. Runs every 15-30 minutes, costs less than €4 return.",
+      options: [
+        { mode: "train", description: "Cercanías C-5 or C-6 from Valencia Nord (Estació del Nord) to Sagunto station", duration: "30 min", cost: "~€3.60 return" },
+        { mode: "car", description: "A-7 motorway north. Free parking available near the old town.", duration: "25-30 min", cost: "Free (toll-free route)" },
+      ],
+      parkingNotes: "Free street parking around the base of the old town. Parking near the Roman theatre is limited but usually available outside summer weekends.",
+    },
+    bestTimeToVisit: {
+      summary: "Spring and autumn are perfect. Summer is brutally hot on the exposed castle walls — go early morning.",
+      seasons: [
+        { season: "spring", description: "Ideal — orange blossoms in the surrounding groves, comfortable temperatures for the castle climb.", rating: 5 },
+        { season: "summer", description: "Very hot (35°C+). The castle has zero shade. Go at opening time (10am) and descend before noon. Summer performances at the Roman theatre are magical.", rating: 3 },
+        { season: "autumn", description: "Perfect weather. Orange harvest season. Fewer visitors. The golden light on the castle walls is stunning.", rating: 5 },
+        { season: "winter", description: "Mild but can be windy on the castle ridge. Few tourists. A peaceful, atmospheric visit.", rating: 4 },
+      ],
+    },
+    whatToBring: {
+      bring: ["Water (essential — no shops on the castle hill)", "Comfortable shoes with grip", "Sun hat and sun cream in summer", "Camera"],
+      dontBring: ["Heels or sandals (the castle path is rough)", "Heavy bags"],
+      rentInstead: ["Compact stroller (leave big buggies — the old town has steps)"],
+    },
+    accessibility: {
+      overallRating: 2,
+      summary: "The castle and old town are challenging for wheelchairs and heavy strollers. The castle climb is steep and uneven. The Roman theatre is accessible at ground level. The train station is flat.",
+      wheelchairNotes: "The castle is not wheelchair accessible — the path is steep, uneven, and unpaved in sections. The Roman theatre and old town are partially accessible on the main streets.",
+      strollerNotes: "A compact, lightweight stroller works for the old town streets. Leave it at the theatre entrance before climbing to the castle — the path is too steep and rough.",
+      publicTransportAccess: "Sagunto train station is step-free. The walk to the old town is flat (10 minutes). The climb to the castle begins at the theatre.",
+    },
+    foodAndDrink: {
+      summary: "Sagunto's restaurants serve excellent, affordable local food. This is where locals eat — not tourists.",
+      recommendations: [
+        { name: "L'Armeler", type: "Traditional Valencian", priceRange: "€€", tip: "One of the best restaurants in Sagunto. The arroz al horno (oven-baked rice) is outstanding. Book for lunch.", familyFriendly: true },
+        { name: "Cafés on Plaça Major", type: "Café / Terrace", priceRange: "€", tip: "Perfect post-castle recovery spot. Cold drinks, bocadillos, and people-watching.", familyFriendly: true },
+      ],
+      localSpeciality: "Arroz al horno — oven-baked rice with chickpeas, blood sausage, and pork. A Camp de Morvedre speciality you won't find easily in Valencia city.",
+    },
+    visitingHere: {
+      summary: "A half day is perfect. Take the morning train, climb the castle, visit the theatre, lunch in the old town, afternoon train back.",
+      idealDuration: "4-5 hours",
+      bestTimeOfDay: "Morning (arrive by 10am, avoid midday heat on the castle)",
+      tips: [
+        "Take the 9:30-10am Cercanías from Valencia Nord. You'll be at the castle by 11am.",
+        "Visit the Roman theatre first (free), then climb to the castle (20 min uphill).",
+        "Descend via the Jewish quarter and old town. Have lunch at Plaça Major.",
+        "Take the afternoon train back (runs every 15-30 min). You'll be in Valencia by 3pm.",
+      ],
+    },
+    practicalTips: [
+      "The castle is free to enter and open daily. Check winter hours (may close earlier).",
+      "Bring at least 1 litre of water per person — there are no facilities on the castle hill.",
+      "The castle climb is moderate (20 min) but exposed. In summer, start early or you'll be climbing in full sun.",
+      "The train station is a 10-minute flat walk from the old town. Follow signs to 'Centro Histórico'.",
+    ],
+    audienceTips: [
+      {
+        audience: "families",
+        tips: [
+          "Kids love the castle — it's like a real-life adventure playground. The walls are safe to walk on but supervise closely.",
+          "The Roman theatre is a great spot for kids to run around. Free entry, open space.",
+          "Pack snacks and water — options on the hill are zero.",
+        ],
+      },
+    ],
+    productWidgets: [
+      { categorySlug: "baby-gear", heading: "Day trip with little ones?", afterSection: "Practical Tips" },
+    ],
+    relatedDestinations: ["albufera-natural-park", "city-of-arts-and-sciences"],
+    relatedBlogPosts: ["valencia-with-kids-complete-guide"],
+    faqs: [
+      { question: "How do I get to Sagunto from Valencia?", answer: "Take the Cercanías commuter train (C-5 or C-6) from Valencia Nord station. It runs every 15-30 minutes, takes 30 minutes, and costs about €3.60 return." },
+      { question: "Is Sagunto Castle worth visiting?", answer: "Absolutely. The 1km-long hilltop ruins with 360° views are spectacular. Combined with the Roman theatre and charming old town, it's Valencia's best half-day trip." },
+      { question: "Is Sagunto Castle free?", answer: "Yes, completely free to enter. Open daily, though winter hours may be shorter. The Roman theatre below is also free." },
+    ],
+  },
 ];
 
