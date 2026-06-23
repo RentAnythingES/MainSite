@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase-admin";
 import { verifyAdmin, unauthorizedResponse } from "@/lib/admin-auth";
+import { sendBookingStatusUpdate } from "@/lib/email";
 
 const VALID_TRANSITIONS: Record<string, string[]> = {
   pending: ["confirmed", "cancelled"],
@@ -30,10 +31,13 @@ export async function PUT(
     const { status } = await request.json();
     const supabase = createAdminClient();
 
-    // Get current booking
+    // Get current booking (with product info for email)
     const { data: booking, error: fetchError } = await supabase
       .from("bookings")
-      .select("status")
+      .select(`
+        *,
+        product:products (name)
+      `)
       .eq("id", id)
       .single();
 
@@ -73,6 +77,26 @@ export async function PUT(
         .delete()
         .eq("booking_id", id);
     }
+
+    // Send status update email to customer (fire-and-forget)
+    const b = booking as Record<string, unknown>;
+    const product = b.product as { name: string } | null;
+    sendBookingStatusUpdate(
+      {
+        bookingRef: b.booking_ref as string,
+        customerName: b.customer_name as string,
+        customerEmail: b.customer_email as string,
+        customerPhone: (b.customer_phone as string) || undefined,
+        productName: product?.name || "Rental equipment",
+        startDate: b.start_date as string,
+        endDate: b.end_date as string,
+        rentalDays: b.rental_days as number,
+        totalCents: b.total_cents as number,
+        deliveryAddress: b.delivery_address as string,
+        deliveryType: (b.delivery_type as string) || "standard",
+      },
+      status
+    ).catch((err) => console.error("[admin/bookings] Email send error:", err));
 
     return NextResponse.json({ booking: data });
   } catch (err) {

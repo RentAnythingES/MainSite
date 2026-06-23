@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createServiceClient } from "@/lib/supabase";
+import { sendBookingConfirmation } from "@/lib/email";
 
 export async function POST(request: NextRequest) {
   try {
@@ -99,6 +100,20 @@ export async function POST(request: NextRequest) {
         }))
       );
     }
+    // Send confirmation email (fire-and-forget — don't block the response)
+    sendBookingConfirmation({
+      bookingRef: (booking as { booking_ref: string }).booking_ref,
+      customerName: customerName,
+      customerEmail: customerEmail,
+      customerPhone: customerPhone || undefined,
+      productName: body.productName || "Rental equipment",
+      startDate: startDate,
+      endDate: endDate,
+      rentalDays: rentalDays,
+      totalCents: totalCents,
+      deliveryAddress: deliveryAddress,
+      deliveryType: deliveryType || "standard",
+    }).catch((err) => console.error("[bookings] Email send error:", err));
 
     return NextResponse.json({
       success: true,

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { stripe } from "@/lib/stripe";
 import { createAdminClient } from "@/lib/supabase-admin";
+import { sendBookingConfirmation } from "@/lib/email";
 import Stripe from "stripe";
 
 /**
@@ -144,6 +145,18 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
     }
   }
 
-  // TODO: Send confirmation email via Resend here
-  // await sendBookingConfirmation(booking);
+  // Send confirmation email (customer + admin)
+  await sendBookingConfirmation({
+    bookingRef: (booking as { booking_ref: string }).booking_ref,
+    customerName: meta.customer_name,
+    customerEmail: meta.customer_email || session.customer_email || "",
+    customerPhone: meta.customer_phone || undefined,
+    productName: meta.product_name || "Rental equipment",
+    startDate: meta.start_date,
+    endDate: meta.end_date,
+    rentalDays: parseInt(meta.rental_days || "1"),
+    totalCents: parseInt(meta.total_cents || "0"),
+    deliveryAddress: meta.delivery_address || "",
+    deliveryType: meta.delivery_type || "standard",
+  });
 }
