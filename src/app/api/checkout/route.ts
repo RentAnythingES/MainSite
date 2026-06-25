@@ -84,7 +84,8 @@ export async function POST(request: NextRequest) {
     // Create Stripe Checkout Session with dynamic pricing
     const session = await stripe.checkout.sessions.create({
       mode: "payment",
-      payment_method_types: ["card"],
+      // Enable all payment methods configured in Stripe Dashboard
+      // (card, Apple Pay, Google Pay, etc.)
       customer_email: customerEmail,
       line_items: [
         {

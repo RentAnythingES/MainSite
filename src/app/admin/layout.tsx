@@ -1,4 +1,4 @@
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { createClient } from "@supabase/supabase-js";
 import AdminShell from "@/components/admin/AdminShell";
@@ -26,11 +26,22 @@ export default async function AdminLayout({
 }: {
   children: React.ReactNode;
 }) {
+  // Check if we're on the login page to avoid redirect loop
+  // (x-pathname is set by src/middleware.ts)
+  const headersList = await headers();
+  const pathname = headersList.get("x-pathname") || "";
+  const isLoginPage = pathname.includes("/admin/login");
+
   const user = await getUser();
 
-  if (!user) {
+  if (!user && !isLoginPage) {
     redirect("/admin/login");
   }
 
-  return <AdminShell userEmail={user.email || "admin"}>{children}</AdminShell>;
+  // Login page renders without the AdminShell wrapper
+  if (!user && isLoginPage) {
+    return <>{children}</>;
+  }
+
+  return <AdminShell userEmail={user?.email || "admin"}>{children}</AdminShell>;
 }

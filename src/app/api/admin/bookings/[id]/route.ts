@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase-admin";
 import { verifyAdmin, unauthorizedResponse } from "@/lib/admin-auth";
 import { sendBookingStatusUpdate } from "@/lib/email";
+import { stripe } from "@/lib/stripe";
 
 const VALID_TRANSITIONS: Record<string, string[]> = {
   pending: ["confirmed", "cancelled"],
@@ -70,12 +71,24 @@ export async function PUT(
 
     if (error) throw error;
 
-    // If cancelled, release blocked dates
+    // If cancelled/refunded, release blocked dates and issue Stripe refund
     if (status === "cancelled" || status === "refunded") {
       await supabase
         .from("blocked_dates")
         .delete()
         .eq("booking_id", id);
+
+      // Issue Stripe refund if payment was collected
+      const paymentIntentId = (booking as Record<string, unknown>).stripe_payment_intent_id as string | null;
+      if (paymentIntentId && stripe) {
+        try {
+          await stripe.refunds.create({ payment_intent: paymentIntentId });
+          console.log(`[admin/bookings] Stripe refund issued for ${paymentIntentId}`);
+        } catch (refundErr) {
+          // Log but don't block — refund may already exist or payment may not be refundable
+          console.error(`[admin/bookings] Stripe refund failed for ${paymentIntentId}:`, refundErr);
+        }
+      }
     }
 
     // Send status update email to customer (fire-and-forget)

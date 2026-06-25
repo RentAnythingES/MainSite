@@ -52,15 +52,15 @@ const labels = {
     unavailable: "✕ Not available for these dates",
     bookWhatsapp: "💬 Book via WhatsApp",
     bookDirect: "📋 Book Now",
-    noPayment: "No payment needed yet — we'll confirm availability first",
+    securePayment: "🔒 Secure payment via Stripe",
     yourDetails: "Your Details",
     fullName: "Full Name",
     email: "Email",
     phone: "Phone / WhatsApp",
     deliveryAddress: "Delivery Address",
     deliveryNotes: "Delivery Notes (optional)",
-    submit: "Submit Booking Request",
-    submitting: "Submitting...",
+    submit: "Proceed to Payment",
+    submitting: "Redirecting to payment...",
     successTitle: "Booking Submitted!",
     successRef: "Reference",
     successMsg: "We'll confirm availability and get back to you within a few hours.",
@@ -88,15 +88,15 @@ const labels = {
     unavailable: "✕ No disponible para estas fechas",
     bookWhatsapp: "💬 Reservar por WhatsApp",
     bookDirect: "📋 Reservar Ahora",
-    noPayment: "No se requiere pago aún — confirmaremos la disponibilidad primero",
+    securePayment: "🔒 Pago seguro con Stripe",
     yourDetails: "Tus Datos",
     fullName: "Nombre Completo",
     email: "Correo Electrónico",
     phone: "Teléfono / WhatsApp",
     deliveryAddress: "Dirección de Entrega",
     deliveryNotes: "Notas de Entrega (opcional)",
-    submit: "Enviar Solicitud de Reserva",
-    submitting: "Enviando...",
+    submit: "Proceder al Pago",
+    submitting: "Redirigiendo al pago...",
     successTitle: "¡Reserva Enviada!",
     successRef: "Referencia",
     successMsg: "Confirmaremos la disponibilidad y te responderemos en pocas horas.",
@@ -177,11 +177,13 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
     setSubmitting(true);
 
     try {
-      const res = await fetch("/api/bookings", {
+      const res = await fetch("/api/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           productId: product.slug, // API will resolve to UUID
+          productSlug: product.slug,
+          productName: product.name,
           customerName: name,
           customerEmail: email,
           customerPhone: phone || null,
@@ -194,23 +196,24 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
           totalCents: Math.round(pricing.total * 100),
           deliveryType: deliveryOption,
           deliveryAddress: address,
+          deliveryCity: "valencia",
           deliveryNotes: notes || null,
         }),
       });
 
       const data = await res.json();
 
-      if (res.ok && data.bookingRef) {
-        setBookingRef(data.bookingRef);
-        setStep("success");
+      if (res.ok && data.checkoutUrl) {
+        // Redirect to Stripe Checkout
+        window.location.href = data.checkoutUrl;
       } else {
         // Fallback to WhatsApp
         window.open(whatsappUrl, "_blank");
+        setSubmitting(false);
       }
     } catch {
       // Fallback to WhatsApp
       window.open(whatsappUrl, "_blank");
-    } finally {
       setSubmitting(false);
     }
   };
@@ -302,7 +305,7 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
           </button>
         </form>
 
-        <p className="text-xs text-neutral-400 text-center mt-3">{t.noPayment}</p>
+        <p className="text-xs text-neutral-400 text-center mt-3">{t.securePayment}</p>
       </div>
     );
   }
@@ -477,7 +480,7 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
         </a>
       )}
 
-      <p className="text-xs text-neutral-400 text-center mt-3">{t.noPayment}</p>
+      <p className="text-xs text-neutral-400 text-center mt-3">{t.securePayment}</p>
     </div>
   );
 }
