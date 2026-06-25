@@ -67,6 +67,16 @@ export default async function AdminDashboard() {
             </div>
           </a>
           <a
+            href="/admin/availability"
+            className="flex items-center gap-3 p-4 rounded-lg bg-neutral-800 hover:bg-neutral-700 transition-colors"
+          >
+            <span className="text-xl">📅</span>
+            <div>
+              <p className="text-sm font-medium text-white">Availability</p>
+              <p className="text-xs text-neutral-500">Block dates, view calendar</p>
+            </div>
+          </a>
+          <a
             href="/admin/bookings"
             className="flex items-center gap-3 p-4 rounded-lg bg-neutral-800 hover:bg-neutral-700 transition-colors"
           >
