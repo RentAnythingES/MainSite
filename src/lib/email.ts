@@ -133,7 +133,7 @@ export async function sendBookingConfirmation(data: BookingEmailData): Promise<b
         <p style="font-size: 15px; color: #374151; line-height: 1.6;">
           If you need to make any changes, just reply to this email or reach us on WhatsApp.
         </p>
-        <a href="https://wa.me/34600000000" style="display: inline-block; background: #25d366; color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 14px; margin-top: 8px;">
+        <a href="https://wa.me/34684708013" style="display: inline-block; background: #25d366; color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 14px; margin-top: 8px;">
           💬 WhatsApp Us
         </a>
       `),
@@ -246,7 +246,7 @@ export async function sendBookingStatusUpdate(
         <p style="font-size: 14px; color: #6b7280; line-height: 1.6;">
           Questions? Reply to this email or reach us on WhatsApp.
         </p>
-        <a href="https://wa.me/34600000000" style="display: inline-block; background: #25d366; color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 14px; margin-top: 8px;">
+        <a href="https://wa.me/34684708013" style="display: inline-block; background: #25d366; color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 14px; margin-top: 8px;">
           💬 WhatsApp Us
         </a>
       `),

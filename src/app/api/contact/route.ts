@@ -107,7 +107,7 @@ export async function POST(request: NextRequest) {
               We've received your message and will get back to you within 24 hours.
               For urgent enquiries, you can also reach us on WhatsApp.
             </p>
-            <a href="https://wa.me/34600000000" style="display: inline-block; background: #25d366; color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 14px; margin-top: 8px;">
+            <a href="https://wa.me/34684708013" style="display: inline-block; background: #25d366; color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 14px; margin-top: 8px;">
               💬 WhatsApp Us
             </a>
             <hr style="border: none; border-top: 1px solid #e5e7eb; margin: 24px 0;" />

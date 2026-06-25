@@ -29,7 +29,7 @@ export default function ContactPage() {
           <div className="grid md:grid-cols-3 gap-8 mb-16">
             {/* WhatsApp */}
             <a
-              href="https://wa.me/34600000000?text=Hi!%20I%20have%20a%20question%20about%20renting%20in%20Valencia"
+              href="https://wa.me/34684708013?text=Hi!%20I%20have%20a%20question%20about%20renting%20in%20Valencia"
               target="_blank"
               rel="noopener noreferrer"
               className="card p-8 text-center hover:border-[#25D366]/30 group"

@@ -1,7 +1,7 @@
 "use client";
 
 export default function WhatsAppButton() {
-  const phoneNumber = "34600000000"; // TODO: Replace with actual number
+  const phoneNumber = "34684708013"; // TODO: Replace with actual number
   const message = encodeURIComponent(
     "Hi! I'm interested in renting equipment in Valencia. Can you help?"
   );

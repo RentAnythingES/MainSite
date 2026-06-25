@@ -8,7 +8,7 @@ export function getLocalBusinessJsonLd() {
     description:
       "Short-term rental of baby gear, mobility aids, remote work equipment & more in Valencia, Spain. Delivered to your accommodation.",
     url: "https://rentanything.es",
-    telephone: "+34600000000",
+    telephone: "+34684708013",
     email: "hello@rentanything.es",
     address: {
       "@type": "PostalAddress",

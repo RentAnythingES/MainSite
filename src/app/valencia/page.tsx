@@ -169,7 +169,7 @@ export default function ValenciaPage() {
             Can&apos;t find what you&apos;re looking for? Message us on WhatsApp and we&apos;ll try to source it.
           </p>
           <a
-            href="https://wa.me/34600000000"
+            href="https://wa.me/34684708013"
             target="_blank"
             rel="noopener noreferrer"
             className="btn btn-accent btn-lg"

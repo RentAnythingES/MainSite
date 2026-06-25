@@ -222,7 +222,7 @@ export default async function CategoryPage({ params }: Props) {
           <h2 className="text-2xl font-bold mb-3">Can&apos;t find what you need?</h2>
           <p className="text-neutral-500 mb-6">We&apos;re constantly adding new products. Message us!</p>
           <a
-            href="https://wa.me/34600000000"
+            href="https://wa.me/34684708013"
             target="_blank"
             rel="noopener noreferrer"
             className="btn btn-primary"

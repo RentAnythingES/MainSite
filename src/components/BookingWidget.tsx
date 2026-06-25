@@ -219,7 +219,7 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
   };
 
   const whatsappMessage = `Hi! I'd like to book:\n\n📦 ${product.name}\n📅 ${formatDisplayDate(new Date(startDate), locale)} → ${formatDisplayDate(new Date(endDate), locale)} (${pricing.days} ${pricing.days === 1 ? t.day : t.days})\n💰 €${pricing.total} total\n🚚 ${deliveryOption === "express" ? t.express : t.standard} ${t.delivery.toLowerCase()}\n\nPlease confirm availability!`;
-  const whatsappUrl = `https://wa.me/34600000000?text=${encodeURIComponent(whatsappMessage)}`;
+  const whatsappUrl = `https://wa.me/34684708013?text=${encodeURIComponent(whatsappMessage)}`;
 
   // Success state
   if (step === "success") {

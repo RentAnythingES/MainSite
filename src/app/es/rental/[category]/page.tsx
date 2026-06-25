@@ -165,7 +165,7 @@ export default async function CategoryPageES({ params }: Props) {
         <div className="container-site text-center">
           <h2 className="text-2xl font-bold mb-3">¿No encuentras lo que buscas?</h2>
           <p className="text-neutral-500 mb-6">Estamos añadiendo nuevos productos constantemente. ¡Escríbenos!</p>
-          <a href="https://wa.me/34600000000" target="_blank" rel="noopener noreferrer" className="btn btn-primary">
+          <a href="https://wa.me/34684708013" target="_blank" rel="noopener noreferrer" className="btn btn-primary">
             💬 Escríbenos por WhatsApp
           </a>
         </div>

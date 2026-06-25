@@ -155,7 +155,7 @@ export default function FAQPage() {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link href="/contact" className="btn btn-primary">Contact Us</Link>
             <a
-              href="https://wa.me/34600000000"
+              href="https://wa.me/34684708013"
               target="_blank"
               rel="noopener noreferrer"
               className="btn btn-outline"
