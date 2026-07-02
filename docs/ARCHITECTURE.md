@@ -71,8 +71,25 @@ Seed data: `supabase/seed_1_categories.sql` → `seed_2_products.sql` → `seed_
 | Route | Method | Purpose |
 |-------|--------|---------|
 | `/api/bookings` | POST | Create booking + block dates |
+| `/api/checkout` | POST | Create Stripe Checkout session for paid bookings |
+| `/api/checkout/session` | GET | Read a completed Checkout session for the success page |
+| `/api/webhooks/stripe` | POST | Verify Stripe events, create paid bookings, block dates |
 | `/api/contact` | POST | Send contact email via Resend |
 | `/api/availability` | GET | Check product availability for date range |
+
+### Stripe Webhook Flow
+```
+Stripe Checkout
+  → /api/webhooks/stripe
+  → verify Stripe-Signature with STRIPE_WEBHOOK_SECRET
+  → checkout.session.completed
+  → create paid booking in Supabase
+  → block rental dates
+  → send booking confirmation email
+```
+- Webhook signature verification depends on `STRIPE_WEBHOOK_SECRET`; Checkout creation depends on `STRIPE_SECRET_KEY`.
+- Booking fulfillment is idempotent by `stripe_payment_intent_id`.
+- Email delivery is a follow-up side effect and should not cause duplicate bookings.
 
 ### Admin (require Supabase Auth cookie)
 | Route | Method | Purpose |
@@ -141,5 +158,10 @@ NEXT_PUBLIC_SUPABASE_URL        # Supabase project URL
 NEXT_PUBLIC_SUPABASE_ANON_KEY   # Supabase anon key (public, RLS)
 SUPABASE_SERVICE_ROLE_KEY       # Supabase service role (admin, bypasses RLS)
 RESEND_API_KEY                  # Resend email API key
+CONTACT_EMAIL                   # Admin notification recipient
+FROM_EMAIL                      # Branded sender address
 NEXT_PUBLIC_GA_MEASUREMENT_ID   # Google Analytics
+STRIPE_SECRET_KEY               # Stripe server-side API key
+STRIPE_WEBHOOK_SECRET           # Stripe webhook signing secret
+NEXT_PUBLIC_SITE_URL            # Public site URL for Checkout redirects
 ```

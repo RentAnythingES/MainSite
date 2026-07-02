@@ -22,10 +22,6 @@ import Stripe from "stripe";
  */
 
 export async function POST(request: NextRequest) {
-  if (!stripe) {
-    return NextResponse.json({ error: "Stripe not configured" }, { status: 503 });
-  }
-
   const body = await request.text();
   const signature = request.headers.get("stripe-signature");
 
@@ -42,21 +38,32 @@ export async function POST(request: NextRequest) {
   // Verify webhook signature
   let event: Stripe.Event;
   try {
-    event = stripe.webhooks.constructEvent(body, signature, webhookSecret);
+    const webhookStripe = stripe || new Stripe("sk_webhook_verification_only", {
+      typescript: true,
+    });
+    event = webhookStripe.webhooks.constructEvent(body, signature, webhookSecret);
   } catch (err) {
     console.error("[webhook] Signature verification failed:", err);
     return NextResponse.json({ error: "Invalid signature" }, { status: 400 });
   }
 
   // Handle the event
-  switch (event.type) {
-    case "checkout.session.completed": {
-      const session = event.data.object as Stripe.Checkout.Session;
-      await handleCheckoutCompleted(session);
-      break;
+  try {
+    switch (event.type) {
+      case "checkout.session.completed": {
+        const session = event.data.object as Stripe.Checkout.Session;
+        const fulfilled = await handleCheckoutCompleted(session);
+        if (!fulfilled) {
+          return NextResponse.json({ error: "Fulfillment failed" }, { status: 500 });
+        }
+        break;
+      }
+      default:
+        console.log(`[webhook] Unhandled event type: ${event.type}`);
     }
-    default:
-      console.log(`[webhook] Unhandled event type: ${event.type}`);
+  } catch (err) {
+    console.error("[webhook] Unhandled webhook processing error:", err);
+    return NextResponse.json({ error: "Webhook processing failed" }, { status: 500 });
   }
 
   // Always return 200 to acknowledge receipt
@@ -66,25 +73,34 @@ export async function POST(request: NextRequest) {
 /**
  * Handle a completed checkout session — create the booking
  */
-async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
+async function handleCheckoutCompleted(session: Stripe.Checkout.Session): Promise<boolean> {
   const meta = session.metadata;
   if (!meta?.product_id || !meta?.customer_name) {
     console.error("[webhook] Missing metadata in checkout session:", session.id);
-    return;
+    return true;
   }
 
   const supabase = createAdminClient();
+  const paymentIntentId =
+    typeof session.payment_intent === "string" ? session.payment_intent : session.payment_intent?.id;
 
   // Check if booking already exists for this session (idempotency)
-  const { data: existing } = await supabase
-    .from("bookings")
-    .select("id")
-    .eq("stripe_payment_intent_id", session.payment_intent as string)
-    .single();
+  if (paymentIntentId) {
+    const { data: existing, error: existingError } = await supabase
+      .from("bookings")
+      .select("id")
+      .eq("stripe_payment_intent_id", paymentIntentId)
+      .maybeSingle();
 
-  if (existing) {
-    console.log("[webhook] Booking already exists for session:", session.id);
-    return;
+    if (existingError) {
+      console.error("[webhook] Failed to check existing booking:", existingError);
+      return false;
+    }
+
+    if (existing) {
+      console.log("[webhook] Booking already exists for session:", session.id);
+      return true;
+    }
   }
 
   // Create the booking with status "paid" (payment already confirmed)
@@ -108,7 +124,7 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
       delivery_city: meta.delivery_city || "valencia",
       delivery_notes: meta.delivery_notes || null,
       status: "paid",
-      stripe_payment_intent_id: (session.payment_intent as string) || null,
+      stripe_payment_intent_id: paymentIntentId || null,
       paid_at: new Date().toISOString(),
     })
     .select()
@@ -116,7 +132,7 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
 
   if (error) {
     console.error("[webhook] Failed to create booking:", error);
-    return;
+    return false;
   }
 
   console.log("[webhook] Booking created:", (booking as { booking_ref: string }).booking_ref);
@@ -159,4 +175,6 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
     deliveryAddress: meta.delivery_address || "",
     deliveryType: meta.delivery_type || "standard",
   });
+
+  return true;
 }
