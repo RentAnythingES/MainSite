@@ -31,15 +31,25 @@ function formatDisplayDate(date: Date, locale: string): string {
   });
 }
 
+function combineDateTime(date: string, time: string): string {
+  return new Date(`${date}T${time}:00`).toISOString();
+}
+
 const labels = {
   en: {
     bookTitle: "Book This Item",
     startDate: "Start Date",
+    startTime: "Start Time",
     endDate: "End Date",
+    endTime: "End Time",
     days: "days",
     day: "day",
     rental: "rental",
     delivery: "Delivery",
+    fulfillment: "Collection",
+    customerPickup: "Pick up from us",
+    deliveryOnly: "Delivery only",
+    deliveryCollection: "Delivery and collection",
     standard: "Standard",
     express: "Express",
     free: "Free",
@@ -60,6 +70,7 @@ const labels = {
     email: "Email",
     phone: "Phone / WhatsApp",
     deliveryAddress: "Delivery Address",
+    collectionAddress: "Collection Address",
     deliveryNotes: "Delivery Notes (optional)",
     submit: "Proceed to Payment",
     submitting: "Redirecting to payment...",
@@ -73,11 +84,17 @@ const labels = {
   es: {
     bookTitle: "Reservar Este Artículo",
     startDate: "Fecha de Inicio",
+    startTime: "Hora de Inicio",
     endDate: "Fecha de Fin",
+    endTime: "Hora de Fin",
     days: "días",
     day: "día",
     rental: "alquiler",
     delivery: "Entrega",
+    fulfillment: "Recogida",
+    customerPickup: "Recoger con nosotros",
+    deliveryOnly: "Solo entrega",
+    deliveryCollection: "Entrega y recogida",
     standard: "Estándar",
     express: "Exprés",
     free: "Gratis",
@@ -98,6 +115,7 @@ const labels = {
     email: "Correo Electrónico",
     phone: "Teléfono / WhatsApp",
     deliveryAddress: "Dirección de Entrega",
+    collectionAddress: "Dirección de Recogida",
     deliveryNotes: "Notas de Entrega (opcional)",
     submit: "Proceder al Pago",
     submitting: "Redirigiendo al pago...",
@@ -111,24 +129,50 @@ const labels = {
 };
 
 type BookingStep = "dates" | "form" | "success";
+type FulfillmentMode = "customer_pickup" | "delivery_only" | "delivery_and_collection";
+
+interface ServiceZoneOption {
+  id: string;
+  slug: string;
+  name: string;
+  delivery_fee_cents: number;
+  collection_fee_cents: number;
+  roundtrip_fee_cents: number;
+}
+
+interface PickupLocationOption {
+  id: string;
+  slug: string;
+  name: string;
+  address: string;
+}
 
 export default function BookingWidget({ product, locale = "en" }: BookingWidgetProps) {
   const t = labels[locale];
   const tomorrow = addDays(new Date(), 1);
   const [startDate, setStartDate] = useState(formatDate(tomorrow));
+  const [startTime, setStartTime] = useState("09:00");
   const [endDate, setEndDate] = useState(formatDate(addDays(tomorrow, 3)));
+  const [endTime, setEndTime] = useState("09:00");
   const [deliveryOption, setDeliveryOption] = useState<"standard" | "express">("standard");
+  const [fulfillmentMode, setFulfillmentMode] = useState<FulfillmentMode>("delivery_and_collection");
   const [step, setStep] = useState<BookingStep>("dates");
 
   // Availability
   const [availabilityStatus, setAvailabilityStatus] = useState<"idle" | "checking" | "available" | "unavailable">("idle");
   const [blockedDates, setBlockedDates] = useState<string[]>([]);
+  const [serviceZones, setServiceZones] = useState<ServiceZoneOption[]>([]);
+  const [pickupLocations, setPickupLocations] = useState<PickupLocationOption[]>([]);
+  const [deliveryZoneId, setDeliveryZoneId] = useState("");
+  const [collectionZoneId, setCollectionZoneId] = useState("");
+  const [pickupLocationId, setPickupLocationId] = useState("");
 
   // Form fields
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
+  const [collectionAddress, setCollectionAddress] = useState("");
   const [notes, setNotes] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [bookingRef, setBookingRef] = useState("");
@@ -153,15 +197,37 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
   useEffect(() => {
     setAvailabilityStatus("idle");
     setBlockedDates([]);
-  }, [startDate, endDate]);
+  }, [startDate, startTime, endDate, endTime, fulfillmentMode]);
 
   const checkAvailability = useCallback(async () => {
     setAvailabilityStatus("checking");
     try {
-      const res = await fetch(
-        `/api/availability?slug=${product.slug}&start=${startDate}&end=${endDate}`
-      );
+      const params = new URLSearchParams({
+        slug: product.slug,
+        start: startDate,
+        end: endDate,
+        startAt: combineDateTime(startDate, startTime),
+        endAt: combineDateTime(endDate, endTime),
+        mode: fulfillmentMode,
+      });
+
+      if (deliveryZoneId) params.set("deliveryZoneId", deliveryZoneId);
+      if (collectionZoneId) params.set("collectionZoneId", collectionZoneId);
+      if (pickupLocationId) params.set("pickupLocationId", pickupLocationId);
+
+      const res = await fetch(`/api/availability?${params.toString()}`);
       const data = await res.json();
+
+      if (Array.isArray(data.serviceZones)) {
+        setServiceZones(data.serviceZones);
+        if (!deliveryZoneId && data.serviceZones[0]?.id) setDeliveryZoneId(data.serviceZones[0].id);
+        if (!collectionZoneId && data.serviceZones[0]?.id) setCollectionZoneId(data.serviceZones[0].id);
+      }
+
+      if (Array.isArray(data.pickupLocations)) {
+        setPickupLocations(data.pickupLocations);
+        if (!pickupLocationId && data.pickupLocations[0]?.id) setPickupLocationId(data.pickupLocations[0].id);
+      }
 
       if (data.available) {
         setAvailabilityStatus("available");
@@ -174,17 +240,50 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
       // If API fails (no Supabase configured), assume available
       setAvailabilityStatus("available");
     }
-  }, [product.slug, startDate, endDate]);
+  }, [product.slug, startDate, startTime, endDate, endTime, fulfillmentMode, deliveryZoneId, collectionZoneId, pickupLocationId]);
 
   const handleSubmitBooking = async (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitting(true);
 
     try {
+      const selectedDeliveryZoneId = deliveryZoneId || serviceZones[0]?.id || null;
+      const selectedCollectionZoneId = collectionZoneId || serviceZones[0]?.id || null;
+      const selectedPickupLocationId = pickupLocationId || pickupLocations[0]?.id || null;
+      const draftRes = await fetch("/api/booking-drafts", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          productSlug: product.slug,
+          customerName: name,
+          customerEmail: email,
+          customerPhone: phone || null,
+          startAt: combineDateTime(startDate, startTime),
+          endAt: combineDateTime(endDate, endTime),
+          fulfillmentMode,
+          pickupLocationId: fulfillmentMode === "customer_pickup" ? selectedPickupLocationId : null,
+          deliveryZoneId: fulfillmentMode !== "customer_pickup" ? selectedDeliveryZoneId : null,
+          collectionZoneId: fulfillmentMode === "delivery_and_collection" ? selectedCollectionZoneId : null,
+          deliveryAddress: fulfillmentMode !== "customer_pickup" ? address : null,
+          collectionAddress: fulfillmentMode === "delivery_and_collection" ? collectionAddress || address : null,
+          deliveryNotes: notes || null,
+          collectionNotes: null,
+        }),
+      });
+
+      const draftData = await draftRes.json();
+
+      if (!draftRes.ok || !draftData.draftId) {
+        setAvailabilityStatus("unavailable");
+        setSubmitting(false);
+        return;
+      }
+
       const res = await fetch("/api/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
+          draftId: draftData.draftId,
           productId: product.slug, // API will resolve to UUID
           productSlug: product.slug,
           productName: product.name,
@@ -275,12 +374,22 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
               className="w-full px-3 py-2.5 rounded-lg border border-border text-sm focus:outline-none focus:ring-2 focus:ring-brand/30 focus:border-brand"
               placeholder="+34 600 000 000" />
           </div>
+          {fulfillmentMode !== "customer_pickup" && (
           <div>
             <label className="text-xs font-medium text-neutral-500 mb-1 block">{t.deliveryAddress}</label>
             <input type="text" required value={address} onChange={(e) => setAddress(e.target.value)}
               className="w-full px-3 py-2.5 rounded-lg border border-border text-sm focus:outline-none focus:ring-2 focus:ring-brand/30 focus:border-brand"
               placeholder="Calle de Colón 42, Valencia" />
           </div>
+          )}
+          {fulfillmentMode === "delivery_and_collection" && (
+            <div>
+              <label className="text-xs font-medium text-neutral-500 mb-1 block">{t.collectionAddress}</label>
+              <input type="text" value={collectionAddress} onChange={(e) => setCollectionAddress(e.target.value)}
+                className="w-full px-3 py-2.5 rounded-lg border border-border text-sm focus:outline-none focus:ring-2 focus:ring-brand/30 focus:border-brand"
+                placeholder={address || "Same as delivery address"} />
+            </div>
+          )}
           <div>
             <label className="text-xs font-medium text-neutral-500 mb-1 block">{t.deliveryNotes}</label>
             <textarea value={notes} onChange={(e) => setNotes(e.target.value)} rows={2}
@@ -354,6 +463,33 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
         </div>
       </div>
 
+      <div className="grid grid-cols-2 gap-3 mb-4">
+        <div>
+          <label htmlFor="booking-start-time" className="text-xs font-medium text-neutral-500 mb-1 block">
+            {t.startTime}
+          </label>
+          <input
+            id="booking-start-time"
+            type="time"
+            value={startTime}
+            onChange={(e) => setStartTime(e.target.value)}
+            className="w-full px-3 py-2.5 rounded-lg border border-border text-sm focus:outline-none focus:ring-2 focus:ring-brand/30 focus:border-brand"
+          />
+        </div>
+        <div>
+          <label htmlFor="booking-end-time" className="text-xs font-medium text-neutral-500 mb-1 block">
+            {t.endTime}
+          </label>
+          <input
+            id="booking-end-time"
+            type="time"
+            value={endTime}
+            onChange={(e) => setEndTime(e.target.value)}
+            className="w-full px-3 py-2.5 rounded-lg border border-border text-sm focus:outline-none focus:ring-2 focus:ring-brand/30 focus:border-brand"
+          />
+        </div>
+      </div>
+
       {/* Duration display */}
       <div className="bg-brand/5 rounded-lg p-3 mb-4 text-center">
         <p className="text-sm text-brand font-semibold">
@@ -362,6 +498,31 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
         <p className="text-xs text-neutral-500">
           {formatDisplayDate(new Date(startDate), locale)} → {formatDisplayDate(new Date(endDate), locale)}
         </p>
+      </div>
+
+      {/* Fulfillment Option */}
+      <div className="mb-4">
+        <p className="text-xs font-medium text-neutral-500 mb-2">{t.fulfillment}</p>
+        <div className="space-y-2">
+          {[
+            ["customer_pickup", t.customerPickup],
+            ["delivery_only", t.deliveryOnly],
+            ["delivery_and_collection", t.deliveryCollection],
+          ].map(([value, label]) => (
+            <button
+              key={value}
+              type="button"
+              onClick={() => setFulfillmentMode(value as FulfillmentMode)}
+              className={`w-full p-3 rounded-lg border text-sm text-left transition-colors ${
+                fulfillmentMode === value
+                  ? "border-brand bg-brand/5 text-brand"
+                  : "border-border hover:border-neutral-300"
+              }`}
+            >
+              <span className="font-semibold">{label}</span>
+            </button>
+          ))}
+        </div>
       </div>
 
       {/* Delivery Option */}

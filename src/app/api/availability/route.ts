@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createServiceClient } from "@/lib/supabase";
+import { calculateRentalDays, getProductWithPricing, getServiceZone, parseRentalDate, quoteBooking } from "@/lib/booking-v2";
+import type { FulfillmentMode } from "@/lib/types";
 
 /**
  * GET /api/availability?slug=compact-stroller&start=2026-07-01&end=2026-07-07
@@ -12,10 +14,16 @@ export async function GET(request: NextRequest) {
   const slug = searchParams.get("slug");
   const start = searchParams.get("start");
   const end = searchParams.get("end");
+  const startAtParam = searchParams.get("startAt");
+  const endAtParam = searchParams.get("endAt");
+  const mode = (searchParams.get("mode") || "delivery_and_collection") as FulfillmentMode;
+  const deliveryZoneId = searchParams.get("deliveryZoneId");
+  const collectionZoneId = searchParams.get("collectionZoneId");
+  const pickupLocationId = searchParams.get("pickupLocationId");
 
-  if (!slug || !start || !end) {
+  if (!slug || (!startAtParam && !start) || (!endAtParam && !end)) {
     return NextResponse.json(
-      { error: "Missing required params: slug, start, end" },
+      { error: "Missing required params: slug and start/end or startAt/endAt" },
       { status: 400 }
     );
   }
@@ -23,50 +31,95 @@ export async function GET(request: NextRequest) {
   try {
     const supabase = createServiceClient();
 
-    // Get product ID from slug
-    const { data: product, error: productError } = await supabase
-      .from("products")
-      .select("id, stock_total, stock_available")
-      .eq("slug", slug)
-      .eq("is_active", true)
-      .single();
-
-    if (productError || !product) {
-      return NextResponse.json(
-        { error: "Product not found" },
-        { status: 404 }
-      );
-    }
-
-    const productId = (product as { id: string }).id;
-    const stockTotal = (product as { stock_total: number }).stock_total;
-    const stockAvailable = (product as { stock_available: number }).stock_available;
+    const startAt = parseRentalDate(startAtParam || `${start}T09:00:00+02:00`, "start");
+    const endAt = parseRentalDate(endAtParam || `${end}T09:00:00+02:00`, "end");
+    const { product, tiers } = await getProductWithPricing(supabase, slug);
+    const rentalDays = calculateRentalDays(startAt, endAt);
 
     // Get all blocked dates in range
     const { data: blockedRows, error: blockedError } = await supabase
       .from("blocked_dates")
       .select("blocked_date, reason")
-      .eq("product_id", productId)
-      .gte("blocked_date", start)
-      .lte("blocked_date", end);
+      .eq("product_id", product.id)
+      .gte("blocked_date", start || startAt.toISOString().slice(0, 10))
+      .lte("blocked_date", end || endAt.toISOString().slice(0, 10));
 
     if (blockedError) throw blockedError;
 
     const blockedDates = (blockedRows || []).map((r: { blocked_date: string }) => r.blocked_date);
+    let overlappingQuantity = 0;
 
-    // Count how many unique bookings overlap each date
-    // For single-stock items, any blocked date = unavailable
-    // For multi-stock, we'd need to count concurrent bookings (future enhancement)
-    const available = stockAvailable > 0 && blockedDates.length === 0;
+    const { data: blockRows, error: blockError } = await supabase
+      .from("booking_inventory_blocks")
+      .select("quantity, booking_drafts!left(status, expires_at)")
+      .eq("product_id", product.id)
+      .lt("starts_at", endAt.toISOString())
+      .gt("ends_at", startAt.toISOString());
+
+    if (blockError && blockError.code !== "42P01" && blockError.code !== "42703") {
+      throw blockError;
+    }
+
+    if (blockRows) {
+      overlappingQuantity = blockRows.reduce((total, row) => {
+        const block = row as {
+          quantity: number;
+          booking_drafts?: { status?: string; expires_at?: string } | null;
+        };
+        const draft = block.booking_drafts;
+        const draftActive = !draft || (
+          ["draft", "checkout_created"].includes(draft.status || "") &&
+          new Date(draft.expires_at || 0).getTime() > Date.now()
+        );
+
+        return draftActive ? total + block.quantity : total;
+      }, 0);
+    }
+
+    const deliveryZone = await getServiceZone(supabase, deliveryZoneId);
+    const collectionZone = await getServiceZone(supabase, collectionZoneId);
+    const quote = quoteBooking(
+      tiers,
+      startAt,
+      endAt,
+      { mode, pickupLocationId, deliveryZoneId, collectionZoneId },
+      deliveryZone,
+      collectionZone
+    );
+
+    const [pickupLocationsResult, serviceZonesResult] = await Promise.all([
+      supabase
+        .from("pickup_locations")
+        .select("id, slug, name, address, pickup_instructions, sort_order")
+        .eq("is_active", true)
+        .order("sort_order", { ascending: true }),
+      supabase
+        .from("service_zones")
+        .select("id, slug, name, description, delivery_fee_cents, collection_fee_cents, roundtrip_fee_cents, sort_order")
+        .eq("is_active", true)
+        .order("sort_order", { ascending: true }),
+    ]);
+
+    const available =
+      product.stock_available > 0 &&
+      blockedDates.length === 0 &&
+      overlappingQuantity < product.stock_total;
 
     return NextResponse.json({
       available,
       blockedDates,
-      stockTotal,
-      stockAvailable,
+      stockTotal: product.stock_total,
+      stockAvailable: product.stock_available,
+      overlappingQuantity,
+      rentalDays,
+      quote,
+      pickupLocations: pickupLocationsResult.error ? [] : pickupLocationsResult.data || [],
+      serviceZones: serviceZonesResult.error ? [] : serviceZonesResult.data || [],
       slug,
-      start,
-      end,
+      start: start || startAt.toISOString().slice(0, 10),
+      end: end || endAt.toISOString().slice(0, 10),
+      startAt: startAt.toISOString(),
+      endAt: endAt.toISOString(),
     });
   } catch (err) {
     console.error("[availability] Error:", err);

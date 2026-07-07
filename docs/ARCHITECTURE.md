@@ -28,7 +28,8 @@ API Routes (/api/bookings, /api/availability)
 Supabase (write bookings, check blocked_dates)
 ```
 - `BOOKINGS_PAUSED` and `NEXT_PUBLIC_BOOKINGS_PAUSED` default to paused unless explicitly set to `false`.
-- While paused, product widgets show a contact-only state, `/api/checkout` refuses Stripe session creation, and `/api/availability` reports unavailable.
+- While paused, `/api/checkout` refuses Stripe session creation. Product widgets can still check availability and route unavailable requests to WhatsApp.
+- Booking System v2 is documented in `docs/BOOKING_SYSTEM.md`.
 
 ### Admin (operator-facing)
 ```
@@ -51,6 +52,13 @@ Supabase (CRUD products, pricing, bookings)
 | `pricing_tiers` | Per-product tiered daily rates (in cents) | Public read |
 | `bookings` | Customer bookings with lifecycle status | Admin only |
 | `blocked_dates` | Date-level inventory blocking | Admin only |
+| `pickup_locations` | Customer pickup options | Public read active |
+| `service_zones` | Valencia delivery/collection zones and fees | Public read active |
+| `booking_drafts` | Pre-payment booking drafts and Stripe Checkout source of truth | Admin/API only |
+| `booking_inventory_blocks` | Datetime inventory holds and paid booking blocks | Admin/API only |
+
+Inventory holds are reserved via the `reserve_booking_inventory(...)` database
+function so overlapping draft creation is checked while the product row is locked.
 
 ### Booking Lifecycle
 ```
@@ -63,7 +71,27 @@ pending → confirmed → paid → delivering → active → returning → compl
 - Timestamps auto-set on status transitions
 
 Schema: `supabase/schema.sql`
+Booking v2 migration: `supabase/migrations/20260707_booking_system_v2.sql`
 Seed data: `supabase/seed_1_categories.sql` → `seed_2_products.sql` → `seed_3_pricing.sql`
+
+### Booking API v2
+```
+GET /api/availability
+  Accepts legacy start/end dates and v2 startAt/endAt timestamps
+  Returns availability, quote, pickup locations, and service zones
+
+POST /api/booking-drafts
+  Resolves product and pricing server-side
+  Creates a booking_draft and temporary inventory hold
+
+POST /api/checkout
+  Preferred input: draftId
+  Creates Stripe Checkout using the stored draft totals
+
+POST /api/webhooks/stripe
+  Fulfills checkout.session.completed from booking_draft_id
+  Creates paid booking and converts hold into a booking inventory block
+```
 
 ---
 

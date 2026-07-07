@@ -1,5 +1,5 @@
 # RentAnything.es — Frontend Guide
-> **Last updated**: 2026-06-19
+> **Last updated**: 2026-07-07
 
 ## Routing
 App Router with static generation (`generateStaticParams`). Prefix-based i18n (`/es/` for Spanish).
@@ -40,7 +40,7 @@ App Router with static generation (`generateStaticParams`). Prefix-based i18n (`
 - Server Components by default
 - `"use client"` only for interactive widgets:
   - `HeroCarousel` — auto-advancing homepage photo carousel
-  - `BookingWidget` — 3-step booking flow (dates → availability check → form → success), locale-aware (EN/ES)
+  - `BookingWidget` — booking flow with rental window, availability check, draft creation, and Stripe handoff
   - `ContactForm` — contact form with Resend
   - `Header` / `Footer` — locale-aware navigation (detects `/es/` prefix)
   - `AdminShell` — admin sidebar layout
@@ -68,11 +68,14 @@ interface ProductWidget {
 The `[slug]/page.tsx` template resolves widgets via `getProductsByCategory()` and renders compact horizontal strips.
 
 ## Booking Flow (BookingWidget)
-When `NEXT_PUBLIC_BOOKINGS_PAUSED` is not explicitly set to `false`, product pages show a contact-only "currently booked" state and route visitors to WhatsApp instead of Stripe.
+Online checkout is server-gated by `BOOKINGS_PAUSED`; product widgets still let customers check availability and contact WhatsApp when inventory is blocked.
 
-Normal 3-step client-side flow:
-1. **Dates** — Pick start/end date, delivery option, see price breakdown → "Check Availability"
-2. **Form** — Name, email, phone, delivery address → "Submit Booking Request"
-3. **Success** — Confirmation with booking reference
+Normal v2 flow:
+1. **Rental window** — Pick start/end date, start/end time, fulfillment mode, and delivery option.
+2. **Availability** — `/api/availability` resolves the product server-side and checks stock, blocked dates, and datetime inventory holds.
+3. **Details** — Customer enters contact details plus delivery/collection address where required.
+4. **Draft** — `/api/booking-drafts` calculates pricing server-side and creates a temporary inventory hold.
+5. **Checkout** — `/api/checkout` creates Stripe Checkout from `draftId`; Stripe metadata contains stable server IDs only.
+6. **Webhook** — `/api/webhooks/stripe` turns paid drafts into bookings and converts the hold into a booking inventory block.
 
-Falls back to WhatsApp deep-link if Supabase API is unavailable.
+Falls back to WhatsApp deep-link if checkout cannot be created.

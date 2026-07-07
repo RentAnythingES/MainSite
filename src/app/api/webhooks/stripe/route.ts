@@ -75,6 +75,10 @@ export async function POST(request: NextRequest) {
  */
 async function handleCheckoutCompleted(session: Stripe.Checkout.Session): Promise<boolean> {
   const meta = session.metadata;
+  if (meta?.booking_draft_id) {
+    return handleDraftCheckoutCompleted(session, meta.booking_draft_id);
+  }
+
   if (!meta?.product_id || !meta?.customer_name) {
     console.error("[webhook] Missing metadata in checkout session:", session.id);
     return true;
@@ -174,6 +178,153 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session): Promis
     totalCents: parseInt(meta.total_cents || "0"),
     deliveryAddress: meta.delivery_address || "",
     deliveryType: meta.delivery_type || "standard",
+  });
+
+  return true;
+}
+
+async function handleDraftCheckoutCompleted(
+  session: Stripe.Checkout.Session,
+  bookingDraftId: string
+): Promise<boolean> {
+  const supabase = createAdminClient();
+  const paymentIntentId =
+    typeof session.payment_intent === "string" ? session.payment_intent : session.payment_intent?.id;
+
+  const { data: existingBooking, error: existingBookingError } = await supabase
+    .from("bookings")
+    .select("id")
+    .or(`booking_draft_id.eq.${bookingDraftId},stripe_checkout_session_id.eq.${session.id}`)
+    .maybeSingle();
+
+  if (existingBookingError) {
+    console.error("[webhook] Failed to check draft booking idempotency:", existingBookingError);
+    return false;
+  }
+
+  if (existingBooking) {
+    return true;
+  }
+
+  const { data: draft, error: draftError } = await supabase
+    .from("booking_drafts")
+    .select("*")
+    .eq("id", bookingDraftId)
+    .single();
+
+  if (draftError || !draft) {
+    console.error("[webhook] Booking draft not found:", bookingDraftId, draftError);
+    return false;
+  }
+
+  const bookingDraft = draft as {
+    id: string;
+    product_id: string;
+    customer_name: string | null;
+    customer_email: string | null;
+    customer_phone: string | null;
+    rental_start_at: string;
+    rental_end_at: string;
+    timezone: string;
+    rental_days: number;
+    fulfillment_mode: "customer_pickup" | "delivery_only" | "delivery_and_collection";
+    pickup_location_id: string | null;
+    delivery_zone_id: string | null;
+    collection_zone_id: string | null;
+    delivery_address: string | null;
+    collection_address: string | null;
+    delivery_notes: string | null;
+    collection_notes: string | null;
+    per_day_cents: number;
+    rental_subtotal_cents: number;
+    delivery_fee_cents: number;
+    collection_fee_cents: number;
+    total_cents: number;
+    deposit_cents: number;
+    pricing_snapshot: Record<string, unknown>;
+  };
+
+  const { data: product } = await supabase
+    .from("products")
+    .select("name")
+    .eq("id", bookingDraft.product_id)
+    .single();
+
+  const startDate = bookingDraft.rental_start_at.slice(0, 10);
+  const endDate = bookingDraft.rental_end_at.slice(0, 10);
+
+  const { data: booking, error: bookingError } = await supabase
+    .from("bookings")
+    .insert({
+      product_id: bookingDraft.product_id,
+      customer_name: bookingDraft.customer_name || session.customer_details?.name || "Customer",
+      customer_email: bookingDraft.customer_email || session.customer_email || "",
+      customer_phone: bookingDraft.customer_phone,
+      customer_whatsapp: bookingDraft.customer_phone,
+      start_date: startDate,
+      end_date: endDate,
+      rental_days: bookingDraft.rental_days,
+      per_day_cents: bookingDraft.per_day_cents,
+      subtotal_cents: bookingDraft.rental_subtotal_cents,
+      delivery_fee_cents: bookingDraft.delivery_fee_cents,
+      total_cents: bookingDraft.total_cents,
+      deposit_cents: bookingDraft.deposit_cents,
+      delivery_type: "standard",
+      delivery_address: bookingDraft.delivery_address || bookingDraft.collection_address || "Customer pickup",
+      delivery_city: "valencia",
+      delivery_notes: bookingDraft.delivery_notes,
+      status: "paid",
+      stripe_payment_intent_id: paymentIntentId || null,
+      paid_at: new Date().toISOString(),
+      booking_draft_id: bookingDraft.id,
+      rental_start_at: bookingDraft.rental_start_at,
+      rental_end_at: bookingDraft.rental_end_at,
+      timezone: bookingDraft.timezone,
+      fulfillment_mode: bookingDraft.fulfillment_mode,
+      pickup_location_id: bookingDraft.pickup_location_id,
+      delivery_zone_id: bookingDraft.delivery_zone_id,
+      collection_zone_id: bookingDraft.collection_zone_id,
+      collection_address: bookingDraft.collection_address,
+      collection_notes: bookingDraft.collection_notes,
+      collection_fee_cents: bookingDraft.collection_fee_cents,
+      pricing_snapshot: bookingDraft.pricing_snapshot,
+      stripe_checkout_session_id: session.id,
+    })
+    .select()
+    .single();
+
+  if (bookingError || !booking) {
+    console.error("[webhook] Failed to create booking from draft:", bookingError);
+    return false;
+  }
+
+  const bookingId = (booking as { id: string }).id;
+  await supabase
+    .from("booking_inventory_blocks")
+    .update({ booking_id: bookingId, reason: "booking" })
+    .eq("booking_draft_id", bookingDraft.id);
+
+  await supabase
+    .from("booking_drafts")
+    .update({
+      status: "paid",
+      stripe_checkout_session_id: session.id,
+      stripe_payment_intent_id: paymentIntentId || null,
+    })
+    .eq("id", bookingDraft.id);
+
+  await sendBookingConfirmation({
+    bookingRef: (booking as { booking_ref: string }).booking_ref,
+    customerName: bookingDraft.customer_name || session.customer_details?.name || "Customer",
+    customerEmail: bookingDraft.customer_email || session.customer_email || "",
+    customerPhone: bookingDraft.customer_phone || undefined,
+    productName: (product as { name?: string } | null)?.name || "Rental equipment",
+    startDate,
+    endDate,
+    rentalDays: bookingDraft.rental_days,
+    totalCents: bookingDraft.total_cents,
+    deliveryAddress: bookingDraft.delivery_address || bookingDraft.collection_address || "Customer pickup",
+    deliveryType: "standard",
   });
 
   return true;
