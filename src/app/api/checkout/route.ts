@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { stripe, isStripeConfigured } from "@/lib/stripe";
 import { createServiceClient } from "@/lib/supabase";
+import { areOnlineBookingsPaused } from "@/lib/booking-mode";
 
 /**
  * POST /api/checkout — Create a Stripe Checkout Session
@@ -16,6 +17,13 @@ import { createServiceClient } from "@/lib/supabase";
  *   4. Return the checkout URL for redirect
  */
 export async function POST(request: NextRequest) {
+  if (areOnlineBookingsPaused()) {
+    return NextResponse.json(
+      { error: "Online bookings are temporarily paused. Please contact us to confirm availability." },
+      { status: 503 }
+    );
+  }
+
   // Check Stripe is configured
   if (!isStripeConfigured() || !stripe) {
     return NextResponse.json(

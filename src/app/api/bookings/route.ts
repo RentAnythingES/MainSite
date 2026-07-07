@@ -1,8 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createServiceClient } from "@/lib/supabase";
 import { sendBookingConfirmation } from "@/lib/email";
+import { areOnlineBookingsPaused } from "@/lib/booking-mode";
 
 export async function POST(request: NextRequest) {
+  if (areOnlineBookingsPaused()) {
+    return NextResponse.json(
+      { error: "Online bookings are temporarily paused. Please contact us to confirm availability." },
+      { status: 503 }
+    );
+  }
+
   try {
     const body = await request.json();
 

@@ -27,6 +27,8 @@ API Routes (/api/bookings, /api/availability)
   ↓ service role client
 Supabase (write bookings, check blocked_dates)
 ```
+- `BOOKINGS_PAUSED` and `NEXT_PUBLIC_BOOKINGS_PAUSED` default to paused unless explicitly set to `false`.
+- While paused, product widgets show a contact-only state, `/api/checkout` refuses Stripe session creation, and `/api/availability` reports unavailable.
 
 ### Admin (operator-facing)
 ```
@@ -87,6 +89,7 @@ Stripe Checkout
   → block rental dates
   → send booking confirmation email
 ```
+- Stripe should send live webhooks to `https://www.rentanything.es/api/webhooks/stripe`; the apex domain redirects and should not be used for webhook delivery.
 - Webhook signature verification depends on `STRIPE_WEBHOOK_SECRET`; Checkout creation depends on `STRIPE_SECRET_KEY`.
 - Booking fulfillment is idempotent by `stripe_payment_intent_id`.
 - Email delivery is a follow-up side effect and should not cause duplicate bookings.
@@ -161,6 +164,8 @@ RESEND_API_KEY                  # Resend email API key
 CONTACT_EMAIL                   # Admin notification recipient
 FROM_EMAIL                      # Branded sender address
 NEXT_PUBLIC_GA_MEASUREMENT_ID   # Google Analytics
+BOOKINGS_PAUSED                 # Server-side online booking kill switch
+NEXT_PUBLIC_BOOKINGS_PAUSED     # Client-side booking widget kill switch
 STRIPE_SECRET_KEY               # Stripe server-side API key
 STRIPE_WEBHOOK_SECRET           # Stripe webhook signing secret
 NEXT_PUBLIC_SITE_URL            # Public site URL for Checkout redirects

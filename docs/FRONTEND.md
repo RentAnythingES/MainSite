@@ -68,7 +68,9 @@ interface ProductWidget {
 The `[slug]/page.tsx` template resolves widgets via `getProductsByCategory()` and renders compact horizontal strips.
 
 ## Booking Flow (BookingWidget)
-3-step client-side flow:
+When `NEXT_PUBLIC_BOOKINGS_PAUSED` is not explicitly set to `false`, product pages show a contact-only "currently booked" state and route visitors to WhatsApp instead of Stripe.
+
+Normal 3-step client-side flow:
 1. **Dates** — Pick start/end date, delivery option, see price breakdown → "Check Availability"
 2. **Form** — Name, email, phone, delivery address → "Submit Booking Request"
 3. **Success** — Confirmation with booking reference
