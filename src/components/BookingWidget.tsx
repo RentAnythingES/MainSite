@@ -49,14 +49,12 @@ const labels = {
     checkAvailability: "Check Availability",
     checking: "Checking...",
     available: "✓ Available for your dates",
-    unavailable: "✕ Not available for these dates",
-    bookWhatsapp: "💬 Book via WhatsApp",
+    unavailable: "This item is currently fully booked for that time frame.",
+    unavailableHelp:
+      "Contact us directly via WhatsApp and we can see if we can find alternative inventory.",
+    bookWhatsapp: "💬 Contact us on WhatsApp",
     bookDirect: "📋 Book Now",
     securePayment: "🔒 Secure payment via Stripe",
-    pausedTitle: "Currently booked",
-    pausedMessage:
-      "We are confirming live inventory before taking online payments. Message us with your Valencia dates and we will personally check options for you.",
-    pausedCta: "Contact us to check availability",
     yourDetails: "Your Details",
     fullName: "Full Name",
     email: "Email",
@@ -89,14 +87,12 @@ const labels = {
     checkAvailability: "Comprobar Disponibilidad",
     checking: "Comprobando...",
     available: "✓ Disponible para tus fechas",
-    unavailable: "✕ No disponible para estas fechas",
-    bookWhatsapp: "💬 Reservar por WhatsApp",
+    unavailable: "Este artículo está completamente reservado para esas fechas.",
+    unavailableHelp:
+      "Contáctanos directamente por WhatsApp y veremos si podemos encontrar inventario alternativo.",
+    bookWhatsapp: "💬 Contactar por WhatsApp",
     bookDirect: "📋 Reservar Ahora",
     securePayment: "🔒 Pago seguro con Stripe",
-    pausedTitle: "Reservado actualmente",
-    pausedMessage:
-      "Estamos confirmando el inventario real antes de aceptar pagos online. Escríbenos con tus fechas en Valencia y revisaremos las opciones personalmente.",
-    pausedCta: "Contactar para comprobar disponibilidad",
     yourDetails: "Tus Datos",
     fullName: "Nombre Completo",
     email: "Correo Electrónico",
@@ -115,8 +111,6 @@ const labels = {
 };
 
 type BookingStep = "dates" | "form" | "success";
-
-const bookingsPaused = process.env.NEXT_PUBLIC_BOOKINGS_PAUSED !== "false";
 
 export default function BookingWidget({ product, locale = "en" }: BookingWidgetProps) {
   const t = labels[locale];
@@ -230,32 +224,6 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
 
   const whatsappMessage = `Hi! I'd like to book:\n\n📦 ${product.name}\n📅 ${formatDisplayDate(new Date(startDate), locale)} → ${formatDisplayDate(new Date(endDate), locale)} (${pricing.days} ${pricing.days === 1 ? t.day : t.days})\n💰 €${pricing.total} total\n🚚 ${deliveryOption === "express" ? t.express : t.standard} ${t.delivery.toLowerCase()}\n\nPlease confirm availability!`;
   const whatsappUrl = `https://wa.me/34684708013?text=${encodeURIComponent(whatsappMessage)}`;
-
-  if (bookingsPaused) {
-    return (
-      <div className="bg-white rounded-2xl border border-amber-200 shadow-sm p-6" id="booking-widget">
-        <div className="inline-flex items-center rounded-full bg-amber-50 px-3 py-1 text-xs font-semibold text-amber-700 mb-4">
-          {t.pausedTitle}
-        </div>
-        <h3 className="font-bold text-lg mb-2">{t.bookTitle}</h3>
-        <p className="text-sm text-neutral-600 mb-5">{t.pausedMessage}</p>
-        <a
-          href={whatsappUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="btn btn-primary btn-lg w-full block text-center"
-          id="booking-whatsapp-cta"
-        >
-          {t.pausedCta}
-        </a>
-        <p className="text-xs text-neutral-400 text-center mt-3">
-          {locale === "es"
-            ? "Sin pago online hasta que confirmemos disponibilidad."
-            : "No online payment until availability is confirmed."}
-        </p>
-      </div>
-    );
-  }
 
   // Success state
   if (step === "success") {
@@ -462,13 +430,9 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
         </div>
       )}
       {availabilityStatus === "unavailable" && (
-        <div className="bg-red-50 border border-red-200 rounded-lg p-3 mb-4">
-          <p className="text-sm text-red-700 font-medium mb-1">{t.unavailable}</p>
-          {blockedDates.length > 0 && (
-            <p className="text-xs text-red-500">
-              {t.tryDifferentDates} {t.orWhatsapp}
-            </p>
-          )}
+        <div className="bg-amber-50 border border-amber-200 rounded-lg p-3 mb-4">
+          <p className="text-sm text-amber-800 font-semibold mb-1">{t.unavailable}</p>
+          <p className="text-xs text-amber-700">{t.unavailableHelp}</p>
         </div>
       )}
 

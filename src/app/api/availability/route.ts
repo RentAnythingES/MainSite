@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 import { supabase } from "@/lib/supabase";
-import { areOnlineBookingsPaused } from "@/lib/booking-mode";
 
 /**
  * GET /api/availability?slug=compact-stroller&start=2026-07-01&end=2026-07-07
@@ -19,17 +18,6 @@ export async function GET(request: NextRequest) {
       { error: "Missing required params: slug, start, end" },
       { status: 400 }
     );
-  }
-
-  if (areOnlineBookingsPaused()) {
-    return NextResponse.json({
-      available: false,
-      blockedDates: [],
-      paused: true,
-      slug,
-      start,
-      end,
-    });
   }
 
   try {
