@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { supabase } from "@/lib/supabase";
+import { createServiceClient } from "@/lib/supabase";
 
 /**
  * GET /api/availability?slug=compact-stroller&start=2026-07-01&end=2026-07-07
@@ -21,6 +21,8 @@ export async function GET(request: NextRequest) {
   }
 
   try {
+    const supabase = createServiceClient();
+
     // Get product ID from slug
     const { data: product, error: productError } = await supabase
       .from("products")
@@ -38,6 +40,7 @@ export async function GET(request: NextRequest) {
 
     const productId = (product as { id: string }).id;
     const stockTotal = (product as { stock_total: number }).stock_total;
+    const stockAvailable = (product as { stock_available: number }).stock_available;
 
     // Get all blocked dates in range
     const { data: blockedRows, error: blockedError } = await supabase
@@ -54,12 +57,13 @@ export async function GET(request: NextRequest) {
     // Count how many unique bookings overlap each date
     // For single-stock items, any blocked date = unavailable
     // For multi-stock, we'd need to count concurrent bookings (future enhancement)
-    const available = blockedDates.length === 0;
+    const available = stockAvailable > 0 && blockedDates.length === 0;
 
     return NextResponse.json({
       available,
       blockedDates,
       stockTotal,
+      stockAvailable,
       slug,
       start,
       end,
