@@ -38,6 +38,7 @@ export interface BookingEmailData {
   totalCents: number;
   deliveryAddress: string;
   deliveryType: string;
+  fulfillmentMode?: string;
 }
 
 // ============================================
@@ -74,6 +75,13 @@ function emailWrapper(title: string, body: string): string {
 }
 
 function bookingDetailsTable(data: BookingEmailData): string {
+  const fulfillmentLabel =
+    data.fulfillmentMode === "customer_pickup"
+      ? "Pickup"
+      : data.fulfillmentMode === "delivery_and_collection"
+        ? "Delivery & collection"
+        : "Delivery";
+
   return `
     <table style="width: 100%; border-collapse: collapse; margin: 16px 0;">
       <tr>
@@ -89,7 +97,7 @@ function bookingDetailsTable(data: BookingEmailData): string {
         <td style="padding: 8px 0; font-size: 14px;">${formatDate(data.startDate)} → ${formatDate(data.endDate)} (${data.rentalDays} days)</td>
       </tr>
       <tr>
-        <td style="padding: 8px 0; color: #6b7280; font-size: 14px;">Delivery</td>
+        <td style="padding: 8px 0; color: #6b7280; font-size: 14px;">${fulfillmentLabel}</td>
         <td style="padding: 8px 0; font-size: 14px;">${data.deliveryAddress}</td>
       </tr>
       <tr>
@@ -127,8 +135,9 @@ export async function sendBookingConfirmation(data: BookingEmailData): Promise<b
         </p>
         ${bookingDetailsTable(data)}
         <p style="font-size: 15px; color: #374151; line-height: 1.6;">
-          We'll deliver to your address on <strong>${formatDate(data.startDate)}</strong>.
-          We'll send you a message the day before to confirm the delivery window.
+          ${data.fulfillmentMode === "customer_pickup"
+            ? `We'll message you before <strong>${formatDate(data.startDate)}</strong> to confirm the pickup details.`
+            : `We'll deliver to your address on <strong>${formatDate(data.startDate)}</strong>. We'll send you a message the day before to confirm the delivery window.`}
         </p>
         <p style="font-size: 15px; color: #374151; line-height: 1.6;">
           If you need to make any changes, just reply to this email or reach us on WhatsApp.
@@ -257,5 +266,36 @@ export async function sendBookingStatusUpdate(
   } catch (err) {
     console.error(`[email] Failed to send status update (${newStatus}):`, err);
     return false;
+  }
+}
+
+export async function sendEmailHealthCheck(): Promise<{ ok: boolean; id?: string; error?: string }> {
+  const resend = getResend();
+  if (!resend) {
+    return { ok: false, error: "RESEND_API_KEY is not configured" };
+  }
+
+  try {
+    const result = await resend.emails.send({
+      from: FROM,
+      to: TO_ADMIN,
+      subject: "RentAnything email health check",
+      html: emailWrapper("Email Health Check", `
+        <p style="font-size: 15px; color: #374151; line-height: 1.6; margin-top: 0;">
+          This is a test email from RentAnything.es.
+        </p>
+        <p style="font-size: 14px; color: #6b7280; line-height: 1.6;">
+          If you received this, Resend accepted the message from the current environment.
+        </p>
+      `),
+    });
+
+    if (result.error) {
+      return { ok: false, error: result.error.message };
+    }
+
+    return { ok: true, id: result.data?.id };
+  } catch (err) {
+    return { ok: false, error: err instanceof Error ? err.message : "Unknown email error" };
   }
 }

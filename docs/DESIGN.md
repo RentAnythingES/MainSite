@@ -2,11 +2,23 @@
 > **Last updated**: 2026-06-18
 
 ## Colors
-- **Brand (Teal)**: `#0d9488` / `teal-600`
-- **Accent (Amber)**: `#f59e0b` / `amber-500`
+- **Brand (Teal)**: `#0E7C73` / Tailwind fallback `teal-600`
+- **Secondary Teal**: `#30A596`
+- **Accent (Amber)**: `#F59E0B` / `amber-500`
+- **Warm Cream**: `#FFF3E0`
+- **Soft Grey**: `#8E9BA3`
+- **Ink**: `#1F2937`
 - **Background**: `#fafafa` (neutral-50)
 - **Card borders**: `#e5e7eb` (neutral-200)
 - **Text on photos**: Always white with `text-shadow` — never dark text on photo backgrounds
+
+
+## Brand Assets
+- Source concept sheet: `docs/Home.png`
+- Transparent icon: `public/brand/rentanything-icon.png`
+- Rounded app icon: `public/brand/rentanything-app-icon.png`
+- Next app icons: `src/app/icon.png`, `src/app/apple-icon.png`, `src/app/favicon.ico`
+- Header uses the transparent suitcase-house icon alongside the wordmark text.
 
 ## Typography
 - **Headings**: Outfit (Google Fonts) — inherits color from context (no hardcoded color)
@@ -64,3 +76,5 @@ Compact, category-based horizontal scrolling strips that appear between content 
 - Thematic heading + "View all →" link
 - Placed contextually: mobility after accessibility, baby gear after food, remote work after "staying here"
 - **Never stack two strips back-to-back** — always separated by content
+
+

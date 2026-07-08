@@ -115,6 +115,7 @@ export async function PUT(
         totalCents: b.total_cents as number,
         deliveryAddress: b.delivery_address as string,
         deliveryType: (b.delivery_type as string) || "standard",
+        fulfillmentMode: (b.fulfillment_mode as string) || undefined,
       },
       status
     ).catch((err) => console.error("[admin/bookings] Email send error:", err));

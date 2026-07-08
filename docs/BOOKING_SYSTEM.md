@@ -20,7 +20,9 @@ Initial Booking System v2 code is now in place:
 - `/api/booking-options` returns active pickup locations and service zones for the booking widget.
 - `/api/booking-drafts` creates server-priced booking drafts and temporary inventory holds.
 - `/api/checkout` can create Stripe Checkout from a `draftId`.
+- `/api/checkout/status` joins Stripe session, booking draft, booking, and inventory state for the success page.
 - `/api/webhooks/stripe` can fulfill `checkout.session.completed` from a booking draft.
+- `/api/admin/health` exposes authenticated, non-secret configuration status for Stripe, Resend, Supabase, and booking pause flags.
 
 This code is not live-safe until the v2 migration has been applied in Supabase and
 a full test booking confirms draft creation, Stripe redirect, webhook fulfillment,
@@ -153,6 +155,8 @@ as a bridge while online bookings are paused.
 - Send confirmation email.
 
 Status: draft fulfillment path implemented for `checkout.session.completed`.
+The success page reads `/api/checkout/status` so it can distinguish confirmed
+bookings from paid-but-still-processing webhook states.
 
 ### Phase 6 — Admin Operations
 
@@ -165,6 +169,10 @@ locations, service zones, delivery address, and collection address. Cancelling,
 refunding, or completing a booking releases legacy `blocked_dates` and v2
 `booking_inventory_blocks`; cancelled/refunded paid bookings attempt a Stripe
 refund.
+
+An authenticated `/api/admin/health` endpoint reports whether Stripe, Stripe
+webhook secret, Resend, Supabase keys, and booking pause flags are configured.
+Email deliverability notes live in `docs/EMAIL_DELIVERABILITY.md`.
 
 ### Phase 7 — Test Booking
 

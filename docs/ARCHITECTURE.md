@@ -198,3 +198,5 @@ STRIPE_SECRET_KEY               # Stripe server-side API key
 STRIPE_WEBHOOK_SECRET           # Stripe webhook signing secret
 NEXT_PUBLIC_SITE_URL            # Public site URL for Checkout redirects
 ```
+
+Analytics event definitions live in `docs/ANALYTICS_SETUP.md`.

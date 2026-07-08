@@ -325,6 +325,7 @@ async function handleDraftCheckoutCompleted(
     totalCents: bookingDraft.total_cents,
     deliveryAddress: bookingDraft.delivery_address || bookingDraft.collection_address || "Customer pickup",
     deliveryType: "standard",
+    fulfillmentMode: bookingDraft.fulfillment_mode,
   });
 
   return true;

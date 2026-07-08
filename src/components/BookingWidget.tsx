@@ -2,6 +2,7 @@
 
 import { useState, useMemo, useEffect, useCallback } from "react";
 import type { Product } from "@/data/products";
+import { trackBookingEvent } from "@/lib/analytics";
 
 interface BookingWidgetProps {
   product: Product;
@@ -266,6 +267,13 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
 
   const checkAvailability = useCallback(async () => {
     setAvailabilityStatus("checking");
+    trackBookingEvent("availability_check_started", {
+      productSlug: product.slug,
+      fulfillmentMode,
+      startDate,
+      endDate,
+    });
+
     try {
       const params = new URLSearchParams({
         slug: product.slug,
@@ -301,13 +309,27 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
       if (data.available) {
         setAvailabilityStatus("available");
         setBlockedDates([]);
+        trackBookingEvent("availability_check_available", {
+          productSlug: product.slug,
+          fulfillmentMode,
+          totalCents: data.quote?.totalCents,
+        });
       } else {
         setAvailabilityStatus("unavailable");
         setBlockedDates(data.blockedDates || []);
+        trackBookingEvent("availability_check_unavailable", {
+          productSlug: product.slug,
+          fulfillmentMode,
+          blockedDates: data.blockedDates?.length || 0,
+        });
       }
     } catch {
       // If API fails (no Supabase configured), assume available
       setAvailabilityStatus("available");
+      trackBookingEvent("availability_check_failed_open", {
+        productSlug: product.slug,
+        fulfillmentMode,
+      });
     }
   }, [product.slug, startDate, startTime, endDate, endTime, fulfillmentMode, deliveryZoneId, collectionZoneId, pickupLocationId]);
 
@@ -345,8 +367,18 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
       if (!draftRes.ok || !draftData.draftId) {
         setAvailabilityStatus("unavailable");
         setSubmitting(false);
+        trackBookingEvent("booking_draft_failed", {
+          productSlug: product.slug,
+          fulfillmentMode,
+        });
         return;
       }
+
+      trackBookingEvent("booking_draft_created", {
+        productSlug: product.slug,
+        fulfillmentMode,
+        totalCents: draftData.quote?.totalCents,
+      });
 
       const res = await fetch("/api/checkout", {
         method: "POST",
@@ -377,14 +409,27 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
 
       if (res.ok && data.checkoutUrl) {
         // Redirect to Stripe Checkout
+        trackBookingEvent("checkout_redirect_started", {
+          productSlug: product.slug,
+          fulfillmentMode,
+          sessionId: data.sessionId,
+        });
         window.location.href = data.checkoutUrl;
       } else {
         // Fallback to WhatsApp
+        trackBookingEvent("checkout_redirect_failed_whatsapp", {
+          productSlug: product.slug,
+          fulfillmentMode,
+        });
         window.open(whatsappUrl, "_blank");
         setSubmitting(false);
       }
     } catch {
       // Fallback to WhatsApp
+      trackBookingEvent("checkout_exception_whatsapp", {
+        productSlug: product.slug,
+        fulfillmentMode,
+      });
       window.open(whatsappUrl, "_blank");
       setSubmitting(false);
     }
@@ -751,7 +796,13 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
       ) : availabilityStatus === "available" ? (
         <div className="space-y-2">
           <button
-            onClick={() => setStep("form")}
+            onClick={() => {
+              trackBookingEvent("booking_form_opened", {
+                productSlug: product.slug,
+                fulfillmentMode,
+              });
+              setStep("form");
+            }}
             className="btn btn-primary btn-lg w-full"
             id="booking-direct-cta"
           >
@@ -761,6 +812,10 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
             href={whatsappUrl}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => trackBookingEvent("whatsapp_clicked_available", {
+              productSlug: product.slug,
+              fulfillmentMode,
+            })}
             className="btn btn-outline btn-lg w-full block text-center"
             id="booking-whatsapp-cta"
           >
@@ -772,6 +827,10 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
           href={whatsappUrl}
           target="_blank"
           rel="noopener noreferrer"
+          onClick={() => trackBookingEvent("whatsapp_clicked_unavailable", {
+            productSlug: product.slug,
+            fulfillmentMode,
+          })}
           className="btn btn-primary btn-lg w-full mb-3"
           id="booking-whatsapp-cta"
         >

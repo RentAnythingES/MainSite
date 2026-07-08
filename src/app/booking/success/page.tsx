@@ -3,6 +3,7 @@
 import { useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
 import Link from "next/link";
+import { trackBookingEvent } from "@/lib/analytics";
 
 interface BookingInfo {
   bookingRef: string;
@@ -13,10 +14,18 @@ interface BookingInfo {
   customerEmail: string;
 }
 
+type CheckoutStatus =
+  | "booking_confirmed"
+  | "payment_pending"
+  | "fulfillment_pending"
+  | "payment_incomplete";
+
 function BookingSuccessContent() {
   const searchParams = useSearchParams();
   const sessionId = searchParams.get("session_id");
   const [booking, setBooking] = useState<BookingInfo | null>(null);
+  const [checkoutStatus, setCheckoutStatus] = useState<CheckoutStatus | null>(null);
+  const [customerEmail, setCustomerEmail] = useState("");
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -25,10 +34,18 @@ function BookingSuccessContent() {
       return;
     }
 
-    // Fetch session details to show confirmation
-    fetch(`/api/checkout/session?id=${sessionId}`)
+    fetch(`/api/checkout/status?id=${sessionId}`)
       .then((res) => res.json())
       .then((data) => {
+        setCheckoutStatus(data.status || null);
+        setCustomerEmail(data.session?.customerEmail || data.booking?.customerEmail || "");
+        if (data.status) {
+          trackBookingEvent("checkout_success_status_loaded", {
+            checkoutStatus: data.status,
+            sessionId,
+            bookingRef: data.booking?.bookingRef,
+          });
+        }
         if (data.booking) {
           setBooking(data.booking);
         }
@@ -40,19 +57,28 @@ function BookingSuccessContent() {
   return (
     <main className="min-h-screen flex items-center justify-center px-4 py-20">
       <div className="max-w-lg w-full text-center">
-        {/* Success icon */}
-        <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-teal-100 flex items-center justify-center">
-          <svg className="w-10 h-10 text-teal-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-          </svg>
+        <div className={`w-20 h-20 mx-auto mb-6 rounded-full flex items-center justify-center ${
+          checkoutStatus === "fulfillment_pending" ? "bg-amber-100" : "bg-teal-100"
+        }`}>
+          {checkoutStatus === "fulfillment_pending" ? (
+            <svg className="w-10 h-10 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          ) : (
+            <svg className="w-10 h-10 text-teal-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+            </svg>
+          )}
         </div>
 
         <h1 className="text-3xl font-bold text-neutral-900 mb-2">
-          Booking Confirmed!
+          {checkoutStatus === "fulfillment_pending" ? "Payment Received" : "Booking Confirmed!"}
         </h1>
 
         <p className="text-neutral-600 mb-8">
-          Thank you for your booking. We&apos;ll be in touch to arrange delivery.
+          {checkoutStatus === "fulfillment_pending"
+            ? "Your payment went through. We are finishing your booking confirmation now."
+            : "Thank you for your booking. We'll be in touch to arrange the next step."}
         </p>
 
         {loading && (
@@ -86,6 +112,19 @@ function BookingSuccessContent() {
           </div>
         )}
 
+        {!loading && checkoutStatus === "fulfillment_pending" && !booking && (
+          <div className="bg-amber-50 border border-amber-200 rounded-2xl p-6 mb-8 text-left">
+            <p className="font-semibold text-amber-900 mb-2">Confirmation is still processing</p>
+            <p className="text-sm text-amber-800">
+              Stripe has received the payment, but our booking confirmation webhook has not finished yet.
+              Please do not pay again. If your confirmation email does not arrive shortly, contact us and include your checkout session ID.
+            </p>
+            {sessionId && (
+              <p className="text-xs text-amber-700 mt-3 font-mono break-all">{sessionId}</p>
+            )}
+          </div>
+        )}
+
         {!loading && !booking && !sessionId && (
           <div className="bg-amber-50 border border-amber-200 rounded-2xl p-6 mb-8">
             <p className="text-amber-800">
@@ -96,7 +135,9 @@ function BookingSuccessContent() {
 
         <div className="space-y-3">
           <p className="text-sm text-neutral-500">
-            A confirmation email has been sent to {booking?.customerEmail || "your email address"}.
+            {checkoutStatus === "fulfillment_pending"
+              ? `A confirmation email will be sent to ${customerEmail || "your email address"} as soon as the booking is created.`
+              : `A confirmation email has been sent to ${booking?.customerEmail || customerEmail || "your email address"}.`}
           </p>
 
           <div className="flex flex-col sm:flex-row gap-3 justify-center">

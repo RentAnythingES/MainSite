@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
@@ -46,6 +47,14 @@ export default function Header() {
         <div className="flex items-center justify-between h-16 lg:h-18">
           {/* Logo */}
           <Link href={isSpanish ? "/es" : "/"} className="flex items-center gap-2 group" id="header-logo">
+            <Image
+              src="/brand/rentanything-icon.png"
+              alt="RentAnything.es"
+              width={42}
+              height={42}
+              priority
+              className="h-10 w-10 object-contain"
+            />
             <span className="text-2xl font-bold font-[var(--font-outfit)]">
               <span className="text-brand">Rent</span>
               <span className="text-foreground">Anything</span>
