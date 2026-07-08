@@ -9,6 +9,14 @@ interface BookingProduct {
   brand: string;
 }
 
+interface BookingLocation {
+  id: string;
+  name: string;
+  slug: string;
+  address?: string;
+  city?: string;
+}
+
 interface Booking {
   id: string;
   booking_ref: string;
@@ -22,6 +30,16 @@ interface Booking {
   total_cents: number;
   delivery_address: string;
   delivery_notes: string | null;
+  rental_start_at?: string | null;
+  rental_end_at?: string | null;
+  timezone?: string | null;
+  fulfillment_mode?: "customer_pickup" | "delivery_only" | "delivery_and_collection" | null;
+  pickup_location?: BookingLocation | null;
+  delivery_zone?: BookingLocation | null;
+  collection_zone?: BookingLocation | null;
+  collection_address?: string | null;
+  collection_notes?: string | null;
+  collection_fee_cents?: number | null;
   status: string;
   created_at: string;
 }
@@ -49,6 +67,7 @@ const TRANSITIONS: Record<string, { label: string; next: string; color: string }
   ],
   paid: [
     { label: "Out for Delivery", next: "delivering", color: "bg-purple-600 hover:bg-purple-500" },
+    { label: "Cancel", next: "cancelled", color: "bg-red-600/20 hover:bg-red-600/40 text-red-400" },
     { label: "Refund", next: "refunded", color: "bg-red-600/20 hover:bg-red-600/40 text-red-400" },
   ],
   delivering: [
@@ -107,6 +126,24 @@ export default function AdminBookingsPage() {
 
   const formatDate = (d: string) =>
     new Date(d).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" });
+
+  const formatDateTime = (d?: string | null) =>
+    d
+      ? new Date(d).toLocaleString("en-GB", {
+          day: "numeric",
+          month: "short",
+          year: "numeric",
+          hour: "2-digit",
+          minute: "2-digit",
+        })
+      : null;
+
+  const formatFulfillmentMode = (mode?: string | null) => {
+    if (mode === "customer_pickup") return "Customer pickup";
+    if (mode === "delivery_only") return "Delivery only";
+    if (mode === "delivery_and_collection") return "Delivery and collection";
+    return "Legacy delivery";
+  };
 
   if (loading) {
     return (
@@ -179,8 +216,8 @@ export default function AdminBookingsPage() {
                   <p className="text-xs text-neutral-500">{booking.rental_days} days</p>
                 </div>
                 <div className="text-right hidden md:block">
-                  <p className="text-xs text-neutral-500">{formatDate(booking.start_date)}</p>
-                  <p className="text-xs text-neutral-500">→ {formatDate(booking.end_date)}</p>
+                  <p className="text-xs text-neutral-500">{formatDateTime(booking.rental_start_at) || formatDate(booking.start_date)}</p>
+                  <p className="text-xs text-neutral-500">&rarr; {formatDateTime(booking.rental_end_at) || formatDate(booking.end_date)}</p>
                 </div>
                 <span className="text-neutral-600 text-sm">{expandedId === booking.id ? "▲" : "▼"}</span>
               </button>
@@ -198,12 +235,55 @@ export default function AdminBookingsPage() {
                       )}
                     </div>
                     <div>
-                      <p className="text-xs text-neutral-500 mb-1">Delivery</p>
-                      <p className="text-sm text-neutral-300">{booking.delivery_address}</p>
-                      {booking.delivery_notes && (
-                        <p className="text-xs text-neutral-400 mt-1">Note: {booking.delivery_notes}</p>
+                      <p className="text-xs text-neutral-500 mb-1">Rental Window</p>
+                      <p className="text-sm text-neutral-300">
+                        {formatDateTime(booking.rental_start_at) || formatDate(booking.start_date)}
+                      </p>
+                      <p className="text-sm text-neutral-300">
+                        → {formatDateTime(booking.rental_end_at) || formatDate(booking.end_date)}
+                      </p>
+                    </div>
+                    <div>
+                      <p className="text-xs text-neutral-500 mb-1">Fulfillment</p>
+                      <p className="text-sm text-white">{formatFulfillmentMode(booking.fulfillment_mode)}</p>
+                      {booking.fulfillment_mode === "customer_pickup" ? (
+                        <>
+                          <p className="text-sm text-neutral-300">{booking.pickup_location?.name || "Pickup location not set"}</p>
+                          {booking.pickup_location?.address && (
+                            <p className="text-xs text-neutral-400">{booking.pickup_location.address}</p>
+                          )}
+                        </>
+                      ) : (
+                        <>
+                          <p className="text-xs text-neutral-400 mt-1">
+                            Delivery zone: {booking.delivery_zone?.name || "Not set"}
+                          </p>
+                          {booking.fulfillment_mode === "delivery_and_collection" && (
+                            <p className="text-xs text-neutral-400">
+                              Collection zone: {booking.collection_zone?.name || "Not set"}
+                            </p>
+                          )}
+                        </>
                       )}
                     </div>
+                    {booking.fulfillment_mode !== "customer_pickup" && (
+                      <div>
+                        <p className="text-xs text-neutral-500 mb-1">Delivery</p>
+                        <p className="text-sm text-neutral-300">{booking.delivery_address}</p>
+                        {booking.delivery_notes && (
+                          <p className="text-xs text-neutral-400 mt-1">Note: {booking.delivery_notes}</p>
+                        )}
+                      </div>
+                    )}
+                    {booking.fulfillment_mode === "delivery_and_collection" && (
+                      <div>
+                        <p className="text-xs text-neutral-500 mb-1">Collection</p>
+                        <p className="text-sm text-neutral-300">{booking.collection_address || booking.delivery_address}</p>
+                        {booking.collection_notes && (
+                          <p className="text-xs text-neutral-400 mt-1">Note: {booking.collection_notes}</p>
+                        )}
+                      </div>
+                    )}
                     <div>
                       <p className="text-xs text-neutral-500 mb-1">Created</p>
                       <p className="text-sm text-neutral-300">{formatDate(booking.created_at)}</p>

@@ -71,13 +71,21 @@ export async function PUT(
 
     if (error) throw error;
 
-    // If cancelled/refunded, release blocked dates and issue Stripe refund
-    if (status === "cancelled" || status === "refunded") {
+    // If cancelled/refunded/completed, release inventory blocks.
+    if (status === "cancelled" || status === "refunded" || status === "completed") {
       await supabase
         .from("blocked_dates")
         .delete()
         .eq("booking_id", id);
 
+      await supabase
+        .from("booking_inventory_blocks")
+        .delete()
+        .eq("booking_id", id);
+    }
+
+    // If cancelled/refunded, issue Stripe refund when payment was collected.
+    if (status === "cancelled" || status === "refunded") {
       // Issue Stripe refund if payment was collected
       const paymentIntentId = (booking as Record<string, unknown>).stripe_payment_intent_id as string | null;
       if (paymentIntentId && stripe) {

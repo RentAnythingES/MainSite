@@ -17,6 +17,7 @@ fix only; the v2 flow must replace it with booking drafts before reopening payme
 Initial Booking System v2 code is now in place:
 
 - `/api/availability` accepts date-only legacy checks and datetime `startAt`/`endAt`.
+- `/api/booking-options` returns active pickup locations and service zones for the booking widget.
 - `/api/booking-drafts` creates server-priced booking drafts and temporary inventory holds.
 - `/api/checkout` can create Stripe Checkout from a `draftId`.
 - `/api/webhooks/stripe` can fulfill `checkout.session.completed` from a booking draft.
@@ -117,12 +118,18 @@ Migration:
 Status: implemented as `/api/availability` with backwards-compatible `start`/`end`
 support for the existing date checker.
 
+Booking options are also exposed through `/api/booking-options` so the widget can
+show Burjassot, Paterna, Valencia pickup, and configured service zones before the
+customer checks availability.
+
 ### Phase 3 — Booking Draft API
 
 - Create a server-side booking draft.
 - Calculate rental days and all fees server-side.
 - Create temporary inventory hold.
 - Return draft summary to the client.
+- Mark expired drafts and release their temporary inventory holds before creating
+  a new draft.
 
 Status: implemented as `/api/booking-drafts`. Requires the v2 migration before it
 can run against Supabase.
@@ -152,6 +159,12 @@ Status: draft fulfillment path implemented for `checkout.session.completed`.
 - Show rental start/end times.
 - Show fulfillment mode, delivery/collection addresses, pickup location, and fees.
 - Support status transitions, refunds, cancellations, and inventory release.
+
+Status: admin booking list now shows v2 rental windows, fulfillment mode, pickup
+locations, service zones, delivery address, and collection address. Cancelling,
+refunding, or completing a booking releases legacy `blocked_dates` and v2
+`booking_inventory_blocks`; cancelled/refunded paid bookings attempt a Stripe
+refund.
 
 ### Phase 7 — Test Booking
 

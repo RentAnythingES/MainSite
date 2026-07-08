@@ -71,11 +71,12 @@ The `[slug]/page.tsx` template resolves widgets via `getProductsByCategory()` an
 Online checkout is server-gated by `BOOKINGS_PAUSED`; product widgets still let customers check availability and contact WhatsApp when inventory is blocked.
 
 Normal v2 flow:
-1. **Rental window** — Pick start/end date, start/end time, fulfillment mode, and delivery option.
-2. **Availability** — `/api/availability` resolves the product server-side and checks stock, blocked dates, and datetime inventory holds.
-3. **Details** — Customer enters contact details plus delivery/collection address where required.
-4. **Draft** — `/api/booking-drafts` calculates pricing server-side and creates a temporary inventory hold.
-5. **Checkout** — `/api/checkout` creates Stripe Checkout from `draftId`; Stripe metadata contains stable server IDs only.
-6. **Webhook** — `/api/webhooks/stripe` turns paid drafts into bookings and converts the hold into a booking inventory block.
+1. **Booking options** — `/api/booking-options` loads active pickup locations and service zones from Supabase.
+2. **Rental window** — Pick start/end date, start/end time, fulfillment mode, pickup location or delivery/collection zones, and delivery option.
+3. **Availability** — `/api/availability` resolves the product server-side and checks stock, blocked dates, datetime inventory holds, and server pricing.
+4. **Details** — Customer enters contact details plus delivery/collection address where required.
+5. **Draft** — `/api/booking-drafts` calculates pricing server-side and creates a temporary inventory hold.
+6. **Checkout** — `/api/checkout` creates Stripe Checkout from `draftId`; Stripe metadata contains stable server IDs only.
+7. **Webhook** — `/api/webhooks/stripe` turns paid drafts into bookings and converts the hold into a booking inventory block.
 
 Falls back to WhatsApp deep-link if checkout cannot be created.

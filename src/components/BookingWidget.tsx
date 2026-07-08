@@ -46,6 +46,9 @@ const labels = {
     day: "day",
     rental: "rental",
     delivery: "Delivery",
+    deliveryZone: "Delivery Area",
+    collectionZone: "Collection Area",
+    pickupLocation: "Pickup Location",
     fulfillment: "Collection",
     customerPickup: "Pick up from us",
     deliveryOnly: "Delivery only",
@@ -91,6 +94,9 @@ const labels = {
     day: "día",
     rental: "alquiler",
     delivery: "Entrega",
+    deliveryZone: "Zona de entrega",
+    collectionZone: "Zona de recogida",
+    pickupLocation: "Punto de recogida",
     fulfillment: "Recogida",
     customerPickup: "Recoger con nosotros",
     deliveryOnly: "Solo entrega",
@@ -138,6 +144,7 @@ interface ServiceZoneOption {
   delivery_fee_cents: number;
   collection_fee_cents: number;
   roundtrip_fee_cents: number;
+  description?: string | null;
 }
 
 interface PickupLocationOption {
@@ -145,6 +152,16 @@ interface PickupLocationOption {
   slug: string;
   name: string;
   address: string;
+  pickup_instructions?: string | null;
+}
+
+interface ServerQuote {
+  rentalDays: number;
+  perDayCents: number;
+  rentalSubtotalCents: number;
+  deliveryFeeCents: number;
+  collectionFeeCents: number;
+  totalCents: number;
 }
 
 export default function BookingWidget({ product, locale = "en" }: BookingWidgetProps) {
@@ -163,6 +180,7 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
   const [blockedDates, setBlockedDates] = useState<string[]>([]);
   const [serviceZones, setServiceZones] = useState<ServiceZoneOption[]>([]);
   const [pickupLocations, setPickupLocations] = useState<PickupLocationOption[]>([]);
+  const [serverQuote, setServerQuote] = useState<ServerQuote | null>(null);
   const [deliveryZoneId, setDeliveryZoneId] = useState("");
   const [collectionZoneId, setCollectionZoneId] = useState("");
   const [pickupLocationId, setPickupLocationId] = useState("");
@@ -187,17 +205,64 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
       .find((t) => days >= t.days) || product.pricing[0];
 
     const subtotal = tier.perDay * days;
-    const deliveryFee = deliveryOption === "express" ? 15 : subtotal >= 50 ? 0 : 10;
+    const deliveryFee = fulfillmentMode === "customer_pickup" ? 0 : deliveryOption === "express" ? 15 : subtotal >= 50 ? 0 : 10;
     const total = subtotal + deliveryFee;
 
     return { days, perDay: tier.perDay, subtotal, deliveryFee, total };
-  }, [startDate, endDate, deliveryOption, product.pricing]);
+  }, [startDate, endDate, deliveryOption, fulfillmentMode, product.pricing]);
+
+  const displayPricing = useMemo(() => {
+    if (!serverQuote) {
+      return pricing;
+    }
+
+    return {
+      days: serverQuote.rentalDays,
+      perDay: serverQuote.perDayCents / 100,
+      subtotal: serverQuote.rentalSubtotalCents / 100,
+      deliveryFee: (serverQuote.deliveryFeeCents + serverQuote.collectionFeeCents) / 100,
+      total: serverQuote.totalCents / 100,
+    };
+  }, [pricing, serverQuote]);
+
+  useEffect(() => {
+    let active = true;
+
+    async function loadBookingOptions() {
+      try {
+        const res = await fetch("/api/booking-options");
+        const data = await res.json();
+
+        if (!active) return;
+
+        if (Array.isArray(data.serviceZones)) {
+          setServiceZones(data.serviceZones);
+          if (!deliveryZoneId && data.serviceZones[0]?.id) setDeliveryZoneId(data.serviceZones[0].id);
+          if (!collectionZoneId && data.serviceZones[0]?.id) setCollectionZoneId(data.serviceZones[0].id);
+        }
+
+        if (Array.isArray(data.pickupLocations)) {
+          setPickupLocations(data.pickupLocations);
+          if (!pickupLocationId && data.pickupLocations[0]?.id) setPickupLocationId(data.pickupLocations[0].id);
+        }
+      } catch {
+        // The availability call can still return these options if this request fails.
+      }
+    }
+
+    loadBookingOptions();
+
+    return () => {
+      active = false;
+    };
+  }, [collectionZoneId, deliveryZoneId, pickupLocationId]);
 
   // Reset availability when dates change
   useEffect(() => {
     setAvailabilityStatus("idle");
     setBlockedDates([]);
-  }, [startDate, startTime, endDate, endTime, fulfillmentMode]);
+    setServerQuote(null);
+  }, [startDate, startTime, endDate, endTime, fulfillmentMode, deliveryZoneId, collectionZoneId, pickupLocationId]);
 
   const checkAvailability = useCallback(async () => {
     setAvailabilityStatus("checking");
@@ -227,6 +292,10 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
       if (Array.isArray(data.pickupLocations)) {
         setPickupLocations(data.pickupLocations);
         if (!pickupLocationId && data.pickupLocations[0]?.id) setPickupLocationId(data.pickupLocations[0].id);
+      }
+
+      if (data.quote) {
+        setServerQuote(data.quote);
       }
 
       if (data.available) {
@@ -321,7 +390,7 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
     }
   };
 
-  const whatsappMessage = `Hi! I'd like to book:\n\n📦 ${product.name}\n📅 ${formatDisplayDate(new Date(startDate), locale)} → ${formatDisplayDate(new Date(endDate), locale)} (${pricing.days} ${pricing.days === 1 ? t.day : t.days})\n💰 €${pricing.total} total\n🚚 ${deliveryOption === "express" ? t.express : t.standard} ${t.delivery.toLowerCase()}\n\nPlease confirm availability!`;
+  const whatsappMessage = `Hi! I'd like to book:\n\n📦 ${product.name}\n📅 ${formatDisplayDate(new Date(startDate), locale)} ${startTime} → ${formatDisplayDate(new Date(endDate), locale)} ${endTime} (${displayPricing.days} ${displayPricing.days === 1 ? t.day : t.days})\n💰 €${displayPricing.total} total\n🚚 ${deliveryOption === "express" ? t.express : t.standard} ${t.delivery.toLowerCase()}\n\nPlease confirm availability!`;
   const whatsappUrl = `https://wa.me/34684708013?text=${encodeURIComponent(whatsappMessage)}`;
 
   // Success state
@@ -400,16 +469,16 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
           {/* Price summary */}
           <div className="border-t border-border pt-3 space-y-1.5">
             <div className="flex justify-between text-sm">
-              <span className="text-neutral-500">€{pricing.perDay} × {pricing.days} {pricing.days === 1 ? t.day : t.days}</span>
-              <span className="font-medium">€{pricing.subtotal}</span>
+              <span className="text-neutral-500">€{displayPricing.perDay} × {displayPricing.days} {displayPricing.days === 1 ? t.day : t.days}</span>
+              <span className="font-medium">€{displayPricing.subtotal}</span>
             </div>
             <div className="flex justify-between text-sm">
               <span className="text-neutral-500">{t.delivery}</span>
-              <span className="font-medium">{pricing.deliveryFee === 0 ? <span className="text-green-600">{t.free}</span> : `€${pricing.deliveryFee}`}</span>
+              <span className="font-medium">{displayPricing.deliveryFee === 0 ? <span className="text-green-600">{t.free}</span> : `€${displayPricing.deliveryFee}`}</span>
             </div>
             <div className="flex justify-between text-base font-bold pt-2 border-t border-border">
               <span>{t.total}</span>
-              <span className="text-brand">€{pricing.total}</span>
+              <span className="text-brand">€{displayPricing.total}</span>
             </div>
           </div>
 
@@ -493,7 +562,7 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
       {/* Duration display */}
       <div className="bg-brand/5 rounded-lg p-3 mb-4 text-center">
         <p className="text-sm text-brand font-semibold">
-          {pricing.days} {pricing.days === 1 ? t.day : t.days} {t.rental}
+          {displayPricing.days} {displayPricing.days === 1 ? t.day : t.days} {t.rental}
         </p>
         <p className="text-xs text-neutral-500">
           {formatDisplayDate(new Date(startDate), locale)} → {formatDisplayDate(new Date(endDate), locale)}
@@ -525,7 +594,75 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
         </div>
       </div>
 
+      {fulfillmentMode === "customer_pickup" && pickupLocations.length > 0 && (
+        <div className="mb-4">
+          <label htmlFor="pickup-location" className="text-xs font-medium text-neutral-500 mb-1 block">
+            {t.pickupLocation}
+          </label>
+          <select
+            id="pickup-location"
+            value={pickupLocationId}
+            onChange={(e) => setPickupLocationId(e.target.value)}
+            className="w-full px-3 py-2.5 rounded-lg border border-border text-sm bg-white focus:outline-none focus:ring-2 focus:ring-brand/30 focus:border-brand"
+          >
+            {pickupLocations.map((location) => (
+              <option key={location.id} value={location.id}>
+                {location.name}
+              </option>
+            ))}
+          </select>
+          {pickupLocations.find((location) => location.id === pickupLocationId)?.pickup_instructions && (
+            <p className="text-xs text-neutral-500 mt-1">
+              {pickupLocations.find((location) => location.id === pickupLocationId)?.pickup_instructions}
+            </p>
+          )}
+        </div>
+      )}
+
+      {fulfillmentMode !== "customer_pickup" && serviceZones.length > 0 && (
+        <div className="mb-4 space-y-3">
+          <div>
+            <label htmlFor="delivery-zone" className="text-xs font-medium text-neutral-500 mb-1 block">
+              {t.deliveryZone}
+            </label>
+            <select
+              id="delivery-zone"
+              value={deliveryZoneId}
+              onChange={(e) => setDeliveryZoneId(e.target.value)}
+              className="w-full px-3 py-2.5 rounded-lg border border-border text-sm bg-white focus:outline-none focus:ring-2 focus:ring-brand/30 focus:border-brand"
+            >
+              {serviceZones.map((zone) => (
+                <option key={zone.id} value={zone.id}>
+                  {zone.name}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {fulfillmentMode === "delivery_and_collection" && (
+            <div>
+              <label htmlFor="collection-zone" className="text-xs font-medium text-neutral-500 mb-1 block">
+                {t.collectionZone}
+              </label>
+              <select
+                id="collection-zone"
+                value={collectionZoneId}
+                onChange={(e) => setCollectionZoneId(e.target.value)}
+                className="w-full px-3 py-2.5 rounded-lg border border-border text-sm bg-white focus:outline-none focus:ring-2 focus:ring-brand/30 focus:border-brand"
+              >
+                {serviceZones.map((zone) => (
+                  <option key={zone.id} value={zone.id}>
+                    {zone.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
+        </div>
+      )}
+
       {/* Delivery Option */}
+      {fulfillmentMode !== "customer_pickup" && (
       <div className="mb-4">
         <p className="text-xs font-medium text-neutral-500 mb-2">{t.delivery}</p>
         <div className="grid grid-cols-2 gap-2">
@@ -541,7 +678,7 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
           >
             <p className="font-semibold">{t.standard}</p>
             <p className="text-xs text-neutral-500">
-              {pricing.subtotal >= 50 ? t.free : "€10"} · {t.nextDay}
+              {displayPricing.deliveryFee === 0 ? t.free : `€${displayPricing.deliveryFee}`} · {t.nextDay}
             </p>
           </button>
           <button
@@ -559,28 +696,29 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
           </button>
         </div>
       </div>
+      )}
 
       {/* Price Breakdown */}
       <div className="border-t border-border pt-4 mb-4 space-y-2">
         <div className="flex justify-between text-sm">
           <span className="text-neutral-500">
-            €{pricing.perDay} × {pricing.days} {pricing.days === 1 ? t.day : t.days}
+            €{displayPricing.perDay} × {displayPricing.days} {displayPricing.days === 1 ? t.day : t.days}
           </span>
-          <span className="font-medium">€{pricing.subtotal}</span>
+          <span className="font-medium">€{displayPricing.subtotal}</span>
         </div>
         <div className="flex justify-between text-sm">
           <span className="text-neutral-500">{t.delivery}</span>
           <span className="font-medium">
-            {pricing.deliveryFee === 0 ? (
+            {displayPricing.deliveryFee === 0 ? (
               <span className="text-green-600">{t.free}</span>
             ) : (
-              `€${pricing.deliveryFee}`
+              `€${displayPricing.deliveryFee}`
             )}
           </span>
         </div>
         <div className="flex justify-between text-base font-bold pt-2 border-t border-border">
           <span>{t.total}</span>
-          <span className="text-brand">€{pricing.total}</span>
+          <span className="text-brand">€{displayPricing.total}</span>
         </div>
       </div>
 

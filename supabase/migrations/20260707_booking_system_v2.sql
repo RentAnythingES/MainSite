@@ -332,14 +332,26 @@ END $$;
 -- ============================================
 -- UPDATED_AT TRIGGERS
 -- ============================================
-DROP TRIGGER IF EXISTS pickup_locations_updated_at ON pickup_locations;
-CREATE TRIGGER pickup_locations_updated_at
-  BEFORE UPDATE ON pickup_locations FOR EACH ROW EXECUTE FUNCTION update_updated_at();
+DO $$
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1 FROM pg_trigger WHERE tgname = 'pickup_locations_updated_at'
+  ) THEN
+    CREATE TRIGGER pickup_locations_updated_at
+      BEFORE UPDATE ON pickup_locations FOR EACH ROW EXECUTE FUNCTION update_updated_at();
+  END IF;
 
-DROP TRIGGER IF EXISTS service_zones_updated_at ON service_zones;
-CREATE TRIGGER service_zones_updated_at
-  BEFORE UPDATE ON service_zones FOR EACH ROW EXECUTE FUNCTION update_updated_at();
+  IF NOT EXISTS (
+    SELECT 1 FROM pg_trigger WHERE tgname = 'service_zones_updated_at'
+  ) THEN
+    CREATE TRIGGER service_zones_updated_at
+      BEFORE UPDATE ON service_zones FOR EACH ROW EXECUTE FUNCTION update_updated_at();
+  END IF;
 
-DROP TRIGGER IF EXISTS booking_drafts_updated_at ON booking_drafts;
-CREATE TRIGGER booking_drafts_updated_at
-  BEFORE UPDATE ON booking_drafts FOR EACH ROW EXECUTE FUNCTION update_updated_at();
+  IF NOT EXISTS (
+    SELECT 1 FROM pg_trigger WHERE tgname = 'booking_drafts_updated_at'
+  ) THEN
+    CREATE TRIGGER booking_drafts_updated_at
+      BEFORE UPDATE ON booking_drafts FOR EACH ROW EXECUTE FUNCTION update_updated_at();
+  END IF;
+END $$;

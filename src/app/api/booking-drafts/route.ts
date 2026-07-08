@@ -52,6 +52,30 @@ export async function POST(request: NextRequest) {
     const startAt = parseRentalDate(body.startAt, "startAt");
     const endAt = parseRentalDate(body.endAt, "endAt");
     const supabase = createServiceClient();
+    const now = new Date().toISOString();
+
+    const { data: expiredDrafts } = await supabase
+      .from("booking_drafts")
+      .select("id")
+      .in("status", ["draft", "checkout_created"])
+      .lt("expires_at", now);
+
+    await supabase
+      .from("booking_drafts")
+      .update({ status: "expired" })
+      .in("status", ["draft", "checkout_created"])
+      .lt("expires_at", now);
+
+    const expiredDraftIds = (expiredDrafts || []).map((draft: { id: string }) => draft.id);
+
+    if (expiredDraftIds.length > 0) {
+      await supabase
+        .from("booking_inventory_blocks")
+        .delete()
+        .is("booking_id", null)
+        .in("booking_draft_id", expiredDraftIds);
+    }
+
     const { product, tiers } = await getProductWithPricing(supabase, body.productSlug);
 
     if (product.stock_available <= 0) {
