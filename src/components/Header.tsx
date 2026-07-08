@@ -54,7 +54,7 @@ export default function Header() {
               width={36}
               height={36}
               priority
-              className="h-8 w-8 md:h-9 md:w-9 object-contain translate-y-[1px]"
+              className="h-8 w-8 md:h-9 md:w-9 object-contain -translate-y-[2px]"
             />
             <span className="text-[1.55rem] md:text-2xl leading-none font-bold font-[var(--font-outfit)] tracking-tight">
               <span className="text-brand">Rent</span>
