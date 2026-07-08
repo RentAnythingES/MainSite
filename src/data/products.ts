@@ -22,12 +22,12 @@ export interface Product {
 }
 
 export const products: Product[] = [
-  // ===== BABY & CHILDREN =====
+  // ===== BABY & TODDLER =====
   {
     slug: "compact-stroller",
     name: "Compact Folding Stroller",
     brand: "Kinderkraft",
-    category: "Baby & Children",
+    category: "Baby & Toddler",
     subcategory: "Strollers & Accessories",
     categorySlug: "baby-gear",
     subcategorySlug: "strollers",
@@ -48,7 +48,7 @@ export const products: Product[] = [
     slug: "double-stroller",
     name: "Double Stroller",
     brand: "Baby Jogger",
-    category: "Baby & Children",
+    category: "Baby & Toddler",
     subcategory: "Strollers & Accessories",
     categorySlug: "baby-gear",
     subcategorySlug: "strollers",
@@ -68,7 +68,7 @@ export const products: Product[] = [
     slug: "travel-crib",
     name: "Travel Crib",
     brand: "BabyBjörn",
-    category: "Baby & Children",
+    category: "Baby & Toddler",
     subcategory: "Sleep & Nursery",
     categorySlug: "baby-gear",
     subcategorySlug: "sleep-nursery",
@@ -88,7 +88,7 @@ export const products: Product[] = [
     slug: "car-seat-infant",
     name: "Infant Car Seat (i-Size)",
     brand: "Cybex",
-    category: "Baby & Children",
+    category: "Baby & Toddler",
     subcategory: "Car Seats",
     categorySlug: "baby-gear",
     subcategorySlug: "car-seats",
@@ -109,7 +109,7 @@ export const products: Product[] = [
     slug: "high-chair",
     name: "Folding High Chair",
     brand: "Stokke",
-    category: "Baby & Children",
+    category: "Baby & Toddler",
     subcategory: "Feeding",
     categorySlug: "baby-gear",
     subcategorySlug: "feeding",
@@ -131,7 +131,7 @@ export const products: Product[] = [
     slug: "standard-wheelchair",
     name: "Standard Wheelchair",
     brand: "Invacare",
-    category: "Mobility & Daily Aid",
+    category: "Mobility & Accessibility",
     subcategory: "Wheelchairs",
     categorySlug: "mobility",
     subcategorySlug: "wheelchairs",
@@ -151,7 +151,7 @@ export const products: Product[] = [
     slug: "transport-wheelchair",
     name: "Transport Wheelchair (Lightweight)",
     brand: "Drive Medical",
-    category: "Mobility & Daily Aid",
+    category: "Mobility & Accessibility",
     subcategory: "Wheelchairs",
     categorySlug: "mobility",
     subcategorySlug: "wheelchairs",
@@ -171,7 +171,7 @@ export const products: Product[] = [
     slug: "mobility-scooter-lightweight",
     name: "Lightweight Mobility Scooter",
     brand: "Pride",
-    category: "Mobility & Daily Aid",
+    category: "Mobility & Accessibility",
     subcategory: "Mobility Scooters",
     categorySlug: "mobility",
     subcategorySlug: "scooters",
@@ -192,7 +192,7 @@ export const products: Product[] = [
     slug: "heavy-duty-mobility-scooter",
     name: "Heavy-Duty Mobility Scooter",
     brand: "Invacare",
-    category: "Mobility & Daily Aid",
+    category: "Mobility & Accessibility",
     subcategory: "Mobility Scooters",
     categorySlug: "mobility",
     subcategorySlug: "scooters",
@@ -212,7 +212,7 @@ export const products: Product[] = [
     slug: "rollator-walker",
     name: "Rollator Walker",
     brand: "Drive Medical",
-    category: "Mobility & Daily Aid",
+    category: "Mobility & Accessibility",
     subcategory: "Walkers",
     categorySlug: "mobility",
     subcategorySlug: "walkers",
@@ -291,12 +291,12 @@ export const products: Product[] = [
     ],
   },
 
-  // ===== HOME & LIVING =====
+  // ===== APARTMENT COMFORT =====
   {
     slug: "air-purifier",
     name: "HEPA Air Purifier",
     brand: "Dyson",
-    category: "Home & Living",
+    category: "Apartment Comfort",
     subcategory: "Home Air Quality",
     categorySlug: "home-living",
     subcategorySlug: "air-quality",
@@ -316,7 +316,7 @@ export const products: Product[] = [
     slug: "portable-ac",
     name: "Portable Air Conditioner",
     brand: "De'Longhi",
-    category: "Home & Living",
+    category: "Apartment Comfort",
     subcategory: "Home Air Quality",
     categorySlug: "home-living",
     subcategorySlug: "air-quality",
@@ -334,12 +334,12 @@ export const products: Product[] = [
     ],
   },
 
-  // ===== TRAVEL & OUTDOORS =====
+  // ===== BEACH & OUTDOOR =====
   {
     slug: "beach-umbrella-set",
     name: "Beach Umbrella & Chair Set",
     brand: "RentAnything",
-    category: "Travel & Outdoors",
+    category: "Beach & Outdoor",
     subcategory: "Beach Gear",
     categorySlug: "travel-outdoors",
     subcategorySlug: "beach",

@@ -48,12 +48,12 @@ const en: Dictionary = {
   },
 
   categories: {
-    babyGear: { name: "Baby & Children", desc: "Strollers, cribs, car seats & high chairs" },
-    mobility: { name: "Mobility Aid", desc: "Wheelchairs, scooters & walkers" },
+    babyGear: { name: "Baby & Toddler", desc: "Strollers, cribs, car seats & high chairs" },
+    mobility: { name: "Mobility & Accessibility", desc: "Wheelchairs, scooters & walkers" },
     remoteWork: { name: "Remote Work", desc: "Monitors, desks, chairs & accessories" },
-    homeLiving: { name: "Home & Living", desc: "Air purifiers, heaters & comfort" },
-    travelOutdoors: { name: "Travel & Outdoors", desc: "Beach gear, coolers & umbrellas" },
-    pregnancy: { name: "Pregnancy", desc: "Support pillows, comfort essentials" },
+    homeLiving: { name: "Apartment Comfort", desc: "Air purifiers, cooling & comfort" },
+    travelOutdoors: { name: "Beach & Outdoor", desc: "Beach gear, coolers & umbrellas" },
+    pregnancy: { name: "Pregnancy & Postpartum", desc: "Support pillows, comfort essentials" },
   },
 
   product: {

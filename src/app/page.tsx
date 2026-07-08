@@ -12,13 +12,13 @@ export const metadata: Metadata = {
 
 const heroCategories = [
   {
-    name: "Baby & Children",
+    name: "Baby & Toddler",
     href: "/rental/baby-gear",
     image: "/categories/baby-gear.png",
     description: "Strollers, cribs, car seats & high chairs",
   },
   {
-    name: "Mobility Aid",
+    name: "Mobility & Accessibility",
     href: "/rental/mobility",
     image: "/categories/mobility.png",
     description: "Wheelchairs, scooters & walkers",
@@ -30,19 +30,19 @@ const heroCategories = [
     description: "Monitors, desks, chairs & accessories",
   },
   {
-    name: "Home & Living",
+    name: "Apartment Comfort",
     href: "/rental/home-living",
     image: "/categories/home-living.png",
     description: "Air purifiers, heaters & comfort",
   },
   {
-    name: "Travel & Outdoors",
+    name: "Beach & Outdoor",
     href: "/rental/travel-outdoors",
     image: "/categories/travel-outdoors.png",
     description: "Beach gear, coolers & umbrellas",
   },
   {
-    name: "Pregnancy",
+    name: "Pregnancy & Postpartum",
     href: "/rental/pregnancy",
     image: "/categories/pregnancy.png",
     description: "Support pillows, comfort essentials",
@@ -83,7 +83,7 @@ const howItWorks = [
 const featuredProducts = [
   {
     name: "Compact Stroller",
-    category: "Baby & Children",
+    category: "Baby & Toddler",
     price: "€5 – €14",
     unit: "/ day",
     href: "/product/compact-stroller",
@@ -91,7 +91,7 @@ const featuredProducts = [
   },
   {
     name: "Standard Wheelchair",
-    category: "Mobility Aid",
+    category: "Mobility & Accessibility",
     price: "€6 – €15",
     unit: "/ day",
     href: "/product/standard-wheelchair",
@@ -107,7 +107,7 @@ const featuredProducts = [
   },
   {
     name: "Heavy-Duty Mobility Scooter",
-    category: "Mobility Aid",
+    category: "Mobility & Accessibility",
     price: "€30 – €70",
     unit: "/ day",
     href: "/product/heavy-duty-mobility-scooter",
