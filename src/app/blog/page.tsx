@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import type { Metadata } from "next";
+import NewsletterSignup from "@/components/NewsletterSignup";
 import { getPublishedPosts } from "@/content/blog";
 
 export const metadata: Metadata = {
@@ -125,16 +126,7 @@ export default function BlogPage() {
             Join our newsletter for seasonal guides, exclusive deals, and local
             recommendations. No spam, unsubscribe anytime.
           </p>
-          <form className="flex flex-col sm:flex-row items-center justify-center gap-3 max-w-md mx-auto">
-            <input
-              type="email"
-              placeholder="your@email.com"
-              className="w-full px-4 py-3 rounded-xl text-sm bg-white/10 text-white placeholder:text-teal-200 border border-white/20 focus:outline-none focus:ring-2 focus:ring-white/30"
-            />
-            <button type="submit" className="btn btn-accent whitespace-nowrap">
-              Subscribe
-            </button>
-          </form>
+          <NewsletterSignup source="blog_footer" dark />
         </div>
       </section>
     </>

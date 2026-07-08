@@ -47,3 +47,10 @@ Current events:
 - Confirm events appear in GA4 Realtime during a manual availability check.
 - Confirm checkout success emits `checkout_success_status_loaded` during the controlled Stripe test.
 - Add consent/cookie banner logic if switching from basic anonymous measurement to richer tracking.
+
+
+## Bundle Events
+
+| Event | Trigger | Key params |
+|-------|---------|------------|
+| `bundle_configurator_whatsapp_click` | User sends a configured kit request to WhatsApp | `bundle_slug`, `selected_items`, `selected_addons`, `has_dates`, `has_area` |

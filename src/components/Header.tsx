@@ -19,15 +19,16 @@ export default function Header() {
   const switchLocaleLabel = isSpanish ? "EN 🇬🇧" : "ES 🇪🇸";
 
   const categories = [
-    { name: isSpanish ? "Bebé y Niños" : "Baby & Children", href: `${prefix}/rental/baby-gear`, emoji: "👶" },
-    { name: isSpanish ? "Movilidad" : "Mobility Aid", href: `${prefix}/rental/mobility`, emoji: "♿" },
+    { name: isSpanish ? "Bebé y Bebé Pequeño" : "Baby & Toddler", href: `${prefix}/rental/baby-gear`, emoji: "👶" },
+    { name: isSpanish ? "Movilidad y Accesibilidad" : "Mobility & Accessibility", href: `${prefix}/rental/mobility`, emoji: "♿" },
     { name: isSpanish ? "Teletrabajo" : "Remote Work", href: `${prefix}/rental/remote-work`, emoji: "💻" },
-    { name: isSpanish ? "Hogar y Confort" : "Home & Living", href: `${prefix}/rental/home-living`, emoji: "🏠" },
-    { name: isSpanish ? "Playa y Aire Libre" : "Travel & Outdoors", href: `${prefix}/rental/travel-outdoors`, emoji: "🏖️" },
-    { name: isSpanish ? "Embarazo" : "Pregnancy", href: `${prefix}/rental/pregnancy`, emoji: "🤰" },
+    { name: isSpanish ? "Confort de Apartamento" : "Apartment Comfort", href: `${prefix}/rental/home-living`, emoji: "🏠" },
+    { name: isSpanish ? "Playa y Aire Libre" : "Beach & Outdoor", href: `${prefix}/rental/travel-outdoors`, emoji: "🏖️" },
+    { name: isSpanish ? "Embarazo y Postparto" : "Pregnancy & Postpartum", href: `${prefix}/rental/pregnancy`, emoji: "🤰" },
   ];
 
   const navLinks = [
+    { name: "Kits", href: "/valencia/kits" },
     { name: "Valencia", href: `${prefix}/valencia` },
     { name: isSpanish ? "Descubrir" : "Discover", href: isSpanish ? "/discover" : "/discover" },
     { name: isSpanish ? "Cómo Funciona" : "How It Works", href: "/how-it-works" },
@@ -46,16 +47,16 @@ export default function Header() {
       <div className="container-site">
         <div className="flex items-center justify-between h-16 lg:h-18">
           {/* Logo */}
-          <Link href={isSpanish ? "/es" : "/"} className="flex items-center gap-2 group" id="header-logo">
+          <Link href={isSpanish ? "/es" : "/"} className="flex items-center gap-2.5 group" id="header-logo">
             <Image
               src="/brand/rentanything-icon.png"
               alt="RentAnything.es"
-              width={42}
-              height={42}
+              width={36}
+              height={36}
               priority
-              className="h-10 w-10 object-contain"
+              className="h-8 w-8 md:h-9 md:w-9 object-contain"
             />
-            <span className="text-2xl font-bold font-[var(--font-outfit)]">
+            <span className="text-[1.55rem] md:text-2xl leading-none font-bold font-[var(--font-outfit)] tracking-tight">
               <span className="text-brand">Rent</span>
               <span className="text-foreground">Anything</span>
               <span className="text-accent">.es</span>

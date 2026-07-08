@@ -183,3 +183,40 @@ Email deliverability notes live in `docs/EMAIL_DELIVERABILITY.md`.
   - webhook fulfillment
   - admin visibility
   - cancellation/refund path
+
+
+### Private Stripe Live Test Route
+
+Route:
+
+- `/internal/stripe-test`
+
+This route is unlisted, excluded from `sitemap.ts`, and marked `noindex`. It renders
+the real `BookingWidget` and uses the product slug `stripe-test-rental`. The page is
+only a customer-facing shell; pricing, stock, availability, booking draft creation,
+Stripe Checkout, and webhook fulfillment still come from Supabase and Stripe.
+
+Before testing live payments:
+
+1. Create a Supabase/admin product with slug `stripe-test-rental`.
+2. Set it active with `stock_total = 1` and `stock_available = 1`.
+3. Add pricing tiers at a low live amount, e.g. EUR 1.00 to EUR 2.00 per day.
+4. Do not add the product to `src/data/products.ts`, so it does not appear in public
+   product grids or SEO routes.
+5. Temporarily set Vercel booking pause flags to false:
+   - `BOOKINGS_PAUSED=false`
+   - `NEXT_PUBLIC_BOOKINGS_PAUSED=false`
+6. Complete a real low-value checkout from `/internal/stripe-test`.
+7. Verify:
+   - Stripe payment succeeds.
+   - `/api/webhooks/stripe` receives `checkout.session.completed`.
+   - `/success` shows the confirmed booking state.
+   - Admin booking view shows times, fulfillment, fees, customer details, and Stripe IDs.
+   - Confirmation email is delivered.
+   - Cancelling/refunding releases inventory and issues the Stripe refund.
+8. Return booking pause flags to true until the public catalogue is ready.
+
+
+## Newsletter Consent
+
+Newsletter signup storage is separate from bookings. The `newsletter_subscribers` table stores explicit consent records through `/api/newsletter`; it should not be used for booking-critical notifications.

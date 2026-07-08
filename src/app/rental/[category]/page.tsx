@@ -16,8 +16,8 @@ interface CategoryContent {
 
 const categoryMeta: Record<string, CategoryContent> = {
   "baby-gear": {
-    title: "Baby & Children Gear Rental in Valencia",
-    description: "Rent strollers, cribs, car seats, high chairs & more in Valencia. Premium brands delivered to your accommodation.",
+    title: "Baby & Toddler Gear Rental in Valencia",
+    description: "Rent travel cots, strollers, high chairs, baby baths & toddler gear in Valencia. Premium brands delivered to your accommodation.",
     emoji: "👶",
     editorialHeading: "Why Rent Baby Gear in Valencia?",
     editorialParagraphs: [
@@ -28,7 +28,7 @@ const categoryMeta: Record<string, CategoryContent> = {
     blogTags: ["family", "kids"],
   },
   "mobility": {
-    title: "Wheelchair & Mobility Scooter Rental in Valencia",
+    title: "Mobility & Accessibility Rental in Valencia",
     description: "Rent wheelchairs, mobility scooters, walkers & daily aids in Valencia. Delivered to your hotel or Airbnb.",
     emoji: "♿",
     editorialHeading: "Exploring Valencia with Mobility Equipment",
@@ -52,7 +52,7 @@ const categoryMeta: Record<string, CategoryContent> = {
     blogTags: ["digital nomad", "remote work"],
   },
   "home-living": {
-    title: "Home & Living Equipment Rental in Valencia",
+    title: "Apartment Comfort Rental in Valencia",
     description: "Rent air purifiers, portable AC units, kitchen appliances & more in Valencia.",
     emoji: "🏠",
     editorialHeading: "Make Your Valencia Accommodation Comfortable",
@@ -65,7 +65,7 @@ const categoryMeta: Record<string, CategoryContent> = {
   },
   "travel-outdoors": {
     title: "Beach & Outdoor Gear Rental in Valencia",
-    description: "Rent beach umbrellas, camping gear & outdoor equipment in Valencia. Ready for Malvarrosa beach.",
+    description: "Rent beach umbrellas, shade, outdoor comfort gear & family beach equipment in Valencia. Ready for Malvarrosa beach.",
     emoji: "🏖️",
     editorialHeading: "Beach-Ready Without the Baggage",
     editorialParagraphs: [

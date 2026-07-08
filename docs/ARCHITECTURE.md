@@ -17,7 +17,7 @@
 
 ### Public (customer-facing)
 ```
-Static data (src/data/products.ts)
+Static data (src/data/products.ts, src/data/bundles.ts)
   ↓ import at build time
 Next.js Server Components (SSG)
   ↓ props
@@ -56,6 +56,7 @@ Supabase (CRUD products, pricing, bookings)
 | `service_zones` | Valencia delivery/collection zones and fees | Public read active |
 | `booking_drafts` | Pre-payment booking drafts and Stripe Checkout source of truth | Admin/API only |
 | `booking_inventory_blocks` | Datetime inventory holds and paid booking blocks | Admin/API only |
+| `newsletter_subscribers` | Newsletter signup consent records | Admin/API only |
 
 Inventory holds are reserved via the `reserve_booking_inventory(...)` database
 function so overlapping draft creation is checked while the product row is locked.
@@ -73,6 +74,18 @@ pending → confirmed → paid → delivering → active → returning → compl
 Schema: `supabase/schema.sql`
 Booking v2 migration: `supabase/migrations/20260707_booking_system_v2.sql`
 Seed data: `supabase/seed_1_categories.sql` → `seed_2_products.sql` → `seed_3_pricing.sql`
+
+### Bundle Routes
+```
+GET /valencia/kits
+  Data-driven bundle hub for scenario-led rental kits
+
+GET /valencia/kits/[slug]
+  SEO landing page for each kit with related products, guides, add-ons, configurator UI, and WhatsApp handoff
+```
+
+### Bundle Configurator
+The first bundle configurator is client-side only. It collects dates, area, selected included items, add-ons, and notes, then generates a structured WhatsApp message. It does not reserve inventory or create a booking draft yet. Future work should connect bundle selections to availability checks, multi-item booking drafts, and admin request visibility.
 
 ### Booking API v2
 ```
@@ -105,6 +118,7 @@ POST /api/webhooks/stripe
 | `/api/checkout/session` | GET | Read a completed Checkout session for the success page |
 | `/api/webhooks/stripe` | POST | Verify Stripe events, create paid bookings, block dates |
 | `/api/contact` | POST | Send contact email via Resend |
+| `/api/newsletter` | POST | Store newsletter consent + send welcome email |
 | `/api/availability` | GET | Check product availability for date range |
 
 ### Stripe Webhook Flow
@@ -170,6 +184,7 @@ Components (`Header`, `Footer`) detect locale via `usePathname()` and toggle lab
 | File | Purpose |
 |------|---------|
 | `src/data/products.ts` | Static product data (build-time fallback) |
+| `src/data/bundles.ts` | Static kit/bundle definitions for scenario-led rental pages |
 | `src/lib/product-service.ts` | Supabase-first product fetching with static fallback |
 | `src/lib/supabase.ts` | Public Supabase client (anon key, RLS) |
 | `src/lib/supabase-admin.ts` | Admin Supabase client (service role, bypasses RLS) |
@@ -200,3 +215,6 @@ NEXT_PUBLIC_SITE_URL            # Public site URL for Checkout redirects
 ```
 
 Analytics event definitions live in `docs/ANALYTICS_SETUP.md`.
+
+Email templates are centralized in `src/lib/email.ts`; deliverability and lifecycle coverage are documented in `docs/EMAIL_DELIVERABILITY.md`.
+Newsletter consent records live in `newsletter_subscribers` and are created only through `/api/newsletter` using the server-side service role.

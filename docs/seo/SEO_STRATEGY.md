@@ -1,5 +1,5 @@
 # RentAnything.es — SEO Strategy & Audit
-> **Last updated**: 2026-06-19 · **Build**: ✅ Clean · **Total pages**: ~80+
+> **Last updated**: 2026-07-08 · **Build**: ✅ Clean · **Total pages**: ~89+
 
 This is the **living SEO strategy document** for rentanything.es. Updated after every SEO-related change. For prioritized fixes, see [SEO_ROADMAP.md](./SEO_ROADMAP.md).
 
@@ -15,6 +15,24 @@ This is the **living SEO strategy document** for rentanything.es. Updated after 
 | [BLOG_CONTENT_STRATEGY.md](./BLOG_CONTENT_STRATEGY.md) | Blog quality standards and content pipeline |
 
 ---
+
+## Strategic Direction
+
+The SEO system should support the brand promise: **Travel light. Feel at home.**
+
+RentAnything.es should not behave like a generic rental catalogue. The core funnel should become:
+
+`Valencia guide section -> practical friction point -> relevant kit/bundle -> configurable add-ons -> availability / WhatsApp support -> individual products as needed`
+
+This means the next SEO layer is not simply more product pages. It is a data-driven kit/bundle architecture, clearer customer-facing categories, and contextual guide CTAs.
+
+Priority structural changes:
+
+- Split `Baby & Children` into `Baby & Toddler` and `Kids & Family`
+- Introduce kit pages for Family Beach, Baby Arrival, Toddler City, Remote Work, Summer Apartment, Accessible Valencia, Grandparents Visiting, and Long-Stay Kitchen
+- Rename display categories toward customer intent: `Mobility & Accessibility`, `Apartment Comfort`, `Beach & Outdoor`, `Pregnancy & Postpartum`
+- Keep URLs stable until redirects/canonicals are planned; display names can change first
+- Build partner/brand surfaces later as measurable kit pilots, not generic sponsorship banners
 
 ## Site Architecture
 
@@ -43,6 +61,8 @@ rentanything.es/
 │   └── /discover/[slug]            Individual destination guides (5 live)
 │
 ├── /valencia                       Valencia landing page (photo hero)
+├── /valencia/kits                  Kit/bundle hub
+│   └── /valencia/kits/[slug]       Individual kit pages (6 live)
 ├── /about                          About page
 ├── /contact                        Contact form (Resend-powered)
 │
@@ -98,6 +118,12 @@ Admin Dashboard:
 - Data-driven architecture (`src/content/blog.ts`)
 - 4 launch posts live with Article JSON-LD + FAQ schema
 - Cross-linked to products, categories, and discover pages
+
+### 📦 Kits & Bundles (7 pages) — ✅ Initial Layer Live
+- Data-driven architecture (`src/data/bundles.ts`)
+- Hub page at `/valencia/kits`
+- 8 individual kit pages with related products, guides, add-ons, FAQ, and Product JSON-LD
+- Current handoff is WhatsApp while configurable bundle checkout remains future work
 
 ### 📍 Valencia Landing (1 page) — ✅ Live
 - Local SEO landing page

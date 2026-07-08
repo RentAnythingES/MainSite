@@ -11,6 +11,8 @@ App Router with static generation (`generateStaticParams`). Prefix-based i18n (`
 |-------|------|--------|------|
 | `/` | Static | `page.tsx` | Photo carousel (3 images) |
 | `/valencia` | Static | `page.tsx` | Beach photo background |
+| `/valencia/kits` | Static | `bundles.ts` data | Photo-backed kit cards |
+| `/valencia/kits/[slug]` | SSG | `bundles.ts` data | Kit hero image |
 | `/product/[slug]` | SSG | `products.ts` data | Product image |
 | `/rental/[category]` | SSG | `products.ts` categories | Category photo |
 | `/blog/[slug]` | SSG | `blog.ts` data | Blog hero image |
@@ -41,7 +43,9 @@ App Router with static generation (`generateStaticParams`). Prefix-based i18n (`
 - `"use client"` only for interactive widgets:
   - `HeroCarousel` — auto-advancing homepage photo carousel
   - `BookingWidget` — booking flow with rental window, availability check, draft creation, and Stripe handoff
+  - `BundleConfigurator` — kit request builder with selectable included items/add-ons and WhatsApp handoff
   - `ContactForm` — contact form with Resend
+  - `NewsletterSignup` — newsletter consent capture with `/api/newsletter`
   - `Header` / `Footer` — locale-aware navigation (detects `/es/` prefix)
   - `AdminShell` — admin sidebar layout
 - Metadata via `generateMetadata()` exports
@@ -51,6 +55,7 @@ App Router with static generation (`generateStaticParams`). Prefix-based i18n (`
 | File | Provides |
 |------|----------|
 | `src/data/products.ts` | Static product data + helpers (`getProductBySlug`, `getProductsByCategory`) |
+| `src/data/bundles.ts` | Static kit/bundle data + helpers (`getBundleBySlug`, `getBundleProducts`) |
 | `src/lib/product-service.ts` | Supabase-first product fetching with static fallback |
 | `src/content/destinations.ts` | Discover guide data + `ProductWidget` interface |
 | `src/content/blog.ts` | Blog post data |
@@ -80,3 +85,13 @@ Normal v2 flow:
 7. **Webhook** — `/api/webhooks/stripe` turns paid drafts into bookings and converts the hold into a booking inventory block.
 
 Falls back to WhatsApp deep-link if checkout cannot be created.
+
+
+## Bundle configurator flow
+
+Kit pages at `/valencia/kits/[slug]` include a client-side `BundleConfigurator`. It lets users choose dates, accommodation area, included items, optional add-ons, and notes. The first version does not reserve inventory or create checkout sessions; it generates a structured WhatsApp request and tracks `bundle_configurator_whatsapp_click`. Future iterations should connect selections to multi-item availability, booking drafts, and admin visibility.
+
+
+## Newsletter signup flow
+
+`NewsletterSignup` posts email, source, locale, and explicit consent to `/api/newsletter`. The API stores a consent record in `newsletter_subscribers`, including consent text/version, source, IP, user agent, active status, and unsubscribe token, then sends `sendSignupWelcome`. The form is currently used on `/blog`.

@@ -1,5 +1,5 @@
 # RentAnything.es — SEO Roadmap
-> **Last updated**: 2026-06-19 · Prioritized by estimated traffic impact × effort
+> **Last updated**: 2026-07-08 · Prioritized by estimated traffic impact × effort
 
 ---
 
@@ -69,6 +69,55 @@ Verify domain, submit sitemap. Monitor crawl errors and indexing.
 **Impact**: 🟠 High · **Effort**: 30 min · **Status**: ✅ Done
 
 Product → blog, blog → products, categories → blog. Bidirectional linking implemented.
+
+---
+
+### 1.5 Build Kits & Bundles architecture
+**Impact**: High · **Effort**: 1-2 days · **Status**: Initial layer live
+
+Initial data-driven bundle layer is live with `/valencia/kits`, individual kit pages, related products, related guides, FAQ, sitemap entries, and a first client-side configurator for included items/add-ons with WhatsApp handoff. Next iteration should add availability-aware add-ons, multi-item booking drafts, and admin request visibility.
+
+**Initial kit pages:**
+- Family Beach Kit Valencia
+- Baby Arrival Kit Valencia
+- Toddler City Kit Valencia
+- Remote Work Apartment Kit
+- Summer Apartment Survival Kit
+- Accessible Valencia Kit
+- Grandparents Visiting Kit
+- Long-Stay Kitchen Upgrade Kit
+
+**Technical direction:**
+- Add a bundle data model rather than hardcoding pages
+- Support included items, optional add-ons, substitutions, related guides, related products, FAQ, and availability status
+- Prepare for future configurable checkout once inventory and booking logic are mature
+- Track `bundle_check_availability`, `bundle_addon_select`, and guide-to-bundle clicks in GA4
+
+---
+
+### 1.6 Split family categories: Baby vs Kids
+**Impact**: High · **Effort**: 0.5-1 day · **Status**: Open
+
+Separate the current broad family category into clearer customer language:
+
+- `Baby & Toddler` for cot, stroller, high chair, baby bath, sleep, feeding, carrier, monitor
+- `Kids & Family` for scooters, beach toys, toy boxes, activity packs, balance bikes, family outdoor gear
+
+This improves navigation, SEO intent matching, bundle surfacing, and future inventory growth.
+
+---
+
+### 1.7 Upgrade category naming and structure
+**Impact**: Medium-High · **Effort**: 0.5-1 day · **Status**: Open
+
+Adopt more use-case-led category names across nav, category pages, sitemap, metadata, and Spanish copy where relevant:
+
+- `Mobility Aid` -> `Mobility & Accessibility`
+- `Home & Living` -> `Apartment Comfort`
+- `Travel & Outdoors` -> `Beach & Outdoor`
+- `Pregnancy` -> `Pregnancy & Postpartum`
+
+Avoid changing URLs casually until redirects/canonicals are planned. Display names can change first; URL migration can follow once the bundle/category architecture is stable.
 
 ---
 
@@ -178,6 +227,17 @@ List our products on Babonbo, BabyQuip, Cloud of Goods (20% commission) as secon
 
 ### 4.6 Partner/affiliate page
 Backlink opportunities from travel bloggers and influencers.
+
+### 4.7 Brand partnership surfaces
+Build only after core kit pages exist. Future surfaces should support narrow, measurable pilots rather than generic ads:
+
+- Co-branded kit landing sections for demo fleets
+- Brand/product badges inside relevant kits
+- Tracked post-rental purchase links and discount codes
+- Partner reporting dashboard/export: rental days, attachment rate, feedback, clicks
+- Case-study pages once proof exists
+
+Priority pilot logic: start with one narrow bundle, collect usage evidence, then use that case study to approach larger brands.
 
 ---
 

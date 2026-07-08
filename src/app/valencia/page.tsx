@@ -1,6 +1,8 @@
 import Link from "next/link";
 import Image from "next/image";
 import type { Metadata } from "next";
+import BundleCard from "@/components/BundleCard";
+import { rentalBundles } from "@/data/bundles";
 import { products } from "@/data/products";
 import ProductCard from "@/components/ProductCard";
 
@@ -11,11 +13,11 @@ export const metadata: Metadata = {
 };
 
 const categoryCards = [
-  { name: "Baby & Children", slug: "baby-gear", image: "/categories/baby-gear.png", desc: "Strollers, cribs, car seats, high chairs" },
-  { name: "Mobility Aid", slug: "mobility", image: "/categories/mobility.png", desc: "Wheelchairs, scooters, walkers" },
+  { name: "Baby & Toddler", slug: "baby-gear", image: "/categories/baby-gear.png", desc: "Cots, strollers, high chairs, baby setup" },
+  { name: "Mobility & Accessibility", slug: "mobility", image: "/categories/mobility.png", desc: "Wheelchairs, scooters, walkers" },
   { name: "Remote Work", slug: "remote-work", image: "/categories/remote-work.png", desc: "Monitors, desks, ergonomic chairs" },
-  { name: "Home & Living", slug: "home-living", image: "/categories/home-living.png", desc: "Air purifiers, AC units, kitchen" },
-  { name: "Travel & Outdoors", slug: "travel-outdoors", image: "/categories/travel-outdoors.png", desc: "Beach gear, camping, recreation" },
+  { name: "Apartment Comfort", slug: "home-living", image: "/categories/home-living.png", desc: "Air purifiers, AC units, kitchen" },
+  { name: "Beach & Outdoor", slug: "travel-outdoors", image: "/categories/travel-outdoors.png", desc: "Beach gear, shade, recreation" },
 ];
 
 export default function ValenciaPage() {
@@ -52,8 +54,11 @@ export default function ValenciaPage() {
               Airbnb, or apartment.
             </p>
             <div className="flex flex-wrap gap-3">
-              <a href="#products" className="btn btn-primary btn-lg">
-                Browse All Products ↓
+              <Link href="/valencia/kits" className="btn btn-primary btn-lg">
+                Start with a Kit
+              </Link>
+              <a href="#products" className="btn btn-lg bg-white/15 text-white hover:bg-white/25 border border-white/20">
+                Browse Products ↓
               </a>
               <Link href="/how-it-works" className="btn btn-lg bg-white/15 text-white hover:bg-white/25 border border-white/20">
                 How It Works
@@ -105,8 +110,31 @@ export default function ValenciaPage() {
         </div>
       </section>
 
+      {/* Kits */}
+      <section className="section bg-neutral-50" id="kits">
+        <div className="container-site">
+          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8">
+            <div className="max-w-2xl">
+              <span className="badge badge-brand mb-3">New planning layer</span>
+              <h2 className="text-3xl font-bold mb-2">Start with a Valencia kit</h2>
+              <p className="text-neutral-600">
+                Not sure which individual items you need? Choose the stay type first, then adjust the setup around your dates, accommodation, and inventory.
+              </p>
+            </div>
+            <Link href="/valencia/kits" className="btn btn-outline">
+              View all kits
+            </Link>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {rentalBundles.slice(0, 3).map((bundle) => (
+              <BundleCard key={bundle.slug} bundle={bundle} compact id={`val-kit-${bundle.slug}`} />
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* All Products */}
-      <section className="section bg-neutral-50" id="products">
+      <section className="section bg-white" id="products">
         <div className="container-site">
           <h2 className="text-3xl font-bold mb-2">All Valencia Rentals</h2>
           <p className="text-neutral-500 mb-8">{products.length} products available</p>

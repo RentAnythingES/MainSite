@@ -18,11 +18,12 @@ export default function Footer() {
       { name: isSpanish ? "Contacto" : "Contact", href: "/contact" },
     ],
     [isSpanish ? "Categorías" : "Categories"]: [
-      { name: isSpanish ? "Bebé y Niños" : "Baby & Children", href: `${prefix}/rental/baby-gear` },
-      { name: isSpanish ? "Movilidad" : "Mobility Aid", href: `${prefix}/rental/mobility` },
+      { name: "Kits", href: "/valencia/kits" },
+      { name: isSpanish ? "Bebé y Bebé Pequeño" : "Baby & Toddler", href: `${prefix}/rental/baby-gear` },
+      { name: isSpanish ? "Movilidad y Accesibilidad" : "Mobility & Accessibility", href: `${prefix}/rental/mobility` },
       { name: isSpanish ? "Teletrabajo" : "Remote Work", href: `${prefix}/rental/remote-work` },
-      { name: isSpanish ? "Hogar y Confort" : "Home & Living", href: `${prefix}/rental/home-living` },
-      { name: isSpanish ? "Playa y Aire Libre" : "Travel & Outdoors", href: `${prefix}/rental/travel-outdoors` },
+      { name: isSpanish ? "Confort de Apartamento" : "Apartment Comfort", href: `${prefix}/rental/home-living` },
+      { name: isSpanish ? "Playa y Aire Libre" : "Beach & Outdoor", href: `${prefix}/rental/travel-outdoors` },
     ],
     [isSpanish ? "Ciudades" : "Cities"]: [
       { name: "Valencia", href: `${prefix}/valencia` },
@@ -41,7 +42,7 @@ export default function Footer() {
 
   const tagline = isSpanish
     ? "Viaja ligero, disfruta de todo. Equipos de alquiler de primera calidad entregados en tu alojamiento en Valencia."
-    : "Travel light, experience everything. Premium rental equipment delivered to your door in Valencia.";
+    : "Travel light. Feel at home. Practical rental kits and individual items delivered in Valencia.";
 
   const soonLabel = isSpanish ? "Pronto" : "Soon";
 

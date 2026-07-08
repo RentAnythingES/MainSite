@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { products } from "@/data/products";
+import { rentalBundles } from "@/data/bundles";
 import { getPublishedPosts } from "@/content/blog";
 import { getPublishedDestinations } from "@/content/destinations";
 
@@ -12,6 +13,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const staticPages: MetadataRoute.Sitemap = [
     { url: BASE_URL, lastModified: now, changeFrequency: "weekly", priority: 1.0 },
     { url: `${BASE_URL}/valencia`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
+    { url: `${BASE_URL}/valencia/kits`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
     { url: `${BASE_URL}/blog`, lastModified: now, changeFrequency: "weekly", priority: 0.8 },
     { url: `${BASE_URL}/how-it-works`, lastModified: now, changeFrequency: "monthly", priority: 0.7 },
     { url: `${BASE_URL}/about`, lastModified: now, changeFrequency: "monthly", priority: 0.5 },
@@ -34,6 +36,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     lastModified: now,
     changeFrequency: "weekly" as const,
     priority: 0.7,
+  }));
+
+  const bundlePages: MetadataRoute.Sitemap = rentalBundles.map((bundle) => ({
+    url: `${BASE_URL}/valencia/kits/${bundle.slug}`,
+    lastModified: now,
+    changeFrequency: "weekly" as const,
+    priority: 0.8,
   }));
 
   // Blog posts (only published)
@@ -83,5 +92,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
 
-  return [...staticPages, ...categoryPages, ...productPages, ...blogPages, ...discoverHubs, ...discoverPages, ...spanishStaticPages, ...spanishProductPages, ...spanishCategoryPages];
+  return [...staticPages, ...categoryPages, ...productPages, ...bundlePages, ...blogPages, ...discoverHubs, ...discoverPages, ...spanishStaticPages, ...spanishProductPages, ...spanishCategoryPages];
 }
