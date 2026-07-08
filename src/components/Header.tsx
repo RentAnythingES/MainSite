@@ -47,14 +47,14 @@ export default function Header() {
       <div className="container-site">
         <div className="flex items-center justify-between h-16 lg:h-18">
           {/* Logo */}
-          <Link href={isSpanish ? "/es" : "/"} className="flex items-center gap-2.5 group" id="header-logo">
+          <Link href={isSpanish ? "/es" : "/"} className="flex items-end gap-2.5 group" id="header-logo">
             <Image
               src="/brand/rentanything-icon.png"
               alt="RentAnything.es"
               width={36}
               height={36}
               priority
-              className="h-8 w-8 md:h-9 md:w-9 object-contain"
+              className="h-8 w-8 md:h-9 md:w-9 object-contain translate-y-[1px]"
             />
             <span className="text-[1.55rem] md:text-2xl leading-none font-bold font-[var(--font-outfit)] tracking-tight">
               <span className="text-brand">Rent</span>
