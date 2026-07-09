@@ -182,6 +182,11 @@ refunding, or completing a booking releases legacy `blocked_dates` and v2
 `booking_inventory_blocks`; cancelled/refunded paid bookings attempt a Stripe
 refund.
 
+Expanded admin booking rows also show payment totals, Stripe checkout/payment IDs,
+active/released inventory block status, and a lightweight status timeline so support
+can quickly confirm whether a booking is paid, refunded, released, or still holding
+inventory.
+
 An authenticated `/api/admin/health` endpoint reports whether Stripe, Stripe
 webhook secret, Resend, Supabase keys, booking pause flags, active draft counts,
 unpaid hold counts, expired hold counts, and last cleanup results are configured.

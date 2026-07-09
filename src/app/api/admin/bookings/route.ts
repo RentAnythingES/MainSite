@@ -31,6 +31,7 @@ export async function GET(request: NextRequest) {
     if (error) throw error;
 
     const bookings = (data || []) as Array<Record<string, unknown>>;
+    const bookingIds = bookings.map((booking) => booking.id).filter(Boolean) as string[];
     const pickupLocationIds = [...new Set(bookings.map((booking) => booking.pickup_location_id).filter(Boolean))] as string[];
     const serviceZoneIds = [
       ...new Set(
@@ -40,7 +41,7 @@ export async function GET(request: NextRequest) {
       ),
     ] as string[];
 
-    const [pickupLocationsResult, serviceZonesResult] = await Promise.all([
+    const [pickupLocationsResult, serviceZonesResult, inventoryBlocksResult] = await Promise.all([
       pickupLocationIds.length > 0
         ? supabase
             .from("pickup_locations")
@@ -53,10 +54,17 @@ export async function GET(request: NextRequest) {
             .select("id, name, slug, city")
             .in("id", serviceZoneIds)
         : Promise.resolve({ data: [], error: null }),
+      bookingIds.length > 0
+        ? supabase
+            .from("booking_inventory_blocks")
+            .select("id, booking_id, starts_at, ends_at, quantity, reason")
+            .in("booking_id", bookingIds)
+        : Promise.resolve({ data: [], error: null }),
     ]);
 
     if (pickupLocationsResult.error) throw pickupLocationsResult.error;
     if (serviceZonesResult.error) throw serviceZonesResult.error;
+    if (inventoryBlocksResult.error) throw inventoryBlocksResult.error;
 
     const pickupLocationById = new Map(
       (pickupLocationsResult.data || []).map((location: { id: string }) => [location.id, location])
@@ -64,6 +72,15 @@ export async function GET(request: NextRequest) {
     const serviceZoneById = new Map(
       (serviceZonesResult.data || []).map((zone: { id: string }) => [zone.id, zone])
     );
+    const inventoryBlocksByBookingId = new Map<string, unknown[]>();
+
+    for (const block of inventoryBlocksResult.data || []) {
+      const bookingId = (block as { booking_id?: string | null }).booking_id;
+      if (!bookingId) continue;
+      const existing = inventoryBlocksByBookingId.get(bookingId) || [];
+      existing.push(block);
+      inventoryBlocksByBookingId.set(bookingId, existing);
+    }
 
     const enrichedBookings = bookings.map((booking) => ({
       ...booking,
@@ -76,6 +93,7 @@ export async function GET(request: NextRequest) {
       collection_zone: booking.collection_zone_id
         ? serviceZoneById.get(booking.collection_zone_id as string) || null
         : null,
+      inventory_blocks: inventoryBlocksByBookingId.get(booking.id as string) || [],
     }));
 
     return NextResponse.json({ bookings: enrichedBookings });

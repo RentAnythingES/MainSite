@@ -17,6 +17,14 @@ interface BookingLocation {
   city?: string;
 }
 
+interface InventoryBlock {
+  id: string;
+  starts_at: string;
+  ends_at: string;
+  quantity: number;
+  reason: string | null;
+}
+
 interface Booking {
   id: string;
   booking_ref: string;
@@ -40,6 +48,17 @@ interface Booking {
   collection_address?: string | null;
   collection_notes?: string | null;
   collection_fee_cents?: number | null;
+  delivery_fee_cents?: number | null;
+  subtotal_cents?: number | null;
+  per_day_cents?: number | null;
+  stripe_checkout_session_id?: string | null;
+  stripe_payment_intent_id?: string | null;
+  stripe_deposit_intent_id?: string | null;
+  paid_at?: string | null;
+  cancelled_at?: string | null;
+  completed_at?: string | null;
+  updated_at?: string | null;
+  inventory_blocks?: InventoryBlock[];
   status: string;
   created_at: string;
 }
@@ -81,7 +100,7 @@ const TRANSITIONS: Record<string, { label: string; next: string; color: string }
   ],
 };
 
-const STATUSES = ["all", "pending", "confirmed", "paid", "delivering", "active", "returning", "completed", "cancelled"];
+const STATUSES = ["all", "pending", "confirmed", "paid", "delivering", "active", "returning", "completed", "cancelled", "refunded"];
 
 export default function AdminBookingsPage() {
   const [bookings, setBookings] = useState<Booking[]>([]);
@@ -138,12 +157,28 @@ export default function AdminBookingsPage() {
         })
       : null;
 
+  const formatMoney = (cents?: number | null) => `€${((cents || 0) / 100).toFixed(2)}`;
+
   const formatFulfillmentMode = (mode?: string | null) => {
     if (mode === "customer_pickup") return "Customer pickup";
     if (mode === "delivery_only") return "Delivery only";
     if (mode === "delivery_and_collection") return "Delivery and collection";
     return "Legacy delivery";
   };
+
+  const shortId = (value?: string | null) => {
+    if (!value) return "Not set";
+    if (value.length <= 18) return value;
+    return `${value.slice(0, 10)}…${value.slice(-6)}`;
+  };
+
+  const buildTimeline = (booking: Booking) => [
+    { label: "Created", value: booking.created_at },
+    { label: "Paid", value: booking.paid_at },
+    { label: "Cancelled", value: booking.cancelled_at },
+    { label: "Completed", value: booking.completed_at },
+    { label: "Updated", value: booking.updated_at },
+  ].filter((item) => Boolean(item.value));
 
   if (loading) {
     return (
@@ -287,6 +322,71 @@ export default function AdminBookingsPage() {
                     <div>
                       <p className="text-xs text-neutral-500 mb-1">Created</p>
                       <p className="text-sm text-neutral-300">{formatDate(booking.created_at)}</p>
+                    </div>
+                  </div>
+
+                  <div className="grid lg:grid-cols-3 gap-4 mb-4 pt-4 border-t border-neutral-800">
+                    <div>
+                      <p className="text-xs text-neutral-500 mb-2">Payment</p>
+                      <div className="space-y-1 text-xs">
+                        <div className="flex justify-between gap-3">
+                          <span className="text-neutral-500">Subtotal</span>
+                          <span className="text-neutral-300">{formatMoney(booking.subtotal_cents)}</span>
+                        </div>
+                        <div className="flex justify-between gap-3">
+                          <span className="text-neutral-500">Delivery</span>
+                          <span className="text-neutral-300">{formatMoney(booking.delivery_fee_cents)}</span>
+                        </div>
+                        <div className="flex justify-between gap-3 font-semibold">
+                          <span className="text-neutral-400">Total</span>
+                          <span className="text-white">{formatMoney(booking.total_cents)}</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div>
+                      <p className="text-xs text-neutral-500 mb-2">Stripe</p>
+                      <div className="space-y-1 text-xs font-mono">
+                        <p className="text-neutral-400">Checkout: <span className="text-neutral-300">{shortId(booking.stripe_checkout_session_id)}</span></p>
+                        <p className="text-neutral-400">Payment: <span className="text-neutral-300">{shortId(booking.stripe_payment_intent_id)}</span></p>
+                        <p className="text-neutral-400">Deposit: <span className="text-neutral-300">{shortId(booking.stripe_deposit_intent_id)}</span></p>
+                      </div>
+                    </div>
+
+                    <div>
+                      <p className="text-xs text-neutral-500 mb-2">Inventory</p>
+                      {booking.inventory_blocks && booking.inventory_blocks.length > 0 ? (
+                        <div className="space-y-1">
+                          {booking.inventory_blocks.map((block) => (
+                            <div key={block.id} className="rounded-lg border border-emerald-500/20 bg-emerald-500/10 px-2 py-1.5">
+                              <p className="text-xs font-semibold text-emerald-300">
+                                Held: {block.quantity} unit{block.quantity === 1 ? "" : "s"}
+                              </p>
+                              <p className="text-[11px] text-emerald-200/80">
+                                {formatDateTime(block.starts_at)} → {formatDateTime(block.ends_at)}
+                              </p>
+                            </div>
+                          ))}
+                        </div>
+                      ) : (
+                        <p className="text-xs text-neutral-400">
+                          {["cancelled", "refunded", "completed"].includes(booking.status)
+                            ? "Released"
+                            : "No active inventory block found"}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+
+                  <div className="mb-4 pt-4 border-t border-neutral-800">
+                    <p className="text-xs text-neutral-500 mb-2">Timeline</p>
+                    <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-2">
+                      {buildTimeline(booking).map((item) => (
+                        <div key={item.label} className="rounded-lg bg-neutral-950 border border-neutral-800 p-2">
+                          <p className="text-[11px] uppercase tracking-wide text-neutral-500">{item.label}</p>
+                          <p className="text-xs text-neutral-300 mt-1">{formatDateTime(item.value)}</p>
+                        </div>
+                      ))}
                     </div>
                   </div>
 
