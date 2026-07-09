@@ -23,6 +23,7 @@ Initial Booking System v2 code is now in place:
 - `/api/checkout/status` joins Stripe session, booking draft, booking, and inventory state for the success page.
 - `/api/webhooks/stripe` can fulfill `checkout.session.completed` from a booking draft.
 - `/api/admin/health` exposes authenticated, non-secret configuration status for Stripe, Resend, Supabase, and booking pause flags.
+- Expired draft cleanup now runs before availability checks, draft creation, checkout creation, and admin health checks.
 
 This code is not live-safe until the v2 migration has been applied in Supabase and
 a full test booking confirms draft creation, Stripe redirect, webhook fulfillment,
@@ -74,6 +75,12 @@ Availability must check overlapping datetime blocks and compare against
 `products.stock_total`. Date-only `blocked_dates` remains available for legacy admin
 views and manual broad blocking, but the new checkout flow should use datetime blocks.
 
+Expired unpaid drafts must not keep inventory blocked. `cleanupExpiredBookingDrafts`
+marks expired `draft` / `checkout_created` rows as `expired` and removes unpaid
+`booking_inventory_blocks`. It is intentionally called from multiple API routes so
+stale holds are cleaned even if a customer only checks availability or an admin opens
+health status.
+
 ## Stripe Contract
 
 Stripe metadata should contain only stable server-generated identifiers:
@@ -118,7 +125,8 @@ Migration:
 - Return available fulfillment options, pickup locations, and zone fees.
 
 Status: implemented as `/api/availability` with backwards-compatible `start`/`end`
-support for the existing date checker.
+support for the existing date checker. Availability checks also clean expired unpaid
+draft holds before calculating overlapping inventory.
 
 Booking options are also exposed through `/api/booking-options` so the widget can
 show active pickup locations and configured service zones before the customer
@@ -135,7 +143,8 @@ central Valencia pickup is disabled until an operational pickup point is ready.
   a new draft.
 
 Status: implemented as `/api/booking-drafts`. Requires the v2 migration before it
-can run against Supabase.
+can run against Supabase. Draft creation uses the shared expired-hold cleanup helper
+before attempting a new reservation.
 
 ### Phase 4 — Stripe Checkout
 
@@ -145,7 +154,9 @@ can run against Supabase.
 - Never trust client-submitted totals.
 
 Status: `draftId` path implemented in `/api/checkout`. Legacy payload path remains
-as a bridge while online bookings are paused.
+as a bridge while online bookings are paused. Checkout now cleans expired holds
+before loading a draft, and customer-facing checkout failures are shown as payment
+startup issues rather than inventory being fully booked.
 
 ### Phase 5 — Webhook Fulfillment
 
@@ -172,7 +183,8 @@ refunding, or completing a booking releases legacy `blocked_dates` and v2
 refund.
 
 An authenticated `/api/admin/health` endpoint reports whether Stripe, Stripe
-webhook secret, Resend, Supabase keys, and booking pause flags are configured.
+webhook secret, Resend, Supabase keys, booking pause flags, active draft counts,
+unpaid hold counts, expired hold counts, and last cleanup results are configured.
 Email deliverability notes live in `docs/EMAIL_DELIVERABILITY.md`.
 
 ### Phase 7 — Test Booking

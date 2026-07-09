@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createServiceClient } from "@/lib/supabase";
-import { calculateRentalDays, getProductWithPricing, getServiceZone, parseRentalDate, quoteBooking } from "@/lib/booking-v2";
+import { calculateRentalDays, cleanupExpiredBookingDrafts, getProductWithPricing, getServiceZone, parseRentalDate, quoteBooking } from "@/lib/booking-v2";
 import type { FulfillmentMode } from "@/lib/types";
 
 /**
@@ -30,6 +30,7 @@ export async function GET(request: NextRequest) {
 
   try {
     const supabase = createServiceClient();
+    await cleanupExpiredBookingDrafts(supabase);
 
     const startAt = parseRentalDate(startAtParam || `${start}T09:00:00+02:00`, "start");
     const endAt = parseRentalDate(endAtParam || `${end}T09:00:00+02:00`, "end");

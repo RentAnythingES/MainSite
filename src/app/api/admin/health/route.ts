@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { verifyAdmin, unauthorizedResponse } from "@/lib/admin-auth";
 import { isStripeConfigured } from "@/lib/stripe";
 import { sendEmailHealthCheck } from "@/lib/email";
+import { createServiceClient } from "@/lib/supabase";
+import { cleanupExpiredBookingDrafts } from "@/lib/booking-v2";
 
 function maskEmail(value: string | undefined): string | null {
   if (!value) return null;
@@ -16,6 +18,33 @@ function maskEmail(value: string | undefined): string | null {
 export async function GET(request: NextRequest) {
   const user = await verifyAdmin(request);
   if (!user) return unauthorizedResponse();
+
+  const supabase = createServiceClient();
+  const cleanup = await cleanupExpiredBookingDrafts(supabase);
+  const now = new Date().toISOString();
+
+  const [
+    activeDraftsResult,
+    expiredDraftsWithHoldsResult,
+    unpaidHoldsResult,
+  ] = await Promise.all([
+    supabase
+      .from("booking_drafts")
+      .select("id", { count: "exact", head: true })
+      .in("status", ["draft", "checkout_created"])
+      .gt("expires_at", now),
+    supabase
+      .from("booking_inventory_blocks")
+      .select("id, booking_drafts!inner(status, expires_at)", { count: "exact", head: true })
+      .is("booking_id", null)
+      .in("booking_drafts.status", ["draft", "checkout_created"])
+      .lt("booking_drafts.expires_at", now),
+    supabase
+      .from("booking_inventory_blocks")
+      .select("id", { count: "exact", head: true })
+      .is("booking_id", null)
+      .not("booking_draft_id", "is", null),
+  ]);
 
   return NextResponse.json({
     stripe: {
@@ -36,6 +65,13 @@ export async function GET(request: NextRequest) {
     booking: {
       paused: process.env.BOOKINGS_PAUSED !== "false",
       publicPaused: process.env.NEXT_PUBLIC_BOOKINGS_PAUSED !== "false",
+      activeDraftCount: activeDraftsResult.count || 0,
+      unpaidHoldCount: unpaidHoldsResult.count || 0,
+      expiredDraftHoldCount: expiredDraftsWithHoldsResult.count || 0,
+      lastCleanup: {
+        expiredDrafts: cleanup.expiredDraftCount,
+        deletedHolds: cleanup.deletedHoldCount,
+      },
     },
     analytics: {
       gaConfigured: Boolean(process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || process.env.NEXT_PUBLIC_GA_ID),

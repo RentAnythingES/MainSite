@@ -66,6 +66,9 @@ const labels = {
     unavailable: "This item is currently fully booked for that time frame.",
     unavailableHelp:
       "Contact us directly via WhatsApp and we can see if we can find alternative inventory.",
+    checkoutUnavailable: "Payment could not be started.",
+    checkoutUnavailableHelp:
+      "Your selected dates may still be available. Please contact us via WhatsApp and we will finish the booking manually.",
     bookWhatsapp: "💬 Contact us on WhatsApp",
     bookDirect: "📋 Book Now",
     securePayment: "🔒 Secure payment via Stripe",
@@ -114,6 +117,9 @@ const labels = {
     unavailable: "Este artículo está completamente reservado para esas fechas.",
     unavailableHelp:
       "Contáctanos directamente por WhatsApp y veremos si podemos encontrar inventario alternativo.",
+    checkoutUnavailable: "No se pudo iniciar el pago.",
+    checkoutUnavailableHelp:
+      "Es posible que tus fechas sigan disponibles. Contáctanos por WhatsApp y terminaremos la reserva manualmente.",
     bookWhatsapp: "💬 Contactar por WhatsApp",
     bookDirect: "📋 Reservar Ahora",
     securePayment: "🔒 Pago seguro con Stripe",
@@ -178,6 +184,7 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
 
   // Availability
   const [availabilityStatus, setAvailabilityStatus] = useState<"idle" | "checking" | "available" | "unavailable">("idle");
+  const [bookingError, setBookingError] = useState<"none" | "availability" | "checkout">("none");
   const [blockedDates, setBlockedDates] = useState<string[]>([]);
   const [serviceZones, setServiceZones] = useState<ServiceZoneOption[]>([]);
   const [pickupLocations, setPickupLocations] = useState<PickupLocationOption[]>([]);
@@ -261,6 +268,7 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
   // Reset availability when dates change
   useEffect(() => {
     setAvailabilityStatus("idle");
+    setBookingError("none");
     setBlockedDates([]);
     setServerQuote(null);
   }, [startDate, startTime, endDate, endTime, fulfillmentMode, deliveryZoneId, collectionZoneId, pickupLocationId]);
@@ -308,6 +316,7 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
 
       if (data.available) {
         setAvailabilityStatus("available");
+        setBookingError("none");
         setBlockedDates([]);
         trackBookingEvent("availability_check_available", {
           productSlug: product.slug,
@@ -316,6 +325,7 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
         });
       } else {
         setAvailabilityStatus("unavailable");
+        setBookingError("availability");
         setBlockedDates(data.blockedDates || []);
         trackBookingEvent("availability_check_unavailable", {
           productSlug: product.slug,
@@ -366,6 +376,7 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
 
       if (!draftRes.ok || !draftData.draftId) {
         setAvailabilityStatus("unavailable");
+        setBookingError("availability");
         setSubmitting(false);
         trackBookingEvent("booking_draft_failed", {
           productSlug: product.slug,
@@ -416,21 +427,20 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
         });
         window.location.href = data.checkoutUrl;
       } else {
-        // Fallback to WhatsApp
+        setBookingError("checkout");
         trackBookingEvent("checkout_redirect_failed_whatsapp", {
           productSlug: product.slug,
           fulfillmentMode,
+          reason: data.error || "checkout_failed",
         });
-        window.open(whatsappUrl, "_blank");
         setSubmitting(false);
       }
     } catch {
-      // Fallback to WhatsApp
+      setBookingError("checkout");
       trackBookingEvent("checkout_exception_whatsapp", {
         productSlug: product.slug,
         fulfillmentMode,
       });
-      window.open(whatsappUrl, "_blank");
       setSubmitting(false);
     }
   };
@@ -779,9 +789,29 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
           <p className="text-xs text-amber-700">{t.unavailableHelp}</p>
         </div>
       )}
+      {bookingError === "checkout" && (
+        <div className="bg-amber-50 border border-amber-200 rounded-lg p-3 mb-4">
+          <p className="text-sm text-amber-800 font-semibold mb-1">{t.checkoutUnavailable}</p>
+          <p className="text-xs text-amber-700">{t.checkoutUnavailableHelp}</p>
+        </div>
+      )}
 
       {/* CTAs */}
-      {availabilityStatus === "idle" ? (
+      {bookingError === "checkout" ? (
+        <a
+          href={whatsappUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={() => trackBookingEvent("whatsapp_clicked_checkout_failed", {
+            productSlug: product.slug,
+            fulfillmentMode,
+          })}
+          className="btn btn-primary btn-lg w-full mb-3"
+          id="booking-whatsapp-cta"
+        >
+          {t.bookWhatsapp}
+        </a>
+      ) : availabilityStatus === "idle" ? (
         <button
           onClick={checkAvailability}
           className="btn btn-primary btn-lg w-full mb-3"

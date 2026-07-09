@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { stripe, isStripeConfigured } from "@/lib/stripe";
 import { createServiceClient } from "@/lib/supabase";
 import { areOnlineBookingsPaused } from "@/lib/booking-mode";
+import { cleanupExpiredBookingDrafts } from "@/lib/booking-v2";
 import type { BookingDraft } from "@/lib/types";
 
 const STRIPE_TEST_PRODUCT_SLUG = "stripe-test-rental";
@@ -59,6 +60,7 @@ export async function POST(request: NextRequest) {
     } = body;
 
     const supabase = createServiceClient();
+    await cleanupExpiredBookingDrafts(supabase);
     const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || request.headers.get("origin") || "https://rentanything.es";
 
     if (draftId) {

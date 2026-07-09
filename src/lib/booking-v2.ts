@@ -34,6 +34,12 @@ export interface BookingQuote {
   pricingSnapshot: Record<string, unknown>;
 }
 
+export interface ExpiredDraftCleanupResult {
+  expiredDraftIds: string[];
+  deletedHoldCount: number;
+  expiredDraftCount: number;
+}
+
 export interface ServiceZoneFee {
   id: string;
   slug: string;
@@ -42,6 +48,57 @@ export interface ServiceZoneFee {
   collection_fee_cents: number;
   roundtrip_fee_cents: number;
   express_surcharge_cents: number;
+}
+
+export async function cleanupExpiredBookingDrafts(
+  supabase: SupabaseClient<Database>,
+  nowIso = new Date().toISOString()
+): Promise<ExpiredDraftCleanupResult> {
+  const { data: expiredDrafts, error: expiredDraftReadError } = await supabase
+    .from("booking_drafts")
+    .select("id")
+    .in("status", ["draft", "checkout_created"])
+    .lt("expires_at", nowIso);
+
+  if (expiredDraftReadError) {
+    throw expiredDraftReadError;
+  }
+
+  const expiredDraftIds = (expiredDrafts || []).map((draft: { id: string }) => draft.id);
+
+  if (expiredDraftIds.length === 0) {
+    return {
+      expiredDraftIds,
+      deletedHoldCount: 0,
+      expiredDraftCount: 0,
+    };
+  }
+
+  const { count: deletedHoldCount, error: holdDeleteError } = await supabase
+    .from("booking_inventory_blocks")
+    .delete({ count: "exact" })
+    .is("booking_id", null)
+    .in("booking_draft_id", expiredDraftIds);
+
+  if (holdDeleteError) {
+    throw holdDeleteError;
+  }
+
+  const { count: expiredDraftCount, error: draftUpdateError } = await supabase
+    .from("booking_drafts")
+    .update({ status: "expired" } as never, { count: "exact" })
+    .in("status", ["draft", "checkout_created"])
+    .lt("expires_at", nowIso);
+
+  if (draftUpdateError) {
+    throw draftUpdateError;
+  }
+
+  return {
+    expiredDraftIds,
+    deletedHoldCount: deletedHoldCount || 0,
+    expiredDraftCount: expiredDraftCount || 0,
+  };
 }
 
 export function parseRentalDate(value: string, fieldName: string): Date {

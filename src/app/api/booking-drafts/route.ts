@@ -4,6 +4,7 @@ import {
   BOOKING_TIMEZONE,
   DEFAULT_DRAFT_TTL_MINUTES,
   assertFulfillmentFields,
+  cleanupExpiredBookingDrafts,
   getProductWithPricing,
   getServiceZone,
   parseRentalDate,
@@ -52,29 +53,7 @@ export async function POST(request: NextRequest) {
     const startAt = parseRentalDate(body.startAt, "startAt");
     const endAt = parseRentalDate(body.endAt, "endAt");
     const supabase = createServiceClient();
-    const now = new Date().toISOString();
-
-    const { data: expiredDrafts } = await supabase
-      .from("booking_drafts")
-      .select("id")
-      .in("status", ["draft", "checkout_created"])
-      .lt("expires_at", now);
-
-    await supabase
-      .from("booking_drafts")
-      .update({ status: "expired" })
-      .in("status", ["draft", "checkout_created"])
-      .lt("expires_at", now);
-
-    const expiredDraftIds = (expiredDrafts || []).map((draft: { id: string }) => draft.id);
-
-    if (expiredDraftIds.length > 0) {
-      await supabase
-        .from("booking_inventory_blocks")
-        .delete()
-        .is("booking_id", null)
-        .in("booking_draft_id", expiredDraftIds);
-    }
+    await cleanupExpiredBookingDrafts(supabase);
 
     const { product, tiers } = await getProductWithPricing(supabase, body.productSlug);
 
