@@ -61,6 +61,12 @@ Supabase (CRUD products, pricing, bookings)
 Inventory holds are reserved via the `reserve_booking_inventory(...)` database
 function so overlapping draft creation is checked while the product row is locked.
 
+Fulfillment configuration stores both public instructions and internal operations
+notes. The additive migration `20260709_fulfillment_instruction_config.sql` adds
+customer instructions, lead-time fields, delivery/collection windows, and internal
+notes for pickup locations and service zones. API reads are backward-compatible and
+fall back to the older column set until that migration is applied.
+
 ### Booking Lifecycle
 ```
 pending → confirmed → paid → delivering → active → returning → completed

@@ -133,6 +133,12 @@ show active pickup locations and configured service zones before the customer
 checks availability. Current customer pickup options are Burjassot and Paterna;
 central Valencia pickup is disabled until an operational pickup point is ready.
 
+Fulfillment configuration now supports customer-facing instructions, internal
+notes, lead times, handoff contacts, and delivery/collection windows. The API uses
+these fields when present and falls back to the older `pickup_instructions` /
+`description` fields until `supabase/migrations/20260709_fulfillment_instruction_config.sql`
+has been applied.
+
 ### Phase 3 — Booking Draft API
 
 - Create a server-side booking draft.

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase-admin";
 import { verifyAdmin, unauthorizedResponse } from "@/lib/admin-auth";
+import { fetchPickupLocationsById, fetchServiceZonesById } from "@/lib/fulfillment-options";
 
 /**
  * GET /api/admin/bookings — List all bookings with product info
@@ -42,18 +43,8 @@ export async function GET(request: NextRequest) {
     ] as string[];
 
     const [pickupLocationsResult, serviceZonesResult, inventoryBlocksResult] = await Promise.all([
-      pickupLocationIds.length > 0
-        ? supabase
-            .from("pickup_locations")
-            .select("id, name, slug, address, city")
-            .in("id", pickupLocationIds)
-        : Promise.resolve({ data: [], error: null }),
-      serviceZoneIds.length > 0
-        ? supabase
-            .from("service_zones")
-            .select("id, name, slug, city")
-            .in("id", serviceZoneIds)
-        : Promise.resolve({ data: [], error: null }),
+      fetchPickupLocationsById(supabase, pickupLocationIds),
+      fetchServiceZonesById(supabase, serviceZoneIds),
       bookingIds.length > 0
         ? supabase
             .from("booking_inventory_blocks")

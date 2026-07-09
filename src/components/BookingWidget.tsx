@@ -152,6 +152,10 @@ interface ServiceZoneOption {
   collection_fee_cents: number;
   roundtrip_fee_cents: number;
   description?: string | null;
+  customer_instructions?: string | null;
+  lead_time_hours?: number | null;
+  delivery_window?: string | null;
+  collection_window?: string | null;
 }
 
 interface PickupLocationOption {
@@ -160,6 +164,8 @@ interface PickupLocationOption {
   name: string;
   address: string;
   pickup_instructions?: string | null;
+  customer_instructions?: string | null;
+  lead_time_hours?: number | null;
 }
 
 interface ServerQuote {
@@ -202,6 +208,9 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
   const [notes, setNotes] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [bookingRef, setBookingRef] = useState("");
+  const selectedPickupLocation = pickupLocations.find((location) => location.id === pickupLocationId);
+  const selectedDeliveryZone = serviceZones.find((zone) => zone.id === deliveryZoneId);
+  const selectedCollectionZone = serviceZones.find((zone) => zone.id === collectionZoneId);
 
   const pricing = useMemo(() => {
     const start = new Date(startDate);
@@ -666,11 +675,16 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
               </option>
             ))}
           </select>
-          {pickupLocations.find((location) => location.id === pickupLocationId)?.pickup_instructions && (
+          {(selectedPickupLocation?.customer_instructions || selectedPickupLocation?.pickup_instructions) && (
             <p className="text-xs text-neutral-500 mt-1">
-              {pickupLocations.find((location) => location.id === pickupLocationId)?.pickup_instructions}
+              {selectedPickupLocation?.customer_instructions || selectedPickupLocation?.pickup_instructions}
             </p>
           )}
+          {selectedPickupLocation?.lead_time_hours ? (
+            <p className="text-[11px] text-neutral-400 mt-1">
+              Typical confirmation lead time: {selectedPickupLocation.lead_time_hours}h.
+            </p>
+          ) : null}
         </div>
       )}
 
@@ -692,6 +706,11 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
                 </option>
               ))}
             </select>
+            {(selectedDeliveryZone?.customer_instructions || selectedDeliveryZone?.delivery_window) && (
+              <p className="text-xs text-neutral-500 mt-1">
+                {selectedDeliveryZone.customer_instructions || `Delivery window: ${selectedDeliveryZone.delivery_window}`}
+              </p>
+            )}
           </div>
 
           {fulfillmentMode === "delivery_and_collection" && (
@@ -711,6 +730,11 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
                   </option>
                 ))}
               </select>
+              {selectedCollectionZone?.collection_window && (
+                <p className="text-xs text-neutral-500 mt-1">
+                  Collection window: {selectedCollectionZone.collection_window}
+                </p>
+              )}
             </div>
           )}
         </div>

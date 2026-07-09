@@ -15,6 +15,13 @@ interface BookingLocation {
   slug: string;
   address?: string;
   city?: string;
+  pickup_instructions?: string | null;
+  customer_instructions?: string | null;
+  internal_notes?: string | null;
+  lead_time_hours?: number | null;
+  handoff_contact?: string | null;
+  delivery_window?: string | null;
+  collection_window?: string | null;
 }
 
 interface InventoryBlock {
@@ -287,15 +294,47 @@ export default function AdminBookingsPage() {
                           {booking.pickup_location?.address && (
                             <p className="text-xs text-neutral-400">{booking.pickup_location.address}</p>
                           )}
+                          {(booking.pickup_location?.customer_instructions || booking.pickup_location?.pickup_instructions) && (
+                            <p className="text-xs text-neutral-400 mt-1">
+                              Customer: {booking.pickup_location.customer_instructions || booking.pickup_location.pickup_instructions}
+                            </p>
+                          )}
+                          {booking.pickup_location?.internal_notes && (
+                            <p className="text-xs text-amber-300 mt-1">
+                              Internal: {booking.pickup_location.internal_notes}
+                            </p>
+                          )}
                         </>
                       ) : (
                         <>
                           <p className="text-xs text-neutral-400 mt-1">
                             Delivery zone: {booking.delivery_zone?.name || "Not set"}
                           </p>
-                          {booking.fulfillment_mode === "delivery_and_collection" && (
+                          {booking.delivery_zone?.delivery_window && (
                             <p className="text-xs text-neutral-400">
-                              Collection zone: {booking.collection_zone?.name || "Not set"}
+                              Delivery window: {booking.delivery_zone.delivery_window}
+                            </p>
+                          )}
+                          {booking.fulfillment_mode === "delivery_and_collection" && (
+                            <>
+                              <p className="text-xs text-neutral-400">
+                                Collection zone: {booking.collection_zone?.name || "Not set"}
+                              </p>
+                              {booking.collection_zone?.collection_window && (
+                                <p className="text-xs text-neutral-400">
+                                  Collection window: {booking.collection_zone.collection_window}
+                                </p>
+                              )}
+                            </>
+                          )}
+                          {(booking.delivery_zone?.customer_instructions || booking.delivery_zone?.internal_notes) && (
+                            <p className="text-xs text-neutral-400 mt-1">
+                              Customer: {booking.delivery_zone.customer_instructions || "Not set"}
+                            </p>
+                          )}
+                          {booking.delivery_zone?.internal_notes && (
+                            <p className="text-xs text-amber-300 mt-1">
+                              Internal: {booking.delivery_zone.internal_notes}
                             </p>
                           )}
                         </>

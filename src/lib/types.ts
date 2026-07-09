@@ -122,6 +122,11 @@ interface PickupLocationRow {
   latitude: number | null;
   longitude: number | null;
   pickup_instructions: string | null;
+  customer_instructions: string | null;
+  internal_notes: string | null;
+  lead_time_hours: number;
+  handoff_contact: string | null;
+  confirmation_template: string | null;
   opening_hours: Record<string, unknown>;
   is_active: boolean;
   sort_order: number;
@@ -141,6 +146,13 @@ interface ServiceZoneRow {
   roundtrip_fee_cents: number;
   express_surcharge_cents: number;
   minimum_order_cents: number;
+  customer_instructions: string | null;
+  internal_notes: string | null;
+  lead_time_hours: number;
+  same_day_cutoff: string | null;
+  delivery_window: string | null;
+  collection_window: string | null;
+  confirmation_template: string | null;
   is_active: boolean;
   sort_order: number;
   created_at: string;
