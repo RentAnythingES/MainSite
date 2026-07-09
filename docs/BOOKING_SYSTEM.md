@@ -139,6 +139,10 @@ these fields when present and falls back to the older `pickup_instructions` /
 `description` fields until `supabase/migrations/20260709_fulfillment_instruction_config.sql`
 has been applied.
 
+Admins can edit pickup locations and service zones at `/admin/fulfillment`, including
+active status, customer instructions, internal notes, lead time, delivery/collection
+windows, and zone fees. Public booking APIs still return active options only.
+
 ### Phase 3 — Booking Draft API
 
 - Create a server-side booking draft.

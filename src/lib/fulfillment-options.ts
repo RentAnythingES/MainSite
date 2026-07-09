@@ -32,6 +32,20 @@ export async function fetchActivePickupLocations(supabase: SupabaseClient<Databa
     .order("sort_order", { ascending: true });
 }
 
+export async function fetchAllPickupLocations(supabase: SupabaseClient<Database>) {
+  const result = await supabase
+    .from("pickup_locations")
+    .select(PICKUP_LOCATION_SELECT)
+    .order("sort_order", { ascending: true });
+
+  if (!result.error || !shouldFallback(result.error)) return result;
+
+  return supabase
+    .from("pickup_locations")
+    .select(PICKUP_LOCATION_FALLBACK_SELECT)
+    .order("sort_order", { ascending: true });
+}
+
 export async function fetchActiveServiceZones(supabase: SupabaseClient<Database>) {
   const result = await supabase
     .from("service_zones")
@@ -45,6 +59,20 @@ export async function fetchActiveServiceZones(supabase: SupabaseClient<Database>
     .from("service_zones")
     .select(SERVICE_ZONE_FALLBACK_SELECT)
     .eq("is_active", true)
+    .order("sort_order", { ascending: true });
+}
+
+export async function fetchAllServiceZones(supabase: SupabaseClient<Database>) {
+  const result = await supabase
+    .from("service_zones")
+    .select(SERVICE_ZONE_SELECT)
+    .order("sort_order", { ascending: true });
+
+  if (!result.error || !shouldFallback(result.error)) return result;
+
+  return supabase
+    .from("service_zones")
+    .select(SERVICE_ZONE_FALLBACK_SELECT)
     .order("sort_order", { ascending: true });
 }
 
