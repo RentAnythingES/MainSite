@@ -121,8 +121,9 @@ Status: implemented as `/api/availability` with backwards-compatible `start`/`en
 support for the existing date checker.
 
 Booking options are also exposed through `/api/booking-options` so the widget can
-show Burjassot, Paterna, Valencia pickup, and configured service zones before the
-customer checks availability.
+show active pickup locations and configured service zones before the customer
+checks availability. Current customer pickup options are Burjassot and Paterna;
+central Valencia pickup is disabled until an operational pickup point is ready.
 
 ### Phase 3 — Booking Draft API
 
