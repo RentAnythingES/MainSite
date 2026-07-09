@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { stripe } from "@/lib/stripe";
 import { createAdminClient } from "@/lib/supabase-admin";
 import { sendBookingConfirmation } from "@/lib/email";
+import { fetchPickupLocationsById, fetchServiceZonesById } from "@/lib/fulfillment-options";
 import Stripe from "stripe";
 
 /**
@@ -250,6 +251,62 @@ async function handleDraftCheckoutCompleted(
     .eq("id", bookingDraft.product_id)
     .single();
 
+  const [pickupLocationsResult, serviceZonesResult] = await Promise.all([
+    bookingDraft.pickup_location_id
+      ? fetchPickupLocationsById(supabase, [bookingDraft.pickup_location_id])
+      : Promise.resolve({ data: [], error: null }),
+    bookingDraft.delivery_zone_id || bookingDraft.collection_zone_id
+      ? fetchServiceZonesById(
+          supabase,
+          [bookingDraft.delivery_zone_id, bookingDraft.collection_zone_id].filter(Boolean) as string[]
+        )
+      : Promise.resolve({ data: [], error: null }),
+  ]);
+
+  if (pickupLocationsResult.error) {
+    console.error("[webhook] Failed to load pickup fulfillment instructions:", pickupLocationsResult.error);
+  }
+
+  if (serviceZonesResult.error) {
+    console.error("[webhook] Failed to load service zone fulfillment instructions:", serviceZonesResult.error);
+  }
+
+  const pickupLocation = (pickupLocationsResult.data || [])[0] as {
+    name?: string;
+    customer_instructions?: string | null;
+    pickup_instructions?: string | null;
+    internal_notes?: string | null;
+    lead_time_hours?: number | null;
+  } | undefined;
+  const serviceZones = (serviceZonesResult.data || []) as Array<{
+    id?: string;
+    name?: string;
+    customer_instructions?: string | null;
+    internal_notes?: string | null;
+    lead_time_hours?: number | null;
+    delivery_window?: string | null;
+    collection_window?: string | null;
+  }>;
+  const deliveryZone = serviceZones.find((zone) => zone.id === bookingDraft.delivery_zone_id);
+  const collectionZone = serviceZones.find((zone) => zone.id === bookingDraft.collection_zone_id);
+  const customerInstructions =
+    pickupLocation?.customer_instructions ||
+    pickupLocation?.pickup_instructions ||
+    deliveryZone?.customer_instructions ||
+    collectionZone?.customer_instructions ||
+    null;
+  const internalNotes =
+    pickupLocation?.internal_notes ||
+    deliveryZone?.internal_notes ||
+    collectionZone?.internal_notes ||
+    null;
+  const fulfillmentDisplayLabel =
+    pickupLocation?.name ||
+    (bookingDraft.fulfillment_mode === "delivery_and_collection"
+      ? [deliveryZone?.name, collectionZone?.name].filter(Boolean).join(" → ")
+      : deliveryZone?.name) ||
+    undefined;
+
   const startDate = bookingDraft.rental_start_at.slice(0, 10);
   const endDate = bookingDraft.rental_end_at.slice(0, 10);
 
@@ -326,6 +383,14 @@ async function handleDraftCheckoutCompleted(
     deliveryAddress: bookingDraft.delivery_address || bookingDraft.collection_address || "Customer pickup",
     deliveryType: "standard",
     fulfillmentMode: bookingDraft.fulfillment_mode,
+    fulfillmentLabel: fulfillmentDisplayLabel,
+    customerInstructions,
+    internalNotes,
+    deliveryWindow: deliveryZone?.delivery_window || null,
+    collectionWindow: collectionZone?.collection_window || null,
+    leadTimeHours: pickupLocation?.lead_time_hours || deliveryZone?.lead_time_hours || collectionZone?.lead_time_hours || null,
+    stripeCheckoutSessionId: session.id,
+    stripePaymentIntentId: paymentIntentId || null,
   });
 
   return true;

@@ -65,6 +65,11 @@ Booking lifecycle emails adapt to `fulfillmentMode`:
 - `delivery_only`: delivery on the way, delivered, pickup/return coordination where needed.
 - `delivery_and_collection`: delivery window and collection scheduling language.
 
+When fulfillment configuration exists, booking confirmation and lifecycle emails also
+include customer-facing pickup/delivery instructions, lead-time expectations, and
+delivery/collection windows. The internal admin copy includes ops notes plus Stripe
+checkout/payment identifiers for faster support follow-up.
+
 ### Current Gap
 
 Newsletter/signup storage is now backed by `newsletter_subscribers`. Any future signup form must collect explicit consent and post through `/api/newsletter` so consent text/version, source, IP, user agent, active status, and unsubscribe token are stored.

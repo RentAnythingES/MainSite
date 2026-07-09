@@ -180,6 +180,11 @@ Status: draft fulfillment path implemented for `checkout.session.completed`.
 The success page reads `/api/checkout/status` so it can distinguish confirmed
 bookings from paid-but-still-processing webhook states.
 
+Confirmation emails now include fulfillment configuration from pickup locations or
+service zones when available. The internal admin notification includes customer
+details, fulfillment instructions, internal ops notes, and Stripe checkout/payment
+IDs.
+
 ### Phase 6 — Admin Operations
 
 - Show rental start/end times.

@@ -3,6 +3,7 @@ import { createAdminClient } from "@/lib/supabase-admin";
 import { verifyAdmin, unauthorizedResponse } from "@/lib/admin-auth";
 import { sendBookingStatusUpdate } from "@/lib/email";
 import { stripe } from "@/lib/stripe";
+import { fetchPickupLocationsById, fetchServiceZonesById } from "@/lib/fulfillment-options";
 
 const VALID_TRANSITIONS: Record<string, string[]> = {
   pending: ["confirmed", "cancelled"],
@@ -102,6 +103,42 @@ export async function PUT(
     // Send status update email to customer (fire-and-forget)
     const b = booking as Record<string, unknown>;
     const product = b.product as { name: string } | null;
+    const pickupLocationId = b.pickup_location_id as string | null;
+    const deliveryZoneId = b.delivery_zone_id as string | null;
+    const collectionZoneId = b.collection_zone_id as string | null;
+    const [pickupLocationsResult, serviceZonesResult] = await Promise.all([
+      pickupLocationId
+        ? fetchPickupLocationsById(supabase, [pickupLocationId])
+        : Promise.resolve({ data: [], error: null }),
+      deliveryZoneId || collectionZoneId
+        ? fetchServiceZonesById(supabase, [deliveryZoneId, collectionZoneId].filter(Boolean) as string[])
+        : Promise.resolve({ data: [], error: null }),
+    ]);
+    const pickupLocation = (pickupLocationsResult.data || [])[0] as {
+      name?: string;
+      customer_instructions?: string | null;
+      pickup_instructions?: string | null;
+      internal_notes?: string | null;
+      lead_time_hours?: number | null;
+    } | undefined;
+    const serviceZones = (serviceZonesResult.data || []) as Array<{
+      id?: string;
+      name?: string;
+      customer_instructions?: string | null;
+      internal_notes?: string | null;
+      lead_time_hours?: number | null;
+      delivery_window?: string | null;
+      collection_window?: string | null;
+    }>;
+    const deliveryZone = serviceZones.find((zone) => zone.id === deliveryZoneId);
+    const collectionZone = serviceZones.find((zone) => zone.id === collectionZoneId);
+    const fulfillmentDisplayLabel =
+      pickupLocation?.name ||
+      ((b.fulfillment_mode as string) === "delivery_and_collection"
+        ? [deliveryZone?.name, collectionZone?.name].filter(Boolean).join(" → ")
+        : deliveryZone?.name) ||
+      undefined;
+
     sendBookingStatusUpdate(
       {
         bookingRef: b.booking_ref as string,
@@ -116,6 +153,23 @@ export async function PUT(
         deliveryAddress: b.delivery_address as string,
         deliveryType: (b.delivery_type as string) || "standard",
         fulfillmentMode: (b.fulfillment_mode as string) || undefined,
+        fulfillmentLabel: fulfillmentDisplayLabel,
+        customerInstructions:
+          pickupLocation?.customer_instructions ||
+          pickupLocation?.pickup_instructions ||
+          deliveryZone?.customer_instructions ||
+          collectionZone?.customer_instructions ||
+          null,
+        internalNotes:
+          pickupLocation?.internal_notes ||
+          deliveryZone?.internal_notes ||
+          collectionZone?.internal_notes ||
+          null,
+        deliveryWindow: deliveryZone?.delivery_window || null,
+        collectionWindow: collectionZone?.collection_window || null,
+        leadTimeHours: pickupLocation?.lead_time_hours || deliveryZone?.lead_time_hours || collectionZone?.lead_time_hours || null,
+        stripeCheckoutSessionId: (b.stripe_checkout_session_id as string) || null,
+        stripePaymentIntentId: (b.stripe_payment_intent_id as string) || null,
       },
       status
     ).catch((err) => console.error("[admin/bookings] Email send error:", err));

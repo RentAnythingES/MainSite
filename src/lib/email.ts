@@ -26,6 +26,14 @@ export interface BookingEmailData {
   deliveryAddress: string;
   deliveryType: string;
   fulfillmentMode?: string;
+  fulfillmentLabel?: string;
+  customerInstructions?: string | null;
+  internalNotes?: string | null;
+  deliveryWindow?: string | null;
+  collectionWindow?: string | null;
+  leadTimeHours?: number | null;
+  stripeCheckoutSessionId?: string | null;
+  stripePaymentIntentId?: string | null;
 }
 
 export interface ContactEmailData {
@@ -93,6 +101,7 @@ function emailWrapper(title: string, body: string, preheader?: string): string {
 }
 
 function fulfillmentLabel(data: BookingEmailData): string {
+  if (data.fulfillmentLabel) return data.fulfillmentLabel;
   if (data.fulfillmentMode === "customer_pickup") return "Pickup";
   if (data.fulfillmentMode === "delivery_and_collection") return "Delivery & collection";
   return "Delivery";
@@ -108,6 +117,37 @@ function nextStepCopy(data: BookingEmailData): string {
     return `We'll message you before <strong>${start}</strong> to confirm the delivery window, then coordinate collection for <strong>${end}</strong>.`;
   }
   return `We'll message you before <strong>${start}</strong> to confirm the delivery window.`;
+}
+
+function fulfillmentInstructionsBox(data: BookingEmailData): string {
+  const lines = [
+    data.customerInstructions,
+    data.deliveryWindow ? `Delivery window: ${data.deliveryWindow}` : null,
+    data.collectionWindow ? `Collection window: ${data.collectionWindow}` : null,
+    data.leadTimeHours ? `Typical confirmation lead time: ${data.leadTimeHours}h` : null,
+  ].filter(Boolean);
+
+  if (lines.length === 0) return "";
+
+  return infoBox(
+    `<p style="font-size:14px;color:#0f766e;line-height:1.6;margin:0;"><strong>Fulfillment details:</strong><br />${lines.map((line) => escapeHtml(line)).join("<br />")}</p>`
+  );
+}
+
+function internalOpsBox(data: BookingEmailData): string {
+  const lines = [
+    data.internalNotes ? `Internal notes: ${data.internalNotes}` : null,
+    data.stripeCheckoutSessionId ? `Stripe Checkout: ${data.stripeCheckoutSessionId}` : null,
+    data.stripePaymentIntentId ? `Stripe Payment: ${data.stripePaymentIntentId}` : null,
+  ].filter(Boolean);
+
+  if (lines.length === 0) return "";
+
+  return infoBox(
+    `<p style="font-size:13px;color:#92400e;line-height:1.6;margin:0;"><strong>Ops notes:</strong><br />${lines.map((line) => escapeHtml(line)).join("<br />")}</p>`,
+    "#fffbeb",
+    "#fde68a"
+  );
 }
 
 function bookingDetailsTable(data: BookingEmailData): string {
@@ -136,6 +176,7 @@ export async function sendBookingConfirmation(data: BookingEmailData): Promise<b
         <p style="font-size:15px;color:#374151;line-height:1.6;">Great news — your rental booking is confirmed. Here are the details:</p>
         ${bookingDetailsTable(data)}
         ${infoBox(`<p style="font-size:14px;color:#0f766e;line-height:1.6;margin:0;"><strong>Next step:</strong> ${nextStepCopy(data)}</p>`)}
+        ${fulfillmentInstructionsBox(data)}
         <p style="font-size:15px;color:#374151;line-height:1.6;">If you need to change dates, timing, address, or fulfillment details, just reply to this email or message us on WhatsApp.</p>
         ${button(WHATSAPP_URL, "Message us on WhatsApp", "#25d366")}
       `, `Booking ${data.bookingRef} is confirmed for ${data.productName}.`),
@@ -154,6 +195,8 @@ export async function sendBookingConfirmation(data: BookingEmailData): Promise<b
           <tr><td style="padding:8px 0;color:#6b7280;font-size:14px;">Email</td><td style="padding:8px 0;font-size:14px;"><a href="mailto:${escapeHtml(data.customerEmail)}" style="color:#0e7c73;">${escapeHtml(data.customerEmail)}</a></td></tr>
           ${data.customerPhone ? `<tr><td style="padding:8px 0;color:#6b7280;font-size:14px;">Phone</td><td style="padding:8px 0;font-size:14px;"><a href="tel:${escapeHtml(data.customerPhone)}" style="color:#0e7c73;">${escapeHtml(data.customerPhone)}</a></td></tr>` : ""}
         </table>
+        ${fulfillmentInstructionsBox(data)}
+        ${internalOpsBox(data)}
         ${button(ADMIN_BOOKINGS_URL, "View in admin dashboard")}
       `, `New booking ${data.bookingRef}.`),
     });
@@ -234,6 +277,7 @@ export async function sendBookingStatusUpdate(data: BookingEmailData, newStatus:
         <p style="font-size:15px;color:#374151;line-height:1.6;margin-top:0;">Hi ${escapeHtml(data.customerName)},</p>
         <p style="font-size:15px;color:#374151;line-height:1.6;">${template.message}</p>
         ${bookingDetailsTable(data)}
+        ${fulfillmentInstructionsBox(data)}
         <p style="font-size:14px;color:#6b7280;line-height:1.6;">Questions? Reply to this email or reach us on WhatsApp.</p>
         ${button(WHATSAPP_URL, "Message us on WhatsApp", "#25d366")}
       `, template.subject),
