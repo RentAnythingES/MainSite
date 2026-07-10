@@ -46,6 +46,17 @@ interface PaymentEvent {
   occurred_at: string;
 }
 
+interface BookingDocument {
+  id: string;
+  document_type: string;
+  status: string;
+  document_number?: string | null;
+  total_cents: number;
+  currency: string;
+  pdf_url?: string | null;
+  issued_at: string;
+}
+
 interface Booking {
   id: string;
   booking_ref: string;
@@ -81,6 +92,7 @@ interface Booking {
   updated_at?: string | null;
   inventory_blocks?: InventoryBlock[];
   payment_events?: PaymentEvent[];
+  documents?: BookingDocument[];
   status: string;
   created_at: string;
 }
@@ -193,6 +205,12 @@ export default function AdminBookingsPage() {
       .split("_")
       .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
       .join(" ");
+
+  const formatDocumentType = (type: string) => {
+    if (type === "refund_receipt") return "Refund receipt";
+    if (type === "rental_agreement") return "Rental agreement";
+    return "Invoice";
+  };
 
   const shortId = (value?: string | null) => {
     if (!value) return "Not set";
@@ -491,6 +509,51 @@ export default function AdminBookingsPage() {
                     ) : (
                       <p className="text-xs text-neutral-400">
                         No payment ledger events yet. Apply the latest migration to start recording new payments and refunds.
+                      </p>
+                    )}
+                  </div>
+
+                  <div className="mb-4 pt-4 border-t border-neutral-800">
+                    <p className="text-xs text-neutral-500 mb-2">Documents</p>
+                    {booking.documents && booking.documents.length > 0 ? (
+                      <div className="grid sm:grid-cols-2 gap-2">
+                        {booking.documents.map((document) => (
+                          <div key={document.id} className="rounded-lg bg-neutral-950 border border-neutral-800 p-3">
+                            <div className="flex items-start justify-between gap-3">
+                              <div>
+                                <p className="text-sm font-semibold text-white">
+                                  {formatDocumentType(document.document_type)}
+                                </p>
+                                <p className="text-xs font-mono text-neutral-300">
+                                  {document.document_number || "Number pending"}
+                                </p>
+                                <p className="text-xs text-neutral-500">
+                                  Issued {formatDateTime(document.issued_at)}
+                                </p>
+                              </div>
+                              <span className={`text-[11px] px-2 py-0.5 rounded-full capitalize ${
+                                document.status === "issued"
+                                  ? "bg-emerald-500/10 text-emerald-300"
+                                  : document.status === "void"
+                                    ? "bg-red-500/10 text-red-300"
+                                    : "bg-amber-500/10 text-amber-300"
+                              }`}>
+                                {document.status}
+                              </span>
+                            </div>
+                            <div className="mt-2 flex items-center justify-between gap-3 text-xs">
+                              <span className="text-neutral-500">Amount</span>
+                              <span className="text-neutral-300">{formatMoney(document.total_cents)}</span>
+                            </div>
+                            <p className="mt-2 text-[11px] text-neutral-500">
+                              {document.pdf_url ? "PDF ready" : "PDF generation not built yet"}
+                            </p>
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
+                      <p className="text-xs text-neutral-400">
+                        No documents yet. New payments create invoices; new refunds create refund receipts.
                       </p>
                     )}
                   </div>

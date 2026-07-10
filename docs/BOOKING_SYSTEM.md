@@ -189,12 +189,19 @@ Payment ledger foundation:
 
 - Migration `supabase/migrations/20260710_booking_payment_events.sql` adds
   `booking_payment_events` for durable finance events.
+- Migration `supabase/migrations/20260710_booking_documents.sql` adds
+  `booking_documents` and yearly sequential document counters.
 - Stripe `checkout.session.completed` records a `payment` event after the booking is
   created.
+- Successful payment events create issued invoice records with booking, customer,
+  company, and payment snapshots.
 - Admin cancellation/refund actions record `refund` events, including failed refund
   attempts.
+- Successful refund events create issued refund receipt records.
 - Ledger writes are intentionally non-blocking so checkout/refund operations keep
   working even if the migration has not been applied yet.
+- PDF rendering/downloads are not built in this slice. The current goal is durable
+  document numbering and admin visibility.
 
 ### Phase 6 — Admin Operations
 
@@ -216,6 +223,11 @@ inventory.
 Expanded rows also show a finance ledger with payment/refund events once
 `booking_payment_events` exists in Supabase. This is the first step toward invoice,
 refund receipt, deposit, and payment-request parity.
+
+Expanded rows also show booking documents once `booking_documents` exists in
+Supabase. New payments create invoice records; new refunds create refund receipt
+records. The admin currently shows document numbers/statuses and whether a future
+PDF URL exists.
 
 An authenticated `/api/admin/health` endpoint reports whether Stripe, Stripe
 webhook secret, Resend, Supabase keys, booking pause flags, active draft counts,

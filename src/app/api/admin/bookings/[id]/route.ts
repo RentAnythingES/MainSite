@@ -5,6 +5,7 @@ import { sendBookingStatusUpdate } from "@/lib/email";
 import { stripe } from "@/lib/stripe";
 import { fetchPickupLocationsById, fetchServiceZonesById } from "@/lib/fulfillment-options";
 import { recordBookingPaymentEvent } from "@/lib/payment-ledger";
+import { createBookingDocumentForPaymentEvent } from "@/lib/booking-documents";
 
 const VALID_TRANSITIONS: Record<string, string[]> = {
   pending: ["confirmed", "cancelled"],
@@ -93,7 +94,7 @@ export async function PUT(
       if (paymentIntentId && stripe) {
         try {
           const refund = await stripe.refunds.create({ payment_intent: paymentIntentId });
-          await recordBookingPaymentEvent(supabase, {
+          const paymentEvent = await recordBookingPaymentEvent(supabase, {
             bookingId: id,
             bookingDraftId: (booking as Record<string, unknown>).booking_draft_id as string | null,
             eventType: "refund",
@@ -111,6 +112,11 @@ export async function PUT(
               refund_status: refund.status,
             },
             occurredAt: refund.created ? new Date(refund.created * 1000).toISOString() : null,
+          });
+          await createBookingDocumentForPaymentEvent(supabase, {
+            booking: booking as Record<string, unknown>,
+            paymentEvent,
+            productName: ((booking as Record<string, unknown>).product as { name?: string } | null)?.name || "Rental equipment",
           });
           console.log(`[admin/bookings] Stripe refund issued for ${paymentIntentId}`);
         } catch (refundErr) {

@@ -23,6 +23,8 @@ export type BookingPaymentEventType =
   | "deposit_release"
   | "manual_adjustment";
 export type BookingPaymentEventStatus = "pending" | "succeeded" | "failed" | "cancelled";
+export type BookingDocumentType = "invoice" | "refund_receipt" | "rental_agreement";
+export type BookingDocumentStatus = "draft" | "issued" | "void";
 
 // Flattened Insert types to avoid circular references with Database interface
 
@@ -233,6 +235,40 @@ interface BookingPaymentEventRow {
   created_at: string;
 }
 
+interface BookingDocumentCounterRow {
+  document_type: BookingDocumentType;
+  document_year: number;
+  last_number: number;
+  updated_at: string;
+}
+
+interface BookingDocumentRow {
+  id: string;
+  booking_id: string;
+  payment_event_id: string | null;
+  document_type: BookingDocumentType;
+  status: BookingDocumentStatus;
+  document_number: string | null;
+  document_year: number;
+  currency: string;
+  subtotal_cents: number;
+  delivery_fee_cents: number;
+  collection_fee_cents: number;
+  deposit_cents: number;
+  tax_cents: number;
+  total_cents: number;
+  customer_snapshot: Record<string, unknown>;
+  company_snapshot: Record<string, unknown>;
+  booking_snapshot: Record<string, unknown>;
+  payment_snapshot: Record<string, unknown>;
+  pdf_url: string | null;
+  notes: string | null;
+  issued_at: string;
+  voided_at: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
 export interface Database {
   public: {
     Tables: {
@@ -286,6 +322,16 @@ export interface Database {
         Insert: Omit<BookingPaymentEventRow, "id" | "created_at">;
         Update: Partial<Omit<BookingPaymentEventRow, "id" | "created_at">>;
       };
+      booking_document_counters: {
+        Row: BookingDocumentCounterRow;
+        Insert: BookingDocumentCounterRow;
+        Update: Partial<BookingDocumentCounterRow>;
+      };
+      booking_documents: {
+        Row: BookingDocumentRow;
+        Insert: Omit<BookingDocumentRow, "id" | "created_at" | "updated_at">;
+        Update: Partial<Omit<BookingDocumentRow, "id" | "created_at" | "updated_at">>;
+      };
     };
   };
 }
@@ -301,6 +347,7 @@ export type ServiceZone = ServiceZoneRow;
 export type BookingDraft = BookingDraftRow;
 export type BookingInventoryBlock = BookingInventoryBlockRow;
 export type BookingPaymentEvent = BookingPaymentEventRow;
+export type BookingDocument = BookingDocumentRow;
 
 // Product with pricing (joined query result)
 export interface ProductWithPricing extends Product {

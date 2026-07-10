@@ -3,6 +3,7 @@ import { createAdminClient } from "@/lib/supabase-admin";
 import { verifyAdmin, unauthorizedResponse } from "@/lib/admin-auth";
 import { fetchPickupLocationsById, fetchServiceZonesById } from "@/lib/fulfillment-options";
 import { fetchBookingPaymentEventsByBookingId } from "@/lib/payment-ledger";
+import { fetchBookingDocumentsByBookingId } from "@/lib/booking-documents";
 
 /**
  * GET /api/admin/bookings — List all bookings with product info
@@ -43,7 +44,13 @@ export async function GET(request: NextRequest) {
       ),
     ] as string[];
 
-    const [pickupLocationsResult, serviceZonesResult, inventoryBlocksResult, paymentEventsResult] = await Promise.all([
+    const [
+      pickupLocationsResult,
+      serviceZonesResult,
+      inventoryBlocksResult,
+      paymentEventsResult,
+      bookingDocumentsResult,
+    ] = await Promise.all([
       fetchPickupLocationsById(supabase, pickupLocationIds),
       fetchServiceZonesById(supabase, serviceZoneIds),
       bookingIds.length > 0
@@ -53,6 +60,7 @@ export async function GET(request: NextRequest) {
             .in("booking_id", bookingIds)
         : Promise.resolve({ data: [], error: null }),
       fetchBookingPaymentEventsByBookingId(supabase, bookingIds),
+      fetchBookingDocumentsByBookingId(supabase, bookingIds),
     ]);
 
     if (pickupLocationsResult.error) throw pickupLocationsResult.error;
@@ -67,6 +75,7 @@ export async function GET(request: NextRequest) {
     );
     const inventoryBlocksByBookingId = new Map<string, unknown[]>();
     const paymentEventsByBookingId = new Map<string, unknown[]>();
+    const bookingDocumentsByBookingId = new Map<string, unknown[]>();
 
     for (const block of inventoryBlocksResult.data || []) {
       const bookingId = (block as { booking_id?: string | null }).booking_id;
@@ -84,6 +93,14 @@ export async function GET(request: NextRequest) {
       paymentEventsByBookingId.set(bookingId, existing);
     }
 
+    for (const document of bookingDocumentsResult.data || []) {
+      const bookingId = (document as { booking_id?: string | null }).booking_id;
+      if (!bookingId) continue;
+      const existing = bookingDocumentsByBookingId.get(bookingId) || [];
+      existing.push(document);
+      bookingDocumentsByBookingId.set(bookingId, existing);
+    }
+
     const enrichedBookings = bookings.map((booking) => ({
       ...booking,
       pickup_location: booking.pickup_location_id
@@ -97,6 +114,7 @@ export async function GET(request: NextRequest) {
         : null,
       inventory_blocks: inventoryBlocksByBookingId.get(booking.id as string) || [],
       payment_events: paymentEventsByBookingId.get(booking.id as string) || [],
+      documents: bookingDocumentsByBookingId.get(booking.id as string) || [],
     }));
 
     return NextResponse.json({ bookings: enrichedBookings });

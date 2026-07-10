@@ -57,6 +57,8 @@ Supabase (CRUD products, pricing, bookings)
 | `booking_drafts` | Pre-payment booking drafts and Stripe Checkout source of truth | Admin/API only |
 | `booking_inventory_blocks` | Datetime inventory holds and paid booking blocks | Admin/API only |
 | `booking_payment_events` | Durable payment/refund/deposit ledger for bookings | Admin/API only |
+| `booking_documents` | Invoice, refund receipt, and rental agreement document records | Admin/API only |
+| `booking_document_counters` | Yearly sequential counters for booking document numbers | Admin/API only |
 | `newsletter_subscribers` | Newsletter signup consent records | Admin/API only |
 
 Inventory holds are reserved via the `reserve_booking_inventory(...)` database
@@ -146,6 +148,10 @@ Stripe Checkout
   `booking_payment_events` when the finance ledger migration is applied. Ledger
   writes are non-blocking, so payment fulfillment does not fail if the table is not
   present yet.
+- Successful payment events create issued invoice records in `booking_documents`.
+  Successful refund events create issued refund receipt records. PDF rendering is
+  intentionally separate future work; the current layer provides stable document
+  numbers, snapshots, and admin visibility.
 
 ### Admin (require Supabase Auth cookie)
 | Route | Method | Purpose |

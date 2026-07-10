@@ -51,6 +51,9 @@ interface RecordBookingPaymentEventInput {
 interface DynamicQueryBuilder {
   upsert: (row: Record<string, unknown>, options?: { onConflict?: string }) => Promise<{ error: unknown }>;
   select: (columns: string) => {
+    eq: (column: string, value: string) => {
+      maybeSingle: () => Promise<{ data: unknown | null; error: unknown }>;
+    };
     in: (column: string, values: string[]) => {
       order: (column: string, options?: { ascending?: boolean }) => Promise<{ data: unknown[] | null; error: unknown }>;
     };
@@ -66,7 +69,7 @@ const asDynamicSupabase = (supabase: SupabaseClient) => supabase as unknown as D
 export async function recordBookingPaymentEvent(
   supabase: SupabaseClient,
   input: RecordBookingPaymentEventInput
-) {
+): Promise<BookingPaymentEvent | null> {
   const provider = input.provider || "stripe";
   const providerEventId = input.providerEventId || null;
   const row = {
@@ -95,7 +98,23 @@ export async function recordBookingPaymentEvent(
 
   if (error) {
     console.error("[payment-ledger] Failed to record payment event:", error);
+    return null;
   }
+
+  if (!providerEventId) return null;
+
+  const { data, error: fetchError } = await asDynamicSupabase(supabase)
+    .from("booking_payment_events")
+    .select("*")
+    .eq("provider_event_id", providerEventId)
+    .maybeSingle();
+
+  if (fetchError) {
+    console.error("[payment-ledger] Failed to fetch saved payment event:", fetchError);
+    return null;
+  }
+
+  return (data as BookingPaymentEvent | null) || null;
 }
 
 export async function fetchBookingPaymentEventsByBookingId(

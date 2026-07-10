@@ -4,6 +4,7 @@ import { createAdminClient } from "@/lib/supabase-admin";
 import { sendBookingConfirmation } from "@/lib/email";
 import { fetchPickupLocationsById, fetchServiceZonesById } from "@/lib/fulfillment-options";
 import { recordBookingPaymentEvent } from "@/lib/payment-ledger";
+import { createBookingDocumentForPaymentEvent } from "@/lib/booking-documents";
 import Stripe from "stripe";
 
 /**
@@ -143,7 +144,7 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session): Promis
 
   console.log("[webhook] Booking created:", (booking as { booking_ref: string }).booking_ref);
 
-  await recordBookingPaymentEvent(supabase, {
+  const paymentEvent = await recordBookingPaymentEvent(supabase, {
     bookingId: (booking as { id: string }).id,
     eventType: "payment",
     status: "succeeded",
@@ -157,6 +158,11 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session): Promis
       source: "legacy_checkout_webhook",
       payment_status: session.payment_status,
     },
+  });
+  await createBookingDocumentForPaymentEvent(supabase, {
+    booking: booking as Record<string, unknown>,
+    paymentEvent,
+    productName: meta.product_name || "Rental equipment",
   });
 
   // Block the rental dates
@@ -374,7 +380,7 @@ async function handleDraftCheckoutCompleted(
 
   const bookingId = (booking as { id: string }).id;
 
-  await recordBookingPaymentEvent(supabase, {
+  const paymentEvent = await recordBookingPaymentEvent(supabase, {
     bookingId,
     bookingDraftId: bookingDraft.id,
     eventType: "payment",
@@ -389,6 +395,11 @@ async function handleDraftCheckoutCompleted(
       source: "booking_draft_webhook",
       payment_status: session.payment_status,
     },
+  });
+  await createBookingDocumentForPaymentEvent(supabase, {
+    booking: booking as Record<string, unknown>,
+    paymentEvent,
+    productName: (product as { name?: string } | null)?.name || "Rental equipment",
   });
 
   await supabase
