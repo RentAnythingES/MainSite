@@ -545,9 +545,12 @@ export default function AdminBookingsPage() {
                               <span className="text-neutral-500">Amount</span>
                               <span className="text-neutral-300">{formatMoney(document.total_cents)}</span>
                             </div>
-                            <p className="mt-2 text-[11px] text-neutral-500">
-                              {document.pdf_url ? "PDF ready" : "PDF generation not built yet"}
-                            </p>
+                            <a
+                              href={`/api/admin/bookings/${booking.id}/documents/${document.id}/pdf`}
+                              className="mt-3 inline-flex rounded-lg bg-teal-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-teal-500"
+                            >
+                              Download PDF
+                            </a>
                           </div>
                         ))}
                       </div>

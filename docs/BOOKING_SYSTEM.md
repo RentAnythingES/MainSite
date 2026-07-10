@@ -200,8 +200,8 @@ Payment ledger foundation:
 - Successful refund events create issued refund receipt records.
 - Ledger writes are intentionally non-blocking so checkout/refund operations keep
   working even if the migration has not been applied yet.
-- PDF rendering/downloads are not built in this slice. The current goal is durable
-  document numbering and admin visibility.
+- Admins can download protected PDF files for invoice and refund receipt records
+  from `/admin/bookings`.
 
 ### Phase 6 — Admin Operations
 
@@ -226,8 +226,8 @@ refund receipt, deposit, and payment-request parity.
 
 Expanded rows also show booking documents once `booking_documents` exists in
 Supabase. New payments create invoice records; new refunds create refund receipt
-records. The admin currently shows document numbers/statuses and whether a future
-PDF URL exists.
+records. The admin shows document numbers/statuses and links to protected PDF
+downloads for each document.
 
 An authenticated `/api/admin/health` endpoint reports whether Stripe, Stripe
 webhook secret, Resend, Supabase keys, booking pause flags, active draft counts,

@@ -149,9 +149,8 @@ Stripe Checkout
   writes are non-blocking, so payment fulfillment does not fail if the table is not
   present yet.
 - Successful payment events create issued invoice records in `booking_documents`.
-  Successful refund events create issued refund receipt records. PDF rendering is
-  intentionally separate future work; the current layer provides stable document
-  numbers, snapshots, and admin visibility.
+  Successful refund events create issued refund receipt records. Admins can
+  download protected PDFs for booking documents from the booking detail panel.
 
 ### Admin (require Supabase Auth cookie)
 | Route | Method | Purpose |
@@ -162,6 +161,7 @@ Stripe Checkout
 | `/api/admin/products/[id]` | PUT, DELETE | Update product / soft-deactivate |
 | `/api/admin/bookings` | GET | List bookings (optional status filter) |
 | `/api/admin/bookings/[id]` | PUT | Update booking status |
+| `/api/admin/bookings/[id]/documents/[documentId]/pdf` | GET | Download protected invoice/refund PDF |
 | `/api/admin/categories` | GET | List categories (for dropdowns) |
 
 ---

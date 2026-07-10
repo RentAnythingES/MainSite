@@ -37,7 +37,7 @@ App Router with static generation (`generateStaticParams`). Prefix-based i18n (`
 | `/admin/products` | Client | Product list, edit, toggle |
 | `/admin/products/new` | Client | Add new product form |
 | `/admin/fulfillment` | Client | Pickup locations, service zones, instructions, fees |
-| `/admin/bookings` | Client | Booking management |
+| `/admin/bookings` | Client | Booking management, finance ledger, document PDF downloads |
 
 ## Component Patterns
 - Server Components by default
