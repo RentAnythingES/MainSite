@@ -186,7 +186,7 @@ Protected by Supabase Auth. Server-side cookie check in `admin/layout.tsx` — r
 | Page | Features |
 |------|----------|
 | `/admin` | Stats overview (product count, booking counts), quick actions |
-| `/admin/products` | Product table, inline active toggle, edit modal (name, brand, description, image upload, stock, pricing tiers with add/remove) |
+| `/admin/products` | Product table, inline active toggle, edit modal (core details, category, image upload/preview, features, specs, stock, pricing tiers) |
 | `/admin/products/new` | Full creation form: auto-slug, category dropdown, image upload, dynamic features, key-value specs, pricing tiers |
 | `/admin/bookings` | Expandable booking cards, status filter tabs, lifecycle transition buttons |
 | `/admin/login` | Supabase Auth email/password login |

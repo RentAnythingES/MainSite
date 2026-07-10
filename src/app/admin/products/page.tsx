@@ -22,22 +22,34 @@ interface Product {
   brand: string;
   description: string;
   image_url: string | null;
+  category_id: string;
   is_active: boolean;
   stock_total: number;
   stock_available: number;
   subcategory: string;
+  subcategory_slug: string;
+  features: string[];
+  specs: Record<string, string>;
   pricing_tiers: PricingTier[];
   category: Category;
 }
 
+interface EditableSpec {
+  key: string;
+  value: string;
+}
+
 export default function AdminProductsPage() {
   const [products, setProducts] = useState<Product[]>([]);
+  const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [editingId, setEditingId] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
   const [uploadingImage, setUploadingImage] = useState(false);
   const [editForm, setEditForm] = useState<Partial<Product & { pricing_tiers: PricingTier[] }>>({});
+  const [editFeatures, setEditFeatures] = useState<string[]>([]);
+  const [editSpecs, setEditSpecs] = useState<EditableSpec[]>([]);
 
   const fetchProducts = useCallback(async () => {
     try {
@@ -52,9 +64,20 @@ export default function AdminProductsPage() {
     }
   }, []);
 
+  const fetchCategories = useCallback(async () => {
+    try {
+      const res = await fetch("/api/admin/categories");
+      if (!res.ok) throw new Error("Failed to fetch categories");
+      const data = await res.json();
+      setCategories(data.categories || []);
+    } catch {
+      setError("Failed to load categories. Check Supabase connection.");
+    }
+  }, []);
+
   useEffect(() => {
-    fetchProducts();
-  }, [fetchProducts]);
+    void Promise.all([fetchProducts(), fetchCategories()]);
+  }, [fetchProducts, fetchCategories]);
 
   const startEdit = (product: Product) => {
     setEditingId(product.id);
@@ -64,30 +87,55 @@ export default function AdminProductsPage() {
       brand: product.brand,
       description: product.description,
       image_url: product.image_url,
+      category_id: product.category_id,
+      subcategory: product.subcategory,
+      subcategory_slug: product.subcategory_slug,
       stock_total: product.stock_total,
       stock_available: product.stock_available,
       pricing_tiers: [...product.pricing_tiers].sort((a, b) => a.min_days - b.min_days),
     });
+    setEditFeatures(product.features?.length ? product.features : [""]);
+    setEditSpecs(
+      Object.entries(product.specs || {}).length
+        ? Object.entries(product.specs || {}).map(([key, value]) => ({ key, value: String(value) }))
+        : [{ key: "", value: "" }]
+    );
   };
 
   const cancelEdit = () => {
     setEditingId(null);
     setEditForm({});
+    setEditFeatures([]);
+    setEditSpecs([]);
   };
 
   const saveEdit = async (id: string) => {
     setSaving(true);
     try {
+      const specs: Record<string, string> = {};
+      editSpecs.forEach((spec) => {
+        if (spec.key.trim()) specs[spec.key.trim()] = spec.value.trim();
+      });
+
+      const payload = {
+        ...editForm,
+        features: editFeatures.filter((feature) => feature.trim()),
+        specs,
+      };
+
       const res = await fetch(`/api/admin/products/${id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(editForm),
+        body: JSON.stringify(payload),
       });
-      if (!res.ok) throw new Error("Save failed");
+      if (!res.ok) {
+        const data = await res.json();
+        throw new Error(data.error || "Save failed");
+      }
       setEditingId(null);
       await fetchProducts();
-    } catch {
-      setError("Failed to save changes");
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to save changes");
     } finally {
       setSaving(false);
     }
@@ -100,10 +148,13 @@ export default function AdminProductsPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ is_active: !currentlyActive }),
       });
-      if (!res.ok) throw new Error("Toggle failed");
+      if (!res.ok) {
+        const data = await res.json();
+        throw new Error(data.error || "Toggle failed");
+      }
       await fetchProducts();
-    } catch {
-      setError("Failed to toggle product status");
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to toggle product status");
     }
   };
 
@@ -111,6 +162,18 @@ export default function AdminProductsPage() {
     const tiers = [...(editForm.pricing_tiers || [])];
     tiers[index] = { ...tiers[index], [field]: value };
     setEditForm({ ...editForm, pricing_tiers: tiers });
+  };
+
+  const updateFeature = (index: number, value: string) => {
+    const features = [...editFeatures];
+    features[index] = value;
+    setEditFeatures(features);
+  };
+
+  const updateSpec = (index: number, field: "key" | "value", value: string) => {
+    const specs = [...editSpecs];
+    specs[index] = { ...specs[index], [field]: value };
+    setEditSpecs(specs);
   };
 
   const uploadProductImage = async (file: File) => {
@@ -274,6 +337,52 @@ export default function AdminProductsPage() {
                 </div>
               </div>
 
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-xs font-medium text-neutral-400 mb-1.5">Slug</label>
+                  <input
+                    type="text"
+                    value={editForm.slug || ""}
+                    onChange={(e) => setEditForm({ ...editForm, slug: e.target.value })}
+                    className="w-full px-3 py-2.5 rounded-lg bg-neutral-800 border border-neutral-700 text-white text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/30 focus:border-teal-500"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-medium text-neutral-400 mb-1.5">Category</label>
+                  <select
+                    value={editForm.category_id || ""}
+                    onChange={(e) => setEditForm({ ...editForm, category_id: e.target.value })}
+                    className="w-full px-3 py-2.5 rounded-lg bg-neutral-800 border border-neutral-700 text-white text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/30 focus:border-teal-500"
+                  >
+                    <option value="">Select category...</option>
+                    {categories.map((category) => (
+                      <option key={category.id} value={category.id}>{category.name}</option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-xs font-medium text-neutral-400 mb-1.5">Subcategory</label>
+                  <input
+                    type="text"
+                    value={editForm.subcategory || ""}
+                    onChange={(e) => setEditForm({ ...editForm, subcategory: e.target.value })}
+                    className="w-full px-3 py-2.5 rounded-lg bg-neutral-800 border border-neutral-700 text-white text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/30 focus:border-teal-500"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-medium text-neutral-400 mb-1.5">Subcategory Slug</label>
+                  <input
+                    type="text"
+                    value={editForm.subcategory_slug || ""}
+                    onChange={(e) => setEditForm({ ...editForm, subcategory_slug: e.target.value })}
+                    className="w-full px-3 py-2.5 rounded-lg bg-neutral-800 border border-neutral-700 text-white text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/30 focus:border-teal-500"
+                  />
+                </div>
+              </div>
+
               <div>
                 <label className="block text-xs font-medium text-neutral-400 mb-1.5">Description</label>
                 <textarea
@@ -293,6 +402,15 @@ export default function AdminProductsPage() {
                   className="w-full px-3 py-2.5 rounded-lg bg-neutral-800 border border-neutral-700 text-white text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/30 focus:border-teal-500"
                   placeholder="/products/my-product.png"
                 />
+                {editForm.image_url && (
+                  <div className="mt-3 overflow-hidden rounded-xl border border-neutral-800 bg-neutral-950">
+                    <img
+                      src={editForm.image_url}
+                      alt="Product preview"
+                      className="h-36 w-full object-contain"
+                    />
+                  </div>
+                )}
                 <div className="mt-2 flex items-center gap-3">
                   <label className="inline-flex cursor-pointer items-center rounded-lg bg-neutral-800 px-3 py-2 text-xs font-medium text-neutral-200 transition-colors hover:bg-neutral-700">
                     {uploadingImage ? "Uploading..." : "Upload image"}
@@ -332,6 +450,83 @@ export default function AdminProductsPage() {
                     onChange={(e) => setEditForm({ ...editForm, stock_available: parseInt(e.target.value) || 0 })}
                     className="w-full px-3 py-2.5 rounded-lg bg-neutral-800 border border-neutral-700 text-white text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/30 focus:border-teal-500"
                   />
+                </div>
+              </div>
+
+              <div>
+                <div className="flex items-center justify-between mb-2">
+                  <label className="text-xs font-medium text-neutral-400">Features</label>
+                  <button
+                    type="button"
+                    onClick={() => setEditFeatures([...editFeatures, ""])}
+                    className="text-xs px-2 py-0.5 rounded bg-neutral-800 text-teal-400 hover:bg-neutral-700 transition-colors"
+                  >
+                    + Add
+                  </button>
+                </div>
+                <div className="space-y-2">
+                  {editFeatures.map((feature, index) => (
+                    <div key={index} className="flex gap-2">
+                      <input
+                        type="text"
+                        value={feature}
+                        onChange={(e) => updateFeature(index, e.target.value)}
+                        className="w-full px-3 py-2.5 rounded-lg bg-neutral-800 border border-neutral-700 text-white text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/30 focus:border-teal-500"
+                        placeholder="One-hand fold"
+                      />
+                      {editFeatures.length > 1 && (
+                        <button
+                          type="button"
+                          onClick={() => setEditFeatures(editFeatures.filter((_, featureIndex) => featureIndex !== index))}
+                          className="px-2 text-neutral-600 hover:text-red-400 transition-colors"
+                        >
+                          ×
+                        </button>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <div className="flex items-center justify-between mb-2">
+                  <label className="text-xs font-medium text-neutral-400">Specifications</label>
+                  <button
+                    type="button"
+                    onClick={() => setEditSpecs([...editSpecs, { key: "", value: "" }])}
+                    className="text-xs px-2 py-0.5 rounded bg-neutral-800 text-teal-400 hover:bg-neutral-700 transition-colors"
+                  >
+                    + Add
+                  </button>
+                </div>
+                <div className="space-y-2">
+                  {editSpecs.map((spec, index) => (
+                    <div key={index} className="flex gap-2">
+                      <input
+                        type="text"
+                        value={spec.key}
+                        onChange={(e) => updateSpec(index, "key", e.target.value)}
+                        className="w-1/3 px-3 py-2.5 rounded-lg bg-neutral-800 border border-neutral-700 text-white text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/30 focus:border-teal-500"
+                        placeholder="Weight"
+                      />
+                      <input
+                        type="text"
+                        value={spec.value}
+                        onChange={(e) => updateSpec(index, "value", e.target.value)}
+                        className="flex-1 px-3 py-2.5 rounded-lg bg-neutral-800 border border-neutral-700 text-white text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/30 focus:border-teal-500"
+                        placeholder="7.5 kg"
+                      />
+                      {editSpecs.length > 1 && (
+                        <button
+                          type="button"
+                          onClick={() => setEditSpecs(editSpecs.filter((_, specIndex) => specIndex !== index))}
+                          className="px-2 text-neutral-600 hover:text-red-400 transition-colors"
+                        >
+                          ×
+                        </button>
+                      )}
+                    </div>
+                  ))}
                 </div>
               </div>
 

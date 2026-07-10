@@ -255,6 +255,15 @@ export default function AddProductPage() {
               <label className={labelClass}>Image URL</label>
               <input type="text" value={imageUrl} onChange={(e) => setImageUrl(e.target.value)}
                 className={inputClass} placeholder="/products/my-product.png" />
+              {imageUrl && (
+                <div className="mt-3 overflow-hidden rounded-xl border border-neutral-800 bg-neutral-950">
+                  <img
+                    src={imageUrl}
+                    alt="Product preview"
+                    className="h-36 w-full object-contain"
+                  />
+                </div>
+              )}
               <div className="mt-2 flex items-center gap-3">
                 <label className="inline-flex cursor-pointer items-center rounded-lg bg-neutral-800 px-3 py-2 text-xs font-medium text-neutral-200 transition-colors hover:bg-neutral-700">
                   {uploadingImage ? "Uploading..." : "Upload image"}
