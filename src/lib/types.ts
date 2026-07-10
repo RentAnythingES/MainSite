@@ -263,6 +263,9 @@ interface BookingDocumentRow {
   payment_snapshot: Record<string, unknown>;
   pdf_url: string | null;
   notes: string | null;
+  customer_access_token: string | null;
+  customer_access_expires_at: string | null;
+  customer_access_last_sent_at: string | null;
   issued_at: string;
   voided_at: string | null;
   created_at: string;

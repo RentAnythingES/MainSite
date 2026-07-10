@@ -1,5 +1,6 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 import type { BookingPaymentEvent } from "@/lib/payment-ledger";
+import { randomBytes } from "crypto";
 
 type BookingDocumentType = "invoice" | "refund_receipt" | "rental_agreement";
 type BookingDocumentStatus = "draft" | "issued" | "void";
@@ -25,6 +26,9 @@ export interface BookingDocument {
   payment_snapshot: Record<string, unknown>;
   pdf_url: string | null;
   notes: string | null;
+  customer_access_token?: string | null;
+  customer_access_expires_at?: string | null;
+  customer_access_last_sent_at?: string | null;
   issued_at: string;
   voided_at: string | null;
   created_at: string;
@@ -32,8 +36,15 @@ export interface BookingDocument {
 }
 
 interface DynamicQueryBuilder {
-  insert: (row: Record<string, unknown>) => Promise<{ error: unknown }>;
+  insert: (row: Record<string, unknown>) => {
+    select: (columns: string) => {
+      single: () => Promise<{ data: unknown | null; error: unknown }>;
+    };
+  };
   select: (columns: string) => {
+    eq: (column: string, value: string) => {
+      single: () => Promise<{ data: unknown | null; error: unknown }>;
+    };
     in: (column: string, values: string[]) => {
       order: (column: string, options?: { ascending?: boolean }) => Promise<{ data: unknown[] | null; error: unknown }>;
     };
@@ -52,6 +63,23 @@ const COMPANY_SNAPSHOT = {
   country: "Spain",
   city: "Valencia",
 };
+
+const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || "https://www.rentanything.es").replace(/\/$/, "");
+
+function createCustomerAccessToken() {
+  return randomBytes(32).toString("hex");
+}
+
+function createCustomerAccessExpiry() {
+  const expiresAt = new Date();
+  expiresAt.setDate(expiresAt.getDate() + 365);
+  return expiresAt.toISOString();
+}
+
+export function getCustomerDocumentUrl(document: BookingDocument | null): string | null {
+  if (!document?.customer_access_token) return null;
+  return `${SITE_URL}/api/documents/${document.customer_access_token}/pdf`;
+}
 
 export async function createBookingDocumentForPaymentEvent(
   supabase: SupabaseClient,
@@ -106,17 +134,41 @@ export async function createBookingDocumentForPaymentEvent(
       stripe_refund_id: paymentEvent.stripe_refund_id,
     },
     notes: isRefund ? "Generated from Stripe refund event." : "Generated from Stripe Checkout payment.",
+    customer_access_token: createCustomerAccessToken(),
+    customer_access_expires_at: createCustomerAccessExpiry(),
     issued_at: paymentEvent.occurred_at || new Date().toISOString(),
   };
 
-  const { error } = await asDynamicSupabase(supabase).from("booking_documents").insert(row);
+  const { data, error } = await asDynamicSupabase(supabase)
+    .from("booking_documents")
+    .insert(row)
+    .select("*")
+    .single();
 
   if (error) {
     console.error("[booking-documents] Failed to create booking document:", error);
     return null;
   }
 
-  return true;
+  return data as BookingDocument | null;
+}
+
+export async function fetchBookingDocumentByCustomerToken(
+  supabase: SupabaseClient,
+  token: string
+): Promise<{ data: BookingDocument | null; error: unknown }> {
+  const { data, error } = await asDynamicSupabase(supabase)
+    .from("booking_documents")
+    .select("*")
+    .eq("customer_access_token", token)
+    .single();
+
+  if (error) {
+    console.error("[booking-documents] Failed to fetch customer document:", error);
+    return { data: null, error };
+  }
+
+  return { data: data as BookingDocument | null, error: null };
 }
 
 export async function fetchBookingDocumentsByBookingId(

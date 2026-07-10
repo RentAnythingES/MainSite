@@ -57,6 +57,11 @@ All main transactional emails are centralized in `src/lib/email.ts` and use the 
 | Signup / newsletter welcome | `sendSignupWelcome` | `/api/newsletter` consent capture | Wired on blog newsletter form |
 | Health check | `sendEmailHealthCheck` | Admin email test | `/api/admin/health` |
 
+Booking confirmation emails can include customer-safe invoice PDF links when a
+booking document exists. Refund/cancellation emails can include refund receipt PDF
+links after a successful Stripe refund. These links use document access tokens at
+`/api/documents/[token]/pdf`, not admin routes.
+
 ### Fulfillment-Aware Copy
 
 Booking lifecycle emails adapt to `fulfillmentMode`:

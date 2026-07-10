@@ -202,6 +202,11 @@ Payment ledger foundation:
   working even if the migration has not been applied yet.
 - Admins can download protected PDF files for invoice and refund receipt records
   from `/admin/bookings`.
+- Booking confirmation emails include customer-safe invoice links when an invoice
+  document is created. Refund/cancellation emails include customer-safe refund
+  receipt links when a refund receipt is created.
+- Customer document links use `customer_access_token` and
+  `customer_access_expires_at`; they do not expose admin routes.
 
 ### Phase 6 — Admin Operations
 

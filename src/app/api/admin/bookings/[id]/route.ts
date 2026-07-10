@@ -5,7 +5,7 @@ import { sendBookingStatusUpdate } from "@/lib/email";
 import { stripe } from "@/lib/stripe";
 import { fetchPickupLocationsById, fetchServiceZonesById } from "@/lib/fulfillment-options";
 import { recordBookingPaymentEvent } from "@/lib/payment-ledger";
-import { createBookingDocumentForPaymentEvent } from "@/lib/booking-documents";
+import { createBookingDocumentForPaymentEvent, getCustomerDocumentUrl } from "@/lib/booking-documents";
 
 const VALID_TRANSITIONS: Record<string, string[]> = {
   pending: ["confirmed", "cancelled"],
@@ -74,6 +74,10 @@ export async function PUT(
 
     if (error) throw error;
 
+    let documentLinks:
+      | Array<{ label: string; url: string; documentNumber?: string | null }>
+      | undefined;
+
     // If cancelled/refunded/completed, release inventory blocks.
     if (status === "cancelled" || status === "refunded" || status === "completed") {
       await supabase
@@ -113,11 +117,21 @@ export async function PUT(
             },
             occurredAt: refund.created ? new Date(refund.created * 1000).toISOString() : null,
           });
-          await createBookingDocumentForPaymentEvent(supabase, {
+          const refundDocument = await createBookingDocumentForPaymentEvent(supabase, {
             booking: booking as Record<string, unknown>,
             paymentEvent,
             productName: ((booking as Record<string, unknown>).product as { name?: string } | null)?.name || "Rental equipment",
           });
+          const refundUrl = getCustomerDocumentUrl(refundDocument);
+          if (refundUrl) {
+            documentLinks = [
+              {
+                label: "Download refund receipt",
+                url: refundUrl,
+                documentNumber: refundDocument?.document_number,
+              },
+            ];
+          }
           console.log(`[admin/bookings] Stripe refund issued for ${paymentIntentId}`);
         } catch (refundErr) {
           // Log but don't block — refund may already exist or payment may not be refundable
@@ -212,6 +226,7 @@ export async function PUT(
         leadTimeHours: pickupLocation?.lead_time_hours || deliveryZone?.lead_time_hours || collectionZone?.lead_time_hours || null,
         stripeCheckoutSessionId: (b.stripe_checkout_session_id as string) || null,
         stripePaymentIntentId: (b.stripe_payment_intent_id as string) || null,
+        documentLinks,
       },
       status
     ).catch((err) => console.error("[admin/bookings] Email send error:", err));

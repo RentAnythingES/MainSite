@@ -129,6 +129,7 @@ POST /api/webhooks/stripe
 | `/api/contact` | POST | Send contact email via Resend |
 | `/api/newsletter` | POST | Store newsletter consent + send welcome email |
 | `/api/availability` | GET | Check product availability for date range |
+| `/api/documents/[token]/pdf` | GET | Customer-safe invoice/refund PDF download |
 
 ### Stripe Webhook Flow
 ```
@@ -151,6 +152,9 @@ Stripe Checkout
 - Successful payment events create issued invoice records in `booking_documents`.
   Successful refund events create issued refund receipt records. Admins can
   download protected PDFs for booking documents from the booking detail panel.
+- Customer document emails use tokenized PDF links at `/api/documents/[token]/pdf`;
+  these links do not expose admin routes and expire via
+  `customer_access_expires_at`.
 
 ### Admin (require Supabase Auth cookie)
 | Route | Method | Purpose |

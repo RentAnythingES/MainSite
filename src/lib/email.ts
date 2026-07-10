@@ -5,6 +5,12 @@ const FROM = process.env.FROM_EMAIL || "RentAnything <noreply@rentanything.es>";
 const WHATSAPP_URL = "https://wa.me/34684708013";
 const ADMIN_BOOKINGS_URL = "https://rentanything.es/admin/bookings";
 
+export interface DocumentEmailLink {
+  label: string;
+  url: string;
+  documentNumber?: string | null;
+}
+
 function getResend(): Resend | null {
   if (!process.env.RESEND_API_KEY) {
     console.warn("[email] RESEND_API_KEY not set — emails disabled");
@@ -34,6 +40,7 @@ export interface BookingEmailData {
   leadTimeHours?: number | null;
   stripeCheckoutSessionId?: string | null;
   stripePaymentIntentId?: string | null;
+  documentLinks?: DocumentEmailLink[];
 }
 
 export interface ContactEmailData {
@@ -134,6 +141,22 @@ function fulfillmentInstructionsBox(data: BookingEmailData): string {
   );
 }
 
+function documentsBox(data: BookingEmailData): string {
+  const links = data.documentLinks?.filter((link) => link.url) || [];
+  if (links.length === 0) return "";
+
+  return infoBox(
+    `<p style="font-size:14px;color:#0f766e;line-height:1.6;margin:0 0 10px;"><strong>Your documents:</strong></p>
+    ${links
+      .map(
+        (link) =>
+          `<p style="margin:8px 0;font-size:14px;line-height:1.5;"><a href="${escapeHtml(link.url)}" style="color:#0e7c73;font-weight:700;">${escapeHtml(link.label)}</a>${link.documentNumber ? ` <span style="color:#6b7280;font-family:monospace;">${escapeHtml(link.documentNumber)}</span>` : ""}</p>`
+      )
+      .join("")}
+    <p style="font-size:12px;color:#6b7280;line-height:1.5;margin:10px 0 0;">These links are private to this booking email. Please do not forward them unless you intend to share the document.</p>`
+  );
+}
+
 function internalOpsBox(data: BookingEmailData): string {
   const lines = [
     data.internalNotes ? `Internal notes: ${data.internalNotes}` : null,
@@ -177,6 +200,7 @@ export async function sendBookingConfirmation(data: BookingEmailData): Promise<b
         ${bookingDetailsTable(data)}
         ${infoBox(`<p style="font-size:14px;color:#0f766e;line-height:1.6;margin:0;"><strong>Next step:</strong> ${nextStepCopy(data)}</p>`)}
         ${fulfillmentInstructionsBox(data)}
+        ${documentsBox(data)}
         <p style="font-size:15px;color:#374151;line-height:1.6;">If you need to change dates, timing, address, or fulfillment details, just reply to this email or message us on WhatsApp.</p>
         ${button(WHATSAPP_URL, "Message us on WhatsApp", "#25d366")}
       `, `Booking ${data.bookingRef} is confirmed for ${data.productName}.`),
@@ -278,6 +302,7 @@ export async function sendBookingStatusUpdate(data: BookingEmailData, newStatus:
         <p style="font-size:15px;color:#374151;line-height:1.6;">${template.message}</p>
         ${bookingDetailsTable(data)}
         ${fulfillmentInstructionsBox(data)}
+        ${documentsBox(data)}
         <p style="font-size:14px;color:#6b7280;line-height:1.6;">Questions? Reply to this email or reach us on WhatsApp.</p>
         ${button(WHATSAPP_URL, "Message us on WhatsApp", "#25d366")}
       `, template.subject),

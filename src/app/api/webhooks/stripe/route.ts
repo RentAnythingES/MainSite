@@ -4,7 +4,7 @@ import { createAdminClient } from "@/lib/supabase-admin";
 import { sendBookingConfirmation } from "@/lib/email";
 import { fetchPickupLocationsById, fetchServiceZonesById } from "@/lib/fulfillment-options";
 import { recordBookingPaymentEvent } from "@/lib/payment-ledger";
-import { createBookingDocumentForPaymentEvent } from "@/lib/booking-documents";
+import { createBookingDocumentForPaymentEvent, getCustomerDocumentUrl } from "@/lib/booking-documents";
 import Stripe from "stripe";
 
 /**
@@ -159,11 +159,12 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session): Promis
       payment_status: session.payment_status,
     },
   });
-  await createBookingDocumentForPaymentEvent(supabase, {
+  const invoiceDocument = await createBookingDocumentForPaymentEvent(supabase, {
     booking: booking as Record<string, unknown>,
     paymentEvent,
     productName: meta.product_name || "Rental equipment",
   });
+  const invoiceUrl = getCustomerDocumentUrl(invoiceDocument);
 
   // Block the rental dates
   const dates: string[] = [];
@@ -202,6 +203,9 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session): Promis
     totalCents: parseInt(meta.total_cents || "0"),
     deliveryAddress: meta.delivery_address || "",
     deliveryType: meta.delivery_type || "standard",
+    documentLinks: invoiceUrl
+      ? [{ label: "Download invoice", url: invoiceUrl, documentNumber: invoiceDocument?.document_number }]
+      : undefined,
   });
 
   return true;
@@ -396,11 +400,12 @@ async function handleDraftCheckoutCompleted(
       payment_status: session.payment_status,
     },
   });
-  await createBookingDocumentForPaymentEvent(supabase, {
+  const invoiceDocument = await createBookingDocumentForPaymentEvent(supabase, {
     booking: booking as Record<string, unknown>,
     paymentEvent,
     productName: (product as { name?: string } | null)?.name || "Rental equipment",
   });
+  const invoiceUrl = getCustomerDocumentUrl(invoiceDocument);
 
   await supabase
     .from("booking_inventory_blocks")
@@ -437,6 +442,9 @@ async function handleDraftCheckoutCompleted(
     leadTimeHours: pickupLocation?.lead_time_hours || deliveryZone?.lead_time_hours || collectionZone?.lead_time_hours || null,
     stripeCheckoutSessionId: session.id,
     stripePaymentIntentId: paymentIntentId || null,
+    documentLinks: invoiceUrl
+      ? [{ label: "Download invoice", url: invoiceUrl, documentNumber: invoiceDocument?.document_number }]
+      : undefined,
   });
 
   return true;
