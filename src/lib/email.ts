@@ -57,6 +57,16 @@ export interface SignupWelcomeEmailData {
   interest?: string;
 }
 
+export interface BookingDocumentEmailData {
+  customerName: string;
+  customerEmail: string;
+  bookingRef: string;
+  productName: string;
+  documentLabel: string;
+  documentNumber?: string | null;
+  documentUrl: string;
+}
+
 function escapeHtml(value: string | number | null | undefined): string {
   return String(value ?? "")
     .replaceAll("&", "&amp;")
@@ -312,6 +322,37 @@ export async function sendBookingStatusUpdate(data: BookingEmailData, newStatus:
     return true;
   } catch (err) {
     console.error(`[email] Failed to send status update (${newStatus}):`, err);
+    return false;
+  }
+}
+
+export async function sendBookingDocumentLink(data: BookingDocumentEmailData): Promise<boolean> {
+  const resend = getResend();
+  if (!resend) return false;
+
+  try {
+    const result = await resend.emails.send({
+      from: FROM,
+      to: data.customerEmail,
+      subject: `${data.documentLabel} — ${data.bookingRef}`,
+      html: emailWrapper(data.documentLabel, `
+        <p style="font-size:15px;color:#374151;line-height:1.6;margin-top:0;">Hi ${escapeHtml(data.customerName)},</p>
+        <p style="font-size:15px;color:#374151;line-height:1.6;">Here is the document for your <strong>${escapeHtml(data.productName)}</strong> booking.</p>
+        <table style="width:100%;border-collapse:collapse;margin:16px 0;">
+          <tr><td style="padding:8px 0;color:#6b7280;font-size:14px;width:145px;">Booking ref</td><td style="padding:8px 0;font-weight:700;font-size:14px;font-family:monospace;color:#0e7c73;">${escapeHtml(data.bookingRef)}</td></tr>
+          <tr><td style="padding:8px 0;color:#6b7280;font-size:14px;">Document</td><td style="padding:8px 0;font-weight:600;font-size:14px;">${escapeHtml(data.documentLabel)}</td></tr>
+          ${data.documentNumber ? `<tr><td style="padding:8px 0;color:#6b7280;font-size:14px;">Number</td><td style="padding:8px 0;font-size:14px;font-family:monospace;">${escapeHtml(data.documentNumber)}</td></tr>` : ""}
+        </table>
+        ${button(data.documentUrl, "Download PDF")}
+        <p style="font-size:12px;color:#6b7280;line-height:1.6;margin-top:18px;">This private link is for your booking document. Please do not forward it unless you intend to share the document.</p>
+        <p style="font-size:14px;color:#6b7280;line-height:1.6;">Questions? Reply to this email or reach us on WhatsApp.</p>
+        ${button(WHATSAPP_URL, "Message us on WhatsApp", "#25d366")}
+      `, `${data.documentLabel} for booking ${data.bookingRef}.`),
+    });
+
+    return !result.error;
+  } catch (err) {
+    console.error("[email] Failed to send booking document link:", err);
     return false;
   }
 }

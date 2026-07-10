@@ -41,6 +41,13 @@ interface DynamicQueryBuilder {
       single: () => Promise<{ data: unknown | null; error: unknown }>;
     };
   };
+  update: (row: Record<string, unknown>) => {
+    eq: (column: string, value: string) => {
+      select: (columns: string) => {
+        single: () => Promise<{ data: unknown | null; error: unknown }>;
+      };
+    };
+  };
   select: (columns: string) => {
     eq: (column: string, value: string) => {
       single: () => Promise<{ data: unknown | null; error: unknown }>;
@@ -79,6 +86,49 @@ function createCustomerAccessExpiry() {
 export function getCustomerDocumentUrl(document: BookingDocument | null): string | null {
   if (!document?.customer_access_token) return null;
   return `${SITE_URL}/api/documents/${document.customer_access_token}/pdf`;
+}
+
+export async function ensureCustomerDocumentAccess(
+  supabase: SupabaseClient,
+  document: BookingDocument
+): Promise<BookingDocument | null> {
+  const expiresAt = document.customer_access_expires_at
+    ? new Date(document.customer_access_expires_at).getTime()
+    : 0;
+
+  if (document.customer_access_token && expiresAt > Date.now()) {
+    return document;
+  }
+
+  const { data, error } = await asDynamicSupabase(supabase)
+    .from("booking_documents")
+    .update({
+      customer_access_token: createCustomerAccessToken(),
+      customer_access_expires_at: createCustomerAccessExpiry(),
+    })
+    .eq("id", document.id)
+    .select("*")
+    .single();
+
+  if (error) {
+    console.error("[booking-documents] Failed to ensure customer document access:", error);
+    return null;
+  }
+
+  return data as BookingDocument | null;
+}
+
+export async function markCustomerDocumentSent(supabase: SupabaseClient, documentId: string) {
+  const { error } = await asDynamicSupabase(supabase)
+    .from("booking_documents")
+    .update({ customer_access_last_sent_at: new Date().toISOString() })
+    .eq("id", documentId)
+    .select("id")
+    .single();
+
+  if (error) {
+    console.error("[booking-documents] Failed to mark document as sent:", error);
+  }
 }
 
 export async function createBookingDocumentForPaymentEvent(

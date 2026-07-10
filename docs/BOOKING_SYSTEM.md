@@ -207,6 +207,9 @@ Payment ledger foundation:
   receipt links when a refund receipt is created.
 - Customer document links use `customer_access_token` and
   `customer_access_expires_at`; they do not expose admin routes.
+- Admins can resend an invoice/refund receipt link from the booking document card.
+  The resend path repairs missing/expired access tokens and records
+  `customer_access_last_sent_at`.
 
 ### Phase 6 — Admin Operations
 

@@ -166,6 +166,7 @@ Stripe Checkout
 | `/api/admin/bookings` | GET | List bookings (optional status filter) |
 | `/api/admin/bookings/[id]` | PUT | Update booking status |
 | `/api/admin/bookings/[id]/documents/[documentId]/pdf` | GET | Download protected invoice/refund PDF |
+| `/api/admin/bookings/[id]/documents/[documentId]/email` | POST | Email customer a document PDF link |
 | `/api/admin/categories` | GET | List categories (for dropdowns) |
 
 ---

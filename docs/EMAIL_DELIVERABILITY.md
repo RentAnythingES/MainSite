@@ -54,6 +54,7 @@ All main transactional emails are centralized in `src/lib/email.ts` and use the 
 | Rental complete | `sendBookingStatusUpdate(..., "completed")` | Admin status transition to `completed` | `/api/admin/bookings/[id]` |
 | Cancellation | `sendBookingStatusUpdate(..., "cancelled")` | Admin status transition to `cancelled` | `/api/admin/bookings/[id]` |
 | Refund processed | `sendBookingStatusUpdate(..., "refunded")` | Admin status transition to `refunded` | `/api/admin/bookings/[id]` |
+| Document resend | `sendBookingDocumentLink` | Admin clicks "Email PDF" on booking document | `/api/admin/bookings/[id]/documents/[documentId]/email` |
 | Signup / newsletter welcome | `sendSignupWelcome` | `/api/newsletter` consent capture | Wired on blog newsletter form |
 | Health check | `sendEmailHealthCheck` | Admin email test | `/api/admin/health` |
 
@@ -61,6 +62,10 @@ Booking confirmation emails can include customer-safe invoice PDF links when a
 booking document exists. Refund/cancellation emails can include refund receipt PDF
 links after a successful Stripe refund. These links use document access tokens at
 `/api/documents/[token]/pdf`, not admin routes.
+
+Admins can resend a single invoice/refund receipt link from `/admin/bookings`. The
+resend route repairs missing/expired customer document access tokens before sending
+and records `customer_access_last_sent_at`.
 
 ### Fulfillment-Aware Copy
 

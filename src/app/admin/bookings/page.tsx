@@ -140,8 +140,10 @@ export default function AdminBookingsPage() {
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [notice, setNotice] = useState("");
   const [filter, setFilter] = useState("all");
   const [expandedId, setExpandedId] = useState<string | null>(null);
+  const [sendingDocumentId, setSendingDocumentId] = useState<string | null>(null);
 
   const fetchBookings = useCallback(async () => {
     try {
@@ -162,6 +164,7 @@ export default function AdminBookingsPage() {
 
   const updateStatus = async (bookingId: string, newStatus: string) => {
     try {
+      setNotice("");
       const res = await fetch(`/api/admin/bookings/${bookingId}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
@@ -174,6 +177,27 @@ export default function AdminBookingsPage() {
       await fetchBookings();
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to update booking");
+    }
+  };
+
+  const sendDocumentEmail = async (bookingId: string, documentId: string) => {
+    try {
+      setError("");
+      setNotice("");
+      setSendingDocumentId(documentId);
+      const res = await fetch(`/api/admin/bookings/${bookingId}/documents/${documentId}/email`, {
+        method: "POST",
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.error || "Failed to email document");
+      }
+      setNotice("Document email sent to the customer.");
+      await fetchBookings();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to email document");
+    } finally {
+      setSendingDocumentId(null);
     }
   };
 
@@ -245,6 +269,13 @@ export default function AdminBookingsPage() {
         <div className="bg-red-500/10 border border-red-500/20 rounded-lg p-3 text-sm text-red-400 mb-4">
           {error}
           <button onClick={() => setError("")} className="ml-2 text-red-300 hover:text-white">✕</button>
+        </div>
+      )}
+
+      {notice && (
+        <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-lg p-3 text-sm text-emerald-300 mb-4">
+          {notice}
+          <button onClick={() => setNotice("")} className="ml-2 text-emerald-200 hover:text-white">×</button>
         </div>
       )}
 
@@ -545,12 +576,22 @@ export default function AdminBookingsPage() {
                               <span className="text-neutral-500">Amount</span>
                               <span className="text-neutral-300">{formatMoney(document.total_cents)}</span>
                             </div>
-                            <a
-                              href={`/api/admin/bookings/${booking.id}/documents/${document.id}/pdf`}
-                              className="mt-3 inline-flex rounded-lg bg-teal-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-teal-500"
-                            >
-                              Download PDF
-                            </a>
+                            <div className="mt-3 flex flex-wrap gap-2">
+                              <a
+                                href={`/api/admin/bookings/${booking.id}/documents/${document.id}/pdf`}
+                                className="inline-flex rounded-lg bg-teal-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-teal-500"
+                              >
+                                Download PDF
+                              </a>
+                              <button
+                                type="button"
+                                onClick={() => sendDocumentEmail(booking.id, document.id)}
+                                disabled={sendingDocumentId === document.id}
+                                className="inline-flex rounded-lg border border-neutral-700 px-3 py-1.5 text-xs font-semibold text-neutral-200 hover:bg-neutral-800 disabled:cursor-not-allowed disabled:opacity-50"
+                              >
+                                {sendingDocumentId === document.id ? "Sending..." : "Email PDF"}
+                              </button>
+                            </div>
                           </div>
                         ))}
                       </div>
