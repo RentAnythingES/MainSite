@@ -78,6 +78,43 @@ export async function PUT(
       | Array<{ label: string; url: string; documentNumber?: string | null }>
       | undefined;
 
+    if (status === "paid") {
+      const bookingRecord = booking as Record<string, unknown>;
+      const hasStripePayment = Boolean(bookingRecord.stripe_payment_intent_id);
+      if (!hasStripePayment) {
+        const paymentEvent = await recordBookingPaymentEvent(supabase, {
+          bookingId: id,
+          bookingDraftId: bookingRecord.booking_draft_id as string | null,
+          eventType: "payment",
+          status: "succeeded",
+          provider: "manual",
+          currency: "eur",
+          amountCents: (bookingRecord.total_cents as number) || 0,
+          providerEventId: `manual_payment:${id}:${Date.now()}`,
+          description: "Manual payment marked paid by admin",
+          metadata: {
+            booking_status: status,
+            source: "admin_status_transition",
+          },
+        });
+        const invoiceDocument = await createBookingDocumentForPaymentEvent(supabase, {
+          booking: { ...bookingRecord, ...((data as Record<string, unknown>) || {}) },
+          paymentEvent,
+          productName: (bookingRecord.product as { name?: string } | null)?.name || "Rental equipment",
+        });
+        const invoiceUrl = getCustomerDocumentUrl(invoiceDocument);
+        if (invoiceUrl) {
+          documentLinks = [
+            {
+              label: "Download invoice",
+              url: invoiceUrl,
+              documentNumber: invoiceDocument?.document_number,
+            },
+          ];
+        }
+      }
+    }
+
     // If cancelled/refunded/completed, release inventory blocks.
     if (status === "cancelled" || status === "refunded" || status === "completed") {
       await supabase

@@ -210,6 +210,9 @@ Payment ledger foundation:
 - Admins can resend an invoice/refund receipt link from the booking document card.
   The resend path repairs missing/expired access tokens and records
   `customer_access_last_sent_at`.
+- Admin "Mark Paid Manually" transitions record a `manual` provider payment event,
+  create an invoice document, and include the invoice link in the payment received
+  email. This supports cash, bank transfer, or other offline payment handling.
 
 ### Phase 6 — Admin Operations
 

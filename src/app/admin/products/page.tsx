@@ -36,6 +36,7 @@ export default function AdminProductsPage() {
   const [error, setError] = useState("");
   const [editingId, setEditingId] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
+  const [uploadingImage, setUploadingImage] = useState(false);
   const [editForm, setEditForm] = useState<Partial<Product & { pricing_tiers: PricingTier[] }>>({});
 
   const fetchProducts = useCallback(async () => {
@@ -59,8 +60,10 @@ export default function AdminProductsPage() {
     setEditingId(product.id);
     setEditForm({
       name: product.name,
+      slug: product.slug,
       brand: product.brand,
       description: product.description,
+      image_url: product.image_url,
       stock_total: product.stock_total,
       stock_available: product.stock_available,
       pricing_tiers: [...product.pricing_tiers].sort((a, b) => a.min_days - b.min_days),
@@ -108,6 +111,33 @@ export default function AdminProductsPage() {
     const tiers = [...(editForm.pricing_tiers || [])];
     tiers[index] = { ...tiers[index], [field]: value };
     setEditForm({ ...editForm, pricing_tiers: tiers });
+  };
+
+  const uploadProductImage = async (file: File) => {
+    setError("");
+    setUploadingImage(true);
+
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("productSlug", editForm.slug || editForm.name || "product");
+
+      const res = await fetch("/api/admin/products/upload-image", {
+        method: "POST",
+        body: formData,
+      });
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.error || "Failed to upload image");
+      }
+
+      setEditForm({ ...editForm, image_url: data.imageUrl });
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to upload image");
+    } finally {
+      setUploadingImage(false);
+    }
   };
 
   const formatPrice = (cents: number) => `€${(cents / 100).toFixed(2)}`;
@@ -252,6 +282,34 @@ export default function AdminProductsPage() {
                   rows={3}
                   className="w-full px-3 py-2.5 rounded-lg bg-neutral-800 border border-neutral-700 text-white text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/30 focus:border-teal-500 resize-none"
                 />
+              </div>
+
+              <div>
+                <label className="block text-xs font-medium text-neutral-400 mb-1.5">Image URL</label>
+                <input
+                  type="text"
+                  value={editForm.image_url || ""}
+                  onChange={(e) => setEditForm({ ...editForm, image_url: e.target.value })}
+                  className="w-full px-3 py-2.5 rounded-lg bg-neutral-800 border border-neutral-700 text-white text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/30 focus:border-teal-500"
+                  placeholder="/products/my-product.png"
+                />
+                <div className="mt-2 flex items-center gap-3">
+                  <label className="inline-flex cursor-pointer items-center rounded-lg bg-neutral-800 px-3 py-2 text-xs font-medium text-neutral-200 transition-colors hover:bg-neutral-700">
+                    {uploadingImage ? "Uploading..." : "Upload image"}
+                    <input
+                      type="file"
+                      accept="image/jpeg,image/png,image/webp,image/gif"
+                      disabled={uploadingImage}
+                      onChange={(e) => {
+                        const file = e.target.files?.[0];
+                        if (file) void uploadProductImage(file);
+                        e.currentTarget.value = "";
+                      }}
+                      className="sr-only"
+                    />
+                  </label>
+                  <span className="text-xs text-neutral-500">JPG, PNG, WebP, GIF · max 5 MB</span>
+                </div>
               </div>
 
               <div className="grid grid-cols-2 gap-4">

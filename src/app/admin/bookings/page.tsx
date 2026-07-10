@@ -115,7 +115,7 @@ const TRANSITIONS: Record<string, { label: string; next: string; color: string }
     { label: "Cancel", next: "cancelled", color: "bg-red-600/20 hover:bg-red-600/40 text-red-400" },
   ],
   confirmed: [
-    { label: "Mark Paid", next: "paid", color: "bg-emerald-600 hover:bg-emerald-500" },
+    { label: "Mark Paid Manually", next: "paid", color: "bg-emerald-600 hover:bg-emerald-500" },
     { label: "Cancel", next: "cancelled", color: "bg-red-600/20 hover:bg-red-600/40 text-red-400" },
   ],
   paid: [

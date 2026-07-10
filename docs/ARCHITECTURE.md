@@ -61,6 +61,11 @@ Supabase (CRUD products, pricing, bookings)
 | `booking_document_counters` | Yearly sequential counters for booking document numbers | Admin/API only |
 | `newsletter_subscribers` | Newsletter signup consent records | Admin/API only |
 
+### Storage
+| Bucket | Purpose | Access |
+|--------|---------|--------|
+| `product-images` | Admin-uploaded product photos | Public read, admin API writes via service role |
+
 Inventory holds are reserved via the `reserve_booking_inventory(...)` database
 function so overlapping draft creation is checked while the product row is locked.
 
@@ -155,6 +160,8 @@ Stripe Checkout
 - Customer document emails use tokenized PDF links at `/api/documents/[token]/pdf`;
   these links do not expose admin routes and expire via
   `customer_access_expires_at`.
+- Admin manual paid transitions record a `manual` provider payment event and create
+  an invoice document, so offline payments still have the same ledger/document flow.
 
 ### Admin (require Supabase Auth cookie)
 | Route | Method | Purpose |
@@ -163,6 +170,7 @@ Stripe Checkout
 | `/api/admin/logout` | POST | Clear auth cookies |
 | `/api/admin/products` | GET, POST | List all products / create new |
 | `/api/admin/products/[id]` | PUT, DELETE | Update product / soft-deactivate |
+| `/api/admin/products/upload-image` | POST | Upload a product image to Supabase Storage |
 | `/api/admin/bookings` | GET | List bookings (optional status filter) |
 | `/api/admin/bookings/[id]` | PUT | Update booking status |
 | `/api/admin/bookings/[id]/documents/[documentId]/pdf` | GET | Download protected invoice/refund PDF |
@@ -178,8 +186,8 @@ Protected by Supabase Auth. Server-side cookie check in `admin/layout.tsx` — r
 | Page | Features |
 |------|----------|
 | `/admin` | Stats overview (product count, booking counts), quick actions |
-| `/admin/products` | Product table, inline active toggle, edit modal (name, brand, description, stock, pricing tiers with add/remove) |
-| `/admin/products/new` | Full creation form: auto-slug, category dropdown, dynamic features, key-value specs, pricing tiers |
+| `/admin/products` | Product table, inline active toggle, edit modal (name, brand, description, image upload, stock, pricing tiers with add/remove) |
+| `/admin/products/new` | Full creation form: auto-slug, category dropdown, image upload, dynamic features, key-value specs, pricing tiers |
 | `/admin/bookings` | Expandable booking cards, status filter tabs, lifecycle transition buttons |
 | `/admin/login` | Supabase Auth email/password login |
 

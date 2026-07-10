@@ -47,7 +47,7 @@ All main transactional emails are centralized in `src/lib/email.ts` and use the 
 | Contact admin notification | `sendContactNotification` | Contact form submission | `/api/contact` |
 | Contact customer auto-reply | `sendContactAutoReply` | Contact form submission | `/api/contact` |
 | Booking confirmation | `sendBookingConfirmation` | Booking created / Stripe checkout fulfilled | `/api/bookings`, `/api/webhooks/stripe` |
-| Payment received | `sendBookingStatusUpdate(..., "paid")` | Admin status transition to `paid` | `/api/admin/bookings/[id]` |
+| Payment received | `sendBookingStatusUpdate(..., "paid")` | Admin status transition to `paid`, including manual payment invoice link when created | `/api/admin/bookings/[id]` |
 | Pickup ready / delivery on the way | `sendBookingStatusUpdate(..., "delivering")` | Admin status transition to `delivering` | `/api/admin/bookings/[id]` |
 | Picked up / delivered | `sendBookingStatusUpdate(..., "active")` | Admin status transition to `active` | `/api/admin/bookings/[id]` |
 | Return reminder / collection scheduled | `sendBookingStatusUpdate(..., "returning")` | Admin status transition to `returning` | `/api/admin/bookings/[id]` |

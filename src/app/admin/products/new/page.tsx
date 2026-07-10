@@ -32,6 +32,7 @@ export default function AddProductPage() {
   const router = useRouter();
   const [categories, setCategories] = useState<Category[]>([]);
   const [saving, setSaving] = useState(false);
+  const [uploadingImage, setUploadingImage] = useState(false);
   const [error, setError] = useState("");
   const [autoSlug, setAutoSlug] = useState(true);
 
@@ -85,6 +86,33 @@ export default function AddProductPage() {
     const updated = [...pricingTiers];
     updated[i] = { ...updated[i], [field]: val };
     setPricingTiers(updated);
+  };
+
+  const handleImageUpload = async (file: File) => {
+    setError("");
+    setUploadingImage(true);
+
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("productSlug", slug || slugify(name) || "new-product");
+
+      const res = await fetch("/api/admin/products/upload-image", {
+        method: "POST",
+        body: formData,
+      });
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.error || "Failed to upload image");
+      }
+
+      setImageUrl(data.imageUrl);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to upload image");
+    } finally {
+      setUploadingImage(false);
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -227,6 +255,26 @@ export default function AddProductPage() {
               <label className={labelClass}>Image URL</label>
               <input type="text" value={imageUrl} onChange={(e) => setImageUrl(e.target.value)}
                 className={inputClass} placeholder="/products/my-product.png" />
+              <div className="mt-2 flex items-center gap-3">
+                <label className="inline-flex cursor-pointer items-center rounded-lg bg-neutral-800 px-3 py-2 text-xs font-medium text-neutral-200 transition-colors hover:bg-neutral-700">
+                  {uploadingImage ? "Uploading..." : "Upload image"}
+                  <input
+                    type="file"
+                    accept="image/jpeg,image/png,image/webp,image/gif"
+                    disabled={uploadingImage}
+                    onChange={(e) => {
+                      const file = e.target.files?.[0];
+                      if (file) void handleImageUpload(file);
+                      e.currentTarget.value = "";
+                    }}
+                    className="sr-only"
+                  />
+                </label>
+                <span className="text-xs text-neutral-500">JPG, PNG, WebP, GIF · max 5 MB</span>
+              </div>
+              {imageUrl && (
+                <p className="mt-2 truncate text-xs text-neutral-500">Saved image: {imageUrl}</p>
+              )}
             </div>
             <div>
               <label className={labelClass}>Stock Quantity *</label>
