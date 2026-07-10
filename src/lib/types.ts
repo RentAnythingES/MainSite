@@ -15,6 +15,14 @@ export type BookingStatus =
 export type DeliveryType = "standard" | "express";
 export type FulfillmentMode = "customer_pickup" | "delivery_only" | "delivery_and_collection";
 export type BookingDraftStatus = "draft" | "checkout_created" | "paid" | "expired" | "cancelled";
+export type BookingPaymentEventType =
+  | "payment"
+  | "refund"
+  | "deposit_authorization"
+  | "deposit_capture"
+  | "deposit_release"
+  | "manual_adjustment";
+export type BookingPaymentEventStatus = "pending" | "succeeded" | "failed" | "cancelled";
 
 // Flattened Insert types to avoid circular references with Database interface
 
@@ -205,6 +213,26 @@ interface BookingInventoryBlockRow {
   created_at: string;
 }
 
+interface BookingPaymentEventRow {
+  id: string;
+  booking_id: string;
+  booking_draft_id: string | null;
+  event_type: BookingPaymentEventType;
+  status: BookingPaymentEventStatus;
+  provider: string;
+  currency: string;
+  amount_cents: number;
+  stripe_checkout_session_id: string | null;
+  stripe_payment_intent_id: string | null;
+  stripe_refund_id: string | null;
+  stripe_charge_id: string | null;
+  provider_event_id: string | null;
+  description: string | null;
+  metadata: Record<string, unknown>;
+  occurred_at: string;
+  created_at: string;
+}
+
 export interface Database {
   public: {
     Tables: {
@@ -253,6 +281,11 @@ export interface Database {
         Insert: Omit<BookingInventoryBlockRow, "id" | "created_at">;
         Update: Partial<Omit<BookingInventoryBlockRow, "id" | "created_at">>;
       };
+      booking_payment_events: {
+        Row: BookingPaymentEventRow;
+        Insert: Omit<BookingPaymentEventRow, "id" | "created_at">;
+        Update: Partial<Omit<BookingPaymentEventRow, "id" | "created_at">>;
+      };
     };
   };
 }
@@ -267,6 +300,7 @@ export type PickupLocation = PickupLocationRow;
 export type ServiceZone = ServiceZoneRow;
 export type BookingDraft = BookingDraftRow;
 export type BookingInventoryBlock = BookingInventoryBlockRow;
+export type BookingPaymentEvent = BookingPaymentEventRow;
 
 // Product with pricing (joined query result)
 export interface ProductWithPricing extends Product {

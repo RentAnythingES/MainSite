@@ -56,6 +56,7 @@ Supabase (CRUD products, pricing, bookings)
 | `service_zones` | Valencia delivery/collection zones and fees | Public read active |
 | `booking_drafts` | Pre-payment booking drafts and Stripe Checkout source of truth | Admin/API only |
 | `booking_inventory_blocks` | Datetime inventory holds and paid booking blocks | Admin/API only |
+| `booking_payment_events` | Durable payment/refund/deposit ledger for bookings | Admin/API only |
 | `newsletter_subscribers` | Newsletter signup consent records | Admin/API only |
 
 Inventory holds are reserved via the `reserve_booking_inventory(...)` database
@@ -141,6 +142,10 @@ Stripe Checkout
 - Webhook signature verification depends on `STRIPE_WEBHOOK_SECRET`; Checkout creation depends on `STRIPE_SECRET_KEY`.
 - Booking fulfillment is idempotent by `stripe_payment_intent_id`.
 - Email delivery is a follow-up side effect and should not cause duplicate bookings.
+- Successful Checkout fulfillment and admin-triggered refunds are recorded in
+  `booking_payment_events` when the finance ledger migration is applied. Ledger
+  writes are non-blocking, so payment fulfillment does not fail if the table is not
+  present yet.
 
 ### Admin (require Supabase Auth cookie)
 | Route | Method | Purpose |

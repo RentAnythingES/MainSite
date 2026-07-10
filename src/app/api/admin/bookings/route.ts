@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase-admin";
 import { verifyAdmin, unauthorizedResponse } from "@/lib/admin-auth";
 import { fetchPickupLocationsById, fetchServiceZonesById } from "@/lib/fulfillment-options";
+import { fetchBookingPaymentEventsByBookingId } from "@/lib/payment-ledger";
 
 /**
  * GET /api/admin/bookings — List all bookings with product info
@@ -42,7 +43,7 @@ export async function GET(request: NextRequest) {
       ),
     ] as string[];
 
-    const [pickupLocationsResult, serviceZonesResult, inventoryBlocksResult] = await Promise.all([
+    const [pickupLocationsResult, serviceZonesResult, inventoryBlocksResult, paymentEventsResult] = await Promise.all([
       fetchPickupLocationsById(supabase, pickupLocationIds),
       fetchServiceZonesById(supabase, serviceZoneIds),
       bookingIds.length > 0
@@ -51,6 +52,7 @@ export async function GET(request: NextRequest) {
             .select("id, booking_id, starts_at, ends_at, quantity, reason")
             .in("booking_id", bookingIds)
         : Promise.resolve({ data: [], error: null }),
+      fetchBookingPaymentEventsByBookingId(supabase, bookingIds),
     ]);
 
     if (pickupLocationsResult.error) throw pickupLocationsResult.error;
@@ -64,6 +66,7 @@ export async function GET(request: NextRequest) {
       (serviceZonesResult.data || []).map((zone: { id: string }) => [zone.id, zone])
     );
     const inventoryBlocksByBookingId = new Map<string, unknown[]>();
+    const paymentEventsByBookingId = new Map<string, unknown[]>();
 
     for (const block of inventoryBlocksResult.data || []) {
       const bookingId = (block as { booking_id?: string | null }).booking_id;
@@ -71,6 +74,14 @@ export async function GET(request: NextRequest) {
       const existing = inventoryBlocksByBookingId.get(bookingId) || [];
       existing.push(block);
       inventoryBlocksByBookingId.set(bookingId, existing);
+    }
+
+    for (const event of paymentEventsResult.data || []) {
+      const bookingId = (event as { booking_id?: string | null }).booking_id;
+      if (!bookingId) continue;
+      const existing = paymentEventsByBookingId.get(bookingId) || [];
+      existing.push(event);
+      paymentEventsByBookingId.set(bookingId, existing);
     }
 
     const enrichedBookings = bookings.map((booking) => ({
@@ -85,6 +96,7 @@ export async function GET(request: NextRequest) {
         ? serviceZoneById.get(booking.collection_zone_id as string) || null
         : null,
       inventory_blocks: inventoryBlocksByBookingId.get(booking.id as string) || [],
+      payment_events: paymentEventsByBookingId.get(booking.id as string) || [],
     }));
 
     return NextResponse.json({ bookings: enrichedBookings });

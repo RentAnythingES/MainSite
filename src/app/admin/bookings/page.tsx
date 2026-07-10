@@ -32,6 +32,20 @@ interface InventoryBlock {
   reason: string | null;
 }
 
+interface PaymentEvent {
+  id: string;
+  event_type: string;
+  status: string;
+  provider: string;
+  currency: string;
+  amount_cents: number;
+  stripe_payment_intent_id?: string | null;
+  stripe_refund_id?: string | null;
+  provider_event_id?: string | null;
+  description?: string | null;
+  occurred_at: string;
+}
+
 interface Booking {
   id: string;
   booking_ref: string;
@@ -66,6 +80,7 @@ interface Booking {
   completed_at?: string | null;
   updated_at?: string | null;
   inventory_blocks?: InventoryBlock[];
+  payment_events?: PaymentEvent[];
   status: string;
   created_at: string;
 }
@@ -172,6 +187,12 @@ export default function AdminBookingsPage() {
     if (mode === "delivery_and_collection") return "Delivery and collection";
     return "Legacy delivery";
   };
+
+  const formatEventType = (type: string) =>
+    type
+      .split("_")
+      .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+      .join(" ");
 
   const shortId = (value?: string | null) => {
     if (!value) return "Not set";
@@ -427,6 +448,51 @@ export default function AdminBookingsPage() {
                         </div>
                       ))}
                     </div>
+                  </div>
+
+                  <div className="mb-4 pt-4 border-t border-neutral-800">
+                    <p className="text-xs text-neutral-500 mb-2">Finance Ledger</p>
+                    {booking.payment_events && booking.payment_events.length > 0 ? (
+                      <div className="space-y-2">
+                        {booking.payment_events.map((event) => (
+                          <div key={event.id} className="rounded-lg bg-neutral-950 border border-neutral-800 p-3">
+                            <div className="flex flex-wrap items-center justify-between gap-2">
+                              <div>
+                                <p className="text-sm font-semibold text-white">
+                                  {formatEventType(event.event_type)}
+                                  <span className={`ml-2 text-[11px] px-2 py-0.5 rounded-full capitalize ${
+                                    event.status === "succeeded"
+                                      ? "bg-emerald-500/10 text-emerald-300"
+                                      : event.status === "failed"
+                                        ? "bg-red-500/10 text-red-300"
+                                        : "bg-amber-500/10 text-amber-300"
+                                  }`}>
+                                    {event.status}
+                                  </span>
+                                </p>
+                                <p className="text-xs text-neutral-500">
+                                  {event.description || event.provider} · {formatDateTime(event.occurred_at)}
+                                </p>
+                              </div>
+                              <p className={`text-sm font-semibold ${
+                                event.event_type === "refund" ? "text-red-300" : "text-emerald-300"
+                              }`}>
+                                {event.event_type === "refund" ? "-" : "+"}{formatMoney(event.amount_cents)}
+                              </p>
+                            </div>
+                            <div className="mt-2 grid sm:grid-cols-3 gap-2 text-[11px] font-mono text-neutral-500">
+                              <p>Payment: <span className="text-neutral-300">{shortId(event.stripe_payment_intent_id)}</span></p>
+                              <p>Refund: <span className="text-neutral-300">{shortId(event.stripe_refund_id)}</span></p>
+                              <p>Provider: <span className="text-neutral-300">{shortId(event.provider_event_id)}</span></p>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
+                      <p className="text-xs text-neutral-400">
+                        No payment ledger events yet. Apply the latest migration to start recording new payments and refunds.
+                      </p>
+                    )}
                   </div>
 
                   {/* Status transition buttons */}

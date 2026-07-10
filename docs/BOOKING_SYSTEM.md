@@ -185,6 +185,17 @@ service zones when available. The internal admin notification includes customer
 details, fulfillment instructions, internal ops notes, and Stripe checkout/payment
 IDs.
 
+Payment ledger foundation:
+
+- Migration `supabase/migrations/20260710_booking_payment_events.sql` adds
+  `booking_payment_events` for durable finance events.
+- Stripe `checkout.session.completed` records a `payment` event after the booking is
+  created.
+- Admin cancellation/refund actions record `refund` events, including failed refund
+  attempts.
+- Ledger writes are intentionally non-blocking so checkout/refund operations keep
+  working even if the migration has not been applied yet.
+
 ### Phase 6 — Admin Operations
 
 - Show rental start/end times.
@@ -201,6 +212,10 @@ Expanded admin booking rows also show payment totals, Stripe checkout/payment ID
 active/released inventory block status, and a lightweight status timeline so support
 can quickly confirm whether a booking is paid, refunded, released, or still holding
 inventory.
+
+Expanded rows also show a finance ledger with payment/refund events once
+`booking_payment_events` exists in Supabase. This is the first step toward invoice,
+refund receipt, deposit, and payment-request parity.
 
 An authenticated `/api/admin/health` endpoint reports whether Stripe, Stripe
 webhook secret, Resend, Supabase keys, booking pause flags, active draft counts,

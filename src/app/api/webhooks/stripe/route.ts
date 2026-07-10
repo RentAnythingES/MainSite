@@ -3,6 +3,7 @@ import { stripe } from "@/lib/stripe";
 import { createAdminClient } from "@/lib/supabase-admin";
 import { sendBookingConfirmation } from "@/lib/email";
 import { fetchPickupLocationsById, fetchServiceZonesById } from "@/lib/fulfillment-options";
+import { recordBookingPaymentEvent } from "@/lib/payment-ledger";
 import Stripe from "stripe";
 
 /**
@@ -141,6 +142,22 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session): Promis
   }
 
   console.log("[webhook] Booking created:", (booking as { booking_ref: string }).booking_ref);
+
+  await recordBookingPaymentEvent(supabase, {
+    bookingId: (booking as { id: string }).id,
+    eventType: "payment",
+    status: "succeeded",
+    currency: session.currency || "eur",
+    amountCents: session.amount_total || parseInt(meta.total_cents || "0"),
+    stripeCheckoutSessionId: session.id,
+    stripePaymentIntentId: paymentIntentId || null,
+    providerEventId: `checkout_session:${session.id}:payment`,
+    description: "Stripe Checkout payment completed",
+    metadata: {
+      source: "legacy_checkout_webhook",
+      payment_status: session.payment_status,
+    },
+  });
 
   // Block the rental dates
   const dates: string[] = [];
@@ -356,6 +373,24 @@ async function handleDraftCheckoutCompleted(
   }
 
   const bookingId = (booking as { id: string }).id;
+
+  await recordBookingPaymentEvent(supabase, {
+    bookingId,
+    bookingDraftId: bookingDraft.id,
+    eventType: "payment",
+    status: "succeeded",
+    currency: session.currency || "eur",
+    amountCents: session.amount_total || bookingDraft.total_cents,
+    stripeCheckoutSessionId: session.id,
+    stripePaymentIntentId: paymentIntentId || null,
+    providerEventId: `checkout_session:${session.id}:payment`,
+    description: "Stripe Checkout payment completed",
+    metadata: {
+      source: "booking_draft_webhook",
+      payment_status: session.payment_status,
+    },
+  });
+
   await supabase
     .from("booking_inventory_blocks")
     .update({ booking_id: bookingId, reason: "booking" })
