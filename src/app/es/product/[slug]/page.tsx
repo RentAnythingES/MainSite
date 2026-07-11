@@ -33,10 +33,26 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const product = await getProductBySlugFromDB(slug);
+  const product = await getProductBySlugFromDB(slug, "es");
   if (!product) return { title: "Producto No Encontrado" };
 
   const lowestPrice = product.pricing[product.pricing.length - 1].perDay;
+  if (product.seoTitle || product.seoDescription) {
+    const title = product.seoTitle || `Alquiler ${product.name} en Valencia — desde €${lowestPrice}/día`;
+    const description = product.seoDescription || product.description;
+    return {
+      title,
+      description,
+      alternates: {
+        canonical: `https://rentanything.es/es/product/${slug}`,
+        languages: {
+          en: `https://rentanything.es/product/${slug}`,
+          es: `https://rentanything.es/es/product/${slug}`,
+        },
+      },
+    };
+  }
+
   return {
     title: `Alquiler ${product.name} en Valencia — desde €${lowestPrice}/día`,
     description: product.description,
@@ -52,10 +68,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function ProductPageES({ params }: Props) {
   const { slug } = await params;
-  const product = await getProductBySlugFromDB(slug);
+  const product = await getProductBySlugFromDB(slug, "es");
   if (!product) notFound();
 
-  const related = (await getProductsByCategoryFromDB(product.categorySlug))
+  const related = (await getProductsByCategoryFromDB(product.categorySlug, "es"))
     .filter((p) => p.categorySlug === product.categorySlug && p.slug !== product.slug)
     .slice(0, 3);
 
@@ -119,7 +135,7 @@ export default async function ProductPageES({ params }: Props) {
             <div className="lg:col-span-2">
               <div className="grid md:grid-cols-2 gap-8 mb-8">
                 <div className="bg-gradient-to-br from-neutral-100 to-neutral-50 rounded-2xl flex items-center justify-center aspect-square relative overflow-hidden">
-                  <Image src={product.image} alt={product.name} fill className="object-contain p-6" sizes="(max-width: 1024px) 100vw, 33vw" priority />
+                  <Image src={product.image} alt={product.imageAlt || product.name} fill className="object-contain p-6" sizes="(max-width: 1024px) 100vw, 33vw" priority />
                 </div>
                 <div>
                   <div className="flex items-center gap-2 mb-3">
@@ -145,6 +161,13 @@ export default async function ProductPageES({ params }: Props) {
                 </div>
               </div>
 
+              {product.detailDescription && (
+                <div className="mb-8">
+                  <h2 className="text-xl font-bold mb-4">Detalles del alquiler</h2>
+                  <p className="text-neutral-600 leading-relaxed whitespace-pre-line">{product.detailDescription}</p>
+                </div>
+              )}
+
               {/* Features */}
               {product.features && product.features.length > 0 && (
                 <div className="mb-8">
@@ -156,6 +179,35 @@ export default async function ProductPageES({ params }: Props) {
                       </li>
                     ))}
                   </ul>
+                </div>
+              )}
+
+              {(product.includesText || product.constraintsText || product.deliverySetupNote || product.careNote) && (
+                <div className="grid sm:grid-cols-2 gap-4 mb-8">
+                  {product.includesText && (
+                    <div className="rounded-xl bg-neutral-50 border border-border p-4">
+                      <h2 className="font-bold text-sm text-neutral-800 mb-2">Incluye</h2>
+                      <p className="text-sm text-neutral-600 whitespace-pre-line">{product.includesText}</p>
+                    </div>
+                  )}
+                  {product.constraintsText && (
+                    <div className="rounded-xl bg-neutral-50 border border-border p-4">
+                      <h2 className="font-bold text-sm text-neutral-800 mb-2">Información útil</h2>
+                      <p className="text-sm text-neutral-600 whitespace-pre-line">{product.constraintsText}</p>
+                    </div>
+                  )}
+                  {product.deliverySetupNote && (
+                    <div className="rounded-xl bg-neutral-50 border border-border p-4">
+                      <h2 className="font-bold text-sm text-neutral-800 mb-2">Entrega y preparación</h2>
+                      <p className="text-sm text-neutral-600 whitespace-pre-line">{product.deliverySetupNote}</p>
+                    </div>
+                  )}
+                  {product.careNote && (
+                    <div className="rounded-xl bg-neutral-50 border border-border p-4">
+                      <h2 className="font-bold text-sm text-neutral-800 mb-2">Cuidado e higiene</h2>
+                      <p className="text-sm text-neutral-600 whitespace-pre-line">{product.careNote}</p>
+                    </div>
+                  )}
                 </div>
               )}
 

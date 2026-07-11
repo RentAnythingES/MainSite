@@ -80,6 +80,10 @@ upload an image and review the product before the admin can activate it.
 It stores English and Spanish page copy, FAQs, SEO snippets, and the primary
 image's alt text/source/rights status. It requires
 `supabase/migrations/20260711_product_content_readiness.sql` before use.
+Public product pages use those fields only when a product is explicitly marked
+`content_ready`; drafts and fact-review records never replace current live copy,
+metadata, FAQs, or image alt text. If the additive content tables are unavailable,
+the existing product data remains the safe fallback.
 
 ## Product Widget System
 Discover guide pages use inline product strips defined in `destinations.ts`:

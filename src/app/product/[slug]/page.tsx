@@ -25,6 +25,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!product) return { title: "Product Not Found" };
 
   const lowestPrice = product.pricing[product.pricing.length - 1].perDay;
+  if (product.seoTitle || product.seoDescription) {
+    const title = product.seoTitle || `Rent ${product.name} in Valencia — from €${lowestPrice}/day`;
+    const description = product.seoDescription || product.description;
+    return {
+      title,
+      description,
+      openGraph: { title, description },
+    };
+  }
+
   return {
     title: `Rent ${product.name} in Valencia — from €${lowestPrice}/day`,
     description: product.description,
@@ -125,7 +135,7 @@ export default async function ProductPage({ params }: Props) {
                 <div className="bg-gradient-to-br from-neutral-100 to-neutral-50 rounded-2xl flex items-center justify-center aspect-square relative overflow-hidden">
                   <Image
                     src={product.image}
-                    alt={product.name}
+                    alt={product.imageAlt || product.name}
                     fill
                     className="object-contain p-6"
                     sizes="(max-width: 1024px) 100vw, 33vw"
@@ -172,6 +182,15 @@ export default async function ProductPage({ params }: Props) {
                 </div>
               </div>
 
+              {product.detailDescription && (
+                <div className="mb-8">
+                  <h2 className="font-bold text-neutral-800 mb-3">Rental details</h2>
+                  <p className="text-neutral-600 leading-relaxed whitespace-pre-line">
+                    {product.detailDescription}
+                  </p>
+                </div>
+              )}
+
               {/* Features */}
               <div className="mb-8">
                 <h3 className="font-bold text-neutral-800 mb-3">Features</h3>
@@ -184,6 +203,35 @@ export default async function ProductPage({ params }: Props) {
                   ))}
                 </ul>
               </div>
+
+              {(product.includesText || product.constraintsText || product.deliverySetupNote || product.careNote) && (
+                <div className="grid sm:grid-cols-2 gap-4 mb-8">
+                  {product.includesText && (
+                    <div className="rounded-xl bg-neutral-50 border border-border p-4">
+                      <h2 className="font-bold text-sm text-neutral-800 mb-2">What&apos;s included</h2>
+                      <p className="text-sm text-neutral-600 whitespace-pre-line">{product.includesText}</p>
+                    </div>
+                  )}
+                  {product.constraintsText && (
+                    <div className="rounded-xl bg-neutral-50 border border-border p-4">
+                      <h2 className="font-bold text-sm text-neutral-800 mb-2">Good to know</h2>
+                      <p className="text-sm text-neutral-600 whitespace-pre-line">{product.constraintsText}</p>
+                    </div>
+                  )}
+                  {product.deliverySetupNote && (
+                    <div className="rounded-xl bg-neutral-50 border border-border p-4">
+                      <h2 className="font-bold text-sm text-neutral-800 mb-2">Delivery and setup</h2>
+                      <p className="text-sm text-neutral-600 whitespace-pre-line">{product.deliverySetupNote}</p>
+                    </div>
+                  )}
+                  {product.careNote && (
+                    <div className="rounded-xl bg-neutral-50 border border-border p-4">
+                      <h2 className="font-bold text-sm text-neutral-800 mb-2">Care and hygiene</h2>
+                      <p className="text-sm text-neutral-600 whitespace-pre-line">{product.careNote}</p>
+                    </div>
+                  )}
+                </div>
+              )}
 
               {/* Specs */}
               <div>

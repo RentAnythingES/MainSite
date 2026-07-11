@@ -4,6 +4,7 @@ export interface ProductFAQ {
 }
 
 export interface Product {
+  id?: string;
   slug: string;
   name: string;
   brand: string;
@@ -17,6 +18,15 @@ export interface Product {
   pricing: { days: number; perDay: number }[];
   emoji: string;
   image: string;
+  imageAlt?: string;
+  detailDescription?: string;
+  includesText?: string;
+  constraintsText?: string;
+  deliverySetupNote?: string;
+  careNote?: string;
+  seoTitle?: string;
+  seoDescription?: string;
+  contentStatus?: "draft" | "facts_verified" | "content_ready";
   city: string;
   faqs?: ProductFAQ[];
 }
