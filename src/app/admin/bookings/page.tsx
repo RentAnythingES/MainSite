@@ -144,6 +144,7 @@ export default function AdminBookingsPage() {
   const [filter, setFilter] = useState("all");
   const [expandedId, setExpandedId] = useState<string | null>(null);
   const [sendingDocumentId, setSendingDocumentId] = useState<string | null>(null);
+  const [updatingStatus, setUpdatingStatus] = useState<string | null>(null);
 
   const fetchBookings = useCallback(async () => {
     try {
@@ -165,18 +166,25 @@ export default function AdminBookingsPage() {
   const updateStatus = async (bookingId: string, newStatus: string) => {
     try {
       setNotice("");
+      setUpdatingStatus(`${bookingId}:${newStatus}`);
       const res = await fetch(`/api/admin/bookings/${bookingId}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ status: newStatus }),
       });
+      const data = await res.json();
       if (!res.ok) {
-        const data = await res.json();
         throw new Error(data.error || "Update failed");
       }
+      setNotice(data.emailSent === false
+        ? "Booking updated. Customer email was not sent — check Resend configuration."
+        : "Booking updated and customer email sent."
+      );
       await fetchBookings();
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to update booking");
+    } finally {
+      setUpdatingStatus(null);
     }
   };
 
@@ -249,6 +257,31 @@ export default function AdminBookingsPage() {
     { label: "Completed", value: booking.completed_at },
     { label: "Updated", value: booking.updated_at },
   ].filter((item) => Boolean(item.value));
+
+  const getTransitions = (booking: Booking) => {
+    const actions = TRANSITIONS[booking.status] || [];
+    return actions.map((action) => {
+      if (action.next === "delivering") {
+        return {
+          ...action,
+          label: booking.fulfillment_mode === "customer_pickup" ? "Ready for Pickup" : "Out for Delivery",
+        };
+      }
+      if (action.next === "active") {
+        return {
+          ...action,
+          label: booking.fulfillment_mode === "customer_pickup" ? "Picked Up" : "Delivered",
+        };
+      }
+      if (action.next === "returning") {
+        return {
+          ...action,
+          label: booking.fulfillment_mode === "customer_pickup" ? "Return Due" : "Schedule Collection",
+        };
+      }
+      return action;
+    });
+  };
 
   if (loading) {
     return (
@@ -603,15 +636,16 @@ export default function AdminBookingsPage() {
                   </div>
 
                   {/* Status transition buttons */}
-                  {TRANSITIONS[booking.status] && (
+                  {getTransitions(booking).length > 0 && (
                     <div className="flex gap-2 pt-3 border-t border-neutral-800">
-                      {TRANSITIONS[booking.status].map((action) => (
+                      {getTransitions(booking).map((action) => (
                         <button
                           key={action.next}
                           onClick={() => updateStatus(booking.id, action.next)}
+                          disabled={updatingStatus === `${booking.id}:${action.next}`}
                           className={`px-3 py-1.5 rounded-lg text-xs font-semibold text-white transition-colors ${action.color}`}
                         >
-                          {action.label}
+                          {updatingStatus === `${booking.id}:${action.next}` ? "Updating..." : action.label}
                         </button>
                       ))}
                     </div>

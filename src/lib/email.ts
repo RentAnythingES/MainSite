@@ -27,6 +27,8 @@ export interface BookingEmailData {
   productName: string;
   startDate: string;
   endDate: string;
+  rentalStartAt?: string | null;
+  rentalEndAt?: string | null;
   rentalDays: number;
   totalCents: number;
   deliveryAddress: string;
@@ -85,6 +87,17 @@ function formatDate(dateStr: string): string {
   });
 }
 
+function formatDateTime(dateStr: string): string {
+  return new Date(dateStr).toLocaleString("en-GB", {
+    weekday: "short",
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+}
+
 function formatEuros(cents: number): string {
   return `€${(cents / 100).toFixed(2)}`;
 }
@@ -125,8 +138,8 @@ function fulfillmentLabel(data: BookingEmailData): string {
 }
 
 function nextStepCopy(data: BookingEmailData): string {
-  const start = escapeHtml(formatDate(data.startDate));
-  const end = escapeHtml(formatDate(data.endDate));
+  const start = escapeHtml(data.rentalStartAt ? formatDateTime(data.rentalStartAt) : formatDate(data.startDate));
+  const end = escapeHtml(data.rentalEndAt ? formatDateTime(data.rentalEndAt) : formatDate(data.endDate));
   if (data.fulfillmentMode === "customer_pickup") {
     return `We'll message you before <strong>${start}</strong> to confirm the pickup time and exact location.`;
   }
@@ -184,11 +197,15 @@ function internalOpsBox(data: BookingEmailData): string {
 }
 
 function bookingDetailsTable(data: BookingEmailData): string {
+  const rentalWindow = data.rentalStartAt && data.rentalEndAt
+    ? `${formatDateTime(data.rentalStartAt)} → ${formatDateTime(data.rentalEndAt)}`
+    : `${formatDate(data.startDate)} → ${formatDate(data.endDate)}`;
+
   return `
     <table style="width:100%;border-collapse:collapse;margin:16px 0;">
       <tr><td style="padding:8px 0;color:#6b7280;font-size:14px;width:145px;">Booking ref</td><td style="padding:8px 0;font-weight:700;font-size:14px;font-family:monospace;color:#0e7c73;">${escapeHtml(data.bookingRef)}</td></tr>
       <tr><td style="padding:8px 0;color:#6b7280;font-size:14px;">Item</td><td style="padding:8px 0;font-weight:600;font-size:14px;">${escapeHtml(data.productName)}</td></tr>
-      <tr><td style="padding:8px 0;color:#6b7280;font-size:14px;">Dates</td><td style="padding:8px 0;font-size:14px;">${escapeHtml(formatDate(data.startDate))} → ${escapeHtml(formatDate(data.endDate))} (${escapeHtml(data.rentalDays)} days)</td></tr>
+      <tr><td style="padding:8px 0;color:#6b7280;font-size:14px;">Rental window</td><td style="padding:8px 0;font-size:14px;">${escapeHtml(rentalWindow)} (${escapeHtml(data.rentalDays)} days)</td></tr>
       <tr><td style="padding:8px 0;color:#6b7280;font-size:14px;">${fulfillmentLabel(data)}</td><td style="padding:8px 0;font-size:14px;">${escapeHtml(data.deliveryAddress)}</td></tr>
       <tr><td style="padding:8px 0;color:#6b7280;font-size:14px;">Total</td><td style="padding:8px 0;font-weight:700;font-size:16px;">${formatEuros(data.totalCents)}</td></tr>
     </table>
@@ -276,8 +293,8 @@ export async function sendBookingStatusUpdate(data: BookingEmailData, newStatus:
       subject: isPickup ? `Return reminder — ${data.productName} (${data.bookingRef})` : `Collection scheduled — ${data.productName} (${data.bookingRef})`,
       title: isPickup ? "Return reminder" : "Collection scheduled",
       message: isPickup
-        ? `Your <strong>${escapeHtml(data.productName)}</strong> rental is due back on <strong>${escapeHtml(formatDate(data.endDate))}</strong>. We'll confirm return details directly.`
-        : `We've scheduled ${isDeliveryAndCollection ? "collection" : "pickup"} of your <strong>${escapeHtml(data.productName)}</strong> on <strong>${escapeHtml(formatDate(data.endDate))}</strong>. Please have the equipment ready and accessible.`,
+        ? `Your <strong>${escapeHtml(data.productName)}</strong> rental is due back on <strong>${escapeHtml(data.rentalEndAt ? formatDateTime(data.rentalEndAt) : formatDate(data.endDate))}</strong>. We'll confirm return details directly.`
+        : `We've scheduled ${isDeliveryAndCollection ? "collection" : "pickup"} of your <strong>${escapeHtml(data.productName)}</strong> on <strong>${escapeHtml(data.rentalEndAt ? formatDateTime(data.rentalEndAt) : formatDate(data.endDate))}</strong>. Please have the equipment ready and accessible.`,
     },
     completed: {
       subject: `Rental complete — thank you (${data.bookingRef})`,

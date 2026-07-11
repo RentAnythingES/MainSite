@@ -209,6 +209,8 @@ export async function PUT(
     ]);
     const pickupLocation = (pickupLocationsResult.data || [])[0] as {
       name?: string;
+      address?: string | null;
+      city?: string | null;
       customer_instructions?: string | null;
       pickup_instructions?: string | null;
       internal_notes?: string | null;
@@ -231,8 +233,17 @@ export async function PUT(
         ? [deliveryZone?.name, collectionZone?.name].filter(Boolean).join(" → ")
         : deliveryZone?.name) ||
       undefined;
+    const fulfillmentAddress =
+      (b.fulfillment_mode as string) === "customer_pickup"
+        ? [pickupLocation?.name, pickupLocation?.address, pickupLocation?.city].filter(Boolean).join(", ") ||
+          (b.delivery_address as string)
+        : (b.fulfillment_mode as string) === "delivery_and_collection"
+          ? [b.delivery_address, b.collection_address ? `Collection: ${b.collection_address}` : null]
+              .filter(Boolean)
+              .join(" · ")
+          : (b.delivery_address as string);
 
-    sendBookingStatusUpdate(
+    const emailSent = await sendBookingStatusUpdate(
       {
         bookingRef: b.booking_ref as string,
         customerName: b.customer_name as string,
@@ -241,9 +252,11 @@ export async function PUT(
         productName: product?.name || "Rental equipment",
         startDate: b.start_date as string,
         endDate: b.end_date as string,
+        rentalStartAt: (b.rental_start_at as string) || null,
+        rentalEndAt: (b.rental_end_at as string) || null,
         rentalDays: b.rental_days as number,
         totalCents: b.total_cents as number,
-        deliveryAddress: b.delivery_address as string,
+        deliveryAddress: fulfillmentAddress,
         deliveryType: (b.delivery_type as string) || "standard",
         fulfillmentMode: (b.fulfillment_mode as string) || undefined,
         fulfillmentLabel: fulfillmentDisplayLabel,
@@ -266,9 +279,9 @@ export async function PUT(
         documentLinks,
       },
       status
-    ).catch((err) => console.error("[admin/bookings] Email send error:", err));
+    );
 
-    return NextResponse.json({ booking: data });
+    return NextResponse.json({ booking: data, emailSent });
   } catch (err) {
     console.error("[admin/bookings] PUT error:", err);
     return NextResponse.json({ error: "Failed to update booking" }, { status: 500 });

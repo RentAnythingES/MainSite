@@ -18,6 +18,11 @@ Code paths:
 - Authenticated health check: `GET /api/admin/health`
 - Authenticated Resend test email: `POST /api/admin/health`
 
+Booking status emails are sent from admin status transitions. They include the
+full rental datetime window, fulfillment-specific wording, customer-facing
+pickup/delivery instructions, and any customer-safe invoice/refund links created
+for the booking.
+
 ## DNS Observed From Local Lookup
 
 Observed on 2026-07-08:

@@ -226,6 +226,11 @@ refunding, or completing a booking releases legacy `blocked_dates` and v2
 `booking_inventory_blocks`; cancelled/refunded paid bookings attempt a Stripe
 refund.
 
+Admin status actions are fulfillment-aware: customer pickup bookings show pickup
+language, while delivery bookings show delivery/collection language. Customer
+status emails include the full rental datetime window and the configured pickup
+location or delivery/collection details.
+
 Expanded admin booking rows also show payment totals, Stripe checkout/payment IDs,
 active/released inventory block status, and a lightweight status timeline so support
 can quickly confirm whether a booking is paid, refunded, released, or still holding
