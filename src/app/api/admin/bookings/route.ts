@@ -6,6 +6,11 @@ import { fetchBookingPaymentEventsByBookingId } from "@/lib/payment-ledger";
 import { fetchBookingDocumentsByBookingId } from "@/lib/booking-documents";
 import { DEFAULT_OPS_TASKS } from "@/lib/booking-ops";
 
+function isMissingOptionalTable(error: unknown) {
+  const code = (error as { code?: string } | null)?.code;
+  return code === "42P01" || code === "PGRST205";
+}
+
 /**
  * GET /api/admin/bookings — List all bookings with product info
  */
@@ -75,7 +80,9 @@ export async function GET(request: NextRequest) {
     if (pickupLocationsResult.error) throw pickupLocationsResult.error;
     if (serviceZonesResult.error) throw serviceZonesResult.error;
     if (inventoryBlocksResult.error) throw inventoryBlocksResult.error;
-    if (opsTasksResult.error && opsTasksResult.error.code !== "42P01") throw opsTasksResult.error;
+    if (opsTasksResult.error && !isMissingOptionalTable(opsTasksResult.error)) {
+      throw opsTasksResult.error;
+    }
 
     const pickupLocationById = new Map(
       (pickupLocationsResult.data || []).map((location: { id: string }) => [location.id, location])

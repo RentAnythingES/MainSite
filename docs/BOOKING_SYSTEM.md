@@ -235,6 +235,8 @@ Migration `supabase/migrations/20260711_booking_ops_tasks.sql` adds internal
 per-booking ops checklist tasks. The admin booking detail can track whether the
 customer was contacted, equipment prepared, handoff confirmed, return scheduled,
 and return inspected without overloading the customer-facing booking status.
+Until that additive migration is applied, the bookings list remains available and
+shows the default checklist; toggling checklist tasks requires the migration.
 
 Expanded admin booking rows also show payment totals, Stripe checkout/payment IDs,
 active/released inventory block status, and a lightweight status timeline so support
