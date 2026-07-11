@@ -31,6 +31,13 @@ function validatePricingTiers(tiers: PricingTierPayload[]) {
   return null;
 }
 
+function validateImageUrl(value: unknown) {
+  if (typeof value !== "string" || !value.trim()) return null;
+  const imageUrl = value.trim();
+  if (imageUrl.startsWith("/") || /^https?:\/\//i.test(imageUrl)) return null;
+  return "Image must be uploaded through admin or use a public https URL";
+}
+
 /**
  * PUT /api/admin/products/[id] — Update a product
  */
@@ -52,6 +59,11 @@ export async function PUT(
       if (validationError) {
         return NextResponse.json({ error: validationError }, { status: 400 });
       }
+    }
+
+    const imageValidationError = validateImageUrl(body.image_url);
+    if (imageValidationError) {
+      return NextResponse.json({ error: imageValidationError }, { status: 400 });
     }
 
     // Build update object with only provided fields

@@ -58,6 +58,10 @@ App Router with static generation (`generateStaticParams`). Prefix-based i18n (`
 | `src/data/products.ts` | Static product data + helpers (`getProductBySlug`, `getProductsByCategory`) |
 | `src/data/bundles.ts` | Static kit/bundle data + helpers (`getBundleBySlug`, `getBundleProducts`) |
 | `src/lib/product-service.ts` | Supabase-first product fetching with static fallback |
+
+Product images from Supabase must be either site-relative paths such as
+`/products/example.png` or public `https://` URLs. Local filesystem paths are
+rejected in admin APIs and normalized to the placeholder image on public pages.
 | `src/content/destinations.ts` | Discover guide data + `ProductWidget` interface |
 | `src/content/blog.ts` | Blog post data |
 | `src/i18n/dictionaries/es.ts` | Spanish translations for all public pages |

@@ -16,6 +16,16 @@ const isSupabaseConfigured = () => {
   return url && !url.includes("placeholder");
 };
 
+function normalizeImageUrl(value: unknown): string {
+  const imageUrl = String(value || "").trim();
+
+  if (!imageUrl) return "/products/placeholder.png";
+  if (imageUrl.startsWith("/") && !imageUrl.startsWith("//")) return imageUrl;
+  if (/^https?:\/\//i.test(imageUrl)) return imageUrl;
+
+  return "/products/placeholder.png";
+}
+
 /**
  * Map a Supabase product row + pricing to the frontend Product interface
  */
@@ -38,7 +48,7 @@ function mapToProduct(row: Record<string, unknown>): Product {
       .sort((a, b) => a.min_days - b.min_days)
       .map((t) => ({ days: t.min_days, perDay: t.per_day_cents / 100 })),
     emoji: row.emoji as string,
-    image: (row.image_url as string) || "/products/placeholder.png",
+    image: normalizeImageUrl(row.image_url),
     city: (row.city as string) || "valencia",
     // FAQs are not yet in DB — will be added in future migration
     faqs: undefined,

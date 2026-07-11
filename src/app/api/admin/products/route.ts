@@ -56,6 +56,13 @@ function validateProductPayload(body: ProductPayload) {
     tierDays.add(tier.min_days);
   }
 
+  const imageUrl = typeof (body as Record<string, unknown>).image_url === "string"
+    ? String((body as Record<string, unknown>).image_url).trim()
+    : "";
+  if (imageUrl && !imageUrl.startsWith("/") && !/^https?:\/\//i.test(imageUrl)) {
+    return "Image must be uploaded through admin or use a public https URL";
+  }
+
   return null;
 }
 
