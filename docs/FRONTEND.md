@@ -76,6 +76,11 @@ the admin API to use lowercase letters, numbers, and hyphens only.
 import. Imported products are always inactive drafts with no image; staff must
 upload an image and review the product before the admin can activate it.
 
+`/admin/products/[id]/content` is the editorial workflow for product content.
+It stores English and Spanish page copy, FAQs, SEO snippets, and the primary
+image's alt text/source/rights status. It requires
+`supabase/migrations/20260711_product_content_readiness.sql` before use.
+
 ## Product Widget System
 Discover guide pages use inline product strips defined in `destinations.ts`:
 ```ts

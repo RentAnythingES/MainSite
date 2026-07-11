@@ -380,6 +380,12 @@ export default function AdminProductsPage() {
                       >
                         Edit
                       </button>
+                      <Link
+                        href={`/admin/products/${product.id}/content`}
+                        className="rounded-lg bg-neutral-800 px-3 py-1.5 text-xs text-neutral-300 transition-colors hover:bg-neutral-700 hover:text-white"
+                      >
+                        Content
+                      </Link>
                       {product.is_active ? (
                         <button
                           onClick={() => archiveProduct(product.id)}
