@@ -15,6 +15,11 @@ function maskEmail(value: string | undefined): string | null {
   return `${local.slice(0, 2)}***@${domain}`;
 }
 
+async function isAvailable(query: unknown) {
+  const { error } = await (query as PromiseLike<{ error: unknown }>);
+  return !error;
+}
+
 export async function GET(request: NextRequest) {
   const user = await verifyAdmin(request);
   if (!user) return unauthorizedResponse();
@@ -27,6 +32,15 @@ export async function GET(request: NextRequest) {
     activeDraftsResult,
     expiredDraftsWithHoldsResult,
     unpaidHoldsResult,
+    bookingDraftsReady,
+    bookingInventoryReady,
+    bookingOpsReady,
+    paymentLedgerReady,
+    bookingDocumentsReady,
+    productContentStatusReady,
+    productLocalizationsReady,
+    productFaqsReady,
+    productImagesReady,
   ] = await Promise.all([
     supabase
       .from("booking_drafts")
@@ -44,6 +58,15 @@ export async function GET(request: NextRequest) {
       .select("id", { count: "exact", head: true })
       .is("booking_id", null)
       .not("booking_draft_id", "is", null),
+    isAvailable(supabase.from("booking_drafts").select("id", { head: true })),
+    isAvailable(supabase.from("booking_inventory_blocks").select("id", { head: true })),
+    isAvailable(supabase.from("booking_ops_tasks").select("id", { head: true })),
+    isAvailable(supabase.from("booking_payment_events").select("id", { head: true })),
+    isAvailable(supabase.from("booking_documents").select("id", { head: true })),
+    isAvailable(supabase.from("products").select("content_status", { head: true })),
+    isAvailable(supabase.from("product_localizations").select("id", { head: true })),
+    isAvailable(supabase.from("product_faqs").select("id", { head: true })),
+    isAvailable(supabase.from("product_images").select("id", { head: true })),
   ]);
 
   return NextResponse.json({
@@ -75,6 +98,12 @@ export async function GET(request: NextRequest) {
     },
     analytics: {
       gaConfigured: Boolean(process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || process.env.NEXT_PUBLIC_GA_ID),
+    },
+    migrations: {
+      bookingCoreReady: bookingDraftsReady && bookingInventoryReady,
+      bookingOpsReady,
+      financeReady: paymentLedgerReady && bookingDocumentsReady,
+      productContentReady: productContentStatusReady && productLocalizationsReady && productFaqsReady && productImagesReady,
     },
   });
 }

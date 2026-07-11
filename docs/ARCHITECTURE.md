@@ -193,7 +193,7 @@ Protected by Supabase Auth. Server-side cookie check in `admin/layout.tsx` — r
 
 | Page | Features |
 |------|----------|
-| `/admin` | Stats overview (product count, booking counts), quick actions |
+| `/admin` | Stats overview, quick actions, and migration readiness checks |
 | `/admin/products` | Product table, catalogue-quality status, active/archived filters, archive/restore, edit modal (core details, category, image upload/preview, features, specs, stock, pricing tiers) |
 | `/admin/products/new` | Full creation form: auto-slug, category dropdown, image upload, dynamic features, key-value specs, pricing tiers |
 | `/admin/products/import` | CSV template, row preview/validation, draft-only bulk import |

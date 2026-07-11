@@ -1,4 +1,5 @@
 import { createAdminClient } from "@/lib/supabase-admin";
+import AdminSystemHealth from "@/components/AdminSystemHealth";
 
 async function getStats() {
   try {
@@ -99,6 +100,8 @@ export default async function AdminDashboard() {
           </a>
         </div>
       </div>
+
+      <AdminSystemHealth />
     </>
   );
 }
