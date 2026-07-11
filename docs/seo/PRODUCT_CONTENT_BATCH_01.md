@@ -206,3 +206,22 @@ health, availability, or compatibility claims.
   insurance requirements are confirmed.
 - **All three documented products:** pricing, local stock count, and primary
   image licensing still require operator confirmation. Keep them inactive.
+
+## Image QA Holds
+
+The following draft image associations were removed from the product rows on
+2026-07-11. The storage files were not deleted; each product now requires a
+correct replacement upload before it can pass the activation checklist.
+
+- **Baby Park:** product image URL returned a storage error instead of an image.
+- **EZVIZ Camera Baby Monitor:** product image URL returned a storage error
+  instead of an image.
+- **Bobby car:** uploaded image showed a Babba logo rather than a ride-on car.
+- **High Chair:** uploaded image showed a silicone bib/feeding accessory rather
+  than a high chair.
+- **Ergobaby carrier:** uploaded photo appears to show an Ergobaby mesh carrier,
+  but the exact model and authenticity need label confirmation before assigning
+  model-specific safety or size information.
+- **Interlocking play mat:** image is visually plausible, but the brand/model
+  and material claims still need confirmation from the physical label or a
+  reliable supplier record.

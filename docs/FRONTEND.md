@@ -68,6 +68,9 @@ rejected in admin APIs and normalized to the placeholder image on public pages.
 In the admin product UI, images are upload-only: staff should use the image
 picker, which stores the file in the `product-images` Supabase Storage bucket
 and saves the returned public URL.
+The upload API validates the file signature against its declared image type, then
+checks that Supabase serves the new public URL as an image before returning it to
+the admin UI. Failed verification removes only the just-uploaded storage object.
 Next image optimisation explicitly allows public Supabase Storage URLs under
 `/storage/v1/object/public/`. Product and subcategory slugs are validated by
 the admin API to use lowercase letters, numbers, and hyphens only.
