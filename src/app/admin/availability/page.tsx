@@ -43,6 +43,10 @@ function formatDate(d: Date): string {
 
 const WEEKDAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
+function todayDateString() {
+  return new Date().toISOString().split("T")[0];
+}
+
 export default function AdminAvailabilityPage() {
   const [products, setProducts] = useState<Product[]>([]);
   const [selectedProductId, setSelectedProductId] = useState("");
@@ -61,6 +65,9 @@ export default function AdminAvailabilityPage() {
   // Selection state for blocking/unblocking
   const [selectedDates, setSelectedDates] = useState<Set<string>>(new Set());
   const [blockReason, setBlockReason] = useState<"manual" | "maintenance">("manual");
+  const [rangeScope, setRangeScope] = useState<"selected" | "all">("selected");
+  const [rangeStartDate, setRangeStartDate] = useState(todayDateString());
+  const [rangeEndDate, setRangeEndDate] = useState(todayDateString());
 
   // Fetch products on mount
   useEffect(() => {
@@ -147,13 +154,13 @@ export default function AdminAvailabilityPage() {
           reason: blockReason,
         }),
       });
-      if (!res.ok) throw new Error("Failed to block dates");
       const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Failed to block dates");
       setSuccess(`Blocked ${data.blocked || selectedDates.size} date(s)`);
       setSelectedDates(new Set());
       await fetchAvailability();
-    } catch {
-      setError("Failed to block dates");
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to block dates");
     } finally {
       setSaving(false);
     }
@@ -174,12 +181,43 @@ export default function AdminAvailabilityPage() {
           dates: Array.from(selectedDates),
         }),
       });
-      if (!res.ok) throw new Error("Failed to unblock dates");
-      setSuccess("Dates unblocked");
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Failed to unblock dates");
+      setSuccess(`Unblocked ${data.dateCount || selectedDates.size} date(s)`);
       setSelectedDates(new Set());
       await fetchAvailability();
-    } catch {
-      setError("Failed to unblock dates");
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to unblock dates");
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const applyRangeAction = async (action: "block" | "unblock") => {
+    setSaving(true);
+    setError("");
+    setSuccess("");
+
+    try {
+      const res = await fetch("/api/admin/availability", {
+        method: action === "block" ? "POST" : "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          productId: rangeScope === "all" ? "all" : selectedProductId,
+          startDate: rangeStartDate,
+          endDate: rangeEndDate,
+          reason: blockReason,
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || `Failed to ${action} date range`);
+
+      const productLabel = data.productCount === 1 ? "product" : "products";
+      const actionLabel = action === "block" ? "Blocked" : "Unblocked";
+      setSuccess(`${actionLabel} ${data.dateCount} date(s) across ${data.productCount} ${productLabel}`);
+      await fetchAvailability();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : `Failed to ${action} date range`);
     } finally {
       setSaving(false);
     }
@@ -249,6 +287,68 @@ export default function AdminAvailabilityPage() {
             </option>
           ))}
         </select>
+      </div>
+
+      {/* Range tools */}
+      <div className="bg-neutral-900 border border-neutral-800 rounded-xl p-4 mb-4">
+        <div className="flex flex-col gap-4 lg:flex-row lg:items-end">
+          <div className="flex-1">
+            <label className="text-xs font-medium text-neutral-400 block mb-2">
+              Quick range target
+            </label>
+            <select
+              value={rangeScope}
+              onChange={(e) => setRangeScope(e.target.value as "selected" | "all")}
+              className="w-full px-3 py-2.5 rounded-lg bg-neutral-800 border border-neutral-700 text-white text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/30"
+            >
+              <option value="selected">Selected product only</option>
+              <option value="all">All active products</option>
+            </select>
+          </div>
+          <div>
+            <label className="text-xs font-medium text-neutral-400 block mb-2">
+              Start date
+            </label>
+            <input
+              type="date"
+              value={rangeStartDate}
+              onChange={(e) => setRangeStartDate(e.target.value)}
+              className="w-full px-3 py-2.5 rounded-lg bg-neutral-800 border border-neutral-700 text-white text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/30"
+            />
+          </div>
+          <div>
+            <label className="text-xs font-medium text-neutral-400 block mb-2">
+              End date
+            </label>
+            <input
+              type="date"
+              value={rangeEndDate}
+              onChange={(e) => setRangeEndDate(e.target.value)}
+              className="w-full px-3 py-2.5 rounded-lg bg-neutral-800 border border-neutral-700 text-white text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/30"
+            />
+          </div>
+          <div className="flex flex-wrap gap-2">
+            <button
+              onClick={() => applyRangeAction("block")}
+              disabled={saving}
+              className="px-4 py-2.5 rounded-lg bg-purple-600 hover:bg-purple-500 text-white text-xs font-semibold transition-colors disabled:opacity-50"
+            >
+              Block Range
+            </button>
+            <button
+              onClick={() => applyRangeAction("unblock")}
+              disabled={saving}
+              className="px-4 py-2.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold transition-colors disabled:opacity-50"
+            >
+              Unblock Range
+            </button>
+          </div>
+        </div>
+        {rangeScope === "all" && (
+          <p className="mt-3 text-xs text-amber-300">
+            All active products means every live item. Booking-linked blocks are never removed by unblock.
+          </p>
+        )}
       </div>
 
       {/* Calendar */}

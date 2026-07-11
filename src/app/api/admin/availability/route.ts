@@ -2,6 +2,86 @@ import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase-admin";
 import { verifyAdmin, unauthorizedResponse } from "@/lib/admin-auth";
 
+type AvailabilityBody = {
+  productId?: string;
+  productIds?: string[];
+  dates?: string[];
+  startDate?: string;
+  endDate?: string;
+  reason?: string;
+};
+
+function getErrorMessage(err: unknown) {
+  if (err && typeof err === "object" && "message" in err) {
+    return String((err as { message: unknown }).message);
+  }
+  return "Unknown error";
+}
+
+function isDateOnly(value: string) {
+  return /^\d{4}-\d{2}-\d{2}$/.test(value);
+}
+
+function buildDateRange(startDate: string, endDate: string) {
+  if (!isDateOnly(startDate) || !isDateOnly(endDate)) {
+    throw new Error("Dates must use YYYY-MM-DD format");
+  }
+
+  const start = new Date(`${startDate}T00:00:00Z`);
+  const end = new Date(`${endDate}T00:00:00Z`);
+
+  if (Number.isNaN(start.getTime()) || Number.isNaN(end.getTime()) || end < start) {
+    throw new Error("End date must be the same as or after start date");
+  }
+
+  const dates: string[] = [];
+  const cursor = new Date(start);
+  while (cursor <= end) {
+    dates.push(cursor.toISOString().slice(0, 10));
+    cursor.setUTCDate(cursor.getUTCDate() + 1);
+  }
+
+  return dates;
+}
+
+function resolveDates(body: AvailabilityBody) {
+  if (body.startDate && body.endDate) {
+    return buildDateRange(body.startDate, body.endDate);
+  }
+
+  if (body.dates && Array.isArray(body.dates) && body.dates.length > 0) {
+    if (body.dates.some((date) => typeof date !== "string" || !isDateOnly(date))) {
+      throw new Error("Dates must use YYYY-MM-DD format");
+    }
+    return [...new Set(body.dates)].sort();
+  }
+
+  throw new Error("Missing dates or startDate/endDate");
+}
+
+async function resolveProductIds(
+  supabase: ReturnType<typeof createAdminClient>,
+  body: AvailabilityBody
+) {
+  if (body.productIds && Array.isArray(body.productIds) && body.productIds.length > 0) {
+    return [...new Set(body.productIds)];
+  }
+
+  if (body.productId === "all") {
+    const { data, error } = await supabase
+      .from("products")
+      .select("id")
+      .eq("is_active", true);
+
+    if (error) throw error;
+    return (data || []).map((product: { id: string }) => product.id);
+  }
+
+  if (body.productId) return [body.productId];
+
+  throw new Error("Missing productId or productIds");
+}
+
 /**
  * GET /api/admin/availability?product_id=xxx&month=2026-07
  * Returns all blocked dates for a product in a given month.
@@ -83,39 +163,51 @@ export async function POST(request: NextRequest) {
   if (!user) return unauthorizedResponse();
 
   try {
-    const { productId, dates, reason } = await request.json();
-
-    if (!productId || !dates || !Array.isArray(dates) || dates.length === 0) {
-      return NextResponse.json({ error: "Missing productId or dates" }, { status: 400 });
-    }
-
-    const validReason = reason === "maintenance" ? "maintenance" : "manual";
-
+    const body = await request.json() as AvailabilityBody;
     const supabase = createAdminClient();
+    const validReason = body.reason === "maintenance" ? "maintenance" : "manual";
+    const [productIds, dates] = await Promise.all([
+      resolveProductIds(supabase, body),
+      Promise.resolve(resolveDates(body)),
+    ]);
+
+    if (productIds.length === 0 || dates.length === 0) {
+      return NextResponse.json({ error: "No products or dates selected" }, { status: 400 });
+    }
 
     // Upsert: insert dates, ignore duplicates
     const { data, error } = await supabase
       .from("blocked_dates")
       .upsert(
-        dates.map((d: string) => ({
-          product_id: productId,
-          blocked_date: d,
-          reason: validReason,
-          booking_id: null,
-        })),
+        productIds.flatMap((productId) =>
+          dates.map((date) => ({
+            product_id: productId,
+            blocked_date: date,
+            reason: validReason,
+            booking_id: null,
+          }))
+        ),
         { onConflict: "product_id,blocked_date", ignoreDuplicates: true }
       )
       .select();
 
     if (error) {
       console.error("[admin/availability] POST error:", error);
-      return NextResponse.json({ error: "Failed to block dates" }, { status: 500 });
+      return NextResponse.json(
+        { error: `Failed to block dates: ${getErrorMessage(error)}` },
+        { status: 500 }
+      );
     }
 
-    return NextResponse.json({ success: true, blocked: data?.length || 0 });
+    return NextResponse.json({
+      success: true,
+      blocked: data?.length || 0,
+      productCount: productIds.length,
+      dateCount: dates.length,
+    });
   } catch (err) {
     console.error("[admin/availability] POST error:", err);
-    return NextResponse.json({ error: "Internal error" }, { status: 500 });
+    return NextResponse.json({ error: getErrorMessage(err) }, { status: 400 });
   }
 }
 
@@ -124,30 +216,36 @@ export async function DELETE(request: NextRequest) {
   if (!user) return unauthorizedResponse();
 
   try {
-    const { productId, dates } = await request.json();
-
-    if (!productId || !dates || !Array.isArray(dates) || dates.length === 0) {
-      return NextResponse.json({ error: "Missing productId or dates" }, { status: 400 });
-    }
-
+    const body = await request.json() as AvailabilityBody;
     const supabase = createAdminClient();
+    const [productIds, dates] = await Promise.all([
+      resolveProductIds(supabase, body),
+      Promise.resolve(resolveDates(body)),
+    ]);
+
+    if (productIds.length === 0 || dates.length === 0) {
+      return NextResponse.json({ error: "No products or dates selected" }, { status: 400 });
+    }
 
     // Only delete manual/maintenance blocks — never delete booking-linked blocks
     const { error } = await supabase
       .from("blocked_dates")
       .delete()
-      .eq("product_id", productId)
+      .in("product_id", productIds)
       .in("blocked_date", dates)
       .is("booking_id", null); // Safety: only unlink manual blocks
 
     if (error) {
       console.error("[admin/availability] DELETE error:", error);
-      return NextResponse.json({ error: "Failed to unblock dates" }, { status: 500 });
+      return NextResponse.json(
+        { error: `Failed to unblock dates: ${getErrorMessage(error)}` },
+        { status: 500 }
+      );
     }
 
-    return NextResponse.json({ success: true });
+    return NextResponse.json({ success: true, productCount: productIds.length, dateCount: dates.length });
   } catch (err) {
     console.error("[admin/availability] DELETE error:", err);
-    return NextResponse.json({ error: "Internal error" }, { status: 500 });
+    return NextResponse.json({ error: getErrorMessage(err) }, { status: 400 });
   }
 }
