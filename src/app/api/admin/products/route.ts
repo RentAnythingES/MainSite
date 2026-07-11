@@ -13,6 +13,10 @@ type ProductPayload = {
   pricing_tiers?: { min_days: number; per_day_cents: number }[];
 };
 
+function isValidSlug(value: string) {
+  return /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(value);
+}
+
 function getErrorMessage(err: unknown) {
   if (err && typeof err === "object" && "message" in err) {
     return String((err as { message: unknown }).message);
@@ -36,6 +40,14 @@ function validateProductPayload(body: ProductPayload) {
     if (typeof value !== "string" || !value.trim()) {
       return `${field.replace("_", " ")} is required`;
     }
+  }
+
+  if (!isValidSlug(body.slug!.trim())) {
+    return "Product slug must use lowercase letters, numbers, and hyphens only";
+  }
+
+  if (!isValidSlug(body.subcategory_slug!.trim())) {
+    return "Subcategory slug must use lowercase letters, numbers, and hyphens only";
   }
 
   if (!body.pricing_tiers || body.pricing_tiers.length === 0) {

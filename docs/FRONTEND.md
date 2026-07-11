@@ -68,6 +68,9 @@ rejected in admin APIs and normalized to the placeholder image on public pages.
 In the admin product UI, images are upload-only: staff should use the image
 picker, which stores the file in the `product-images` Supabase Storage bucket
 and saves the returned public URL.
+Next image optimisation explicitly allows public Supabase Storage URLs under
+`/storage/v1/object/public/`. Product and subcategory slugs are validated by
+the admin API to use lowercase letters, numbers, and hyphens only.
 
 ## Product Widget System
 Discover guide pages use inline product strips defined in `destinations.ts`:

@@ -4,6 +4,10 @@ import { verifyAdmin, unauthorizedResponse } from "@/lib/admin-auth";
 
 type PricingTierPayload = { min_days: number; per_day_cents: number };
 
+function isValidSlug(value: string) {
+  return /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(value);
+}
+
 function getErrorMessage(err: unknown) {
   if (err && typeof err === "object" && "message" in err) {
     return String((err as { message: unknown }).message);
@@ -64,6 +68,20 @@ export async function PUT(
     const imageValidationError = validateImageUrl(body.image_url);
     if (imageValidationError) {
       return NextResponse.json({ error: imageValidationError }, { status: 400 });
+    }
+
+    if (body.slug !== undefined && (typeof body.slug !== "string" || !isValidSlug(body.slug.trim()))) {
+      return NextResponse.json(
+        { error: "Product slug must use lowercase letters, numbers, and hyphens only" },
+        { status: 400 }
+      );
+    }
+
+    if (body.subcategory_slug !== undefined && (typeof body.subcategory_slug !== "string" || !isValidSlug(body.subcategory_slug.trim()))) {
+      return NextResponse.json(
+        { error: "Subcategory slug must use lowercase letters, numbers, and hyphens only" },
+        { status: 400 }
+      );
     }
 
     // Build update object with only provided fields
