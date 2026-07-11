@@ -1,18 +1,12 @@
 # Booking System
-> Last updated: 2026-07-07
+> Last updated: 2026-07-11
 
 ## Current Status
 
-Online payments are intentionally paused while the booking system is rebuilt.
-All active products are blocked in Supabase availability data through 2029-07-07.
-
-The Stripe webhook transport is working, but paid booking fulfillment is not yet ready
-to reopen because the legacy checkout flow does not model rental times,
-fulfillment modes, collection, service zones, or booking drafts.
-
-The legacy checkout route has been hardened to resolve `product_slug` to the
-Supabase product UUID server-side before creating Stripe Checkout. This is a bridge
-fix only; the v2 flow must replace it with booking drafts before reopening payments.
+Online checkout is controlled by Supabase product availability, blocked dates, and
+datetime inventory holds. There is no separate global pause in the v2 checkout path.
+Products that should not be purchasable must be made unavailable through the inventory
+and availability data rather than through presentation-only or checkout-only blocks.
 
 Initial Booking System v2 code is now in place:
 
@@ -22,7 +16,7 @@ Initial Booking System v2 code is now in place:
 - `/api/checkout` can create Stripe Checkout from a `draftId`.
 - `/api/checkout/status` joins Stripe session, booking draft, booking, and inventory state for the success page.
 - `/api/webhooks/stripe` can fulfill `checkout.session.completed` from a booking draft.
-- `/api/admin/health` exposes authenticated, non-secret configuration status for Stripe, Resend, Supabase, and booking pause flags.
+- `/api/admin/health` exposes authenticated, non-secret configuration status for Stripe, Resend, Supabase, and booking health.
 - Expired draft cleanup now runs before availability checks, draft creation, checkout creation, and admin health checks.
 
 This code is not live-safe until the v2 migration has been applied in Supabase and
@@ -286,18 +280,14 @@ Before testing live payments:
 3. Add pricing tiers at a low live amount, e.g. EUR 1.00 to EUR 2.00 per day.
 4. Do not add the product to `src/data/products.ts`, so it does not appear in public
    product grids or SEO routes.
-5. Temporarily set Vercel booking pause flags to false:
-   - `BOOKINGS_PAUSED=false`
-   - `NEXT_PUBLIC_BOOKINGS_PAUSED=false`
-6. Complete a real low-value checkout from `/internal/stripe-test`.
-7. Verify:
+5. Complete a real low-value checkout from `/internal/stripe-test`.
+6. Verify:
    - Stripe payment succeeds.
    - `/api/webhooks/stripe` receives `checkout.session.completed`.
    - `/success` shows the confirmed booking state.
    - Admin booking view shows times, fulfillment, fees, customer details, and Stripe IDs.
    - Confirmation email is delivered.
    - Cancelling/refunding releases inventory and issues the Stripe refund.
-8. Return booking pause flags to true until the public catalogue is ready.
 
 
 ## Newsletter Consent

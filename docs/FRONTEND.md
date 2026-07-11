@@ -103,7 +103,7 @@ interface ProductWidget {
 The `[slug]/page.tsx` template resolves widgets via `getProductsByCategory()` and renders compact horizontal strips.
 
 ## Booking Flow (BookingWidget)
-Online checkout is server-gated by `BOOKINGS_PAUSED`; product widgets still let customers check availability and contact WhatsApp when inventory is blocked.
+Online checkout is gated by server-side Supabase availability, blocked dates, and inventory holds. Product widgets route unavailable requests to WhatsApp.
 
 Normal v2 flow:
 1. **Booking options** — `/api/booking-options` loads active pickup locations and service zones from Supabase.

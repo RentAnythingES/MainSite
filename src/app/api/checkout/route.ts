@@ -1,18 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { stripe, isStripeConfigured } from "@/lib/stripe";
 import { createServiceClient } from "@/lib/supabase";
-import { areOnlineBookingsPaused } from "@/lib/booking-mode";
 import { cleanupExpiredBookingDrafts } from "@/lib/booking-v2";
 import type { BookingDraft } from "@/lib/types";
-
-const STRIPE_TEST_PRODUCT_SLUG = "stripe-test-rental";
-
-function pausedCheckoutResponse() {
-  return NextResponse.json(
-    { error: "Online bookings are temporarily paused. Please contact us to confirm availability." },
-    { status: 503 }
-  );
-}
 
 /**
  * POST /api/checkout — Create a Stripe Checkout Session
@@ -101,10 +91,6 @@ export async function POST(request: NextRequest) {
       }
 
       const resolvedProduct = product as { slug: string; name: string };
-
-      if (areOnlineBookingsPaused() && resolvedProduct.slug !== STRIPE_TEST_PRODUCT_SLUG) {
-        return pausedCheckoutResponse();
-      }
 
       const formattedStart = new Date(bookingDraft.rental_start_at).toLocaleString("en-GB", {
         dateStyle: "medium",
@@ -201,10 +187,6 @@ export async function POST(request: NextRequest) {
       name: string;
       stock_available: number;
     };
-
-    if (areOnlineBookingsPaused() && resolvedProduct.slug !== STRIPE_TEST_PRODUCT_SLUG) {
-      return pausedCheckoutResponse();
-    }
 
     if (resolvedProduct.stock_available <= 0) {
       return NextResponse.json(

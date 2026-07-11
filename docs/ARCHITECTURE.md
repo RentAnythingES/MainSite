@@ -27,8 +27,7 @@ API Routes (/api/bookings, /api/availability)
   ↓ service role client
 Supabase (write bookings, check blocked_dates)
 ```
-- `BOOKINGS_PAUSED` and `NEXT_PUBLIC_BOOKINGS_PAUSED` default to paused unless explicitly set to `false`.
-- While paused, `/api/checkout` refuses Stripe session creation. Product widgets can still check availability and route unavailable requests to WhatsApp.
+- The live v2 checkout path is gated by Supabase product availability, blocked dates, and inventory holds. It does not use a separate global checkout pause flag.
 - Booking System v2 is documented in `docs/BOOKING_SYSTEM.md`.
 
 ### Admin (operator-facing)
