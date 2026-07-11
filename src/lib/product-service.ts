@@ -66,7 +66,7 @@ export async function getProductsFromDB(city = "valencia"): Promise<Product[]> {
       .order("name");
 
     if (error) throw error;
-    if (!data || data.length === 0) return staticProducts.filter((p) => p.city === city);
+    if (!data) return [];
 
     return data.map(mapToProduct);
   } catch (err) {
@@ -96,8 +96,9 @@ export async function getProductBySlugFromDB(slug: string): Promise<Product | nu
       .single();
 
     if (error || !data) {
-      // Fall back to static for this slug (e.g., FAQs live there)
-      return staticGetBySlug(slug) || null;
+      const code = (error as { code?: string } | null)?.code;
+      if (code === "PGRST116") return null;
+      throw error || new Error("Product not found");
     }
 
     // Merge: DB data + static FAQs
@@ -130,7 +131,7 @@ export async function getProductsByCategoryFromDB(categorySlug: string): Promise
       .eq("slug", categorySlug)
       .single();
 
-    if (!cat) return staticGetByCategory(categorySlug);
+    if (!cat) return [];
 
     const { data, error } = await supabase
       .from("products")
@@ -144,7 +145,7 @@ export async function getProductsByCategoryFromDB(categorySlug: string): Promise
       .order("name");
 
     if (error) throw error;
-    if (!data || data.length === 0) return staticGetByCategory(categorySlug);
+    if (!data) return [];
 
     return data.map(mapToProduct);
   } catch (err) {

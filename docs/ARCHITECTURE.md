@@ -189,7 +189,7 @@ Protected by Supabase Auth. Server-side cookie check in `admin/layout.tsx` — r
 | Page | Features |
 |------|----------|
 | `/admin` | Stats overview (product count, booking counts), quick actions |
-| `/admin/products` | Product table, inline active toggle, edit modal (core details, category, image upload/preview, features, specs, stock, pricing tiers) |
+| `/admin/products` | Product table, active/archived filters, archive/restore, edit modal (core details, category, image upload/preview, features, specs, stock, pricing tiers) |
 | `/admin/products/new` | Full creation form: auto-slug, category dropdown, image upload, dynamic features, key-value specs, pricing tiers |
 | `/admin/availability` | Calendar availability manager with selected-date actions plus selected/all-product range blocking |
 | `/admin/bookings` | Expandable booking cards, status filter tabs, ops checklist, lifecycle transition buttons |

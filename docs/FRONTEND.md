@@ -13,8 +13,8 @@ App Router with static generation (`generateStaticParams`). Prefix-based i18n (`
 | `/valencia` | Static | `page.tsx` | Beach photo background |
 | `/valencia/kits` | Static | `bundles.ts` data | Photo-backed kit cards |
 | `/valencia/kits/[slug]` | SSG | `bundles.ts` data | Kit hero image |
-| `/product/[slug]` | SSG | `products.ts` data | Product image |
-| `/rental/[category]` | SSG | `products.ts` categories | Category photo |
+| `/product/[slug]` | Dynamic | Supabase via `product-service.ts` | Product image |
+| `/rental/[category]` | Dynamic | Supabase via `product-service.ts` | Category photo |
 | `/blog/[slug]` | SSG | `blog.ts` data | Blog hero image |
 | `/discover` | Static | `page.tsx` | Aerial Valencia photo |
 | `/discover/[slug]` | SSG | `destinations.ts` data | Destination hero photo |
@@ -34,7 +34,7 @@ App Router with static generation (`generateStaticParams`). Prefix-based i18n (`
 |-------|------|---------|
 | `/admin/login` | Client | Supabase Auth login |
 | `/admin` | Server + Client | Dashboard overview |
-| `/admin/products` | Client | Product list, edit, toggle |
+| `/admin/products` | Client | Product list, edit, archive/restore, active/archived filters |
 | `/admin/products/new` | Client | Add new product form |
 | `/admin/fulfillment` | Client | Pickup locations, service zones, instructions, fees |
 | `/admin/bookings` | Client | Booking management, finance ledger, document PDF downloads and email resend controls |

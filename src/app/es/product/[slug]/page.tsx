@@ -2,7 +2,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { products, getProductBySlug, getAllSlugs } from "@/data/products";
+import { getAllSlugs } from "@/data/products";
+import { getProductBySlugFromDB, getProductsByCategoryFromDB } from "@/lib/product-service";
 import { getProductJsonLd, getBreadcrumbJsonLd } from "@/lib/jsonld";
 import ProductCard from "@/components/ProductCard";
 import BookingWidget from "@/components/BookingWidget";
@@ -24,13 +25,15 @@ interface Props {
   params: Promise<{ slug: string }>;
 }
 
+export const dynamic = "force-dynamic";
+
 export async function generateStaticParams() {
   return getAllSlugs().map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const product = getProductBySlug(slug);
+  const product = await getProductBySlugFromDB(slug);
   if (!product) return { title: "Producto No Encontrado" };
 
   const lowestPrice = product.pricing[product.pricing.length - 1].perDay;
@@ -49,10 +52,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function ProductPageES({ params }: Props) {
   const { slug } = await params;
-  const product = getProductBySlug(slug);
+  const product = await getProductBySlugFromDB(slug);
   if (!product) notFound();
 
-  const related = products
+  const related = (await getProductsByCategoryFromDB(product.categorySlug))
     .filter((p) => p.categorySlug === product.categorySlug && p.slug !== product.slug)
     .slice(0, 3);
 

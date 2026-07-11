@@ -44,6 +44,8 @@ export default function AdminProductsPage() {
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [notice, setNotice] = useState("");
+  const [statusFilter, setStatusFilter] = useState<"active" | "archived" | "all">("active");
   const [editingId, setEditingId] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
   const [uploadingImage, setUploadingImage] = useState(false);
@@ -143,6 +145,8 @@ export default function AdminProductsPage() {
 
   const toggleActive = async (id: string, currentlyActive: boolean) => {
     try {
+      setError("");
+      setNotice("");
       const res = await fetch(`/api/admin/products/${id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
@@ -153,8 +157,27 @@ export default function AdminProductsPage() {
         throw new Error(data.error || "Toggle failed");
       }
       await fetchProducts();
+      setNotice(currentlyActive ? "Product archived and hidden from public pages." : "Product restored and visible on public pages.");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to toggle product status");
+    }
+  };
+
+  const archiveProduct = async (id: string) => {
+    try {
+      setError("");
+      setNotice("");
+      const res = await fetch(`/api/admin/products/${id}`, {
+        method: "DELETE",
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.error || "Archive failed");
+      }
+      await fetchProducts();
+      setNotice("Product archived and hidden from public pages.");
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to archive product");
     }
   };
 
@@ -214,6 +237,12 @@ export default function AdminProductsPage() {
     return `${formatPrice(low)} – ${formatPrice(high)}/day`;
   };
 
+  const visibleProducts = products.filter((product) => {
+    if (statusFilter === "active") return product.is_active;
+    if (statusFilter === "archived") return !product.is_active;
+    return true;
+  });
+
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
@@ -244,6 +273,29 @@ export default function AdminProductsPage() {
         </div>
       )}
 
+      {notice && (
+        <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-lg p-3 text-sm text-emerald-300 mb-4">
+          {notice}
+          <button onClick={() => setNotice("")} className="ml-2 text-emerald-200 hover:text-white">×</button>
+        </div>
+      )}
+
+      <div className="flex flex-wrap gap-1 mb-4">
+        {(["active", "archived", "all"] as const).map((filter) => (
+          <button
+            key={filter}
+            onClick={() => setStatusFilter(filter)}
+            className={`px-3 py-1.5 rounded-lg text-xs font-medium capitalize transition-colors ${
+              statusFilter === filter
+                ? "bg-teal-500/10 text-teal-400"
+                : "text-neutral-500 hover:text-white hover:bg-neutral-800"
+            }`}
+          >
+            {filter}
+          </button>
+        ))}
+      </div>
+
       <div className="bg-neutral-900 border border-neutral-800 rounded-xl overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
@@ -258,7 +310,7 @@ export default function AdminProductsPage() {
               </tr>
             </thead>
             <tbody className="divide-y divide-neutral-800">
-              {products.map((product) => (
+              {visibleProducts.map((product) => (
                 <tr key={product.id} className="hover:bg-neutral-800/50 transition-colors">
                   <td className="p-4">
                     <div>
@@ -292,18 +344,40 @@ export default function AdminProductsPage() {
                     </button>
                   </td>
                   <td className="p-4 text-right">
-                    <button
-                      onClick={() => startEdit(product)}
-                      className="text-xs px-3 py-1.5 rounded-lg bg-neutral-800 text-neutral-300 hover:text-white hover:bg-neutral-700 transition-colors"
-                    >
-                      Edit
-                    </button>
+                    <div className="flex justify-end gap-2">
+                      <button
+                        onClick={() => startEdit(product)}
+                        className="text-xs px-3 py-1.5 rounded-lg bg-neutral-800 text-neutral-300 hover:text-white hover:bg-neutral-700 transition-colors"
+                      >
+                        Edit
+                      </button>
+                      {product.is_active ? (
+                        <button
+                          onClick={() => archiveProduct(product.id)}
+                          className="text-xs px-3 py-1.5 rounded-lg bg-red-600/20 text-red-300 hover:bg-red-600/40 transition-colors"
+                        >
+                          Archive
+                        </button>
+                      ) : (
+                        <button
+                          onClick={() => toggleActive(product.id, false)}
+                          className="text-xs px-3 py-1.5 rounded-lg bg-emerald-600/20 text-emerald-300 hover:bg-emerald-600/40 transition-colors"
+                        >
+                          Restore
+                        </button>
+                      )}
+                    </div>
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
+        {visibleProducts.length === 0 && (
+          <div className="p-8 text-center text-sm text-neutral-500">
+            No {statusFilter === "all" ? "" : statusFilter} products found.
+          </div>
+        )}
       </div>
 
       {/* Edit Modal */}

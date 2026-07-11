@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { getProductsByCategory } from "@/data/products";
+import { getProductsByCategoryFromDB } from "@/lib/product-service";
 import ProductCard from "@/components/ProductCard";
 
 interface CategoryContent {
@@ -68,6 +68,8 @@ interface Props {
   params: Promise<{ category: string }>;
 }
 
+export const dynamic = "force-dynamic";
+
 export async function generateStaticParams() {
   return Object.keys(categoryMetaES).map((category) => ({ category }));
 }
@@ -94,7 +96,7 @@ export default async function CategoryPageES({ params }: Props) {
   const meta = categoryMetaES[category];
   if (!meta) notFound();
 
-  const categoryProducts = getProductsByCategory(category);
+  const categoryProducts = await getProductsByCategoryFromDB(category);
 
   const subcategories = Array.from(
     new Map(categoryProducts.map((p) => [p.subcategorySlug, { name: p.subcategory, slug: p.subcategorySlug }])).values()
