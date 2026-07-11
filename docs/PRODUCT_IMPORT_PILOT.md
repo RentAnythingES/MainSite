@@ -1,4 +1,4 @@
-# Product Import Pilot
+# Product Import Workflow and Results
 
 > Completed: 2026-07-11
 
@@ -6,6 +6,25 @@
 
 Validate the source-page to product-draft workflow before importing the full
 `Product_Database_WIP.xlsx` catalogue.
+
+## Full Workbook Import
+
+The full workbook contained 137 named rows. After excluding the four pilot
+products and the duplicate Beach Wheelchair row, 132 remaining products were
+reconciled on 2026-07-11:
+
+- **129** new inactive drafts were created.
+- **3** already-existing products were left untouched: Double Stroller,
+  Standard Wheelchair, and Travel Crib.
+- **61** source images were downloaded and copied to the `product-images`
+  Supabase Storage bucket; all 61 returned HTTP 200 after upload.
+- **71** drafts have no image yet because the workbook had no usable source URL
+  or the source did not expose a safe raster product image. They remain inactive.
+
+The import added draft-only database categories where the workbook did not map
+to the existing public catalogue: Events & Celebrations, Fitness & Wellness,
+Photography & Content, and Catalogue Review. No active customer-facing products
+were added to these categories.
 
 ## Imported Drafts
 
@@ -27,6 +46,10 @@ Validate the source-page to product-draft workflow before importing the full
 5. Keep the product inactive until the operator has confirmed physical stock,
    set positive rental pricing, reviewed delivery/collection suitability, and
    confirmed image-use approval where required.
+
+The reusable workbook importer is `scripts/import-workbook-drafts.py`. It is
+resumable: rerunning a batch skips product rows already created rather than
+duplicating them.
 
 ## Activation Rule
 

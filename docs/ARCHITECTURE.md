@@ -47,7 +47,7 @@ Supabase (CRUD products, pricing, bookings)
 ### Tables
 | Table | Purpose | RLS |
 |-------|---------|-----|
-| `categories` | 5 rental categories (baby-gear, mobility, etc.) | Public read |
+| `categories` | Customer-facing categories plus inactive draft-only import categories | Public read |
 | `products` | 16 products with specs, features, stock | Public read (active only) |
 | `pricing_tiers` | Per-product tiered daily rates (in cents) | Public read |
 | `bookings` | Customer bookings with lifecycle status | Admin only |
