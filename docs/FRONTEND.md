@@ -58,13 +58,16 @@ App Router with static generation (`generateStaticParams`). Prefix-based i18n (`
 | `src/data/products.ts` | Static product data + helpers (`getProductBySlug`, `getProductsByCategory`) |
 | `src/data/bundles.ts` | Static kit/bundle data + helpers (`getBundleBySlug`, `getBundleProducts`) |
 | `src/lib/product-service.ts` | Supabase-first product fetching with static fallback |
+| `src/content/destinations.ts` | Discover guide data + `ProductWidget` interface |
+| `src/content/blog.ts` | Blog post data |
+| `src/i18n/dictionaries/es.ts` | Spanish translations for all public pages |
 
 Product images from Supabase must be either site-relative paths such as
 `/products/example.png` or public `https://` URLs. Local filesystem paths are
 rejected in admin APIs and normalized to the placeholder image on public pages.
-| `src/content/destinations.ts` | Discover guide data + `ProductWidget` interface |
-| `src/content/blog.ts` | Blog post data |
-| `src/i18n/dictionaries/es.ts` | Spanish translations for all public pages |
+In the admin product UI, images are upload-only: staff should use the image
+picker, which stores the file in the `product-images` Supabase Storage bucket
+and saves the returned public URL.
 
 ## Product Widget System
 Discover guide pages use inline product strips defined in `destinations.ts`:

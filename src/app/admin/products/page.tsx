@@ -39,6 +39,11 @@ interface EditableSpec {
   value: string;
 }
 
+function isValidStoredImageUrl(value: string | null | undefined) {
+  const imageUrl = String(value || "").trim();
+  return !imageUrl || (imageUrl.startsWith("/") && !imageUrl.startsWith("//")) || /^https?:\/\//i.test(imageUrl);
+}
+
 export default function AdminProductsPage() {
   const [products, setProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
@@ -114,6 +119,10 @@ export default function AdminProductsPage() {
   const saveEdit = async (id: string) => {
     setSaving(true);
     try {
+      if (!isValidStoredImageUrl(editForm.image_url)) {
+        throw new Error("Please upload product images through the Upload image button. Local file paths cannot work on the website.");
+      }
+
       const specs: Record<string, string> = {};
       editSpecs.forEach((spec) => {
         if (spec.key.trim()) specs[spec.key.trim()] = spec.value.trim();
@@ -242,6 +251,8 @@ export default function AdminProductsPage() {
     if (statusFilter === "archived") return !product.is_active;
     return true;
   });
+  const editImageUrl = isValidStoredImageUrl(editForm.image_url) ? editForm.image_url || "" : "";
+  const hasInvalidEditImageUrl = Boolean(editForm.image_url && !isValidStoredImageUrl(editForm.image_url));
 
   if (loading) {
     return (
@@ -468,24 +479,27 @@ export default function AdminProductsPage() {
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-neutral-400 mb-1.5">Image URL</label>
-                <input
-                  type="text"
-                  value={editForm.image_url || ""}
-                  onChange={(e) => setEditForm({ ...editForm, image_url: e.target.value })}
-                  className="w-full px-3 py-2.5 rounded-lg bg-neutral-800 border border-neutral-700 text-white text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/30 focus:border-teal-500"
-                  placeholder="/products/my-product.png"
-                />
-                {editForm.image_url && (
+                <label className="block text-xs font-medium text-neutral-400 mb-1.5">Product Image</label>
+                {hasInvalidEditImageUrl && (
+                  <div className="rounded-xl border border-amber-500/30 bg-amber-500/10 p-4 text-sm text-amber-200">
+                    This product has an invalid local file path saved as its image. Upload the image here to store it properly.
+                  </div>
+                )}
+                {editImageUrl && (
                   <div className="mt-3 overflow-hidden rounded-xl border border-neutral-800 bg-neutral-950">
                     <img
-                      src={editForm.image_url}
+                      src={editImageUrl}
                       alt="Product preview"
                       className="h-36 w-full object-contain"
                     />
                   </div>
                 )}
-                <div className="mt-2 flex items-center gap-3">
+                {!editImageUrl && !hasInvalidEditImageUrl && (
+                  <div className="rounded-xl border border-dashed border-neutral-700 bg-neutral-950 p-6 text-center text-xs text-neutral-500">
+                    Upload an image to store it in Supabase Storage.
+                  </div>
+                )}
+                <div className="mt-2 flex flex-wrap items-center gap-3">
                   <label className="inline-flex cursor-pointer items-center rounded-lg bg-neutral-800 px-3 py-2 text-xs font-medium text-neutral-200 transition-colors hover:bg-neutral-700">
                     {uploadingImage ? "Uploading..." : "Upload image"}
                     <input
@@ -500,8 +514,22 @@ export default function AdminProductsPage() {
                       className="sr-only"
                     />
                   </label>
+                  {(editImageUrl || hasInvalidEditImageUrl) && (
+                    <button
+                      type="button"
+                      onClick={() => setEditForm({ ...editForm, image_url: "" })}
+                      className="rounded-lg border border-neutral-700 px-3 py-2 text-xs font-medium text-neutral-300 hover:bg-neutral-800"
+                    >
+                      Remove image
+                    </button>
+                  )}
                   <span className="text-xs text-neutral-500">JPG, PNG, WebP, GIF · max 5 MB</span>
                 </div>
+                {editImageUrl && (
+                  <p className="mt-2 truncate text-xs text-neutral-500">
+                    Stored image URL: {editImageUrl}
+                  </p>
+                )}
               </div>
 
               <div className="grid grid-cols-2 gap-4">

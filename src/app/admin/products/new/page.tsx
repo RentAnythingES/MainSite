@@ -28,6 +28,11 @@ function slugify(text: string): string {
     .replace(/^-|-$/g, "");
 }
 
+function isValidStoredImageUrl(value: string) {
+  const imageUrl = value.trim();
+  return !imageUrl || (imageUrl.startsWith("/") && !imageUrl.startsWith("//")) || /^https?:\/\//i.test(imageUrl);
+}
+
 export default function AddProductPage() {
   const router = useRouter();
   const [categories, setCategories] = useState<Category[]>([]);
@@ -119,6 +124,12 @@ export default function AddProductPage() {
     e.preventDefault();
     setError("");
     setSaving(true);
+
+    if (!isValidStoredImageUrl(imageUrl)) {
+      setError("Please upload product images through the Upload image button. Local file paths cannot work on the website.");
+      setSaving(false);
+      return;
+    }
 
     // Build specs object
     const specsObj: Record<string, string> = {};
@@ -252,9 +263,7 @@ export default function AddProductPage() {
           <h2 className="text-sm font-semibold text-neutral-300 uppercase tracking-wider mb-4">Image & Stock</h2>
           <div className="grid sm:grid-cols-2 gap-4">
             <div>
-              <label className={labelClass}>Image URL</label>
-              <input type="text" value={imageUrl} onChange={(e) => setImageUrl(e.target.value)}
-                className={inputClass} placeholder="/products/my-product.png" />
+              <label className={labelClass}>Product Image</label>
               {imageUrl && (
                 <div className="mt-3 overflow-hidden rounded-xl border border-neutral-800 bg-neutral-950">
                   <img
@@ -264,7 +273,12 @@ export default function AddProductPage() {
                   />
                 </div>
               )}
-              <div className="mt-2 flex items-center gap-3">
+              {!imageUrl && (
+                <div className="rounded-xl border border-dashed border-neutral-700 bg-neutral-950 p-6 text-center text-xs text-neutral-500">
+                  Upload an image to store it in Supabase Storage.
+                </div>
+              )}
+              <div className="mt-2 flex flex-wrap items-center gap-3">
                 <label className="inline-flex cursor-pointer items-center rounded-lg bg-neutral-800 px-3 py-2 text-xs font-medium text-neutral-200 transition-colors hover:bg-neutral-700">
                   {uploadingImage ? "Uploading..." : "Upload image"}
                   <input
@@ -279,10 +293,19 @@ export default function AddProductPage() {
                     className="sr-only"
                   />
                 </label>
+                {imageUrl && (
+                  <button
+                    type="button"
+                    onClick={() => setImageUrl("")}
+                    className="rounded-lg border border-neutral-700 px-3 py-2 text-xs font-medium text-neutral-300 hover:bg-neutral-800"
+                  >
+                    Remove image
+                  </button>
+                )}
                 <span className="text-xs text-neutral-500">JPG, PNG, WebP, GIF · max 5 MB</span>
               </div>
               {imageUrl && (
-                <p className="mt-2 truncate text-xs text-neutral-500">Saved image: {imageUrl}</p>
+                <p className="mt-2 truncate text-xs text-neutral-500">Stored image URL: {imageUrl}</p>
               )}
             </div>
             <div>
