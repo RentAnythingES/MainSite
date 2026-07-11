@@ -72,6 +72,10 @@ Supabase (CRUD products, pricing, bookings)
 
 Inventory holds are reserved via the `reserve_booking_inventory(...)` database
 function so overlapping draft creation is checked while the product row is locked.
+The function is `SECURITY DEFINER` only because it performs that atomic lock and
+write; execution is restricted to the `service_role` used by the server-side
+booking draft API. Product images use a public Storage bucket for CDN delivery,
+without a public `storage.objects` listing policy.
 
 Fulfillment configuration stores both public instructions and internal operations
 notes. The additive migration `20260709_fulfillment_instruction_config.sql` adds
