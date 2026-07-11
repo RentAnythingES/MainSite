@@ -69,8 +69,8 @@ export function getProductReadinessIssues(product: ProductReadinessInput) {
         issues.push("Pricing tier minimum days must be at least 1");
         break;
       }
-      if (!Number.isInteger(tier.per_day_cents) || tier.per_day_cents < 0) {
-        issues.push("Pricing tier prices must be zero or higher");
+      if (!Number.isInteger(tier.per_day_cents) || tier.per_day_cents < 1) {
+        issues.push("Pricing tier prices must be greater than zero");
         break;
       }
       if (tierDays.has(tier.min_days)) {
