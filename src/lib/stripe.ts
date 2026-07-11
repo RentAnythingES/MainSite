@@ -22,6 +22,8 @@ if (!stripeSecretKey) {
 export const stripe = stripeSecretKey
   ? new Stripe(stripeSecretKey, {
       typescript: true,
+      timeout: 20_000,
+      maxNetworkRetries: 1,
     })
   : null;
 

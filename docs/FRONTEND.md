@@ -111,7 +111,7 @@ Normal v2 flow:
 3. **Availability** — `/api/availability` resolves the product server-side and checks stock, blocked dates, datetime inventory holds, and server pricing.
 4. **Details** — Customer enters contact details plus delivery/collection address where required.
 5. **Draft** — `/api/booking-drafts` calculates pricing server-side and creates a temporary inventory hold.
-6. **Checkout** — `/api/checkout` creates Stripe Checkout from `draftId`; Stripe metadata contains stable server IDs only.
+6. **Checkout** — `/api/checkout` creates Stripe Checkout from `draftId`; Stripe metadata contains stable server IDs only. Client and Stripe API requests have a 20-second timeout so a stalled handoff returns to the recoverable WhatsApp fallback instead of remaining on a loading state.
 7. **Webhook** — `/api/webhooks/stripe` turns paid drafts into bookings and converts the hold into a booking inventory block.
 
 Falls back to WhatsApp deep-link if checkout cannot be created.

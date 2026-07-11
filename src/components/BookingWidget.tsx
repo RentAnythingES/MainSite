@@ -141,6 +141,19 @@ const labels = {
   },
 };
 
+const CHECKOUT_REQUEST_TIMEOUT_MS = 20_000;
+
+async function fetchWithTimeout(input: RequestInfo | URL, init: RequestInit) {
+  const controller = new AbortController();
+  const timeoutId = window.setTimeout(() => controller.abort(), CHECKOUT_REQUEST_TIMEOUT_MS);
+
+  try {
+    return await fetch(input, { ...init, signal: controller.signal });
+  } finally {
+    window.clearTimeout(timeoutId);
+  }
+}
+
 type BookingStep = "dates" | "form" | "success";
 type FulfillmentMode = "customer_pickup" | "delivery_only" | "delivery_and_collection";
 
@@ -360,7 +373,7 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
       const selectedDeliveryZoneId = deliveryZoneId || serviceZones[0]?.id || null;
       const selectedCollectionZoneId = collectionZoneId || serviceZones[0]?.id || null;
       const selectedPickupLocationId = pickupLocationId || pickupLocations[0]?.id || null;
-      const draftRes = await fetch("/api/booking-drafts", {
+      const draftRes = await fetchWithTimeout("/api/booking-drafts", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -400,7 +413,7 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
         totalCents: draftData.quote?.totalCents,
       });
 
-      const res = await fetch("/api/checkout", {
+      const res = await fetchWithTimeout("/api/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -434,7 +447,7 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
           fulfillmentMode,
           sessionId: data.sessionId,
         });
-        window.location.href = data.checkoutUrl;
+        window.location.assign(data.checkoutUrl);
       } else {
         setBookingError("checkout");
         trackBookingEvent("checkout_redirect_failed_whatsapp", {
