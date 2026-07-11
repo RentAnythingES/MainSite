@@ -33,6 +33,7 @@ interface Product {
   specs: Record<string, string>;
   pricing_tiers: PricingTier[];
   category: Category;
+  content_status?: "draft" | "facts_verified" | "content_ready";
 }
 
 interface EditableSpec {
@@ -44,6 +45,12 @@ function isValidStoredImageUrl(value: string | null | undefined) {
   const imageUrl = String(value || "").trim();
   return !imageUrl || (imageUrl.startsWith("/") && !imageUrl.startsWith("//")) || /^https?:\/\//i.test(imageUrl);
 }
+
+const CONTENT_REVIEW_STATUS = {
+  draft: { label: "Content draft", className: "text-amber-300" },
+  facts_verified: { label: "Facts verified", className: "text-sky-300" },
+  content_ready: { label: "Content ready", className: "text-emerald-400" },
+} as const;
 
 export default function AdminProductsPage() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -167,7 +174,7 @@ export default function AdminProductsPage() {
         throw new Error(data.error || "Toggle failed");
       }
       await fetchProducts();
-      setNotice(currentlyActive ? "Product archived and hidden from public pages." : "Product restored and visible on public pages.");
+      setNotice(currentlyActive ? "Product archived and hidden from public pages." : "Product activated and visible on public pages.");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to toggle product status");
     }
@@ -359,6 +366,10 @@ export default function AdminProductsPage() {
                         <span className="text-xs font-medium text-amber-300" title={issues.join(" · ")}>Needs attention</span>
                       );
                     })()}
+                    {(() => {
+                      const contentStatus = CONTENT_REVIEW_STATUS[product.content_status || "draft"];
+                      return <p className={`mt-1 text-xs font-medium ${contentStatus.className}`}>{contentStatus.label}</p>;
+                    })()}
                   </td>
                   <td className="p-4">
                     <button
@@ -398,7 +409,7 @@ export default function AdminProductsPage() {
                           onClick={() => toggleActive(product.id, false)}
                           className="text-xs px-3 py-1.5 rounded-lg bg-emerald-600/20 text-emerald-300 hover:bg-emerald-600/40 transition-colors"
                         >
-                          Restore
+                          Activate
                         </button>
                       )}
                     </div>

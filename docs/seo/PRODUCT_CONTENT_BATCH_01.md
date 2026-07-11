@@ -150,10 +150,57 @@ health, availability, or compatibility claims.
 3. *Are locks included?* — The manufacturer supplies locks for the bike to the
    carrier and the carrier to the roof rack; no lock eliminates all theft risk.
 
+## Deuter Kid Comfort Child Carrier
+
+- **Database slug:** `deuter-kid-comfort-child-carrier`
+- **Source:** [Deuter Kid Comfort](https://www.deuter.com/us-en/kid-comfort/4046051192017)
+- **Verified facts:** 3.23 kg; 72 × 43 × 34 cm; adult back length 44–58 cm;
+  recommended load 9–24 kg; Aircomfort Sensic Vario ventilated mesh back
+  system; suitable from around 9 months when a child can sit independently.
+
+**English short description**
+
+> A Deuter Kid Comfort child carrier for family walks and day trips around
+> Valencia, with a ventilated back system and adjustable adult fit.
+
+**English detail description**
+
+> The Deuter Kid Comfort is a framed child carrier for outings where a stroller
+> is not the right fit. Its Aircomfort Sensic Vario mesh back system is designed
+> to distribute the load while keeping the adult carrier ventilated. Use it only
+> once a child can sit independently, and follow the manufacturer’s fitting and
+> supervision guidance on every outing.
+
+**Suggested features**
+
+- Aircomfort Sensic Vario ventilated mesh back system
+- Adjustable adult back length and padded hip belt
+- Side entry with child harness system
+- Foldable stand and adjustable child foot loops
+
+**Suggested specifications**
+
+- Carrier weight: 3.23 kg
+- Carrier size: 72 × 43 × 34 cm
+- Adult back length: 44–58 cm
+- Recommended load: 9–24 kg
+- Suitable from: around 9 months, when the child sits independently
+
+**SEO title:** `Deuter Kid Comfort Child Carrier Rental Valencia`
+
+**SEO description:** `Rent a Deuter Kid Comfort child carrier in Valencia for family walks and day trips. Check availability for your stay.`
+
+**English FAQ prompts**
+
+1. *When can a child use this carrier?* — Deuter states that child carriers are
+   intended for children who can sit independently and have good head control.
+2. *Is it suitable for a day out in Valencia?* — It is a practical option for
+   supervised family walks where a carrier is more suitable than a stroller.
+3. *Will it fit the adult carrying it?* — The adjustable back length is designed
+   to fit a range of adult back lengths; we will help confirm the fit at handover.
+
 ## Holds for Batch 01
 
-- **Deuter Kid Comfort Child Carrier:** confirm the exact model or product label
-  before using model-specific dimensions, weight, or child-load limits.
 - **Motorized Beach Wheelchair E4:** do not create Valencia availability claims
   until local inventory, operating terrain, delivery process, training, and
   insurance requirements are confirmed.

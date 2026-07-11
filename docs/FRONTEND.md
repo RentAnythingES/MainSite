@@ -85,6 +85,8 @@ Public product pages use those fields only when a product is explicitly marked
 `content_ready`; drafts and fact-review records never replace current live copy,
 metadata, FAQs, or image alt text. If the additive content tables are unavailable,
 the existing product data remains the safe fallback.
+The product list displays core rental setup separately from the editorial state:
+`Content draft`, `Facts verified`, or `Content ready`.
 
 ## Product Widget System
 Discover guide pages use inline product strips defined in `destinations.ts`:
