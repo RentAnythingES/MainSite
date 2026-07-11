@@ -26,6 +26,12 @@ RentAnything.es should not behave like a generic rental catalogue. The core funn
 
 This means the next SEO layer is not simply more product pages. It is a data-driven kit/bundle architecture, clearer customer-facing categories, and contextual guide CTAs.
 
+Product pages now have a dedicated publication framework in
+[PRODUCT_CONTENT_STRATEGY.md](./PRODUCT_CONTENT_STRATEGY.md). They capture
+bottom-funnel item demand only after verified facts, operational readiness,
+metadata, local links, and locale content are complete; they do not replace the
+guide and kit layers.
+
 Priority structural changes:
 
 - Split `Baby & Children` into `Baby & Toddler` and `Kids & Family`

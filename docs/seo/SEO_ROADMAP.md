@@ -121,6 +121,22 @@ Avoid changing URLs casually until redirects/canonicals are planned. Display nam
 
 ---
 
+### 1.8 Product content readiness system
+**Impact**: High · **Effort**: 2–3 days · **Status**: Planned
+
+Implement the data model, admin workflow, and product-page rendering needed to
+turn verified inventory into indexable Valencia product pages. Follow
+[PRODUCT_CONTENT_STRATEGY.md](./PRODUCT_CONTENT_STRATEGY.md).
+
+**Sequence:**
+1. Add database-backed product details, FAQs, image metadata/rights records, and locale content.
+2. Make page metadata consume product-specific SEO fields.
+3. Add admin readiness checks and an editorial review queue.
+4. Enrich and publish a first 12–20 conversion-ready products only.
+5. Add guide/category/kit links and measure product-assisted conversion.
+
+---
+
 ## 🟠 Tier 2 — Medium Impact, Medium Effort
 
 ### 2.1 i18n — Phased multilingual rollout
