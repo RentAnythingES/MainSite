@@ -4,6 +4,7 @@ import { verifyAdmin, unauthorizedResponse } from "@/lib/admin-auth";
 import { fetchPickupLocationsById, fetchServiceZonesById } from "@/lib/fulfillment-options";
 import { fetchBookingPaymentEventsByBookingId } from "@/lib/payment-ledger";
 import { fetchBookingDocumentsByBookingId } from "@/lib/booking-documents";
+import { DEFAULT_OPS_TASKS } from "@/lib/booking-ops";
 
 /**
  * GET /api/admin/bookings — List all bookings with product info
@@ -50,6 +51,7 @@ export async function GET(request: NextRequest) {
       inventoryBlocksResult,
       paymentEventsResult,
       bookingDocumentsResult,
+      opsTasksResult,
     ] = await Promise.all([
       fetchPickupLocationsById(supabase, pickupLocationIds),
       fetchServiceZonesById(supabase, serviceZoneIds),
@@ -61,11 +63,19 @@ export async function GET(request: NextRequest) {
         : Promise.resolve({ data: [], error: null }),
       fetchBookingPaymentEventsByBookingId(supabase, bookingIds),
       fetchBookingDocumentsByBookingId(supabase, bookingIds),
+      bookingIds.length > 0
+        ? supabase
+            .from("booking_ops_tasks")
+            .select("*")
+            .in("booking_id", bookingIds)
+            .order("sort_order", { ascending: true })
+        : Promise.resolve({ data: [], error: null }),
     ]);
 
     if (pickupLocationsResult.error) throw pickupLocationsResult.error;
     if (serviceZonesResult.error) throw serviceZonesResult.error;
     if (inventoryBlocksResult.error) throw inventoryBlocksResult.error;
+    if (opsTasksResult.error && opsTasksResult.error.code !== "42P01") throw opsTasksResult.error;
 
     const pickupLocationById = new Map(
       (pickupLocationsResult.data || []).map((location: { id: string }) => [location.id, location])
@@ -76,6 +86,7 @@ export async function GET(request: NextRequest) {
     const inventoryBlocksByBookingId = new Map<string, unknown[]>();
     const paymentEventsByBookingId = new Map<string, unknown[]>();
     const bookingDocumentsByBookingId = new Map<string, unknown[]>();
+    const opsTasksByBookingId = new Map<string, unknown[]>();
 
     for (const block of inventoryBlocksResult.data || []) {
       const bookingId = (block as { booking_id?: string | null }).booking_id;
@@ -101,6 +112,14 @@ export async function GET(request: NextRequest) {
       bookingDocumentsByBookingId.set(bookingId, existing);
     }
 
+    for (const task of opsTasksResult.data || []) {
+      const bookingId = (task as { booking_id?: string | null }).booking_id;
+      if (!bookingId) continue;
+      const existing = opsTasksByBookingId.get(bookingId) || [];
+      existing.push(task);
+      opsTasksByBookingId.set(bookingId, existing);
+    }
+
     const enrichedBookings = bookings.map((booking) => ({
       ...booking,
       pickup_location: booking.pickup_location_id
@@ -115,6 +134,14 @@ export async function GET(request: NextRequest) {
       inventory_blocks: inventoryBlocksByBookingId.get(booking.id as string) || [],
       payment_events: paymentEventsByBookingId.get(booking.id as string) || [],
       documents: bookingDocumentsByBookingId.get(booking.id as string) || [],
+      ops_tasks: opsTasksByBookingId.get(booking.id as string) ||
+        DEFAULT_OPS_TASKS.map((task) => ({
+          ...task,
+          booking_id: booking.id,
+          is_done: false,
+          completed_at: null,
+          note: null,
+        })),
     }));
 
     return NextResponse.json({ bookings: enrichedBookings });

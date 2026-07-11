@@ -57,6 +57,17 @@ interface BookingDocument {
   issued_at: string;
 }
 
+interface BookingOpsTask {
+  id?: string;
+  booking_id: string;
+  task_key: string;
+  label: string;
+  sort_order: number;
+  is_done: boolean;
+  completed_at?: string | null;
+  note?: string | null;
+}
+
 interface Booking {
   id: string;
   booking_ref: string;
@@ -93,6 +104,7 @@ interface Booking {
   inventory_blocks?: InventoryBlock[];
   payment_events?: PaymentEvent[];
   documents?: BookingDocument[];
+  ops_tasks?: BookingOpsTask[];
   status: string;
   created_at: string;
 }
@@ -145,6 +157,7 @@ export default function AdminBookingsPage() {
   const [expandedId, setExpandedId] = useState<string | null>(null);
   const [sendingDocumentId, setSendingDocumentId] = useState<string | null>(null);
   const [updatingStatus, setUpdatingStatus] = useState<string | null>(null);
+  const [updatingOpsTask, setUpdatingOpsTask] = useState<string | null>(null);
 
   const fetchBookings = useCallback(async () => {
     try {
@@ -206,6 +219,28 @@ export default function AdminBookingsPage() {
       setError(err instanceof Error ? err.message : "Failed to email document");
     } finally {
       setSendingDocumentId(null);
+    }
+  };
+
+  const updateOpsTask = async (bookingId: string, taskKey: string, isDone: boolean) => {
+    try {
+      setError("");
+      setNotice("");
+      setUpdatingOpsTask(`${bookingId}:${taskKey}`);
+      const res = await fetch(`/api/admin/bookings/${bookingId}/ops-tasks`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ taskKey, isDone }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.error || "Failed to update checklist");
+      }
+      await fetchBookings();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to update checklist");
+    } finally {
+      setUpdatingOpsTask(null);
     }
   };
 
@@ -530,6 +565,53 @@ export default function AdminBookingsPage() {
                         </div>
                       ))}
                     </div>
+                  </div>
+
+                  <div className="mb-4 pt-4 border-t border-neutral-800">
+                    <p className="text-xs text-neutral-500 mb-2">Ops Checklist</p>
+                    {booking.ops_tasks && booking.ops_tasks.length > 0 ? (
+                      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-2">
+                        {[...booking.ops_tasks]
+                          .sort((a, b) => a.sort_order - b.sort_order)
+                          .map((task) => {
+                            const taskUpdating = updatingOpsTask === `${booking.id}:${task.task_key}`;
+                            return (
+                              <label
+                                key={task.task_key}
+                                className={`flex items-start gap-3 rounded-lg border p-3 transition-colors ${
+                                  task.is_done
+                                    ? "border-emerald-500/20 bg-emerald-500/10"
+                                    : "border-neutral-800 bg-neutral-950"
+                                }`}
+                              >
+                                <input
+                                  type="checkbox"
+                                  checked={task.is_done}
+                                  disabled={taskUpdating}
+                                  onChange={(event) => updateOpsTask(booking.id, task.task_key, event.target.checked)}
+                                  className="mt-0.5 h-4 w-4 rounded border-neutral-700 bg-neutral-900 text-teal-500 focus:ring-teal-500"
+                                />
+                                <span>
+                                  <span className={`block text-sm font-medium ${task.is_done ? "text-emerald-300" : "text-neutral-200"}`}>
+                                    {task.label}
+                                  </span>
+                                  <span className="block text-xs text-neutral-500">
+                                    {taskUpdating
+                                      ? "Saving..."
+                                      : task.completed_at
+                                        ? `Done ${formatDateTime(task.completed_at)}`
+                                        : "Pending"}
+                                  </span>
+                                </span>
+                              </label>
+                            );
+                          })}
+                      </div>
+                    ) : (
+                      <p className="text-xs text-neutral-400">
+                        Checklist will appear after the latest migration is applied.
+                      </p>
+                    )}
                   </div>
 
                   <div className="mb-4 pt-4 border-t border-neutral-800">

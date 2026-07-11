@@ -59,6 +59,7 @@ Supabase (CRUD products, pricing, bookings)
 | `booking_payment_events` | Durable payment/refund/deposit ledger for bookings | Admin/API only |
 | `booking_documents` | Invoice, refund receipt, and rental agreement document records | Admin/API only |
 | `booking_document_counters` | Yearly sequential counters for booking document numbers | Admin/API only |
+| `booking_ops_tasks` | Internal per-booking operations checklist tasks | Admin/API only |
 | `newsletter_subscribers` | Newsletter signup consent records | Admin/API only |
 
 ### Storage
@@ -174,6 +175,7 @@ Stripe Checkout
 | `/api/admin/availability` | GET, POST, DELETE | View, block, and unblock product availability dates |
 | `/api/admin/bookings` | GET | List bookings (optional status filter) |
 | `/api/admin/bookings/[id]` | PUT | Update booking status |
+| `/api/admin/bookings/[id]/ops-tasks` | PATCH | Toggle internal booking operations checklist tasks |
 | `/api/admin/bookings/[id]/documents/[documentId]/pdf` | GET | Download protected invoice/refund PDF |
 | `/api/admin/bookings/[id]/documents/[documentId]/email` | POST | Email customer a document PDF link |
 | `/api/admin/categories` | GET | List categories (for dropdowns) |
@@ -190,7 +192,7 @@ Protected by Supabase Auth. Server-side cookie check in `admin/layout.tsx` — r
 | `/admin/products` | Product table, inline active toggle, edit modal (core details, category, image upload/preview, features, specs, stock, pricing tiers) |
 | `/admin/products/new` | Full creation form: auto-slug, category dropdown, image upload, dynamic features, key-value specs, pricing tiers |
 | `/admin/availability` | Calendar availability manager with selected-date actions plus selected/all-product range blocking |
-| `/admin/bookings` | Expandable booking cards, status filter tabs, lifecycle transition buttons |
+| `/admin/bookings` | Expandable booking cards, status filter tabs, ops checklist, lifecycle transition buttons |
 | `/admin/login` | Supabase Auth email/password login |
 
 ---

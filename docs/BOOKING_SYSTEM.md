@@ -231,6 +231,11 @@ language, while delivery bookings show delivery/collection language. Customer
 status emails include the full rental datetime window and the configured pickup
 location or delivery/collection details.
 
+Migration `supabase/migrations/20260711_booking_ops_tasks.sql` adds internal
+per-booking ops checklist tasks. The admin booking detail can track whether the
+customer was contacted, equipment prepared, handoff confirmed, return scheduled,
+and return inspected without overloading the customer-facing booking status.
+
 Expanded admin booking rows also show payment totals, Stripe checkout/payment IDs,
 active/released inventory block status, and a lightweight status timeline so support
 can quickly confirm whether a booking is paid, refunded, released, or still holding
