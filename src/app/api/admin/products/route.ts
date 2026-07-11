@@ -104,7 +104,8 @@ export async function POST(request: NextRequest) {
         city: body.city || "valencia",
         stock_total: body.stock_total || 1,
         stock_available: body.stock_available || 1,
-        is_active: body.is_active ?? false,
+        // New products must be reviewed through the content workflow before publication.
+        is_active: false,
         features: body.features || [],
         specs: body.specs || {},
       })

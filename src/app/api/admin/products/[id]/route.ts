@@ -39,6 +39,11 @@ function validateImageUrl(value: unknown) {
   return "Image must be uploaded through admin or use a public https URL";
 }
 
+function isContentMigrationMissing(error: unknown) {
+  const code = (error as { code?: string } | null)?.code;
+  return code === "42703" || code === "PGRST204" || code === "PGRST205" || code === "42P01";
+}
+
 /**
  * PUT /api/admin/products/[id] — Update a product
  */
@@ -99,6 +104,29 @@ export async function PUT(
       });
       if (issues.length > 0) {
         return NextResponse.json({ error: `This product cannot be activated: ${issues[0]}` }, { status: 400 });
+      }
+
+      const { data: editorialStatus, error: editorialStatusError } = await supabase
+        .from("products")
+        .select("content_status")
+        .eq("id", id)
+        .single();
+
+      if (editorialStatusError) {
+        if (isContentMigrationMissing(editorialStatusError)) {
+          return NextResponse.json(
+            { error: "Apply the product-content migration before activating new products." },
+            { status: 400 }
+          );
+        }
+        throw editorialStatusError;
+      }
+
+      if ((editorialStatus as { content_status?: string } | null)?.content_status !== "content_ready") {
+        return NextResponse.json(
+          { error: "Complete the Content review and mark this product content ready before activation." },
+          { status: 400 }
+        );
       }
     }
 

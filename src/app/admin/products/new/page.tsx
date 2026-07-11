@@ -182,7 +182,7 @@ export default function AddProductPage() {
         </button>
         <div>
           <h1 className="text-2xl font-bold text-white">Add New Product</h1>
-          <p className="text-neutral-500 text-sm mt-0.5">Fill in the product details below</p>
+          <p className="text-neutral-500 text-sm mt-0.5">Create a draft, then complete its content review before publishing.</p>
         </div>
       </div>
 

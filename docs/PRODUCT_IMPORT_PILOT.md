@@ -54,5 +54,6 @@ duplicating them.
 ## Activation Rule
 
 The admin API now prevents activation when any pricing tier is zero, an image
-is invalid or missing, stock is invalid, or required catalogue fields are
-incomplete.
+is invalid or missing, stock is invalid, required catalogue fields are
+incomplete, or the product has not been marked `content_ready` through the
+editorial workflow. New products are always created as inactive drafts.

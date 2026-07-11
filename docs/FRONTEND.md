@@ -73,8 +73,9 @@ Next image optimisation explicitly allows public Supabase Storage URLs under
 the admin API to use lowercase letters, numbers, and hyphens only.
 
 `/admin/products/import` provides a CSV template and previews every row before
-import. Imported products are always inactive drafts with no image; staff must
-upload an image and review the product before the admin can activate it.
+import. Imported and manually created products are always inactive drafts.
+Staff must upload an image, complete content review, and mark the product
+`content_ready` before the admin can activate it.
 
 `/admin/products/[id]/content` is the editorial workflow for product content.
 It stores English and Spanish page copy, FAQs, SEO snippets, and the primary
