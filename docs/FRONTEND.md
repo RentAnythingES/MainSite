@@ -72,6 +72,10 @@ Next image optimisation explicitly allows public Supabase Storage URLs under
 `/storage/v1/object/public/`. Product and subcategory slugs are validated by
 the admin API to use lowercase letters, numbers, and hyphens only.
 
+`/admin/products/import` provides a CSV template and previews every row before
+import. Imported products are always inactive drafts with no image; staff must
+upload an image and review the product before the admin can activate it.
+
 ## Product Widget System
 Discover guide pages use inline product strips defined in `destinations.ts`:
 ```ts

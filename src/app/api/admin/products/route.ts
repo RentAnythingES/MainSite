@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase-admin";
 import { verifyAdmin, unauthorizedResponse } from "@/lib/admin-auth";
+import { getProductReadinessIssues, isValidProductImageUrl, isValidProductSlug } from "@/lib/product-validation";
 
 type ProductPayload = {
   slug?: string;
@@ -12,10 +13,6 @@ type ProductPayload = {
   subcategory_slug?: string;
   pricing_tiers?: { min_days: number; per_day_cents: number }[];
 };
-
-function isValidSlug(value: string) {
-  return /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(value);
-}
 
 function getErrorMessage(err: unknown) {
   if (err && typeof err === "object" && "message" in err) {
@@ -42,38 +39,8 @@ function validateProductPayload(body: ProductPayload) {
     }
   }
 
-  if (!isValidSlug(body.slug!.trim())) {
-    return "Product slug must use lowercase letters, numbers, and hyphens only";
-  }
-
-  if (!isValidSlug(body.subcategory_slug!.trim())) {
-    return "Subcategory slug must use lowercase letters, numbers, and hyphens only";
-  }
-
-  if (!body.pricing_tiers || body.pricing_tiers.length === 0) {
-    return "At least one pricing tier is required";
-  }
-
-  const tierDays = new Set<number>();
-  for (const tier of body.pricing_tiers) {
-    if (!Number.isInteger(tier.min_days) || tier.min_days < 1) {
-      return "Pricing tier minimum days must be at least 1";
-    }
-    if (!Number.isInteger(tier.per_day_cents) || tier.per_day_cents < 0) {
-      return "Pricing tier price must be zero or higher";
-    }
-    if (tierDays.has(tier.min_days)) {
-      return `Duplicate pricing tier for ${tier.min_days} days`;
-    }
-    tierDays.add(tier.min_days);
-  }
-
-  const imageUrl = typeof (body as Record<string, unknown>).image_url === "string"
-    ? String((body as Record<string, unknown>).image_url).trim()
-    : "";
-  if (imageUrl && !imageUrl.startsWith("/") && !/^https?:\/\//i.test(imageUrl)) {
-    return "Image must be uploaded through admin or use a public https URL";
-  }
+  const issues = getProductReadinessIssues(body);
+  if (issues.length > 0) return issues[0];
 
   return null;
 }
@@ -137,7 +104,7 @@ export async function POST(request: NextRequest) {
         city: body.city || "valencia",
         stock_total: body.stock_total || 1,
         stock_available: body.stock_available || 1,
-        is_active: body.is_active ?? true,
+        is_active: body.is_active ?? false,
         features: body.features || [],
         specs: body.specs || {},
       })

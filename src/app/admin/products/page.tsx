@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
+import { getProductReadinessIssues } from "@/lib/product-validation";
 
 interface PricingTier {
   id: string;
@@ -271,10 +272,16 @@ export default function AdminProductsPage() {
             {products.length} products · {products.filter((p) => p.is_active).length} active
           </p>
         </div>
-        <Link href="/admin/products/new"
-          className="px-4 py-2 rounded-lg bg-teal-600 hover:bg-teal-500 text-white text-sm font-semibold transition-colors">
-          + Add Product
-        </Link>
+        <div className="flex items-center gap-2">
+          <Link href="/admin/products/import"
+            className="px-4 py-2 rounded-lg border border-neutral-700 text-neutral-200 text-sm font-semibold transition-colors hover:bg-neutral-800">
+            Import CSV
+          </Link>
+          <Link href="/admin/products/new"
+            className="px-4 py-2 rounded-lg bg-teal-600 hover:bg-teal-500 text-white text-sm font-semibold transition-colors">
+            + Add Product
+          </Link>
+        </div>
       </div>
 
       {error && (
@@ -316,6 +323,7 @@ export default function AdminProductsPage() {
                 <th className="text-left p-4 text-xs font-medium text-neutral-500 uppercase tracking-wider">Category</th>
                 <th className="text-left p-4 text-xs font-medium text-neutral-500 uppercase tracking-wider">Price Range</th>
                 <th className="text-left p-4 text-xs font-medium text-neutral-500 uppercase tracking-wider">Stock</th>
+                <th className="text-left p-4 text-xs font-medium text-neutral-500 uppercase tracking-wider">Quality</th>
                 <th className="text-left p-4 text-xs font-medium text-neutral-500 uppercase tracking-wider">Status</th>
                 <th className="text-right p-4 text-xs font-medium text-neutral-500 uppercase tracking-wider">Actions</th>
               </tr>
@@ -341,6 +349,16 @@ export default function AdminProductsPage() {
                     <span className="text-neutral-300">
                       {product.stock_available}/{product.stock_total}
                     </span>
+                  </td>
+                  <td className="p-4">
+                    {(() => {
+                      const issues = getProductReadinessIssues(product);
+                      return issues.length === 0 ? (
+                        <span className="text-xs font-medium text-emerald-400">Ready</span>
+                      ) : (
+                        <span className="text-xs font-medium text-amber-300" title={issues.join(" · ")}>Needs attention</span>
+                      );
+                    })()}
                   </td>
                   <td className="p-4">
                     <button

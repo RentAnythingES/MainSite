@@ -1,12 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase-admin";
 import { verifyAdmin, unauthorizedResponse } from "@/lib/admin-auth";
+import { getProductReadinessIssues, isValidProductImageUrl, isValidProductSlug } from "@/lib/product-validation";
 
 type PricingTierPayload = { min_days: number; per_day_cents: number };
-
-function isValidSlug(value: string) {
-  return /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(value);
-}
 
 function getErrorMessage(err: unknown) {
   if (err && typeof err === "object" && "message" in err) {
@@ -70,18 +67,39 @@ export async function PUT(
       return NextResponse.json({ error: imageValidationError }, { status: 400 });
     }
 
-    if (body.slug !== undefined && (typeof body.slug !== "string" || !isValidSlug(body.slug.trim()))) {
+    if (body.slug !== undefined && (typeof body.slug !== "string" || !isValidProductSlug(body.slug.trim()))) {
       return NextResponse.json(
         { error: "Product slug must use lowercase letters, numbers, and hyphens only" },
         { status: 400 }
       );
     }
 
-    if (body.subcategory_slug !== undefined && (typeof body.subcategory_slug !== "string" || !isValidSlug(body.subcategory_slug.trim()))) {
+    if (body.subcategory_slug !== undefined && (typeof body.subcategory_slug !== "string" || !isValidProductSlug(body.subcategory_slug.trim()))) {
       return NextResponse.json(
         { error: "Subcategory slug must use lowercase letters, numbers, and hyphens only" },
         { status: 400 }
       );
+    }
+
+    const { data: existingProduct, error: existingProductError } = await supabase
+      .from("products")
+      .select("slug, name, brand, description, image_url, category_id, subcategory, subcategory_slug, stock_total, stock_available, pricing_tiers (min_days, per_day_cents)")
+      .eq("id", id)
+      .single();
+
+    if (existingProductError || !existingProduct) {
+      return NextResponse.json({ error: "Product not found" }, { status: 404 });
+    }
+
+    if (body.is_active === true) {
+      const issues = getProductReadinessIssues({
+        ...existingProduct,
+        ...body,
+        pricing_tiers: body.pricing_tiers || existingProduct.pricing_tiers,
+      });
+      if (issues.length > 0) {
+        return NextResponse.json({ error: `This product cannot be activated: ${issues[0]}` }, { status: 400 });
+      }
     }
 
     // Build update object with only provided fields
