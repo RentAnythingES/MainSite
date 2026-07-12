@@ -219,6 +219,10 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
   const [address, setAddress] = useState("");
   const [collectionAddress, setCollectionAddress] = useState("");
   const [notes, setNotes] = useState("");
+  const [invoiceRequested, setInvoiceRequested] = useState(false);
+  const [billingCompanyName, setBillingCompanyName] = useState("");
+  const [billingTaxId, setBillingTaxId] = useState("");
+  const [billingAddress, setBillingAddress] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [bookingRef, setBookingRef] = useState("");
   const selectedPickupLocation = pickupLocations.find((location) => location.id === pickupLocationId);
@@ -391,6 +395,11 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
           collectionAddress: fulfillmentMode === "delivery_and_collection" ? collectionAddress || address : null,
           deliveryNotes: notes || null,
           collectionNotes: null,
+          billingName: name,
+          billingCompanyName: invoiceRequested ? billingCompanyName || null : null,
+          billingTaxId: invoiceRequested ? billingTaxId || null : null,
+          billingAddress: invoiceRequested ? { address: billingAddress } : null,
+          invoiceRequested,
         }),
       });
 
@@ -724,6 +733,17 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
                 {selectedDeliveryZone.customer_instructions || `Delivery window: ${selectedDeliveryZone.delivery_window}`}
               </p>
             )}
+          </div>
+          <div className="rounded-lg border border-border bg-neutral-50 p-3">
+            <label className="flex items-center gap-2 text-sm font-medium text-neutral-700">
+              <input type="checkbox" checked={invoiceRequested} onChange={(e) => setInvoiceRequested(e.target.checked)} />
+              I need a full invoice for my business
+            </label>
+            {invoiceRequested && <div className="mt-3 space-y-3">
+              <input type="text" required value={billingCompanyName} onChange={(e) => setBillingCompanyName(e.target.value)} className="w-full px-3 py-2.5 rounded-lg border border-border text-sm" placeholder="Company legal name" />
+              <input type="text" required value={billingTaxId} onChange={(e) => setBillingTaxId(e.target.value)} className="w-full px-3 py-2.5 rounded-lg border border-border text-sm" placeholder="NIF / VAT ID" />
+              <input type="text" required value={billingAddress} onChange={(e) => setBillingAddress(e.target.value)} className="w-full px-3 py-2.5 rounded-lg border border-border text-sm" placeholder="Billing address" />
+            </div>}
           </div>
 
           {fulfillmentMode === "delivery_and_collection" && (

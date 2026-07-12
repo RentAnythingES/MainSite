@@ -263,6 +263,11 @@ async function handleDraftCheckoutCompleted(
     collection_address: string | null;
     delivery_notes: string | null;
     collection_notes: string | null;
+    billing_name?: string | null;
+    billing_company_name?: string | null;
+    billing_tax_id?: string | null;
+    billing_address?: Record<string, string> | null;
+    invoice_requested?: boolean;
     per_day_cents: number;
     rental_subtotal_cents: number;
     delivery_fee_cents: number;
@@ -357,6 +362,11 @@ async function handleDraftCheckoutCompleted(
       delivery_address: bookingDraft.delivery_address || bookingDraft.collection_address || "Customer pickup",
       delivery_city: "valencia",
       delivery_notes: bookingDraft.delivery_notes,
+      billing_name: bookingDraft.billing_name || bookingDraft.customer_name,
+      billing_company_name: bookingDraft.billing_company_name || null,
+      billing_tax_id: bookingDraft.billing_tax_id || null,
+      billing_address: bookingDraft.billing_address || {},
+      invoice_requested: Boolean(bookingDraft.invoice_requested),
       status: "paid",
       stripe_payment_intent_id: paymentIntentId || null,
       paid_at: new Date().toISOString(),

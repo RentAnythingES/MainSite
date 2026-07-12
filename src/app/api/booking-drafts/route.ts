@@ -28,6 +28,11 @@ interface DraftRequestBody {
   collectionAddress?: string | null;
   deliveryNotes?: string | null;
   collectionNotes?: string | null;
+  billingName?: string | null;
+  billingCompanyName?: string | null;
+  billingTaxId?: string | null;
+  billingAddress?: Record<string, string> | null;
+  invoiceRequested?: boolean;
 }
 
 export async function POST(request: NextRequest) {
@@ -115,6 +120,11 @@ export async function POST(request: NextRequest) {
         collection_address: body.collectionAddress || null,
         delivery_notes: body.deliveryNotes || null,
         collection_notes: body.collectionNotes || null,
+        billing_name: body.billingName || body.customerName,
+        billing_company_name: body.billingCompanyName || null,
+        billing_tax_id: body.billingTaxId || null,
+        billing_address: body.billingAddress || {},
+        invoice_requested: Boolean(body.invoiceRequested),
         currency: "eur",
         per_day_cents: quote.perDayCents,
         rental_subtotal_cents: quote.rentalSubtotalCents,

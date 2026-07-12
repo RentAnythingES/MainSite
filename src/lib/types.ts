@@ -90,6 +90,11 @@ interface BookingRow {
   delivery_address: string;
   delivery_city: string;
   delivery_notes: string | null;
+  billing_name: string | null;
+  billing_company_name: string | null;
+  billing_tax_id: string | null;
+  billing_address: Record<string, string>;
+  invoice_requested: boolean;
   status: BookingStatus;
   stripe_payment_intent_id: string | null;
   stripe_deposit_intent_id: string | null;
@@ -187,6 +192,11 @@ interface BookingDraftRow {
   collection_address: string | null;
   delivery_notes: string | null;
   collection_notes: string | null;
+  billing_name: string | null;
+  billing_company_name: string | null;
+  billing_tax_id: string | null;
+  billing_address: Record<string, string>;
+  invoice_requested: boolean;
   currency: string;
   per_day_cents: number;
   rental_subtotal_cents: number;
