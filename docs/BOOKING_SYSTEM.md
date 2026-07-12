@@ -59,6 +59,11 @@ admin-managed issuer/tax settings record and the extra immutable invoice fields.
 It seeds Escalera Labs S.L. with a provisional 21% IVA-inclusive policy that must
 remain marked pending adviser confirmation until verified.
 
+`/api/admin/invoicing/export` provides an authenticated CSV export of issued
+documents for accounting reconciliation. It includes document identifiers, dates,
+format, customer tax ID when supplied, tax base, IVA rate/amount, gross total, and
+the rectified document link.
+
 The baseline content and numbering requirements are in Article 6 of Real Decreto
 1619/2012. The current invoicing-software timetable and integrity requirements are
 in Real Decreto 1007/2023, as amended; confirm the entity-specific deadline with
