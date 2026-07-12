@@ -189,12 +189,29 @@ export async function createBookingDocumentForPaymentEvent(
   const invoiceFormat = isRefund
     ? "rectifying"
     : grossCents <= settings.simplified_invoice_limit_cents ? "simplified" : "full";
+  let originalInvoice: { id: string; document_number: string | null } | null = null;
+
+  if (isRefund) {
+    const { data, error } = await (supabase as any)
+      .from("booking_documents")
+      .select("id, document_number")
+      .eq("booking_id", bookingId)
+      .eq("document_type", "invoice")
+      .eq("status", "issued")
+      .order("issued_at", { ascending: false })
+      .limit(1)
+      .maybeSingle();
+
+    if (error) console.error("[booking-documents] Failed to locate original invoice:", error);
+    originalInvoice = data as { id: string; document_number: string | null } | null;
+  }
 
   const row = {
     booking_id: bookingId,
     payment_event_id: paymentEvent.id,
     document_type: documentType,
     invoice_format: invoiceFormat,
+    rectifies_document_id: originalInvoice?.id || null,
     status: "issued",
     currency: paymentEvent.currency || "eur",
     subtotal_cents: isRefund ? 0 : (booking.subtotal_cents as number) || 0,
@@ -232,6 +249,7 @@ export async function createBookingDocumentForPaymentEvent(
       rental_end_at: booking.rental_end_at || booking.end_date || null,
       rental_days: booking.rental_days || null,
       fulfillment_mode: booking.fulfillment_mode || null,
+      rectifies_document_number: originalInvoice?.document_number || null,
     },
     payment_snapshot: {
       payment_event_id: paymentEvent.id,
@@ -242,7 +260,9 @@ export async function createBookingDocumentForPaymentEvent(
       stripe_payment_intent_id: paymentEvent.stripe_payment_intent_id,
       stripe_refund_id: paymentEvent.stripe_refund_id,
     },
-    notes: isRefund ? "Rectifying document generated from Stripe refund event." : "Generated from Stripe Checkout payment.",
+    notes: isRefund
+      ? `Rectifying invoice generated from Stripe refund event${originalInvoice?.document_number ? `; rectifies ${originalInvoice.document_number}.` : "."}`
+      : "Generated from Stripe Checkout payment.",
     customer_access_token: createCustomerAccessToken(),
     customer_access_expires_at: createCustomerAccessExpiry(),
     issued_at: paymentEvent.occurred_at || new Date().toISOString(),

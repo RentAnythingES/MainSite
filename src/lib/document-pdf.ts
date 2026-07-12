@@ -104,6 +104,9 @@ export function buildBookingDocumentPdf(document: BookingDocument, booking: Book
   content += drawKeyValue("Issued", formatDate(document.issued_at), 48, 638);
   content += drawKeyValue("Booking ref", booking.booking_ref || bookingSnapshot.booking_ref, 48, 616);
   content += drawKeyValue("Status", document.status, 48, 594);
+  if (isRefund && bookingSnapshot.rectifies_document_number) {
+    content += drawKeyValue("Rectifies", bookingSnapshot.rectifies_document_number, 48, 572);
+  }
 
   content += pdfText("From", 330, 660, 13, "F2");
   content += pdfText(companySnapshot.brand || "RentAnything.es", 330, 638, 10, "F2");
