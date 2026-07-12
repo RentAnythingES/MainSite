@@ -57,6 +57,7 @@ Supabase (CRUD products, pricing, bookings)
 | `booking_inventory_blocks` | Datetime inventory holds and paid booking blocks | Admin/API only |
 | `booking_payment_events` | Durable payment/refund/deposit ledger for bookings | Admin/API only |
 | `booking_documents` | Invoice, refund receipt, and rental agreement document records | Admin/API only |
+| `invoice_settings` | Issuer identity, invoice series, VAT policy, and compliance status | Admin/API only |
 | `booking_document_counters` | Yearly sequential counters for booking document numbers | Admin/API only |
 | `booking_ops_tasks` | Internal per-booking operations checklist tasks | Admin/API only |
 | `newsletter_subscribers` | Newsletter signup consent records | Admin/API only |

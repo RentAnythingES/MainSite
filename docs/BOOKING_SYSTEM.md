@@ -23,6 +23,47 @@ This code is not live-safe until the v2 migration has been applied in Supabase a
 a full test booking confirms draft creation, Stripe redirect, webhook fulfillment,
 admin visibility, cancellation, refund, and inventory release.
 
+## Invoicing Compliance Roadmap
+
+The current `booking_documents` implementation creates an operational payment
+invoice/receipt after a successful Stripe webhook, but it is not yet a Spanish
+accounting-compliant invoicing system. It lacks configurable issuer tax identity,
+VAT rules, immutable invoice records, accounting exports, and a reviewed legal PDF
+template.
+
+### Proposed source of truth
+
+- **Stripe Checkout** processes card payment and returns payment evidence.
+- **RentAnything invoice ledger** issues the legal customer invoice and rectifying
+  refund document, preserves the immutable issued snapshot, and owns the
+  sequential series/numbering.
+- **Stripe Invoicing** is not used for normal rental Checkout payments. If used for
+  a separate manual or recurring-billing workflow, it must have its own configured
+  tax IDs, tax behaviour, customer address collection, and VAT calculation.
+
+### Required implementation work
+
+1. Add admin-managed legal entity, address, NIF/CIF, invoice series, tax policy,
+   payment terms, and invoice footer configuration.
+2. Store base amount, VAT rate, VAT amount, gross amount, customer tax identity,
+   and immutable issuer/customer snapshots per issued document.
+3. Replace refund receipts with linked credit/rectifying invoices where the
+   business adviser confirms that treatment is required.
+4. Add immutable document versioning/audit events, void/rectification flow, and
+   accounting CSV export.
+5. Obtain tax-adviser confirmation for Spanish IVA classification, customer-facing
+   tax-inclusive pricing, invoice series, and the planned VERI*FACTU approach.
+
+The additive migration `20260711_invoice_compliance_foundation.sql` creates the
+admin-managed issuer/tax settings record and the extra immutable invoice fields.
+It seeds Escalera Labs S.L. with a provisional 21% IVA-inclusive policy that must
+remain marked pending adviser confirmation until verified.
+
+The baseline content and numbering requirements are in Article 6 of Real Decreto
+1619/2012. The current invoicing-software timetable and integrity requirements are
+in Real Decreto 1007/2023, as amended; confirm the entity-specific deadline with
+the company adviser before relying on the system for production invoicing.
+
 ## Target Booking Model
 
 ### Customer Flow
