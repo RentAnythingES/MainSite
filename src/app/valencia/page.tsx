@@ -3,8 +3,10 @@ import Image from "next/image";
 import type { Metadata } from "next";
 import BundleCard from "@/components/BundleCard";
 import { rentalBundles } from "@/data/bundles";
-import { products } from "@/data/products";
 import ProductCard from "@/components/ProductCard";
+import { getProductsFromDB } from "@/lib/product-service";
+
+export const revalidate = 60;
 
 export const metadata: Metadata = {
   title: "Rent Baby Gear, Wheelchairs & Tech in Valencia",
@@ -20,7 +22,9 @@ const categoryCards = [
   { name: "Beach & Outdoor", slug: "travel-outdoors", image: "/categories/travel-outdoors.png", desc: "Beach gear, shade, recreation" },
 ];
 
-export default function ValenciaPage() {
+export default async function ValenciaPage() {
+  const products = await getProductsFromDB();
+
   return (
     <>
       {/* Hero */}
@@ -49,8 +53,8 @@ export default function ValenciaPage() {
               <span className="text-amber-400">in Valencia</span>
             </h1>
             <p className="text-lg text-white/90 leading-relaxed mb-8 max-w-2xl" style={{ textShadow: '0 1px 4px rgba(0,0,0,0.3)' }}>
-              Everything you need for your Valencia trip — baby gear, mobility aids,
-              remote work setups & more. Premium brands, delivered to your hotel,
+              Everything you need for your Valencia trip — baby gear, mobility support,
+              remote work setups and more, delivered to your hotel,
               Airbnb, or apartment.
             </p>
             <div className="flex flex-wrap gap-3">
@@ -72,10 +76,10 @@ export default function ValenciaPage() {
       <section className="bg-neutral-900 py-4">
         <div className="container-site">
           <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-2 text-sm text-neutral-300">
-            <span>🚚 Free delivery on orders over €50</span>
-            <span>📍 City centre & beach areas</span>
-            <span>🧼 100% sanitised gear</span>
-            <span>⚡ Same-day delivery available</span>
+            <span>🚚 Delivery priced by service area</span>
+            <span>📍 Pickup options in Burjassot and Paterna</span>
+            <span>🧼 Items checked before handover</span>
+            <span>💬 Local support via WhatsApp</span>
           </div>
         </div>
       </section>

@@ -35,7 +35,7 @@ export async function POST(request: NextRequest) {
       null;
     const userAgent = request.headers.get("user-agent");
 
-    const { error } = await supabase
+    const { data: subscriber, error } = await supabase
       .from("newsletter_subscribers")
       .upsert(
         {
@@ -53,7 +53,9 @@ export async function POST(request: NextRequest) {
           unsubscribed_at: null,
         },
         { onConflict: "email" }
-      );
+      )
+      .select("unsubscribe_token")
+      .single();
 
     if (error) {
       console.error("[newsletter] Subscribe error:", error);
@@ -64,6 +66,7 @@ export async function POST(request: NextRequest) {
       name: name || undefined,
       email,
       interest: interest || undefined,
+      unsubscribeUrl: `${(process.env.NEXT_PUBLIC_SITE_URL || "https://www.rentanything.es").replace(/\/$/, "")}/newsletter/unsubscribe?token=${subscriber.unsubscribe_token}`,
     }).catch((err) => console.error("[newsletter] Welcome email error:", err));
 
     return NextResponse.json({ success: true });

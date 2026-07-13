@@ -1,5 +1,5 @@
 # Booking System
-> Last updated: 2026-07-11
+> Last updated: 2026-07-13
 
 ## Current Status
 
@@ -18,10 +18,15 @@ Initial Booking System v2 code is now in place:
 - `/api/webhooks/stripe` can fulfill `checkout.session.completed` from a booking draft.
 - `/api/admin/health` exposes authenticated, non-secret configuration status for Stripe, Resend, Supabase, and booking health.
 - Expired draft cleanup now runs before availability checks, draft creation, checkout creation, and admin health checks.
+- `npm run smoke:booking` performs safe, read-only checks against booking options and availability.
+- `npm run audit:launch` checks required configuration, core tables, active-product readiness, and expired drafts.
+- Checkout and signed-webhook processing failures are written to `system_incidents` and surfaced in admin health after the incident migration is applied.
 
-This code is not live-safe until the v2 migration has been applied in Supabase and
-a full test booking confirms draft creation, Stripe redirect, webhook fulfillment,
-admin visibility, cancellation, refund, and inventory release.
+The v2 migrations have been applied and a controlled live-mode test confirmed draft
+creation, Stripe redirect, signed webhook fulfillment, success-page display, admin
+visibility, refund email, and refunded booking state. Treat the system as controlled-
+release rather than fully open until repeated tests cover each fulfillment mode and
+inventory release is verified after cancellation and refund.
 
 ## Invoicing Compliance Roadmap
 

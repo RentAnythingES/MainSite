@@ -57,6 +57,7 @@ export interface SignupWelcomeEmailData {
   name?: string;
   email: string;
   interest?: string;
+  unsubscribeUrl: string;
 }
 
 export interface BookingDocumentEmailData {
@@ -451,6 +452,7 @@ export async function sendSignupWelcome(data: SignupWelcomeEmailData): Promise<b
         ${data.interest ? infoBox(`<p style="font-size:14px;color:#0f766e;line-height:1.6;margin:0;"><strong>Your interest:</strong> ${escapeHtml(data.interest)}</p>`) : ""}
         <p style="font-size:15px;color:#374151;line-height:1.6;">In the meantime, if you need something specific for a Valencia stay, just message us.</p>
         ${button(WHATSAPP_URL, "Ask us on WhatsApp", "#25d366")}
+        <p style="font-size:12px;color:#6b7280;line-height:1.5;margin-top:24px;">You received this because you subscribed to RentAnything.es updates. <a href="${escapeHtml(data.unsubscribeUrl)}" style="color:#0e7c73;">Unsubscribe</a>.</p>
       `, "Thanks for signing up for RentAnything.es."),
     });
 

@@ -96,7 +96,7 @@ Initial data-driven bundle layer is live with `/valencia/kits`, individual kit p
 ---
 
 ### 1.6 Split family categories: Baby vs Kids
-**Impact**: High · **Effort**: 0.5-1 day · **Status**: Open
+**Impact**: High · **Effort**: 0.5-1 day · **Status**: Migration prepared; inventory review remains
 
 Separate the current broad family category into clearer customer language:
 
@@ -105,10 +105,14 @@ Separate the current broad family category into clearer customer language:
 
 This improves navigation, SEO intent matching, bundle surfacing, and future inventory growth.
 
+The July 2026 category migration adds `Kids & Family` while preserving existing URLs
+and moves only clearly identified toy/bike records. Mixed legacy records remain for
+manual classification rather than being guessed in bulk.
+
 ---
 
 ### 1.7 Upgrade category naming and structure
-**Impact**: Medium-High · **Effort**: 0.5-1 day · **Status**: Open
+**Impact**: Medium-High · **Effort**: 0.5-1 day · **Status**: Display layer done; database migration prepared
 
 Adopt more use-case-led category names across nav, category pages, sitemap, metadata, and Spanish copy where relevant:
 
@@ -122,7 +126,7 @@ Avoid changing URLs casually until redirects/canonicals are planned. Display nam
 ---
 
 ### 1.8 Product content readiness system
-**Impact**: High · **Effort**: 2–3 days · **Status**: Planned
+**Impact**: High · **Effort**: 2–3 days · **Status**: Infrastructure done; editorial queue in progress
 
 Implement the data model, admin workflow, and product-page rendering needed to
 turn verified inventory into indexable Valencia product pages. Follow
@@ -204,9 +208,14 @@ Maintain publishing cadence. Seasonal content planned around:
 ---
 
 ### 3.2 Stripe payment integration
-**Impact**: 🟡 Medium · **Effort**: 2-3 hours · **Status**: Deferred (pending entity decision)
+**Impact**: 🔴 Critical · **Effort**: Ongoing hardening · **Status**: Live flow implemented and manually tested
 
-Payment flow for deposit holds. BookingWidget now submits booking requests directly to Supabase; Stripe will be wired when the business entity is finalized.
+Server-priced booking drafts, temporary inventory holds, Stripe Checkout, signed
+webhook fulfillment, success-page reconciliation, refunds, payment records, and
+customer documents are implemented. A refunded live-mode test completed successfully.
+Automated read-only booking smoke checks and persistent Checkout/webhook incident
+monitoring were added in July 2026. Continue controlled regression testing before
+opening the full catalogue.
 
 ---
 

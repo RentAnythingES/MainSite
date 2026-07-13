@@ -3,6 +3,7 @@ import { stripe, isStripeConfigured } from "@/lib/stripe";
 import { createServiceClient } from "@/lib/supabase";
 import { cleanupExpiredBookingDrafts } from "@/lib/booking-v2";
 import type { BookingDraft } from "@/lib/types";
+import { getIncidentErrorMessage, recordSystemIncident } from "@/lib/system-incidents";
 
 /**
  * POST /api/checkout — Create a Stripe Checkout Session
@@ -20,6 +21,12 @@ import type { BookingDraft } from "@/lib/types";
 export async function POST(request: NextRequest) {
   // Check Stripe is configured
   if (!isStripeConfigured() || !stripe) {
+    await recordSystemIncident({
+      source: "checkout",
+      eventType: "stripe_not_configured",
+      severity: "critical",
+      message: "Checkout was requested while Stripe configuration was unavailable.",
+    });
     return NextResponse.json(
       { error: "Payment processing is not configured. Please contact us to complete your booking." },
       { status: 503 }
@@ -285,6 +292,11 @@ export async function POST(request: NextRequest) {
     });
   } catch (err) {
     console.error("[checkout] Error creating session:", err);
+    await recordSystemIncident({
+      source: "checkout",
+      eventType: "checkout_session_creation_failed",
+      message: getIncidentErrorMessage(err),
+    });
     return NextResponse.json(
       { error: "Failed to create checkout session" },
       { status: 500 }

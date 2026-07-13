@@ -64,6 +64,7 @@ Supabase (CRUD products, pricing, bookings)
 | `product_localizations` | Locale-specific product copy and SEO metadata | Public read for active products |
 | `product_faqs` | Locale-specific pre-rental product FAQs | Public read for active products |
 | `product_images` | Product image alt text, source, rights status, and ordering | Public read for active products |
+| `system_incidents` | Persistent Checkout, webhook, and booking failure trail | Server/admin only |
 
 ### Storage
 | Bucket | Purpose | Access |
@@ -252,8 +253,6 @@ RESEND_API_KEY                  # Resend email API key
 CONTACT_EMAIL                   # Admin notification recipient
 FROM_EMAIL                      # Branded sender address
 NEXT_PUBLIC_GA_MEASUREMENT_ID   # Google Analytics
-BOOKINGS_PAUSED                 # Server-side online booking kill switch
-NEXT_PUBLIC_BOOKINGS_PAUSED     # Client-side booking widget kill switch
 STRIPE_SECRET_KEY               # Stripe server-side API key
 STRIPE_WEBHOOK_SECRET           # Stripe webhook signing secret
 NEXT_PUBLIC_SITE_URL            # Public site URL for Checkout redirects
@@ -263,3 +262,4 @@ Analytics event definitions live in `docs/ANALYTICS_SETUP.md`.
 
 Email templates are centralized in `src/lib/email.ts`; deliverability and lifecycle coverage are documented in `docs/EMAIL_DELIVERABILITY.md`.
 Newsletter consent records live in `newsletter_subscribers` and are created only through `/api/newsletter` using the server-side service role.
+Analytics loads only after explicit browser consent. Operational payment failures are recorded server-side in `system_incidents` and summarized by `/api/admin/health`.

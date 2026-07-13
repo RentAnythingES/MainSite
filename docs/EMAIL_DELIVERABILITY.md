@@ -87,4 +87,8 @@ checkout/payment identifiers for faster support follow-up.
 
 ### Current Gap
 
-Newsletter/signup storage is now backed by `newsletter_subscribers`. Any future signup form must collect explicit consent and post through `/api/newsletter` so consent text/version, source, IP, user agent, active status, and unsubscribe token are stored.
+Newsletter/signup storage is backed by `newsletter_subscribers`. Any signup form must
+collect explicit consent and post through `/api/newsletter` so consent text/version,
+source, IP, user agent, active status, and unsubscribe token are stored. Welcome emails
+include a tokenized link to `/newsletter/unsubscribe`; the confirmation page uses POST
+to deactivate the subscription so email-link scanners cannot unsubscribe recipients.

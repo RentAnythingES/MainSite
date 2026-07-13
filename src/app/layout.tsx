@@ -5,6 +5,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
+import CookieConsent from "@/components/CookieConsent";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -25,7 +26,7 @@ export const metadata: Metadata = {
     template: "%s | RentAnything.es",
   },
   description:
-    "Short-term rental of strollers, cribs, wheelchairs, mobility scooters, remote work gear & more. Delivered to your accommodation in Valencia. Book today!",
+    "Short-term rental of strollers, cribs, wheelchairs, mobility scooters, remote work gear and more in Valencia. Check availability for your dates.",
   keywords: [
     "rental Valencia",
     "stroller rental Valencia",
@@ -86,6 +87,7 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col bg-background text-foreground">
         <GoogleAnalytics />
+        <CookieConsent />
         <Header />
         <main className="flex-1">{children}</main>
         <Footer />

@@ -41,6 +41,8 @@ export async function GET(request: NextRequest) {
     productLocalizationsReady,
     productFaqsReady,
     productImagesReady,
+    systemIncidentsReady,
+    unresolvedIncidentsResult,
   ] = await Promise.all([
     supabase
       .from("booking_drafts")
@@ -67,6 +69,13 @@ export async function GET(request: NextRequest) {
     isAvailable(supabase.from("product_localizations").select("id", { head: true })),
     isAvailable(supabase.from("product_faqs").select("id", { head: true })),
     isAvailable(supabase.from("product_images").select("id", { head: true })),
+    isAvailable(supabase.from("system_incidents").select("id", { head: true })),
+    supabase
+      .from("system_incidents")
+      .select("id, source, severity, event_type, message, created_at", { count: "exact" })
+      .is("resolved_at", null)
+      .order("created_at", { ascending: false })
+      .limit(10),
   ]);
 
   return NextResponse.json({
@@ -98,6 +107,11 @@ export async function GET(request: NextRequest) {
     },
     analytics: {
       gaConfigured: Boolean(process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || process.env.NEXT_PUBLIC_GA_ID),
+    },
+    incidents: {
+      available: systemIncidentsReady,
+      unresolvedCount: unresolvedIncidentsResult.error ? null : unresolvedIncidentsResult.count || 0,
+      latest: unresolvedIncidentsResult.error ? [] : unresolvedIncidentsResult.data || [],
     },
     migrations: {
       bookingCoreReady: bookingDraftsReady && bookingInventoryReady,

@@ -10,7 +10,7 @@ export default function CookiesPage() {
     <section className="section bg-white">
       <div className="container-site max-w-3xl">
         <h1 className="text-4xl font-extrabold tracking-tight mb-2">Cookie Policy</h1>
-        <p className="text-sm text-neutral-400 mb-10">Last updated: June 2026</p>
+        <p className="text-sm text-neutral-400 mb-10">Last updated: July 2026</p>
 
         <div className="space-y-8 text-[15px] leading-relaxed">
           <div>
@@ -48,10 +48,10 @@ export default function CookiesPage() {
                     <td className="p-3 text-neutral-600">1 year</td>
                   </tr>
                   <tr>
-                    <td className="p-3 text-neutral-600">Analytics</td>
+                    <td className="p-3 text-neutral-600">Google Analytics (_ga and related identifiers)</td>
                     <td className="p-3"><span className="badge badge-accent">Analytics</span></td>
-                    <td className="p-3 text-neutral-600">Anonymous usage statistics to improve our site</td>
-                    <td className="p-3 text-neutral-600">1 year</td>
+                    <td className="p-3 text-neutral-600">Measures site usage after you choose to allow analytics</td>
+                    <td className="p-3 text-neutral-600">Up to 2 years</td>
                   </tr>
                 </tbody>
               </table>
@@ -61,9 +61,10 @@ export default function CookiesPage() {
           <div>
             <h2 className="text-xl font-bold mb-3">Managing Cookies</h2>
             <p className="text-neutral-600">
-              You can control cookies through your browser settings. Disabling essential cookies
-              may affect site functionality. Analytics cookies can be disabled without impact on
-              your browsing experience.
+              Use the Cookie settings button on the site to allow or reject analytics at any time.
+              Your choice is stored in your browser. Google Analytics is not loaded unless you
+              actively allow analytics. You can also clear cookies and local storage through your
+              browser settings.
             </p>
           </div>
 

@@ -1,5 +1,5 @@
 # Analytics Setup
-> Last updated: 2026-07-08
+> Last updated: 2026-07-13
 
 ## Provider
 
@@ -15,6 +15,14 @@ Implementation:
 - Script/page views: `src/components/GoogleAnalytics.tsx`
 - Event helper: `src/lib/analytics.ts`
 - Config health check: `GET /api/admin/health`
+
+## Consent
+
+- Google Analytics does not load until the visitor selects **Allow analytics**.
+- The choice is stored locally as `rentanything_analytics_consent`.
+- Visitors can reopen the preference panel with the persistent **Cookie settings** button.
+- Rejecting analytics does not affect catalogue browsing, availability, or Checkout.
+- The cookie policy documents the provider, purpose, and retention period.
 
 ## Booking Funnel Events
 
@@ -46,7 +54,7 @@ Current events:
 - Confirm `NEXT_PUBLIC_GA_MEASUREMENT_ID` is set in Vercel Production and Preview.
 - Confirm events appear in GA4 Realtime during a manual availability check.
 - Confirm checkout success emits `checkout_success_status_loaded` during the controlled Stripe test.
-- Add consent/cookie banner logic if switching from basic anonymous measurement to richer tracking.
+- Verify both consent paths after each analytics integration change: rejected must send no GA requests; granted must appear in Realtime.
 
 
 ## Bundle Events

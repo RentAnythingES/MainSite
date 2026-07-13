@@ -7,7 +7,7 @@ import HeroCarousel from "@/components/HeroCarousel";
 export const metadata: Metadata = {
   title: "Rent Baby Gear, Mobility & Tech in Valencia | RentAnything.es",
   description:
-    "Short-term rental of strollers, cribs, wheelchairs, mobility scooters, remote work gear & more. Delivered to your accommodation in Valencia. Book today!",
+    "Short-term rental of strollers, cribs, wheelchairs, mobility scooters, remote work gear and more in Valencia. Check availability for your dates.",
 };
 
 const heroCategories = [
@@ -50,10 +50,10 @@ const heroCategories = [
 ];
 
 const trustStats = [
-  { number: "4,000+", label: "Rentals delivered" },
-  { number: "5★", label: "Google reviews" },
-  { number: "24h", label: "Delivery available" },
-  { number: "100%", label: "Sanitised gear" },
+  { number: "Valencia", label: "Local service area" },
+  { number: "EN · ES", label: "Bilingual support" },
+  { number: "Flexible", label: "Short and longer rentals" },
+  { number: "Local", label: "Pickup and delivery options" },
 ];
 
 const howItWorks = [
@@ -61,7 +61,7 @@ const howItWorks = [
     step: "1",
     title: "Browse & Book",
     description:
-      "Explore our selection of premium gear. Choose your dates, add extras, and book instantly.",
+      "Explore the rental range, choose your dates, and check live availability before payment.",
     icon: "🔍",
   },
   {

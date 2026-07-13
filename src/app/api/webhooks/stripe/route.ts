@@ -5,6 +5,7 @@ import { sendBookingConfirmation } from "@/lib/email";
 import { fetchPickupLocationsById, fetchServiceZonesById } from "@/lib/fulfillment-options";
 import { recordBookingPaymentEvent } from "@/lib/payment-ledger";
 import { createBookingDocumentForPaymentEvent, getCustomerDocumentUrl } from "@/lib/booking-documents";
+import { getIncidentErrorMessage, recordSystemIncident } from "@/lib/system-incidents";
 import Stripe from "stripe";
 
 /**
@@ -35,6 +36,12 @@ export async function POST(request: NextRequest) {
   const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
   if (!webhookSecret) {
     console.error("[webhook] STRIPE_WEBHOOK_SECRET not set");
+    await recordSystemIncident({
+      source: "stripe_webhook",
+      eventType: "webhook_not_configured",
+      severity: "critical",
+      message: "Stripe webhook received an event without a configured signing secret.",
+    });
     return NextResponse.json({ error: "Webhook not configured" }, { status: 500 });
   }
 
@@ -57,6 +64,13 @@ export async function POST(request: NextRequest) {
         const session = event.data.object as Stripe.Checkout.Session;
         const fulfilled = await handleCheckoutCompleted(session);
         if (!fulfilled) {
+          await recordSystemIncident({
+            source: "stripe_webhook",
+            eventType: "checkout_fulfillment_failed",
+            severity: "critical",
+            message: "A completed Stripe Checkout session could not be fulfilled.",
+            context: { eventId: event.id, sessionId: session.id },
+          });
           return NextResponse.json({ error: "Fulfillment failed" }, { status: 500 });
         }
         break;
@@ -66,6 +80,13 @@ export async function POST(request: NextRequest) {
     }
   } catch (err) {
     console.error("[webhook] Unhandled webhook processing error:", err);
+    await recordSystemIncident({
+      source: "stripe_webhook",
+      eventType: "webhook_processing_failed",
+      severity: "critical",
+      message: getIncidentErrorMessage(err),
+      context: { eventId: event.id, eventType: event.type },
+    });
     return NextResponse.json({ error: "Webhook processing failed" }, { status: 500 });
   }
 

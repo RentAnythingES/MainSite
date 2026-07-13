@@ -3,11 +3,15 @@ import type { Database } from "@/lib/types";
 
 const PICKUP_LOCATION_SELECT =
   "id, slug, name, address, city, pickup_instructions, customer_instructions, internal_notes, lead_time_hours, handoff_contact, opening_hours, sort_order";
+const PUBLIC_PICKUP_LOCATION_SELECT =
+  "id, slug, name, address, city, pickup_instructions, customer_instructions, lead_time_hours, opening_hours, sort_order";
 const PICKUP_LOCATION_FALLBACK_SELECT =
   "id, slug, name, address, city, pickup_instructions, opening_hours, sort_order";
 
 const SERVICE_ZONE_SELECT =
   "id, slug, name, city, description, customer_instructions, internal_notes, lead_time_hours, same_day_cutoff, delivery_window, collection_window, delivery_fee_cents, collection_fee_cents, roundtrip_fee_cents, express_surcharge_cents, minimum_order_cents, sort_order";
+const PUBLIC_SERVICE_ZONE_SELECT =
+  "id, slug, name, city, description, customer_instructions, lead_time_hours, same_day_cutoff, delivery_window, collection_window, delivery_fee_cents, collection_fee_cents, roundtrip_fee_cents, express_surcharge_cents, minimum_order_cents, sort_order";
 const SERVICE_ZONE_FALLBACK_SELECT =
   "id, slug, name, city, description, delivery_fee_cents, collection_fee_cents, roundtrip_fee_cents, express_surcharge_cents, minimum_order_cents, sort_order";
 
@@ -19,7 +23,7 @@ function shouldFallback(error: unknown): boolean {
 export async function fetchActivePickupLocations(supabase: SupabaseClient<Database>) {
   const result = await supabase
     .from("pickup_locations")
-    .select(PICKUP_LOCATION_SELECT)
+    .select(PUBLIC_PICKUP_LOCATION_SELECT)
     .eq("is_active", true)
     .order("sort_order", { ascending: true });
 
@@ -49,7 +53,7 @@ export async function fetchAllPickupLocations(supabase: SupabaseClient<Database>
 export async function fetchActiveServiceZones(supabase: SupabaseClient<Database>) {
   const result = await supabase
     .from("service_zones")
-    .select(SERVICE_ZONE_SELECT)
+    .select(PUBLIC_SERVICE_ZONE_SELECT)
     .eq("is_active", true)
     .order("sort_order", { ascending: true });
 
