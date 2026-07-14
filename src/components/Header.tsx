@@ -77,18 +77,20 @@ export default function Header() {
                 {browseLabel}
               </button>
               {browseOpen && (
-                <div className="absolute top-full left-0 mt-1 w-64 bg-white rounded-xl shadow-xl border border-border p-2 animate-in fade-in slide-in-from-top-2 duration-200">
-                  {categories.map((cat) => (
-                    <Link
-                      key={cat.href}
-                      href={cat.href}
-                      className="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-surface-muted transition-colors text-sm font-medium text-neutral-700 hover:text-brand"
-                      id={`browse-${cat.href.split("/").pop()}`}
-                    >
-                      <span className="text-lg">{cat.emoji}</span>
-                      {cat.name}
-                    </Link>
-                  ))}
+                <div className="absolute top-full left-0 z-50 w-64 pt-1">
+                  <div className="bg-white rounded-xl shadow-xl border border-border p-2 animate-in fade-in slide-in-from-top-2 duration-200">
+                    {categories.map((cat) => (
+                      <Link
+                        key={cat.href}
+                        href={cat.href}
+                        className="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-surface-muted transition-colors text-sm font-medium text-neutral-700 hover:text-brand"
+                        id={`browse-${cat.href.split("/").pop()}`}
+                      >
+                        <span className="text-lg">{cat.emoji}</span>
+                        {cat.name}
+                      </Link>
+                    ))}
+                  </div>
                 </div>
               )}
             </div>
