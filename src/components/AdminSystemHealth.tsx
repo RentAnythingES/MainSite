@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 type MigrationStatus = {
   bookingCoreReady: boolean;
   bookingOpsReady: boolean;
+  inventoryAssignmentsReady: boolean;
   financeReady: boolean;
   productContentReady: boolean;
 };
@@ -36,6 +37,7 @@ type HealthResponse = {
 const CHECKS: Array<{ key: keyof MigrationStatus; label: string; description: string }> = [
   { key: "bookingCoreReady", label: "Booking foundation", description: "Drafts and inventory holds" },
   { key: "bookingOpsReady", label: "Operations checklist", description: "Booking handover tasks" },
+  { key: "inventoryAssignmentsReady", label: "Physical assignments", description: "Unit reservation, handover and return tracking" },
   { key: "financeReady", label: "Finance records", description: "Payment ledger and documents" },
   { key: "productContentReady", label: "Product review", description: "Editorial copy, FAQs and image rights" },
 ];

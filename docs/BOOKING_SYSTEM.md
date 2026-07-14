@@ -19,6 +19,14 @@ Item-level inventory is additive: `inventory_units` records physical assets and
 to use aggregate product stock until all physical units for a product have been
 onboarded and reconciled; this prevents a partial registry from changing sellable stock.
 
+Bookings can now be linked to specific physical assets through
+`booking_inventory_unit_assignments`. Admins assign an available unit, mark it handed
+over, and mark it returned. These transitions atomically keep the unit status and event
+history synchronized. Cancelling or refunding a booking automatically releases units
+that have not been handed over, while a booking cannot be completed until every handed-
+over unit has been returned. This operational assignment layer does not yet replace the
+aggregate availability calculation.
+
 Initial Booking System v2 code is now in place:
 
 - `/api/availability` accepts date-only legacy checks and datetime `startAt`/`endAt`.
@@ -28,6 +36,7 @@ Initial Booking System v2 code is now in place:
 - `/api/checkout/status` joins Stripe session, booking draft, booking, and inventory state for the success page.
 - `/api/webhooks/stripe` can fulfill `checkout.session.completed` from a booking draft.
 - `/api/admin/health` exposes authenticated, non-secret configuration status for Stripe, Resend, Supabase, and booking health.
+- `/api/admin/bookings/[id]/inventory-units` manages physical-unit assignment and lifecycle transitions.
 - Expired draft cleanup now runs before availability checks, draft creation, checkout creation, and admin health checks.
 - `npm run smoke:booking` performs safe, read-only checks against booking options and availability.
 - `npm run audit:launch` checks required configuration, core tables, active-product readiness, and expired drafts.

@@ -67,6 +67,7 @@ Supabase (CRUD products, pricing, bookings)
 | `system_incidents` | Persistent Checkout, webhook, and booking failure trail | Server/admin only |
 | `inventory_units` | Individual physical assets, condition, location, and operational status | Admin only |
 | `inventory_unit_events` | Append-only unit creation, inspection, and status history | Admin only |
+| `booking_inventory_unit_assignments` | Physical-unit reservation, handover, return, and release history per booking | Admin/API only |
 | `monitoring_runs` | Scheduled production health results and alert deduplication | Server/admin only |
 
 ### Storage
@@ -188,6 +189,7 @@ Stripe Checkout
 | `/api/admin/availability` | GET, POST, DELETE | View, block, and unblock product availability dates |
 | `/api/admin/bookings` | GET | List bookings (optional status filter) |
 | `/api/admin/bookings/[id]` | PUT | Update booking status |
+| `/api/admin/bookings/[id]/inventory-units` | GET, POST, PATCH | List, assign, hand over, return, or release physical units |
 | `/api/admin/bookings/[id]/ops-tasks` | PATCH | Toggle internal booking operations checklist tasks |
 | `/api/admin/bookings/[id]/documents/[documentId]/pdf` | GET | Download protected invoice/refund PDF |
 | `/api/admin/bookings/[id]/documents/[documentId]/email` | POST | Email customer a document PDF link |
@@ -208,7 +210,7 @@ Protected by Supabase Auth. Server-side cookie check in `admin/layout.tsx` — r
 | `/admin/products/[id]/content` | Locale content editor, product FAQs, image-use record, and readiness checklist |
 | `/admin/availability` | Calendar availability manager with selected-date actions plus selected/all-product range blocking |
 | `/admin/inventory` | Physical asset registry with status, condition, location, notes, and inspections |
-| `/admin/bookings` | Expandable booking cards, status filter tabs, ops checklist, lifecycle transition buttons |
+| `/admin/bookings` | Expandable booking cards, status filters, physical-unit assignment, ops checklist, lifecycle controls |
 | `/admin/login` | Supabase Auth email/password login |
 
 ---

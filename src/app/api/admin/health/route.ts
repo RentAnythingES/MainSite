@@ -35,6 +35,7 @@ export async function GET(request: NextRequest) {
     bookingDraftsReady,
     bookingInventoryReady,
     bookingOpsReady,
+    inventoryAssignmentsReady,
     paymentLedgerReady,
     bookingDocumentsReady,
     productContentStatusReady,
@@ -65,6 +66,7 @@ export async function GET(request: NextRequest) {
     isAvailable(supabase.from("booking_drafts").select("id", { head: true })),
     isAvailable(supabase.from("booking_inventory_blocks").select("id", { head: true })),
     isAvailable(supabase.from("booking_ops_tasks").select("id", { head: true })),
+    isAvailable(supabase.from("booking_inventory_unit_assignments").select("id", { head: true })),
     isAvailable(supabase.from("booking_payment_events").select("id", { head: true })),
     isAvailable(supabase.from("booking_documents").select("id", { head: true })),
     isAvailable(supabase.from("products").select("content_status", { head: true })),
@@ -125,6 +127,7 @@ export async function GET(request: NextRequest) {
     migrations: {
       bookingCoreReady: bookingDraftsReady && bookingInventoryReady,
       bookingOpsReady,
+      inventoryAssignmentsReady,
       financeReady: paymentLedgerReady && bookingDocumentsReady,
       productContentReady: productContentStatusReady && productLocalizationsReady && productFaqsReady && productImagesReady,
     },
