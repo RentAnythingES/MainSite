@@ -67,6 +67,7 @@ Supabase (CRUD products, pricing, bookings)
 | `system_incidents` | Persistent Checkout, webhook, and booking failure trail | Server/admin only |
 | `inventory_units` | Individual physical assets, condition, location, and operational status | Admin only |
 | `inventory_unit_events` | Append-only unit creation, inspection, and status history | Admin only |
+| `monitoring_runs` | Scheduled production health results and alert deduplication | Server/admin only |
 
 ### Storage
 | Bucket | Purpose | Access |
@@ -256,6 +257,7 @@ RESEND_API_KEY                  # Resend email API key
 CONTACT_EMAIL                   # Admin notification recipient
 FROM_EMAIL                      # Branded sender address
 NEXT_PUBLIC_GA_MEASUREMENT_ID   # Google Analytics
+CRON_SECRET                     # Vercel Cron Bearer authentication (16+ random characters)
 STRIPE_SECRET_KEY               # Stripe server-side API key
 STRIPE_WEBHOOK_SECRET           # Stripe webhook signing secret
 NEXT_PUBLIC_SITE_URL            # Public site URL for Checkout redirects

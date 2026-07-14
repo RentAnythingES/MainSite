@@ -30,6 +30,7 @@ type HealthResponse = {
     webhookSecretConfigured: boolean;
     publishableKeyConfigured: boolean;
   };
+  monitoring: { available: boolean; cronSecretConfigured: boolean; latest: { status: string; created_at: string } | null };
 };
 
 const CHECKS: Array<{ key: keyof MigrationStatus; label: string; description: string }> = [
@@ -43,6 +44,7 @@ export default function AdminSystemHealth() {
   const [migrations, setMigrations] = useState<MigrationStatus | null>(null);
   const [incidents, setIncidents] = useState<IncidentStatus | null>(null);
   const [stripeReady, setStripeReady] = useState<boolean | null>(null);
+  const [monitoring, setMonitoring] = useState<HealthResponse["monitoring"] | null>(null);
   const [error, setError] = useState(false);
 
   useEffect(() => {
@@ -54,6 +56,7 @@ export default function AdminSystemHealth() {
       .then((data: HealthResponse) => {
         setMigrations(data.migrations);
         setIncidents(data.incidents);
+        setMonitoring(data.monitoring);
         setStripeReady(
           data.stripe.configured &&
           data.stripe.webhookSecretConfigured &&
@@ -136,6 +139,12 @@ export default function AdminSystemHealth() {
               description="Persistent payment and webhook failure records"
               ready={Boolean(incidents?.available)}
               failureLabel="Migration needed"
+            />
+            <HealthCard
+              label="Scheduled monitoring"
+              description={monitoring?.latest ? `Last run ${new Date(monitoring.latest.created_at).toLocaleString()} — ${monitoring.latest.status}` : "Daily production health and alert emails"}
+              ready={Boolean(monitoring?.available && monitoring.cronSecretConfigured)}
+              failureLabel={monitoring?.available ? "Add CRON_SECRET" : "Migration needed"}
             />
             {CHECKS.map((check) => (
               <HealthCard

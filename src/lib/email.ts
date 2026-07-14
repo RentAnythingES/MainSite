@@ -489,3 +489,25 @@ export async function sendEmailHealthCheck(): Promise<{ ok: boolean; id?: string
     return { ok: false, error: err instanceof Error ? err.message : "Unknown email error" };
   }
 }
+
+export async function sendOperationalAlert(issues: string[], metrics: Record<string, number>): Promise<boolean> {
+  const resend = getResend();
+  if (!resend) return false;
+  try {
+    const result = await resend.emails.send({
+      from: FROM,
+      to: TO_ADMIN,
+      subject: `RentAnything operational alert — ${issues.length} issue${issues.length === 1 ? "" : "s"}`,
+      html: emailWrapper("Operational attention required", `
+        <p style="font-size:15px;color:#374151;line-height:1.6;margin-top:0;">The scheduled production monitor found the following:</p>
+        <ul style="font-size:14px;color:#374151;line-height:1.8;">${issues.map((issue) => `<li>${escapeHtml(issue)}</li>`).join("")}</ul>
+        ${infoBox(`<p style="font-size:13px;color:#0f766e;margin:0;">Unresolved incidents: ${metrics.unresolvedIncidents || 0} · Expired drafts cleaned: ${metrics.expiredDraftsCleaned || 0} · Invalid stock rows: ${metrics.invalidStockRows || 0}</p>`)}
+        <p style="font-size:13px;color:#6b7280;line-height:1.6;">Open the RentAnything admin dashboard and review System readiness before accepting affected bookings.</p>
+      `, "Scheduled RentAnything production monitoring alert."),
+    });
+    return !result.error;
+  } catch (error) {
+    console.error("[email] Failed to send operational alert:", error);
+    return false;
+  }
+}

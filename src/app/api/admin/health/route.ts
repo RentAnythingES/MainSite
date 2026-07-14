@@ -43,6 +43,8 @@ export async function GET(request: NextRequest) {
     productImagesReady,
     systemIncidentsReady,
     unresolvedIncidentsResult,
+    monitoringReady,
+    latestMonitoringRun,
   ] = await Promise.all([
     supabase
       .from("booking_drafts")
@@ -76,6 +78,8 @@ export async function GET(request: NextRequest) {
       .is("resolved_at", null)
       .order("created_at", { ascending: false })
       .limit(10),
+    isAvailable(supabase.from("monitoring_runs").select("id", { head: true })),
+    supabase.from("monitoring_runs").select("status,issues,alert_sent,created_at").order("created_at", { ascending: false }).limit(1).maybeSingle(),
   ]);
 
   return NextResponse.json({
@@ -107,6 +111,11 @@ export async function GET(request: NextRequest) {
     },
     analytics: {
       gaConfigured: Boolean(process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || process.env.NEXT_PUBLIC_GA_ID),
+    },
+    monitoring: {
+      available: monitoringReady,
+      cronSecretConfigured: Boolean(process.env.CRON_SECRET),
+      latest: latestMonitoringRun.error ? null : latestMonitoringRun.data,
     },
     incidents: {
       available: systemIncidentsReady,

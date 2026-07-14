@@ -62,6 +62,7 @@ All main transactional emails are centralized in `src/lib/email.ts` and use the 
 | Document resend | `sendBookingDocumentLink` | Admin clicks "Email PDF" on booking document | `/api/admin/bookings/[id]/documents/[documentId]/email` |
 | Signup / newsletter welcome | `sendSignupWelcome` | `/api/newsletter` consent capture | Wired on blog newsletter form |
 | Health check | `sendEmailHealthCheck` | Admin email test | `/api/admin/health` |
+| Operational alert | `sendOperationalAlert` | Daily secure Vercel Cron; deduplicated for 24 hours | `/api/cron/operational-health` |
 
 Booking confirmation emails can include customer-safe invoice PDF links when a
 booking document exists. Refund/cancellation emails can include refund receipt PDF
