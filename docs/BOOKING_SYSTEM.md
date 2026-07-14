@@ -8,6 +8,12 @@ datetime inventory holds. There is no separate global pause in the v2 checkout p
 Products that should not be purchasable must be made unavailable through the inventory
 and availability data rather than through presentation-only or checkout-only blocks.
 
+The admin availability page distinguishes calendar blocks from product-level online
+stock. **Restore online availability** verifies that no active booking, draft, or
+inventory hold exists, then restores `stock_available` and removes only unlinked
+legacy `booking` date rows. Normal date unblocking continues to affect manual and
+maintenance calendar blocks without changing product stock.
+
 Item-level inventory is additive: `inventory_units` records physical assets and
 `inventory_unit_events` preserves operational history. Live availability continues
 to use aggregate product stock until all physical units for a product have been

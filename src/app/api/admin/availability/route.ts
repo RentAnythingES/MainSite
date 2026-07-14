@@ -3,6 +3,7 @@ import { createAdminClient } from "@/lib/supabase-admin";
 import { verifyAdmin, unauthorizedResponse } from "@/lib/admin-auth";
 
 type AvailabilityBody = {
+  action?: string;
   productId?: string;
   productIds?: string[];
   dates?: string[];
@@ -155,7 +156,35 @@ export async function GET(request: NextRequest) {
     }
   }
 
-  return NextResponse.json({ blockedDates: data, bookings });
+  const today = new Date().toISOString().slice(0, 10);
+  const [productResult, legacyResult] = await Promise.all([
+    supabase.from("products").select("stock_total,stock_available").eq("id", productId).single(),
+    supabase.from("blocked_dates").select("id", { count: "exact", head: true }).eq("product_id", productId).eq("reason", "booking").gte("blocked_date", today),
+  ]);
+  return NextResponse.json({ blockedDates: data, bookings, productState: productResult.data, futureLegacyBookingDates: legacyResult.count || 0 });
+}
+
+export async function PUT(request: NextRequest) {
+  const user = await verifyAdmin(request);
+  if (!user) return unauthorizedResponse();
+  const body = await request.json() as AvailabilityBody;
+  if (body.action !== "restore_online_availability" || !body.productId || body.productId === "all") return NextResponse.json({ error: "Invalid availability action" }, { status: 400 });
+  const supabase = createAdminClient();
+  const now = new Date().toISOString();
+  const [product, drafts, blocks, bookings] = await Promise.all([
+    supabase.from("products").select("id,stock_total").eq("id", body.productId).single(),
+    supabase.from("booking_drafts").select("id", { count: "exact", head: true }).eq("product_id", body.productId).in("status", ["draft", "checkout_created"]).gt("expires_at", now),
+    supabase.from("booking_inventory_blocks").select("id", { count: "exact", head: true }).eq("product_id", body.productId).gt("ends_at", now),
+    supabase.from("bookings").select("id", { count: "exact", head: true }).eq("product_id", body.productId).in("status", ["pending", "confirmed", "paid", "delivering", "active", "returning"]),
+  ]);
+  if (product.error) return NextResponse.json({ error: "Product not found" }, { status: 404 });
+  if (drafts.error || blocks.error || bookings.error) return NextResponse.json({ error: "Could not verify booking safety" }, { status: 500 });
+  if (drafts.count || blocks.count || bookings.count) return NextResponse.json({ error: "Cannot restore availability while active bookings or holds exist" }, { status: 409 });
+  const { count, error: deleteError } = await supabase.from("blocked_dates").delete({ count: "exact" }).eq("product_id", body.productId).eq("reason", "booking").is("booking_id", null);
+  if (deleteError) return NextResponse.json({ error: deleteError.message }, { status: 500 });
+  const { error: stockError } = await supabase.from("products").update({ stock_available: product.data.stock_total }).eq("id", body.productId);
+  if (stockError) return NextResponse.json({ error: stockError.message }, { status: 500 });
+  return NextResponse.json({ success: true, stockAvailable: product.data.stock_total, deletedLegacyDates: count || 0 });
 }
 
 export async function POST(request: NextRequest) {

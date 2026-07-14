@@ -22,6 +22,7 @@ interface BookingInfo {
   customer_name: string;
   status: string;
 }
+interface ProductState { stock_total: number; stock_available: number }
 
 function getMonthDays(year: number, month: number): Date[] {
   const days: Date[] = [];
@@ -56,6 +57,8 @@ export default function AdminAvailabilityPage() {
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const [productState, setProductState] = useState<ProductState | null>(null);
+  const [futureLegacyBookingDates, setFutureLegacyBookingDates] = useState(0);
 
   // Calendar state
   const now = new Date();
@@ -93,14 +96,19 @@ export default function AdminAvailabilityPage() {
       const data = await res.json();
       setBlockedDates(data.blockedDates || []);
       setBookings(data.bookings || {});
+      setProductState(data.productState || null);
+      setFutureLegacyBookingDates(data.futureLegacyBookingDates || 0);
     } catch {
       setError("Failed to load availability");
     }
   }, [selectedProductId, viewYear, viewMonth]);
 
   useEffect(() => {
-    fetchAvailability();
-    setSelectedDates(new Set());
+    const timeout = window.setTimeout(() => {
+      void fetchAvailability();
+      setSelectedDates(new Set());
+    }, 0);
+    return () => window.clearTimeout(timeout);
   }, [fetchAvailability]);
 
   // Navigation
@@ -223,6 +231,14 @@ export default function AdminAvailabilityPage() {
     }
   };
 
+  const restoreOnlineAvailability = async () => {
+    if (!confirm("Restore this product for online booking? This clears its legacy booking blocks only after checking there are no active bookings or holds.")) return;
+    setSaving(true); setError(""); setSuccess("");
+    try { const response = await fetch("/api/admin/availability", { method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ action: "restore_online_availability", productId: selectedProductId }) }); const data = await response.json(); if (!response.ok) throw new Error(data.error || "Could not restore availability"); setSuccess(`Online availability restored. Removed ${data.deletedLegacyDates} legacy date blocks.`); await fetchAvailability(); }
+    catch (err) { setError(err instanceof Error ? err.message : "Could not restore availability"); }
+    finally { setSaving(false); }
+  };
+
   // Build blocked dates lookup
   const blockedMap = new Map<string, BlockedDate>();
   blockedDates.forEach((bd) => blockedMap.set(bd.blocked_date, bd));
@@ -287,6 +303,7 @@ export default function AdminAvailabilityPage() {
             </option>
           ))}
         </select>
+        {productState && <div className="mt-4 flex flex-col gap-3 rounded-lg border border-neutral-800 bg-neutral-950 p-3 sm:flex-row sm:items-center sm:justify-between"><div><p className="text-sm font-medium text-white">Online stock: {productState.stock_available}/{productState.stock_total}</p><p className="text-xs text-neutral-500">{futureLegacyBookingDates} future legacy booking blocks</p></div>{(productState.stock_available === 0 || futureLegacyBookingDates > 0) && <button type="button" disabled={saving} onClick={restoreOnlineAvailability} className="rounded-lg bg-emerald-600 px-4 py-2 text-xs font-semibold text-white disabled:opacity-50">Restore online availability</button>}</div>}
       </div>
 
       {/* Range tools */}
