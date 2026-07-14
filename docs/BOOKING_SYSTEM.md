@@ -8,6 +8,11 @@ datetime inventory holds. There is no separate global pause in the v2 checkout p
 Products that should not be purchasable must be made unavailable through the inventory
 and availability data rather than through presentation-only or checkout-only blocks.
 
+Item-level inventory is additive: `inventory_units` records physical assets and
+`inventory_unit_events` preserves operational history. Live availability continues
+to use aggregate product stock until all physical units for a product have been
+onboarded and reconciled; this prevents a partial registry from changing sellable stock.
+
 Initial Booking System v2 code is now in place:
 
 - `/api/availability` accepts date-only legacy checks and datetime `startAt`/`endAt`.

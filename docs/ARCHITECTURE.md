@@ -65,6 +65,8 @@ Supabase (CRUD products, pricing, bookings)
 | `product_faqs` | Locale-specific pre-rental product FAQs | Public read for active products |
 | `product_images` | Product image alt text, source, rights status, and ordering | Public read for active products |
 | `system_incidents` | Persistent Checkout, webhook, and booking failure trail | Server/admin only |
+| `inventory_units` | Individual physical assets, condition, location, and operational status | Admin only |
+| `inventory_unit_events` | Append-only unit creation, inspection, and status history | Admin only |
 
 ### Storage
 | Bucket | Purpose | Access |
@@ -204,6 +206,7 @@ Protected by Supabase Auth. Server-side cookie check in `admin/layout.tsx` — r
 | `/admin/products/import` | CSV template, row preview/validation, draft-only bulk import |
 | `/admin/products/[id]/content` | Locale content editor, product FAQs, image-use record, and readiness checklist |
 | `/admin/availability` | Calendar availability manager with selected-date actions plus selected/all-product range blocking |
+| `/admin/inventory` | Physical asset registry with status, condition, location, notes, and inspections |
 | `/admin/bookings` | Expandable booking cards, status filter tabs, ops checklist, lifecycle transition buttons |
 | `/admin/login` | Supabase Auth email/password login |
 
