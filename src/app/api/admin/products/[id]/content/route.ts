@@ -40,7 +40,7 @@ function buildReadiness(product: Record<string, unknown>) {
   if (!english?.seo_title?.trim() || !english?.seo_description?.trim()) missing.push("English SEO title and description");
   if (faqs.filter((faq) => faq.locale === "en" && faq.question.trim() && faq.answer.trim()).length < 3) missing.push("Three English FAQs");
   if (!primaryImage?.alt_text?.trim()) missing.push("Primary image alt text");
-  if (!primaryImage?.rights_status || primaryImage.rights_status === "unknown") missing.push("Confirmed image-use status");
+  if (!primaryImage?.rights_status || primaryImage.rights_status === "unknown") missing.push("Confirm why RentAnything is allowed to use the primary image");
 
   return { ready: missing.length === 0, missing };
 }
@@ -77,6 +77,10 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
       faqs?: FaqPayload[];
       primary_image?: PrimaryImagePayload;
     };
+    const allowedImageStatuses = ["unknown", "owned", "licensed", "manufacturer_approved"];
+    if (body.primary_image?.rights_status && !allowedImageStatuses.includes(body.primary_image.rights_status)) {
+      return NextResponse.json({ error: "Choose a valid image permission status." }, { status: 400 });
+    }
     const supabase = createAdminClient();
     const { data: product, error: productError } = await supabase
       .from("products")

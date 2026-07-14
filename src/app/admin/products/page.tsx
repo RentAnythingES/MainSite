@@ -61,6 +61,7 @@ export default function AdminProductsPage() {
   const [statusFilter, setStatusFilter] = useState<"active" | "archived" | "all">("active");
   const [editingId, setEditingId] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
+  const [statusChangeId, setStatusChangeId] = useState<string | null>(null);
   const [uploadingImage, setUploadingImage] = useState(false);
   const [editForm, setEditForm] = useState<Partial<Product & { pricing_tiers: PricingTier[] }>>({});
   const [editFeatures, setEditFeatures] = useState<string[]>([]);
@@ -162,6 +163,7 @@ export default function AdminProductsPage() {
 
   const toggleActive = async (id: string, currentlyActive: boolean) => {
     try {
+      setStatusChangeId(id);
       setError("");
       setNotice("");
       const res = await fetch(`/api/admin/products/${id}`, {
@@ -177,6 +179,8 @@ export default function AdminProductsPage() {
       setNotice(currentlyActive ? "Product archived and hidden from public pages." : "Product activated and visible on public pages.");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to toggle product status");
+    } finally {
+      setStatusChangeId(null);
     }
   };
 
@@ -372,16 +376,9 @@ export default function AdminProductsPage() {
                     })()}
                   </td>
                   <td className="p-4">
-                    <button
-                      onClick={() => toggleActive(product.id, product.is_active)}
-                      className={`text-xs px-2 py-1 rounded-full font-medium transition-colors ${
-                        product.is_active
-                          ? "bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500/20"
-                          : "bg-neutral-700 text-neutral-400 hover:bg-neutral-600"
-                      }`}
-                    >
+                    <span className={`text-xs px-2 py-1 rounded-full font-medium ${product.is_active ? "bg-emerald-500/10 text-emerald-400" : "bg-neutral-700 text-neutral-400"}`}>
                       {product.is_active ? "Active" : "Inactive"}
-                    </button>
+                    </span>
                   </td>
                   <td className="p-4 text-right">
                     <div className="flex justify-end gap-2">
@@ -404,12 +401,21 @@ export default function AdminProductsPage() {
                         >
                           Archive
                         </button>
+                      ) : product.content_status !== "content_ready" ? (
+                        <Link
+                          href={`/admin/products/${product.id}/content`}
+                          className="rounded-lg bg-amber-500/15 px-3 py-1.5 text-xs font-medium text-amber-200 transition-colors hover:bg-amber-500/25"
+                          title="Complete the publication checklist before activation"
+                        >
+                          Finish review
+                        </Link>
                       ) : (
                         <button
                           onClick={() => toggleActive(product.id, false)}
-                          className="text-xs px-3 py-1.5 rounded-lg bg-emerald-600/20 text-emerald-300 hover:bg-emerald-600/40 transition-colors"
+                          disabled={statusChangeId === product.id}
+                          className="text-xs px-3 py-1.5 rounded-lg bg-emerald-600/20 text-emerald-300 hover:bg-emerald-600/40 transition-colors disabled:cursor-wait disabled:opacity-50"
                         >
-                          Activate
+                          {statusChangeId === product.id ? "Activating..." : "Activate"}
                         </button>
                       )}
                     </div>
