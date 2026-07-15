@@ -18,11 +18,11 @@ export const metadata: Metadata = {
 
 const heroCategories = [
   { ...t.categories.babyGear, href: "/es/rental/baby-gear", image: "/categories/baby-gear.png" },
+  { name: "Niños y Familia", desc: "Bicicletas, juegos, juguetes y actividades familiares", href: "/es/rental/kids-family", image: "/discover/turia-gardens-hero.jpg" },
   { ...t.categories.mobility, href: "/es/rental/mobility", image: "/categories/mobility.png" },
   { ...t.categories.remoteWork, href: "/es/rental/remote-work", image: "/categories/remote-work.png" },
   { ...t.categories.homeLiving, href: "/es/rental/home-living", image: "/categories/home-living.png" },
   { ...t.categories.travelOutdoors, href: "/es/rental/travel-outdoors", image: "/categories/travel-outdoors.png" },
-  { ...t.categories.pregnancy, href: "/es/rental/pregnancy", image: "/categories/pregnancy.png" },
 ];
 
 const howItWorks = [
