@@ -301,7 +301,11 @@ per-booking ops checklist tasks. The admin booking detail can track whether the
 customer was contacted, equipment prepared, handoff confirmed, return scheduled,
 and return inspected without overloading the customer-facing booking status.
 Until that additive migration is applied, the bookings list remains available and
-shows the default checklist; toggling checklist tasks requires the migration.
+shows the default checklist in a disabled state with a migration warning; booking
+status, payments, documents, inventory, and customer-email actions remain usable.
+The bookings API reports the checklist capability explicitly, and the checklist
+update endpoint returns a focused `503` migration-required response instead of a
+generic schema-cache failure.
 
 Expanded admin booking rows also show payment totals, Stripe checkout/payment IDs,
 active/released inventory block status, and a lightweight status timeline so support

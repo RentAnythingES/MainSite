@@ -159,6 +159,7 @@ export default function AdminBookingsPage() {
   const [sendingDocumentId, setSendingDocumentId] = useState<string | null>(null);
   const [updatingStatus, setUpdatingStatus] = useState<string | null>(null);
   const [updatingOpsTask, setUpdatingOpsTask] = useState<string | null>(null);
+  const [bookingOpsTasksAvailable, setBookingOpsTasksAvailable] = useState(true);
 
   const fetchBookings = useCallback(async () => {
     try {
@@ -166,6 +167,7 @@ export default function AdminBookingsPage() {
       if (!res.ok) throw new Error("Failed to fetch");
       const data = await res.json();
       setBookings(data.bookings || []);
+      setBookingOpsTasksAvailable(data.capabilities?.bookingOpsTasks !== false);
     } catch {
       setError("Failed to load bookings. Check Supabase connection.");
     } finally {
@@ -345,6 +347,12 @@ export default function AdminBookingsPage() {
         <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-lg p-3 text-sm text-emerald-300 mb-4">
           {notice}
           <button onClick={() => setNotice("")} className="ml-2 text-emerald-200 hover:text-white">×</button>
+        </div>
+      )}
+
+      {!bookingOpsTasksAvailable && (
+        <div className="mb-4 rounded-lg border border-amber-500/20 bg-amber-500/10 p-3 text-sm text-amber-200">
+          Operations checklist is temporarily unavailable because its database migration has not been applied. Booking status, payments, documents, inventory and customer emails still work normally.
         </div>
       )}
 
@@ -590,7 +598,7 @@ export default function AdminBookingsPage() {
                                 <input
                                   type="checkbox"
                                   checked={task.is_done}
-                                  disabled={taskUpdating}
+                                  disabled={taskUpdating || !bookingOpsTasksAvailable}
                                   onChange={(event) => updateOpsTask(booking.id, task.task_key, event.target.checked)}
                                   className="mt-0.5 h-4 w-4 rounded border-neutral-700 bg-neutral-900 text-teal-500 focus:ring-teal-500"
                                 />
@@ -601,7 +609,9 @@ export default function AdminBookingsPage() {
                                   <span className="block text-xs text-neutral-500">
                                     {taskUpdating
                                       ? "Saving..."
-                                      : task.completed_at
+                                      : !bookingOpsTasksAvailable
+                                        ? "Unavailable until database migration is applied"
+                                        : task.completed_at
                                         ? `Done ${formatDateTime(task.completed_at)}`
                                         : "Pending"}
                                   </span>

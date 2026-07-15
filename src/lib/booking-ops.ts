@@ -10,6 +10,11 @@ export const DEFAULT_OPS_TASKS = [
 
 export type BookingOpsTaskKey = (typeof DEFAULT_OPS_TASKS)[number]["task_key"];
 
+export function isMissingBookingOpsTasksTable(error: unknown) {
+  const code = (error as { code?: string } | null)?.code;
+  return code === "42P01" || code === "PGRST205";
+}
+
 export function getDefaultOpsTasks(bookingId: string) {
   return DEFAULT_OPS_TASKS.map((task) => ({
     booking_id: bookingId,
@@ -31,7 +36,7 @@ export async function ensureBookingOpsTasks(
       ignoreDuplicates: true,
     });
 
-  if (error && error.code !== "42P01") {
+  if (error && !isMissingBookingOpsTasksTable(error)) {
     throw error;
   }
 }

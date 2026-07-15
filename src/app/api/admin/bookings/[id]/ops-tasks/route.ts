@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase-admin";
 import { unauthorizedResponse, verifyAdmin } from "@/lib/admin-auth";
-import { DEFAULT_OPS_TASKS, ensureBookingOpsTasks } from "@/lib/booking-ops";
+import { DEFAULT_OPS_TASKS, ensureBookingOpsTasks, isMissingBookingOpsTasksTable } from "@/lib/booking-ops";
 
 type OpsTaskPatchBody = {
   taskKey?: string;
@@ -68,6 +68,15 @@ export async function PATCH(
     return NextResponse.json({ task: data });
   } catch (err) {
     console.error("[admin/bookings/ops-tasks] PATCH error:", err);
+    if (isMissingBookingOpsTasksTable(err)) {
+      return NextResponse.json(
+        {
+          code: "BOOKING_OPS_MIGRATION_REQUIRED",
+          error: "The operations checklist is not installed yet. Apply migration 20260711_booking_ops_tasks.sql; all other booking actions remain available.",
+        },
+        { status: 503 }
+      );
+    }
     return NextResponse.json(
       { error: `Failed to update checklist: ${getErrorMessage(err)}` },
       { status: 500 }

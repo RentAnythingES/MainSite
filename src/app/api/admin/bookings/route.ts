@@ -4,12 +4,7 @@ import { verifyAdmin, unauthorizedResponse } from "@/lib/admin-auth";
 import { fetchPickupLocationsById, fetchServiceZonesById } from "@/lib/fulfillment-options";
 import { fetchBookingPaymentEventsByBookingId } from "@/lib/payment-ledger";
 import { fetchBookingDocumentsByBookingId } from "@/lib/booking-documents";
-import { DEFAULT_OPS_TASKS } from "@/lib/booking-ops";
-
-function isMissingOptionalTable(error: unknown) {
-  const code = (error as { code?: string } | null)?.code;
-  return code === "42P01" || code === "PGRST205";
-}
+import { DEFAULT_OPS_TASKS, isMissingBookingOpsTasksTable } from "@/lib/booking-ops";
 
 /**
  * GET /api/admin/bookings — List all bookings with product info
@@ -80,9 +75,10 @@ export async function GET(request: NextRequest) {
     if (pickupLocationsResult.error) throw pickupLocationsResult.error;
     if (serviceZonesResult.error) throw serviceZonesResult.error;
     if (inventoryBlocksResult.error) throw inventoryBlocksResult.error;
-    if (opsTasksResult.error && !isMissingOptionalTable(opsTasksResult.error)) {
+    if (opsTasksResult.error && !isMissingBookingOpsTasksTable(opsTasksResult.error)) {
       throw opsTasksResult.error;
     }
+    const bookingOpsTasksAvailable = !opsTasksResult.error;
 
     const pickupLocationById = new Map(
       (pickupLocationsResult.data || []).map((location: { id: string }) => [location.id, location])
@@ -151,7 +147,10 @@ export async function GET(request: NextRequest) {
         })),
     }));
 
-    return NextResponse.json({ bookings: enrichedBookings });
+    return NextResponse.json({
+      bookings: enrichedBookings,
+      capabilities: { bookingOpsTasks: bookingOpsTasksAvailable },
+    });
   } catch (err) {
     console.error("[admin/bookings] GET error:", err);
     return NextResponse.json({ error: "Failed to fetch bookings" }, { status: 500 });
