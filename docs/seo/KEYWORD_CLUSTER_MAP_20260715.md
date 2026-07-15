@@ -128,6 +128,43 @@ Until those thresholds are met, category sections and product pages should cover
 the mid-tail terms. Creating thin subcategory pages early would split authority
 from the category page that is already receiving impressions.
 
+## Apartment Comfort cluster - second priority
+
+### Implementation status - 15 July 2026
+
+- `/rental/home-living` owns `apartment equipment rental Valencia` and supports
+  portable air conditioner, air purifier and apartment-comfort queries without
+  competing with model-specific product pages.
+- `/es/rental/home-living` mirrors that ownership for
+  `alquiler de equipamiento para apartamentos en Valencia`.
+- The category explains portable-AC venting, room suitability, noise and setup
+  considerations before directing visitors into date-based availability.
+- The category links to `/valencia/kits/summer-apartment-survival-kit` for
+  bundled intent and `/blog/valencia-summer-survival-guide` for informational
+  summer-planning intent.
+- The summer guide links back to the category, kit and relevant individual
+  products. Product pages already link to their category and related guide.
+
+The first-pass cluster loop is:
+
+`summer guide -> Apartment Equipment category -> Summer Apartment Kit or exact product -> availability`
+
+### Search ownership
+
+- **Category hub:** `/rental/home-living`
+  - Owns broad apartment-equipment and apartment-comfort rental intent.
+- **Kit page:** `/valencia/kits/summer-apartment-survival-kit`
+  - Owns bundled cooling and summer-apartment setup intent.
+- **Products:**
+  - Own brand/model and precise equipment queries such as De'Longhi Pinguino or
+    KOENIC portable air conditioner rental in Valencia.
+- **Blog:** `/blog/valencia-summer-survival-guide`
+  - Owns informational heat-management and summer-stay planning intent.
+
+Do not create a portable-air-conditioner subcategory until Search Console shows
+recurring distinct demand and at least three genuinely different, available AC
+products can support useful comparison guidance.
+
 ## Product-page long-tail rules
 
 Each indexable product page should target one primary formulation:

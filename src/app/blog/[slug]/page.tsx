@@ -80,6 +80,7 @@ function getFaqJsonLd(post: BlogPost) {
 
 const clusterCtas = [
   {
+    slug: "best-beaches-valencia-families",
     tags: ["beach", "beaches"],
     href: "/rental/travel-outdoors",
     heading: "Need Beach Equipment for Your Valencia Stay?",
@@ -87,6 +88,7 @@ const clusterCtas = [
     label: "Browse Beach Equipment",
   },
   {
+    slug: "wheelchair-accessibility-valencia",
     tags: ["mobility", "accessibility"],
     href: "/rental/mobility",
     heading: "Need Mobility Equipment in Valencia?",
@@ -94,6 +96,7 @@ const clusterCtas = [
     label: "Browse Mobility Equipment",
   },
   {
+    slug: "digital-nomad-guide-valencia",
     tags: ["digital nomad", "remote work"],
     href: "/rental/remote-work",
     heading: "Need a Better Workspace in Valencia?",
@@ -101,6 +104,7 @@ const clusterCtas = [
     label: "Browse Remote Work Equipment",
   },
   {
+    slug: "valencia-summer-survival-guide",
     tags: ["summer", "seasonal"],
     href: "/rental/home-living",
     heading: "Need a More Comfortable Valencia Apartment?",
@@ -108,6 +112,7 @@ const clusterCtas = [
     label: "Browse Apartment Comfort",
   },
   {
+    slug: "valencia-with-kids-complete-guide",
     tags: ["family", "kids"],
     href: "/rental/baby-gear",
     heading: "Need Family Equipment for Your Valencia Stay?",
@@ -118,7 +123,9 @@ const clusterCtas = [
 
 function getClusterCta(post: BlogPost) {
   const tags = new Set(post.tags.map((tag) => tag.toLowerCase()));
-  return clusterCtas.find((cta) => cta.tags.some((tag) => tags.has(tag))) || {
+  return clusterCtas.find((cta) => cta.slug === post.slug)
+    || clusterCtas.find((cta) => cta.tags.some((tag) => tags.has(tag)))
+    || {
     href: "/valencia",
     heading: "Need Equipment for Your Valencia Stay?",
     description: "Browse practical rental equipment and check availability for your dates in Valencia.",

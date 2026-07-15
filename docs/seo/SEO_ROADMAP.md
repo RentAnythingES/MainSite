@@ -41,6 +41,7 @@
 - [x] Automated canonical, hreflang, robots and sitemap regression audit
 - [x] Six-cluster keyword ownership map including Kids & Family
 - [x] Beach & Outdoor transactional cluster strengthened with kit and local-guide pathways
+- [x] Apartment Comfort cluster connected across category, summer kit, guide and cooling products
 
 ---
 

@@ -455,6 +455,16 @@ export const blogPosts: BlogPost[] = [
     ],
     crossLinks: [
       {
+        title: "Apartment Equipment Rental",
+        href: "/rental/home-living",
+        description: "Compare portable cooling and air-quality equipment for your Valencia stay"
+      },
+      {
+        title: "Summer Apartment Kit",
+        href: "/valencia/kits/summer-apartment-survival-kit",
+        description: "Build a practical cooling and comfort setup around your accommodation"
+      },
+      {
         title: "Portable Air Conditioner",
         href: "/product/portable-ac",
         description: "Cool your apartment — delivered and ready to use"

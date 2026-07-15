@@ -10,6 +10,8 @@ interface CategoryContent {
   description: string;
   editorialHeading: string;
   editorialParagraphs: string[];
+  featuredHeading?: string;
+  featuredDescription?: string;
   featuredPathways?: Array<{
     eyebrow: string;
     title: string;
@@ -60,13 +62,29 @@ const categoryMetaES: Record<string, CategoryContent> = {
     ],
   },
   "home-living": {
-    title: "Alquiler de Equipos de Hogar y Confort en Valencia",
-    description: "Alquila purificadores de aire, aires acondicionados portátiles, electrodomésticos y más en Valencia.",
-    editorialHeading: "Haz tu alojamiento en Valencia más confortable",
+    title: "Alquiler de Equipamiento para Apartamentos en Valencia",
+    description: "Alquila aire acondicionado portátil, purificadores y equipamiento de confort en Valencia, con entrega y recogida para estancias cortas o largas.",
+    editorialHeading: "Adapta tu apartamento de Valencia a tu estancia",
     editorialParagraphs: [
-      "No todos los alquileres vacacionales vienen con todo lo que necesitas. Los veranos en Valencia pueden ser intensos — las temperaturas superan regularmente los 35-40 °C en julio y agosto — y muchos pisos carecen de aire acondicionado o tienen uno insuficiente.",
-      "Un aire acondicionado portátil (los valencianos los llaman pingüinos) puede transformar tu estancia veraniega. Un purificador de aire ayuda durante los días de calima, cuando el polvo del Sáhara reduce la calidad del aire. No son lujos — son elementos esenciales de confort que marcan la diferencia entre sobrevivir tus vacaciones y disfrutarlas.",
-      "Entregamos y recogemos todo, así que no necesitas comprar equipos que solo usarás una vez y dejarás atrás.",
+      "Los apartamentos turísticos y alojamientos temporales no siempre incluyen todo lo necesario para una estancia cómoda. El alquiler de refrigeración portátil, equipos para la calidad del aire y otros complementos permite resolver una necesidad concreta sin comprar, guardar o desechar un aparato voluminoso al terminar el viaje.",
+      "Durante el verano, un aire acondicionado portátil puede mejorar el confort de un dormitorio o salón cuando el alojamiento tiene una refrigeración limitada. Estos equipos necesitan una salida adecuada por ventana o puerta de balcón, por lo que cada ficha explica la superficie recomendada, la evacuación del aire, el ruido y el montaje antes de confirmar la disponibilidad.",
+      "Los purificadores pueden ayudar a huéspedes sensibles al polvo, el polen o la calidad del aire interior. Elige un producto o empieza con el Kit de Apartamento de Verano para preparar una combinación adaptada. Las opciones de entrega y recogida aparecen durante la reserva y confirmamos los detalles de instalación con el alojamiento.",
+    ],
+    featuredHeading: "Prepara una estancia más cómoda en Valencia",
+    featuredDescription: "Empieza con un kit estacional o consulta nuestra guía práctica para elegir la refrigeración y el equipamiento adecuados para tu alojamiento.",
+    featuredPathways: [
+      {
+        eyebrow: "Kit de apartamento",
+        title: "Configura un kit de apartamento de verano",
+        description: "Combina refrigeración y equipos para la calidad del aire según tu alojamiento y tus fechas.",
+        href: "/valencia/kits/summer-apartment-survival-kit",
+      },
+      {
+        eyebrow: "Guía práctica",
+        title: "Prepárate para el verano en Valencia",
+        description: "Consulta horarios locales, estrategias para refrescar el apartamento y consejos para los días de más calor.",
+        href: "/blog/valencia-summer-survival-guide",
+      },
     ],
   },
   "travel-outdoors": {
@@ -78,6 +96,8 @@ const categoryMetaES: Record<string, CategoryContent> = {
       "Elige el producto que encaje con tu grupo y tus planes, desde una sombrilla tradicional hasta un refugio familiar compacto. Cada ficha recoge las medidas, el peso, las piezas incluidas, las instrucciones de montaje y las limitaciones importantes de viento o cuidado antes de comprobar la disponibilidad.",
       "Las opciones de recogida y entrega facilitan el uso del material si te alojas cerca de Malvarrosa, Patacona, Cabanyal o el centro. Las familias que necesiten algo más que sombra también pueden empezar con el Kit de Playa Familiar y solicitar la combinación adecuada para sus fechas.",
     ],
+    featuredHeading: "Planifica tus días de playa en Valencia",
+    featuredDescription: "Combina el equipamiento con un kit familiar o una guía práctica de la playa más cercana a tu alojamiento.",
     featuredPathways: [
       {
         eyebrow: "Kit de playa",
@@ -237,9 +257,9 @@ export default async function CategoryPageES({ params }: Props) {
         <section className="section bg-white">
           <div className="container-site">
             <div className="max-w-3xl mb-8">
-              <h2 className="text-2xl font-bold mb-3">Planifica tus días de playa en Valencia</h2>
+              <h2 className="text-2xl font-bold mb-3">{meta.featuredHeading}</h2>
               <p className="text-neutral-600">
-                Combina el equipamiento con un kit familiar o una guía práctica de la playa más cercana a tu alojamiento.
+                {meta.featuredDescription}
               </p>
             </div>
             <div className="grid md:grid-cols-3 gap-6">

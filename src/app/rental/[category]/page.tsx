@@ -13,6 +13,8 @@ interface CategoryContent {
   editorialHeading: string;
   editorialParagraphs: string[];
   blogTags: string[];
+  featuredHeading?: string;
+  featuredDescription?: string;
   featuredPathways?: Array<{
     eyebrow: string;
     title: string;
@@ -71,16 +73,32 @@ const categoryMeta: Record<string, CategoryContent> = {
     blogTags: ["digital nomad", "remote work"],
   },
   "home-living": {
-    title: "Apartment Comfort Rental in Valencia",
-    description: "Rent air purifiers, portable AC units, kitchen appliances & more in Valencia.",
+    title: "Apartment Equipment Rental in Valencia",
+    description: "Rent portable air conditioners, air purifiers and apartment comfort equipment in Valencia, with delivery and collection for short and long stays.",
     emoji: "🏠",
-    editorialHeading: "Make Your Valencia Accommodation Comfortable",
+    editorialHeading: "Make Your Valencia Apartment Work for Your Stay",
     editorialParagraphs: [
-      "Not every holiday rental comes with everything you need. Valencia summers can be intense — temperatures regularly hit 35-40°C in July and August — and many apartments lack air conditioning or have a single underpowered unit.",
-      "A portable AC unit (locals call them pinguinos) can transform your summer stay. An air purifier helps during calima days when Saharan dust reduces air quality. These aren't luxuries — they're comfort essentials that make the difference between enduring your holiday and enjoying it.",
-      "We deliver and collect everything, so you don't need to buy equipment you'll use for one trip and then leave behind.",
+      "Holiday apartments and temporary homes do not always include the equipment needed for a comfortable Valencia stay. Portable cooling, air-quality equipment and practical apartment upgrades can solve a specific problem without buying, storing or disposing of a bulky appliance after the trip.",
+      "For summer stays, a portable air conditioner can make a bedroom or living area more comfortable when the property has limited cooling. These units need suitable window or balcony-door venting, so each product page explains room coverage, exhaust requirements, noise and setup considerations before availability is confirmed.",
+      "Air purifiers can support guests who are sensitive to dust, pollen or indoor air quality. Choose an individual item below or start with the Summer Apartment Kit for a tailored combination. Delivery and collection options are shown during booking, with final setup details confirmed for the accommodation.",
     ],
     blogTags: ["summer", "seasonal"],
+    featuredHeading: "Plan a More Comfortable Valencia Stay",
+    featuredDescription: "Start with a seasonal apartment kit or use our practical summer guide to decide which cooling and comfort equipment fits your accommodation.",
+    featuredPathways: [
+      {
+        eyebrow: "Apartment kit",
+        title: "Configure a Summer Apartment Kit",
+        description: "Combine suitable cooling and air-quality equipment for hot-weather stays in Valencia.",
+        href: "/valencia/kits/summer-apartment-survival-kit",
+      },
+      {
+        eyebrow: "Practical guide",
+        title: "Prepare for Summer in Valencia",
+        description: "Use local routines, apartment cooling strategies and beach timing to manage warmer days.",
+        href: "/blog/valencia-summer-survival-guide",
+      },
+    ],
   },
   "travel-outdoors": {
     title: "Beach Equipment Rental in Valencia",
@@ -93,6 +111,8 @@ const categoryMeta: Record<string, CategoryContent> = {
       "Pickup and delivery options make the equipment practical for stays near Malvarrosa, Patacona, Cabanyal and the city centre. Families who need more than shade can also start with the Family Beach Kit and request the combination that suits their dates.",
     ],
     blogTags: ["summer", "beach"],
+    featuredHeading: "Plan Your Valencia Beach Days",
+    featuredDescription: "Connect your equipment choice with a family kit or a practical guide to the beach nearest your accommodation.",
     featuredPathways: [
       {
         eyebrow: "Beach kit",
@@ -272,9 +292,9 @@ export default async function CategoryPage({ params }: Props) {
         <section className="section bg-white">
           <div className="container-site">
             <div className="max-w-3xl mb-8">
-              <h2 className="text-2xl font-bold mb-3">Plan Your Valencia Beach Days</h2>
+              <h2 className="text-2xl font-bold mb-3">{meta.featuredHeading}</h2>
               <p className="text-neutral-600">
-                Connect your equipment choice with a family kit or a practical guide to the beach nearest your accommodation.
+                {meta.featuredDescription}
               </p>
             </div>
             <div className="grid md:grid-cols-3 gap-6">
