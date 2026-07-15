@@ -19,23 +19,23 @@ npm run audit:product-seo
 | Total catalogue records | 178 |
 | Active products | 24 |
 | English-indexable products | 20 |
-| Spanish-indexable products | 5 |
+| Spanish-indexable products | 20 |
 
 ### Priority cluster coverage
 
 | Cluster | Active | EN indexable | ES indexable |
 |---|---:|---:|---:|
-| Baby & Toddler | 6 | 5 | 0 |
+| Baby & Toddler | 6 | 5 | 5 |
 | Kids & Family | 1 | 0 | 0 |
-| Mobility & Accessibility | 4 | 4 | 0 |
-| Remote Work | 3 | 3 | 0 |
-| Apartment Comfort | 4 | 3 | 1 |
-| Beach & Outdoor | 5 | 5 | 4 |
+| Mobility & Accessibility | 4 | 4 | 4 |
+| Remote Work | 3 | 3 | 3 |
+| Apartment Comfort | 4 | 3 | 3 |
+| Beach & Outdoor | 5 | 5 | 5 |
 
 ### Immediate findings
 
-1. Spanish product coverage is the largest active-catalogue SEO gap: only 5 of
-   20 English-indexable products currently meet the Spanish indexing gate.
+1. All 20 English-indexable products now have complete Spanish localization,
+   Spanish FAQs and reciprocal EN/ES indexability.
 2. Four active products are not English-indexable:
    - `bladeless-fan-ventilator` — editorial approval incomplete.
    - `thule-chariot-sport-1-bike-trailer` — editorial approval incomplete.
@@ -57,8 +57,8 @@ description.
 
 1. Complete legitimate editorial/image-rights review for the three blocked
    products; do not bypass the approval gate.
-2. Complete Spanish SEO fields for active products, starting with Baby & Toddler,
-   Mobility, Remote Work, and the remaining Beach & Outdoor item.
+2. Translate newly activated products as part of the same publication batch so
+   English and Spanish stay aligned.
 3. Decide whether Fitness & Wellness becomes a supported public cluster before
    indexing the ball-machine product.
 4. Re-run this audit after each catalogue publishing batch and update this file

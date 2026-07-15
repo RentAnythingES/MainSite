@@ -167,7 +167,7 @@ turn verified inventory into indexable Valencia product pages. Follow
 5. Add guide/category/kit links and measure product-assisted conversion.
 
 The July 15 live baseline is 24 active products, 20 English-indexable products,
-and 5 Spanish-indexable products. The admin product list now separates public
+and 20 Spanish-indexable products. The admin product list now separates public
 activation from EN/ES search readiness and exposes the blocking reason. Run
 `npm run audit:product-seo` for the full cluster report; the persistent baseline
 and next actions live in [PRODUCT_INDEXABILITY_AUDIT.md](./PRODUCT_INDEXABILITY_AUDIT.md).

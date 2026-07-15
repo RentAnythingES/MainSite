@@ -275,6 +275,24 @@ export default async function ProductPageES({ params }: Props) {
         locale="es"
       />
 
+      {product.faqs && product.faqs.length > 0 && (
+        <section className="section bg-white">
+          <div className="container-site">
+            <div className="max-w-3xl">
+              <h2 className="text-2xl font-bold mb-6">Preguntas frecuentes</h2>
+              <div className="space-y-4">
+                {product.faqs.map((faq, index) => (
+                  <div key={index} className="card p-5">
+                    <h3 className="font-semibold mb-2">{faq.question}</h3>
+                    <p className="text-sm text-neutral-600 leading-relaxed">{faq.answer}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* Related */}
       {related.length > 0 && (
         <section className="section bg-neutral-50">

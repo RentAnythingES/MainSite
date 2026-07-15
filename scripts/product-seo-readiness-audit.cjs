@@ -62,7 +62,7 @@ function evaluateProduct(product, legacySlugs) {
 
   const indexableEn = blockersEn.length === 0;
   const blockersEs = [...blockersEn];
-  if (product.content_status !== "content_ready") blockersEs.push("content_not_ready");
+  if (!legacySlugs.has(product.slug) && product.content_status !== "content_ready") blockersEs.push("content_not_ready");
   if (!spanish || !hasText(spanish.short_description) || !hasText(spanish.seo_title) || !hasText(spanish.seo_description)) {
     blockersEs.push("missing_spanish_seo");
   }

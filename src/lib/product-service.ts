@@ -120,7 +120,7 @@ function mapProductSeoState(row: ProductSeoRow): ProductSeoState {
     row.is_active && hasPublicCategory && hasCoreEnglishContent && hasEditorialApproval;
   const indexableEs = Boolean(
     indexableEn &&
-    row.content_status === "content_ready" &&
+    (isLegacyProduct || row.content_status === "content_ready") &&
     spanish &&
     hasText(spanish.short_description) &&
     hasText(spanish.seo_title) &&
@@ -201,7 +201,8 @@ function canUseEditorialImage(image: ProductImage | undefined): image is Product
 }
 
 async function enrichProductWithEditorialContent(product: Product, locale: ProductLocale): Promise<Product> {
-  if (!product.id || product.contentStatus !== "content_ready") return product;
+  const canUseLocalizedContent = legacyStaticSlugs.has(product.slug) || product.contentStatus === "content_ready";
+  if (!product.id || !canUseLocalizedContent) return product;
 
   const contentClient = supabase as unknown as OptionalContentClient;
   const [localizationResult, faqResult, imageResult] = await Promise.all([

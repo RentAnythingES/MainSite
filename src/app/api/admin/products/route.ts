@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase-admin";
 import { verifyAdmin, unauthorizedResponse } from "@/lib/admin-auth";
-import { getProductReadinessIssues, isValidProductImageUrl, isValidProductSlug } from "@/lib/product-validation";
+import { getProductReadinessIssues } from "@/lib/product-validation";
 import { products as legacyProducts } from "@/data/products";
 import { seoCategorySlugs } from "@/data/seo-clusters";
 
@@ -69,7 +69,7 @@ function getSeoReadiness(row: ProductSeoListRow) {
   }
 
   const blockersEs = [...blockersEn];
-  if (row.content_status !== "content_ready") blockersEs.push("Content status is not ready");
+  if (!legacySlugs.has(row.slug) && row.content_status !== "content_ready") blockersEs.push("Content status is not ready");
   if (!spanish || !hasText(spanish.short_description) || !hasText(spanish.seo_title) || !hasText(spanish.seo_description)) {
     blockersEs.push("Spanish SEO copy is incomplete");
   }
@@ -137,7 +137,9 @@ export async function GET(request: NextRequest) {
     if (error) throw error;
 
     const products = ((data || []) as unknown as ProductSeoListRow[]).map((row) => {
-      const { product_localizations: _localizations, product_images: _images, ...product } = row;
+      const product: Partial<ProductSeoListRow> = { ...row };
+      delete product.product_localizations;
+      delete product.product_images;
       return { ...product, seo: getSeoReadiness(row) };
     });
 

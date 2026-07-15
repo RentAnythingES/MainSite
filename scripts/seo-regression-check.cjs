@@ -64,9 +64,10 @@ function assertPathway(html, pathway, context) {
 }
 
 async function main() {
-  const [home, product, noindexProduct, robots, sitemap, categoryPages] = await Promise.all([
+  const [home, product, productEs, noindexProduct, robots, sitemap, categoryPages] = await Promise.all([
     get("/"),
     get(`/product/${productSlug}`),
+    get(`/es/product/${productSlug}`),
     get(`/product/${noindexProductSlug}`),
     get("/robots.txt"),
     get("/sitemap.xml"),
@@ -100,6 +101,19 @@ async function main() {
     "Product canonical is incorrect"
   );
   assert(!robotsMeta(product).includes("noindex"), "Reference product is unexpectedly noindex");
+  assert(
+    canonical(productEs) === `https://rentanything.es/es/product/${productSlug}`,
+    "Spanish reference product canonical is incorrect"
+  );
+  assert(!robotsMeta(productEs).includes("noindex"), "Spanish reference product is unexpectedly noindex");
+  assert(
+    alternate(productEs, "en") === `https://rentanything.es/product/${productSlug}`,
+    "Spanish reference product lacks English hreflang"
+  );
+  assert(
+    alternate(productEs, "es") === `https://rentanything.es/es/product/${productSlug}`,
+    "Spanish reference product lacks Spanish hreflang"
+  );
   assertPathway(product, `/rental/${productCategory}`, "Reference product");
   for (const pathway of productPathways[productCategory] || []) {
     assertPathway(product, pathway, "Reference product");
@@ -114,6 +128,10 @@ async function main() {
     sitemap.includes(`https://rentanything.es/product/${productSlug}`),
     "Reference product is missing from the sitemap"
   );
+  assert(
+    sitemap.includes(`https://rentanything.es/es/product/${productSlug}`),
+    "Spanish reference product is missing from the sitemap"
+  );
   assert(!sitemap.includes("/admin/"), "Admin URL leaked into the sitemap");
   assert(!sitemap.includes("/booking/success"), "Booking success URL leaked into the sitemap");
   assert(
@@ -127,6 +145,7 @@ async function main() {
     noindexProductSlug,
     homepageCanonical: canonical(home),
     productCanonical: canonical(product),
+    spanishProductCanonical: canonical(productEs),
     productCategory,
     checkedCategoryClusters: categoryPages.map((categoryPage) => categoryPage.slug),
     status: "passed",
