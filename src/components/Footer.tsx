@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { seoCategoryClusters } from "@/data/seo-clusters";
 
 export default function Footer() {
   const pathname = usePathname();
@@ -19,11 +20,10 @@ export default function Footer() {
     ],
     [isSpanish ? "Categorías" : "Categories"]: [
       { name: "Kits", href: "/valencia/kits" },
-      { name: isSpanish ? "Bebé y Bebé Pequeño" : "Baby & Toddler", href: `${prefix}/rental/baby-gear` },
-      { name: isSpanish ? "Movilidad y Accesibilidad" : "Mobility & Accessibility", href: `${prefix}/rental/mobility` },
-      { name: isSpanish ? "Teletrabajo" : "Remote Work", href: `${prefix}/rental/remote-work` },
-      { name: isSpanish ? "Confort de Apartamento" : "Apartment Comfort", href: `${prefix}/rental/home-living` },
-      { name: isSpanish ? "Playa y Aire Libre" : "Beach & Outdoor", href: `${prefix}/rental/travel-outdoors` },
+      ...seoCategoryClusters.map((category) => ({
+        name: isSpanish ? category.nameEs : category.nameEn,
+        href: `${prefix}/rental/${category.slug}`,
+      })),
     ],
     [isSpanish ? "Ciudades" : "Cities"]: [
       { name: "Valencia", href: `${prefix}/valencia` },

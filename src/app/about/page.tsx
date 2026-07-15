@@ -5,6 +5,7 @@ export const metadata: Metadata = {
   title: "About Us — Our Story",
   description:
     "We built RentAnything.es to take the stress out of travel. Premium baby gear, mobility aids, tech and more, delivered across Valencia.",
+  alternates: { canonical: "https://rentanything.es/about" },
 };
 
 const values = [

@@ -5,6 +5,7 @@ export const metadata: Metadata = {
   title: "Contact Us",
   description:
     "Get in touch with RentAnything.es. WhatsApp, email, or use our contact form. We respond within minutes.",
+  alternates: { canonical: "https://rentanything.es/contact" },
 };
 
 export default function ContactPage() {
@@ -72,4 +73,3 @@ export default function ContactPage() {
     </>
   );
 }
-

@@ -1,46 +1,47 @@
 import type { MetadataRoute } from "next";
-import { products } from "@/data/products";
 import { rentalBundles } from "@/data/bundles";
 import { getPublishedPosts } from "@/content/blog";
 import { getPublishedDestinations } from "@/content/destinations";
+import { getIndexableProductsForSeo } from "@/lib/product-service";
+import { seoCategorySlugs } from "@/data/seo-clusters";
 
 const BASE_URL = "https://rentanything.es";
 
-export default function sitemap(): MetadataRoute.Sitemap {
-  const now = new Date().toISOString();
+export const revalidate = 3600;
+
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const products = await getIndexableProductsForSeo();
 
   // Static pages
   const staticPages: MetadataRoute.Sitemap = [
-    { url: BASE_URL, lastModified: now, changeFrequency: "weekly", priority: 1.0 },
-    { url: `${BASE_URL}/valencia`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
-    { url: `${BASE_URL}/valencia/kits`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
-    { url: `${BASE_URL}/blog`, lastModified: now, changeFrequency: "weekly", priority: 0.8 },
-    { url: `${BASE_URL}/how-it-works`, lastModified: now, changeFrequency: "monthly", priority: 0.7 },
-    { url: `${BASE_URL}/about`, lastModified: now, changeFrequency: "monthly", priority: 0.5 },
-    { url: `${BASE_URL}/faq`, lastModified: now, changeFrequency: "monthly", priority: 0.6 },
-    { url: `${BASE_URL}/contact`, lastModified: now, changeFrequency: "monthly", priority: 0.5 },
+    { url: BASE_URL, changeFrequency: "weekly", priority: 1.0 },
+    { url: `${BASE_URL}/valencia`, changeFrequency: "weekly", priority: 0.9 },
+    { url: `${BASE_URL}/valencia/kits`, changeFrequency: "weekly", priority: 0.9 },
+    { url: `${BASE_URL}/blog`, changeFrequency: "weekly", priority: 0.8 },
+    { url: `${BASE_URL}/how-it-works`, changeFrequency: "monthly", priority: 0.7 },
+    { url: `${BASE_URL}/about`, changeFrequency: "monthly", priority: 0.5 },
+    { url: `${BASE_URL}/faq`, changeFrequency: "monthly", priority: 0.6 },
+    { url: `${BASE_URL}/contact`, changeFrequency: "monthly", priority: 0.5 },
   ];
 
   // Category pages
-  const categories = ["baby-gear", "mobility", "remote-work", "home-living", "travel-outdoors"];
+  const categories = seoCategorySlugs;
   const categoryPages: MetadataRoute.Sitemap = categories.map((cat) => ({
     url: `${BASE_URL}/rental/${cat}`,
-    lastModified: now,
     changeFrequency: "weekly" as const,
     priority: 0.8,
   }));
 
   // Product pages
-  const productPages: MetadataRoute.Sitemap = products.map((p) => ({
-    url: `${BASE_URL}/product/${p.slug}`,
-    lastModified: now,
+  const productPages: MetadataRoute.Sitemap = products.map((product) => ({
+    url: `${BASE_URL}/product/${product.slug}`,
+    lastModified: product.updatedAt || undefined,
     changeFrequency: "weekly" as const,
     priority: 0.7,
   }));
 
   const bundlePages: MetadataRoute.Sitemap = rentalBundles.map((bundle) => ({
     url: `${BASE_URL}/valencia/kits/${bundle.slug}`,
-    lastModified: now,
     changeFrequency: "weekly" as const,
     priority: 0.8,
   }));
@@ -55,11 +56,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   // Discover hub pages
   const discoverHubs: MetadataRoute.Sitemap = [
-    { url: `${BASE_URL}/discover`, lastModified: now, changeFrequency: "weekly" as const, priority: 0.8 },
-    { url: `${BASE_URL}/discover/neighbourhoods`, lastModified: now, changeFrequency: "weekly" as const, priority: 0.7 },
-    { url: `${BASE_URL}/discover/day-trips`, lastModified: now, changeFrequency: "weekly" as const, priority: 0.7 },
-    { url: `${BASE_URL}/discover/attractions`, lastModified: now, changeFrequency: "weekly" as const, priority: 0.7 },
-    { url: `${BASE_URL}/discover/events`, lastModified: now, changeFrequency: "weekly" as const, priority: 0.7 },
+    { url: `${BASE_URL}/discover`, changeFrequency: "weekly" as const, priority: 0.8 },
+    { url: `${BASE_URL}/discover/neighbourhoods`, changeFrequency: "weekly" as const, priority: 0.7 },
+    { url: `${BASE_URL}/discover/day-trips`, changeFrequency: "weekly" as const, priority: 0.7 },
+    { url: `${BASE_URL}/discover/attractions`, changeFrequency: "weekly" as const, priority: 0.7 },
+    { url: `${BASE_URL}/discover/events`, changeFrequency: "weekly" as const, priority: 0.7 },
   ];
 
   // Discover destination pages (only published)
@@ -72,22 +73,23 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   // Spanish static pages
   const spanishStaticPages: MetadataRoute.Sitemap = [
-    { url: `${BASE_URL}/es`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
-    { url: `${BASE_URL}/es/valencia`, lastModified: now, changeFrequency: "weekly", priority: 0.8 },
+    { url: `${BASE_URL}/es`, changeFrequency: "weekly", priority: 0.9 },
+    { url: `${BASE_URL}/es/valencia`, changeFrequency: "weekly", priority: 0.8 },
   ];
 
   // Spanish product pages
-  const spanishProductPages: MetadataRoute.Sitemap = products.map((p) => ({
-    url: `${BASE_URL}/es/product/${p.slug}`,
-    lastModified: now,
-    changeFrequency: "weekly" as const,
-    priority: 0.6,
-  }));
+  const spanishProductPages: MetadataRoute.Sitemap = products
+    .filter((product) => product.indexableEs)
+    .map((product) => ({
+      url: `${BASE_URL}/es/product/${product.slug}`,
+      lastModified: product.updatedAt || undefined,
+      changeFrequency: "weekly" as const,
+      priority: 0.6,
+    }));
 
   // Spanish category pages
   const spanishCategoryPages: MetadataRoute.Sitemap = categories.map((cat) => ({
     url: `${BASE_URL}/es/rental/${cat}`,
-    lastModified: now,
     changeFrequency: "weekly" as const,
     priority: 0.7,
   }));

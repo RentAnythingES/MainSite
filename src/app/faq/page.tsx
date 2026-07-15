@@ -5,6 +5,7 @@ export const metadata: Metadata = {
   title: "FAQ — Rental Bookings, Delivery, Hygiene & Policies",
   description:
     "Everything you need to know about renting baby gear, mobility aids & tech in Valencia. Delivery areas, cancellations & more.",
+  alternates: { canonical: "https://rentanything.es/faq" },
 };
 
 const faqSections = [

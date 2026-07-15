@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Terms & Conditions",
   description: "Terms and conditions for renting equipment from RentAnything.es. Booking, cancellation, damage, and liability policies.",
+  alternates: { canonical: "https://rentanything.es/terms" },
 };
 
 export default function TermsPage() {

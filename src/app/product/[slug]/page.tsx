@@ -3,7 +3,11 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { getAllSlugs } from "@/data/products";
-import { getProductBySlugFromDB, getProductsByCategoryFromDB } from "@/lib/product-service";
+import {
+  getProductBySlugFromDB,
+  getProductsByCategoryFromDB,
+  getProductSeoState,
+} from "@/lib/product-service";
 import { getProductJsonLd, getBreadcrumbJsonLd } from "@/lib/jsonld";
 import { getPublishedPosts } from "@/content/blog";
 import ProductCard from "@/components/ProductCard";
@@ -21,26 +25,39 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const product = await getProductBySlugFromDB(slug);
-  if (!product) return { title: "Product Not Found" };
-
-  const lowestPrice = product.pricing[product.pricing.length - 1].perDay;
-  if (product.seoTitle || product.seoDescription) {
-    const title = product.seoTitle || `Rent ${product.name} in Valencia — from €${lowestPrice}/day`;
-    const description = product.seoDescription || product.description;
-    return {
-      title,
-      description,
-      openGraph: { title, description },
-    };
+  const [product, seoState] = await Promise.all([
+    getProductBySlugFromDB(slug),
+    getProductSeoState(slug),
+  ]);
+  if (!product) {
+    return { title: "Product Not Found", robots: { index: false, follow: false } };
   }
 
+  const canonical = `https://rentanything.es/product/${slug}`;
+  const lowestPrice = product.pricing.at(-1)?.perDay;
+  const fallbackTitle = lowestPrice === undefined
+    ? `Rent ${product.name} in Valencia`
+    : `Rent ${product.name} in Valencia — from €${lowestPrice}/day`;
+  const title = product.seoTitle || fallbackTitle;
+  const description = product.seoDescription || product.description;
+  const indexable = seoState?.indexableEn === true;
+  const languages = seoState?.indexableEs
+    ? {
+        en: canonical,
+        es: `https://rentanything.es/es/product/${slug}`,
+      }
+    : { en: canonical };
+
   return {
-    title: `Rent ${product.name} in Valencia — from €${lowestPrice}/day`,
-    description: product.description,
+    title,
+    description,
+    alternates: { canonical, languages },
+    robots: { index: indexable, follow: true },
     openGraph: {
-      title: `Rent ${product.name} in Valencia | RentAnything.es`,
-      description: product.description,
+      title,
+      description,
+      url: canonical,
+      images: product.image ? [{ url: product.image, alt: product.imageAlt || product.name }] : undefined,
     },
   };
 }
@@ -48,6 +65,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 // Map product categories to relevant blog post tags
 const categoryBlogTags: Record<string, string[]> = {
   "baby-gear": ["family", "kids"],
+  "kids-family": ["family", "kids"],
   "mobility": ["mobility", "accessibility"],
   "remote-work": ["digital nomad", "remote work"],
   "home-living": ["summer", "seasonal"],
@@ -74,7 +92,11 @@ export default async function ProductPage({ params }: Props) {
       {/* JSON-LD Structured Data */}
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(getProductJsonLd(product)) }}
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            getProductJsonLd(product, { locale: "en", availability: "LimitedAvailability" })
+          ),
+        }}
       />
       <script
         type="application/ld+json"

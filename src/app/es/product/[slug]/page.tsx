@@ -3,7 +3,11 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { getAllSlugs } from "@/data/products";
-import { getProductBySlugFromDB, getProductsByCategoryFromDB } from "@/lib/product-service";
+import {
+  getProductBySlugFromDB,
+  getProductsByCategoryFromDB,
+  getProductSeoState,
+} from "@/lib/product-service";
 import { getProductJsonLd, getBreadcrumbJsonLd } from "@/lib/jsonld";
 import ProductCard from "@/components/ProductCard";
 import BookingWidget from "@/components/BookingWidget";
@@ -14,6 +18,7 @@ const t = getDictionary("es");
 // Spanish category name mapping
 const categoryNameES: Record<string, string> = {
   "baby-gear": "Bebé y Niños",
+  "kids-family": "Niños y Familia",
   "mobility": "Movilidad",
   "remote-work": "Teletrabajo",
   "home-living": "Hogar y Confort",
@@ -33,35 +38,38 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const product = await getProductBySlugFromDB(slug, "es");
-  if (!product) return { title: "Producto No Encontrado" };
-
-  const lowestPrice = product.pricing[product.pricing.length - 1].perDay;
-  if (product.seoTitle || product.seoDescription) {
-    const title = product.seoTitle || `Alquiler ${product.name} en Valencia — desde €${lowestPrice}/día`;
-    const description = product.seoDescription || product.description;
-    return {
-      title,
-      description,
-      alternates: {
-        canonical: `https://rentanything.es/es/product/${slug}`,
-        languages: {
-          en: `https://rentanything.es/product/${slug}`,
-          es: `https://rentanything.es/es/product/${slug}`,
-        },
-      },
-    };
+  const [product, seoState] = await Promise.all([
+    getProductBySlugFromDB(slug, "es"),
+    getProductSeoState(slug),
+  ]);
+  if (!product) {
+    return { title: "Producto No Encontrado", robots: { index: false, follow: false } };
   }
 
+  const englishUrl = `https://rentanything.es/product/${slug}`;
+  const spanishUrl = `https://rentanything.es/es/product/${slug}`;
+  const indexable = seoState?.indexableEs === true;
+  const canonical = indexable ? spanishUrl : englishUrl;
+  const lowestPrice = product.pricing.at(-1)?.perDay;
+  const fallbackTitle = lowestPrice === undefined
+    ? `Alquiler ${product.name} en Valencia`
+    : `Alquiler ${product.name} en Valencia — desde €${lowestPrice}/día`;
+  const title = product.seoTitle || fallbackTitle;
+  const description = product.seoDescription || product.description;
+
   return {
-    title: `Alquiler ${product.name} en Valencia — desde €${lowestPrice}/día`,
-    description: product.description,
-    alternates: {
-      canonical: `https://rentanything.es/es/product/${slug}`,
-      languages: {
-        en: `https://rentanything.es/product/${slug}`,
-        es: `https://rentanything.es/es/product/${slug}`,
-      },
+    title,
+    description,
+    alternates: indexable
+      ? { canonical, languages: { en: englishUrl, es: spanishUrl } }
+      : { canonical },
+    robots: { index: indexable, follow: true },
+    openGraph: {
+      title,
+      description,
+      url: canonical,
+      locale: "es_ES",
+      images: product.image ? [{ url: product.image, alt: product.imageAlt || product.name }] : undefined,
     },
   };
 }
@@ -81,7 +89,11 @@ export default async function ProductPageES({ params }: Props) {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(getProductJsonLd(product)) }}
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            getProductJsonLd(product, { locale: "es", availability: "LimitedAvailability" })
+          ),
+        }}
       />
       <script
         type="application/ld+json"

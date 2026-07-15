@@ -6,7 +6,13 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: "*",
         allow: "/",
-        disallow: ["/api/", "/_next/"],
+        disallow: [
+          "/api/",
+          "/admin/",
+          "/internal/",
+          "/booking/",
+          "/newsletter/unsubscribe",
+        ],
       },
     ],
     sitemap: "https://rentanything.es/sitemap.xml",

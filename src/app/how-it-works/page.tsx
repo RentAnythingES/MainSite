@@ -5,6 +5,7 @@ export const metadata: Metadata = {
   title: "How It Works — Browse, Book, Deliver, Return",
   description:
     "Renting is simple. Browse our range, pick your dates, choose delivery or pickup, and we handle the rest. Delivered to your door in Valencia.",
+  alternates: { canonical: "https://rentanything.es/how-it-works" },
 };
 
 const steps = [

@@ -66,13 +66,6 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
-  alternates: {
-    canonical: "https://rentanything.es",
-    languages: {
-      en: "https://rentanything.es",
-      es: "https://rentanything.es/es",
-    },
-  },
 };
 
 export default function RootLayout({

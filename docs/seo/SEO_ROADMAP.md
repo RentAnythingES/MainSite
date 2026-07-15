@@ -1,5 +1,5 @@
 # RentAnything.es — SEO Roadmap
-> **Last updated**: 2026-07-08 · Prioritized by estimated traffic impact × effort
+> **Last updated**: 2026-07-15 · Prioritized by estimated traffic impact × effort
 
 ---
 
@@ -32,6 +32,14 @@
 - [x] Booking management (list, filter, lifecycle transitions)
 - [x] Availability API + 3-step BookingWidget (dates → form → success)
 - [x] `hreflang` alternates + Spanish sitemap routes
+- [x] Self-referencing canonicals on English product and primary static pages
+- [x] Reciprocal EN/ES hreflang gated by real localized product content
+- [x] Database-backed product sitemap with durable product timestamps
+- [x] Product indexability gate for editorial readiness and supported categories
+- [x] Noindex and crawl controls for admin, internal and transactional utility routes
+- [x] Locale-aware Product structured data and rental availability status
+- [x] Automated canonical, hreflang, robots and sitemap regression audit
+- [x] Six-cluster keyword ownership map including Kids & Family
 
 ---
 
@@ -59,9 +67,12 @@ Blog architecture live with `src/content/blog.ts`, `/blog/[slug]` template with 
 ---
 
 ### 1.3 Google Search Console setup
-**Impact**: 🔴 High · **Effort**: 10 min · **Status**: Open (user action)
+**Impact**: 🔴 High · **Effort**: 10 min · **Status**: Property active; post-deploy validation pending
 
-Verify domain, submit sitemap. Monitor crawl errors and indexing.
+Search Console is receiving performance data. After the July 15 technical SEO
+deployment, resubmit the sitemap and inspect the homepage, Valencia hub,
+`travel-outdoors`, one English product, one Spanish product, one kit and one
+guide. Monitor duplicate/canonical selections and crawled-not-indexed URLs.
 
 ---
 
@@ -268,12 +279,12 @@ Priority pilot logic: start with one narrow bundle, collect usage evidence, then
 
 ## Priority Execution Order (Next Session)
 
-1. **1.3** — Google Search Console setup (user action)
-2. **3.1** — Blog cadence — next 2 posts (summer content)
-3. **Discover** — Add more destination guides (5 live, target 15+)
-4. **Visual** — Replace AI images with real photography
-5. **2.1** — German localization (Phase 2)
-6. **Supabase** — Configure `.env.local` and test admin dashboard
+1. **Deploy + validate** — run `npm run audit:seo`, resubmit sitemap, inspect representative URLs in GSC
+2. **Beach cluster** — strengthen `/rental/travel-outdoors` using real query data without creating overlapping thin pages
+3. **Active catalogue** — complete EN/ES readiness for commercially available products
+4. **Commercial hubs** — improve AC, baby gear, mobility and remote-work category ownership
+5. **Internal links** — connect guides, kits, categories and products according to the cluster map
+6. **Authority** — Google Business Profile, reviews and Valencia partner backlinks
 
 ---
 

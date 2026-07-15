@@ -22,6 +22,16 @@ const categoryMetaES: Record<string, CategoryContent> = {
       "Valencia es una de las ciudades más familiares de Europa — calles llanas para cochecitos, playas suaves para los más pequeños y una cultura que acoge a los niños en todas partes. El equipo adecuado lo hace aún mejor.",
     ],
   },
+  "kids-family": {
+    title: "Alquiler de Equipamiento Infantil y Familiar en Valencia",
+    description: "Alquila bicicletas de equilibrio, juguetes y equipamiento familiar práctico en Valencia, con opciones flexibles de recogida y entrega.",
+    editorialHeading: "Equipamiento útil para estancias familiares en Valencia",
+    editorialParagraphs: [
+      "Las vacaciones en familia son más sencillas cuando los niños disponen de equipamiento adecuado sin tener que transportar cada artículo voluminoso por el aeropuerto. Alquilar en Valencia permite viajar con menos equipaje y elegir lo que realmente encaja con la estancia.",
+      "Esta colección reúne equipamiento práctico para niños pequeños, niños mayores y actividades familiares. Cada ficha de producto explica las medidas, la orientación de edad, los elementos incluidos y las condiciones de alquiler para que puedas comprobar si es adecuado antes de reservar.",
+      "Tanto si te alojas cerca de los Jardines del Turia como en la playa o en un apartamento de Valencia, podemos ayudarte a coordinar la recogida o la entrega según tus fechas y alojamiento.",
+    ],
+  },
   "mobility": {
     title: "Alquiler de Sillas de Ruedas y Scooters de Movilidad en Valencia",
     description: "Alquila sillas de ruedas, scooters de movilidad, andadores y ayudas diarias en Valencia. Entrega en tu hotel o Airbnb.",
@@ -96,7 +106,7 @@ export default async function CategoryPageES({ params }: Props) {
   const meta = categoryMetaES[category];
   if (!meta) notFound();
 
-  const categoryProducts = await getProductsByCategoryFromDB(category);
+  const categoryProducts = await getProductsByCategoryFromDB(category, "es");
 
   const subcategories = Array.from(
     new Map(categoryProducts.map((p) => [p.subcategorySlug, { name: p.subcategory, slug: p.subcategorySlug }])).values()

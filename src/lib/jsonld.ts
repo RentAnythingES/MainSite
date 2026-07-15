@@ -39,33 +39,56 @@ export function getLocalBusinessJsonLd() {
   };
 }
 
-export function getProductJsonLd(product: Product) {
-  const lowestPrice = product.pricing[product.pricing.length - 1].perDay;
-  const highestPrice = product.pricing[0].perDay;
+type ProductJsonLdOptions = {
+  locale?: "en" | "es";
+  availability?: "InStock" | "OutOfStock" | "LimitedAvailability";
+};
+
+export function getProductJsonLd(
+  product: Product,
+  options: ProductJsonLdOptions = {}
+) {
+  const locale = options.locale || "en";
+  const availability = options.availability || "LimitedAvailability";
+  const lowestPrice = product.pricing.at(-1)?.perDay;
+  const highestPrice = product.pricing[0]?.perDay;
+  const productUrl = `https://rentanything.es${locale === "es" ? "/es" : ""}/product/${product.slug}`;
 
   return {
     "@context": "https://schema.org",
     "@type": "Product",
     name: product.name,
     description: product.description,
+    image: product.image,
+    inLanguage: locale,
     brand: {
       "@type": "Brand",
       name: product.brand,
     },
     category: product.category,
-    offers: {
-      "@type": "AggregateOffer",
-      priceCurrency: "EUR",
-      lowPrice: lowestPrice,
-      highPrice: highestPrice,
-      offerCount: product.pricing.length,
-      availability: "https://schema.org/InStock",
-      areaServed: {
-        "@type": "City",
-        name: "Valencia",
-      },
+    seller: {
+      "@type": "Organization",
+      name: "RentAnything.es",
+      url: "https://rentanything.es",
     },
-    url: `https://rentanything.es/product/${product.slug}`,
+    ...(lowestPrice !== undefined && highestPrice !== undefined
+      ? {
+          offers: {
+            "@type": "AggregateOffer",
+            priceCurrency: "EUR",
+            lowPrice: lowestPrice,
+            highPrice: highestPrice,
+            offerCount: product.pricing.length,
+            availability: `https://schema.org/${availability}`,
+            url: productUrl,
+            areaServed: {
+              "@type": "City",
+              name: "Valencia",
+            },
+          },
+        }
+      : {}),
+    url: productUrl,
   };
 }
 

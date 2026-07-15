@@ -12,6 +12,13 @@ export const metadata: Metadata = {
   title: "Rent Baby Gear, Wheelchairs & Tech in Valencia",
   description:
     "Browse our full range of rental equipment in Valencia. Strollers, wheelchairs, mobility scooters, remote work setups & more. Delivered to your door.",
+  alternates: {
+    canonical: "https://rentanything.es/valencia",
+    languages: {
+      en: "https://rentanything.es/valencia",
+      es: "https://rentanything.es/es/valencia",
+    },
+  },
 };
 
 const categoryCards = [

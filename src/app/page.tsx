@@ -8,6 +8,13 @@ export const metadata: Metadata = {
   title: "Rent Baby Gear, Mobility & Tech in Valencia | RentAnything.es",
   description:
     "Short-term rental of strollers, cribs, wheelchairs, mobility scooters, remote work gear and more in Valencia. Check availability for your dates.",
+  alternates: {
+    canonical: "https://rentanything.es",
+    languages: {
+      en: "https://rentanything.es",
+      es: "https://rentanything.es/es",
+    },
+  },
 };
 
 const heroCategories = [
@@ -40,12 +47,6 @@ const heroCategories = [
     href: "/rental/travel-outdoors",
     image: "/categories/travel-outdoors.png",
     description: "Beach gear, coolers & umbrellas",
-  },
-  {
-    name: "Pregnancy & Postpartum",
-    href: "/rental/pregnancy",
-    image: "/categories/pregnancy.png",
-    description: "Support pillows, comfort essentials",
   },
 ];
 

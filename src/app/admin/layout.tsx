@@ -1,7 +1,12 @@
 import { cookies, headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { createClient } from "@supabase/supabase-js";
+import type { Metadata } from "next";
 import AdminShell from "@/components/admin/AdminShell";
+
+export const metadata: Metadata = {
+  robots: { index: false, follow: false, nocache: true },
+};
 
 async function getUser() {
   const cookieStore = await cookies();

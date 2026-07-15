@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
+import { seoCategoryClusters } from "@/data/seo-clusters";
 
 export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -18,14 +19,11 @@ export default function Header() {
     : `/es${pathname}`;
   const switchLocaleLabel = isSpanish ? "EN 🇬🇧" : "ES 🇪🇸";
 
-  const categories = [
-    { name: isSpanish ? "Bebé y Bebé Pequeño" : "Baby & Toddler", href: `${prefix}/rental/baby-gear`, emoji: "👶" },
-    { name: isSpanish ? "Movilidad y Accesibilidad" : "Mobility & Accessibility", href: `${prefix}/rental/mobility`, emoji: "♿" },
-    { name: isSpanish ? "Teletrabajo" : "Remote Work", href: `${prefix}/rental/remote-work`, emoji: "💻" },
-    { name: isSpanish ? "Confort de Apartamento" : "Apartment Comfort", href: `${prefix}/rental/home-living`, emoji: "🏠" },
-    { name: isSpanish ? "Playa y Aire Libre" : "Beach & Outdoor", href: `${prefix}/rental/travel-outdoors`, emoji: "🏖️" },
-    { name: isSpanish ? "Embarazo y Postparto" : "Pregnancy & Postpartum", href: `${prefix}/rental/pregnancy`, emoji: "🤰" },
-  ];
+  const categories = seoCategoryClusters.map((category) => ({
+    name: isSpanish ? category.nameEs : category.nameEn,
+    href: `${prefix}/rental/${category.slug}`,
+    emoji: category.emoji,
+  }));
 
   const navLinks = [
     { name: "Kits", href: "/valencia/kits" },

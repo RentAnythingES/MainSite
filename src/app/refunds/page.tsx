@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Refunds & Cancellations",
   description: "Our refund and cancellation policy for rental bookings in Valencia. Free cancellation up to 48 hours before delivery.",
+  alternates: { canonical: "https://rentanything.es/refunds" },
 };
 
 export default function RefundsPage() {

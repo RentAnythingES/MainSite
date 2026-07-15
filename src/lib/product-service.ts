@@ -1,6 +1,7 @@
 import { supabase } from "./supabase";
 import type { Product, ProductFAQ } from "@/data/products";
 import { products as staticProducts, getProductBySlug as staticGetBySlug, getProductsByCategory as staticGetByCategory } from "@/data/products";
+import { seoCategorySlugs } from "@/data/seo-clusters";
 
 /**
  * Product Service — Supabase-first with static fallback
@@ -49,6 +50,131 @@ type ProductImage = {
   alt_text: string | null;
   rights_status: "unknown" | "owned" | "licensed" | "manufacturer_approved";
 };
+
+type ProductSeoLocalization = {
+  locale: ProductLocale;
+  short_description: string | null;
+  seo_title: string | null;
+  seo_description: string | null;
+};
+
+type ProductSeoImage = {
+  is_primary: boolean;
+  rights_status: ProductImage["rights_status"];
+};
+
+type ProductSeoRow = {
+  slug: string;
+  name: string;
+  description: string;
+  image_url: string | null;
+  is_active: boolean;
+  content_status: Product["contentStatus"];
+  updated_at: string;
+  category: { slug: string } | Array<{ slug: string }> | null;
+  pricing_tiers: Array<{ min_days: number }>;
+  product_localizations: ProductSeoLocalization[];
+  product_images: ProductSeoImage[];
+};
+
+export type ProductSeoState = {
+  slug: string;
+  categorySlug: string;
+  updatedAt: string | null;
+  indexableEn: boolean;
+  indexableEs: boolean;
+};
+
+const legacyStaticSlugs = new Set(staticProducts.map((product) => product.slug));
+const publicSeoCategorySlugs = new Set<string>(seoCategorySlugs);
+const approvedImageRights = new Set<ProductImage["rights_status"]>([
+  "owned",
+  "licensed",
+  "manufacturer_approved",
+]);
+
+function hasText(value: unknown): boolean {
+  return typeof value === "string" && value.trim().length > 0;
+}
+
+function mapProductSeoState(row: ProductSeoRow): ProductSeoState {
+  const category = Array.isArray(row.category) ? row.category[0] : row.category;
+  const hasPublicCategory = Boolean(category?.slug && publicSeoCategorySlugs.has(category.slug));
+  const isLegacyProduct = legacyStaticSlugs.has(row.slug);
+  const hasApprovedPrimaryImage = row.product_images.some(
+    (image) => image.is_primary && approvedImageRights.has(image.rights_status)
+  );
+  const hasCoreEnglishContent =
+    hasText(row.name) &&
+    hasText(row.description) &&
+    normalizeImageUrl(row.image_url) !== "/products/placeholder.png" &&
+    row.pricing_tiers.length > 0;
+  const hasEditorialApproval =
+    isLegacyProduct ||
+    (row.content_status === "content_ready" && hasApprovedPrimaryImage);
+  const spanish = row.product_localizations.find(
+    (localization) => localization.locale === "es"
+  );
+
+  const indexableEn =
+    row.is_active && hasPublicCategory && hasCoreEnglishContent && hasEditorialApproval;
+  const indexableEs = Boolean(
+    indexableEn &&
+    row.content_status === "content_ready" &&
+    spanish &&
+    hasText(spanish.short_description) &&
+    hasText(spanish.seo_title) &&
+    hasText(spanish.seo_description)
+  );
+
+  return {
+    slug: row.slug,
+    categorySlug: category?.slug || "",
+    updatedAt: row.updated_at || null,
+    indexableEn,
+    indexableEs,
+  };
+}
+
+function staticProductSeoState(slug: string): ProductSeoState | null {
+  const product = staticGetBySlug(slug);
+  if (!product) return null;
+
+  return {
+    slug,
+    categorySlug: product.categorySlug,
+    updatedAt: null,
+    indexableEn:
+      publicSeoCategorySlugs.has(product.categorySlug) && product.pricing.length > 0,
+    indexableEs: false,
+  };
+}
+
+async function fetchProductSeoRows(slug?: string): Promise<ProductSeoRow[]> {
+  let query = supabase
+    .from("products")
+    .select(`
+      slug,
+      name,
+      description,
+      image_url,
+      is_active,
+      content_status,
+      updated_at,
+      category:categories (slug),
+      pricing_tiers (min_days),
+      product_localizations (locale, short_description, seo_title, seo_description),
+      product_images (is_primary, rights_status)
+    `)
+    .eq("is_active", true);
+
+  if (slug) query = query.eq("slug", slug);
+
+  const { data, error } = await query.order("slug");
+  if (error) throw error;
+
+  return (data || []) as unknown as ProductSeoRow[];
+}
 
 interface OptionalContentQuery<T> {
   eq: (column: string, value: string | boolean) => OptionalContentQuery<T>;
@@ -265,5 +391,35 @@ export async function getProductsByCategoryFromDB(categorySlug: string, locale: 
   } catch (err) {
     console.warn("[product-service] Supabase category fetch failed:", categorySlug, err);
     return staticGetByCategory(categorySlug);
+  }
+}
+
+export async function getIndexableProductsForSeo(): Promise<ProductSeoState[]> {
+  if (!isSupabaseConfigured()) {
+    return staticProducts
+      .map((product) => staticProductSeoState(product.slug))
+      .filter((product): product is ProductSeoState => Boolean(product));
+  }
+
+  try {
+    const rows = await fetchProductSeoRows();
+    return rows.map(mapProductSeoState).filter((product) => product.indexableEn);
+  } catch (error) {
+    console.warn("[product-service] Product SEO feed failed, using static English fallback:", error);
+    return staticProducts
+      .map((product) => staticProductSeoState(product.slug))
+      .filter((product): product is ProductSeoState => Boolean(product));
+  }
+}
+
+export async function getProductSeoState(slug: string): Promise<ProductSeoState | null> {
+  if (!isSupabaseConfigured()) return staticProductSeoState(slug);
+
+  try {
+    const rows = await fetchProductSeoRows(slug);
+    return rows[0] ? mapProductSeoState(rows[0]) : null;
+  } catch (error) {
+    console.warn("[product-service] Product SEO state fetch failed:", slug, error);
+    return staticProductSeoState(slug);
   }
 }
