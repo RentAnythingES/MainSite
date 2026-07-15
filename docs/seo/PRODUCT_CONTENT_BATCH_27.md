@@ -8,8 +8,9 @@
   no softener, bleach, ironing, tumble drying or dry cleaning.
 - **Source conflict:** the Decathlon page lists both 320 g and 340 g. The draft
   records a 320–340 g verified range rather than selecting one value.
-- **Media:** the primary Decathlon image was copied into the Supabase
-  `product-images` bucket. Its original product page remains stored as the source.
+- **Media:** the primary image was replaced on 15 July 2026 with the
+  user-supplied blue floral variant and copied into the Supabase `product-images`
+  bucket. Image-use permission remains unconfirmed, so publication stays blocked.
 - **Status:** inactive `facts_verified`; English and Spanish copy plus six FAQs
   are complete. Pricing, stock and image-use permission remain publication gates.
 
