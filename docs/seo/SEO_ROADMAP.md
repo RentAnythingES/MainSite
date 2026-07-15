@@ -47,6 +47,7 @@
 - [x] Baby & Toddler cluster connected across category, Baby Arrival kit, Toddler City kit and family guide
 - [x] Mobility & Accessibility cluster connected across category, accessibility kits and local guide
 - [x] EN/ES product templates inherit category, kit and local-guide pathways for all six priority clusters
+- [x] Live product indexability audit plus EN/ES search-readiness indicators in admin
 
 ---
 
@@ -152,7 +153,7 @@ Avoid changing URLs casually until redirects/canonicals are planned. Display nam
 ---
 
 ### 1.8 Product content readiness system
-**Impact**: High · **Effort**: 2–3 days · **Status**: Infrastructure done; editorial queue in progress
+**Impact**: High · **Effort**: 2–3 days · **Status**: Infrastructure and indexability monitoring done; editorial queue in progress
 
 Implement the data model, admin workflow, and product-page rendering needed to
 turn verified inventory into indexable Valencia product pages. Follow
@@ -164,6 +165,12 @@ turn verified inventory into indexable Valencia product pages. Follow
 3. Add admin readiness checks and an editorial review queue.
 4. Enrich and publish a first 12–20 conversion-ready products only.
 5. Add guide/category/kit links and measure product-assisted conversion.
+
+The July 15 live baseline is 24 active products, 20 English-indexable products,
+and 5 Spanish-indexable products. The admin product list now separates public
+activation from EN/ES search readiness and exposes the blocking reason. Run
+`npm run audit:product-seo` for the full cluster report; the persistent baseline
+and next actions live in [PRODUCT_INDEXABILITY_AUDIT.md](./PRODUCT_INDEXABILITY_AUDIT.md).
 
 ---
 

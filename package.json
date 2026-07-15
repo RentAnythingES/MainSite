@@ -13,6 +13,7 @@
     "catalogue:verify": "node scripts/verify-product-enrichment-batch.cjs",
     "audit:launch": "node scripts/launch-readiness-audit.cjs",
     "audit:seo": "node scripts/seo-regression-check.cjs",
+    "audit:product-seo": "node scripts/product-seo-readiness-audit.cjs",
     "smoke:booking": "node scripts/booking-api-smoke.cjs",
     "db:audit": "node scripts/audit-live-schema.cjs",
     "db:migrate": "node scripts/apply-db-migrations.cjs",

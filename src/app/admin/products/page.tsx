@@ -34,6 +34,12 @@ interface Product {
   pricing_tiers: PricingTier[];
   category: Category;
   content_status?: "draft" | "facts_verified" | "content_ready";
+  seo?: {
+    indexableEn: boolean;
+    indexableEs: boolean;
+    blockersEn: string[];
+    blockersEs: string[];
+  };
 }
 
 interface EditableSpec {
@@ -280,7 +286,7 @@ export default function AdminProductsPage() {
         <div>
           <h1 className="text-2xl font-bold text-white">Products</h1>
           <p className="text-neutral-500 text-sm mt-1">
-            {products.length} products · {products.filter((p) => p.is_active).length} active
+            {products.length} products · {products.filter((product) => product.is_active).length} active · {products.filter((product) => product.seo?.indexableEn).length} EN indexed · {products.filter((product) => product.seo?.indexableEs).length} ES indexed
           </p>
         </div>
         <div className="flex items-center gap-2">
@@ -335,6 +341,7 @@ export default function AdminProductsPage() {
                 <th className="text-left p-4 text-xs font-medium text-neutral-500 uppercase tracking-wider">Price Range</th>
                 <th className="text-left p-4 text-xs font-medium text-neutral-500 uppercase tracking-wider">Stock</th>
                 <th className="text-left p-4 text-xs font-medium text-neutral-500 uppercase tracking-wider">Quality</th>
+                <th className="text-left p-4 text-xs font-medium text-neutral-500 uppercase tracking-wider">Search</th>
                 <th className="text-left p-4 text-xs font-medium text-neutral-500 uppercase tracking-wider">Status</th>
                 <th className="text-right p-4 text-xs font-medium text-neutral-500 uppercase tracking-wider">Actions</th>
               </tr>
@@ -346,6 +353,22 @@ export default function AdminProductsPage() {
                     <div>
                       <p className="font-medium text-white">{product.name}</p>
                       <p className="text-xs text-neutral-500">{product.brand} · {product.slug}</p>
+                    </div>
+                  </td>
+                  <td className="p-4">
+                    <div className="flex flex-wrap gap-1.5">
+                      <span
+                        className={`rounded-full px-2 py-1 text-xs font-medium ${product.seo?.indexableEn ? "bg-emerald-500/10 text-emerald-400" : "bg-amber-500/10 text-amber-300"}`}
+                        title={product.seo?.blockersEn.join(" · ") || "English product page is indexable"}
+                      >
+                        EN {product.seo?.indexableEn ? "indexed" : "blocked"}
+                      </span>
+                      <span
+                        className={`rounded-full px-2 py-1 text-xs font-medium ${product.seo?.indexableEs ? "bg-emerald-500/10 text-emerald-400" : "bg-neutral-800 text-neutral-400"}`}
+                        title={product.seo?.blockersEs.join(" · ") || "Spanish product page is indexable"}
+                      >
+                        ES {product.seo?.indexableEs ? "indexed" : "blocked"}
+                      </span>
                     </div>
                   </td>
                   <td className="p-4">

@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase-admin";
 import { verifyAdmin, unauthorizedResponse } from "@/lib/admin-auth";
 import { getProductReadinessIssues, isValidProductImageUrl, isValidProductSlug } from "@/lib/product-validation";
+import { products as legacyProducts } from "@/data/products";
+import { seoCategorySlugs } from "@/data/seo-clusters";
 
 type ProductPayload = {
   slug?: string;
@@ -13,6 +15,72 @@ type ProductPayload = {
   subcategory_slug?: string;
   pricing_tiers?: { min_days: number; per_day_cents: number }[];
 };
+
+type ProductSeoListRow = {
+  slug: string;
+  name: string;
+  description: string;
+  image_url: string | null;
+  is_active: boolean;
+  content_status: "draft" | "facts_verified" | "content_ready";
+  category: { slug: string } | Array<{ slug: string }> | null;
+  pricing_tiers: Array<{ min_days: number; per_day_cents: number }>;
+  product_localizations: Array<{
+    locale: string;
+    short_description: string | null;
+    seo_title: string | null;
+    seo_description: string | null;
+  }>;
+  product_images: Array<{ is_primary: boolean; rights_status: string }>;
+};
+
+const legacySlugs = new Set(legacyProducts.map((product) => product.slug));
+const publicCategorySlugs = new Set<string>(seoCategorySlugs);
+const approvedImageRights = new Set(["owned", "licensed", "manufacturer_approved"]);
+
+function hasText(value: unknown) {
+  return typeof value === "string" && value.trim().length > 0;
+}
+
+function hasUsableImage(value: unknown) {
+  const imageUrl = String(value || "").trim();
+  return (
+    ((imageUrl.startsWith("/") && !imageUrl.startsWith("//")) || /^https?:\/\//i.test(imageUrl)) &&
+    imageUrl !== "/products/placeholder.png"
+  );
+}
+
+function getSeoReadiness(row: ProductSeoListRow) {
+  const category = Array.isArray(row.category) ? row.category[0] : row.category;
+  const primaryImage = row.product_images.find((image) => image.is_primary);
+  const spanish = row.product_localizations.find((localization) => localization.locale === "es");
+  const blockersEn: string[] = [];
+
+  if (!row.is_active) blockersEn.push("Product is inactive");
+  if (!category?.slug || !publicCategorySlugs.has(category.slug)) blockersEn.push("Category is not an approved SEO cluster");
+  if (!hasText(row.name) || !hasText(row.description)) blockersEn.push("Core product copy is incomplete");
+  if (!hasUsableImage(row.image_url)) blockersEn.push("Usable product image is missing");
+  if (row.pricing_tiers.length === 0) blockersEn.push("Pricing is missing");
+  if (
+    !legacySlugs.has(row.slug) &&
+    (row.content_status !== "content_ready" || !primaryImage || !approvedImageRights.has(primaryImage.rights_status))
+  ) {
+    blockersEn.push("Editorial or image-rights approval is incomplete");
+  }
+
+  const blockersEs = [...blockersEn];
+  if (row.content_status !== "content_ready") blockersEs.push("Content status is not ready");
+  if (!spanish || !hasText(spanish.short_description) || !hasText(spanish.seo_title) || !hasText(spanish.seo_description)) {
+    blockersEs.push("Spanish SEO copy is incomplete");
+  }
+
+  return {
+    indexableEn: blockersEn.length === 0,
+    indexableEs: blockersEs.length === 0,
+    blockersEn,
+    blockersEs: [...new Set(blockersEs)],
+  };
+}
 
 function getErrorMessage(err: unknown) {
   if (err && typeof err === "object" && "message" in err) {
@@ -60,13 +128,20 @@ export async function GET(request: NextRequest) {
       .select(`
         *,
         pricing_tiers (id, min_days, per_day_cents),
-        category:categories (id, slug, name)
+        category:categories (id, slug, name),
+        product_localizations (locale, short_description, seo_title, seo_description),
+        product_images (is_primary, rights_status)
       `)
       .order("name");
 
     if (error) throw error;
 
-    return NextResponse.json({ products: data });
+    const products = ((data || []) as unknown as ProductSeoListRow[]).map((row) => {
+      const { product_localizations: _localizations, product_images: _images, ...product } = row;
+      return { ...product, seo: getSeoReadiness(row) };
+    });
+
+    return NextResponse.json({ products });
   } catch (err) {
     console.error("[admin/products] GET error:", err);
     return NextResponse.json({ error: "Failed to fetch products" }, { status: 500 });
