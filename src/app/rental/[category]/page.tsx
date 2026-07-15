@@ -36,6 +36,28 @@ const categoryMeta: Record<string, CategoryContent> = {
       "Valencia is one of Europe's most family-friendly cities — flat streets for strollers, gentle beaches for toddlers, and a culture that genuinely welcomes children everywhere. The right gear makes it even better.",
     ],
     blogTags: ["family", "kids"],
+    featuredHeading: "Plan a Smoother Valencia Stay with a Baby",
+    featuredDescription: "Start with a complete arrival setup, choose a toddler-focused city kit, or use our family guide to plan around sleep, feeding and getting around.",
+    featuredPathways: [
+      {
+        eyebrow: "Baby arrival kit",
+        title: "Prepare Your Accommodation Before Arrival",
+        description: "Combine sleep, feeding, bathing and mobility essentials around your baby's routine and stay.",
+        href: "/valencia/kits/baby-arrival-kit",
+      },
+      {
+        eyebrow: "Toddler city kit",
+        title: "Configure a Toddler City Setup",
+        description: "Choose practical mobility, outing and play equipment for exploring Valencia with a toddler.",
+        href: "/valencia/kits/toddler-city-kit",
+      },
+      {
+        eyebrow: "Valencia guide",
+        title: "Plan Valencia with a Baby or Toddler",
+        description: "Compare neighbourhoods, family activities, transport and the bulky equipment worth arranging locally.",
+        href: "/blog/valencia-with-kids-complete-guide",
+      },
+    ],
   },
   "kids-family": {
     title: "Kids & Family Equipment Rental in Valencia",
@@ -83,6 +105,28 @@ const categoryMeta: Record<string, CategoryContent> = {
       "Our lightweight mobility scooters are especially popular with visitors who want independence to explore the 9km Turia Gardens, the City of Arts and Sciences, and the accessible beaches with their assisted bathing services.",
     ],
     blogTags: ["mobility", "accessibility"],
+    featuredHeading: "Plan Accessible Travel in Valencia",
+    featuredDescription: "Choose a focused accessibility setup, prepare for a visit with older relatives, or use our local guide to understand routes and facilities.",
+    featuredPathways: [
+      {
+        eyebrow: "Accessibility kit",
+        title: "Configure an Accessible Valencia Kit",
+        description: "Combine mobility equipment with practical bathroom and daily-living support for your accommodation.",
+        href: "/valencia/kits/accessible-valencia-kit",
+      },
+      {
+        eyebrow: "Family visit kit",
+        title: "Prepare for Grandparents Visiting",
+        description: "Build a tailored setup around walking support, comfort and Valencia's warmer conditions.",
+        href: "/valencia/kits/grandparents-visiting-kit",
+      },
+      {
+        eyebrow: "Accessibility guide",
+        title: "Explore Accessible Valencia",
+        description: "Plan transport, attractions, beaches and neighbourhood routes with practical accessibility context.",
+        href: "/blog/wheelchair-accessibility-valencia",
+      },
+    ],
   },
   "remote-work": {
     title: "Remote Work Equipment Rental in Valencia",

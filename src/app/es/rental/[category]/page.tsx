@@ -31,6 +31,28 @@ const categoryMetaES: Record<string, CategoryContent> = {
       "Alquilar localmente resuelve todo esto. Entregamos equipos de bebé de primera calidad directamente en tu hotel, Airbnb o apartamento vacacional antes de que llegues. Todo está limpio e inspeccionado entre alquileres. Cuando termines, recogemos todo en tu puerta. Sin colas, sin cintas de equipaje, sin estrés.",
       "Valencia es una de las ciudades más familiares de Europa — calles llanas para cochecitos, playas suaves para los más pequeños y una cultura que acoge a los niños en todas partes. El equipo adecuado lo hace aún mejor.",
     ],
+    featuredHeading: "Planifica una estancia más sencilla con un bebé",
+    featuredDescription: "Empieza con un conjunto completo para la llegada, configura un kit para niños pequeños o consulta nuestra guía familiar para organizar sueño, alimentación y desplazamientos.",
+    featuredPathways: [
+      {
+        eyebrow: "Kit de llegada del bebé",
+        title: "Prepara el alojamiento antes de llegar",
+        description: "Combina descanso, alimentación, baño y movilidad según la rutina del bebé y la estancia.",
+        href: "/valencia/kits/baby-arrival-kit",
+      },
+      {
+        eyebrow: "Kit infantil para la ciudad",
+        title: "Configura un conjunto para recorrer Valencia",
+        description: "Elige movilidad, paseo y juego para explorar Valencia con un niño pequeño.",
+        href: "/valencia/kits/toddler-city-kit",
+      },
+      {
+        eyebrow: "Guía en inglés",
+        title: "Planifica Valencia con un bebé o niño pequeño",
+        description: "Compara barrios, actividades, transporte y el equipamiento voluminoso que conviene organizar localmente.",
+        href: "/blog/valencia-with-kids-complete-guide",
+      },
+    ],
   },
   "kids-family": {
     title: "Alquiler de Equipamiento Infantil y Familiar en Valencia",
@@ -73,6 +95,28 @@ const categoryMetaES: Record<string, CategoryContent> = {
       "Valencia es una de las ciudades más accesibles de España. El terreno llano, el metro totalmente accesible y los amplios paseos marítimos la hacen ideal para usuarios de silla de ruedas y visitantes con movilidad reducida.",
       "Alquilar equipos de movilidad localmente significa que evitas el riesgo de daños en tu propia silla de ruedas o scooter durante el vuelo. Entregamos directamente en tu alojamiento — ya sea un hotel en el centro histórico, un apartamento en la playa de la Malvarrosa o un Airbnb en Ruzafa.",
       "Nuestros scooters de movilidad ligeros son especialmente populares entre los visitantes que quieren independencia para recorrer los 9 km de los Jardines del Turia, la Ciudad de las Artes y las Ciencias, y las playas accesibles con sus servicios de baño asistido.",
+    ],
+    featuredHeading: "Planifica un viaje accesible en Valencia",
+    featuredDescription: "Elige un conjunto de accesibilidad, prepara la visita de familiares mayores o consulta nuestra guía local para conocer rutas y servicios.",
+    featuredPathways: [
+      {
+        eyebrow: "Kit de accesibilidad",
+        title: "Configura un kit de Valencia accesible",
+        description: "Combina movilidad con apoyo práctico para el baño y la vida diaria en el alojamiento.",
+        href: "/valencia/kits/accessible-valencia-kit",
+      },
+      {
+        eyebrow: "Kit para visitas familiares",
+        title: "Prepara la visita de los abuelos",
+        description: "Crea un conjunto adaptado con apoyo para caminar, confort y gestión del calor en Valencia.",
+        href: "/valencia/kits/grandparents-visiting-kit",
+      },
+      {
+        eyebrow: "Guía en inglés",
+        title: "Descubre la Valencia accesible",
+        description: "Planifica transporte, atracciones, playas y rutas por barrios con contexto práctico de accesibilidad.",
+        href: "/blog/wheelchair-accessibility-valencia",
+      },
     ],
   },
   "remote-work": {

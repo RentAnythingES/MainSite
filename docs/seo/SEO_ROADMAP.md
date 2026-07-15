@@ -44,6 +44,8 @@
 - [x] Apartment Comfort cluster connected across category, summer kit, guide and cooling products
 - [x] Remote Work cluster connected across category, apartment kit, guide and workstation products
 - [x] Kids & Family cluster connected across category, Toddler City kit, Family Beach kit and family guide
+- [x] Baby & Toddler cluster connected across category, Baby Arrival kit, Toddler City kit and family guide
+- [x] Mobility & Accessibility cluster connected across category, accessibility kits and local guide
 
 ---
 
