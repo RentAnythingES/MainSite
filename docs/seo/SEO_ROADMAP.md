@@ -38,7 +38,7 @@
 - [x] Product indexability gate for editorial readiness and supported categories
 - [x] Noindex and crawl controls for admin, internal and transactional utility routes
 - [x] Locale-aware Product structured data and rental availability status
-- [x] Automated canonical, hreflang, robots and sitemap regression audit
+- [x] Automated canonical, hreflang, robots, sitemap and cluster-pathway regression audit
 - [x] Six-cluster keyword ownership map including Kids & Family
 - [x] Beach & Outdoor transactional cluster strengthened with kit and local-guide pathways
 - [x] Apartment Comfort cluster connected across category, summer kit, guide and cooling products
@@ -46,6 +46,7 @@
 - [x] Kids & Family cluster connected across category, Toddler City kit, Family Beach kit and family guide
 - [x] Baby & Toddler cluster connected across category, Baby Arrival kit, Toddler City kit and family guide
 - [x] Mobility & Accessibility cluster connected across category, accessibility kits and local guide
+- [x] EN/ES product templates inherit category, kit and local-guide pathways for all six priority clusters
 
 ---
 
@@ -85,7 +86,11 @@ guide. Monitor duplicate/canonical selections and crawled-not-indexed URLs.
 ### 1.4 Cross-cluster internal linking audit
 **Impact**: 🟠 High · **Effort**: 30 min · **Status**: ✅ Done
 
-Product → blog, blog → products, categories → blog. Bidirectional linking implemented.
+Product → category/kit/guide, blog → products, and categories → kits/guides.
+The shared product pathway layer covers all six priority clusters in English and
+Spanish. The rendered SEO regression audit now checks every category pair plus a
+representative product so these links, canonicals and hreflang tags cannot vanish
+silently.
 
 ---
 

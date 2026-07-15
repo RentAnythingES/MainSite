@@ -11,6 +11,7 @@ import {
 import { getProductJsonLd, getBreadcrumbJsonLd } from "@/lib/jsonld";
 import ProductCard from "@/components/ProductCard";
 import BookingWidget from "@/components/BookingWidget";
+import ProductPlanningLinks from "@/components/ProductPlanningLinks";
 import { getDictionary } from "@/i18n/getDictionary";
 
 const t = getDictionary("es");
@@ -267,6 +268,12 @@ export default async function ProductPageES({ params }: Props) {
           </div>
         </div>
       </section>
+
+      <ProductPlanningLinks
+        categoryName={catNameES}
+        categorySlug={product.categorySlug}
+        locale="es"
+      />
 
       {/* Related */}
       {related.length > 0 && (

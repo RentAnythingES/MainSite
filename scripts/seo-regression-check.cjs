@@ -1,6 +1,38 @@
 const baseUrl = (process.env.SEO_BASE_URL || "https://www.rentanything.es").replace(/\/$/, "");
 const productSlug = process.env.SEO_PRODUCT_SLUG || "beach-umbrella-set";
 const noindexProductSlug = process.env.SEO_NOINDEX_PRODUCT_SLUG || "toddler-bike-lila";
+const productCategory = process.env.SEO_PRODUCT_CATEGORY || "travel-outdoors";
+
+const categoryChecks = [
+  {
+    slug: "baby-gear",
+    pathways: ["/valencia/kits/baby-arrival-kit", "/blog/valencia-with-kids-complete-guide"],
+  },
+  {
+    slug: "kids-family",
+    pathways: ["/valencia/kits/toddler-city-kit", "/valencia/kits/family-beach-kit"],
+  },
+  {
+    slug: "mobility",
+    pathways: ["/valencia/kits/accessible-valencia-kit", "/blog/wheelchair-accessibility-valencia"],
+  },
+  {
+    slug: "remote-work",
+    pathways: ["/valencia/kits/remote-work-apartment-kit", "/blog/digital-nomad-guide-valencia"],
+  },
+  {
+    slug: "home-living",
+    pathways: ["/valencia/kits/summer-apartment-survival-kit", "/blog/valencia-summer-survival-guide"],
+  },
+  {
+    slug: "travel-outdoors",
+    pathways: ["/valencia/kits/family-beach-kit", "/discover/malvarrosa-beach"],
+  },
+];
+
+const productPathways = Object.fromEntries(
+  categoryChecks.map((category) => [category.slug, category.pathways])
+);
 
 function assert(condition, message) {
   if (!condition) throw new Error(message);
@@ -27,34 +59,51 @@ function robotsMeta(html) {
   return html.match(/<meta[^>]+name="robots"[^>]+content="([^"]+)"[^>]*>/i)?.[1] || "";
 }
 
+function assertPathway(html, pathway, context) {
+  assert(html.includes(`href="${pathway}"`), `${context} is missing pathway ${pathway}`);
+}
+
 async function main() {
-  const [home, category, product, noindexProduct, robots, sitemap] = await Promise.all([
+  const [home, product, noindexProduct, robots, sitemap, categoryPages] = await Promise.all([
     get("/"),
-    get("/rental/travel-outdoors"),
     get(`/product/${productSlug}`),
     get(`/product/${noindexProductSlug}`),
     get("/robots.txt"),
     get("/sitemap.xml"),
+    Promise.all(
+      categoryChecks.map(async (categoryCheck) => ({
+        ...categoryCheck,
+        en: await get(`/rental/${categoryCheck.slug}`),
+        es: await get(`/es/rental/${categoryCheck.slug}`),
+      }))
+    ),
   ]);
 
   assert(canonical(home) === "https://rentanything.es", "Homepage canonical is incorrect");
-  assert(
-    canonical(category) === "https://rentanything.es/rental/travel-outdoors",
-    "Category canonical is incorrect"
-  );
-  assert(
-    alternate(category, "en") === "https://rentanything.es/rental/travel-outdoors",
-    "Category English hreflang is incorrect"
-  );
-  assert(
-    alternate(category, "es") === "https://rentanything.es/es/rental/travel-outdoors",
-    "Category Spanish hreflang is incorrect"
-  );
+  for (const categoryPage of categoryPages) {
+    const englishUrl = `https://rentanything.es/rental/${categoryPage.slug}`;
+    const spanishUrl = `https://rentanything.es/es/rental/${categoryPage.slug}`;
+    assert(canonical(categoryPage.en) === englishUrl, `${categoryPage.slug} English canonical is incorrect`);
+    assert(canonical(categoryPage.es) === spanishUrl, `${categoryPage.slug} Spanish canonical is incorrect`);
+    assert(alternate(categoryPage.en, "en") === englishUrl, `${categoryPage.slug} English hreflang is incorrect`);
+    assert(alternate(categoryPage.en, "es") === spanishUrl, `${categoryPage.slug} Spanish hreflang is incorrect`);
+    assert(alternate(categoryPage.es, "en") === englishUrl, `${categoryPage.slug} Spanish page lacks English hreflang`);
+    assert(alternate(categoryPage.es, "es") === spanishUrl, `${categoryPage.slug} Spanish page lacks Spanish hreflang`);
+
+    for (const pathway of categoryPage.pathways) {
+      assertPathway(categoryPage.en, pathway, `${categoryPage.slug} English category`);
+      assertPathway(categoryPage.es, pathway, `${categoryPage.slug} Spanish category`);
+    }
+  }
   assert(
     canonical(product) === `https://rentanything.es/product/${productSlug}`,
     "Product canonical is incorrect"
   );
   assert(!robotsMeta(product).includes("noindex"), "Reference product is unexpectedly noindex");
+  assertPathway(product, `/rental/${productCategory}`, "Reference product");
+  for (const pathway of productPathways[productCategory] || []) {
+    assertPathway(product, pathway, "Reference product");
+  }
   assert(
     robotsMeta(noindexProduct).includes("noindex"),
     "Incomplete reference product is unexpectedly indexable"
@@ -77,12 +126,9 @@ async function main() {
     productSlug,
     noindexProductSlug,
     homepageCanonical: canonical(home),
-    categoryCanonical: canonical(category),
     productCanonical: canonical(product),
-    categoryAlternates: {
-      en: alternate(category, "en"),
-      es: alternate(category, "es"),
-    },
+    productCategory,
+    checkedCategoryClusters: categoryPages.map((categoryPage) => categoryPage.slug),
     status: "passed",
   }, null, 2));
 }

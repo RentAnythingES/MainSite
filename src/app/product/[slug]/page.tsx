@@ -12,6 +12,7 @@ import { getProductJsonLd, getBreadcrumbJsonLd } from "@/lib/jsonld";
 import { getPublishedPosts } from "@/content/blog";
 import ProductCard from "@/components/ProductCard";
 import BookingWidget from "@/components/BookingWidget";
+import ProductPlanningLinks from "@/components/ProductPlanningLinks";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -301,6 +302,11 @@ export default async function ProductPage({ params }: Props) {
           </div>
         </div>
       </section>
+
+      <ProductPlanningLinks
+        categoryName={product.category}
+        categorySlug={product.categorySlug}
+      />
 
       {/* Related Guides */}
       {relatedPosts.length > 0 && (
