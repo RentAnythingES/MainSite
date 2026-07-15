@@ -165,6 +165,30 @@ Do not create a portable-air-conditioner subcategory until Search Console shows
 recurring distinct demand and at least three genuinely different, available AC
 products can support useful comparison guidance.
 
+## Remote Work cluster - third priority
+
+### Implementation status - 15 July 2026
+
+- `/rental/remote-work` owns `remote work equipment rental Valencia` and
+  supports monitor, standing-desk and ergonomic-chair rental queries.
+- `/es/rental/remote-work` mirrors that ownership for
+  `alquiler de equipos de teletrabajo en Valencia`.
+- The category explains product compatibility, apartment space, delivery,
+  placement and assembly considerations without relying on unstable city or
+  coworking price claims.
+- The category links to `/valencia/kits/remote-work-apartment-kit` for complete
+  workstation intent and `/blog/digital-nomad-guide-valencia` for informational
+  planning intent.
+- The digital-nomad guide links back to the category, kit and exact workstation
+  products. Product pages already link to the category and relevant guide.
+
+The first-pass cluster loop is:
+
+`digital-nomad guide -> Remote Work category -> Remote Work Apartment Kit or exact product -> availability`
+
+Do not create a monitor or desk subcategory until recurring Search Console demand
+and at least three distinct, available products justify unique comparison copy.
+
 ## Product-page long-tail rules
 
 Each indexable product page should target one primary formulation:

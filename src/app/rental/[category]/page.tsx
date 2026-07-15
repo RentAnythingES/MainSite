@@ -62,15 +62,31 @@ const categoryMeta: Record<string, CategoryContent> = {
   },
   "remote-work": {
     title: "Remote Work Equipment Rental in Valencia",
-    description: "Rent monitors, standing desks, ergonomic chairs & tech gear in Valencia. Perfect for digital nomads.",
+    description: "Rent monitors, standing desks and ergonomic office equipment in Valencia, with delivery and collection for remote-work and longer stays.",
     emoji: "💻",
-    editorialHeading: "Set Up Your Perfect Valencia Workspace",
+    editorialHeading: "Build a Practical Workspace in Your Valencia Apartment",
     editorialParagraphs: [
-      "Valencia has become one of Europe's top digital nomad destinations — 300 sunny days, fibre-optic internet exceeding 240 Mbps, and a cost of living well below Barcelona or Lisbon. The only problem? Most rental apartments come with a tiny desk and a wobbly chair.",
-      "Our remote work equipment fills that gap. A proper 27-inch monitor, an ergonomic chair, or a height-adjustable standing desk transforms any holiday rental into a genuinely productive workspace. We deliver everything to your apartment and collect it when you leave.",
-      "Unlike a coworking space (€120-160/month plus commute time), having your own setup means you work on your terms — on the terrace in the morning, at the desk in the afternoon, and at the beach by 6pm.",
+      "A temporary apartment may have reliable internet but still lack a comfortable place for focused work. Renting remote-work equipment in Valencia lets you add the screen, desk or chair you need without buying furniture for a short or medium-length stay.",
+      "Choose an individual monitor, height-adjustable desk or ergonomic chair according to your working pattern and available space. Each product page explains connections, dimensions, adjustability and compatibility so you can confirm that the equipment suits your laptop and accommodation before booking.",
+      "For a complete setup, the Remote Work Apartment Kit combines the core workstation items and optional add-ons in one request. Delivery and collection options are shown during booking, while access, placement and any assembly requirements can be confirmed with the apartment in advance.",
     ],
     blogTags: ["digital nomad", "remote work"],
+    featuredHeading: "Plan Your Valencia Work Setup",
+    featuredDescription: "Start with a complete apartment workstation or use our Valencia digital-nomad guide to plan where and how you want to work.",
+    featuredPathways: [
+      {
+        eyebrow: "Workspace kit",
+        title: "Configure a Remote Work Apartment Kit",
+        description: "Combine a monitor, desk, ergonomic seating and practical accessories around your stay.",
+        href: "/valencia/kits/remote-work-apartment-kit",
+      },
+      {
+        eyebrow: "Valencia guide",
+        title: "Plan a Remote-Work Stay in Valencia",
+        description: "Compare apartment working, coworking and neighbourhood considerations for a productive stay.",
+        href: "/blog/digital-nomad-guide-valencia",
+      },
+    ],
   },
   "home-living": {
     title: "Apartment Equipment Rental in Valencia",

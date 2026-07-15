@@ -42,6 +42,7 @@
 - [x] Six-cluster keyword ownership map including Kids & Family
 - [x] Beach & Outdoor transactional cluster strengthened with kit and local-guide pathways
 - [x] Apartment Comfort cluster connected across category, summer kit, guide and cooling products
+- [x] Remote Work cluster connected across category, apartment kit, guide and workstation products
 
 ---
 

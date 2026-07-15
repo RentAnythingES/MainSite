@@ -53,12 +53,28 @@ const categoryMetaES: Record<string, CategoryContent> = {
   },
   "remote-work": {
     title: "Alquiler de Equipos de Teletrabajo en Valencia",
-    description: "Alquila monitores, escritorios de pie, sillas ergonómicas y equipos tecnológicos en Valencia. Ideal para nómadas digitales.",
-    editorialHeading: "Monta tu espacio de trabajo perfecto en Valencia",
+    description: "Alquila monitores, escritorios regulables y sillas ergonómicas en Valencia, con entrega y recogida para teletrabajo y estancias largas.",
+    editorialHeading: "Prepara un espacio de trabajo práctico en tu apartamento",
     editorialParagraphs: [
-      "Valencia se ha convertido en uno de los destinos favoritos de los nómadas digitales en Europa — 300 días de sol, fibra óptica de más de 240 Mbps y un coste de vida muy por debajo de Barcelona o Lisboa. El único problema: la mayoría de los apartamentos de alquiler vienen con un escritorio pequeño y una silla inestable.",
-      "Nuestros equipos de teletrabajo llenan ese vacío. Un monitor de 27 pulgadas, una silla ergonómica o un escritorio de pie transforman cualquier alquiler vacacional en un espacio de trabajo realmente productivo. Lo entregamos todo en tu apartamento y lo recogemos cuando te vayas.",
-      "A diferencia de un coworking (120-160 €/mes más desplazamiento), tener tu propio equipo significa trabajar a tu ritmo — en la terraza por la mañana, en el escritorio por la tarde y en la playa a las 6.",
+      "Un apartamento temporal puede tener una buena conexión a internet y, aun así, no ofrecer un lugar cómodo para trabajar. Alquilar equipamiento de teletrabajo en Valencia permite añadir la pantalla, el escritorio o la silla que necesitas sin comprar muebles para una estancia corta o media.",
+      "Elige un monitor, un escritorio regulable o una silla ergonómica según tu forma de trabajar y el espacio disponible. Cada ficha explica conexiones, medidas, ajustes y compatibilidad para comprobar que el equipo encaja con tu portátil y tu alojamiento antes de reservar.",
+      "Para un puesto completo, el Kit de Teletrabajo para Apartamento combina los elementos principales y complementos opcionales en una sola solicitud. Las opciones de entrega y recogida aparecen durante la reserva y podemos confirmar con antelación el acceso, la ubicación y cualquier necesidad de montaje.",
+    ],
+    featuredHeading: "Planifica tu espacio de trabajo en Valencia",
+    featuredDescription: "Empieza con un puesto completo para el apartamento o consulta nuestra guía para decidir dónde y cómo quieres trabajar durante tu estancia.",
+    featuredPathways: [
+      {
+        eyebrow: "Kit de teletrabajo",
+        title: "Configura un kit de teletrabajo para el apartamento",
+        description: "Combina monitor, escritorio, asiento ergonómico y accesorios prácticos según tu estancia.",
+        href: "/valencia/kits/remote-work-apartment-kit",
+      },
+      {
+        eyebrow: "Guía de Valencia",
+        title: "Planifica una estancia de teletrabajo en Valencia",
+        description: "Compara el trabajo desde el apartamento, los espacios de coworking y las zonas más prácticas.",
+        href: "/blog/digital-nomad-guide-valencia",
+      },
     ],
   },
   "home-living": {

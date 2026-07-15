@@ -360,6 +360,11 @@ export const blogPosts: BlogPost[] = [
         description: "Monitors, desks, and chairs — delivered to your apartment"
       },
       {
+        title: "Remote Work Apartment Kit",
+        href: "/valencia/kits/remote-work-apartment-kit",
+        description: "Configure a complete workstation for your Valencia accommodation"
+      },
+      {
         title: "27-inch Monitor",
         href: "/product/monitor-27",
         description: "USB-C portable monitor for productive remote work"
