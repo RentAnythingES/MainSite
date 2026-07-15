@@ -43,6 +43,7 @@
 - [x] Beach & Outdoor transactional cluster strengthened with kit and local-guide pathways
 - [x] Apartment Comfort cluster connected across category, summer kit, guide and cooling products
 - [x] Remote Work cluster connected across category, apartment kit, guide and workstation products
+- [x] Kids & Family cluster connected across category, Toddler City kit, Family Beach kit and family guide
 
 ---
 
@@ -110,7 +111,7 @@ Initial data-driven bundle layer is live with `/valencia/kits`, individual kit p
 ---
 
 ### 1.6 Split family categories: Baby vs Kids
-**Impact**: High · **Effort**: 0.5-1 day · **Status**: Migration prepared; inventory review remains
+**Impact**: High · **Effort**: 0.5-1 day · **Status**: Core hub and navigation live; inventory review remains
 
 Separate the current broad family category into clearer customer language:
 
@@ -122,6 +123,10 @@ This improves navigation, SEO intent matching, bundle surfacing, and future inve
 The July 2026 category migration adds `Kids & Family` while preserving existing URLs
 and moves only clearly identified toy/bike records. Mixed legacy records remain for
 manual classification rather than being guessed in bulk.
+
+The Kids & Family hub is now visible on both homepage and Valencia category grids,
+uses a valid social-sharing image, and links directly to the Toddler City kit,
+Family Beach kit, and Valencia-with-kids guide in both locale templates.
 
 ---
 

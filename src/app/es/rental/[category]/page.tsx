@@ -8,6 +8,7 @@ import { getBreadcrumbJsonLd, getCategoryCollectionJsonLd } from "@/lib/jsonld";
 interface CategoryContent {
   title: string;
   description: string;
+  image?: string;
   editorialHeading: string;
   editorialParagraphs: string[];
   featuredHeading?: string;
@@ -34,11 +35,34 @@ const categoryMetaES: Record<string, CategoryContent> = {
   "kids-family": {
     title: "Alquiler de Equipamiento Infantil y Familiar en Valencia",
     description: "Alquila bicicletas de equilibrio, juguetes y equipamiento familiar práctico en Valencia, con opciones flexibles de recogida y entrega.",
+    image: "/discover/turia-gardens-hero.jpg",
     editorialHeading: "Equipamiento útil para estancias familiares en Valencia",
     editorialParagraphs: [
       "Las vacaciones en familia son más sencillas cuando los niños disponen de equipamiento adecuado sin tener que transportar cada artículo voluminoso por el aeropuerto. Alquilar en Valencia permite viajar con menos equipaje y elegir lo que realmente encaja con la estancia.",
       "Esta colección reúne equipamiento práctico para niños pequeños, niños mayores y actividades familiares. Cada ficha de producto explica las medidas, la orientación de edad, los elementos incluidos y las condiciones de alquiler para que puedas comprobar si es adecuado antes de reservar.",
       "Tanto si te alojas cerca de los Jardines del Turia como en la playa o en un apartamento de Valencia, podemos ayudarte a coordinar la recogida o la entrega según tus fechas y alojamiento.",
+    ],
+    featuredHeading: "Planifica una estancia familiar en Valencia",
+    featuredDescription: "Combina productos individuales con un kit familiar práctico o utiliza nuestra guía local para organizar la estancia según tus hijos y alojamiento.",
+    featuredPathways: [
+      {
+        eyebrow: "Kit para niños pequeños",
+        title: "Configura un kit infantil para la ciudad",
+        description: "Combina movilidad, juego y elementos prácticos para recorrer Valencia con un niño pequeño.",
+        href: "/valencia/kits/toddler-city-kit",
+      },
+      {
+        eyebrow: "Kit de playa familiar",
+        title: "Prepara un conjunto familiar de playa",
+        description: "Reúne sombra, transporte, frío y juegos para los días de playa en Valencia.",
+        href: "/valencia/kits/family-beach-kit",
+      },
+      {
+        eyebrow: "Guía en inglés",
+        title: "Planifica Valencia con niños",
+        description: "Consulta barrios, actividades y equipamiento útil para organizar una estancia familiar.",
+        href: "/blog/valencia-with-kids-complete-guide",
+      },
     ],
   },
   "mobility": {
@@ -166,7 +190,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description: meta.description,
       url: `https://rentanything.es/es/rental/${category}`,
       locale: "es_ES",
-      images: [{ url: `/categories/${category}.png`, alt: meta.title }],
+      images: [{ url: meta.image ?? `/categories/${category}.png`, alt: meta.title }],
     },
   };
 }

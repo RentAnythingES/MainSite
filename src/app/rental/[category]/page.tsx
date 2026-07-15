@@ -10,6 +10,7 @@ interface CategoryContent {
   title: string;
   description: string;
   emoji: string;
+  image?: string;
   editorialHeading: string;
   editorialParagraphs: string[];
   blogTags: string[];
@@ -40,6 +41,7 @@ const categoryMeta: Record<string, CategoryContent> = {
     title: "Kids & Family Equipment Rental in Valencia",
     description: "Rent balance bikes, toys and practical family equipment in Valencia. Flexible pickup and delivery options for your stay.",
     emoji: "🧸",
+    image: "/discover/turia-gardens-hero.jpg",
     editorialHeading: "Useful Gear for Family Stays in Valencia",
     editorialParagraphs: [
       "Family holidays are easier when children have age-appropriate equipment without every bulky item travelling through the airport. Renting locally keeps luggage lighter and lets you choose what fits the stay rather than what fits the suitcase.",
@@ -47,6 +49,28 @@ const categoryMeta: Record<string, CategoryContent> = {
       "Whether you are staying near the Turia Gardens, the beach or in a Valencia apartment, we can help coordinate pickup or delivery around your accommodation and rental dates.",
     ],
     blogTags: ["family", "kids"],
+    featuredHeading: "Plan a Family-Friendly Valencia Stay",
+    featuredDescription: "Connect individual equipment with a practical family kit or use our local guide to plan activities around your children and accommodation.",
+    featuredPathways: [
+      {
+        eyebrow: "Toddler kit",
+        title: "Configure a Toddler City Kit",
+        description: "Combine practical mobility, play and outing essentials for exploring Valencia with a toddler.",
+        href: "/valencia/kits/toddler-city-kit",
+      },
+      {
+        eyebrow: "Family beach kit",
+        title: "Build a Family Beach Setup",
+        description: "Bring together shade, carrying, cooling and play equipment for Valencia beach days.",
+        href: "/valencia/kits/family-beach-kit",
+      },
+      {
+        eyebrow: "Valencia guide",
+        title: "Plan Valencia with Children",
+        description: "Use our practical family guide to choose neighbourhoods, activities and useful equipment for your stay.",
+        href: "/blog/valencia-with-kids-complete-guide",
+      },
+    ],
   },
   "mobility": {
     title: "Mobility & Accessibility Rental in Valencia",
@@ -180,7 +204,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: meta.title,
       description: meta.description,
       url: `https://rentanything.es/rental/${category}`,
-      images: [{ url: `/categories/${category}.png`, alt: meta.title }],
+      images: [{ url: meta.image ?? `/categories/${category}.png`, alt: meta.title }],
     },
   };
 }
