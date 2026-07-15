@@ -42,6 +42,7 @@ export async function GET(request: NextRequest) {
     productLocalizationsReady,
     productFaqsReady,
     productImagesReady,
+    newsletterReady,
     systemIncidentsReady,
     unresolvedIncidentsResult,
     monitoringReady,
@@ -73,6 +74,7 @@ export async function GET(request: NextRequest) {
     isAvailable(supabase.from("product_localizations").select("id", { head: true })),
     isAvailable(supabase.from("product_faqs").select("id", { head: true })),
     isAvailable(supabase.from("product_images").select("id", { head: true })),
+    isAvailable(supabase.from("newsletter_subscribers").select("id", { head: true })),
     isAvailable(supabase.from("system_incidents").select("id", { head: true })),
     supabase
       .from("system_incidents")
@@ -130,6 +132,7 @@ export async function GET(request: NextRequest) {
       inventoryAssignmentsReady,
       financeReady: paymentLedgerReady && bookingDocumentsReady,
       productContentReady: productContentStatusReady && productLocalizationsReady && productFaqsReady && productImagesReady,
+      newsletterReady,
     },
   });
 }

@@ -12,7 +12,10 @@
     "catalogue:apply": "node scripts/apply-product-enrichment-batch.cjs",
     "catalogue:verify": "node scripts/verify-product-enrichment-batch.cjs",
     "audit:launch": "node scripts/launch-readiness-audit.cjs",
-    "smoke:booking": "node scripts/booking-api-smoke.cjs"
+    "smoke:booking": "node scripts/booking-api-smoke.cjs",
+    "db:audit": "node scripts/audit-live-schema.cjs",
+    "db:migrate": "node scripts/apply-db-migrations.cjs",
+    "db:verify": "node scripts/verify-live-backend.cjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.108.2",
@@ -29,6 +32,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.2.9",
+    "pg": "^8.22.0",
     "tailwindcss": "^4",
     "typescript": "^5"
   }

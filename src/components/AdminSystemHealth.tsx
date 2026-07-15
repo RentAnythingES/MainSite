@@ -8,6 +8,7 @@ type MigrationStatus = {
   inventoryAssignmentsReady: boolean;
   financeReady: boolean;
   productContentReady: boolean;
+  newsletterReady: boolean;
 };
 
 type IncidentStatus = {
@@ -40,6 +41,7 @@ const CHECKS: Array<{ key: keyof MigrationStatus; label: string; description: st
   { key: "inventoryAssignmentsReady", label: "Physical assignments", description: "Unit reservation, handover and return tracking" },
   { key: "financeReady", label: "Finance records", description: "Payment ledger and documents" },
   { key: "productContentReady", label: "Product review", description: "Editorial copy, FAQs and image rights" },
+  { key: "newsletterReady", label: "Newsletter consent", description: "GDPR-aware signup and unsubscribe storage" },
 ];
 
 export default function AdminSystemHealth() {

@@ -306,6 +306,9 @@ status, payments, documents, inventory, and customer-email actions remain usable
 The bookings API reports the checklist capability explicitly, and the checklist
 update endpoint returns a focused `503` migration-required response instead of a
 generic schema-cache failure.
+The shared admin shell also runs the authenticated system-health check and displays
+an admin-wide warning when any required schema capability is unavailable, so an
+operator sees database drift before opening a feature that depends on it.
 
 Expanded admin booking rows also show payment totals, Stripe checkout/payment IDs,
 active/released inventory block status, and a lightweight status timeline so support

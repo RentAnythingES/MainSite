@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const navItems = [
   { name: "Dashboard", href: "/admin", icon: "📊" },
@@ -24,6 +24,17 @@ export default function AdminShell({
   const pathname = usePathname();
   const router = useRouter();
   const [loggingOut, setLoggingOut] = useState(false);
+  const [schemaWarning, setSchemaWarning] = useState(false);
+
+  useEffect(() => {
+    fetch("/api/admin/health")
+      .then(async (response) => response.ok ? response.json() : null)
+      .then((data) => {
+        const migrations = data?.migrations as Record<string, boolean> | undefined;
+        setSchemaWarning(Boolean(migrations && Object.values(migrations).some((ready) => !ready)));
+      })
+      .catch(() => setSchemaWarning(true));
+  }, []);
 
   const handleLogout = async () => {
     setLoggingOut(true);
@@ -92,6 +103,12 @@ export default function AdminShell({
       {/* Main content */}
       <main className="flex-1 overflow-y-auto">
         <div className="p-6 md:p-8 max-w-7xl">
+          {schemaWarning && (
+            <div className="mb-5 flex flex-wrap items-center justify-between gap-3 rounded-lg border border-amber-500/20 bg-amber-500/10 px-4 py-3 text-sm text-amber-100">
+              <span>Some backend features are unavailable because the production database is missing required schema.</span>
+              <Link href="/admin" className="font-semibold text-amber-200 underline underline-offset-2 hover:text-white">Review system readiness</Link>
+            </div>
+          )}
           {children}
         </div>
       </main>

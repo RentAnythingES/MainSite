@@ -24,6 +24,22 @@ const blankLocalization = (locale: Locale): Localization => ({
   delivery_setup_note: "", care_note: "", seo_title: "", seo_description: "",
 });
 
+function normalizeLocalization(locale: Locale, value?: Partial<Localization>): Localization {
+  const blank = blankLocalization(locale);
+  return Object.fromEntries(
+    Object.entries({ ...blank, ...value, locale }).map(([key, fieldValue]) => [key, fieldValue ?? ""]),
+  ) as Localization;
+}
+
+function normalizeFaq(value: Partial<Faq>): Faq {
+  return {
+    locale: value.locale === "es" ? "es" : "en",
+    question: value.question ?? "",
+    answer: value.answer ?? "",
+    sort_order: value.sort_order ?? 0,
+  };
+}
+
 export default function ProductContentPage() {
   const params = useParams<{ id: string }>();
   const [locale, setLocale] = useState<Locale>("en");
@@ -45,9 +61,15 @@ export default function ProductContentPage() {
       if (!response.ok) throw new Error(data.error || "Could not load product content");
       setProduct(data.product);
       setStatus(data.product.content_status || "draft");
-      setReadiness(data.readiness);
-      setLocalizations((["en", "es"] as Locale[]).map((item) => ({ ...blankLocalization(item), ...(data.product.product_localizations || []).find((value: Localization) => value.locale === item) })));
-      setFaqs((data.product.product_faqs || []).map((faq: Faq) => ({ ...faq })));
+      setReadiness({
+        ready: Boolean(data.readiness?.ready),
+        missing: Array.isArray(data.readiness?.missing) ? data.readiness.missing : [],
+      });
+      setLocalizations((["en", "es"] as Locale[]).map((item) => normalizeLocalization(
+        item,
+        (data.product.product_localizations || []).find((value: Localization) => value.locale === item),
+      )));
+      setFaqs((data.product.product_faqs || []).map((faq: Partial<Faq>) => normalizeFaq(faq)));
       const image = (data.product.product_images || []).find((value: { is_primary: boolean }) => value.is_primary);
       setPrimaryImage({ alt_text: image?.alt_text || data.product.name, source_url: image?.source_url || "", rights_status: image?.rights_status || "unknown" });
     } catch (loadError) {
@@ -76,7 +98,11 @@ export default function ProductContentPage() {
       });
       const data = await response.json();
       if (!response.ok) throw new Error(data.error || "Could not save product content");
-      setReadiness(data.readiness); setNotice("Product content saved.");
+      setReadiness({
+        ready: Boolean(data.readiness?.ready),
+        missing: Array.isArray(data.readiness?.missing) ? data.readiness.missing : [],
+      });
+      setNotice("Product content saved.");
     } catch (saveError) { setError(saveError instanceof Error ? saveError.message : "Could not save product content"); }
     finally { setSaving(false); }
   };

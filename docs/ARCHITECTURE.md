@@ -102,6 +102,20 @@ Schema: `supabase/schema.sql`
 Booking v2 migration: `supabase/migrations/20260707_booking_system_v2.sql`
 Seed data: `supabase/seed_1_categories.sql` → `seed_2_products.sql` → `seed_3_pricing.sql`
 
+### Production Schema Workflow
+
+- Store the production session-pooler connection string only in local `.env.local`
+  as `SUPABASE_DB_URL`; never add it to Vercel or expose it to browser code.
+- Run `npm run db:audit` before deploying code that depends on schema changes.
+- Apply reviewed additive migrations with
+  `npm run db:migrate -- <migration-file.sql>`.
+- The migration runner uses a PostgreSQL advisory lock, one transaction per file,
+  SHA-256 checksum verification, and `public.app_schema_migrations` as the durable
+  application migration ledger. Migrations run manually before 15 July 2026 are
+  treated as the audited production baseline rather than fabricated history.
+- Run `npm run db:verify` after migration work. Its write checks run inside a
+  transaction that is always rolled back.
+
 ### Bundle Routes
 ```
 GET /valencia/kits

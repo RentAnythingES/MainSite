@@ -38,7 +38,7 @@ function buildReadiness(product: Record<string, unknown>) {
   if (!english?.short_description?.trim()) missing.push("English short description");
   if (!english?.detail_description?.trim()) missing.push("English product detail copy");
   if (!english?.seo_title?.trim() || !english?.seo_description?.trim()) missing.push("English SEO title and description");
-  if (faqs.filter((faq) => faq.locale === "en" && faq.question.trim() && faq.answer.trim()).length < 3) missing.push("Three English FAQs");
+  if (faqs.filter((faq) => faq.locale === "en" && faq.question?.trim() && faq.answer?.trim()).length < 3) missing.push("Three English FAQs");
   if (!primaryImage?.alt_text?.trim()) missing.push("Primary image alt text");
   if (!primaryImage?.rights_status || primaryImage.rights_status === "unknown") missing.push("Confirm why RentAnything is allowed to use the primary image");
 
@@ -107,8 +107,14 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
     }
 
     const cleanedFaqs = (body.faqs || [])
-      .filter((faq) => faq.question.trim() || faq.answer.trim())
-      .map((faq, index) => ({ product_id: id, locale: faq.locale, question: faq.question.trim(), answer: faq.answer.trim(), sort_order: index }));
+      .filter((faq) => faq.question?.trim() || faq.answer?.trim())
+      .map((faq, index) => ({
+        product_id: id,
+        locale: faq.locale,
+        question: faq.question?.trim() || "",
+        answer: faq.answer?.trim() || "",
+        sort_order: index,
+      }));
     const { error: deleteFaqError } = await supabase.from("product_faqs").delete().eq("product_id", id);
     if (deleteFaqError) throw deleteFaqError;
     if (cleanedFaqs.length > 0) {
