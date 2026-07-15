@@ -119,3 +119,36 @@ export function getBreadcrumbJsonLd(items: { name: string; url: string }[]) {
     })),
   };
 }
+
+export function getCategoryCollectionJsonLd({
+  name,
+  description,
+  url,
+  locale,
+  products,
+}: {
+  name: string;
+  description: string;
+  url: string;
+  locale: "en" | "es";
+  products: Product[];
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name,
+    description,
+    url,
+    inLanguage: locale,
+    mainEntity: {
+      "@type": "ItemList",
+      numberOfItems: products.length,
+      itemListElement: products.map((product, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        name: product.name,
+        url: `https://rentanything.es${locale === "es" ? "/es" : ""}/product/${product.slug}`,
+      })),
+    },
+  };
+}

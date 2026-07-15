@@ -66,6 +66,31 @@ on the destination URLs, sitemap replacement and Search Console monitoring.
 
 ## Beach & Outdoor cluster — first priority
 
+### Implementation status - 15 July 2026
+
+- `/rental/travel-outdoors` now targets `beach equipment rental Valencia` with
+  transactional copy about equipment choice, verified product facts, delivery,
+  pickup and date-based availability.
+- The category links directly to the Family Beach Kit and the Malvarrosa and
+  Patacona local guides, creating clear routes for bundled and place-specific
+  intent without adding overlapping landing pages.
+- The Spanish category mirrors the same ownership model for
+  `alquiler de equipamiento de playa en Valencia`.
+- Category pages emit `CollectionPage`, `ItemList` and breadcrumb structured
+  data based on the current catalogue rather than hard-coded product lists.
+- Commercial blog calls to action now route by topic. Beach guides point to the
+  Beach & Outdoor category instead of the former site-wide Baby Gear fallback.
+- The family beach guide links to both local beach guides, the transactional
+  category and relevant individual products. Malvarrosa and Patacona guides
+  surface the Beach & Outdoor catalogue through contextual product widgets.
+
+This is the complete first-pass cluster loop:
+
+`family beach guide -> Malvarrosa/Patacona guide -> Beach & Outdoor category -> Family Beach Kit or product -> availability`
+
+Do not add separate pages for minor keyword variants until Search Console shows
+a distinct recurring intent that the category, kit or product layer cannot own.
+
 ### Search ownership
 
 - **Category hub:** `/rental/travel-outdoors`

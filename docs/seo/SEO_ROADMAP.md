@@ -40,6 +40,7 @@
 - [x] Locale-aware Product structured data and rental availability status
 - [x] Automated canonical, hreflang, robots and sitemap regression audit
 - [x] Six-cluster keyword ownership map including Kids & Family
+- [x] Beach & Outdoor transactional cluster strengthened with kit and local-guide pathways
 
 ---
 

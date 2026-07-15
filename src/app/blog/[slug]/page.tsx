@@ -78,6 +78,54 @@ function getFaqJsonLd(post: BlogPost) {
   };
 }
 
+const clusterCtas = [
+  {
+    tags: ["beach", "beaches"],
+    href: "/rental/travel-outdoors",
+    heading: "Need Beach Equipment for Your Valencia Stay?",
+    description: "Compare beach umbrellas, shelters and family shade options, then check availability for your dates.",
+    label: "Browse Beach Equipment",
+  },
+  {
+    tags: ["mobility", "accessibility"],
+    href: "/rental/mobility",
+    heading: "Need Mobility Equipment in Valencia?",
+    description: "Compare wheelchairs, scooters and daily mobility aids with pickup and delivery options for your stay.",
+    label: "Browse Mobility Equipment",
+  },
+  {
+    tags: ["digital nomad", "remote work"],
+    href: "/rental/remote-work",
+    heading: "Need a Better Workspace in Valencia?",
+    description: "Compare monitors, desks and ergonomic equipment for your apartment or longer Valencia stay.",
+    label: "Browse Remote Work Equipment",
+  },
+  {
+    tags: ["summer", "seasonal"],
+    href: "/rental/home-living",
+    heading: "Need a More Comfortable Valencia Apartment?",
+    description: "Compare portable cooling and apartment comfort equipment, then check availability for your dates.",
+    label: "Browse Apartment Comfort",
+  },
+  {
+    tags: ["family", "kids"],
+    href: "/rental/baby-gear",
+    heading: "Need Family Equipment for Your Valencia Stay?",
+    description: "Compare practical baby and toddler equipment without adding bulky items to your luggage.",
+    label: "Browse Baby & Toddler Equipment",
+  },
+] as const;
+
+function getClusterCta(post: BlogPost) {
+  const tags = new Set(post.tags.map((tag) => tag.toLowerCase()));
+  return clusterCtas.find((cta) => cta.tags.some((tag) => tags.has(tag))) || {
+    href: "/valencia",
+    heading: "Need Equipment for Your Valencia Stay?",
+    description: "Browse practical rental equipment and check availability for your dates in Valencia.",
+    label: "Browse Valencia Rentals",
+  };
+}
+
 export default async function BlogPostPage({ params }: Props) {
   const { slug } = await params;
   const post = getBlogPostBySlug(slug);
@@ -86,6 +134,7 @@ export default async function BlogPostPage({ params }: Props) {
   if (!post || !isPublished(post)) notFound();
 
   const faqSchema = getFaqJsonLd(post);
+  const clusterCta = getClusterCta(post);
 
   return (
     <>
@@ -241,14 +290,13 @@ export default async function BlogPostPage({ params }: Props) {
       <section className="bg-brand py-16">
         <div className="container-site text-center">
           <h2 className="text-3xl font-bold text-white mb-3">
-            Need Equipment for Your Valencia Trip?
+            {clusterCta.heading}
           </h2>
           <p className="text-teal-100 mb-8 max-w-lg mx-auto">
-            We deliver strollers, wheelchairs, monitors, and more straight to
-            your door in Valencia. Check availability for your dates.
+            {clusterCta.description}
           </p>
-          <Link href="/rental/baby-gear" className="btn btn-accent">
-            Browse All Rentals
+          <Link href={clusterCta.href} className="btn btn-accent">
+            {clusterCta.label}
           </Link>
         </div>
       </section>

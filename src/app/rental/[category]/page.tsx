@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { getProductsByCategoryFromDB } from "@/lib/product-service";
 import { getPublishedPosts } from "@/content/blog";
 import ProductCard from "@/components/ProductCard";
+import { getBreadcrumbJsonLd, getCategoryCollectionJsonLd } from "@/lib/jsonld";
 
 interface CategoryContent {
   title: string;
@@ -12,6 +13,12 @@ interface CategoryContent {
   editorialHeading: string;
   editorialParagraphs: string[];
   blogTags: string[];
+  featuredPathways?: Array<{
+    eyebrow: string;
+    title: string;
+    description: string;
+    href: string;
+  }>;
 }
 
 const categoryMeta: Record<string, CategoryContent> = {
@@ -76,16 +83,36 @@ const categoryMeta: Record<string, CategoryContent> = {
     blogTags: ["summer", "seasonal"],
   },
   "travel-outdoors": {
-    title: "Beach & Outdoor Gear Rental in Valencia",
-    description: "Rent beach umbrellas, shade, outdoor comfort gear & family beach equipment in Valencia. Ready for Malvarrosa beach.",
+    title: "Beach Equipment Rental in Valencia",
+    description: "Rent beach umbrellas, shelters and family beach shade in Valencia, with pickup or delivery options for Malvarrosa, Patacona and nearby stays.",
     emoji: "🏖️",
-    editorialHeading: "Beach-Ready Without the Baggage",
+    editorialHeading: "Rent Beach Gear for Valencia Days by the Sea",
     editorialParagraphs: [
-      "Valencia's urban beaches — Malvarrosa, Patacona, El Cabanyal — are some of the Mediterranean's best. Wide sandy stretches, shallow warm water, and a promenade packed with restaurants and bars.",
-      "Sunbed and umbrella rental at the chiringuitos runs about €9-10 each, but the areas fill up fast in peak season and you're limited to their roped-off sections. Having your own beach set means you can set up wherever you want, arrive whenever suits you, and have proper UV protection for the whole family.",
-      "We deliver beach gear to your accommodation so it's waiting when you arrive. No hunting for shops, no carrying bulky umbrellas through the streets.",
+      "Beach umbrellas and shelters are awkward to pack, difficult to carry through an airport and rarely supplied by holiday apartments. Renting beach equipment in Valencia gives you reliable shade without buying bulky gear for a short stay.",
+      "Choose the product that fits your group and beach plans, from a traditional umbrella setup to a compact family shelter. Each product page records the verified dimensions, weight, included parts, setup guidance and important wind or care limitations before you check availability.",
+      "Pickup and delivery options make the equipment practical for stays near Malvarrosa, Patacona, Cabanyal and the city centre. Families who need more than shade can also start with the Family Beach Kit and request the combination that suits their dates.",
     ],
     blogTags: ["summer", "beach"],
+    featuredPathways: [
+      {
+        eyebrow: "Beach kit",
+        title: "Build a Family Beach Setup",
+        description: "Combine shade with practical family add-ons for beach days during your Valencia stay.",
+        href: "/valencia/kits/family-beach-kit",
+      },
+      {
+        eyebrow: "Local guide",
+        title: "Plan a Day at Malvarrosa",
+        description: "Understand the promenade, family facilities and what to bring for Valencia's best-known urban beach.",
+        href: "/discover/malvarrosa-beach",
+      },
+      {
+        eyebrow: "Local guide",
+        title: "Explore Patacona Beach",
+        description: "Plan a slightly quieter beach day north of Malvarrosa and choose suitable equipment for your stay.",
+        href: "/discover/patacona-beach",
+      },
+    ],
   },
 };
 
@@ -113,6 +140,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         es: `https://rentanything.es/es/rental/${category}`,
       },
     },
+    openGraph: {
+      title: meta.title,
+      description: meta.description,
+      url: `https://rentanything.es/rental/${category}`,
+      images: [{ url: `/categories/${category}.png`, alt: meta.title }],
+    },
   };
 }
 
@@ -135,6 +168,32 @@ export default async function CategoryPage({ params }: Props) {
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            getCategoryCollectionJsonLd({
+              name: meta.title,
+              description: meta.description,
+              url: `https://rentanything.es/rental/${category}`,
+              locale: "en",
+              products: categoryProducts,
+            })
+          ),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            getBreadcrumbJsonLd([
+              { name: "Home", url: "https://rentanything.es" },
+              { name: "Valencia", url: "https://rentanything.es/valencia" },
+              { name: meta.title, url: `https://rentanything.es/rental/${category}` },
+            ])
+          ),
+        }}
+      />
       {/* Breadcrumb */}
       <nav className="bg-neutral-50 border-b border-border py-3">
         <div className="container-site">
@@ -208,6 +267,37 @@ export default async function CategoryPage({ params }: Props) {
           </div>
         </div>
       </section>
+
+      {meta.featuredPathways && meta.featuredPathways.length > 0 && (
+        <section className="section bg-white">
+          <div className="container-site">
+            <div className="max-w-3xl mb-8">
+              <h2 className="text-2xl font-bold mb-3">Plan Your Valencia Beach Days</h2>
+              <p className="text-neutral-600">
+                Connect your equipment choice with a family kit or a practical guide to the beach nearest your accommodation.
+              </p>
+            </div>
+            <div className="grid md:grid-cols-3 gap-6">
+              {meta.featuredPathways.map((pathway) => (
+                <Link
+                  key={pathway.href}
+                  href={pathway.href}
+                  className="card p-6 hover:shadow-md transition-shadow group"
+                >
+                  <span className="badge badge-brand mb-3">{pathway.eyebrow}</span>
+                  <h3 className="font-bold text-lg mb-2 group-hover:text-brand transition-colors">
+                    {pathway.title}
+                  </h3>
+                  <p className="text-sm text-neutral-500 leading-relaxed mb-4">
+                    {pathway.description}
+                  </p>
+                  <span className="text-sm font-semibold text-brand">Explore →</span>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Related Guides */}
       {relatedPosts.length > 0 && (

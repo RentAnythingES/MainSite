@@ -3,12 +3,19 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { getProductsByCategoryFromDB } from "@/lib/product-service";
 import ProductCard from "@/components/ProductCard";
+import { getBreadcrumbJsonLd, getCategoryCollectionJsonLd } from "@/lib/jsonld";
 
 interface CategoryContent {
   title: string;
   description: string;
   editorialHeading: string;
   editorialParagraphs: string[];
+  featuredPathways?: Array<{
+    eyebrow: string;
+    title: string;
+    description: string;
+    href: string;
+  }>;
 }
 
 const categoryMetaES: Record<string, CategoryContent> = {
@@ -63,13 +70,33 @@ const categoryMetaES: Record<string, CategoryContent> = {
     ],
   },
   "travel-outdoors": {
-    title: "Alquiler de Equipamiento de Playa y Aire Libre en Valencia",
-    description: "Alquila sombrillas, equipamiento de playa y artículos de exterior en Valencia. Listo para la playa de la Malvarrosa.",
-    editorialHeading: "Preparado para la playa sin equipaje extra",
+    title: "Alquiler de Equipamiento de Playa en Valencia",
+    description: "Alquila sombrillas, refugios y sombra familiar en Valencia, con opciones de recogida o entrega para Malvarrosa, Patacona y alojamientos cercanos.",
+    editorialHeading: "Alquila material para tus días de playa en Valencia",
     editorialParagraphs: [
-      "Las playas urbanas de Valencia — la Malvarrosa, la Patacona, el Cabanyal — son de las mejores del Mediterráneo. Amplias extensiones de arena, aguas cálidas y poco profundas, y un paseo marítimo lleno de restaurantes y bares.",
-      "El alquiler de hamaca y sombrilla en los chiringuitos cuesta unos 9-10 € cada uno, pero las zonas se llenan rápido en temporada alta y estás limitado a sus secciones. Tener tu propio equipo de playa significa que puedes instalarte donde quieras, llegar cuando te convenga y tener protección UV adecuada para toda la familia.",
-      "Entregamos el equipamiento de playa en tu alojamiento para que esté esperándote cuando llegues. Sin buscar tiendas, sin cargar sombrillas por las calles.",
+      "Las sombrillas y los refugios de playa son difíciles de transportar en avión y pocos apartamentos vacacionales los incluyen. Alquilar equipamiento de playa en Valencia permite disponer de sombra sin comprar artículos voluminosos para una estancia corta.",
+      "Elige el producto que encaje con tu grupo y tus planes, desde una sombrilla tradicional hasta un refugio familiar compacto. Cada ficha recoge las medidas, el peso, las piezas incluidas, las instrucciones de montaje y las limitaciones importantes de viento o cuidado antes de comprobar la disponibilidad.",
+      "Las opciones de recogida y entrega facilitan el uso del material si te alojas cerca de Malvarrosa, Patacona, Cabanyal o el centro. Las familias que necesiten algo más que sombra también pueden empezar con el Kit de Playa Familiar y solicitar la combinación adecuada para sus fechas.",
+    ],
+    featuredPathways: [
+      {
+        eyebrow: "Kit de playa",
+        title: "Prepara un kit de playa familiar",
+        description: "Combina sombra con complementos prácticos para los días de playa durante tu estancia en Valencia.",
+        href: "/valencia/kits/family-beach-kit",
+      },
+      {
+        eyebrow: "Guía local",
+        title: "Planifica un día en la Malvarrosa",
+        description: "Conoce el paseo, los servicios familiares y qué llevar a la playa urbana más conocida de Valencia.",
+        href: "/discover/malvarrosa-beach",
+      },
+      {
+        eyebrow: "Guía local",
+        title: "Descubre la playa de la Patacona",
+        description: "Organiza un día de playa algo más tranquilo al norte de la Malvarrosa y elige el equipamiento adecuado.",
+        href: "/discover/patacona-beach",
+      },
     ],
   },
 };
@@ -98,6 +125,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         es: `https://rentanything.es/es/rental/${category}`,
       },
     },
+    openGraph: {
+      title: meta.title,
+      description: meta.description,
+      url: `https://rentanything.es/es/rental/${category}`,
+      locale: "es_ES",
+      images: [{ url: `/categories/${category}.png`, alt: meta.title }],
+    },
   };
 }
 
@@ -114,6 +148,32 @@ export default async function CategoryPageES({ params }: Props) {
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            getCategoryCollectionJsonLd({
+              name: meta.title,
+              description: meta.description,
+              url: `https://rentanything.es/es/rental/${category}`,
+              locale: "es",
+              products: categoryProducts,
+            })
+          ),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            getBreadcrumbJsonLd([
+              { name: "Inicio", url: "https://rentanything.es/es" },
+              { name: "Valencia", url: "https://rentanything.es/es/valencia" },
+              { name: meta.title, url: `https://rentanything.es/es/rental/${category}` },
+            ])
+          ),
+        }}
+      />
       <nav className="bg-neutral-50 border-b border-border py-3">
         <div className="container-site">
           <ol className="flex items-center gap-2 text-sm text-neutral-500">
@@ -172,6 +232,37 @@ export default async function CategoryPageES({ params }: Props) {
           </div>
         </div>
       </section>
+
+      {meta.featuredPathways && meta.featuredPathways.length > 0 && (
+        <section className="section bg-white">
+          <div className="container-site">
+            <div className="max-w-3xl mb-8">
+              <h2 className="text-2xl font-bold mb-3">Planifica tus días de playa en Valencia</h2>
+              <p className="text-neutral-600">
+                Combina el equipamiento con un kit familiar o una guía práctica de la playa más cercana a tu alojamiento.
+              </p>
+            </div>
+            <div className="grid md:grid-cols-3 gap-6">
+              {meta.featuredPathways.map((pathway) => (
+                <Link
+                  key={pathway.href}
+                  href={pathway.href}
+                  className="card p-6 hover:shadow-md transition-shadow group"
+                >
+                  <span className="badge badge-brand mb-3">{pathway.eyebrow}</span>
+                  <h3 className="font-bold text-lg mb-2 group-hover:text-brand transition-colors">
+                    {pathway.title}
+                  </h3>
+                  <p className="text-sm text-neutral-500 leading-relaxed mb-4">
+                    {pathway.description}
+                  </p>
+                  <span className="text-sm font-semibold text-brand">Explorar →</span>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       <section className="bg-neutral-50 py-12">
         <div className="container-site text-center">
