@@ -88,7 +88,7 @@ const categoryMetaES: Record<string, CategoryContent> = {
     ],
   },
   "mobility": {
-    title: "Alquiler de Sillas de Ruedas y Scooters de Movilidad en Valencia",
+    title: "Alquiler de Sillas de Ruedas y Scooters en Valencia",
     description: "Alquila sillas de ruedas, scooters de movilidad, andadores y ayudas diarias en Valencia. Entrega en tu hotel o Airbnb.",
     editorialHeading: "Explorar Valencia con equipos de movilidad",
     editorialParagraphs: [

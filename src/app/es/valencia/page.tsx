@@ -8,8 +8,8 @@ import { getDictionary } from "@/i18n/getDictionary";
 const t = getDictionary("es");
 
 export const metadata: Metadata = {
-  title: "Alquiler de Cochecitos, Sillas de Ruedas y Equipos en Valencia",
-  description: t.valencia.subtitle,
+  title: "Alquiler de Equipos en Valencia | RentAnything.es",
+  description: "Alquila artículos de bebé, movilidad, teletrabajo y confort en Valencia, con recogida o entrega en hoteles, apartamentos y alojamientos.",
   alternates: {
     canonical: "https://rentanything.es/es/valencia",
     languages: { en: "https://rentanything.es/valencia", es: "https://rentanything.es/es/valencia" },

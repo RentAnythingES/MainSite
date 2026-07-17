@@ -49,6 +49,7 @@
 - [x] EN/ES product templates inherit category, kit and local-guide pathways for all six priority clusters
 - [x] Live product indexability audit plus EN/ES search-readiness indicators in admin
 - [x] Rendered technical SEO audit with locale, social metadata, orphan and broken-link checks
+- [x] Static blog, Discover and Spanish hub metadata brought within audit length targets
 
 ---
 

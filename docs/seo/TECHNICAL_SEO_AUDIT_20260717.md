@@ -43,7 +43,7 @@ static fallback and returned:
 - 0 pages with hard errors;
 - 0 sitemap orphans;
 - 0 broken internal links;
-- 19 pages with non-blocking metadata-length warnings.
+- 6 pages with non-blocking metadata-length warnings.
 
 The local build cannot load Supabase-only products because outbound database
 access is restricted in the build environment. The initial live crawl provides
@@ -52,11 +52,11 @@ updated shared product and locale templates.
 
 ## Editorial follow-up
 
-The remaining warnings are title or description lengths, concentrated in older
-Discover guides, several blog posts, and a small number of legacy product SEO
-records. These are editorial optimization tasks rather than technical indexing
-failures. Product copy remains subject to the existing manual content-review
-workflow; this audit did not activate, archive, or rewrite catalogue records.
+All static guide, blog and Spanish hub metadata-length warnings were cleared.
+The six remaining warnings belong to legacy product SEO records: High Chair,
+Transport Wheelchair, Rollator Walker, Ergonomic Chair, Air Purifier and Portable
+AC. Product copy remains subject to the existing manual content-review workflow;
+this audit did not activate, archive, or rewrite catalogue records.
 
 ## Evidence
 
