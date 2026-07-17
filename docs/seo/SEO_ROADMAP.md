@@ -50,6 +50,7 @@
 - [x] Live product indexability audit plus EN/ES search-readiness indicators in admin
 - [x] Rendered technical SEO audit with locale, social metadata, orphan and broken-link checks
 - [x] Static blog, Discover and Spanish hub metadata brought within audit length targets
+- [x] Route-specific structured-data safeguards plus breadcrumbs on blog, Discover and kit details
 
 ---
 

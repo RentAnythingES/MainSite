@@ -63,6 +63,19 @@ function extractInternalLinks(html) {
   return [...links];
 }
 
+function getRequiredJsonLdTypes(url) {
+  const pathname = new URL(url).pathname.replace(/\/$/, "") || "/";
+  if (pathname === "/" || pathname === "/es") return ["LocalBusiness"];
+  if (/^\/(?:es\/)?product\/[^/]+$/.test(pathname)) return ["Product", "BreadcrumbList"];
+  if (/^\/(?:es\/)?rental\/[^/]+$/.test(pathname)) return ["CollectionPage", "BreadcrumbList"];
+  if (/^\/blog\/[^/]+$/.test(pathname)) return ["Article", "BreadcrumbList"];
+  if (/^\/valencia\/kits\/[^/]+$/.test(pathname)) return ["Product", "BreadcrumbList"];
+  if (/^\/discover\/[^/]+$/.test(pathname) && !["/discover/neighbourhoods", "/discover/day-trips", "/discover/attractions", "/discover/events"].includes(pathname)) {
+    return ["BreadcrumbList", "TouristDestination|Event"];
+  }
+  return [];
+}
+
 function inspectPage(url, html) {
   const errors = [];
   const warnings = [];
@@ -104,6 +117,13 @@ function inspectPage(url, html) {
       }
     } catch {
       errors.push("invalid_json_ld");
+    }
+  }
+
+  for (const requiredType of getRequiredJsonLdTypes(url)) {
+    const alternatives = requiredType.split("|");
+    if (!alternatives.some((type) => jsonLdTypes.includes(type))) {
+      errors.push(`missing_json_ld_type:${requiredType}`);
     }
   }
 
@@ -204,6 +224,7 @@ async function main() {
     orphanPages,
     unlistedInternalLinks,
     brokenInternalLinks,
+    schemaCoverage: pages.map(({ url, jsonLdTypes }) => ({ url, jsonLdTypes })),
   };
 
   if (outputPath) {

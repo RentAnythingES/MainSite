@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-07-17T16:17:06.201Z",
-  "baseUrl": "http://localhost:3036",
+  "generatedAt": "2026-07-17T17:06:37.226Z",
+  "baseUrl": "http://localhost:3038",
   "sitemapUrlCount": 71,
   "robots": {
     "hasSitemap": true,
@@ -55,26 +55,520 @@
   ],
   "orphanPages": [],
   "unlistedInternalLinks": [
-    "http://localhost:3036/cookies",
-    "http://localhost:3036/privacy",
-    "http://localhost:3036/terms",
-    "http://localhost:3036/refunds",
-    "http://localhost:3036/es/product/compact-stroller",
-    "http://localhost:3036/es/product/double-stroller",
-    "http://localhost:3036/es/product/travel-crib",
-    "http://localhost:3036/es/product/car-seat-infant",
-    "http://localhost:3036/es/product/high-chair",
-    "http://localhost:3036/es/product/standard-wheelchair",
-    "http://localhost:3036/es/product/transport-wheelchair",
-    "http://localhost:3036/es/product/mobility-scooter-lightweight",
-    "http://localhost:3036/es/product/heavy-duty-mobility-scooter",
-    "http://localhost:3036/es/product/rollator-walker",
-    "http://localhost:3036/es/product/monitor-27",
-    "http://localhost:3036/es/product/standing-desk",
-    "http://localhost:3036/es/product/ergonomic-chair",
-    "http://localhost:3036/es/product/air-purifier",
-    "http://localhost:3036/es/product/portable-ac",
-    "http://localhost:3036/es/product/beach-umbrella-set"
+    "http://localhost:3038/cookies",
+    "http://localhost:3038/privacy",
+    "http://localhost:3038/terms",
+    "http://localhost:3038/refunds",
+    "http://localhost:3038/es/product/compact-stroller",
+    "http://localhost:3038/es/product/double-stroller",
+    "http://localhost:3038/es/product/travel-crib",
+    "http://localhost:3038/es/product/car-seat-infant",
+    "http://localhost:3038/es/product/high-chair",
+    "http://localhost:3038/es/product/standard-wheelchair",
+    "http://localhost:3038/es/product/transport-wheelchair",
+    "http://localhost:3038/es/product/mobility-scooter-lightweight",
+    "http://localhost:3038/es/product/heavy-duty-mobility-scooter",
+    "http://localhost:3038/es/product/rollator-walker",
+    "http://localhost:3038/es/product/monitor-27",
+    "http://localhost:3038/es/product/standing-desk",
+    "http://localhost:3038/es/product/ergonomic-chair",
+    "http://localhost:3038/es/product/air-purifier",
+    "http://localhost:3038/es/product/portable-ac",
+    "http://localhost:3038/es/product/beach-umbrella-set"
   ],
-  "brokenInternalLinks": []
+  "brokenInternalLinks": [],
+  "schemaCoverage": [
+    {
+      "url": "https://rentanything.es",
+      "jsonLdTypes": [
+        "LocalBusiness"
+      ]
+    },
+    {
+      "url": "https://rentanything.es/valencia",
+      "jsonLdTypes": []
+    },
+    {
+      "url": "https://rentanything.es/valencia/kits",
+      "jsonLdTypes": []
+    },
+    {
+      "url": "https://rentanything.es/blog",
+      "jsonLdTypes": []
+    },
+    {
+      "url": "https://rentanything.es/how-it-works",
+      "jsonLdTypes": []
+    },
+    {
+      "url": "https://rentanything.es/about",
+      "jsonLdTypes": []
+    },
+    {
+      "url": "https://rentanything.es/faq",
+      "jsonLdTypes": []
+    },
+    {
+      "url": "https://rentanything.es/contact",
+      "jsonLdTypes": []
+    },
+    {
+      "url": "https://rentanything.es/rental/baby-gear",
+      "jsonLdTypes": [
+        "CollectionPage",
+        "BreadcrumbList"
+      ]
+    },
+    {
+      "url": "https://rentanything.es/rental/kids-family",
+      "jsonLdTypes": [
+        "CollectionPage",
+        "BreadcrumbList"
+      ]
+    },
+    {
+      "url": "https://rentanything.es/rental/mobility",
+      "jsonLdTypes": [
+        "CollectionPage",
+        "BreadcrumbList"
+      ]
+    },
+    {
+      "url": "https://rentanything.es/rental/remote-work",
+      "jsonLdTypes": [
+        "CollectionPage",
+        "BreadcrumbList"
+      ]
+    },
+    {
+      "url": "https://rentanything.es/rental/home-living",
+      "jsonLdTypes": [
+        "CollectionPage",
+        "BreadcrumbList"
+      ]
+    },
+    {
+      "url": "https://rentanything.es/rental/travel-outdoors",
+      "jsonLdTypes": [
+        "CollectionPage",
+        "BreadcrumbList"
+      ]
+    },
+    {
+      "url": "https://rentanything.es/product/compact-stroller",
+      "jsonLdTypes": [
+        "Product",
+        "BreadcrumbList",
+        "FAQPage"
+      ]
+    },
+    {
+      "url": "https://rentanything.es/product/double-stroller",
+      "jsonLdTypes": [
+        "Product",
+        "BreadcrumbList",
+        "FAQPage"
+      ]
+    },
+    {
+      "url": "https://rentanything.es/product/travel-crib",
+      "jsonLdTypes": [
+        "Product",
+        "BreadcrumbList",
+        "FAQPage"
+      ]
+    },
+    {
+      "url": "https://rentanything.es/product/car-seat-infant",
+      "jsonLdTypes": [
+        "Product",
+        "BreadcrumbList",
+        "FAQPage"
+      ]
+    },
+    {
+      "url": "https://rentanything.es/product/high-chair",
+      "jsonLdTypes": [
+        "Product",
+        "BreadcrumbList",
+        "FAQPage"
+      ]
+    },
+    {
+      "url": "https://rentanything.es/product/standard-wheelchair",
+      "jsonLdTypes": [
+        "Product",
+        "BreadcrumbList",
+        "FAQPage"
+      ]
+    },
+    {
+      "url": "https://rentanything.es/product/transport-wheelchair",
+      "jsonLdTypes": [
+        "Product",
+        "BreadcrumbList",
+        "FAQPage"
+      ]
+    },
+    {
+      "url": "https://rentanything.es/product/mobility-scooter-lightweight",
+      "jsonLdTypes": [
+        "Product",
+        "BreadcrumbList",
+        "FAQPage"
+      ]
+    },
+    {
+      "url": "https://rentanything.es/product/heavy-duty-mobility-scooter",
+      "jsonLdTypes": [
+        "Product",
+        "BreadcrumbList",
+        "FAQPage"
+      ]
+    },
+    {
+      "url": "https://rentanything.es/product/rollator-walker",
+      "jsonLdTypes": [
+        "Product",
+        "BreadcrumbList",
+        "FAQPage"
+      ]
+    },
+    {
+      "url": "https://rentanything.es/product/monitor-27",
+      "jsonLdTypes": [
+        "Product",
+        "BreadcrumbList",
+        "FAQPage"
+      ]
+    },
+    {
+      "url": "https://rentanything.es/product/standing-desk",
+      "jsonLdTypes": [
+        "Product",
+        "BreadcrumbList",
+        "FAQPage"
+      ]
+    },
+    {
+      "url": "https://rentanything.es/product/ergonomic-chair",
+      "jsonLdTypes": [
+        "Product",
+        "BreadcrumbList",
+        "FAQPage"
+      ]
+    },
+    {
+      "url": "https://rentanything.es/product/air-purifier",
+      "jsonLdTypes": [
+        "Product",
+        "BreadcrumbList",
+        "FAQPage"
+      ]
+    },
+    {
+      "url": "https://rentanything.es/product/portable-ac",
+      "jsonLdTypes": [
+        "Product",
+        "BreadcrumbList",
+        "FAQPage"
+      ]
+    },
+    {
+      "url": "https://rentanything.es/product/beach-umbrella-set",
+      "jsonLdTypes": [
+        "Product",
+        "BreadcrumbList",
+        "FAQPage"
+      ]
+    },
+    {
+      "url": "https://rentanything.es/valencia/kits/family-beach-kit",
+      "jsonLdTypes": [
+        "Product",
+        "BreadcrumbList"
+      ]
+    },
+    {
+      "url": "https://rentanything.es/valencia/kits/baby-arrival-kit",
+      "jsonLdTypes": [
+        "Product",
+        "BreadcrumbList"
+      ]
+    },
+    {
+      "url": "https://rentanything.es/valencia/kits/toddler-city-kit",
+      "jsonLdTypes": [
+        "Product",
+        "BreadcrumbList"
+      ]
+    },
+    {
+      "url": "https://rentanything.es/valencia/kits/remote-work-apartment-kit",
+      "jsonLdTypes": [
+        "Product",
+        "BreadcrumbList"
+      ]
+    },
+    {
+      "url": "https://rentanything.es/valencia/kits/summer-apartment-survival-kit",
+      "jsonLdTypes": [
+        "Product",
+        "BreadcrumbList"
+      ]
+    },
+    {
+      "url": "https://rentanything.es/valencia/kits/accessible-valencia-kit",
+      "jsonLdTypes": [
+        "Product",
+        "BreadcrumbList"
+      ]
+    },
+    {
+      "url": "https://rentanything.es/valencia/kits/grandparents-visiting-kit",
+      "jsonLdTypes": [
+        "Product",
+        "BreadcrumbList"
+      ]
+    },
+    {
+      "url": "https://rentanything.es/valencia/kits/long-stay-kitchen-upgrade-kit",
+      "jsonLdTypes": [
+        "Product",
+        "BreadcrumbList"
+      ]
+    },
+    {
+      "url": "https://rentanything.es/blog/best-beaches-valencia-families",
+      "jsonLdTypes": [
+        "Article",
+        "BreadcrumbList",
+        "FAQPage"
+      ]
+    },
+    {
+      "url": "https://rentanything.es/blog/best-day-trips-from-valencia",
+      "jsonLdTypes": [
+        "Article",
+        "BreadcrumbList",
+        "FAQPage"
+      ]
+    },
+    {
+      "url": "https://rentanything.es/blog/valencia-with-kids-complete-guide",
+      "jsonLdTypes": [
+        "Article",
+        "BreadcrumbList",
+        "FAQPage"
+      ]
+    },
+    {
+      "url": "https://rentanything.es/blog/wheelchair-accessibility-valencia",
+      "jsonLdTypes": [
+        "Article",
+        "BreadcrumbList",
+        "FAQPage"
+      ]
+    },
+    {
+      "url": "https://rentanything.es/blog/digital-nomad-guide-valencia",
+      "jsonLdTypes": [
+        "Article",
+        "BreadcrumbList",
+        "FAQPage"
+      ]
+    },
+    {
+      "url": "https://rentanything.es/blog/valencia-summer-survival-guide",
+      "jsonLdTypes": [
+        "Article",
+        "BreadcrumbList",
+        "FAQPage"
+      ]
+    },
+    {
+      "url": "https://rentanything.es/discover",
+      "jsonLdTypes": []
+    },
+    {
+      "url": "https://rentanything.es/discover/neighbourhoods",
+      "jsonLdTypes": []
+    },
+    {
+      "url": "https://rentanything.es/discover/day-trips",
+      "jsonLdTypes": []
+    },
+    {
+      "url": "https://rentanything.es/discover/attractions",
+      "jsonLdTypes": []
+    },
+    {
+      "url": "https://rentanything.es/discover/events",
+      "jsonLdTypes": []
+    },
+    {
+      "url": "https://rentanything.es/discover/el-carmen",
+      "jsonLdTypes": [
+        "TouristDestination",
+        "BreadcrumbList",
+        "FAQPage"
+      ]
+    },
+    {
+      "url": "https://rentanything.es/discover/cabanyal",
+      "jsonLdTypes": [
+        "TouristDestination",
+        "BreadcrumbList",
+        "FAQPage"
+      ]
+    },
+    {
+      "url": "https://rentanything.es/discover/benimaclet",
+      "jsonLdTypes": [
+        "TouristDestination",
+        "BreadcrumbList",
+        "FAQPage"
+      ]
+    },
+    {
+      "url": "https://rentanything.es/discover/turia-gardens",
+      "jsonLdTypes": [
+        "TouristDestination",
+        "BreadcrumbList",
+        "FAQPage"
+      ]
+    },
+    {
+      "url": "https://rentanything.es/discover/el-ensanche",
+      "jsonLdTypes": [
+        "TouristDestination",
+        "BreadcrumbList",
+        "FAQPage"
+      ]
+    },
+    {
+      "url": "https://rentanything.es/discover/sagunto",
+      "jsonLdTypes": [
+        "TouristDestination",
+        "BreadcrumbList",
+        "FAQPage"
+      ]
+    },
+    {
+      "url": "https://rentanything.es/discover/requena",
+      "jsonLdTypes": [
+        "TouristDestination",
+        "BreadcrumbList",
+        "FAQPage"
+      ]
+    },
+    {
+      "url": "https://rentanything.es/discover/patacona-beach",
+      "jsonLdTypes": [
+        "TouristDestination",
+        "BreadcrumbList",
+        "FAQPage"
+      ]
+    },
+    {
+      "url": "https://rentanything.es/discover/xativa",
+      "jsonLdTypes": [
+        "TouristDestination",
+        "BreadcrumbList",
+        "FAQPage"
+      ]
+    },
+    {
+      "url": "https://rentanything.es/discover/ruzafa",
+      "jsonLdTypes": [
+        "TouristDestination",
+        "BreadcrumbList",
+        "FAQPage"
+      ]
+    },
+    {
+      "url": "https://rentanything.es/discover/malvarrosa-beach",
+      "jsonLdTypes": [
+        "TouristDestination",
+        "BreadcrumbList",
+        "FAQPage"
+      ]
+    },
+    {
+      "url": "https://rentanything.es/discover/fallas",
+      "jsonLdTypes": [
+        "Event",
+        "BreadcrumbList",
+        "FAQPage"
+      ]
+    },
+    {
+      "url": "https://rentanything.es/discover/albufera",
+      "jsonLdTypes": [
+        "TouristDestination",
+        "BreadcrumbList",
+        "FAQPage"
+      ]
+    },
+    {
+      "url": "https://rentanything.es/discover/city-of-arts-and-sciences",
+      "jsonLdTypes": [
+        "TouristDestination",
+        "BreadcrumbList",
+        "FAQPage"
+      ]
+    },
+    {
+      "url": "https://rentanything.es/es",
+      "jsonLdTypes": [
+        "LocalBusiness"
+      ]
+    },
+    {
+      "url": "https://rentanything.es/es/valencia",
+      "jsonLdTypes": []
+    },
+    {
+      "url": "https://rentanything.es/es/rental/baby-gear",
+      "jsonLdTypes": [
+        "CollectionPage",
+        "BreadcrumbList"
+      ]
+    },
+    {
+      "url": "https://rentanything.es/es/rental/kids-family",
+      "jsonLdTypes": [
+        "CollectionPage",
+        "BreadcrumbList"
+      ]
+    },
+    {
+      "url": "https://rentanything.es/es/rental/mobility",
+      "jsonLdTypes": [
+        "CollectionPage",
+        "BreadcrumbList"
+      ]
+    },
+    {
+      "url": "https://rentanything.es/es/rental/remote-work",
+      "jsonLdTypes": [
+        "CollectionPage",
+        "BreadcrumbList"
+      ]
+    },
+    {
+      "url": "https://rentanything.es/es/rental/home-living",
+      "jsonLdTypes": [
+        "CollectionPage",
+        "BreadcrumbList"
+      ]
+    },
+    {
+      "url": "https://rentanything.es/es/rental/travel-outdoors",
+      "jsonLdTypes": [
+        "CollectionPage",
+        "BreadcrumbList"
+      ]
+    }
+  ]
 }

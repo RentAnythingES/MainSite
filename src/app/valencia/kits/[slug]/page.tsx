@@ -7,6 +7,7 @@ import BundleConfigurator from "@/components/BundleConfigurator";
 import ProductCard from "@/components/ProductCard";
 import { getBlogPostBySlug } from "@/content/blog";
 import { getBundleBySlug, getBundleProducts, rentalBundles } from "@/data/bundles";
+import { getBreadcrumbJsonLd } from "@/lib/jsonld";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -74,6 +75,19 @@ export default async function BundlePage({ params }: Props) {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            getBreadcrumbJsonLd([
+              { name: "Home", url: "https://rentanything.es" },
+              { name: "Valencia", url: "https://rentanything.es/valencia" },
+              { name: "Kits", url: "https://rentanything.es/valencia/kits" },
+              { name: bundle.shortName, url: `https://rentanything.es/valencia/kits/${bundle.slug}` },
+            ]),
+          ),
+        }}
+      />
 
       <nav className="bg-neutral-50 border-b border-border py-3">
         <div className="container-site">

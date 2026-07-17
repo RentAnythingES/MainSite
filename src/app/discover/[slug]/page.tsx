@@ -8,6 +8,7 @@ import {
 } from "@/content/destinations";
 import { getProductsByCategory } from "@/data/products";
 import { getBlogPostBySlug } from "@/content/blog";
+import { getBreadcrumbJsonLd } from "@/lib/jsonld";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -162,6 +163,18 @@ export default async function DiscoverPage({ params }: Props) {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            getBreadcrumbJsonLd([
+              { name: "Home", url: "https://rentanything.es" },
+              { name: "Discover", url: "https://rentanything.es/discover" },
+              { name: dest.name, url: `https://rentanything.es/discover/${dest.slug}` },
+            ]),
+          ),
+        }}
+      />
       {faqJsonLd && (
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
       )}

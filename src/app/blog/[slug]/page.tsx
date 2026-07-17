@@ -8,6 +8,7 @@ import {
   isPublished,
   type BlogPost,
 } from "@/content/blog";
+import { getBreadcrumbJsonLd } from "@/lib/jsonld";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -155,6 +156,18 @@ export default async function BlogPostPage({ params }: Props) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify(getArticleJsonLd(post)),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            getBreadcrumbJsonLd([
+              { name: "Home", url: "https://rentanything.es" },
+              { name: "Blog", url: "https://rentanything.es/blog" },
+              { name: post.title, url: `https://rentanything.es/blog/${post.slug}` },
+            ]),
+          ),
         }}
       />
       {faqSchema && (

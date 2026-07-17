@@ -45,6 +45,12 @@ static fallback and returned:
 - 0 broken internal links;
 - 6 pages with non-blocking metadata-length warnings.
 
+Route-specific schema requirements are also enforced. The final crawl found 56
+`BreadcrumbList`, 36 `FAQPage`, 24 `Product`, 13 `TouristDestination`, 12
+`CollectionPage`, 6 `Article`, 2 `LocalBusiness` and 1 `Event` schemas. Product,
+category, blog, Discover detail and kit detail routes now fail the audit if their
+required schema types disappear.
+
 The local build cannot load Supabase-only products because outbound database
 access is restricted in the build environment. The initial live crawl provides
 coverage of those database-backed routes, while the local crawl verifies the
