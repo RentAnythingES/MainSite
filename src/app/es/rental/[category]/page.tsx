@@ -227,6 +227,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       languages: {
         en: `https://rentanything.es/rental/${category}`,
         es: `https://rentanything.es/es/rental/${category}`,
+        "x-default": `https://rentanything.es/rental/${category}`,
       },
     },
     openGraph: {

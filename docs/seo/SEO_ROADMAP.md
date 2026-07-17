@@ -52,6 +52,7 @@
 - [x] Static blog, Discover and Spanish hub metadata brought within audit length targets
 - [x] Route-specific structured-data safeguards plus breadcrumbs on blog, Discover and kit details
 - [x] Sitemap completeness enforcement for linked indexable routes and public trust pages
+- [x] Full-sitemap EN/ES hreflang reciprocity and `x-default` enforcement
 
 ---
 

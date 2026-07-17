@@ -44,6 +44,7 @@ static fallback and returned:
 - 0 sitemap orphans;
 - 0 broken internal links;
 - 0 linked indexable pages missing from the sitemap;
+- 8 reciprocal EN/ES hreflang pairs in the local fallback;
 - 6 pages with non-blocking metadata-length warnings.
 
 Route-specific schema requirements are also enforced. The final crawl found 56
@@ -56,6 +57,12 @@ Privacy, Terms, Refunds and Cookies are canonical public trust pages and now
 appear in the sitemap at low priority. The crawler separately checks every
 internally linked URL outside the sitemap: noindex routes may remain excluded,
 but any linked indexable route omitted from the sitemap fails the audit.
+
+Localized sitemap pairs are derived automatically rather than maintained as a
+separate list. Both pages must expose matching `en`, `es` and `x-default`
+alternates, with `x-default` resolving to the English URL. The local fallback
+covers the homepage, Valencia hub and six category pairs; the same rule applies
+to every database-backed EN/ES product pair in production.
 
 The local build cannot load Supabase-only products because outbound database
 access is restricted in the build environment. The initial live crawl provides

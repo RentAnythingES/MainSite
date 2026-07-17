@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   description: "Alquila artículos de bebé, movilidad, teletrabajo y confort en Valencia, con recogida o entrega en hoteles, apartamentos y alojamientos.",
   alternates: {
     canonical: "https://rentanything.es/es/valencia",
-    languages: { en: "https://rentanything.es/valencia", es: "https://rentanything.es/es/valencia" },
+    languages: { en: "https://rentanything.es/valencia", es: "https://rentanything.es/es/valencia", "x-default": "https://rentanything.es/valencia" },
   },
 };
 

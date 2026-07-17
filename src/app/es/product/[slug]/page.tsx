@@ -62,7 +62,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title,
     description,
     alternates: indexable
-      ? { canonical, languages: { en: englishUrl, es: spanishUrl } }
+      ? { canonical, languages: { en: englishUrl, es: spanishUrl, "x-default": englishUrl } }
       : { canonical },
     robots: { index: indexable, follow: true },
     openGraph: {

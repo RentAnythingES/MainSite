@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   description: t.home.subheadline,
   alternates: {
     canonical: "https://rentanything.es/es",
-    languages: { en: "https://rentanything.es", es: "https://rentanything.es/es" },
+    languages: { en: "https://rentanything.es", es: "https://rentanything.es/es", "x-default": "https://rentanything.es" },
   },
 };
 

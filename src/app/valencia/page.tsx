@@ -17,6 +17,7 @@ export const metadata: Metadata = {
     languages: {
       en: "https://rentanything.es/valencia",
       es: "https://rentanything.es/es/valencia",
+      "x-default": "https://rentanything.es/valencia",
     },
   },
 };

@@ -13,6 +13,7 @@ export const metadata: Metadata = {
     languages: {
       en: "https://rentanything.es",
       es: "https://rentanything.es/es",
+      "x-default": "https://rentanything.es",
     },
   },
 };

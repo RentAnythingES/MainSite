@@ -46,8 +46,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     ? {
         en: canonical,
         es: `https://rentanything.es/es/product/${slug}`,
+        "x-default": canonical,
       }
-    : { en: canonical };
+    : { en: canonical, "x-default": canonical };
 
   return {
     title,

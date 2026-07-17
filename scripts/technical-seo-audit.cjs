@@ -30,6 +30,17 @@ function linkHref(html, rel, hrefLang) {
   return decodeEntities(tag?.match(/href=["']([^"']+)["']/i)?.[1] || "");
 }
 
+function extractHreflang(html) {
+  const alternates = {};
+  for (const tag of html.match(/<link\b[^>]*>/gi) || []) {
+    if (!/rel=["']alternate["']/i.test(tag)) continue;
+    const locale = tag.match(/hreflang=["']([^"']+)["']/i)?.[1]?.toLowerCase();
+    const href = tag.match(/href=["']([^"']+)["']/i)?.[1];
+    if (locale && href) alternates[locale] = decodeEntities(href);
+  }
+  return alternates;
+}
+
 function normalizeUrl(value) {
   try {
     const url = new URL(value, baseUrl);
@@ -89,6 +100,7 @@ function inspectPage(url, html) {
   const images = html.match(/<img\b[^>]*>/gi) || [];
   const missingAlt = images.filter((image) => !/\balt=["'][^"']*["']/i.test(image)).length;
   const jsonLdTypes = [];
+  const hreflang = extractHreflang(html);
 
   if (!title) errors.push("missing_title");
   else if (title.length > 60) warnings.push(`title_too_long:${title.length}`);
@@ -136,6 +148,7 @@ function inspectPage(url, html) {
     h1Count,
     htmlLanguage,
     jsonLdTypes,
+    hreflang,
     internalLinks: extractInternalLinks(html),
     errors,
     warnings,
@@ -186,6 +199,25 @@ async function main() {
   });
 
   const pageUrls = new Set(pages.map((page) => normalizeUrl(page.url)));
+  const pagesByUrl = new Map(pages.map((page) => [normalizeUrl(page.url), page]));
+  const hreflangPairs = [];
+  for (const englishPage of pages.filter((page) => !new URL(page.url).pathname.startsWith("/es"))) {
+    const pathname = new URL(englishPage.url).pathname;
+    const englishUrl = normalizeUrl(englishPage.url);
+    const spanishUrl = normalizeUrl(`${baseUrl}/es${pathname === "/" ? "" : pathname}`);
+    const spanishPage = pagesByUrl.get(spanishUrl);
+    if (!spanishPage) continue;
+
+    for (const page of [englishPage, spanishPage]) {
+      const expected = { en: englishUrl, es: spanishUrl, "x-default": englishUrl };
+      for (const [locale, expectedUrl] of Object.entries(expected)) {
+        if (normalizeUrl(page.hreflang?.[locale]) !== expectedUrl) {
+          page.errors.push(`hreflang_mismatch:${locale}`);
+        }
+      }
+    }
+    hreflangPairs.push({ englishUrl, spanishUrl });
+  }
   const linkedUrls = new Set(pages.flatMap((page) => page.internalLinks || []));
   const orphanPages = pages
     .filter((page) => normalizeUrl(page.url) !== normalizeUrl(baseUrl) && !linkedUrls.has(normalizeUrl(page.url)))
@@ -226,6 +258,7 @@ async function main() {
       unlistedInternalLinks: unlistedInternalLinks.length,
       brokenInternalLinks: brokenInternalLinks.length,
       indexableUnlistedInternalLinks: indexableUnlistedInternalLinks.length,
+      hreflangPairs: hreflangPairs.length,
     },
     errorPages: errorPages.map(({ url, errors }) => ({ url, errors })),
     warningPages: warningPages.map(({ url, warnings }) => ({ url, warnings })),
@@ -233,6 +266,7 @@ async function main() {
     unlistedInternalLinks,
     brokenInternalLinks,
     indexableUnlistedInternalLinks,
+    hreflangPairs,
     schemaCoverage: pages.map(({ url, jsonLdTypes }) => ({ url, jsonLdTypes })),
   };
 
