@@ -32,7 +32,7 @@ const testProduct: Product = {
     { days: 14, perDay: 1 },
   ],
   emoji: "🧪",
-  image: "/products/compact-stroller.png",
+  image: "/products/compact-stroller.webp",
   city: "valencia",
 };
 

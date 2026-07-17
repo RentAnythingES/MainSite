@@ -17,12 +17,12 @@ export const metadata: Metadata = {
 };
 
 const categoryCards = [
-  { ...t.categories.babyGear, slug: "baby-gear", image: "/categories/baby-gear.png" },
-  { name: "Niños y Familia", desc: "Bicicletas, juegos, juguetes y actividades familiares", slug: "kids-family", image: "/discover/turia-gardens-hero.jpg" },
-  { ...t.categories.mobility, slug: "mobility", image: "/categories/mobility.png" },
-  { ...t.categories.remoteWork, slug: "remote-work", image: "/categories/remote-work.png" },
-  { ...t.categories.homeLiving, slug: "home-living", image: "/categories/home-living.png" },
-  { ...t.categories.travelOutdoors, slug: "travel-outdoors", image: "/categories/travel-outdoors.png" },
+  { ...t.categories.babyGear, slug: "baby-gear", image: "/categories/baby-gear.webp" },
+  { name: "Niños y Familia", desc: "Bicicletas, juegos, juguetes y actividades familiares", slug: "kids-family", image: "/discover/turia-gardens-hero.webp" },
+  { ...t.categories.mobility, slug: "mobility", image: "/categories/mobility.webp" },
+  { ...t.categories.remoteWork, slug: "remote-work", image: "/categories/remote-work.webp" },
+  { ...t.categories.homeLiving, slug: "home-living", image: "/categories/home-living.webp" },
+  { ...t.categories.travelOutdoors, slug: "travel-outdoors", image: "/categories/travel-outdoors.webp" },
 ];
 
 export default function ValenciaPageES() {
@@ -30,7 +30,7 @@ export default function ValenciaPageES() {
     <>
       <section className="relative overflow-hidden">
         <div className="absolute inset-0">
-          <Image src="/hero/valencia-3.png" alt="Paseo marítimo de Valencia al atardecer" fill className="object-cover" priority sizes="100vw" />
+          <Image src="/hero/valencia-3.webp" alt="Paseo marítimo de Valencia al atardecer" fill className="object-cover" priority sizes="100vw" />
           <div className="absolute inset-0 bg-black/50" />
           <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
         </div>

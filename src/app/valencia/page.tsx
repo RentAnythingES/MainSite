@@ -23,12 +23,12 @@ export const metadata: Metadata = {
 };
 
 const categoryCards = [
-  { name: "Baby & Toddler", slug: "baby-gear", image: "/categories/baby-gear.png", desc: "Cots, strollers, high chairs, baby setup" },
-  { name: "Kids & Family", slug: "kids-family", image: "/discover/turia-gardens-hero.jpg", desc: "Bikes, games, toys and family activities" },
-  { name: "Mobility & Accessibility", slug: "mobility", image: "/categories/mobility.png", desc: "Wheelchairs, scooters, walkers" },
-  { name: "Remote Work", slug: "remote-work", image: "/categories/remote-work.png", desc: "Monitors, desks, ergonomic chairs" },
-  { name: "Apartment Comfort", slug: "home-living", image: "/categories/home-living.png", desc: "Air purifiers, AC units, kitchen" },
-  { name: "Beach & Outdoor", slug: "travel-outdoors", image: "/categories/travel-outdoors.png", desc: "Beach gear, shade, recreation" },
+  { name: "Baby & Toddler", slug: "baby-gear", image: "/categories/baby-gear.webp", desc: "Cots, strollers, high chairs, baby setup" },
+  { name: "Kids & Family", slug: "kids-family", image: "/discover/turia-gardens-hero.webp", desc: "Bikes, games, toys and family activities" },
+  { name: "Mobility & Accessibility", slug: "mobility", image: "/categories/mobility.webp", desc: "Wheelchairs, scooters, walkers" },
+  { name: "Remote Work", slug: "remote-work", image: "/categories/remote-work.webp", desc: "Monitors, desks, ergonomic chairs" },
+  { name: "Apartment Comfort", slug: "home-living", image: "/categories/home-living.webp", desc: "Air purifiers, AC units, kitchen" },
+  { name: "Beach & Outdoor", slug: "travel-outdoors", image: "/categories/travel-outdoors.webp", desc: "Beach gear, shade, recreation" },
 ];
 
 export default async function ValenciaPage() {
@@ -40,7 +40,7 @@ export default async function ValenciaPage() {
       <section className="relative overflow-hidden">
         <div className="absolute inset-0">
           <Image
-            src="/hero/valencia-3.png"
+            src="/hero/valencia-3.webp"
             alt="Valencia beach promenade at golden hour"
             fill
             className="object-cover"

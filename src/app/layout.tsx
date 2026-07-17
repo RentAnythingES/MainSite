@@ -47,7 +47,7 @@ export const metadata: Metadata = {
       "Short-term rental of strollers, cribs, wheelchairs, mobility scooters, remote work gear & more. Delivered to your accommodation in Valencia.",
     images: [
       {
-        url: "/hero/valencia-1.png",
+        url: "/hero/valencia-1.webp",
         alt: "RentAnything.es equipment rental delivery in Valencia",
       },
     ],

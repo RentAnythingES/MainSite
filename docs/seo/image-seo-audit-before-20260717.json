@@ -1,0 +1,692 @@
+{
+  "generatedAt": "2026-07-17T18:31:38.732Z",
+  "summary": {
+    "assets": 46,
+    "totalBytes": 35474739,
+    "errors": 34,
+    "warnings": 38,
+    "duplicateGroups": 0
+  },
+  "errors": [
+    "/categories/baby-gear.png:extension_format_mismatch:.png:jpeg",
+    "/categories/home-living.png:extension_format_mismatch:.png:jpeg",
+    "/categories/mobility.png:extension_format_mismatch:.png:jpeg",
+    "/categories/pregnancy.png:extension_format_mismatch:.png:jpeg",
+    "/categories/remote-work.png:extension_format_mismatch:.png:jpeg",
+    "/categories/travel-outdoors.png:extension_format_mismatch:.png:jpeg",
+    "/discover/albufera.png:extension_format_mismatch:.png:jpeg",
+    "/discover/city-of-arts-and-sciences.png:extension_format_mismatch:.png:jpeg",
+    "/discover/fallas.png:extension_format_mismatch:.png:jpeg",
+    "/discover/hubs/attractions.png:extension_format_mismatch:.png:jpeg",
+    "/discover/hubs/day-trips.png:extension_format_mismatch:.png:jpeg",
+    "/discover/hubs/events.png:extension_format_mismatch:.png:jpeg",
+    "/discover/hubs/neighbourhoods.png:extension_format_mismatch:.png:jpeg",
+    "/discover/malvarrosa-beach.png:extension_format_mismatch:.png:jpeg",
+    "/discover/ruzafa.png:extension_format_mismatch:.png:jpeg",
+    "/hero/valencia-1.png:extension_format_mismatch:.png:jpeg",
+    "/hero/valencia-2.png:extension_format_mismatch:.png:jpeg",
+    "/hero/valencia-3.png:extension_format_mismatch:.png:jpeg",
+    "/products/air-purifier.png:extension_format_mismatch:.png:jpeg",
+    "/products/beach-umbrella-set.png:extension_format_mismatch:.png:jpeg",
+    "/products/car-seat-infant.png:extension_format_mismatch:.png:jpeg",
+    "/products/compact-stroller.png:extension_format_mismatch:.png:jpeg",
+    "/products/double-stroller.png:extension_format_mismatch:.png:jpeg",
+    "/products/ergonomic-chair.png:extension_format_mismatch:.png:jpeg",
+    "/products/heavy-duty-mobility-scooter.png:extension_format_mismatch:.png:jpeg",
+    "/products/high-chair.png:extension_format_mismatch:.png:jpeg",
+    "/products/mobility-scooter-lightweight.png:extension_format_mismatch:.png:jpeg",
+    "/products/monitor-27.png:extension_format_mismatch:.png:jpeg",
+    "/products/portable-ac.png:extension_format_mismatch:.png:jpeg",
+    "/products/rollator-walker.png:extension_format_mismatch:.png:jpeg",
+    "/products/standard-wheelchair.png:extension_format_mismatch:.png:jpeg",
+    "/products/standing-desk.png:extension_format_mismatch:.png:jpeg",
+    "/products/transport-wheelchair.png:extension_format_mismatch:.png:jpeg",
+    "/products/travel-crib.png:extension_format_mismatch:.png:jpeg"
+  ],
+  "warnings": [
+    "/categories/baby-gear.png:asset_exceeds_500kb",
+    "/categories/home-living.png:asset_exceeds_500kb",
+    "/categories/mobility.png:asset_exceeds_500kb",
+    "/categories/pregnancy.png:asset_exceeds_500kb",
+    "/categories/remote-work.png:asset_exceeds_500kb",
+    "/categories/travel-outdoors.png:asset_exceeds_500kb",
+    "/discover/albufera.png:asset_exceeds_500kb",
+    "/discover/benimaclet-hero.jpg:asset_exceeds_500kb",
+    "/discover/cabanyal-hero.jpg:asset_exceeds_500kb",
+    "/discover/city-of-arts-and-sciences.png:asset_exceeds_500kb",
+    "/discover/el-carmen-hero.jpg:asset_exceeds_500kb",
+    "/discover/el-ensanche-hero.jpg:asset_exceeds_500kb",
+    "/discover/fallas.png:asset_exceeds_500kb",
+    "/discover/hubs/attractions.png:asset_exceeds_500kb",
+    "/discover/hubs/day-trips.png:asset_exceeds_500kb",
+    "/discover/hubs/events.png:asset_exceeds_500kb",
+    "/discover/hubs/neighbourhoods.png:asset_exceeds_500kb",
+    "/discover/malvarrosa-beach.png:asset_exceeds_500kb",
+    "/discover/patacona-hero.jpg:asset_exceeds_500kb",
+    "/discover/requena-hero.jpg:asset_exceeds_500kb",
+    "/discover/ruzafa.png:asset_exceeds_500kb",
+    "/discover/sagunto-hero.jpg:asset_exceeds_500kb",
+    "/discover/turia-gardens-hero.jpg:asset_exceeds_500kb",
+    "/discover/xativa-hero.jpg:asset_exceeds_500kb",
+    "/hero/valencia-1.png:asset_exceeds_500kb",
+    "/hero/valencia-2.png:asset_exceeds_500kb",
+    "/hero/valencia-3.png:asset_exceeds_500kb",
+    "/products/beach-umbrella-set.png:asset_exceeds_500kb",
+    "/products/car-seat-infant.png:asset_exceeds_500kb",
+    "/products/compact-stroller.png:asset_exceeds_500kb",
+    "/products/double-stroller.png:asset_exceeds_500kb",
+    "/products/heavy-duty-mobility-scooter.png:asset_exceeds_500kb",
+    "/products/mobility-scooter-lightweight.png:asset_exceeds_500kb",
+    "/products/monitor-27.png:asset_exceeds_500kb",
+    "/products/rollator-walker.png:asset_exceeds_500kb",
+    "/products/standard-wheelchair.png:asset_exceeds_500kb",
+    "/products/transport-wheelchair.png:asset_exceeds_500kb",
+    "/products/travel-crib.png:asset_exceeds_500kb"
+  ],
+  "assets": [
+    {
+      "path": "/discover/benimaclet-hero.jpg",
+      "bytes": 1242859,
+      "width": 1024,
+      "height": 1024,
+      "format": "jpeg",
+      "hash": "cbed0bce92580b41392a9c46be754c09eb5eccf7ad28f5e9d3ba63e344b18e5d",
+      "errors": [],
+      "warnings": [
+        "asset_exceeds_500kb"
+      ]
+    },
+    {
+      "path": "/discover/ruzafa.png",
+      "bytes": 1224206,
+      "width": 1024,
+      "height": 1024,
+      "format": "jpeg",
+      "hash": "14d5dd8e088b0acdce76b419dcb9c6422e94edc9750378e0fa27f108ccedd1bc",
+      "errors": [
+        "extension_format_mismatch:.png:jpeg"
+      ],
+      "warnings": [
+        "asset_exceeds_500kb"
+      ]
+    },
+    {
+      "path": "/discover/el-ensanche-hero.jpg",
+      "bytes": 1197511,
+      "width": 1024,
+      "height": 1024,
+      "format": "jpeg",
+      "hash": "2bc98748ea6dfc3887ef9014010122b3e4bc7ea6589647c5f660c2e1eb3f3532",
+      "errors": [],
+      "warnings": [
+        "asset_exceeds_500kb"
+      ]
+    },
+    {
+      "path": "/discover/hubs/events.png",
+      "bytes": 1182851,
+      "width": 1024,
+      "height": 1024,
+      "format": "jpeg",
+      "hash": "d8fbb3080c25dce66d43d8f6616415a32b3a3157981217b3bd3fdfcbda5d3ca6",
+      "errors": [
+        "extension_format_mismatch:.png:jpeg"
+      ],
+      "warnings": [
+        "asset_exceeds_500kb"
+      ]
+    },
+    {
+      "path": "/discover/hubs/neighbourhoods.png",
+      "bytes": 1170569,
+      "width": 1024,
+      "height": 1024,
+      "format": "jpeg",
+      "hash": "8a9719e5c93f4af4f7ecea71d61410edb444718ecec76ac9e9b2c1572532d433",
+      "errors": [
+        "extension_format_mismatch:.png:jpeg"
+      ],
+      "warnings": [
+        "asset_exceeds_500kb"
+      ]
+    },
+    {
+      "path": "/discover/turia-gardens-hero.jpg",
+      "bytes": 1152110,
+      "width": 1024,
+      "height": 1024,
+      "format": "jpeg",
+      "hash": "b5d288b36848def137859a71a36baa748b365b37c14be1a118c3370c3bd805b4",
+      "errors": [],
+      "warnings": [
+        "asset_exceeds_500kb"
+      ]
+    },
+    {
+      "path": "/discover/el-carmen-hero.jpg",
+      "bytes": 1135165,
+      "width": 1024,
+      "height": 1024,
+      "format": "jpeg",
+      "hash": "087d0ac0c174017afd53b1b983fce0b8d0b7ec723f4e7a1c7ae8b94d8d7674f8",
+      "errors": [],
+      "warnings": [
+        "asset_exceeds_500kb"
+      ]
+    },
+    {
+      "path": "/discover/cabanyal-hero.jpg",
+      "bytes": 1118828,
+      "width": 1024,
+      "height": 1024,
+      "format": "jpeg",
+      "hash": "ee9b2e5d0b3e00405f03b7a6d0288c66eccd34a7d5e373b9677b72ae2999552e",
+      "errors": [],
+      "warnings": [
+        "asset_exceeds_500kb"
+      ]
+    },
+    {
+      "path": "/hero/valencia-1.png",
+      "bytes": 1103345,
+      "width": 1024,
+      "height": 1024,
+      "format": "jpeg",
+      "hash": "6b36ec25a519715145700ed320f2f5b1bde7bbed047f7e027fe43cc9f0436b05",
+      "errors": [
+        "extension_format_mismatch:.png:jpeg"
+      ],
+      "warnings": [
+        "asset_exceeds_500kb"
+      ]
+    },
+    {
+      "path": "/discover/hubs/day-trips.png",
+      "bytes": 1102883,
+      "width": 1024,
+      "height": 1024,
+      "format": "jpeg",
+      "hash": "650d48dc6ba8d5d5cada792e4caef89675310f667101a5b163410d8336a9967b",
+      "errors": [
+        "extension_format_mismatch:.png:jpeg"
+      ],
+      "warnings": [
+        "asset_exceeds_500kb"
+      ]
+    },
+    {
+      "path": "/discover/requena-hero.jpg",
+      "bytes": 1096302,
+      "width": 1024,
+      "height": 1024,
+      "format": "jpeg",
+      "hash": "1563dcb987c845ae6ead581d6657b6bb139a176010e6deb07606e03d8ae00029",
+      "errors": [],
+      "warnings": [
+        "asset_exceeds_500kb"
+      ]
+    },
+    {
+      "path": "/discover/fallas.png",
+      "bytes": 1027294,
+      "width": 1024,
+      "height": 1024,
+      "format": "jpeg",
+      "hash": "67bea2bdd71e12d361a742d35e2daeb3e1552f2c83dc31d987e962eb3f2dda6d",
+      "errors": [
+        "extension_format_mismatch:.png:jpeg"
+      ],
+      "warnings": [
+        "asset_exceeds_500kb"
+      ]
+    },
+    {
+      "path": "/discover/xativa-hero.jpg",
+      "bytes": 1019786,
+      "width": 1024,
+      "height": 1024,
+      "format": "jpeg",
+      "hash": "3e087177fa5e9c726542eb00d4ca6ea31e8445daccd316a87d7c6e62d599453b",
+      "errors": [],
+      "warnings": [
+        "asset_exceeds_500kb"
+      ]
+    },
+    {
+      "path": "/discover/malvarrosa-beach.png",
+      "bytes": 1016724,
+      "width": 1024,
+      "height": 1024,
+      "format": "jpeg",
+      "hash": "424134786453fd5cd01deface963eb56d4d791d12c65680a4400871c64066c27",
+      "errors": [
+        "extension_format_mismatch:.png:jpeg"
+      ],
+      "warnings": [
+        "asset_exceeds_500kb"
+      ]
+    },
+    {
+      "path": "/categories/mobility.png",
+      "bytes": 1000259,
+      "width": 1024,
+      "height": 1024,
+      "format": "jpeg",
+      "hash": "f83916fa3cdf62dc015ea3c97630f55de34d531478e2a971c0189fb86de1a82f",
+      "errors": [
+        "extension_format_mismatch:.png:jpeg"
+      ],
+      "warnings": [
+        "asset_exceeds_500kb"
+      ]
+    },
+    {
+      "path": "/discover/sagunto-hero.jpg",
+      "bytes": 989111,
+      "width": 1024,
+      "height": 1024,
+      "format": "jpeg",
+      "hash": "db369ffd3ea439e10fed99c7c0fc4c6b3506c811b6ff47fb3b49c24b437074ad",
+      "errors": [],
+      "warnings": [
+        "asset_exceeds_500kb"
+      ]
+    },
+    {
+      "path": "/discover/patacona-hero.jpg",
+      "bytes": 973365,
+      "width": 1024,
+      "height": 1024,
+      "format": "jpeg",
+      "hash": "a9751d9f9eb9d5d3b46a89ab4011f6b87da8505b686368bbd198c2276c529e35",
+      "errors": [],
+      "warnings": [
+        "asset_exceeds_500kb"
+      ]
+    },
+    {
+      "path": "/hero/valencia-3.png",
+      "bytes": 958829,
+      "width": 1024,
+      "height": 1024,
+      "format": "jpeg",
+      "hash": "3d0cc7adff228bf77d4c29787e93f78ced1ed207cf8f708d8dfc90f3af407e78",
+      "errors": [
+        "extension_format_mismatch:.png:jpeg"
+      ],
+      "warnings": [
+        "asset_exceeds_500kb"
+      ]
+    },
+    {
+      "path": "/categories/baby-gear.png",
+      "bytes": 937438,
+      "width": 1024,
+      "height": 1024,
+      "format": "jpeg",
+      "hash": "7656974cecbee8e14183d4d88a02401fc02d8f684c777d2af5f7040f6b0b57a6",
+      "errors": [
+        "extension_format_mismatch:.png:jpeg"
+      ],
+      "warnings": [
+        "asset_exceeds_500kb"
+      ]
+    },
+    {
+      "path": "/categories/home-living.png",
+      "bytes": 928673,
+      "width": 1024,
+      "height": 1024,
+      "format": "jpeg",
+      "hash": "44972ecaafe057eab69cf945fb85918ae0cb6d6e9b54ebb9cf2fcc477e242ca7",
+      "errors": [
+        "extension_format_mismatch:.png:jpeg"
+      ],
+      "warnings": [
+        "asset_exceeds_500kb"
+      ]
+    },
+    {
+      "path": "/discover/hubs/attractions.png",
+      "bytes": 915299,
+      "width": 1024,
+      "height": 1024,
+      "format": "jpeg",
+      "hash": "8b0f2fcc36b1ab61f21af3b7e2a58c82b9bf1eaa06bab2b3a962298869b83c8e",
+      "errors": [
+        "extension_format_mismatch:.png:jpeg"
+      ],
+      "warnings": [
+        "asset_exceeds_500kb"
+      ]
+    },
+    {
+      "path": "/categories/pregnancy.png",
+      "bytes": 866942,
+      "width": 1024,
+      "height": 1024,
+      "format": "jpeg",
+      "hash": "f2ddfee9afb2a122cb153e26119d7a5e91074e2c266f0a426a71c017cfac3513",
+      "errors": [
+        "extension_format_mismatch:.png:jpeg"
+      ],
+      "warnings": [
+        "asset_exceeds_500kb"
+      ]
+    },
+    {
+      "path": "/categories/travel-outdoors.png",
+      "bytes": 861653,
+      "width": 1024,
+      "height": 1024,
+      "format": "jpeg",
+      "hash": "8411592fdce12c3d84edb6db6b501e86a47b796bba73a46fbbdec92e27978d38",
+      "errors": [
+        "extension_format_mismatch:.png:jpeg"
+      ],
+      "warnings": [
+        "asset_exceeds_500kb"
+      ]
+    },
+    {
+      "path": "/categories/remote-work.png",
+      "bytes": 853697,
+      "width": 1024,
+      "height": 1024,
+      "format": "jpeg",
+      "hash": "bf7e2860534d8b5a124b7e11bfa6236040d9ec237e841dcbdcb73f95e3449c8b",
+      "errors": [
+        "extension_format_mismatch:.png:jpeg"
+      ],
+      "warnings": [
+        "asset_exceeds_500kb"
+      ]
+    },
+    {
+      "path": "/discover/albufera.png",
+      "bytes": 841472,
+      "width": 1024,
+      "height": 1024,
+      "format": "jpeg",
+      "hash": "a76b213428dd99cfed6dddd51058df0438d397d0cf220e7501fe554a56358eab",
+      "errors": [
+        "extension_format_mismatch:.png:jpeg"
+      ],
+      "warnings": [
+        "asset_exceeds_500kb"
+      ]
+    },
+    {
+      "path": "/hero/valencia-2.png",
+      "bytes": 833825,
+      "width": 1024,
+      "height": 1024,
+      "format": "jpeg",
+      "hash": "2771a0035ee05540cc850faa39d1b5a810abb716b5064fa3f44703c9fe54ccdd",
+      "errors": [
+        "extension_format_mismatch:.png:jpeg"
+      ],
+      "warnings": [
+        "asset_exceeds_500kb"
+      ]
+    },
+    {
+      "path": "/discover/city-of-arts-and-sciences.png",
+      "bytes": 721481,
+      "width": 1024,
+      "height": 1024,
+      "format": "jpeg",
+      "hash": "cc0552ff75f3a6ac110d12c14f3a53bf09038e752593e56deb8cc511d420bb41",
+      "errors": [
+        "extension_format_mismatch:.png:jpeg"
+      ],
+      "warnings": [
+        "asset_exceeds_500kb"
+      ]
+    },
+    {
+      "path": "/products/beach-umbrella-set.png",
+      "bytes": 585261,
+      "width": 1024,
+      "height": 1024,
+      "format": "jpeg",
+      "hash": "ebc13c16451efbb5ba88c7f3c1b849f101a59471f440dc62d374ec62e3bf7c09",
+      "errors": [
+        "extension_format_mismatch:.png:jpeg"
+      ],
+      "warnings": [
+        "asset_exceeds_500kb"
+      ]
+    },
+    {
+      "path": "/products/heavy-duty-mobility-scooter.png",
+      "bytes": 578044,
+      "width": 1024,
+      "height": 1024,
+      "format": "jpeg",
+      "hash": "8a1d679317ddd0b9b63b06fea853f3643cf1053f75eadb61e8238b729e2162f5",
+      "errors": [
+        "extension_format_mismatch:.png:jpeg"
+      ],
+      "warnings": [
+        "asset_exceeds_500kb"
+      ]
+    },
+    {
+      "path": "/products/double-stroller.png",
+      "bytes": 562066,
+      "width": 1024,
+      "height": 1024,
+      "format": "jpeg",
+      "hash": "7e565b0d33802f4392de9508493fef3b305a574acc329997334860425aa87a6e",
+      "errors": [
+        "extension_format_mismatch:.png:jpeg"
+      ],
+      "warnings": [
+        "asset_exceeds_500kb"
+      ]
+    },
+    {
+      "path": "/products/compact-stroller.png",
+      "bytes": 560264,
+      "width": 1024,
+      "height": 1024,
+      "format": "jpeg",
+      "hash": "ff649c8931edddb2297ea848d6d64f1e70b078dec8e4082ee29ef9cd99573610",
+      "errors": [
+        "extension_format_mismatch:.png:jpeg"
+      ],
+      "warnings": [
+        "asset_exceeds_500kb"
+      ]
+    },
+    {
+      "path": "/products/standard-wheelchair.png",
+      "bytes": 549854,
+      "width": 1024,
+      "height": 1024,
+      "format": "jpeg",
+      "hash": "147972bdb0c47f47d5347119bafb67df388098cfd9457d39bfaa21195ccd5b71",
+      "errors": [
+        "extension_format_mismatch:.png:jpeg"
+      ],
+      "warnings": [
+        "asset_exceeds_500kb"
+      ]
+    },
+    {
+      "path": "/products/transport-wheelchair.png",
+      "bytes": 548911,
+      "width": 1024,
+      "height": 1024,
+      "format": "jpeg",
+      "hash": "02525cedae7cfe7962af747531744950ade2355244e4dba32ddcdd8352d335d4",
+      "errors": [
+        "extension_format_mismatch:.png:jpeg"
+      ],
+      "warnings": [
+        "asset_exceeds_500kb"
+      ]
+    },
+    {
+      "path": "/products/travel-crib.png",
+      "bytes": 541699,
+      "width": 1024,
+      "height": 1024,
+      "format": "jpeg",
+      "hash": "91598dd45713d2e26e836424930ef7861777a65a902043255a51705353f997d7",
+      "errors": [
+        "extension_format_mismatch:.png:jpeg"
+      ],
+      "warnings": [
+        "asset_exceeds_500kb"
+      ]
+    },
+    {
+      "path": "/products/car-seat-infant.png",
+      "bytes": 541025,
+      "width": 1024,
+      "height": 1024,
+      "format": "jpeg",
+      "hash": "ac3bd602fd0436c21340eb6bd78528a4da910323407a3050f55e9f766c7da967",
+      "errors": [
+        "extension_format_mismatch:.png:jpeg"
+      ],
+      "warnings": [
+        "asset_exceeds_500kb"
+      ]
+    },
+    {
+      "path": "/products/mobility-scooter-lightweight.png",
+      "bytes": 519193,
+      "width": 1024,
+      "height": 1024,
+      "format": "jpeg",
+      "hash": "9a0110f44ef07f88d178dfb09bdb72ead76381f5afc636040b0bf881c881ac7e",
+      "errors": [
+        "extension_format_mismatch:.png:jpeg"
+      ],
+      "warnings": [
+        "asset_exceeds_500kb"
+      ]
+    },
+    {
+      "path": "/products/monitor-27.png",
+      "bytes": 507786,
+      "width": 1024,
+      "height": 1024,
+      "format": "jpeg",
+      "hash": "facefc7f2dd12a7552f4c1b9d457052eddb7c71123fc2a4c110b55ac6f2dfe20",
+      "errors": [
+        "extension_format_mismatch:.png:jpeg"
+      ],
+      "warnings": [
+        "asset_exceeds_500kb"
+      ]
+    },
+    {
+      "path": "/products/rollator-walker.png",
+      "bytes": 506016,
+      "width": 1024,
+      "height": 1024,
+      "format": "jpeg",
+      "hash": "2524b9e205602f466c8f56d2ebe2143c82fad7c6714c7d3e24ad9360a2d1bdfd",
+      "errors": [
+        "extension_format_mismatch:.png:jpeg"
+      ],
+      "warnings": [
+        "asset_exceeds_500kb"
+      ]
+    },
+    {
+      "path": "/products/high-chair.png",
+      "bytes": 447477,
+      "width": 1024,
+      "height": 1024,
+      "format": "jpeg",
+      "hash": "2d09b996d931097947c27458e1472124cdd593c7b984eadff00c8ccd85ca5743",
+      "errors": [
+        "extension_format_mismatch:.png:jpeg"
+      ],
+      "warnings": []
+    },
+    {
+      "path": "/products/air-purifier.png",
+      "bytes": 419514,
+      "width": 1024,
+      "height": 1024,
+      "format": "jpeg",
+      "hash": "280810484171fa59075b313d39645d72c232e6dce42b5fd3f03383ceee9ee50a",
+      "errors": [
+        "extension_format_mismatch:.png:jpeg"
+      ],
+      "warnings": []
+    },
+    {
+      "path": "/products/ergonomic-chair.png",
+      "bytes": 374113,
+      "width": 1024,
+      "height": 1024,
+      "format": "jpeg",
+      "hash": "1595494120bdd2d1f4026681939189cb8badf8986fa2b680fb48de94352cb64e",
+      "errors": [
+        "extension_format_mismatch:.png:jpeg"
+      ],
+      "warnings": []
+    },
+    {
+      "path": "/products/portable-ac.png",
+      "bytes": 327361,
+      "width": 1024,
+      "height": 1024,
+      "format": "jpeg",
+      "hash": "bfd03d943748a2f0449d624c5ac16199a6bddae4e561e3eb2aa2d04f8f010938",
+      "errors": [
+        "extension_format_mismatch:.png:jpeg"
+      ],
+      "warnings": []
+    },
+    {
+      "path": "/products/standing-desk.png",
+      "bytes": 270762,
+      "width": 1024,
+      "height": 1024,
+      "format": "jpeg",
+      "hash": "5d716f69874c6beb9e861785bccf11277a65b8363b6759e090a90c4e2932c171",
+      "errors": [
+        "extension_format_mismatch:.png:jpeg"
+      ],
+      "warnings": []
+    },
+    {
+      "path": "/brand/rentanything-icon.png",
+      "bytes": 89752,
+      "width": 330,
+      "height": 386,
+      "format": "png",
+      "hash": "74f45ce94da6542c2c480d772e9198f483e01ced2a8e6d15047eddff07338302",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "path": "/brand/rentanything-app-icon.png",
+      "bytes": 55378,
+      "width": 512,
+      "height": 512,
+      "format": "png",
+      "hash": "090bd1258d879db647717337ac04d3c5d3725176f2db24e7738bb323fc6df44b",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "path": "/products/delonghi-pinguino-pac-es72.jpg",
+      "bytes": 17786,
+      "width": 902,
+      "height": 902,
+      "format": "jpeg",
+      "hash": "cbc04dc8f4dc3b3d064cc4645c95683ff9630e0f2534ca82886105a70a291402",
+      "errors": [],
+      "warnings": []
+    }
+  ]
+}

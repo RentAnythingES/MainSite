@@ -74,6 +74,24 @@ function extractInternalLinks(html) {
   return [...links];
 }
 
+function extractInternalImages(html) {
+  const sources = new Set();
+  const candidates = [];
+  for (const image of html.match(/<img\b[^>]*>/gi) || []) {
+    const source = image.match(/\bsrc=["']([^"']+)["']/i)?.[1];
+    if (source) candidates.push(source);
+  }
+  candidates.push(metaContent(html, "property", "og:image"));
+  candidates.push(metaContent(html, "name", "twitter:image"));
+
+  for (const candidate of candidates) {
+    if (!candidate || candidate.startsWith("data:")) continue;
+    const normalized = normalizeUrl(decodeEntities(candidate));
+    if (normalized.startsWith(normalizeUrl(baseUrl))) sources.add(normalized);
+  }
+  return [...sources];
+}
+
 function getRequiredJsonLdTypes(url) {
   const pathname = new URL(url).pathname.replace(/\/$/, "") || "/";
   if (pathname === "/" || pathname === "/es") return ["LocalBusiness"];
@@ -150,6 +168,7 @@ function inspectPage(url, html) {
     jsonLdTypes,
     hreflang,
     internalLinks: extractInternalLinks(html),
+    internalImages: extractInternalImages(html),
     errors,
     warnings,
   };
@@ -190,11 +209,11 @@ async function main() {
     try {
       const { response, text } = await fetchText(url.replace("https://rentanything.es", baseUrl).replace("https://www.rentanything.es", baseUrl));
       if (!response.ok) {
-        return { url, status: response.status, errors: [`http_status:${response.status}`], warnings: [], internalLinks: [] };
+        return { url, status: response.status, errors: [`http_status:${response.status}`], warnings: [], internalLinks: [], internalImages: [] };
       }
       return { status: response.status, ...inspectPage(url, text) };
     } catch (error) {
-      return { url, status: 0, errors: [`fetch_failed:${error.message}`], warnings: [], internalLinks: [] };
+      return { url, status: 0, errors: [`fetch_failed:${error.message}`], warnings: [], internalLinks: [], internalImages: [] };
     }
   });
 
@@ -241,6 +260,22 @@ async function main() {
   });
   const brokenInternalLinks = unlistedLinkChecks.filter((link) => link.status < 200 || link.status >= 400);
   const indexableUnlistedInternalLinks = unlistedLinkChecks.filter((link) => link.indexable);
+  const internalImages = [...new Set(pages.flatMap((page) => page.internalImages || []))];
+  const imageChecks = await mapWithConcurrency(internalImages, async (url) => {
+    try {
+      const response = await fetch(url, {
+        redirect: "follow",
+        headers: { "user-agent": "RentAnythingTechnicalSeoAudit/1.0" },
+        signal: AbortSignal.timeout(20000),
+      });
+      return { url, status: response.status, contentType: response.headers.get("content-type") || "" };
+    } catch (error) {
+      return { url, status: 0, contentType: "", error: error.message };
+    }
+  });
+  const brokenInternalImages = imageChecks.filter(
+    (image) => image.status < 200 || image.status >= 400 || !image.contentType.startsWith("image/"),
+  );
 
   const report = {
     generatedAt: new Date().toISOString(),
@@ -259,6 +294,8 @@ async function main() {
       brokenInternalLinks: brokenInternalLinks.length,
       indexableUnlistedInternalLinks: indexableUnlistedInternalLinks.length,
       hreflangPairs: hreflangPairs.length,
+      internalImages: internalImages.length,
+      brokenInternalImages: brokenInternalImages.length,
     },
     errorPages: errorPages.map(({ url, errors }) => ({ url, errors })),
     warningPages: warningPages.map(({ url, warnings }) => ({ url, warnings })),
@@ -267,6 +304,7 @@ async function main() {
     brokenInternalLinks,
     indexableUnlistedInternalLinks,
     hreflangPairs,
+    brokenInternalImages,
     schemaCoverage: pages.map(({ url, jsonLdTypes }) => ({ url, jsonLdTypes })),
   };
 
@@ -285,7 +323,7 @@ async function main() {
     console.log(JSON.stringify(report, null, 2));
   }
 
-  if (errorPages.length > 0 || brokenInternalLinks.length > 0 || indexableUnlistedInternalLinks.length > 0) process.exitCode = 1;
+  if (errorPages.length > 0 || brokenInternalLinks.length > 0 || indexableUnlistedInternalLinks.length > 0 || brokenInternalImages.length > 0) process.exitCode = 1;
 }
 
 main().catch((error) => {

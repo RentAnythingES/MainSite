@@ -34,7 +34,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       publishedTime: post.date,
       images: [
         {
-          url: post.heroImage || "/hero/valencia-1.png",
+          url: post.heroImage || "/hero/valencia-1.webp",
           alt: post.heroImageAlt || post.title,
         },
       ],

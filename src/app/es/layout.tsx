@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     siteName: "RentAnything.es",
     images: [
       {
-        url: "/hero/valencia-1.png",
+        url: "/hero/valencia-1.webp",
         alt: "Alquiler y entrega de equipamiento de RentAnything.es en Valencia",
       },
     ],

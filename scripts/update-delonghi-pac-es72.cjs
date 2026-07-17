@@ -9,7 +9,7 @@ for (const line of fs.readFileSync(path.join(process.cwd(), ".env.local"), "utf8
 
 const applyChanges = process.argv.includes("--apply");
 const slug = "portable-ac";
-const imageUrl = "/products/delonghi-pinguino-pac-es72.jpg";
+const imageUrl = "/products/delonghi-pinguino-pac-es72.webp";
 const imageSourceUrl = "https://www.delonghi.com/es-es/p/aires-acondicionados-portatiles-aire-acondicionado-portatil-pinguino-compact-pac-es72-classic/PACES72CLASSIC.html?pid=0151453004";
 
 const update = {

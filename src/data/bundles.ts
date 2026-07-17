@@ -48,7 +48,7 @@ export const rentalBundles: RentalBundle[] = [
     tagline: "Shade, cold drinks, toys, and a way to carry it all.",
     description:
       "A ready-to-go beach setup for Malvarrosa, Patacona, Cabanyal, and El Saler days with children. Start with the essentials, then add baby or toddler extras if you need them.",
-    image: "/categories/travel-outdoors.png",
+    image: "/categories/travel-outdoors.webp",
     accent: "amber",
     bestFor: ["Beach days with children", "Malvarrosa or Patacona stays", "Families without a car", "Hot July and August trips"],
     includedItems: [
@@ -94,7 +94,7 @@ export const rentalBundles: RentalBundle[] = [
     tagline: "The core baby setup ready at your apartment before arrival.",
     description:
       "A practical starter kit for parents arriving in Valencia with babies or young toddlers. Built around sleep, feeding, stroller, bath, and apartment comfort.",
-    image: "/categories/baby-gear.png",
+    image: "/categories/baby-gear.webp",
     accent: "teal",
     bestFor: ["Babies and toddlers", "Hotels and Airbnbs", "1-4 week family stays", "Parents who want to pack lighter"],
     includedItems: [
@@ -140,7 +140,7 @@ export const rentalBundles: RentalBundle[] = [
     tagline: "For park days, beach promenades, Turia Gardens, and tired legs.",
     description:
       "A city-friendly kit for toddlers and young children exploring Valencia with parents. It connects stroller backup, movement, snacks, and small play moments.",
-    image: "/categories/baby-gear.png",
+    image: "/categories/baby-gear.webp",
     accent: "green",
     bestFor: ["Toddlers", "Turia Gardens days", "Long city walks", "Families staying near the centre or beach"],
     includedItems: [
@@ -180,7 +180,7 @@ export const rentalBundles: RentalBundle[] = [
     tagline: "Turn a short-stay apartment into a real work setup.",
     description:
       "A practical workstation bundle for digital nomads, founders, and remote employees staying in Valencia apartments for more than a few days.",
-    image: "/categories/remote-work.png",
+    image: "/categories/remote-work.webp",
     accent: "blue",
     bestFor: ["Digital nomads", "Long-stay professionals", "Couples working remotely", "Apartments without proper desks"],
     includedItems: [
@@ -219,7 +219,7 @@ export const rentalBundles: RentalBundle[] = [
     tagline: "Cooling and comfort for hot Valencia apartments.",
     description:
       "A seasonal kit for July, August, and heat-wave stays where the apartment has weak AC, bright bedrooms, or poor air movement.",
-    image: "/categories/home-living.png",
+    image: "/categories/home-living.webp",
     accent: "amber",
     bestFor: ["July and August stays", "Apartments with weak AC", "Families with naps", "Long-stay guests"],
     includedItems: [
@@ -257,7 +257,7 @@ export const rentalBundles: RentalBundle[] = [
     tagline: "Mobility support for longer Valencia days.",
     description:
       "A careful, support-led kit for visitors who need mobility help around Turia Gardens, the City of Arts and Sciences, beach promenades, and accessible accommodation.",
-    image: "/categories/mobility.png",
+    image: "/categories/mobility.webp",
     accent: "teal",
     bestFor: ["Reduced mobility", "Senior travellers", "Accessible sightseeing", "Long walking days"],
     includedItems: [
@@ -295,7 +295,7 @@ export const rentalBundles: RentalBundle[] = [
     tagline: "Comfort, mobility, and heat support for older visitors.",
     description:
       "A practical support kit for families hosting parents or grandparents in Valencia. It combines light mobility help, bathroom support, cooling, and comfort items for easier days out and calmer apartment time.",
-    image: "/categories/mobility.png",
+    image: "/categories/mobility.webp",
     accent: "green",
     bestFor: ["Older visitors", "Multi-generation family trips", "Summer stays", "Longer sightseeing days"],
     includedItems: [
@@ -335,7 +335,7 @@ export const rentalBundles: RentalBundle[] = [
     tagline: "Make a temporary apartment easier to actually live in.",
     description:
       "A long-stay comfort kit for families, remote workers, and guests frustrated by under-equipped Airbnb kitchens. It starts with practical appliance and dining upgrades, then adapts to the stay.",
-    image: "/categories/home-living.png",
+    image: "/categories/home-living.webp",
     accent: "blue",
     bestFor: ["Long-stay apartments", "Families cooking at home", "Remote workers", "Airbnbs with minimal kitchen gear"],
     includedItems: [

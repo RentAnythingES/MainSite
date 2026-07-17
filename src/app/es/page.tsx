@@ -17,12 +17,12 @@ export const metadata: Metadata = {
 };
 
 const heroCategories = [
-  { ...t.categories.babyGear, href: "/es/rental/baby-gear", image: "/categories/baby-gear.png" },
-  { name: "Niños y Familia", desc: "Bicicletas, juegos, juguetes y actividades familiares", href: "/es/rental/kids-family", image: "/discover/turia-gardens-hero.jpg" },
-  { ...t.categories.mobility, href: "/es/rental/mobility", image: "/categories/mobility.png" },
-  { ...t.categories.remoteWork, href: "/es/rental/remote-work", image: "/categories/remote-work.png" },
-  { ...t.categories.homeLiving, href: "/es/rental/home-living", image: "/categories/home-living.png" },
-  { ...t.categories.travelOutdoors, href: "/es/rental/travel-outdoors", image: "/categories/travel-outdoors.png" },
+  { ...t.categories.babyGear, href: "/es/rental/baby-gear", image: "/categories/baby-gear.webp" },
+  { name: "Niños y Familia", desc: "Bicicletas, juegos, juguetes y actividades familiares", href: "/es/rental/kids-family", image: "/discover/turia-gardens-hero.webp" },
+  { ...t.categories.mobility, href: "/es/rental/mobility", image: "/categories/mobility.webp" },
+  { ...t.categories.remoteWork, href: "/es/rental/remote-work", image: "/categories/remote-work.webp" },
+  { ...t.categories.homeLiving, href: "/es/rental/home-living", image: "/categories/home-living.webp" },
+  { ...t.categories.travelOutdoors, href: "/es/rental/travel-outdoors", image: "/categories/travel-outdoors.webp" },
 ];
 
 const howItWorks = [
@@ -32,10 +32,10 @@ const howItWorks = [
 ];
 
 const featuredProducts = [
-  { name: "Cochecito Compacto", category: t.categories.babyGear.name, price: "€5 – €14", unit: "/ día", href: "/es/product/compact-stroller", image: "/products/compact-stroller.png" },
-  { name: "Silla de Ruedas Estándar", category: t.categories.mobility.name, price: "€6 – €15", unit: "/ día", href: "/es/product/standard-wheelchair", image: "/products/standard-wheelchair.png" },
-  { name: "Monitor 27\"", category: t.categories.remoteWork.name, price: "€7 – €21", unit: "/ día", href: "/es/product/monitor-27", image: "/products/monitor-27.png" },
-  { name: "Scooter de Movilidad Todoterreno", category: t.categories.mobility.name, price: "€30 – €70", unit: "/ día", href: "/es/product/heavy-duty-mobility-scooter", image: "/products/heavy-duty-mobility-scooter.png" },
+  { name: "Cochecito Compacto", category: t.categories.babyGear.name, price: "€5 – €14", unit: "/ día", href: "/es/product/compact-stroller", image: "/products/compact-stroller.webp" },
+  { name: "Silla de Ruedas Estándar", category: t.categories.mobility.name, price: "€6 – €15", unit: "/ día", href: "/es/product/standard-wheelchair", image: "/products/standard-wheelchair.webp" },
+  { name: "Monitor 27\"", category: t.categories.remoteWork.name, price: "€7 – €21", unit: "/ día", href: "/es/product/monitor-27", image: "/products/monitor-27.webp" },
+  { name: "Scooter de Movilidad Todoterreno", category: t.categories.mobility.name, price: "€30 – €70", unit: "/ día", href: "/es/product/heavy-duty-mobility-scooter", image: "/products/heavy-duty-mobility-scooter.webp" },
 ];
 
 export default function HomePageES() {

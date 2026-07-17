@@ -32,7 +32,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       url: `https://rentanything.es/discover/${dest.slug}`,
       images: [
         {
-          url: dest.heroImage || "/hero/valencia-1.png",
+          url: dest.heroImage || "/hero/valencia-1.webp",
           alt: dest.heroImageAlt || dest.title,
         },
       ],

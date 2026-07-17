@@ -53,6 +53,7 @@
 - [x] Route-specific structured-data safeguards plus breadcrumbs on blog, Discover and kit details
 - [x] Sitemap completeness enforcement for linked indexable routes and public trust pages
 - [x] Full-sitemap EN/ES hreflang reciprocity and `x-default` enforcement
+- [x] Static image library normalized to WebP with automated weight, format, duplicate and rendered-response checks
 
 ---
 

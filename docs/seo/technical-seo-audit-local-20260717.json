@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-07-17T18:21:04.314Z",
-  "baseUrl": "http://localhost:3044",
+  "generatedAt": "2026-07-17T18:50:00.817Z",
+  "baseUrl": "http://127.0.0.1:3018",
   "sitemapUrlCount": 75,
   "robots": {
     "hasSitemap": true,
@@ -14,7 +14,9 @@
     "unlistedInternalLinks": 16,
     "brokenInternalLinks": 0,
     "indexableUnlistedInternalLinks": 0,
-    "hreflangPairs": 8
+    "hreflangPairs": 8,
+    "internalImages": 79,
+    "brokenInternalImages": 0
   },
   "errorPages": [],
   "warningPages": [
@@ -57,59 +59,60 @@
   ],
   "orphanPages": [],
   "unlistedInternalLinks": [
-    "http://localhost:3044/es/product/compact-stroller",
-    "http://localhost:3044/es/product/double-stroller",
-    "http://localhost:3044/es/product/travel-crib",
-    "http://localhost:3044/es/product/car-seat-infant",
-    "http://localhost:3044/es/product/high-chair",
-    "http://localhost:3044/es/product/standard-wheelchair",
-    "http://localhost:3044/es/product/transport-wheelchair",
-    "http://localhost:3044/es/product/mobility-scooter-lightweight",
-    "http://localhost:3044/es/product/heavy-duty-mobility-scooter",
-    "http://localhost:3044/es/product/rollator-walker",
-    "http://localhost:3044/es/product/monitor-27",
-    "http://localhost:3044/es/product/standing-desk",
-    "http://localhost:3044/es/product/ergonomic-chair",
-    "http://localhost:3044/es/product/air-purifier",
-    "http://localhost:3044/es/product/portable-ac",
-    "http://localhost:3044/es/product/beach-umbrella-set"
+    "http://127.0.0.1:3018/es/product/compact-stroller",
+    "http://127.0.0.1:3018/es/product/double-stroller",
+    "http://127.0.0.1:3018/es/product/travel-crib",
+    "http://127.0.0.1:3018/es/product/car-seat-infant",
+    "http://127.0.0.1:3018/es/product/high-chair",
+    "http://127.0.0.1:3018/es/product/standard-wheelchair",
+    "http://127.0.0.1:3018/es/product/transport-wheelchair",
+    "http://127.0.0.1:3018/es/product/mobility-scooter-lightweight",
+    "http://127.0.0.1:3018/es/product/heavy-duty-mobility-scooter",
+    "http://127.0.0.1:3018/es/product/rollator-walker",
+    "http://127.0.0.1:3018/es/product/monitor-27",
+    "http://127.0.0.1:3018/es/product/standing-desk",
+    "http://127.0.0.1:3018/es/product/ergonomic-chair",
+    "http://127.0.0.1:3018/es/product/air-purifier",
+    "http://127.0.0.1:3018/es/product/portable-ac",
+    "http://127.0.0.1:3018/es/product/beach-umbrella-set"
   ],
   "brokenInternalLinks": [],
   "indexableUnlistedInternalLinks": [],
   "hreflangPairs": [
     {
-      "englishUrl": "http://localhost:3044",
-      "spanishUrl": "http://localhost:3044/es"
+      "englishUrl": "http://127.0.0.1:3018",
+      "spanishUrl": "http://127.0.0.1:3018/es"
     },
     {
-      "englishUrl": "http://localhost:3044/valencia",
-      "spanishUrl": "http://localhost:3044/es/valencia"
+      "englishUrl": "http://127.0.0.1:3018/valencia",
+      "spanishUrl": "http://127.0.0.1:3018/es/valencia"
     },
     {
-      "englishUrl": "http://localhost:3044/rental/baby-gear",
-      "spanishUrl": "http://localhost:3044/es/rental/baby-gear"
+      "englishUrl": "http://127.0.0.1:3018/rental/baby-gear",
+      "spanishUrl": "http://127.0.0.1:3018/es/rental/baby-gear"
     },
     {
-      "englishUrl": "http://localhost:3044/rental/kids-family",
-      "spanishUrl": "http://localhost:3044/es/rental/kids-family"
+      "englishUrl": "http://127.0.0.1:3018/rental/kids-family",
+      "spanishUrl": "http://127.0.0.1:3018/es/rental/kids-family"
     },
     {
-      "englishUrl": "http://localhost:3044/rental/mobility",
-      "spanishUrl": "http://localhost:3044/es/rental/mobility"
+      "englishUrl": "http://127.0.0.1:3018/rental/mobility",
+      "spanishUrl": "http://127.0.0.1:3018/es/rental/mobility"
     },
     {
-      "englishUrl": "http://localhost:3044/rental/remote-work",
-      "spanishUrl": "http://localhost:3044/es/rental/remote-work"
+      "englishUrl": "http://127.0.0.1:3018/rental/remote-work",
+      "spanishUrl": "http://127.0.0.1:3018/es/rental/remote-work"
     },
     {
-      "englishUrl": "http://localhost:3044/rental/home-living",
-      "spanishUrl": "http://localhost:3044/es/rental/home-living"
+      "englishUrl": "http://127.0.0.1:3018/rental/home-living",
+      "spanishUrl": "http://127.0.0.1:3018/es/rental/home-living"
     },
     {
-      "englishUrl": "http://localhost:3044/rental/travel-outdoors",
-      "spanishUrl": "http://localhost:3044/es/rental/travel-outdoors"
+      "englishUrl": "http://127.0.0.1:3018/rental/travel-outdoors",
+      "spanishUrl": "http://127.0.0.1:3018/es/rental/travel-outdoors"
     }
   ],
+  "brokenInternalImages": [],
   "schemaCoverage": [
     {
       "url": "https://rentanything.es",

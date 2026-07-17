@@ -57,7 +57,7 @@ const categoryMetaES: Record<string, CategoryContent> = {
   "kids-family": {
     title: "Alquiler de Equipamiento Infantil y Familiar en Valencia",
     description: "Alquila bicicletas de equilibrio, juguetes y equipamiento familiar práctico en Valencia, con opciones flexibles de recogida y entrega.",
-    image: "/discover/turia-gardens-hero.jpg",
+    image: "/discover/turia-gardens-hero.webp",
     editorialHeading: "Equipamiento útil para estancias familiares en Valencia",
     editorialParagraphs: [
       "Las vacaciones en familia son más sencillas cuando los niños disponen de equipamiento adecuado sin tener que transportar cada artículo voluminoso por el aeropuerto. Alquilar en Valencia permite viajar con menos equipaje y elegir lo que realmente encaja con la estancia.",
@@ -235,7 +235,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description: meta.description,
       url: `https://rentanything.es/es/rental/${category}`,
       locale: "es_ES",
-      images: [{ url: meta.image ?? `/categories/${category}.png`, alt: meta.title }],
+      images: [{ url: meta.image ?? `/categories/${category}.webp`, alt: meta.title }],
     },
   };
 }

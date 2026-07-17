@@ -19,7 +19,7 @@ export default function ValenciaKitsPage() {
       <section className="relative overflow-hidden">
         <div className="absolute inset-0">
           <Image
-            src="/hero/valencia-3.png"
+            src="/hero/valencia-3.webp"
             alt="Valencia beach and city stay essentials"
             fill
             className="object-cover"

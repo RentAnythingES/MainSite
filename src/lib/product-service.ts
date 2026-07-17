@@ -17,11 +17,19 @@ const isSupabaseConfigured = () => {
   return url && !url.includes("placeholder");
 };
 
+const staticWebpProductImages = new Set([
+  ...staticProducts.map((product) => product.image),
+  "/products/delonghi-pinguino-pac-es72.webp",
+]);
+
 function normalizeImageUrl(value: unknown): string {
   const imageUrl = String(value || "").trim();
 
   if (!imageUrl) return "/products/placeholder.png";
-  if (imageUrl.startsWith("/") && !imageUrl.startsWith("//")) return imageUrl;
+  if (imageUrl.startsWith("/") && !imageUrl.startsWith("//")) {
+    const webpPath = imageUrl.replace(/\.(?:jpe?g|png)$/i, ".webp");
+    return staticWebpProductImages.has(webpPath) ? webpPath : imageUrl;
+  }
   if (/^https?:\/\//i.test(imageUrl)) return imageUrl;
 
   return "/products/placeholder.png";

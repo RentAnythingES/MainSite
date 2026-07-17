@@ -22,37 +22,37 @@ const heroCategories = [
   {
     name: "Baby & Toddler",
     href: "/rental/baby-gear",
-    image: "/categories/baby-gear.png",
+    image: "/categories/baby-gear.webp",
     description: "Strollers, cribs, car seats & high chairs",
   },
   {
     name: "Kids & Family",
     href: "/rental/kids-family",
-    image: "/discover/turia-gardens-hero.jpg",
+    image: "/discover/turia-gardens-hero.webp",
     description: "Bikes, games, toys & family activities",
   },
   {
     name: "Mobility & Accessibility",
     href: "/rental/mobility",
-    image: "/categories/mobility.png",
+    image: "/categories/mobility.webp",
     description: "Wheelchairs, scooters & walkers",
   },
   {
     name: "Remote Work",
     href: "/rental/remote-work",
-    image: "/categories/remote-work.png",
+    image: "/categories/remote-work.webp",
     description: "Monitors, desks, chairs & accessories",
   },
   {
     name: "Apartment Comfort",
     href: "/rental/home-living",
-    image: "/categories/home-living.png",
+    image: "/categories/home-living.webp",
     description: "Air purifiers, heaters & comfort",
   },
   {
     name: "Beach & Outdoor",
     href: "/rental/travel-outdoors",
-    image: "/categories/travel-outdoors.png",
+    image: "/categories/travel-outdoors.webp",
     description: "Beach gear, coolers & umbrellas",
   },
 ];
@@ -95,7 +95,7 @@ const featuredProducts = [
     price: "€5 – €14",
     unit: "/ day",
     href: "/product/compact-stroller",
-    image: "/products/compact-stroller.png",
+    image: "/products/compact-stroller.webp",
   },
   {
     name: "Standard Wheelchair",
@@ -103,7 +103,7 @@ const featuredProducts = [
     price: "€6 – €15",
     unit: "/ day",
     href: "/product/standard-wheelchair",
-    image: "/products/standard-wheelchair.png",
+    image: "/products/standard-wheelchair.webp",
   },
   {
     name: '27" Monitor',
@@ -111,7 +111,7 @@ const featuredProducts = [
     price: "€7 – €21",
     unit: "/ day",
     href: "/product/monitor-27",
-    image: "/products/monitor-27.png",
+    image: "/products/monitor-27.webp",
   },
   {
     name: "Heavy-Duty Mobility Scooter",
@@ -119,7 +119,7 @@ const featuredProducts = [
     price: "€30 – €70",
     unit: "/ day",
     href: "/product/heavy-duty-mobility-scooter",
-    image: "/products/heavy-duty-mobility-scooter.png",
+    image: "/products/heavy-duty-mobility-scooter.webp",
   },
 ];
 

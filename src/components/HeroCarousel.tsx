@@ -4,9 +4,9 @@ import Image from "next/image";
 import { useState, useEffect } from "react";
 
 const slides = [
-  { src: "/hero/valencia-1.png", alt: "Aerial view of Valencia Old Town at golden hour" },
-  { src: "/hero/valencia-2.png", alt: "Sunset over Turia Gardens and City of Arts and Sciences" },
-  { src: "/hero/valencia-3.png", alt: "Valencia beach promenade with palm trees at golden hour" },
+  { src: "/hero/valencia-1.webp", alt: "Aerial view of Valencia Old Town at golden hour" },
+  { src: "/hero/valencia-2.webp", alt: "Sunset over Turia Gardens and City of Arts and Sciences" },
+  { src: "/hero/valencia-3.webp", alt: "Valencia beach promenade with palm trees at golden hour" },
 ];
 
 export default function HeroCarousel() {

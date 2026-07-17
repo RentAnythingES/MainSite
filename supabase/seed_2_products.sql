@@ -52,3 +52,8 @@ VALUES ('portable-ac', 'Portable Air Conditioner', 'DeLonghi', 'Beat the Valenci
 -- Outdoors
 INSERT INTO products (slug, name, brand, description, emoji, image_url, category_id, subcategory, subcategory_slug, features, specs)
 VALUES ('beach-umbrella-set', 'Beach Umbrella and Chair Set', 'RentAnything', 'Complete beach setup: XL umbrella, 2 folding chairs, and a cooler bag. Ready for Malvarrosa or Patacona.', 'B', '/products/beach-umbrella-set.png', (SELECT id FROM categories WHERE slug = 'travel-outdoors'), 'Beach Gear', 'beach', '["2m umbrella with UV protection","2x folding chairs","Insulated cooler bag","Sand anchor","Carry bag"]', '{"Umbrella diameter":"2m","UV protection":"UPF 50+","Total weight":"6 kg"}');
+
+-- Static catalogue images were normalized to WebP in July 2026.
+UPDATE products
+SET image_url = regexp_replace(image_url, '\.(png|jpe?g)$', '.webp')
+WHERE image_url LIKE '/products/%';

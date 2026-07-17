@@ -63,7 +63,7 @@ const categoryMeta: Record<string, CategoryContent> = {
     title: "Kids & Family Equipment Rental in Valencia",
     description: "Rent balance bikes, toys and practical family equipment in Valencia. Flexible pickup and delivery options for your stay.",
     emoji: "🧸",
-    image: "/discover/turia-gardens-hero.jpg",
+    image: "/discover/turia-gardens-hero.webp",
     editorialHeading: "Useful Gear for Family Stays in Valencia",
     editorialParagraphs: [
       "Family holidays are easier when children have age-appropriate equipment without every bulky item travelling through the airport. Renting locally keeps luggage lighter and lets you choose what fits the stay rather than what fits the suitcase.",
@@ -249,7 +249,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: meta.title,
       description: meta.description,
       url: `https://rentanything.es/rental/${category}`,
-      images: [{ url: meta.image ?? `/categories/${category}.png`, alt: meta.title }],
+      images: [{ url: meta.image ?? `/categories/${category}.webp`, alt: meta.title }],
     },
   };
 }

@@ -46,7 +46,7 @@ export const products: Product[] = [
     specs: { "Age": "6m – 3 years", "Weight limit": "22 kg", "Stroller weight": "7.5 kg", "Folded size": "54 × 44 × 28 cm" },
     pricing: [{ days: 1, perDay: 14 }, { days: 3, perDay: 10 }, { days: 7, perDay: 7 }, { days: 14, perDay: 5 }],
     emoji: "🍼",
-    image: "/products/compact-stroller.png",
+    image: "/products/compact-stroller.webp",
     city: "valencia",
     faqs: [
       { question: "Can I take this stroller on Valencia's buses and metro?", answer: "Yes — Valencia's EMT buses and metro are fully accessible. The compact fold makes it easy to board and store. Buses kneel for strollers and all metro stations have lifts." },
@@ -67,7 +67,7 @@ export const products: Product[] = [
     specs: { "Age": "6m – 4 years", "Weight limit": "2 × 22 kg", "Stroller weight": "13 kg", "Width": "76 cm" },
     pricing: [{ days: 1, perDay: 20 }, { days: 3, perDay: 15 }, { days: 7, perDay: 11 }, { days: 14, perDay: 8 }],
     emoji: "👶",
-    image: "/products/double-stroller.png",
+    image: "/products/double-stroller.webp",
     city: "valencia",
     faqs: [
       { question: "Will this double stroller fit through doorways in Valencia?", answer: "Yes — at 76 cm wide it fits through standard doorways. Most Valencia restaurants, shops, and attractions have entrances wide enough. The Turia Gardens paths are easily wide enough too." },
@@ -87,7 +87,7 @@ export const products: Product[] = [
     specs: { "Age": "0 – 3 years", "Weight limit": "12 kg", "Crib weight": "6 kg", "Open size": "112 × 64 × 82 cm" },
     pricing: [{ days: 1, perDay: 12 }, { days: 3, perDay: 9 }, { days: 7, perDay: 6 }, { days: 14, perDay: 4 }],
     emoji: "😴",
-    image: "/products/travel-crib.png",
+    image: "/products/travel-crib.webp",
     city: "valencia",
     faqs: [
       { question: "Is the travel crib safe for newborns?", answer: "Yes — the BabyBjörn travel crib is suitable from birth to 3 years (up to 12 kg). It has a firm mattress and breathable mesh sides that meet all EU safety standards." },
@@ -107,7 +107,7 @@ export const products: Product[] = [
     specs: { "Age": "0 – 15 months", "Weight limit": "13 kg", "Height": "45 – 87 cm", "Seat weight": "4.2 kg" },
     pricing: [{ days: 1, perDay: 10 }, { days: 3, perDay: 8 }, { days: 7, perDay: 5 }, { days: 14, perDay: 4 }],
     emoji: "🚗",
-    image: "/products/car-seat-infant.png",
+    image: "/products/car-seat-infant.webp",
     city: "valencia",
     faqs: [
       { question: "Do I need a car seat in taxis in Valencia?", answer: "Spanish law exempts taxis from the car seat requirement. However, for safety — especially for airport transfers or day trips — we strongly recommend using one. This i-Size seat installs in seconds." },
@@ -128,7 +128,7 @@ export const products: Product[] = [
     specs: { "Age": "6m – 3 years", "Weight limit": "20 kg", "Chair weight": "7 kg" },
     pricing: [{ days: 1, perDay: 8 }, { days: 3, perDay: 6 }, { days: 7, perDay: 4 }, { days: 14, perDay: 3 }],
     emoji: "🪑",
-    image: "/products/high-chair.png",
+    image: "/products/high-chair.webp",
     city: "valencia",
     faqs: [
       { question: "Why rent a high chair for my Valencia apartment?", answer: "Most holiday rentals don't include high chairs, and restaurant high chairs vary in quality and cleanliness. Having your own means safe, comfortable mealtimes wherever you eat — at home or on a terrace." },
@@ -150,7 +150,7 @@ export const products: Product[] = [
     specs: { "Seat width": "46 cm", "Weight capacity": "115 kg", "Chair weight": "14 kg", "Folded width": "28 cm" },
     pricing: [{ days: 1, perDay: 15 }, { days: 3, perDay: 12 }, { days: 7, perDay: 8 }, { days: 14, perDay: 6 }],
     emoji: "♿",
-    image: "/products/standard-wheelchair.png",
+    image: "/products/standard-wheelchair.webp",
     city: "valencia",
     faqs: [
       { question: "Can I use this wheelchair on Valencia's beaches?", answer: "The standard wheelchair works well on the beach promenades and boardwalks. For sand access, Valencia's accessible beaches (Malvarrosa, Pinedo) offer free amphibious wheelchairs during summer months with Red Cross assistance." },
@@ -170,7 +170,7 @@ export const products: Product[] = [
     specs: { "Seat width": "43 cm", "Weight capacity": "100 kg", "Chair weight": "9 kg" },
     pricing: [{ days: 1, perDay: 12 }, { days: 3, perDay: 9 }, { days: 7, perDay: 6 }, { days: 14, perDay: 5 }],
     emoji: "🦽",
-    image: "/products/transport-wheelchair.png",
+    image: "/products/transport-wheelchair.webp",
     city: "valencia",
     faqs: [
       { question: "What's the difference between a transport and standard wheelchair?", answer: "A transport wheelchair is companion-pushed (smaller rear wheels) and much lighter at 9 kg vs 14 kg. It's ideal when someone will be pushing you — for museums, airports, and sightseeing. A standard wheelchair allows self-propelling." },
@@ -190,7 +190,7 @@ export const products: Product[] = [
     specs: { "Max speed": "6 km/h", "Range": "20 km", "Weight capacity": "115 kg", "Scooter weight": "34 kg" },
     pricing: [{ days: 1, perDay: 35 }, { days: 3, perDay: 28 }, { days: 7, perDay: 20 }, { days: 14, perDay: 15 }],
     emoji: "🛵",
-    image: "/products/mobility-scooter-lightweight.png",
+    image: "/products/mobility-scooter-lightweight.webp",
     city: "valencia",
     faqs: [
       { question: "Can a mobility scooter handle Valencia's cobblestones?", answer: "Yes — the 4-wheel design provides good stability on uneven surfaces. While the narrowest old town alleys can be tight, the main plazas, Turia Gardens, and beach promenades are all smooth and spacious." },
@@ -211,7 +211,7 @@ export const products: Product[] = [
     specs: { "Max speed": "12 km/h", "Range": "40 km", "Weight capacity": "160 kg", "Scooter weight": "68 kg" },
     pricing: [{ days: 1, perDay: 70 }, { days: 3, perDay: 55 }, { days: 7, perDay: 40 }, { days: 14, perDay: 30 }],
     emoji: "🏍️",
-    image: "/products/heavy-duty-mobility-scooter.png",
+    image: "/products/heavy-duty-mobility-scooter.webp",
     city: "valencia",
     faqs: [
       { question: "Is this scooter suitable for all-day use?", answer: "Absolutely — with a 40 km range and full suspension, it's designed for extended use. You can comfortably explore the entire Turia Gardens (9 km), visit the City of Arts and Sciences, and still have charge for the beach." },
@@ -231,7 +231,7 @@ export const products: Product[] = [
     specs: { "Weight capacity": "135 kg", "Seat height": "56 cm", "Walker weight": "6.5 kg" },
     pricing: [{ days: 1, perDay: 10 }, { days: 3, perDay: 8 }, { days: 7, perDay: 5 }, { days: 14, perDay: 4 }],
     emoji: "🚶",
-    image: "/products/rollator-walker.png",
+    image: "/products/rollator-walker.webp",
     city: "valencia",
     faqs: [
       { question: "Is a rollator walker enough for sightseeing in Valencia?", answer: "Valencia is very flat, making a rollator ideal for visitors who can walk but need support and rest breaks. The built-in seat lets you stop and rest anywhere — the Turia Gardens, the Mercado Central, the beach promenade." },
@@ -253,7 +253,7 @@ export const products: Product[] = [
     specs: { "Screen": "27 inch IPS", "Resolution": "3840 × 2160", "Ports": "USB-C, HDMI, DP", "Weight": "6.2 kg" },
     pricing: [{ days: 1, perDay: 21 }, { days: 3, perDay: 15 }, { days: 7, perDay: 10 }, { days: 14, perDay: 7 }],
     emoji: "🖥️",
-    image: "/products/monitor-27.png",
+    image: "/products/monitor-27.webp",
     city: "valencia",
     faqs: [
       { question: "Can I connect this monitor to my MacBook?", answer: "Yes — it has USB-C with 65W power delivery, so a single cable connects your MacBook, charges it, and extends your display. Also works with HDMI and DisplayPort for other laptops." },
@@ -273,7 +273,7 @@ export const products: Product[] = [
     specs: { "Height range": "72 – 120 cm", "Desk weight": "25 kg", "Load capacity": "70 kg" },
     pricing: [{ days: 1, perDay: 18 }, { days: 3, perDay: 14 }, { days: 7, perDay: 9 }, { days: 14, perDay: 6 }],
     emoji: "🪜",
-    image: "/products/standing-desk.png",
+    image: "/products/standing-desk.webp",
     city: "valencia",
     faqs: [
       { question: "Will a standing desk fit in my Valencia apartment?", answer: "At 120 × 60 cm it fits against most walls. We deliver it assembled and ready to use. If your apartment has limited space, it still works as a regular desk — just adjust to sitting height." },
@@ -293,7 +293,7 @@ export const products: Product[] = [
     specs: { "Weight capacity": "130 kg", "Seat height": "40 – 52 cm", "Chair weight": "12 kg" },
     pricing: [{ days: 1, perDay: 15 }, { days: 3, perDay: 12 }, { days: 7, perDay: 8 }, { days: 14, perDay: 6 }],
     emoji: "💺",
-    image: "/products/ergonomic-chair.png",
+    image: "/products/ergonomic-chair.webp",
     city: "valencia",
     faqs: [
       { question: "Why rent an office chair instead of using the apartment's?", answer: "Most holiday rentals provide dining chairs or cheap desk chairs — fine for a meal, painful for 8 hours of work. A proper ergonomic chair with lumbar support prevents back pain and makes you more productive." },
@@ -315,7 +315,7 @@ export const products: Product[] = [
     specs: { "CADR": "320 m³/h", "Noise level": "24 – 48 dB", "Weight": "4.7 kg" },
     pricing: [{ days: 1, perDay: 12 }, { days: 3, perDay: 9 }, { days: 7, perDay: 6 }, { days: 14, perDay: 4 }],
     emoji: "🌬️",
-    image: "/products/air-purifier.png",
+    image: "/products/air-purifier.webp",
     city: "valencia",
     faqs: [
       { question: "What is calima and do I need an air purifier for it?", answer: "Calima is a weather event that brings Saharan dust across the Mediterranean to Spain. It can reduce air quality for several days. A HEPA purifier makes a noticeable difference, especially for visitors with asthma or allergies." },
@@ -335,7 +335,7 @@ export const products: Product[] = [
     specs: { "Cooling capacity": "9,000 BTU", "Room size": "Up to 30m²", "Noise": "52 dB", "Weight": "26 kg" },
     pricing: [{ days: 1, perDay: 25 }, { days: 3, perDay: 20 }, { days: 7, perDay: 14 }, { days: 14, perDay: 10 }],
     emoji: "❄️",
-    image: "/products/portable-ac.png",
+    image: "/products/portable-ac.webp",
     city: "valencia",
     faqs: [
       { question: "Do I really need AC for Valencia in summer?", answer: "If you're visiting July-August, temperatures regularly hit 35-40°C with high humidity. Many holiday rentals lack AC or have weak units. A portable AC in the bedroom transforms your sleep quality — it's the single biggest comfort upgrade for summer visitors." },
@@ -358,7 +358,7 @@ export const products: Product[] = [
     specs: { "Umbrella diameter": "2m", "UV protection": "UPF 50+", "Total weight": "6 kg" },
     pricing: [{ days: 1, perDay: 15 }, { days: 3, perDay: 10 }, { days: 7, perDay: 7 }, { days: 14, perDay: 5 }],
     emoji: "🏖️",
-    image: "/products/beach-umbrella-set.png",
+    image: "/products/beach-umbrella-set.webp",
     city: "valencia",
     faqs: [
       { question: "Why not just rent a sunbed at the beach?", answer: "Chiringuito sunbed rental costs €9-10 per item and sells out on busy days. With your own set you can go anywhere on the beach, arrive anytime, and aren't limited to the roped-off rental areas. It also works out cheaper over multiple days." },

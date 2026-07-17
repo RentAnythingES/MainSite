@@ -14,6 +14,7 @@
     "audit:launch": "node scripts/launch-readiness-audit.cjs",
     "audit:seo": "node scripts/seo-regression-check.cjs",
     "audit:product-seo": "node scripts/product-seo-readiness-audit.cjs",
+    "audit:image-seo": "node scripts/image-seo-audit.cjs",
     "audit:technical-seo": "node scripts/technical-seo-audit.cjs",
     "smoke:booking": "node scripts/booking-api-smoke.cjs",
     "db:audit": "node scripts/audit-live-schema.cjs",

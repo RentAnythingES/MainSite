@@ -23,28 +23,28 @@ const hubs = [
   {
     title: "Neighbourhoods",
     description: "Where to stay, eat, and explore — street by street",
-    image: "/discover/hubs/neighbourhoods.png",
+    image: "/discover/hubs/neighbourhoods.webp",
     href: "/discover/neighbourhoods",
     hubKey: "neighbourhoods" as const,
   },
   {
     title: "Day Trips",
     description: "Beaches, mountains, and castles within an hour",
-    image: "/discover/hubs/day-trips.png",
+    image: "/discover/hubs/day-trips.webp",
     href: "/discover/day-trips",
     hubKey: "day-trips" as const,
   },
   {
     title: "Sights & Attractions",
     description: "The best things to see and do in Valencia",
-    image: "/discover/hubs/attractions.png",
+    image: "/discover/hubs/attractions.webp",
     href: "/discover/attractions",
     hubKey: "attractions" as const,
   },
   {
     title: "Events",
     description: "Festivals, holidays, and seasonal highlights",
-    image: "/discover/hubs/events.png",
+    image: "/discover/hubs/events.webp",
     href: "/discover/events",
     hubKey: "events" as const,
   },
@@ -70,7 +70,7 @@ export default function DiscoverHub() {
       <section className="relative overflow-hidden min-h-[420px] md:min-h-[480px] flex items-center">
         <div className="absolute inset-0">
           <Image
-            src="/hero/valencia-1.png"
+            src="/hero/valencia-1.webp"
             alt="Aerial view of Valencia at golden hour"
             fill
             className="object-cover"
