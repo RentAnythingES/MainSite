@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Privacy Policy",
-  description: "How RentAnything.es collects, uses, and protects your personal data. GDPR compliant.",
+  description: "Learn how RentAnything.es collects, uses, stores and protects personal data when you browse the site, contact us or make a rental booking.",
   alternates: { canonical: "https://rentanything.es/privacy" },
 };
 

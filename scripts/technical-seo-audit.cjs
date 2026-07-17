@@ -195,13 +195,20 @@ async function main() {
   const unlistedInternalLinks = [...linkedUrls].filter((url) => !pageUrls.has(url));
   const unlistedLinkChecks = await mapWithConcurrency(unlistedInternalLinks, async (url) => {
     try {
-      const { response } = await fetchText(url);
-      return { url, status: response.status };
+      const { response, text } = await fetchText(url);
+      const robots = metaContent(text, "name", "robots").toLowerCase();
+      return {
+        url,
+        status: response.status,
+        indexable: response.ok && !robots.includes("noindex"),
+        canonical: linkHref(text, "canonical"),
+      };
     } catch (error) {
       return { url, status: 0, error: error.message };
     }
   });
   const brokenInternalLinks = unlistedLinkChecks.filter((link) => link.status < 200 || link.status >= 400);
+  const indexableUnlistedInternalLinks = unlistedLinkChecks.filter((link) => link.indexable);
 
   const report = {
     generatedAt: new Date().toISOString(),
@@ -218,12 +225,14 @@ async function main() {
       orphanPages: orphanPages.length,
       unlistedInternalLinks: unlistedInternalLinks.length,
       brokenInternalLinks: brokenInternalLinks.length,
+      indexableUnlistedInternalLinks: indexableUnlistedInternalLinks.length,
     },
     errorPages: errorPages.map(({ url, errors }) => ({ url, errors })),
     warningPages: warningPages.map(({ url, warnings }) => ({ url, warnings })),
     orphanPages,
     unlistedInternalLinks,
     brokenInternalLinks,
+    indexableUnlistedInternalLinks,
     schemaCoverage: pages.map(({ url, jsonLdTypes }) => ({ url, jsonLdTypes })),
   };
 
@@ -242,7 +251,7 @@ async function main() {
     console.log(JSON.stringify(report, null, 2));
   }
 
-  if (errorPages.length > 0 || brokenInternalLinks.length > 0) process.exitCode = 1;
+  if (errorPages.length > 0 || brokenInternalLinks.length > 0 || indexableUnlistedInternalLinks.length > 0) process.exitCode = 1;
 }
 
 main().catch((error) => {

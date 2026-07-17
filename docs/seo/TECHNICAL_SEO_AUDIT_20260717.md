@@ -37,12 +37,13 @@ audit command to fail.
 
 ## Verified result
 
-The final production-build crawl covered the 71 routes available from the local
+The final production-build crawl covered the 75 routes available from the local
 static fallback and returned:
 
 - 0 pages with hard errors;
 - 0 sitemap orphans;
 - 0 broken internal links;
+- 0 linked indexable pages missing from the sitemap;
 - 6 pages with non-blocking metadata-length warnings.
 
 Route-specific schema requirements are also enforced. The final crawl found 56
@@ -50,6 +51,11 @@ Route-specific schema requirements are also enforced. The final crawl found 56
 `CollectionPage`, 6 `Article`, 2 `LocalBusiness` and 1 `Event` schemas. Product,
 category, blog, Discover detail and kit detail routes now fail the audit if their
 required schema types disappear.
+
+Privacy, Terms, Refunds and Cookies are canonical public trust pages and now
+appear in the sitemap at low priority. The crawler separately checks every
+internally linked URL outside the sitemap: noindex routes may remain excluded,
+but any linked indexable route omitted from the sitemap fails the audit.
 
 The local build cannot load Supabase-only products because outbound database
 access is restricted in the build environment. The initial live crawl provides

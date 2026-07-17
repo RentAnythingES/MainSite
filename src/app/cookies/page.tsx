@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Cookie Policy",
-  description: "How RentAnything.es uses cookies. Essential and analytics cookies explained.",
+  description: "Learn which essential and analytics cookies RentAnything.es uses, why they are used, and how you can manage consent and browser preferences.",
   alternates: { canonical: "https://rentanything.es/cookies" },
 };
 

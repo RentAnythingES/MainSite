@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-07-17T17:06:37.226Z",
-  "baseUrl": "http://localhost:3038",
-  "sitemapUrlCount": 71,
+  "generatedAt": "2026-07-17T17:44:15.079Z",
+  "baseUrl": "http://localhost:3042",
+  "sitemapUrlCount": 75,
   "robots": {
     "hasSitemap": true,
     "blocksAdmin": true,
@@ -11,8 +11,9 @@
     "pagesWithErrors": 0,
     "pagesWithWarnings": 6,
     "orphanPages": 0,
-    "unlistedInternalLinks": 20,
-    "brokenInternalLinks": 0
+    "unlistedInternalLinks": 16,
+    "brokenInternalLinks": 0,
+    "indexableUnlistedInternalLinks": 0
   },
   "errorPages": [],
   "warningPages": [
@@ -55,28 +56,25 @@
   ],
   "orphanPages": [],
   "unlistedInternalLinks": [
-    "http://localhost:3038/cookies",
-    "http://localhost:3038/privacy",
-    "http://localhost:3038/terms",
-    "http://localhost:3038/refunds",
-    "http://localhost:3038/es/product/compact-stroller",
-    "http://localhost:3038/es/product/double-stroller",
-    "http://localhost:3038/es/product/travel-crib",
-    "http://localhost:3038/es/product/car-seat-infant",
-    "http://localhost:3038/es/product/high-chair",
-    "http://localhost:3038/es/product/standard-wheelchair",
-    "http://localhost:3038/es/product/transport-wheelchair",
-    "http://localhost:3038/es/product/mobility-scooter-lightweight",
-    "http://localhost:3038/es/product/heavy-duty-mobility-scooter",
-    "http://localhost:3038/es/product/rollator-walker",
-    "http://localhost:3038/es/product/monitor-27",
-    "http://localhost:3038/es/product/standing-desk",
-    "http://localhost:3038/es/product/ergonomic-chair",
-    "http://localhost:3038/es/product/air-purifier",
-    "http://localhost:3038/es/product/portable-ac",
-    "http://localhost:3038/es/product/beach-umbrella-set"
+    "http://localhost:3042/es/product/compact-stroller",
+    "http://localhost:3042/es/product/double-stroller",
+    "http://localhost:3042/es/product/travel-crib",
+    "http://localhost:3042/es/product/car-seat-infant",
+    "http://localhost:3042/es/product/high-chair",
+    "http://localhost:3042/es/product/standard-wheelchair",
+    "http://localhost:3042/es/product/transport-wheelchair",
+    "http://localhost:3042/es/product/mobility-scooter-lightweight",
+    "http://localhost:3042/es/product/heavy-duty-mobility-scooter",
+    "http://localhost:3042/es/product/rollator-walker",
+    "http://localhost:3042/es/product/monitor-27",
+    "http://localhost:3042/es/product/standing-desk",
+    "http://localhost:3042/es/product/ergonomic-chair",
+    "http://localhost:3042/es/product/air-purifier",
+    "http://localhost:3042/es/product/portable-ac",
+    "http://localhost:3042/es/product/beach-umbrella-set"
   ],
   "brokenInternalLinks": [],
+  "indexableUnlistedInternalLinks": [],
   "schemaCoverage": [
     {
       "url": "https://rentanything.es",
@@ -110,6 +108,22 @@
     },
     {
       "url": "https://rentanything.es/contact",
+      "jsonLdTypes": []
+    },
+    {
+      "url": "https://rentanything.es/privacy",
+      "jsonLdTypes": []
+    },
+    {
+      "url": "https://rentanything.es/terms",
+      "jsonLdTypes": []
+    },
+    {
+      "url": "https://rentanything.es/refunds",
+      "jsonLdTypes": []
+    },
+    {
+      "url": "https://rentanything.es/cookies",
       "jsonLdTypes": []
     },
     {
