@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { headers } from "next/headers";
 import { Inter, Outfit } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
@@ -22,8 +23,8 @@ const outfit = Outfit({
 
 export const metadata: Metadata = {
   title: {
-    default: "Rent Baby Gear, Mobility & Tech in Valencia | RentAnything.es",
-    template: "%s | RentAnything.es",
+    default: "Rent Equipment in Valencia | RentAnything.es",
+    template: "%s",
   },
   description:
     "Short-term rental of strollers, cribs, wheelchairs, mobility scooters, remote work gear and more in Valencia. Check availability for your dates.",
@@ -41,9 +42,15 @@ export const metadata: Metadata = {
     locale: "en_US",
     alternateLocale: "es_ES",
     siteName: "RentAnything.es",
-    title: "Rent Baby Gear, Mobility & Tech in Valencia | RentAnything.es",
+    title: "Rent Equipment in Valencia | RentAnything.es",
     description:
       "Short-term rental of strollers, cribs, wheelchairs, mobility scooters, remote work gear & more. Delivered to your accommodation in Valencia.",
+    images: [
+      {
+        url: "/hero/valencia-1.png",
+        alt: "RentAnything.es equipment rental delivery in Valencia",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
@@ -68,14 +75,17 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const requestHeaders = await headers();
+  const locale = requestHeaders.get("x-page-locale") === "es" ? "es" : "en";
+
   return (
     <html
-      lang="en"
+      lang={locale}
       className={`${inter.variable} ${outfit.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-background text-foreground">

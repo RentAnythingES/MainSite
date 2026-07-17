@@ -5,7 +5,6 @@ import type { Metadata } from "next";
 import {
   getDestinationBySlug,
   getAllDestinationSlugsForBuild,
-  getPublishedDestinations,
 } from "@/content/destinations";
 import { getProductsByCategory } from "@/data/products";
 import { getBlogPostBySlug } from "@/content/blog";
@@ -26,6 +25,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: dest.title,
     description: dest.description,
     alternates: { canonical: `https://rentanything.es/discover/${dest.slug}` },
+    openGraph: {
+      title: dest.title,
+      description: dest.description,
+      url: `https://rentanything.es/discover/${dest.slug}`,
+      images: [
+        {
+          url: dest.heroImage || "/hero/valencia-1.png",
+          alt: dest.heroImageAlt || dest.title,
+        },
+      ],
+    },
   };
 }
 
@@ -118,11 +128,6 @@ export default async function DiscoverPage({ params }: Props) {
   // Resolve related blog posts
   const resolvedBlogPosts = dest.relatedBlogPosts
     .map((slug) => getBlogPostBySlug(slug))
-    .filter(Boolean);
-
-  // Resolve related destinations
-  const resolvedDestinations = dest.relatedDestinations
-    .map((slug) => getDestinationBySlug(slug))
     .filter(Boolean);
 
   // JSON-LD

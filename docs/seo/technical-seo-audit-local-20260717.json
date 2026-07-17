@@ -1,0 +1,166 @@
+{
+  "generatedAt": "2026-07-17T15:16:35.300Z",
+  "baseUrl": "http://localhost:3034",
+  "sitemapUrlCount": 71,
+  "robots": {
+    "hasSitemap": true,
+    "blocksAdmin": true,
+    "blocksApi": true
+  },
+  "summary": {
+    "pagesWithErrors": 0,
+    "pagesWithWarnings": 19,
+    "orphanPages": 0,
+    "unlistedInternalLinks": 20,
+    "brokenInternalLinks": 0
+  },
+  "errorPages": [],
+  "warningPages": [
+    {
+      "url": "https://rentanything.es/product/high-chair",
+      "warnings": [
+        "description_too_short:90"
+      ]
+    },
+    {
+      "url": "https://rentanything.es/product/transport-wheelchair",
+      "warnings": [
+        "title_too_long:65"
+      ]
+    },
+    {
+      "url": "https://rentanything.es/product/rollator-walker",
+      "warnings": [
+        "description_too_short:91"
+      ]
+    },
+    {
+      "url": "https://rentanything.es/product/ergonomic-chair",
+      "warnings": [
+        "description_too_short:91"
+      ]
+    },
+    {
+      "url": "https://rentanything.es/product/air-purifier",
+      "warnings": [
+        "description_too_short:96"
+      ]
+    },
+    {
+      "url": "https://rentanything.es/product/portable-ac",
+      "warnings": [
+        "description_too_short:97"
+      ]
+    },
+    {
+      "url": "https://rentanything.es/blog/best-beaches-valencia-families",
+      "warnings": [
+        "description_too_long:171"
+      ]
+    },
+    {
+      "url": "https://rentanything.es/blog/best-day-trips-from-valencia",
+      "warnings": [
+        "description_too_long:172"
+      ]
+    },
+    {
+      "url": "https://rentanything.es/discover/el-carmen",
+      "warnings": [
+        "description_too_long:179"
+      ]
+    },
+    {
+      "url": "https://rentanything.es/discover/cabanyal",
+      "warnings": [
+        "description_too_long:181"
+      ]
+    },
+    {
+      "url": "https://rentanything.es/discover/benimaclet",
+      "warnings": [
+        "title_too_long:65",
+        "description_too_long:177"
+      ]
+    },
+    {
+      "url": "https://rentanything.es/discover/turia-gardens",
+      "warnings": [
+        "title_too_long:64",
+        "description_too_long:199"
+      ]
+    },
+    {
+      "url": "https://rentanything.es/discover/el-ensanche",
+      "warnings": [
+        "title_too_long:63",
+        "description_too_long:187"
+      ]
+    },
+    {
+      "url": "https://rentanything.es/discover/sagunto",
+      "warnings": [
+        "title_too_long:65",
+        "description_too_long:175"
+      ]
+    },
+    {
+      "url": "https://rentanything.es/discover/requena",
+      "warnings": [
+        "title_too_long:72",
+        "description_too_long:180"
+      ]
+    },
+    {
+      "url": "https://rentanything.es/discover/patacona-beach",
+      "warnings": [
+        "title_too_long:63",
+        "description_too_long:178"
+      ]
+    },
+    {
+      "url": "https://rentanything.es/discover/xativa",
+      "warnings": [
+        "title_too_long:65",
+        "description_too_long:194"
+      ]
+    },
+    {
+      "url": "https://rentanything.es/es/valencia",
+      "warnings": [
+        "title_too_long:62",
+        "description_too_long:183"
+      ]
+    },
+    {
+      "url": "https://rentanything.es/es/rental/mobility",
+      "warnings": [
+        "title_too_long:64"
+      ]
+    }
+  ],
+  "orphanPages": [],
+  "unlistedInternalLinks": [
+    "http://localhost:3034/cookies",
+    "http://localhost:3034/privacy",
+    "http://localhost:3034/terms",
+    "http://localhost:3034/refunds",
+    "http://localhost:3034/es/product/compact-stroller",
+    "http://localhost:3034/es/product/double-stroller",
+    "http://localhost:3034/es/product/travel-crib",
+    "http://localhost:3034/es/product/car-seat-infant",
+    "http://localhost:3034/es/product/high-chair",
+    "http://localhost:3034/es/product/standard-wheelchair",
+    "http://localhost:3034/es/product/transport-wheelchair",
+    "http://localhost:3034/es/product/mobility-scooter-lightweight",
+    "http://localhost:3034/es/product/heavy-duty-mobility-scooter",
+    "http://localhost:3034/es/product/rollator-walker",
+    "http://localhost:3034/es/product/monitor-27",
+    "http://localhost:3034/es/product/standing-desk",
+    "http://localhost:3034/es/product/ergonomic-chair",
+    "http://localhost:3034/es/product/air-purifier",
+    "http://localhost:3034/es/product/portable-ac",
+    "http://localhost:3034/es/product/beach-umbrella-set"
+  ],
+  "brokenInternalLinks": []
+}

@@ -1,16 +1,23 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-/**
- * Middleware to inject the current pathname into request headers.
- * Used by the admin layout to detect the login page and skip auth redirects.
- */
 export function middleware(request: NextRequest) {
-  const response = NextResponse.next();
-  response.headers.set("x-pathname", request.nextUrl.pathname);
-  return response;
+  const requestHeaders = new Headers(request.headers);
+  requestHeaders.set("x-pathname", request.nextUrl.pathname);
+  requestHeaders.set(
+    "x-page-locale",
+    request.nextUrl.pathname === "/es" || request.nextUrl.pathname.startsWith("/es/")
+      ? "es"
+      : "en",
+  );
+
+  return NextResponse.next({
+    request: {
+      headers: requestHeaders,
+    },
+  });
 }
 
 export const config = {
-  matcher: ["/admin/:path*"],
+  matcher: ["/((?!api|_next/static|_next/image|favicon.ico|.*\\..*).*)"],
 };

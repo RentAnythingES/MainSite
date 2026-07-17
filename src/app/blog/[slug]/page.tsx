@@ -23,7 +23,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!post) return { title: "Post Not Found" };
 
   return {
-    title: `${post.title} | RentAnything.es`,
+    title: post.title,
     description: post.description,
     keywords: post.keywords,
     openGraph: {
@@ -31,7 +31,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description: post.description,
       type: "article",
       publishedTime: post.date,
-      ...(post.heroImage && { images: [{ url: post.heroImage }] }),
+      images: [
+        {
+          url: post.heroImage || "/hero/valencia-1.png",
+          alt: post.heroImageAlt || post.title,
+        },
+      ],
     },
     alternates: {
       canonical: `https://rentanything.es/blog/${post.slug}`,

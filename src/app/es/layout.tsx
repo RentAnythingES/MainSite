@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: {
-    default: "Alquiler de Cochecitos, Sillas de Ruedas y Equipos en Valencia | RentAnything.es",
-    template: "%s | RentAnything.es",
+    default: "Alquiler de Equipamiento en Valencia | RentAnything.es",
+    template: "%s",
   },
   description:
     "Alquiler a corto plazo de cochecitos, cunas, sillas de ruedas, scooters de movilidad, equipos de teletrabajo y más. Entrega en tu alojamiento en Valencia.",
@@ -20,7 +20,13 @@ export const metadata: Metadata = {
     locale: "es_ES",
     alternateLocale: "en_US",
     siteName: "RentAnything.es",
-    title: "Alquiler de Cochecitos, Sillas de Ruedas y Equipos en Valencia | RentAnything.es",
+    images: [
+      {
+        url: "/hero/valencia-1.png",
+        alt: "Alquiler y entrega de equipamiento de RentAnything.es en Valencia",
+      },
+    ],
+    title: "Alquiler de Equipamiento en Valencia | RentAnything.es",
     description:
       "Alquiler a corto plazo de cochecitos, cunas, sillas de ruedas, scooters de movilidad, equipos de teletrabajo y más. Entrega en tu alojamiento en Valencia.",
   },

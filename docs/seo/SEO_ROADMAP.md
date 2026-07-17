@@ -1,5 +1,5 @@
 # RentAnything.es — SEO Roadmap
-> **Last updated**: 2026-07-15 · Prioritized by estimated traffic impact × effort
+> **Last updated**: 2026-07-17 · Prioritized by estimated traffic impact × effort
 
 ---
 
@@ -8,7 +8,7 @@
 - [x] 16 product pages with structured data (JSON-LD Product)
 - [x] 5 category pages
 - [x] Dynamic sitemap (`src/app/sitemap.ts`)
-- [x] Title tags ≤60 chars on all pages
+- [x] Automated title and description length reporting with editorial exceptions tracked
 - [x] Canonical tags on all pages
 - [x] Open Graph / Twitter meta on all pages
 - [x] Valencia landing page (local SEO)
@@ -48,6 +48,7 @@
 - [x] Mobility & Accessibility cluster connected across category, accessibility kits and local guide
 - [x] EN/ES product templates inherit category, kit and local-guide pathways for all six priority clusters
 - [x] Live product indexability audit plus EN/ES search-readiness indicators in admin
+- [x] Rendered technical SEO audit with locale, social metadata, orphan and broken-link checks
 
 ---
 

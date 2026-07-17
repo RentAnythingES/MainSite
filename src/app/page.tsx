@@ -5,7 +5,7 @@ import { getLocalBusinessJsonLd } from "@/lib/jsonld";
 import HeroCarousel from "@/components/HeroCarousel";
 
 export const metadata: Metadata = {
-  title: "Rent Baby Gear, Mobility & Tech in Valencia | RentAnything.es",
+  title: "Rent Equipment in Valencia | RentAnything.es",
   description:
     "Short-term rental of strollers, cribs, wheelchairs, mobility scooters, remote work gear and more in Valencia. Check availability for your dates.",
   alternates: {

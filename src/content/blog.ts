@@ -541,7 +541,7 @@ export const blogPosts: BlogPost[] = [
           "<strong>Distance:</strong> 12 km south · <strong>Bus:</strong> Line 25 from Valencia, 30 min · <strong>Cost:</strong> ~€1.50 bus",
           "The Albufera is the closest day trip and arguably the most delicious. This freshwater lagoon — Spain's largest — is surrounded by rice paddies where paella was literally invented. The village of El Palmar, accessible by bus or car, has a single main street lined with family-run restaurants serving authentic arroz dishes that make the tourist paella on Valencia's beach look amateur.",
           "Beyond the food, the Albufera is a protected natural park. Take a traditional wooden boat (albuferenc) across the lake at sunset — the reflections and birdlife are extraordinary. The park is home to over 300 bird species and the surrounding farmland produces the prized bomba and senia rice varieties used in true Valencian paella.",
-          "This is the easiest trip on the list — no train required, just the 25 bus from Valencia's centre. You can be eating paella by the lake within an hour of leaving your apartment. Read our <a href=\"/discover/albufera-natural-park\">full Albufera guide</a> for boat tour bookings and restaurant recommendations."
+          "This is the easiest trip on the list — no train required, just the 25 bus from Valencia's centre. You can be eating paella by the lake within an hour of leaving your apartment. Read our <a href=\"/discover/albufera\">full Albufera guide</a> for boat tour bookings and restaurant recommendations."
         ]
       },
       {
@@ -579,7 +579,7 @@ export const blogPosts: BlogPost[] = [
       },
       {
         title: "Discover Albufera",
-        href: "/discover/albufera-natural-park",
+        href: "/discover/albufera",
         description: "Sunset boat rides and authentic paella"
       },
       {

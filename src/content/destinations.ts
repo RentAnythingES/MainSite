@@ -1726,7 +1726,7 @@ export const destinations: Destination[] = [
     productWidgets: [
       { categorySlug: "baby-gear", heading: "Day trip with little ones?", afterSection: "Practical Tips" },
     ],
-    relatedDestinations: ["albufera-natural-park", "city-of-arts-and-sciences"],
+    relatedDestinations: ["albufera", "city-of-arts-and-sciences"],
     relatedBlogPosts: ["valencia-with-kids-complete-guide"],
     faqs: [
       { question: "How do I get to Sagunto from Valencia?", answer: "Take the Cercanías commuter train (C-5 or C-6) from Valencia Nord station. It runs every 15-30 minutes, takes 30 minutes, and costs about €3.60 return." },
@@ -1856,7 +1856,7 @@ export const destinations: Destination[] = [
       },
     ],
     productWidgets: [],
-    relatedDestinations: ["sagunto", "albufera-natural-park"],
+    relatedDestinations: ["sagunto", "albufera"],
     relatedBlogPosts: [],
     faqs: [
       { question: "How do I get to Requena from Valencia?", answer: "Drive the A-3 motorway west (1 hour, toll-free) or take the Cercanías C-3 train from Valencia Nord (1 hour 10 min, ~€5 return). Car is better if you want to visit rural bodegas." },
@@ -2140,7 +2140,7 @@ export const destinations: Destination[] = [
     productWidgets: [
       { categorySlug: "baby-gear", heading: "Day trip with little ones?", afterSection: "Practical Tips" },
     ],
-    relatedDestinations: ["sagunto", "requena", "albufera-natural-park"],
+    relatedDestinations: ["sagunto", "requena", "albufera"],
     relatedBlogPosts: ["valencia-with-kids-complete-guide"],
     faqs: [
       { question: "How do I get to Xàtiva from Valencia?", answer: "Take the Cercanías C-2 train from Valencia Nord station. It runs hourly, takes about 1 hour, and costs ~€5.50 return. The scenic ride passes through orange groves and rice paddies." },
@@ -2149,4 +2149,3 @@ export const destinations: Destination[] = [
     ],
   },
 ];
-

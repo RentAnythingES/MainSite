@@ -8,7 +8,7 @@ import { getDictionary } from "@/i18n/getDictionary";
 const t = getDictionary("es");
 
 export const metadata: Metadata = {
-  title: "Alquiler de Cochecitos, Sillas de Ruedas y Equipos en Valencia | RentAnything.es",
+  title: "Alquiler de Equipamiento en Valencia | RentAnything.es",
   description: t.home.subheadline,
   alternates: {
     canonical: "https://rentanything.es/es",
@@ -69,7 +69,7 @@ export default function HomePageES() {
               <Link href="/es/valencia" className="btn btn-primary btn-lg" id="hero-cta-primary">
                 {t.home.ctaPrimary}
               </Link>
-              <Link href="/es/how-it-works" className="btn btn-lg bg-white/15 text-white hover:bg-white/25 border border-white/20" id="hero-cta-secondary">
+              <Link href="/how-it-works" className="btn btn-lg bg-white/15 text-white hover:bg-white/25 border border-white/20" id="hero-cta-secondary">
                 {t.home.ctaSecondary}
               </Link>
             </div>

@@ -12,11 +12,17 @@ export default function Header() {
   const pathname = usePathname();
   const isSpanish = pathname.startsWith("/es");
   const prefix = isSpanish ? "/es" : "";
+  const hasSpanishEquivalent =
+    pathname === "/" ||
+    pathname === "/valencia" ||
+    pathname.startsWith("/product/") ||
+    pathname.startsWith("/rental/");
 
-  // Locale-aware switch: on /es/* -> link to EN equivalent, on /* -> link to /es/*
   const switchLocaleHref = isSpanish
     ? pathname.replace(/^\/es/, "") || "/"
-    : `/es${pathname}`;
+    : hasSpanishEquivalent
+      ? `/es${pathname === "/" ? "" : pathname}`
+      : "/es";
   const switchLocaleLabel = isSpanish ? "EN 🇬🇧" : "ES 🇪🇸";
 
   const categories = seoCategoryClusters.map((category) => ({
