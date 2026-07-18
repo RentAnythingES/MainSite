@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { rentalBundles } from "@/data/bundles";
 import { getPublishedPosts } from "@/content/blog";
+import { getPublishedSpanishPosts } from "@/content/blog-es";
 import { getPublishedDestinations } from "@/content/destinations";
 import { getIndexableProductsForSeo } from "@/lib/product-service";
 import { seoCategorySlugs } from "@/data/seo-clusters";
@@ -79,7 +80,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const spanishStaticPages: MetadataRoute.Sitemap = [
     { url: `${BASE_URL}/es`, changeFrequency: "weekly", priority: 0.9 },
     { url: `${BASE_URL}/es/valencia`, changeFrequency: "weekly", priority: 0.8 },
+    { url: `${BASE_URL}/es/blog`, changeFrequency: "weekly", priority: 0.7 },
   ];
+
+  const spanishBlogPages: MetadataRoute.Sitemap = getPublishedSpanishPosts().map((post) => ({
+    url: `${BASE_URL}/es/blog/${post.slug}`,
+    lastModified: post.date,
+    changeFrequency: "monthly" as const,
+    priority: 0.6,
+  }));
 
   // Spanish product pages
   const spanishProductPages: MetadataRoute.Sitemap = products
@@ -98,5 +107,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.7,
   }));
 
-  return [...staticPages, ...categoryPages, ...productPages, ...bundlePages, ...blogPages, ...discoverHubs, ...discoverPages, ...spanishStaticPages, ...spanishProductPages, ...spanishCategoryPages];
+  return [...staticPages, ...categoryPages, ...productPages, ...bundlePages, ...blogPages, ...discoverHubs, ...discoverPages, ...spanishStaticPages, ...spanishBlogPages, ...spanishProductPages, ...spanishCategoryPages];
 }

@@ -64,6 +64,7 @@
 - [x] Fresh SERP review corrected outdated zero-competition claims and formalized query-to-hub ownership
 - [x] Discover neighbourhood, day-trip, attraction and event sub-hubs expose guide ItemLists and breadcrumb schema
 - [x] Product, kit, category and editorial schema connected to stable business/WebSite IDs; evergreen event guides corrected to Article markup
+- [x] Spanish planning coverage launched with a localized blog hub plus complete Beach and Summer guides and selective reciprocal hreflang
 
 ---
 

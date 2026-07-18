@@ -28,6 +28,8 @@ App Router with static generation (`generateStaticParams`). Prefix-based i18n (`
 | `/es/valencia` | Static | `es/valencia/page.tsx` |
 | `/es/product/[slug]` | SSG | Same products, Spanish dictionary |
 | `/es/rental/[category]` | SSG | Same categories, Spanish dictionary |
+| `/es/blog` | Static | Complete Spanish planning guides only |
+| `/es/blog/[slug]` | SSG | `content/blog-es.ts` + shared article renderer |
 
 ### Admin (protected)
 | Route | Type | Purpose |
@@ -60,6 +62,7 @@ App Router with static generation (`generateStaticParams`). Prefix-based i18n (`
 | `src/lib/product-service.ts` | Supabase-first product fetching with static fallback |
 | `src/content/destinations.ts` | Discover guide data + `ProductWidget` interface |
 | `src/content/blog.ts` | Blog post data |
+| `src/content/blog-es.ts` | Complete Spanish blog adaptations |
 | `src/i18n/dictionaries/es.ts` | Spanish translations for all public pages |
 
 Product images from Supabase must be either site-relative paths such as

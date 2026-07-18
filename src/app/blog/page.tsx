@@ -11,6 +11,11 @@ export const metadata: Metadata = {
     "Practical tips for travelling to Valencia. Guides for families, mobility needs, digital nomads & more. From the RentAnything.es team.",
   alternates: {
     canonical: "https://rentanything.es/blog",
+    languages: {
+      en: "https://rentanything.es/blog",
+      es: "https://rentanything.es/es/blog",
+      "x-default": "https://rentanything.es/blog",
+    },
   },
 };
 

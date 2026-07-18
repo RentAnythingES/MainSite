@@ -15,6 +15,9 @@ export default function Header() {
   const hasSpanishEquivalent =
     pathname === "/" ||
     pathname === "/valencia" ||
+    pathname === "/blog" ||
+    pathname === "/blog/best-beaches-valencia-families" ||
+    pathname === "/blog/valencia-summer-survival-guide" ||
     pathname.startsWith("/product/") ||
     pathname.startsWith("/rental/");
 
@@ -38,7 +41,7 @@ export default function Header() {
     { name: isSpanish ? "Cómo Funciona" : "How It Works", href: "/how-it-works" },
     { name: isSpanish ? "Sobre Nosotros" : "About", href: "/about" },
     { name: isSpanish ? "Preguntas" : "FAQ", href: "/faq" },
-    { name: "Blog", href: "/blog" },
+    { name: "Blog", href: `${prefix}/blog` },
   ];
 
   const ctaLabel = isSpanish ? "Reservar" : "Rent Now";

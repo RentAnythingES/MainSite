@@ -3,6 +3,11 @@
 > **Last updated**: 2026-06-17
 > **Applies to**: All blog posts at `/blog/[slug]` — powered by `src/content/blog.ts`
 
+Spanish adaptations live in `src/content/blog-es.ts` and render at
+`/es/blog/[slug]`. A Spanish route is published only when the full article,
+metadata, FAQs and internal links are localized. Hreflang must never point an
+untranslated article to a generic Spanish page.
+
 This document defines quality standards, structural patterns, and guardrails for blog content on rentanything.es.
 
 ---

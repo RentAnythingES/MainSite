@@ -15,7 +15,7 @@ export default function Footer() {
       { name: isSpanish ? "Descubrir Valencia" : "Discover Valencia", href: "/discover" },
       { name: isSpanish ? "Sobre Nosotros" : "About Us", href: "/about" },
       { name: isSpanish ? "Preguntas Frecuentes" : "FAQ", href: "/faq" },
-      { name: "Blog", href: "/blog" },
+      { name: "Blog", href: `${prefix}/blog` },
       { name: isSpanish ? "Contacto" : "Contact", href: "/contact" },
     ],
     [isSpanish ? "Categorías" : "Categories"]: [
