@@ -236,6 +236,7 @@ Data-driven `/discover/[slug]` pages. 5 destinations live. Hub pages for neighbo
 - [x] **Widget spacing** — No two product strips adjacent; contextually placed after relevant sections
 - [x] **Photo-backed hub cards** — Discover index uses lifestyle photos instead of emojis
 - [x] **Valencia map widget** — Accessible schematic city/day-trip map with destination selection, transport summaries, and guide pathways
+  - Production verified 18 July 2026: responsive layout has no horizontal overflow; live crawl reports zero page errors, warnings, broken internal links, or broken images.
 
 **Open design items:**
 - [ ] **Real photos** — Replace AI-generated images with sourced photography for trust
