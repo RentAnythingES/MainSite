@@ -7,6 +7,9 @@ const categoryChecks = [
   {
     slug: "baby-gear",
     pathways: ["/valencia/kits/baby-arrival-kit", "/blog/valencia-with-kids-complete-guide"],
+    requiredEnglishText: ["Baby Equipment Rental in Valencia: FAQs"],
+    requiredSpanishText: ["Preguntas sobre el alquiler de material de bebé en Valencia"],
+    requiredSchemaTypes: ["FAQPage"],
   },
   {
     slug: "kids-family",
@@ -15,14 +18,23 @@ const categoryChecks = [
   {
     slug: "mobility",
     pathways: ["/valencia/kits/accessible-valencia-kit", "/blog/wheelchair-accessibility-valencia"],
+    requiredEnglishText: ["Mobility Equipment Rental in Valencia: FAQs"],
+    requiredSpanishText: ["Preguntas sobre el alquiler de movilidad en Valencia"],
+    requiredSchemaTypes: ["FAQPage"],
   },
   {
     slug: "remote-work",
     pathways: ["/valencia/kits/remote-work-apartment-kit", "/blog/digital-nomad-guide-valencia"],
+    requiredEnglishText: ["Remote Work Equipment Rental in Valencia: FAQs"],
+    requiredSpanishText: ["Preguntas sobre el alquiler de equipos de teletrabajo"],
+    requiredSchemaTypes: ["FAQPage"],
   },
   {
     slug: "home-living",
     pathways: ["/valencia/kits/summer-apartment-survival-kit", "/blog/valencia-summer-survival-guide"],
+    requiredEnglishText: ["Portable AC and Apartment Equipment Rental: FAQs"],
+    requiredSpanishText: ["Preguntas sobre aire acondicionado portátil y confort"],
+    requiredSchemaTypes: ["FAQPage"],
   },
   {
     slug: "travel-outdoors",

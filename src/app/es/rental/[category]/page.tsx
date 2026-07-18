@@ -64,6 +64,13 @@ const categoryMetaES: Record<string, CategoryContent> = {
         href: "/blog/valencia-with-kids-complete-guide",
       },
     ],
+    faqHeading: "Preguntas sobre el alquiler de material de bebé en Valencia",
+    faqs: [
+      { question: "¿Puedo alquilar un cochecito o una cuna de viaje en Valencia?", answer: "Sí. Elige el producto, introduce tus fechas y revisa las opciones de recogida o entrega antes del pago. Cada ficha muestra medidas, piezas incluidas e información de uso." },
+      { question: "¿Podéis entregar el material de bebé en mi alojamiento?", answer: "La reserva muestra las opciones de entrega y recogida disponibles para la dirección y las fechas elegidas. Podemos confirmar el acceso, el horario y cualquier necesidad de montaje antes de la entrega." },
+      { question: "¿Cómo se prepara el material infantil entre alquileres?", answer: "El equipamiento se revisa y prepara entre reservas. La ficha correspondiente recoge la información específica de cuidado, higiene y seguridad; consúltanos cualquier duda de idoneidad antes de reservar." },
+      { question: "¿Me convienen productos sueltos o el Kit de Llegada del Bebé?", answer: "Elige productos individuales si necesitas un artículo concreto. El Kit de Llegada es un punto de partida más sencillo cuando necesitas varios elementos de descanso, alimentación, baño o movilidad." },
+    ],
   },
   "kids-family": {
     title: "Alquiler de Equipamiento Infantil y Familiar en Valencia",
@@ -129,6 +136,13 @@ const categoryMetaES: Record<string, CategoryContent> = {
         href: "/blog/wheelchair-accessibility-valencia",
       },
     ],
+    faqHeading: "Preguntas sobre el alquiler de movilidad en Valencia",
+    faqs: [
+      { question: "¿Puedo alquilar una silla de ruedas o un scooter en Valencia?", answer: "Sí. Las fichas publicadas muestran las sillas, scooters y ayudas para caminar disponibles. Introduce tus fechas para comprobar el inventario y las opciones de recogida o entrega." },
+      { question: "¿Cómo elijo entre silla de ruedas, andador y scooter?", answer: "Valora la capacidad para caminar, las transferencias, la distancia, el espacio de guardado, el transporte y el acceso al alojamiento. Cada ficha incluye medidas y especificaciones para comparar." },
+      { question: "¿Entregáis equipos de movilidad en hoteles o apartamentos?", answer: "La reserva muestra las opciones de entrega y recogida disponibles. Indica si hay escalones, ascensor, puertas estrechas o restricciones de recepción para planificar la entrega con seguridad." },
+      { question: "¿Valencia es adecuada para usuarios de silla de ruedas o scooter?", answer: "Muchas rutas céntricas, el Jardín del Turia y el paseo marítimo son relativamente llanos, pero las superficies y accesos varían. Consulta nuestra guía y verifica la información actual del transporte o recinto." },
+    ],
   },
   "remote-work": {
     title: "Alquiler de Equipos de Teletrabajo en Valencia",
@@ -155,6 +169,13 @@ const categoryMetaES: Record<string, CategoryContent> = {
         href: "/blog/digital-nomad-guide-valencia",
       },
     ],
+    faqHeading: "Preguntas sobre el alquiler de equipos de teletrabajo",
+    faqs: [
+      { question: "¿Puedo alquilar un monitor en Valencia para una estancia corta?", answer: "Sí. Selecciona un monitor publicado, introduce tus fechas y comprueba la disponibilidad. La ficha muestra tamaño, conexiones y accesorios incluidos para confirmar la compatibilidad." },
+      { question: "¿Podéis entregar equipos de oficina en mi apartamento?", answer: "La reserva muestra las opciones de entrega y recogida para la dirección y el periodo elegidos. Podemos confirmar el acceso, el ascensor y cualquier necesidad de montaje antes de la entrega." },
+      { question: "¿Qué necesito para una oficina temporal en casa?", answer: "Un monitor, una altura de mesa adecuada y una silla con buen apoyo son la base. El soporte, teclado, ratón o hub dependen de tu equipo. El Kit de Teletrabajo ofrece un punto de partida combinado." },
+      { question: "¿Puedo alquilar el equipo durante varias semanas o meses?", answer: "Introduce todo el periodo en la ficha del producto. La calculadora aplica el tramo de duración correspondiente y muestra disponibilidad y precio total antes del pago." },
+    ],
   },
   "home-living": {
     title: "Alquiler de Equipamiento para Apartamentos en Valencia",
@@ -180,6 +201,13 @@ const categoryMetaES: Record<string, CategoryContent> = {
         description: "Consulta horarios locales, estrategias para refrescar el apartamento y consejos para los días de más calor.",
         href: "/blog/valencia-summer-survival-guide",
       },
+    ],
+    faqHeading: "Preguntas sobre aire acondicionado portátil y confort",
+    faqs: [
+      { question: "¿Puedo alquilar un aire acondicionado portátil en Valencia?", answer: "Sí, cuando haya una unidad publicada disponible para tus fechas. Revisa la superficie recomendada, la salida de aire, las medidas y el ruido antes de reservar." },
+      { question: "¿Funcionará un aire acondicionado portátil en mi apartamento?", answer: "La estancia necesita una ventana o puerta de balcón adecuada para el tubo de extracción y espacio alrededor del equipo. Revisa la ficha y consúltanos el tipo de apertura si tienes dudas." },
+      { question: "¿Entregáis y recogéis los equipos de aire acondicionado?", answer: "La reserva muestra las opciones de entrega y recogida, horarios y costes disponibles. Conviene confirmar el acceso y la ubicación porque las unidades portátiles son voluminosas." },
+      { question: "¿Necesito aire acondicionado, ventilador o purificador?", answer: "El aire acondicionado enfría si puede expulsar el calor al exterior. Un ventilador mueve el aire, pero no reduce la temperatura. Un purificador trata partículas, no el calor. Elige según el problema del alojamiento." },
     ],
   },
   "travel-outdoors": {

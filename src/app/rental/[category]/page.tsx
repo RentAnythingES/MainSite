@@ -69,6 +69,13 @@ const categoryMeta: Record<string, CategoryContent> = {
         href: "/blog/valencia-with-kids-complete-guide",
       },
     ],
+    faqHeading: "Baby Equipment Rental in Valencia: FAQs",
+    faqs: [
+      { question: "Can I rent a stroller or travel cot in Valencia?", answer: "Yes. Choose the relevant product, enter your dates and review the available pickup or delivery options before payment. Product pages list dimensions, included parts and suitability details." },
+      { question: "Can baby equipment be delivered to my accommodation?", answer: "The booking flow shows the delivery and pickup options available for your address and dates. Access details, timing and any setup requirements can be confirmed before handover." },
+      { question: "How is rental baby equipment prepared between bookings?", answer: "Equipment is checked and prepared between rentals. Product-specific care, hygiene and safety information is shown on the relevant listing, and you can contact us with any suitability question before booking." },
+      { question: "Should I book individual items or a Baby Arrival Kit?", answer: "Choose individual products when you need one specific item. The Baby Arrival Kit is the simpler starting point when you need several sleep, feeding, bathing or mobility essentials for the same stay." },
+    ],
   },
   "kids-family": {
     title: "Kids & Family Equipment Rental in Valencia",
@@ -138,6 +145,13 @@ const categoryMeta: Record<string, CategoryContent> = {
         href: "/blog/wheelchair-accessibility-valencia",
       },
     ],
+    faqHeading: "Mobility Equipment Rental in Valencia: FAQs",
+    faqs: [
+      { question: "Can I rent a wheelchair or mobility scooter in Valencia?", answer: "Yes. Published listings show the available wheelchair, scooter and walking-aid options. Enter your dates to check inventory and review pickup or delivery before payment." },
+      { question: "How do I choose between a wheelchair, rollator and scooter?", answer: "Consider walking ability, transfer needs, travel distance, storage, transport and the accommodation entrance. Each product page lists dimensions and key specifications; contact us if you need help comparing options." },
+      { question: "Can mobility equipment be delivered to a hotel or apartment?", answer: "Available delivery and pickup options are shown during booking. Tell us about steps, lifts, door widths or reception restrictions so the handover can be planned safely." },
+      { question: "Is Valencia suitable for wheelchair and scooter users?", answer: "Many central routes, the Turia Gardens and the seafront are relatively level, but surfaces and access vary. Use our accessibility guide to plan routes and verify current transport or venue information directly." },
+    ],
   },
   "remote-work": {
     title: "Remote Work Equipment Rental in Valencia",
@@ -166,6 +180,13 @@ const categoryMeta: Record<string, CategoryContent> = {
         href: "/blog/digital-nomad-guide-valencia",
       },
     ],
+    faqHeading: "Remote Work Equipment Rental in Valencia: FAQs",
+    faqs: [
+      { question: "Can I rent a monitor in Valencia for a short stay?", answer: "Yes. Select a published monitor, enter your dates and check availability. The product page lists screen size, ports and included accessories so you can confirm compatibility first." },
+      { question: "Can you deliver office equipment to my apartment?", answer: "The booking flow shows available delivery and collection options for the address and rental window. Building access, lift dimensions and assembly needs can be confirmed before handover." },
+      { question: "What do I need for a temporary home office?", answer: "A monitor, suitable desk height and supportive chair are the core items. Laptop stands, input devices or hubs depend on your equipment and working pattern. The Remote Work Apartment Kit provides a combined starting point." },
+      { question: "Can I rent equipment for several weeks or months?", answer: "Enter the complete rental window on the product page. The pricing calculator applies the relevant duration tier and shows availability and the total before checkout." },
+    ],
   },
   "home-living": {
     title: "Apartment Equipment Rental in Valencia",
@@ -193,6 +214,13 @@ const categoryMeta: Record<string, CategoryContent> = {
         description: "Use local routines, apartment cooling strategies and beach timing to manage warmer days.",
         href: "/blog/valencia-summer-survival-guide",
       },
+    ],
+    faqHeading: "Portable AC and Apartment Equipment Rental: FAQs",
+    faqs: [
+      { question: "Can I rent a portable air conditioner in Valencia?", answer: "Yes, when a published unit is available for your dates. Check the product page for room guidance, exhaust requirements, dimensions and noise information before booking." },
+      { question: "Will a portable air conditioner work in my apartment?", answer: "The room needs a suitable window or balcony-door route for the exhaust hose and enough space around the unit. Review the listing and confirm the opening type with us if you are unsure." },
+      { question: "Do you deliver and collect portable air conditioners?", answer: "Available delivery and collection options, timing and fees are shown during booking. Access restrictions and placement can be confirmed before handover because portable units are bulky." },
+      { question: "Should I rent an air conditioner, fan or air purifier?", answer: "An air conditioner actively cools when it can vent outside. A fan moves air but does not lower room temperature. An air purifier addresses particles rather than heat. Choose according to the accommodation problem you need to solve." },
     ],
   },
   "travel-outdoors": {
