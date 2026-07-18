@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase-admin";
 import { verifyAdmin, unauthorizedResponse } from "@/lib/admin-auth";
-import { getProductReadinessIssues, isValidProductImageUrl, isValidProductSlug } from "@/lib/product-validation";
+import { getProductReadinessIssues, isValidProductSlug } from "@/lib/product-validation";
+import { invalidatePublicProductCache } from "@/lib/product-cache";
 
 type PricingTierPayload = { min_days: number; per_day_cents: number };
 
@@ -55,6 +56,7 @@ export async function PUT(
   if (!user) return unauthorizedResponse();
 
   const { id } = await params;
+  let didMutate = false;
 
   try {
     const body = await request.json();
@@ -153,6 +155,7 @@ export async function PUT(
       .single();
 
     if (error) throw error;
+    didMutate = true;
 
     // Update pricing tiers if provided
     if (body.pricing_tiers) {
@@ -163,6 +166,7 @@ export async function PUT(
         .eq("product_id", id);
 
       if (deletePricingError) {
+        invalidatePublicProductCache();
         console.error("[admin/products] Pricing delete error:", deletePricingError);
         return NextResponse.json(
           { error: `Product pricing update failed: ${getErrorMessage(deletePricingError)}` },
@@ -182,6 +186,7 @@ export async function PUT(
           );
 
         if (pricingError) {
+          invalidatePublicProductCache();
           console.error("[admin/products] Pricing update error:", pricingError);
           return NextResponse.json(
             { error: `Product pricing update failed: ${getErrorMessage(pricingError)}` },
@@ -191,8 +196,10 @@ export async function PUT(
       }
     }
 
+    invalidatePublicProductCache();
     return NextResponse.json({ product: data });
   } catch (err) {
+    if (didMutate) invalidatePublicProductCache();
     console.error("[admin/products] PUT error:", err);
     return NextResponse.json(
       { error: `Failed to update product: ${getErrorMessage(err)}` },
@@ -223,6 +230,7 @@ export async function DELETE(
 
     if (error) throw error;
 
+    invalidatePublicProductCache();
     return NextResponse.json({ success: true });
   } catch (err) {
     console.error("[admin/products] DELETE error:", err);

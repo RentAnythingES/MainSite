@@ -52,6 +52,12 @@ three batched requests for the complete result set. This keeps catalogue changes
 immediately visible—unlike a time-based page cache—while removing the N+1 request
 pattern from homepage and category rendering.
 
+The follow-up optimization adds a five-minute tagged server-data cache and removes
+the separate category-ID lookup. Successful admin product and editorial writes
+expire the shared tag immediately, including partial-write error paths. Repeated
+public requests therefore avoid Supabase latency without delaying normal backend
+updates; the TTL only protects against changes made directly in the database.
+
 Machine-readable baseline: `docs/seo/performance-budget-live-20260718.json`.
 
 ## Post-deployment verification

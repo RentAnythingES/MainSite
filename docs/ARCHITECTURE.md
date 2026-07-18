@@ -252,10 +252,25 @@ Components (`Header`, `Footer`) detect locale via `usePathname()` and toggle lab
 | `src/data/products.ts` | Static product data (build-time fallback) |
 | `src/data/bundles.ts` | Static kit/bundle definitions for scenario-led rental pages |
 | `src/lib/product-service.ts` | Supabase-first product fetching with static fallback |
+| `src/lib/product-cache.ts` | Tagged public catalogue cache and immediate admin-write invalidation |
 | `src/lib/supabase.ts` | Public Supabase client (anon key, RLS) |
 | `src/lib/supabase-admin.ts` | Admin Supabase client (service role, bypasses RLS) |
 | `src/lib/admin-auth.ts` | Admin auth verification (cookie → Supabase getUser) |
 | `src/lib/queries.ts` | Direct Supabase query functions |
+
+### Public catalogue cache
+
+Homepage, category and product rendering cache successful Supabase product reads
+for up to five minutes under the shared `public-products` tag. Cache arguments
+include city, category, slug and locale, so English and Spanish responses remain
+separate. Database failures fall back to static catalogue data outside the cache
+and therefore do not poison the cache with fallback results.
+
+Admin create, update, deactivate, import and content-write routes invalidate the
+tag immediately with `revalidateTag(..., { expire: 0 })`. Partial product or
+content mutations also invalidate before returning an error. Direct database
+changes outside the admin API become visible when the five-minute fallback TTL
+expires.
 | `src/lib/types.ts` | TypeScript types matching DB schema |
 | `src/components/BookingWidget.tsx` | 3-step booking flow (dates → form → success), locale-aware |
 | `src/components/admin/AdminShell.tsx` | Admin sidebar layout |

@@ -4,6 +4,7 @@ import { verifyAdmin, unauthorizedResponse } from "@/lib/admin-auth";
 import { getProductReadinessIssues } from "@/lib/product-validation";
 import { products as legacyProducts } from "@/data/products";
 import { seoCategorySlugs } from "@/data/seo-clusters";
+import { invalidatePublicProductCache } from "@/lib/product-cache";
 
 type ProductPayload = {
   slug?: string;
@@ -211,6 +212,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    invalidatePublicProductCache();
     return NextResponse.json({ product: data }, { status: 201 });
   } catch (err) {
     console.error("[admin/products] POST error:", err);

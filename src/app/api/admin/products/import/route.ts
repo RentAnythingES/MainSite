@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { unauthorizedResponse, verifyAdmin } from "@/lib/admin-auth";
 import { createAdminClient } from "@/lib/supabase-admin";
+import { invalidatePublicProductCache } from "@/lib/product-cache";
 
 const MAX_IMPORT_ROWS = 100;
 const PRICE_COLUMNS = [
@@ -150,7 +151,11 @@ export async function POST(request: NextRequest) {
 
     if (body.mode !== "commit") {
       return NextResponse.json({
-        rows: prepared.map(({ product, pricingTiers, ...row }) => ({ ...row, pricingTiers })),
+        rows: prepared.map((preparedRow) => {
+          const previewRow = { ...preparedRow };
+          delete previewRow.product;
+          return previewRow;
+        }),
         valid: invalidRows.length === 0,
       });
     }
@@ -179,6 +184,7 @@ export async function POST(request: NextRequest) {
       throw pricingError;
     }
 
+    invalidatePublicProductCache();
     return NextResponse.json({ imported: createdProducts.length, products: createdProducts }, { status: 201 });
   } catch (error) {
     console.error("[admin/products/import] POST error:", error);

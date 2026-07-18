@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { unauthorizedResponse, verifyAdmin } from "@/lib/admin-auth";
 import { createAdminClient } from "@/lib/supabase-admin";
+import { invalidatePublicProductCache } from "@/lib/product-cache";
 
 type LocalizationPayload = {
   locale: "en" | "es";
@@ -70,6 +71,7 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
   if (!user) return unauthorizedResponse();
 
   const { id } = await params;
+  let didMutate = false;
   try {
     const body = await request.json() as {
       content_status?: "draft" | "facts_verified" | "content_ready";
@@ -104,6 +106,7 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
     if (localizations.length > 0) {
       const { error } = await supabase.from("product_localizations").upsert(localizations, { onConflict: "product_id,locale" });
       if (error) throw error;
+      didMutate = true;
     }
 
     const cleanedFaqs = (body.faqs || [])
@@ -117,6 +120,7 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
       }));
     const { error: deleteFaqError } = await supabase.from("product_faqs").delete().eq("product_id", id);
     if (deleteFaqError) throw deleteFaqError;
+    didMutate = true;
     if (cleanedFaqs.length > 0) {
       const { error } = await supabase.from("product_faqs").insert(cleanedFaqs);
       if (error) throw error;
@@ -125,6 +129,7 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
     if (product.image_url && body.primary_image) {
       const { error: deleteImageError } = await supabase.from("product_images").delete().eq("product_id", id).eq("is_primary", true);
       if (deleteImageError) throw deleteImageError;
+      didMutate = true;
       const { error } = await supabase.from("product_images").insert({
         product_id: id,
         image_url: product.image_url,
@@ -145,16 +150,20 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
     const readiness = buildReadiness(contentSnapshot as Record<string, unknown>);
 
     if (body.content_status === "content_ready" && !readiness.ready) {
+      invalidatePublicProductCache();
       return NextResponse.json({ error: `Content is not ready: ${readiness.missing.join(", ")}`, readiness }, { status: 400 });
     }
 
     if (body.content_status) {
       const { error } = await supabase.from("products").update({ content_status: body.content_status }).eq("id", id);
       if (error) throw error;
+      didMutate = true;
     }
 
+    invalidatePublicProductCache();
     return NextResponse.json({ product: { ...product, content_status: body.content_status }, readiness });
   } catch (error) {
+    if (didMutate) invalidatePublicProductCache();
     console.error("[admin/products/content] PUT error:", error);
     return NextResponse.json({ error: `Could not save product content: ${getErrorMessage(error)}` }, { status: 500 });
   }

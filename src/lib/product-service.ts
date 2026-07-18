@@ -2,6 +2,8 @@ import { supabase } from "./supabase";
 import type { Product, ProductFAQ } from "@/data/products";
 import { products as staticProducts, getProductBySlug as staticGetBySlug, getProductsByCategory as staticGetByCategory } from "@/data/products";
 import { seoCategorySlugs } from "@/data/seo-clusters";
+import { unstable_cache } from "next/cache";
+import { PUBLIC_PRODUCT_CACHE_TAG } from "@/lib/product-cache";
 
 /**
  * Product Service — Supabase-first with static fallback
@@ -355,12 +357,7 @@ function mapToProduct(row: Record<string, unknown>): Product {
 /**
  * Fetch all active products from Supabase, fall back to static
  */
-export async function getProductsFromDB(city = "valencia", locale: ProductLocale = "en"): Promise<Product[]> {
-  if (!isSupabaseConfigured()) {
-    return staticProducts.filter((p) => p.city === city);
-  }
-
-  try {
+async function fetchProductsFromDB(city: string, locale: ProductLocale): Promise<Product[]> {
     const { data, error } = await supabase
       .from("products")
       .select(`
@@ -376,6 +373,20 @@ export async function getProductsFromDB(city = "valencia", locale: ProductLocale
     if (!data) return [];
 
     return enrichProductsWithEditorialContent(data.map(mapToProduct), locale);
+}
+
+const getCachedProducts = unstable_cache(fetchProductsFromDB, ["public-product-list"], {
+  tags: [PUBLIC_PRODUCT_CACHE_TAG],
+  revalidate: 300,
+});
+
+export async function getProductsFromDB(city = "valencia", locale: ProductLocale = "en"): Promise<Product[]> {
+  if (!isSupabaseConfigured()) {
+    return staticProducts.filter((p) => p.city === city);
+  }
+
+  try {
+    return await getCachedProducts(city, locale);
   } catch (err) {
     console.warn("[product-service] Supabase fetch failed, using static fallback:", err);
     return staticProducts.filter((p) => p.city === city);
@@ -385,12 +396,7 @@ export async function getProductsFromDB(city = "valencia", locale: ProductLocale
 /**
  * Fetch a single product by slug from Supabase, fall back to static
  */
-export async function getProductBySlugFromDB(slug: string, locale: ProductLocale = "en"): Promise<Product | null> {
-  if (!isSupabaseConfigured()) {
-    return staticGetBySlug(slug) || null;
-  }
-
-  try {
+async function fetchProductBySlugFromDB(slug: string, locale: ProductLocale): Promise<Product | null> {
     const { data, error } = await supabase
       .from("products")
       .select(`
@@ -416,6 +422,20 @@ export async function getProductBySlugFromDB(slug: string, locale: ProductLocale
     }
 
     return enrichProductWithEditorialContent(dbProduct, locale);
+}
+
+const getCachedProductBySlug = unstable_cache(fetchProductBySlugFromDB, ["public-product-detail"], {
+  tags: [PUBLIC_PRODUCT_CACHE_TAG],
+  revalidate: 300,
+});
+
+export async function getProductBySlugFromDB(slug: string, locale: ProductLocale = "en"): Promise<Product | null> {
+  if (!isSupabaseConfigured()) {
+    return staticGetBySlug(slug) || null;
+  }
+
+  try {
+    return await getCachedProductBySlug(slug, locale);
   } catch (err) {
     console.warn("[product-service] Supabase fetch failed for slug:", slug, err);
     return staticGetBySlug(slug) || null;
@@ -425,29 +445,15 @@ export async function getProductBySlugFromDB(slug: string, locale: ProductLocale
 /**
  * Fetch products by category slug from Supabase, fall back to static
  */
-export async function getProductsByCategoryFromDB(categorySlug: string, locale: ProductLocale = "en"): Promise<Product[]> {
-  if (!isSupabaseConfigured()) {
-    return staticGetByCategory(categorySlug);
-  }
-
-  try {
-    // Get category ID first
-    const { data: cat } = await supabase
-      .from("categories")
-      .select("id")
-      .eq("slug", categorySlug)
-      .single();
-
-    if (!cat) return [];
-
+async function fetchProductsByCategoryFromDB(categorySlug: string, locale: ProductLocale): Promise<Product[]> {
     const { data, error } = await supabase
       .from("products")
       .select(`
         *,
         pricing_tiers (*),
-        category:categories (*)
+        category:categories!inner (*)
       `)
-      .eq("category_id", (cat as { id: string }).id)
+      .eq("category.slug", categorySlug)
       .eq("is_active", true)
       .order("name");
 
@@ -455,6 +461,21 @@ export async function getProductsByCategoryFromDB(categorySlug: string, locale: 
     if (!data) return [];
 
     return enrichProductsWithEditorialContent(data.map(mapToProduct), locale);
+}
+
+const getCachedProductsByCategory = unstable_cache(
+  fetchProductsByCategoryFromDB,
+  ["public-products-by-category"],
+  { tags: [PUBLIC_PRODUCT_CACHE_TAG], revalidate: 300 },
+);
+
+export async function getProductsByCategoryFromDB(categorySlug: string, locale: ProductLocale = "en"): Promise<Product[]> {
+  if (!isSupabaseConfigured()) {
+    return staticGetByCategory(categorySlug);
+  }
+
+  try {
+    return await getCachedProductsByCategory(categorySlug, locale);
   } catch (err) {
     console.warn("[product-service] Supabase category fetch failed:", categorySlug, err);
     return staticGetByCategory(categorySlug);
