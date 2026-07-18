@@ -13,6 +13,7 @@ import { getPublishedPosts } from "@/content/blog";
 import ProductCard from "@/components/ProductCard";
 import BookingWidget from "@/components/BookingWidget";
 import ProductPlanningLinks from "@/components/ProductPlanningLinks";
+import { getProductMetadataDescription, getProductMetadataTitle } from "@/lib/seo-metadata";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -36,11 +37,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   const canonical = `https://rentanything.es/product/${slug}`;
   const lowestPrice = product.pricing.at(-1)?.perDay;
-  const fallbackTitle = lowestPrice === undefined
-    ? `Rent ${product.name} in Valencia`
-    : `Rent ${product.name} in Valencia — from €${lowestPrice}/day`;
-  const title = product.seoTitle || fallbackTitle;
-  const description = product.seoDescription || product.description;
+  const title = getProductMetadataTitle({
+    name: product.name,
+    customTitle: product.seoTitle,
+    lowestPrice,
+    locale: "en",
+  });
+  const description = getProductMetadataDescription({
+    description: product.description,
+    customDescription: product.seoDescription,
+    locale: "en",
+  });
   const indexable = seoState?.indexableEn === true;
   const languages = seoState?.indexableEs
     ? {

@@ -33,7 +33,7 @@ const howItWorks = [
 
 const featuredProducts = [
   { name: "Cochecito Compacto", category: t.categories.babyGear.name, price: "€5 – €14", unit: "/ día", href: "/es/product/compact-stroller", image: "/products/compact-stroller.webp" },
-  { name: "Silla de Ruedas Estándar", category: t.categories.mobility.name, price: "€6 – €15", unit: "/ día", href: "/es/product/standard-wheelchair", image: "/products/standard-wheelchair.webp" },
+  { name: "Silla de Transporte Ligera", category: t.categories.mobility.name, price: "€5 – €12", unit: "/ día", href: "/es/product/transport-wheelchair", image: "/products/transport-wheelchair.webp" },
   { name: "Monitor 27\"", category: t.categories.remoteWork.name, price: "€7 – €21", unit: "/ día", href: "/es/product/monitor-27", image: "/products/monitor-27.webp" },
   { name: "Scooter de Movilidad Todoterreno", category: t.categories.mobility.name, price: "€30 – €70", unit: "/ día", href: "/es/product/heavy-duty-mobility-scooter", image: "/products/heavy-duty-mobility-scooter.webp" },
 ];

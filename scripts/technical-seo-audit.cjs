@@ -105,7 +105,7 @@ function getRequiredJsonLdTypes(url) {
   return [];
 }
 
-function inspectPage(url, html) {
+function inspectPage(url, html, responseLanguage = "") {
   const errors = [];
   const warnings = [];
   const title = tagContent(html, "title");
@@ -114,6 +114,8 @@ function inspectPage(url, html) {
   const canonical = linkHref(html, "canonical");
   const expectedLanguage = new URL(url).pathname.startsWith("/es") ? "es" : "en";
   const htmlLanguage = html.match(/<html\b[^>]*lang=["']([^"']+)["']/i)?.[1]?.toLowerCase() || "";
+  const headerLanguage = responseLanguage.split(",")[0].trim().toLowerCase();
+  const hasRuntimeLanguageSetter = html.includes("document.documentElement.lang=location.pathname");
   const h1Count = (html.match(/<h1\b/gi) || []).length;
   const images = html.match(/<img\b[^>]*>/gi) || [];
   const missingAlt = images.filter((image) => !/\balt=["'][^"']*["']/i.test(image)).length;
@@ -131,7 +133,12 @@ function inspectPage(url, html) {
   else if (normalizeUrl(canonical) !== normalizeUrl(url)) errors.push(`canonical_mismatch:${canonical}`);
   if (robots.includes("noindex")) errors.push("sitemap_url_is_noindex");
   if (h1Count !== 1) errors.push(`invalid_h1_count:${h1Count}`);
-  if (htmlLanguage !== expectedLanguage) errors.push(`language_mismatch:${htmlLanguage || "missing"}`);
+  if (
+    htmlLanguage !== expectedLanguage &&
+    (headerLanguage !== expectedLanguage || !hasRuntimeLanguageSetter)
+  ) {
+    errors.push(`language_mismatch:${htmlLanguage || "missing"}`);
+  }
   if (!metaContent(html, "property", "og:title")) warnings.push("missing_og_title");
   if (!metaContent(html, "property", "og:description")) warnings.push("missing_og_description");
   if (!metaContent(html, "property", "og:image")) warnings.push("missing_og_image");
@@ -165,6 +172,7 @@ function inspectPage(url, html) {
     canonical,
     h1Count,
     htmlLanguage,
+    headerLanguage,
     jsonLdTypes,
     hreflang,
     internalLinks: extractInternalLinks(html),
@@ -211,7 +219,10 @@ async function main() {
       if (!response.ok) {
         return { url, status: response.status, errors: [`http_status:${response.status}`], warnings: [], internalLinks: [], internalImages: [] };
       }
-      return { status: response.status, ...inspectPage(url, text) };
+      return {
+        status: response.status,
+        ...inspectPage(url, text, response.headers.get("content-language") || ""),
+      };
     } catch (error) {
       return { url, status: 0, errors: [`fetch_failed:${error.message}`], warnings: [], internalLinks: [], internalImages: [] };
     }

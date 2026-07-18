@@ -267,9 +267,9 @@ export const blogPosts: BlogPost[] = [
         description: "Portable scooter perfect for city sightseeing"
       },
       {
-        title: "Standard Wheelchair",
-        href: "/product/standard-wheelchair",
-        description: "Self-propelling wheelchair with comfortable seating"
+        title: "Lightweight Transport Wheelchair",
+        href: "/product/transport-wheelchair",
+        description: "Compact companion-pushed chair for sightseeing and transfers"
       }
     ]
   },

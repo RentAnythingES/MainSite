@@ -12,6 +12,7 @@ import { getProductJsonLd, getBreadcrumbJsonLd } from "@/lib/jsonld";
 import ProductCard from "@/components/ProductCard";
 import BookingWidget from "@/components/BookingWidget";
 import ProductPlanningLinks from "@/components/ProductPlanningLinks";
+import { getProductMetadataDescription, getProductMetadataTitle } from "@/lib/seo-metadata";
 import { getDictionary } from "@/i18n/getDictionary";
 
 const t = getDictionary("es");
@@ -52,11 +53,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const indexable = seoState?.indexableEs === true;
   const canonical = indexable ? spanishUrl : englishUrl;
   const lowestPrice = product.pricing.at(-1)?.perDay;
-  const fallbackTitle = lowestPrice === undefined
-    ? `Alquiler ${product.name} en Valencia`
-    : `Alquiler ${product.name} en Valencia — desde €${lowestPrice}/día`;
-  const title = product.seoTitle || fallbackTitle;
-  const description = product.seoDescription || product.description;
+  const title = getProductMetadataTitle({
+    name: product.name,
+    customTitle: product.seoTitle,
+    lowestPrice,
+    locale: "es",
+  });
+  const description = getProductMetadataDescription({
+    description: product.description,
+    customDescription: product.seoDescription,
+    locale: "es",
+  });
 
   return {
     title,

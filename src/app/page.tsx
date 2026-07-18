@@ -98,12 +98,12 @@ const featuredProducts = [
     image: "/products/compact-stroller.webp",
   },
   {
-    name: "Standard Wheelchair",
+    name: "Lightweight Transport Wheelchair",
     category: "Mobility & Accessibility",
-    price: "€6 – €15",
+    price: "€5 – €12",
     unit: "/ day",
-    href: "/product/standard-wheelchair",
-    image: "/products/standard-wheelchair.webp",
+    href: "/product/transport-wheelchair",
+    image: "/products/transport-wheelchair.webp",
   },
   {
     name: '27" Monitor',

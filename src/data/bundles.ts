@@ -267,11 +267,11 @@ export const rentalBundles: RentalBundle[] = [
       { name: "Mobility scooter option", note: "Requires fit, battery, and delivery confirmation" },
     ],
     addons: [
-      { name: "Standard wheelchair", note: "For reliable daily support", productSlug: "standard-wheelchair" },
+      { name: "Lightweight transport wheelchair", note: "For reliable companion-assisted support", productSlug: "transport-wheelchair" },
       { name: "Mobility scooter", note: "For longer distances", productSlug: "mobility-scooter-lightweight" },
       { name: "Portable ramp", note: "Only where dimensions and safety are confirmed" },
     ],
-    relatedProductSlugs: ["standard-wheelchair", "mobility-scooter-lightweight", "rollator-walker"],
+    relatedProductSlugs: ["transport-wheelchair", "mobility-scooter-lightweight", "rollator-walker"],
     relatedGuideSlugs: ["wheelchair-accessibility-valencia"],
     seo: {
       title: "Accessible Valencia Kit Rental",
@@ -307,11 +307,11 @@ export const rentalBundles: RentalBundle[] = [
     ],
     addons: [
       { name: "Rollator walker", note: "For stable walking support", productSlug: "rollator-walker" },
-      { name: "Standard wheelchair", note: "For longer days out", productSlug: "standard-wheelchair" },
+      { name: "Lightweight transport wheelchair", note: "For companion-assisted longer days out", productSlug: "transport-wheelchair" },
       { name: "Portable AC", note: "For hot bedrooms where setup allows it", productSlug: "portable-ac" },
       { name: "Mobility scooter", note: "For longer distances after careful confirmation", productSlug: "mobility-scooter-lightweight" },
     ],
-    relatedProductSlugs: ["rollator-walker", "standard-wheelchair", "portable-ac"],
+    relatedProductSlugs: ["rollator-walker", "transport-wheelchair", "portable-ac"],
     relatedGuideSlugs: ["wheelchair-accessibility-valencia", "valencia-summer-survival-guide"],
     seo: {
       title: "Grandparents Visiting Kit Rental in Valencia",
