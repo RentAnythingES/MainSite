@@ -77,6 +77,33 @@ Transport Wheelchair, Rollator Walker, Ergonomic Chair, Air Purifier and Portabl
 AC. Product copy remains subject to the existing manual content-review workflow;
 this audit did not activate, archive, or rewrite catalogue records.
 
+## Production follow-up — 18 July 2026
+
+The production audit now covers 99 sitemap URLs and returns:
+
+- 0 pages with errors or warnings;
+- 0 sitemap orphans;
+- 0 broken internal links or internal images;
+- 0 linked indexable pages missing from the sitemap;
+- 28 reciprocal English/Spanish hreflang pairs;
+- 87 verified internal images.
+
+Category-page CDN caching no longer requires a request-bound root layout.
+Middleware supplies the locale-specific `Content-Language` header and the root
+document applies the matching `/es` language before hydration. The audit accepts
+this pair only when both the response header and early runtime language setter are
+present, so removing either protection makes localized routes fail again.
+
+Product metadata now has shared 60-character title and 100–160-character
+description guards. This cleared the remaining legacy product warnings without
+changing or approving catalogue content. Discover product strips and the Spanish
+Valencia catalogue now use active Supabase products rather than static fallback
+inventory, removing links to the retired `standard-wheelchair` route.
+
+The same release passed image SEO with 46 assets, 0 warnings, 0 errors and no
+duplicate groups. The performance audit passed all five templates with a maximum
+646 ms response sample and no budget warnings.
+
 ## Evidence
 
 - `technical-seo-audit-results-20260717.json` — pre-fix live crawl

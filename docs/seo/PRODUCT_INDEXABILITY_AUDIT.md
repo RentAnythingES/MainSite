@@ -55,6 +55,11 @@ description.
 
 ## Next actions
 
+The July 18 production rerun confirms the baseline remains 178 catalogue records,
+24 active products, and 20 indexable products in each language. Code-side SEO,
+image and rendered-page audits pass; the four blocked active products remain
+intentional editorial/category decisions rather than technical failures.
+
 1. Complete legitimate editorial/image-rights review for the three blocked
    products; do not bypass the approval gate.
 2. Translate newly activated products as part of the same publication batch so

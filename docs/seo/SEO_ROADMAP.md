@@ -56,6 +56,9 @@
 - [x] Static image library normalized to WebP with automated weight, format, duplicate and rendered-response checks
 - [x] Consent-aware GA4 Core Web Vitals telemetry for template-level field monitoring
 - [x] Production template performance budgets and batched public catalogue enrichment reads
+- [x] CDN-regenerated EN/ES category pages with immediate catalogue invalidation
+- [x] 99-URL production technical audit with zero errors, warnings, orphan pages or broken links
+- [x] Shared product metadata-length safeguards and active-catalogue discovery widgets
 
 ---
 
