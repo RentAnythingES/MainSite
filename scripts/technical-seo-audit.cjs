@@ -258,6 +258,46 @@ async function main() {
   const orphanPages = pages
     .filter((page) => normalizeUrl(page.url) !== normalizeUrl(baseUrl) && !linkedUrls.has(normalizeUrl(page.url)))
     .map((page) => page.url);
+  const sitemapLinksByPage = new Map(
+    pages.map((page) => [
+      normalizeUrl(page.url),
+      [...new Set((page.internalLinks || []).filter((url) => pageUrls.has(normalizeUrl(url))))],
+    ]),
+  );
+  const inboundLinkCounts = new Map([...pageUrls].map((url) => [url, 0]));
+  for (const links of sitemapLinksByPage.values()) {
+    for (const linkedUrl of links) {
+      const normalized = normalizeUrl(linkedUrl);
+      inboundLinkCounts.set(normalized, (inboundLinkCounts.get(normalized) || 0) + 1);
+    }
+  }
+  const clickDepths = new Map([[normalizeUrl(baseUrl), 0]]);
+  const queue = [normalizeUrl(baseUrl)];
+  while (queue.length > 0) {
+    const currentUrl = queue.shift();
+    const nextDepth = clickDepths.get(currentUrl) + 1;
+    for (const linkedUrl of sitemapLinksByPage.get(currentUrl) || []) {
+      const normalized = normalizeUrl(linkedUrl);
+      if (clickDepths.has(normalized)) continue;
+      clickDepths.set(normalized, nextDepth);
+      queue.push(normalized);
+    }
+  }
+  const linkCoverage = pages
+    .map((page) => {
+      const normalized = normalizeUrl(page.url);
+      return {
+        url: page.url,
+        inboundLinks: inboundLinkCounts.get(normalized) || 0,
+        outboundLinks: sitemapLinksByPage.get(normalized)?.length || 0,
+        clickDepth: clickDepths.get(normalized) ?? null,
+      };
+    })
+    .sort((a, b) => a.inboundLinks - b.inboundLinks || (b.clickDepth ?? 0) - (a.clickDepth ?? 0) || a.url.localeCompare(b.url));
+  const pagesBeyondThreeClicks = linkCoverage.filter((page) => page.clickDepth !== null && page.clickDepth > 3);
+  const pagesWithSingleInboundLink = linkCoverage.filter(
+    (page) => normalizeUrl(page.url) !== normalizeUrl(baseUrl) && page.inboundLinks <= 1,
+  );
   const errorPages = pages.filter((page) => page.errors.length > 0);
   const warningPages = pages.filter((page) => page.warnings.length > 0);
   const unlistedInternalLinks = [...linkedUrls].filter((url) => !pageUrls.has(url));
@@ -307,6 +347,9 @@ async function main() {
       pagesWithErrors: errorPages.length,
       pagesWithWarnings: warningPages.length,
       orphanPages: orphanPages.length,
+      maxClickDepth: Math.max(...linkCoverage.map((page) => page.clickDepth ?? 0)),
+      pagesBeyondThreeClicks: pagesBeyondThreeClicks.length,
+      pagesWithSingleInboundLink: pagesWithSingleInboundLink.length,
       unlistedInternalLinks: unlistedInternalLinks.length,
       brokenInternalLinks: brokenInternalLinks.length,
       indexableUnlistedInternalLinks: indexableUnlistedInternalLinks.length,
@@ -317,6 +360,9 @@ async function main() {
     errorPages: errorPages.map(({ url, errors }) => ({ url, errors })),
     warningPages: warningPages.map(({ url, warnings }) => ({ url, warnings })),
     orphanPages,
+    pagesBeyondThreeClicks,
+    pagesWithSingleInboundLink,
+    linkCoverage,
     unlistedInternalLinks,
     brokenInternalLinks,
     indexableUnlistedInternalLinks,

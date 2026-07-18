@@ -44,6 +44,7 @@
 - [x] Beach hub expanded around rental, delivery, shade, family-setup and transport sub-intents with visible EN/ES FAQs and FAQ schema
 - [x] Baby, mobility, remote-work and apartment-comfort hubs expanded with EN/ES commercial FAQs and regression-protected FAQ schema
 - [x] Spanish category and product pathways now prefer localized planning guides wherever full ES parity exists
+- [x] Technical crawler reports sitemap inbound-link counts and shortest homepage click depth; Discover child breadcrumbs and the long-stay kitchen pathway close the first weak-link set
 - [x] Apartment Comfort cluster connected across category, summer kit, guide and cooling products
 - [x] Remote Work cluster connected across category, apartment kit, guide and workstation products
 - [x] Kids & Family cluster connected across category, Toddler City kit, Family Beach kit and family guide
@@ -326,7 +327,7 @@ Priority pilot logic: start with one narrow bundle, collect usage evidence, then
 2. **Beach cluster — ✅ Completed 18 July** — `/rental/travel-outdoors` owns broad rental and delivery intent; guides own beach-planning queries; product pages own exact-item searches. Consolidated comparison and FAQ coverage avoids overlapping thin landing pages.
 3. **Active catalogue** — complete EN/ES readiness for commercially available products
 4. **Commercial hubs — ✅ Completed 18 July** — AC, baby gear, mobility and remote-work hubs now absorb closely related rental, delivery, suitability and duration questions in EN/ES without creating competing landing pages.
-5. **Internal links — ✅ Localized cluster pass completed 18 July** — Spanish category and product pathways now point to Spanish family, accessibility, remote-work, summer and beach guides; regression checks distinguish shared kit links from locale-specific editorial links.
+5. **Internal links — ✅ Graph pass completed 18 July** — Spanish pathways use localized guides; all sitemap pages remain within three homepage clicks; Discover children now link through their sub-hubs; the long-stay kitchen kit gains a contextual Apartment Comfort pathway. Regression checks cover locale-specific editorial links and hierarchy links.
 6. **Authority** — Google Business Profile, reviews and Valencia partner backlinks
 
 ---

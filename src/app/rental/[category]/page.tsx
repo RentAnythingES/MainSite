@@ -209,6 +209,12 @@ const categoryMeta: Record<string, CategoryContent> = {
         href: "/valencia/kits/summer-apartment-survival-kit",
       },
       {
+        eyebrow: "Long-stay kit",
+        title: "Upgrade a Temporary Kitchen",
+        description: "Combine practical kitchen equipment for a longer apartment stay without buying bulky appliances.",
+        href: "/valencia/kits/long-stay-kitchen-upgrade-kit",
+      },
+      {
         eyebrow: "Practical guide",
         title: "Prepare for Summer in Valencia",
         description: "Use local routines, apartment cooling strategies and beach timing to manage warmer days.",

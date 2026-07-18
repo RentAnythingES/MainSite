@@ -3,6 +3,13 @@ const productSlug = process.env.SEO_PRODUCT_SLUG || "beach-umbrella-set";
 const noindexProductSlug = process.env.SEO_NOINDEX_PRODUCT_SLUG || "toddler-bike-lila";
 const productCategory = process.env.SEO_PRODUCT_CATEGORY || "travel-outdoors";
 
+const discoverHierarchyChecks = [
+  { hub: "neighbourhoods", child: "ruzafa" },
+  { hub: "day-trips", child: "albufera" },
+  { hub: "attractions", child: "city-of-arts-and-sciences" },
+  { hub: "events", child: "fallas" },
+];
+
 const categoryChecks = [
   {
     slug: "baby-gear",
@@ -40,6 +47,7 @@ const categoryChecks = [
   {
     slug: "home-living",
     pathways: ["/valencia/kits/summer-apartment-survival-kit"],
+    categoryOnlyPathways: ["/valencia/kits/long-stay-kitchen-upgrade-kit"],
     englishPathways: ["/blog/valencia-summer-survival-guide"],
     spanishPathways: ["/es/blog/valencia-summer-survival-guide"],
     requiredEnglishText: ["Portable AC and Apartment Equipment Rental: FAQs"],
@@ -110,7 +118,7 @@ function assertPageEnhancements(html, expectedText = [], schemaTypes = [], conte
 }
 
 async function main() {
-  const [home, product, productEs, noindexProduct, robots, sitemap, categoryPages] = await Promise.all([
+  const [home, product, productEs, noindexProduct, robots, sitemap, categoryPages, discoverHierarchyPages] = await Promise.all([
     get("/"),
     get(`/product/${productSlug}`),
     get(`/es/product/${productSlug}`),
@@ -122,6 +130,12 @@ async function main() {
         ...categoryCheck,
         en: await get(`/rental/${categoryCheck.slug}`),
         es: await get(`/es/rental/${categoryCheck.slug}`),
+      }))
+    ),
+    Promise.all(
+      discoverHierarchyChecks.map(async (check) => ({
+        ...check,
+        html: await get(`/discover/${check.child}`),
       }))
     ),
   ]);
@@ -147,6 +161,10 @@ async function main() {
     for (const pathway of categoryPage.spanishPathways || []) {
       assertPathway(categoryPage.es, pathway, `${categoryPage.slug} Spanish category`);
     }
+    for (const pathway of categoryPage.categoryOnlyPathways || []) {
+      assertPathway(categoryPage.en, pathway, `${categoryPage.slug} English category`);
+      assertPathway(categoryPage.es, pathway, `${categoryPage.slug} Spanish category`);
+    }
     assertPageEnhancements(
       categoryPage.en,
       categoryPage.requiredEnglishText,
@@ -158,6 +176,13 @@ async function main() {
       categoryPage.requiredSpanishText,
       categoryPage.requiredSchemaTypes,
       `${categoryPage.slug} Spanish category`
+    );
+  }
+  for (const hierarchyPage of discoverHierarchyPages) {
+    assertPathway(
+      hierarchyPage.html,
+      `/discover/${hierarchyPage.hub}`,
+      `${hierarchyPage.child} Discover hierarchy`,
     );
   }
   assert(

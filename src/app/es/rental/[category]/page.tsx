@@ -196,6 +196,12 @@ const categoryMetaES: Record<string, CategoryContent> = {
         href: "/valencia/kits/summer-apartment-survival-kit",
       },
       {
+        eyebrow: "Kit para estancias largas · en inglés",
+        title: "Mejora una cocina temporal",
+        description: "Combina equipamiento práctico para una estancia larga sin comprar electrodomésticos voluminosos.",
+        href: "/valencia/kits/long-stay-kitchen-upgrade-kit",
+      },
+      {
         eyebrow: "Guía práctica",
         title: "Prepárate para el verano en Valencia",
         description: "Consulta horarios locales, estrategias para refrescar el apartamento y consejos para los días de más calor.",

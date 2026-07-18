@@ -50,6 +50,13 @@ const typeLabels: Record<string, string> = {
   "natural-area": "Natural Area",
 };
 
+const hubLabels = {
+  neighbourhoods: "Neighbourhoods",
+  "day-trips": "Day Trips",
+  attractions: "Attractions",
+  events: "Events",
+} as const;
+
 const seasonEmojis: Record<string, string> = {
   spring: "🌸",
   summer: "☀️",
@@ -71,6 +78,8 @@ export default async function DiscoverPage({ params }: Props) {
   const { slug } = await params;
   const dest = getDestinationBySlug(slug);
   if (!dest) notFound();
+  const primaryHub = dest.hubs[0] || "attractions";
+  const primaryHubLabel = hubLabels[primaryHub];
 
   const widgetCategories = [...new Set(dest.productWidgets.map((widget) => widget.categorySlug))];
   const productsByCategory = new Map(
@@ -190,6 +199,7 @@ export default async function DiscoverPage({ params }: Props) {
             getBreadcrumbJsonLd([
               { name: "Home", url: "https://rentanything.es" },
               { name: "Discover", url: "https://rentanything.es/discover" },
+              { name: primaryHubLabel, url: `https://rentanything.es/discover/${primaryHub}` },
               { name: dest.name, url: `https://rentanything.es/discover/${dest.slug}` },
             ]),
           ),
@@ -206,6 +216,8 @@ export default async function DiscoverPage({ params }: Props) {
             <li><Link href="/" className="hover:text-brand transition-colors">Home</Link></li>
             <li>/</li>
             <li><Link href="/discover" className="hover:text-brand transition-colors">Discover</Link></li>
+            <li>/</li>
+            <li><Link href={`/discover/${primaryHub}`} className="hover:text-brand transition-colors">{primaryHubLabel}</Link></li>
             <li>/</li>
             <li className="text-neutral-800 font-medium">{dest.name}</li>
           </ol>
