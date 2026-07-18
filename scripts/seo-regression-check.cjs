@@ -6,7 +6,9 @@ const productCategory = process.env.SEO_PRODUCT_CATEGORY || "travel-outdoors";
 const categoryChecks = [
   {
     slug: "baby-gear",
-    pathways: ["/valencia/kits/baby-arrival-kit", "/blog/valencia-with-kids-complete-guide"],
+    pathways: ["/valencia/kits/baby-arrival-kit"],
+    englishPathways: ["/blog/valencia-with-kids-complete-guide"],
+    spanishPathways: ["/es/blog/valencia-with-kids-complete-guide"],
     requiredEnglishText: ["Baby Equipment Rental in Valencia: FAQs"],
     requiredSpanishText: ["Preguntas sobre el alquiler de material de bebé en Valencia"],
     requiredSchemaTypes: ["FAQPage"],
@@ -14,31 +16,41 @@ const categoryChecks = [
   {
     slug: "kids-family",
     pathways: ["/valencia/kits/toddler-city-kit", "/valencia/kits/family-beach-kit"],
+    englishPathways: ["/blog/valencia-with-kids-complete-guide"],
+    spanishPathways: ["/es/blog/valencia-with-kids-complete-guide"],
   },
   {
     slug: "mobility",
-    pathways: ["/valencia/kits/accessible-valencia-kit", "/blog/wheelchair-accessibility-valencia"],
+    pathways: ["/valencia/kits/accessible-valencia-kit"],
+    englishPathways: ["/blog/wheelchair-accessibility-valencia"],
+    spanishPathways: ["/es/blog/wheelchair-accessibility-valencia"],
     requiredEnglishText: ["Mobility Equipment Rental in Valencia: FAQs"],
     requiredSpanishText: ["Preguntas sobre el alquiler de movilidad en Valencia"],
     requiredSchemaTypes: ["FAQPage"],
   },
   {
     slug: "remote-work",
-    pathways: ["/valencia/kits/remote-work-apartment-kit", "/blog/digital-nomad-guide-valencia"],
+    pathways: ["/valencia/kits/remote-work-apartment-kit"],
+    englishPathways: ["/blog/digital-nomad-guide-valencia"],
+    spanishPathways: ["/es/blog/digital-nomad-guide-valencia"],
     requiredEnglishText: ["Remote Work Equipment Rental in Valencia: FAQs"],
     requiredSpanishText: ["Preguntas sobre el alquiler de equipos de teletrabajo"],
     requiredSchemaTypes: ["FAQPage"],
   },
   {
     slug: "home-living",
-    pathways: ["/valencia/kits/summer-apartment-survival-kit", "/blog/valencia-summer-survival-guide"],
+    pathways: ["/valencia/kits/summer-apartment-survival-kit"],
+    englishPathways: ["/blog/valencia-summer-survival-guide"],
+    spanishPathways: ["/es/blog/valencia-summer-survival-guide"],
     requiredEnglishText: ["Portable AC and Apartment Equipment Rental: FAQs"],
     requiredSpanishText: ["Preguntas sobre aire acondicionado portátil y confort"],
     requiredSchemaTypes: ["FAQPage"],
   },
   {
     slug: "travel-outdoors",
-    pathways: ["/valencia/kits/family-beach-kit", "/discover/malvarrosa-beach"],
+    pathways: ["/valencia/kits/family-beach-kit"],
+    englishPathways: ["/discover/malvarrosa-beach"],
+    spanishPathways: ["/es/blog/best-beaches-valencia-families"],
     requiredEnglishText: ["Choose the Right Beach Setup", "Beach Equipment Rental in Valencia: FAQs"],
     requiredSpanishText: [
       "Elige el equipamiento adecuado para la playa",
@@ -48,9 +60,13 @@ const categoryChecks = [
   },
 ];
 
-const productPathways = Object.fromEntries(
-  categoryChecks.map((category) => [category.slug, category.pathways])
-);
+const productPathways = Object.fromEntries(categoryChecks.map((category) => [
+  category.slug,
+  {
+    en: [...category.pathways, ...(category.englishPathways || [])],
+    es: [...category.pathways, ...(category.spanishPathways || [])],
+  },
+]));
 
 function assert(condition, message) {
   if (!condition) throw new Error(message);
@@ -125,6 +141,12 @@ async function main() {
       assertPathway(categoryPage.en, pathway, `${categoryPage.slug} English category`);
       assertPathway(categoryPage.es, pathway, `${categoryPage.slug} Spanish category`);
     }
+    for (const pathway of categoryPage.englishPathways || []) {
+      assertPathway(categoryPage.en, pathway, `${categoryPage.slug} English category`);
+    }
+    for (const pathway of categoryPage.spanishPathways || []) {
+      assertPathway(categoryPage.es, pathway, `${categoryPage.slug} Spanish category`);
+    }
     assertPageEnhancements(
       categoryPage.en,
       categoryPage.requiredEnglishText,
@@ -157,8 +179,12 @@ async function main() {
     "Spanish reference product lacks Spanish hreflang"
   );
   assertPathway(product, `/rental/${productCategory}`, "Reference product");
-  for (const pathway of productPathways[productCategory] || []) {
+  for (const pathway of productPathways[productCategory]?.en || []) {
     assertPathway(product, pathway, "Reference product");
+  }
+  assertPathway(productEs, `/es/rental/${productCategory}`, "Spanish reference product");
+  for (const pathway of productPathways[productCategory]?.es || []) {
+    assertPathway(productEs, pathway, "Spanish reference product");
   }
   assert(
     robotsMeta(noindexProduct).includes("noindex"),
