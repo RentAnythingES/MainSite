@@ -55,5 +55,8 @@ orphan pages, broken links or broken images. It confirmed 33 reciprocal hreflang
 pairs. Both new English/Spanish article pairs expose `Article`, `BreadcrumbList`
 and `FAQPage` structured data.
 
-The remote-work and day-trip adaptations were added locally on 18 July 2026. Their
-production crawl results are recorded after deployment.
+The remote-work and day-trip adaptations deployed as commit `44bb749` on 18 July
+2026. The final production crawl covered 106 sitemap URLs with zero errors,
+warnings, orphan pages, broken links or broken images and confirmed 35 reciprocal
+hreflang pairs. Both new English/Spanish pairs expose `Article`, `BreadcrumbList`
+and `FAQPage`, completing locale parity across all six planning guides.
