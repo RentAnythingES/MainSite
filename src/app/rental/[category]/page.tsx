@@ -4,7 +4,7 @@ import type { Metadata } from "next";
 import { getProductsByCategoryFromDB } from "@/lib/product-service";
 import { getPublishedPosts } from "@/content/blog";
 import ProductCard from "@/components/ProductCard";
-import { getBreadcrumbJsonLd, getCategoryCollectionJsonLd } from "@/lib/jsonld";
+import { getBreadcrumbJsonLd, getCategoryCollectionJsonLd, getFaqJsonLd } from "@/lib/jsonld";
 
 interface CategoryContent {
   title: string;
@@ -21,6 +21,17 @@ interface CategoryContent {
     title: string;
     description: string;
     href: string;
+  }>;
+  searchIntentHeading?: string;
+  searchIntentDescription?: string;
+  searchIntents?: Array<{
+    title: string;
+    description: string;
+  }>;
+  faqHeading?: string;
+  faqs?: Array<{
+    question: string;
+    answer: string;
   }>;
 }
 
@@ -217,6 +228,45 @@ const categoryMeta: Record<string, CategoryContent> = {
         href: "/discover/patacona-beach",
       },
     ],
+    searchIntentHeading: "Choose the Right Beach Setup",
+    searchIntentDescription: "Use one Valencia beach-equipment hub to compare the setup you need rather than searching across separate, overlapping rental pages.",
+    searchIntents: [
+      {
+        title: "Shade for a simple beach day",
+        description: "Compare umbrellas and compact shelters by covered area, packed size, setup method and wind guidance before checking your dates.",
+      },
+      {
+        title: "A complete family beach setup",
+        description: "Start with the Family Beach Kit when you need shade plus practical extras such as cooling, towels, toys or easier transport.",
+      },
+      {
+        title: "Equipment that is easier to carry",
+        description: "Browse coolers, beach wagons, folding furniture and other published gear for Malvarrosa, Patacona and stays near Valencia's coast.",
+      },
+    ],
+    faqHeading: "Beach Equipment Rental in Valencia: FAQs",
+    faqs: [
+      {
+        question: "Can I rent beach equipment in Valencia?",
+        answer: "Yes. Browse the published Beach & Outdoor catalogue, select your dates and check availability. Pickup or delivery options are shown during the booking flow before payment.",
+      },
+      {
+        question: "Do you deliver beach equipment to Malvarrosa or Patacona?",
+        answer: "Supported pickup and delivery options, timing and any applicable fee are shown for the address and dates entered during booking. Contact us if your accommodation sits outside the listed service areas.",
+      },
+      {
+        question: "What beach equipment can I rent?",
+        answer: "The published catalogue may include umbrellas, shelters, towels, coolers, wagons, folding furniture and beach games. Exact products and availability depend on your selected dates.",
+      },
+      {
+        question: "Should I choose a beach umbrella or a shelter?",
+        answer: "An umbrella is flexible and familiar for smaller groups. A shelter can provide a broader covered area for families. Compare dimensions, setup instructions and wind limitations on each product page.",
+      },
+      {
+        question: "Can I book beach gear for a single day?",
+        answer: "Enter your preferred start and end time on the relevant product page. The booking flow will show whether the item is available and calculate the applicable rental price for that period.",
+      },
+    ],
   },
 };
 
@@ -299,6 +349,16 @@ export default async function CategoryPage({ params }: Props) {
           ),
         }}
       />
+      {meta.faqs && meta.faqs.length > 0 && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(
+              getFaqJsonLd(meta.faqs.map((faq) => ({ q: faq.question, a: faq.answer })))
+            ),
+          }}
+        />
+      )}
       {/* Breadcrumb */}
       <nav className="bg-neutral-50 border-b border-border py-3">
         <div className="container-site">
@@ -360,6 +420,25 @@ export default async function CategoryPage({ params }: Props) {
           </div>
         </div>
       </section>
+
+      {meta.searchIntents && meta.searchIntents.length > 0 && (
+        <section className="section bg-neutral-50">
+          <div className="container-site">
+            <div className="max-w-3xl mb-8">
+              <h2 className="text-2xl font-bold mb-3">{meta.searchIntentHeading}</h2>
+              <p className="text-neutral-600 leading-relaxed">{meta.searchIntentDescription}</p>
+            </div>
+            <div className="grid md:grid-cols-3 gap-6">
+              {meta.searchIntents.map((intent) => (
+                <div key={intent.title} className="card p-6 bg-white">
+                  <h3 className="font-bold text-lg mb-2">{intent.title}</h3>
+                  <p className="text-sm text-neutral-600 leading-relaxed">{intent.description}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Editorial Content */}
       <section className="section bg-neutral-50">
@@ -424,6 +503,24 @@ export default async function CategoryPage({ params }: Props) {
                   <span className="text-sm font-semibold text-brand mt-3 inline-block">Read guide →</span>
                 </Link>
               ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {meta.faqs && meta.faqs.length > 0 && (
+        <section className="section bg-neutral-50">
+          <div className="container-site">
+            <div className="max-w-4xl">
+              <h2 className="text-2xl font-bold mb-8">{meta.faqHeading}</h2>
+              <div className="grid md:grid-cols-2 gap-5">
+                {meta.faqs.map((faq) => (
+                  <div key={faq.question} className="card p-6 bg-white">
+                    <h3 className="font-semibold text-lg mb-2">{faq.question}</h3>
+                    <p className="text-neutral-600 leading-relaxed">{faq.answer}</p>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </section>

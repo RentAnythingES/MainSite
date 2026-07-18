@@ -27,6 +27,12 @@ const categoryChecks = [
   {
     slug: "travel-outdoors",
     pathways: ["/valencia/kits/family-beach-kit", "/discover/malvarrosa-beach"],
+    requiredEnglishText: ["Choose the Right Beach Setup", "Beach Equipment Rental in Valencia: FAQs"],
+    requiredSpanishText: [
+      "Elige el equipamiento adecuado para la playa",
+      "Preguntas sobre el alquiler de material de playa en Valencia",
+    ],
+    requiredSchemaTypes: ["FAQPage"],
   },
 ];
 
@@ -63,6 +69,18 @@ function assertPathway(html, pathway, context) {
   assert(html.includes(`href="${pathway}"`), `${context} is missing pathway ${pathway}`);
 }
 
+function assertPageEnhancements(html, expectedText = [], schemaTypes = [], context) {
+  for (const text of expectedText) {
+    assert(html.includes(text), `${context} is missing required copy: ${text}`);
+  }
+  for (const schemaType of schemaTypes) {
+    assert(
+      html.includes(`"@type":"${schemaType}"`),
+      `${context} is missing ${schemaType} structured data`
+    );
+  }
+}
+
 async function main() {
   const [home, product, productEs, noindexProduct, robots, sitemap, categoryPages] = await Promise.all([
     get("/"),
@@ -95,6 +113,18 @@ async function main() {
       assertPathway(categoryPage.en, pathway, `${categoryPage.slug} English category`);
       assertPathway(categoryPage.es, pathway, `${categoryPage.slug} Spanish category`);
     }
+    assertPageEnhancements(
+      categoryPage.en,
+      categoryPage.requiredEnglishText,
+      categoryPage.requiredSchemaTypes,
+      `${categoryPage.slug} English category`
+    );
+    assertPageEnhancements(
+      categoryPage.es,
+      categoryPage.requiredSpanishText,
+      categoryPage.requiredSchemaTypes,
+      `${categoryPage.slug} Spanish category`
+    );
   }
   assert(
     canonical(product) === `https://rentanything.es/product/${productSlug}`,

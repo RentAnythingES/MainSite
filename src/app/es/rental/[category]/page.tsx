@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { getProductsByCategoryFromDB } from "@/lib/product-service";
 import ProductCard from "@/components/ProductCard";
-import { getBreadcrumbJsonLd, getCategoryCollectionJsonLd } from "@/lib/jsonld";
+import { getBreadcrumbJsonLd, getCategoryCollectionJsonLd, getFaqJsonLd } from "@/lib/jsonld";
 
 interface CategoryContent {
   title: string;
@@ -18,6 +18,17 @@ interface CategoryContent {
     title: string;
     description: string;
     href: string;
+  }>;
+  searchIntentHeading?: string;
+  searchIntentDescription?: string;
+  searchIntents?: Array<{
+    title: string;
+    description: string;
+  }>;
+  faqHeading?: string;
+  faqs?: Array<{
+    question: string;
+    answer: string;
   }>;
 }
 
@@ -202,6 +213,45 @@ const categoryMetaES: Record<string, CategoryContent> = {
         href: "/discover/patacona-beach",
       },
     ],
+    searchIntentHeading: "Elige el equipamiento adecuado para la playa",
+    searchIntentDescription: "Compara en un único catálogo de Valencia el tipo de equipamiento que necesitas, sin saltar entre páginas de alquiler repetitivas.",
+    searchIntents: [
+      {
+        title: "Sombra para un día sencillo de playa",
+        description: "Compara sombrillas y refugios compactos por superficie cubierta, tamaño plegado, montaje y recomendaciones de viento antes de indicar tus fechas.",
+      },
+      {
+        title: "Un conjunto completo para familias",
+        description: "Empieza con el Kit de Playa Familiar si necesitas sombra y complementos prácticos como frío, toallas, juguetes o transporte más cómodo.",
+      },
+      {
+        title: "Material más fácil de transportar",
+        description: "Consulta neveras, carros de playa, mobiliario plegable y otros artículos publicados para Malvarrosa, Patacona y alojamientos cerca de la costa de Valencia.",
+      },
+    ],
+    faqHeading: "Preguntas sobre el alquiler de material de playa en Valencia",
+    faqs: [
+      {
+        question: "¿Puedo alquilar material de playa en Valencia?",
+        answer: "Sí. Consulta el catálogo publicado de Playa y Aire Libre, selecciona tus fechas y comprueba la disponibilidad. Las opciones de recogida o entrega aparecen durante la reserva antes del pago.",
+      },
+      {
+        question: "¿Entregáis material de playa en Malvarrosa o Patacona?",
+        answer: "La reserva muestra las opciones de recogida y entrega disponibles, los horarios y cualquier coste aplicable para la dirección y las fechas indicadas. Escríbenos si tu alojamiento queda fuera de las zonas mostradas.",
+      },
+      {
+        question: "¿Qué material de playa puedo alquilar?",
+        answer: "El catálogo publicado puede incluir sombrillas, refugios, toallas, neveras, carros, mobiliario plegable y juegos de playa. Los artículos concretos y su disponibilidad dependen de las fechas elegidas.",
+      },
+      {
+        question: "¿Me conviene una sombrilla o un refugio de playa?",
+        answer: "Una sombrilla resulta flexible y familiar para grupos pequeños. Un refugio puede ofrecer una zona cubierta más amplia para familias. Compara las medidas, el montaje y los límites de viento en cada ficha.",
+      },
+      {
+        question: "¿Puedo reservar material de playa para un solo día?",
+        answer: "Introduce la fecha y la hora de inicio y fin en la ficha correspondiente. El proceso de reserva mostrará si el artículo está disponible y calculará el precio aplicable para ese periodo.",
+      },
+    ],
   },
 };
 
@@ -279,6 +329,16 @@ export default async function CategoryPageES({ params }: Props) {
           ),
         }}
       />
+      {meta.faqs && meta.faqs.length > 0 && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(
+              getFaqJsonLd(meta.faqs.map((faq) => ({ q: faq.question, a: faq.answer })))
+            ),
+          }}
+        />
+      )}
       <nav className="bg-neutral-50 border-b border-border py-3">
         <div className="container-site">
           <ol className="flex items-center gap-2 text-sm text-neutral-500">
@@ -327,6 +387,25 @@ export default async function CategoryPageES({ params }: Props) {
         </div>
       </section>
 
+      {meta.searchIntents && meta.searchIntents.length > 0 && (
+        <section className="section bg-neutral-50">
+          <div className="container-site">
+            <div className="max-w-3xl mb-8">
+              <h2 className="text-2xl font-bold mb-3">{meta.searchIntentHeading}</h2>
+              <p className="text-neutral-600 leading-relaxed">{meta.searchIntentDescription}</p>
+            </div>
+            <div className="grid md:grid-cols-3 gap-6">
+              {meta.searchIntents.map((intent) => (
+                <div key={intent.title} className="card p-6 bg-white">
+                  <h3 className="font-bold text-lg mb-2">{intent.title}</h3>
+                  <p className="text-sm text-neutral-600 leading-relaxed">{intent.description}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
       <section className="section bg-neutral-50">
         <div className="container-site">
           <div className="max-w-3xl">
@@ -364,6 +443,24 @@ export default async function CategoryPageES({ params }: Props) {
                   <span className="text-sm font-semibold text-brand">Explorar →</span>
                 </Link>
               ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {meta.faqs && meta.faqs.length > 0 && (
+        <section className="section bg-neutral-50">
+          <div className="container-site">
+            <div className="max-w-4xl">
+              <h2 className="text-2xl font-bold mb-8">{meta.faqHeading}</h2>
+              <div className="grid md:grid-cols-2 gap-5">
+                {meta.faqs.map((faq) => (
+                  <div key={faq.question} className="card p-6 bg-white">
+                    <h3 className="font-semibold text-lg mb-2">{faq.question}</h3>
+                    <p className="text-neutral-600 leading-relaxed">{faq.answer}</p>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </section>

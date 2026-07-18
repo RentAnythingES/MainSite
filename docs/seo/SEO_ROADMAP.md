@@ -1,5 +1,5 @@
 # RentAnything.es — SEO Roadmap
-> **Last updated**: 2026-07-17 · Prioritized by estimated traffic impact × effort
+> **Last updated**: 2026-07-18 · Prioritized by estimated traffic impact × effort
 
 ---
 
@@ -41,6 +41,7 @@
 - [x] Automated canonical, hreflang, robots, sitemap and cluster-pathway regression audit
 - [x] Six-cluster keyword ownership map including Kids & Family
 - [x] Beach & Outdoor transactional cluster strengthened with kit and local-guide pathways
+- [x] Beach hub expanded around rental, delivery, shade, family-setup and transport sub-intents with visible EN/ES FAQs and FAQ schema
 - [x] Apartment Comfort cluster connected across category, summer kit, guide and cooling products
 - [x] Remote Work cluster connected across category, apartment kit, guide and workstation products
 - [x] Kids & Family cluster connected across category, Toddler City kit, Family Beach kit and family guide
@@ -320,7 +321,7 @@ Priority pilot logic: start with one narrow bundle, collect usage evidence, then
 ## Priority Execution Order (Next Session)
 
 1. **Deploy + validate** — run `npm run audit:seo`, resubmit sitemap, inspect representative URLs in GSC
-2. **Beach cluster** — strengthen `/rental/travel-outdoors` using real query data without creating overlapping thin pages
+2. **Beach cluster — ✅ Completed 18 July** — `/rental/travel-outdoors` owns broad rental and delivery intent; guides own beach-planning queries; product pages own exact-item searches. Consolidated comparison and FAQ coverage avoids overlapping thin landing pages.
 3. **Active catalogue** — complete EN/ES readiness for commercially available products
 4. **Commercial hubs** — improve AC, baby gear, mobility and remote-work category ownership
 5. **Internal links** — connect guides, kits, categories and products according to the cluster map
