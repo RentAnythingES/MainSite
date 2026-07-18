@@ -48,8 +48,9 @@ App Router with static generation (`generateStaticParams`). Prefix-based i18n (`
   - `BookingWidget` — booking flow with rental window, availability check, draft creation, and Stripe handoff
   - `BundleConfigurator` — kit request builder with selectable included items/add-ons and WhatsApp handoff
   - `ContactForm` — contact form with Resend
-  - `NewsletterSignup` — newsletter consent capture with `/api/newsletter`
-  - `Header` / `Footer` — locale-aware navigation (detects `/es/` prefix)
+- `NewsletterSignup` — newsletter consent capture with `/api/newsletter`
+- `DestinationMap` — dependency-free schematic map with city/day-trip views and keyboard-accessible guide selection
+- `Header` / `Footer` — locale-aware navigation (detects `/es/` prefix)
   - `AdminShell` — admin sidebar layout
 - Metadata via `generateMetadata()` exports
 - Photo-backed cards use the two-layer overlay pattern (see DESIGN.md)
@@ -116,6 +117,12 @@ plus `ItemList` structured data from the same products, posts, destinations or
 bundles visible on the page. Discover sub-hubs also publish `BreadcrumbList`.
 Use `getHubCollectionJsonLd()` for future indexable hubs rather than constructing
 inconsistent schema inline.
+
+The Discover hub includes `DestinationMap`, a client-side orientation component.
+Marker positions are deliberately schematic rather than navigation coordinates;
+each selection exposes the destination's stored transport summary and links to the
+full guide. Keep it dependency-free and label it as non-navigational so a visual
+overview never replaces current route or accessibility checks.
 
 Public products and kits reference `https://rentanything.es/#business` as their
 seller. Editorial pages use the same entity for author and publisher and reference

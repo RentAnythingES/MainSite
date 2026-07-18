@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import type { Metadata } from "next";
 import { getPublishedDestinations, getDestinationsByHub } from "@/content/destinations";
+import DestinationMap from "@/components/DestinationMap";
 import { getHubCollectionJsonLd } from "@/lib/jsonld";
 
 export const metadata: Metadata = {
@@ -162,6 +163,19 @@ export default function DiscoverHub() {
           </div>
         </div>
       </section>
+
+      <DestinationMap
+        destinations={allDestinations.map((destination) => ({
+          slug: destination.slug,
+          name: destination.name,
+          type: destination.type,
+          tagline: destination.tagline,
+          distance: destination.distanceFromValencia,
+          transport:
+            destination.gettingThere?.options[0]?.description ||
+            destination.gettingThere?.summary,
+        }))}
+      />
 
       {/* All Guides */}
       {allDestinations.length > 0 && (

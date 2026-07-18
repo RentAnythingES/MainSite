@@ -57,6 +57,7 @@ Text on photo backgrounds always gets `style={{ textShadow: '0 2px 8px rgba(0,0,
 - `HeroCarousel` — Client component, auto-advancing photo carousel (5s interval, opacity crossfade)
 - `ProductCard` — Reusable product display card
 - `BundleCard` — Photo-backed scenario card for rental kits
+- `DestinationMap` — Schematic Valencia city/region explorer with numbered markers, accessible controls, and a linked detail card
 
 ## Photo Card Pattern (categories, hubs, discover)
 ```tsx

@@ -235,10 +235,10 @@ Data-driven `/discover/[slug]` pages. 5 destinations live. Hub pages for neighbo
 - [x] **Two-layer overlay** — Consistent `bg-black/50` + gradient pattern on all photo heroes
 - [x] **Widget spacing** — No two product strips adjacent; contextually placed after relevant sections
 - [x] **Photo-backed hub cards** — Discover index uses lifestyle photos instead of emojis
+- [x] **Valencia map widget** — Accessible schematic city/day-trip map with destination selection, transport summaries, and guide pathways
 
 **Open design items:**
 - [ ] **Real photos** — Replace AI-generated images with sourced photography for trust
-- [ ] **Valencia map widget** — Interactive or visual map showing destination locations and transport
 - [ ] **Restaurant source tracking** — `sourceNote` fields exist but need populating with research
 - [ ] **Staying vs Visiting** — Data model supports both angles; content needs fleshing out
 
