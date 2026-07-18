@@ -4,18 +4,17 @@ import type { NextRequest } from "next/server";
 export function middleware(request: NextRequest) {
   const requestHeaders = new Headers(request.headers);
   requestHeaders.set("x-pathname", request.nextUrl.pathname);
-  requestHeaders.set(
-    "x-page-locale",
-    request.nextUrl.pathname === "/es" || request.nextUrl.pathname.startsWith("/es/")
-      ? "es"
-      : "en",
-  );
+  const locale = request.nextUrl.pathname === "/es" || request.nextUrl.pathname.startsWith("/es/")
+    ? "es"
+    : "en";
 
-  return NextResponse.next({
+  const response = NextResponse.next({
     request: {
       headers: requestHeaders,
     },
   });
+  response.headers.set("Content-Language", locale);
+  return response;
 }
 
 export const config = {

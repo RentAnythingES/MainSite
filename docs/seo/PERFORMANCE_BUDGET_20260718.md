@@ -64,6 +64,13 @@ four Supabase round trips to one. A production-build test against live Supabase
 recorded 704 ms for the first category request and 117-125 ms for the next two
 requests; all returned the expected five live Travel & Outdoors products.
 
+Production still recorded 2,084 ms for a cold dynamic category invocation despite
+the faster database path, while ten warm requests averaged 330 ms. Category pages
+therefore now use five-minute static regeneration. The generated response carries
+`s-maxage=300`, retains immediate tag-based invalidation after admin changes, and
+keeps English and Spanish `Content-Language` responses separate. This removes the
+serverless cold start from normal category-page delivery.
+
 Machine-readable baseline: `docs/seo/performance-budget-live-20260718.json`.
 
 ## Post-deployment verification

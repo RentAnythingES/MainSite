@@ -271,6 +271,13 @@ tag immediately with `revalidateTag(..., { expire: 0 })`. Partial product or
 content mutations also invalidate before returning an error. Direct database
 changes outside the admin API become visible when the five-minute fallback TTL
 expires.
+
+English and Spanish category routes use five-minute static regeneration instead
+of request-time rendering. Their full-route cache depends on the tagged product
+read, so the same admin invalidation refreshes both the data and generated page.
+The root layout avoids request-bound APIs; middleware supplies `Content-Language`
+and a small pre-hydration script keeps the document `lang` attribute aligned with
+the `/es` route prefix.
 | `src/lib/types.ts` | TypeScript types matching DB schema |
 | `src/components/BookingWidget.tsx` | 3-step booking flow (dates → form → success), locale-aware |
 | `src/components/admin/AdminShell.tsx` | Admin sidebar layout |
