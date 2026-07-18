@@ -6,7 +6,7 @@ import {
   getDestinationBySlug,
   getAllDestinationSlugsForBuild,
 } from "@/content/destinations";
-import { getProductsByCategory } from "@/data/products";
+import { getProductsByCategoryFromDB } from "@/lib/product-service";
 import { getBlogPostBySlug } from "@/content/blog";
 import { getBreadcrumbJsonLd } from "@/lib/jsonld";
 
@@ -72,6 +72,16 @@ export default async function DiscoverPage({ params }: Props) {
   const dest = getDestinationBySlug(slug);
   if (!dest) notFound();
 
+  const widgetCategories = [...new Set(dest.productWidgets.map((widget) => widget.categorySlug))];
+  const productsByCategory = new Map(
+    await Promise.all(
+      widgetCategories.map(async (categorySlug) => [
+        categorySlug,
+        await getProductsByCategoryFromDB(categorySlug),
+      ] as const),
+    ),
+  );
+
   // Helper: render inline product strip for a given section
   const renderWidgets = (sectionName: string) => {
     const matching = dest.productWidgets.filter((w) => w.afterSection === sectionName);
@@ -79,7 +89,7 @@ export default async function DiscoverPage({ params }: Props) {
     return (
       <>
         {matching.map((w, idx) => {
-          const products = getProductsByCategory(w.categorySlug);
+          const products = productsByCategory.get(w.categorySlug) || [];
           if (products.length === 0) return null;
           return (
             <div key={idx} className="border-y border-border bg-neutral-50/60 py-5">

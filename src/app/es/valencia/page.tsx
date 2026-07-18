@@ -1,11 +1,13 @@
 import Link from "next/link";
 import Image from "next/image";
 import type { Metadata } from "next";
-import { products } from "@/data/products";
 import ProductCard from "@/components/ProductCard";
 import { getDictionary } from "@/i18n/getDictionary";
+import { getProductsFromDB } from "@/lib/product-service";
 
 const t = getDictionary("es");
+
+export const revalidate = 60;
 
 export const metadata: Metadata = {
   title: "Alquiler de Equipos en Valencia | RentAnything.es",
@@ -25,7 +27,9 @@ const categoryCards = [
   { ...t.categories.travelOutdoors, slug: "travel-outdoors", image: "/categories/travel-outdoors.webp" },
 ];
 
-export default function ValenciaPageES() {
+export default async function ValenciaPageES() {
+  const products = await getProductsFromDB("valencia", "es");
+
   return (
     <>
       <section className="relative overflow-hidden">
