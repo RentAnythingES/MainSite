@@ -47,5 +47,8 @@ orphan pages, broken links or broken images. It confirmed 31 reciprocal hreflang
 pairs, including the Spanish blog hub and both translated articles. The hub exposes
 `CollectionPage`; each article exposes `Article`, `BreadcrumbList` and `FAQPage`.
 
-The family and accessibility guides were added locally on 18 July 2026. Their
-production crawl results are recorded after deployment.
+The family and accessibility guides deployed as commit `fa361cf` on 18 July 2026.
+The production crawl then covered 104 sitemap URLs with zero errors, warnings,
+orphan pages, broken links or broken images. It confirmed 33 reciprocal hreflang
+pairs. Both new English/Spanish article pairs expose `Article`, `BreadcrumbList`
+and `FAQPage` structured data.
