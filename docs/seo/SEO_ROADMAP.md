@@ -343,3 +343,10 @@ Priority pilot logic: start with one narrow bundle, collect usage evidence, then
 | Booking flow | WhatsApp only | 3-step form + WhatsApp fallback | + Stripe payments |
 | Google Search Console | Not verified | Not verified | Verified, sitemap submitted |
 | Internal links per page | ~3 | 6+ | 8+ |
+# Spanish planning cluster expansion — 18 July 2026
+
+- [x] Publish complete Spanish family-travel adaptation with Baby & Toddler and
+  Kids & Family commercial paths.
+- [x] Publish a fact-checked Spanish accessibility adaptation using current
+  Metrovalencia and municipal accessible-bathing sources.
+- [x] Restrict reciprocal article hreflang to guides with complete locale parity.

@@ -248,4 +248,242 @@ export const spanishBlogPosts: BlogPost[] = [
       },
     ],
   },
+  {
+    slug: "valencia-with-kids-complete-guide",
+    title: "Valencia con niños: guía familiar completa",
+    h1: "Guía completa para visitar Valencia con niños",
+    description:
+      "Organiza un viaje familiar a Valencia: playas, planes con niños, transporte con cochecito, horarios y equipamiento útil para la estancia.",
+    category: "guide",
+    keywords: [
+      "Valencia con niños",
+      "viaje familiar Valencia",
+      "qué hacer en Valencia con niños",
+      "Valencia con bebé",
+      "vacaciones en familia Valencia",
+    ],
+    date: "2026-07-18",
+    readTime: "9 min de lectura",
+    excerpt:
+      "Playas, atracciones, transporte y consejos prácticos para organizar una estancia en Valencia con bebés, niños pequeños o escolares.",
+    tags: ["familias", "niños", "Valencia", "viaje", "guía"],
+    sections: [
+      {
+        heading: "Por qué Valencia funciona bien para viajar en familia",
+        paragraphs: [
+          "Valencia combina playa, zonas verdes y atracciones culturales en una ciudad relativamente compacta y llana. Para una familia, eso significa que es posible alternar una mañana junto al mar, una comida tranquila y una actividad interior sin dedicar medio día a los desplazamientos.",
+          "El Jardín del Turia atraviesa buena parte de la ciudad con caminos sin tráfico, áreas de juego y conexiones hacia el Bioparc y la Ciutat de les Arts i les Ciències. No todos los trayectos son perfectos con un cochecito —el centro histórico conserva adoquines y aceras estrechas—, pero la mayoría de los planes familiares se pueden organizar con recorridos sencillos.",
+          "La clave no es intentar verlo todo. Con bebés o niños pequeños conviene escoger una actividad principal al día, proteger las horas de descanso y dejar margen para parques, meriendas y cambios de plan.",
+        ],
+      },
+      {
+        heading: "Playas familiares: Malvarrosa, Patacona y El Saler",
+        paragraphs: [
+          "Malvarrosa y Cabanyal son las opciones urbanas más prácticas. Tienen paseo marítimo, transporte público, restauración y accesos mediante pasarelas en distintos puntos. En temporada alta también concentran más visitantes, por lo que llegar por la mañana facilita encontrar espacio y evitar las horas de mayor calor.",
+          "Patacona continúa hacia el norte con un ambiente algo más residencial. Su paseo es cómodo para un cochecito, aunque la arena blanda sigue siendo difícil para cualquier rueda pequeña. El Saler ofrece un entorno más natural junto a la Albufera, pero requiere comprobar el acceso, los servicios disponibles y el transporte antes de salir.",
+          "Las playas urbanas tienen muy poca sombra natural. Lleva agua, protección solar, ropa seca y una solución de sombra adecuada. En nuestra <a href=\"/es/blog/best-beaches-valencia-families\">comparativa de playas familiares</a> explicamos qué zona encaja mejor según la edad de los niños y la logística del día.",
+        ],
+      },
+      {
+        heading: "Planes que suelen funcionar con niños",
+        paragraphs: [
+          "La Ciutat de les Arts i les Ciències reúne varios espacios en una zona amplia y peatonal. El Oceanogràfic necesita varias horas y puede resultar intenso si se combina con otros museos el mismo día; revisa horarios, entradas y condiciones de acceso en sus canales oficiales antes de ir.",
+          "El Bioparc es otra actividad de media jornada. Para un plan gratuito, el Parque Gulliver convierte una gran escultura en rampas y toboganes dentro del Jardín del Turia. En verano es mejor visitarlo temprano o al final de la tarde porque muchas superficies quedan expuestas al sol.",
+          "El propio Turia es el recurso más flexible: permite caminar, descansar en el césped o parar en áreas infantiles sin una reserva. Para escolares, también se puede combinar con un paseo por el centro, el Mercado Central o una visita corta a la playa sin sobrecargar el itinerario.",
+        ],
+      },
+      {
+        heading: "Moverse por Valencia con cochecito",
+        paragraphs: [
+          "La ciudad es mayoritariamente llana, pero el tipo de superficie cambia. El Jardín del Turia, los barrios modernos y los paseos marítimos son cómodos; algunas calles de Ciutat Vella tienen adoquines, bordillos o pasos estrechos. Un <a href=\"/es/product/compact-stroller\">cochecito compacto</a> facilita los trayectos y ocupa menos espacio en restaurantes y transporte público.",
+          "Metrovalencia dispone de recorridos adaptados mediante rampas y ascensores en estaciones y paradas, aunque conviene consultar avisos de servicio antes de viajar. Los autobuses urbanos suelen ser una alternativa útil para trayectos directos, especialmente cuando el metro obliga a hacer transbordos.",
+          "Si vas a utilizar taxi o coche de alquiler, confirma la silla infantil al reservar: no des por hecho que estará disponible ni que será adecuada para la edad y talla del menor. Puedes traer tu propio sistema o comprobar un <a href=\"/es/product/car-seat-infant\">asiento infantil de alquiler</a> antes del viaje.",
+        ],
+      },
+      {
+        heading: "Comidas, siestas y horarios realistas",
+        paragraphs: [
+          "Los horarios de comida en España suelen ser más tardíos que en otros países europeos. Muchos restaurantes abren la cocina para la cena a partir de las 20:00, así que una merienda consistente o una cena sencilla en el alojamiento puede evitar que los niños lleguen agotados.",
+          "No todos los locales disponen de menú infantil, cambiador o trona. Si una trona segura es importante para toda la estancia, tener una <a href=\"/es/product/high-chair\">trona en el apartamento</a> evita depender del equipamiento de cada restaurante.",
+          "En julio y agosto, reserva las actividades exteriores para la mañana y el final de la tarde. Entre ambas, una siesta, una comida larga o una visita interior climatizada suelen funcionar mejor que caminar por el centro en las horas de más calor. Nuestra <a href=\"/es/blog/valencia-summer-survival-guide\">guía para el verano en Valencia</a> reúne recomendaciones adicionales.",
+        ],
+      },
+      {
+        heading: "Qué llevar y qué alquilar en Valencia",
+        paragraphs: [
+          "Trae de casa la medicación, los objetos de apego, la documentación y cualquier producto específico que el niño necesite. Pañales, alimentación básica y productos de higiene se encuentran con facilidad en supermercados y farmacias, aunque una marca concreta puede no estar disponible.",
+          "El equipamiento voluminoso merece otra valoración. Un cochecito, una <a href=\"/es/product/travel-crib\">cuna de viaje</a>, una trona o una silla de coche ocupan espacio y pueden sufrir daños durante el vuelo. Alquilarlos localmente puede simplificar el aeropuerto y permite recibirlos directamente en el alojamiento.",
+          "Compara el <a href=\"/es/rental/baby-gear\">equipamiento para bebés</a> y la selección de <a href=\"/es/rental/kids-family\">artículos para niños y familias</a>. Antes de confirmar, revisamos las fechas, la entrega y la compatibilidad del producto con la edad, talla o espacio disponible.",
+        ],
+      },
+    ],
+    faqs: [
+      {
+        question: "¿Es Valencia un buen destino para viajar con niños pequeños?",
+        answer:
+          "Sí. La ciudad es relativamente llana, cuenta con playas urbanas y dispone del Jardín del Turia como gran eje peatonal. El centro histórico exige algo más de planificación con cochecito por sus adoquines y calles estrechas.",
+      },
+      {
+        question: "¿Cuál es la mejor playa de Valencia para ir con niños?",
+        answer:
+          "Malvarrosa y Patacona son prácticas por sus paseos y servicios. El Saler ofrece un entorno más natural, pero conviene confirmar accesos, vigilancia y transporte. La mejor opción depende de la edad de los niños y de la logística familiar.",
+      },
+      {
+        question: "¿Se puede recorrer Valencia con un cochecito?",
+        answer:
+          "La mayoría de las zonas modernas, el Jardín del Turia y los paseos marítimos son cómodos. En Ciutat Vella hay adoquines y pasos estrechos, por lo que un cochecito compacto con ruedas resistentes resulta más práctico.",
+      },
+      {
+        question: "¿Puedo alquilar material para bebés en Valencia?",
+        answer:
+          "Sí. Puedes comprobar la disponibilidad de cochecitos, cunas de viaje, tronas y sillas infantiles con entrega o recogida. Confirma siempre edad, talla, fechas y características antes de reservar.",
+      },
+      {
+        question: "¿Cuándo es mejor visitar Valencia en familia?",
+        answer:
+          "Primavera y principios de otoño suelen ofrecer temperaturas más cómodas para caminar. En julio y agosto también se puede disfrutar de la ciudad, pero conviene evitar actividades exteriores en las horas centrales y asegurar sombra e hidratación.",
+      },
+    ],
+    crossLinks: [
+      {
+        title: "Alquiler de equipamiento para bebés",
+        href: "/es/rental/baby-gear",
+        description: "Cochecitos, cunas, tronas y sillas infantiles para tu estancia",
+      },
+      {
+        title: "Artículos para niños y familias",
+        href: "/es/rental/kids-family",
+        description: "Equipamiento práctico para vacaciones familiares en Valencia",
+      },
+      {
+        title: "Cochecito compacto",
+        href: "/es/product/compact-stroller",
+        description: "Una opción ligera para paseos y transporte público",
+      },
+      {
+        title: "Cuna de viaje",
+        href: "/es/product/travel-crib",
+        description: "Descanso familiar sin transportar una cuna en el avión",
+      },
+    ],
+  },
+  {
+    slug: "wheelchair-accessibility-valencia",
+    title: "Valencia accesible en silla de ruedas: guía práctica",
+    h1: "Guía práctica de accesibilidad en Valencia",
+    description:
+      "Planifica Valencia en silla de ruedas o scooter: transporte, playas accesibles, zonas turísticas, alojamiento y consejos prácticos verificados.",
+    category: "guide",
+    keywords: [
+      "Valencia accesible silla de ruedas",
+      "accesibilidad Valencia",
+      "playas accesibles Valencia",
+      "scooter movilidad Valencia",
+      "viajar a Valencia con movilidad reducida",
+    ],
+    date: "2026-07-18",
+    readTime: "9 min de lectura",
+    excerpt:
+      "Una guía realista para organizar transporte, visitas, playa y alojamiento en Valencia con silla de ruedas o scooter de movilidad.",
+    tags: ["accesibilidad", "movilidad", "Valencia", "silla de ruedas", "guía"],
+    sections: [
+      {
+        heading: "Valencia es llana, pero cada ruta debe comprobarse",
+        paragraphs: [
+          "La orografía llana de Valencia facilita muchos desplazamientos en silla de ruedas o scooter. El Jardín del Turia, la Ciutat de les Arts i les Ciències y el paseo marítimo ofrecen recorridos amplios y mayoritariamente pavimentados. Esa ventaja no convierte toda la ciudad en un entorno sin barreras.",
+          "Ciutat Vella conserva adoquines, pavimentos irregulares, bordillos y calles estrechas. Además, un ascensor, una rampa o un baño adaptado pueden quedar temporalmente fuera de servicio. La planificación más fiable consiste en revisar cada trayecto y confirmar directamente los accesos esenciales antes de salir.",
+          "Esta guía no asigna una etiqueta universal de «accesible» a barrios o atracciones. Explica dónde suele resultar más sencillo moverse, qué información oficial consultar y qué preguntas hacer según las dimensiones, autonomía y necesidades de cada persona.",
+        ],
+      },
+      {
+        heading: "Metro, tranvía, autobús y taxi adaptado",
+        paragraphs: [
+          "Metrovalencia indica que sus estaciones y paradas disponen de recorridos adaptados mediante rampas y ascensores. Sin embargo, el acceso entre andén y tren no es idéntico en toda la red: existen estaciones con plataformas de embarque y otras donde puede solicitarse una rampa manual. La compañía publica <a href=\"https://www.metrovalencia.es/es/accesibilidad/\" target=\"_blank\" rel=\"noopener\">información de accesibilidad</a>, avisos de ascensores y teléfonos de asistencia.",
+          "Antes del viaje, revisa la estación de origen y destino, el estado de los ascensores y las dimensiones admitidas para sillas o scooters. En València Sud pueden existir limitaciones en determinados trenes que inician o terminan allí; la pantalla de la estación debe indicar la accesibilidad del servicio.",
+          "Los autobuses urbanos cuentan con espacios reservados y sistemas de acceso, pero la ocupación y una parada concreta pueden cambiar la experiencia. Para una silla eléctrica grande o un scooter, reserva un taxi adaptado con antelación y comunica medidas, peso total y tipo de transferencia. No confíes en que un taxi convencional pueda transportar cualquier equipo.",
+        ],
+      },
+      {
+        heading: "Rutas y visitas con menos barreras",
+        paragraphs: [
+          "El Jardín del Turia permite recorrer varios kilómetros sin tráfico y conecta el entorno del Bioparc con la Ciutat de les Arts i les Ciències. Hay rampas entre el antiguo cauce y la calle, pero la pendiente y la distancia varían; elegir de antemano el punto de entrada y salida evita desvíos innecesarios.",
+          "La Ciutat de les Arts i les Ciències tiene grandes superficies peatonales y accesos adaptados en sus edificios principales. Consulta la información oficial de cada recinto para conocer ascensores, aseos, acompañantes y posibles descuentos. Un certificado de discapacidad no produce las mismas condiciones en todas las taquillas.",
+          "En el centro histórico, las plazas principales suelen ser más fáciles que las calles laterales. Diseña un recorrido corto entre puntos confirmados y deja tiempo extra. Una <a href=\"/es/product/mobility-scooter-lightweight\">scooter de movilidad</a> puede aportar autonomía en distancias largas, pero su radio de giro, batería y dimensiones también condicionan ascensores y transporte.",
+        ],
+      },
+      {
+        heading: "Playas accesibles y servicio de ayuda al baño",
+        paragraphs: [
+          "El Ayuntamiento de València mantiene un <a href=\"https://www.valencia.es/cas/playas/accesibilidad-en-las-playas\" target=\"_blank\" rel=\"noopener\">programa oficial de ayuda al baño</a>. Su información de 2026 incluye puntos en Malvarrosa, Cabanyal y Pinedo durante la temporada de verano, además de servicios con cita previa en El Saler y El Perellonet durante julio y agosto.",
+          "Los calendarios, horarios y condiciones pueden cambiar cada temporada. Consulta la página municipal justo antes de la visita y reserva cuando se indique. Para grupos, el Ayuntamiento solicita cita previa; algunos puntos adicionales también funcionan únicamente con reserva telefónica.",
+          "Una pasarela permite aproximarse a la orilla, pero no garantiza que una silla cotidiana pueda circular sobre arena ni entrar en el agua. Pregunta qué medios de apoyo ofrece el punto, quién realiza la transferencia, qué acompañamiento se exige y si las condiciones del mar permiten prestar el servicio ese día.",
+        ],
+      },
+      {
+        heading: "Cómo confirmar un alojamiento realmente adecuado",
+        paragraphs: [
+          "La expresión «habitación accesible» no describe por sí sola las necesidades concretas. Solicita medidas de puertas, altura de cama, espacio lateral, acceso al ascensor, tipo de ducha, barras de apoyo y desniveles desde la calle. Pide fotografías actuales cuando un detalle sea imprescindible.",
+          "Comprueba también el itinerario completo: entrada del edificio, portal, ascensor, pasillos, habitación y baño. Un apartamento puede tener una ducha adaptada y, al mismo tiempo, un escalón en el acceso principal o un ascensor demasiado estrecho.",
+          "Si vas a recibir equipo de alquiler, confirma dónde se entrega y guarda, si existe toma de corriente para una scooter y quién puede ayudar con una transferencia. Estas preguntas son más útiles que una categoría genérica en una plataforma de reservas.",
+        ],
+      },
+      {
+        heading: "Elegir y alquilar equipo de movilidad",
+        paragraphs: [
+          "No todo equipo sirve para la misma persona. Para una <a href=\"/es/product/transport-wheelchair\">silla de transporte</a> es necesario confirmar que habrá un acompañante capaz de impulsarla. Una silla autopropulsable, una scooter y un <a href=\"/es/product/rollator-walker\">andador rollator</a> responden a necesidades distintas.",
+          "Antes de alquilar, facilita altura, peso, capacidad de transferencia, entorno de uso y medidas críticas. En una scooter también hay que valorar autonomía, cargador, anchura, radio de giro y posibilidad de guardarla con seguridad. El equipo no sustituye una evaluación clínica ni debe recomendarse únicamente por una fotografía.",
+          "Consulta nuestro <a href=\"/es/rental/mobility\">equipamiento de movilidad y accesibilidad en Valencia</a>. Confirmamos disponibilidad y logística para tus fechas; cuando un producto no encaja con el usuario o el itinerario, buscamos una alternativa en lugar de forzar la reserva.",
+        ],
+      },
+    ],
+    faqs: [
+      {
+        question: "¿Valencia es accesible en silla de ruedas?",
+        answer:
+          "Muchas zonas son relativamente cómodas por el terreno llano, especialmente el Jardín del Turia, la Ciutat de les Arts i les Ciències y el paseo marítimo. El centro histórico presenta adoquines, bordillos y calles estrechas, por lo que cada ruta debe comprobarse.",
+      },
+      {
+        question: "¿El metro de Valencia es accesible?",
+        answer:
+          "Metrovalencia ofrece recorridos adaptados con rampas y ascensores, pero el embarque entre andén y tren varía según la estación. Consulta las estaciones con plataforma, los avisos de ascensores y la asistencia mediante rampa manual en la web oficial.",
+      },
+      {
+        question: "¿Hay playas accesibles en Valencia?",
+        answer:
+          "Sí. El Ayuntamiento publica un programa estacional de ayuda al baño en varias playas. Los puntos, horarios, reservas y condiciones cambian, así que consulta la información municipal vigente antes de desplazarte.",
+      },
+      {
+        question: "¿Puedo alquilar una silla de ruedas o scooter en Valencia?",
+        answer:
+          "Sí, sujeto a disponibilidad y compatibilidad. Debes confirmar medidas, peso, autonomía, capacidad de transferencia, acompañamiento y entorno de uso para elegir entre silla de transporte, silla manual, rollator o scooter.",
+      },
+      {
+        question: "¿Cómo reservo un taxi adaptado en Valencia?",
+        answer:
+          "Resérvalo con antelación e indica que necesitas un eurotaxi o vehículo adaptado. Comunica las dimensiones y peso del equipo, el número de pasajeros y si la persona permanece sentada durante el trayecto.",
+      },
+    ],
+    crossLinks: [
+      {
+        title: "Equipamiento de movilidad",
+        href: "/es/rental/mobility",
+        description: "Sillas, scooters y andadores con confirmación previa",
+      },
+      {
+        title: "Scooter de movilidad ligera",
+        href: "/es/product/mobility-scooter-lightweight",
+        description: "Autonomía para trayectos largos tras comprobar compatibilidad",
+      },
+      {
+        title: "Silla de transporte ligera",
+        href: "/es/product/transport-wheelchair",
+        description: "Opción compacta para desplazamientos con acompañante",
+      },
+      {
+        title: "Andador rollator",
+        href: "/es/product/rollator-walker",
+        description: "Apoyo estable para caminar y hacer pausas durante la visita",
+      },
+    ],
+  },
 ];

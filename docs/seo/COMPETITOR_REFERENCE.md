@@ -198,3 +198,27 @@ Strategic correction: Remote Work and Apartment Comfort are **low-specialist-
 competition opportunities**, not uncontested blue oceans. Copy and planning docs
 must avoid "only platform" or "zero competition" claims unless a new dated SERP
 review supports them.
+
+---
+
+## Official accessibility source check — 18 July 2026
+
+Research for the Spanish accessibility planning guide used primary public sources,
+not competitor summaries:
+
+- **Metrovalencia accessibility:** the operator states that stations and stops
+  provide adapted routes with ramps and lifts. This does not mean level boarding
+  at every metro platform: FGV publishes the stations with boarding platforms and
+  offers manual-ramp assistance at stations where needed. Lift outages and a
+  València Sud service caveat must be checked before travel. Source:
+  <https://www.metrovalencia.es/es/accesibilidad/>.
+- **València accessible bathing programme:** the municipal 2026 page lists summer
+  assistance at Malvarrosa, Cabanyal and Pinedo, with additional appointment-based
+  service at El Saler and El Perellonet in July and August. Dates, hours, booking
+  requirements and sea conditions are operational details that must be checked
+  immediately before a visit. Source:
+  <https://www.valencia.es/cas/playas/accesibilidad-en-las-playas>.
+
+Copy rule: never describe the entire network, city or beach as unconditionally
+"fully accessible." Explain the relevant route, boarding gap, equipment,
+dimensions and seasonal service, and direct readers to the current official notice.
