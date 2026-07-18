@@ -38,3 +38,11 @@ terminology, cautions and calls to action are adapted for Spanish users.
 
 Each guide should be added only as a complete adaptation. Do not create placeholder
 Spanish routes or point hreflang at the Spanish homepage.
+
+## Production verification
+
+Deployed as commit `c99f2d3` on 18 July 2026. The post-deployment crawl covered
+102 sitemap URLs and returned zero errors, warnings, orphan pages, broken links or
+broken images. It confirmed 31 reciprocal hreflang pairs, including the Spanish
+blog hub and both translated articles. The hub exposes `CollectionPage`; each
+article exposes `Article`, `BreadcrumbList` and `FAQPage`.
