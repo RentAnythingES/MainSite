@@ -54,6 +54,7 @@
 - [x] Sitemap completeness enforcement for linked indexable routes and public trust pages
 - [x] Full-sitemap EN/ES hreflang reciprocity and `x-default` enforcement
 - [x] Static image library normalized to WebP with automated weight, format, duplicate and rendered-response checks
+- [x] Consent-aware GA4 Core Web Vitals telemetry for template-level field monitoring
 
 ---
 

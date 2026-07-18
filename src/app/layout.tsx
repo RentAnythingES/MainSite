@@ -7,6 +7,7 @@ import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
 import CookieConsent from "@/components/CookieConsent";
+import WebVitalsReporter from "@/components/WebVitalsReporter";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -90,6 +91,7 @@ export default async function RootLayout({
     >
       <body className="min-h-full flex flex-col bg-background text-foreground">
         <GoogleAnalytics />
+        <WebVitalsReporter />
         <CookieConsent />
         <Header />
         <main className="flex-1">{children}</main>

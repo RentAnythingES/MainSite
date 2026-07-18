@@ -1,5 +1,5 @@
 # Analytics Setup
-> Last updated: 2026-07-13
+> Last updated: 2026-07-18
 
 ## Provider
 
@@ -14,6 +14,7 @@ Implementation:
 
 - Script/page views: `src/components/GoogleAnalytics.tsx`
 - Event helper: `src/lib/analytics.ts`
+- Core Web Vitals: `src/components/WebVitalsReporter.tsx`
 - Config health check: `GET /api/admin/health`
 
 ## Consent
@@ -62,3 +63,28 @@ Current events:
 | Event | Trigger | Key params |
 |-------|---------|------------|
 | `bundle_configurator_whatsapp_click` | User sends a configured kit request to WhatsApp | `bundle_slug`, `selected_items`, `selected_addons`, `has_dates`, `has_area` |
+
+## Core Web Vitals
+
+Next.js reports real-user performance to GA4 with the `web_vital` event after
+analytics consent is granted. Metrics observed before the visitor makes a consent
+choice are held in memory only; they are sent after consent or discarded when
+analytics is rejected.
+
+Event parameters:
+
+| Parameter | Purpose |
+|-----------|---------|
+| `metric_name` | LCP, INP, CLS, FCP, TTFB or another Next.js metric |
+| `metric_value` | Integer metric value; CLS is multiplied by 1,000 |
+| `metric_delta` | Change since the previous report for the same page load |
+| `metric_id` | Unique page-load metric identifier for percentile analysis |
+| `metric_rating` | `good`, `needs-improvement` or `poor` |
+| `navigation_type` | Initial navigation, reload, back/forward or restore |
+| `page_path` | Route and query string where the metric was recorded |
+
+For reusable GA4 reports, register `metric_name`, `metric_rating`,
+`navigation_type` and `page_path` as event-scoped custom dimensions, plus
+`metric_value` as a custom metric. Use Explorations to compare LCP, INP and CLS by
+landing-page template and device category. Field data will accumulate only from
+visitors who grant analytics consent.
