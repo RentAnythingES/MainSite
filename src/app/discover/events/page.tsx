@@ -1,11 +1,17 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { getDestinationsByHub } from "@/content/destinations";
+import { getBreadcrumbJsonLd, getHubCollectionJsonLd } from "@/lib/jsonld";
+
+const hubUrl = "https://rentanything.es/discover/events";
+const hubName = "Valencia Events";
+const hubDescription =
+  "Plan a Valencia trip around published festival and seasonal guides, with practical dates, local context and booking advice.";
 
 export const metadata: Metadata = {
   title: "Valencia Events — Festivals, Holidays & Seasonal Highlights",
-  description: "Plan your Valencia trip around the best events: Fallas, La Tomatina, F1 Grand Prix, and more. Dates, tips, and booking advice.",
-  alternates: { canonical: "https://rentanything.es/discover/events" },
+  description: hubDescription,
+  alternates: { canonical: hubUrl },
 };
 
 const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -25,6 +31,35 @@ export default function EventsHub() {
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            getHubCollectionJsonLd({
+              name: hubName,
+              description: hubDescription,
+              url: hubUrl,
+              locale: "en",
+              items: destinations.map((destination) => ({
+                name: destination.name,
+                url: `https://rentanything.es/discover/${destination.slug}`,
+              })),
+            })
+          ),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            getBreadcrumbJsonLd([
+              { name: "Home", url: "https://rentanything.es" },
+              { name: "Discover Valencia", url: "https://rentanything.es/discover" },
+              { name: hubName, url: hubUrl },
+            ])
+          ),
+        }}
+      />
       <nav className="bg-neutral-50 border-b border-border py-3">
         <div className="container-site">
           <ol className="flex items-center gap-2 text-sm text-neutral-500">

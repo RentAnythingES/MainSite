@@ -1,17 +1,52 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { getDestinationsByHub } from "@/content/destinations";
+import { getBreadcrumbJsonLd, getHubCollectionJsonLd } from "@/lib/jsonld";
+
+const hubUrl = "https://rentanything.es/discover/day-trips";
+const hubName = "Day Trips from Valencia";
+const hubDescription =
+  "The best day trips from Valencia: Albufera, Sagunto, Requena and Xàtiva. Practical guides with transport information and local planning advice.";
 
 export const metadata: Metadata = {
   title: "Day Trips from Valencia — Beaches, Mountains & Castles",
-  description: "The best day trips from Valencia: Albufera, Montanejos hot springs, Xàtiva castle & more. All within 1 hour. Practical guides with transport info.",
-  alternates: { canonical: "https://rentanything.es/discover/day-trips" },
+  description: hubDescription,
+  alternates: { canonical: hubUrl },
 };
 
 export default function DayTripsHub() {
   const destinations = getDestinationsByHub("day-trips");
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            getHubCollectionJsonLd({
+              name: hubName,
+              description: hubDescription,
+              url: hubUrl,
+              locale: "en",
+              items: destinations.map((destination) => ({
+                name: destination.name,
+                url: `https://rentanything.es/discover/${destination.slug}`,
+              })),
+            })
+          ),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            getBreadcrumbJsonLd([
+              { name: "Home", url: "https://rentanything.es" },
+              { name: "Discover Valencia", url: "https://rentanything.es/discover" },
+              { name: hubName, url: hubUrl },
+            ])
+          ),
+        }}
+      />
       <nav className="bg-neutral-50 border-b border-border py-3">
         <div className="container-site">
           <ol className="flex items-center gap-2 text-sm text-neutral-500">

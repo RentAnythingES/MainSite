@@ -62,6 +62,7 @@
 - [x] Launch-readiness audit aligned with the authoritative product indexability gate
 - [x] Verified business/WebSite entity graph and ItemList schema on primary Valencia, Blog, Discover and Kits hubs
 - [x] Fresh SERP review corrected outdated zero-competition claims and formalized query-to-hub ownership
+- [x] Discover neighbourhood, day-trip, attraction and event sub-hubs expose guide ItemLists and breadcrumb schema
 
 ---
 

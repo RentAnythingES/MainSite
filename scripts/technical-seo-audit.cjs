@@ -98,6 +98,9 @@ function getRequiredJsonLdTypes(url) {
   if (["/valencia", "/es/valencia", "/blog", "/discover", "/valencia/kits"].includes(pathname)) {
     return ["CollectionPage"];
   }
+  if (["/discover/neighbourhoods", "/discover/day-trips", "/discover/attractions", "/discover/events"].includes(pathname)) {
+    return ["CollectionPage", "BreadcrumbList"];
+  }
   if (/^\/(?:es\/)?product\/[^/]+$/.test(pathname)) return ["Product", "BreadcrumbList"];
   if (/^\/(?:es\/)?rental\/[^/]+$/.test(pathname)) return ["CollectionPage", "BreadcrumbList"];
   if (/^\/blog\/[^/]+$/.test(pathname)) return ["Article", "BreadcrumbList"];
