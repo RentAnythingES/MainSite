@@ -41,6 +41,7 @@ type ProductLocale = "en" | "es";
 
 type ProductLocalization = {
   product_id: string;
+  locale: ProductLocale;
   short_description: string | null;
   detail_description: string | null;
   includes_text: string | null;
@@ -53,8 +54,10 @@ type ProductLocalization = {
 
 type ProductFaqRow = {
   product_id: string;
+  locale: ProductLocale;
   question: string;
   answer: string;
+  sort_order?: number;
 };
 
 type ProductImage = {
@@ -62,6 +65,8 @@ type ProductImage = {
   image_url: string;
   alt_text: string | null;
   rights_status: "unknown" | "owned" | "licensed" | "manufacturer_approved";
+  is_primary?: boolean;
+  sort_order?: number;
 };
 
 type ProductSeoLocalization = {
@@ -189,23 +194,6 @@ async function fetchProductSeoRows(slug?: string): Promise<ProductSeoRow[]> {
   return (data || []) as unknown as ProductSeoRow[];
 }
 
-interface OptionalContentQuery<T> {
-  eq: (column: string, value: string | boolean) => OptionalContentQuery<T>;
-  in: (column: string, values: string[]) => OptionalContentQuery<T>;
-  order: (column: string, options?: { ascending?: boolean }) => Promise<{ data: T[] | null; error: unknown }>;
-}
-
-interface OptionalContentClient {
-  from: <T>(table: string) => {
-    select: (columns: string) => OptionalContentQuery<T>;
-  };
-}
-
-function isMissingOptionalContentTable(error: unknown): boolean {
-  const code = (error as { code?: string } | null)?.code;
-  return code === "42P01" || code === "PGRST205";
-}
-
 function canUseEditorialImage(image: ProductImage | undefined): image is ProductImage {
   return Boolean(
     image &&
@@ -240,88 +228,6 @@ function mergeProductEditorialContent(
   };
 }
 
-async function enrichProductWithEditorialContent(product: Product, locale: ProductLocale): Promise<Product> {
-  const canUseLocalizedContent = legacyStaticSlugs.has(product.slug) || product.contentStatus === "content_ready";
-  if (!product.id || !canUseLocalizedContent) return product;
-
-  const contentClient = supabase as unknown as OptionalContentClient;
-  const [localizationResult, faqResult, imageResult] = await Promise.all([
-    contentClient
-      .from<ProductLocalization>("product_localizations")
-      .select("*")
-      .eq("product_id", product.id)
-      .eq("locale", locale)
-      .order("updated_at", { ascending: false }),
-    contentClient
-      .from<ProductFaqRow>("product_faqs")
-      .select("question, answer")
-      .eq("product_id", product.id)
-      .eq("locale", locale)
-      .order("sort_order", { ascending: true }),
-    contentClient
-      .from<ProductImage>("product_images")
-      .select("image_url, alt_text, rights_status")
-      .eq("product_id", product.id)
-      .eq("is_primary", true)
-      .order("sort_order", { ascending: true }),
-  ]);
-
-  for (const result of [localizationResult, faqResult, imageResult]) {
-    if (result.error && !isMissingOptionalContentTable(result.error)) {
-      console.warn("[product-service] Optional editorial content fetch failed:", result.error);
-    }
-  }
-
-  const localization = localizationResult.data?.[0];
-  const primaryImage = imageResult.data?.[0];
-
-  return mergeProductEditorialContent(product, localization, faqResult.data || [], primaryImage);
-}
-
-async function enrichProductsWithEditorialContent(products: Product[], locale: ProductLocale): Promise<Product[]> {
-  const eligibleProducts = products.filter(
-    (product) => product.id && (legacyStaticSlugs.has(product.slug) || product.contentStatus === "content_ready"),
-  );
-  const productIds = eligibleProducts.map((product) => product.id as string);
-  if (productIds.length === 0) return products;
-
-  const contentClient = supabase as unknown as OptionalContentClient;
-  const [localizationResult, faqResult, imageResult] = await Promise.all([
-    contentClient
-      .from<ProductLocalization>("product_localizations")
-      .select("*")
-      .in("product_id", productIds)
-      .eq("locale", locale)
-      .order("updated_at", { ascending: false }),
-    contentClient
-      .from<ProductFaqRow>("product_faqs")
-      .select("product_id, question, answer")
-      .in("product_id", productIds)
-      .eq("locale", locale)
-      .order("sort_order", { ascending: true }),
-    contentClient
-      .from<ProductImage>("product_images")
-      .select("product_id, image_url, alt_text, rights_status")
-      .in("product_id", productIds)
-      .eq("is_primary", true)
-      .order("sort_order", { ascending: true }),
-  ]);
-
-  for (const result of [localizationResult, faqResult, imageResult]) {
-    if (result.error && !isMissingOptionalContentTable(result.error)) {
-      console.warn("[product-service] Batched editorial content fetch failed:", result.error);
-    }
-  }
-
-  return products.map((product) => {
-    if (!product.id) return product;
-    const localization = localizationResult.data?.find((row) => row.product_id === product.id);
-    const faqs = (faqResult.data || []).filter((row) => row.product_id === product.id);
-    const primaryImage = imageResult.data?.find((row) => row.product_id === product.id);
-    return mergeProductEditorialContent(product, localization, faqs, primaryImage);
-  });
-}
-
 /**
  * Map a Supabase product row + pricing to the frontend Product interface
  */
@@ -354,6 +260,26 @@ function mapToProduct(row: Record<string, unknown>): Product {
   };
 }
 
+function mapEmbeddedProduct(row: Record<string, unknown>, locale: ProductLocale): Product {
+  const product = mapToProduct(row);
+  const staticProduct = staticGetBySlug(product.slug);
+  if (staticProduct?.faqs) product.faqs = staticProduct.faqs;
+
+  const canUseLocalizedContent = legacyStaticSlugs.has(product.slug) || product.contentStatus === "content_ready";
+  if (!canUseLocalizedContent) return product;
+
+  const localization = ((row.product_localizations as ProductLocalization[] | undefined) || [])
+    .find((entry) => entry.locale === locale);
+  const faqs = ((row.product_faqs as ProductFaqRow[] | undefined) || [])
+    .filter((entry) => entry.locale === locale)
+    .sort((left, right) => (left.sort_order || 0) - (right.sort_order || 0));
+  const primaryImage = ((row.product_images as ProductImage[] | undefined) || [])
+    .filter((entry) => entry.is_primary !== false)
+    .sort((left, right) => (left.sort_order || 0) - (right.sort_order || 0))[0];
+
+  return mergeProductEditorialContent(product, localization, faqs, primaryImage);
+}
+
 /**
  * Fetch all active products from Supabase, fall back to static
  */
@@ -363,16 +289,22 @@ async function fetchProductsFromDB(city: string, locale: ProductLocale): Promise
       .select(`
         *,
         pricing_tiers (*),
-        category:categories (*)
+        category:categories (*),
+        product_localizations (*),
+        product_faqs (*),
+        product_images (*)
       `)
       .eq("city", city)
       .eq("is_active", true)
+      .eq("product_localizations.locale", locale)
+      .eq("product_faqs.locale", locale)
+      .eq("product_images.is_primary", true)
       .order("name");
 
     if (error) throw error;
     if (!data) return [];
 
-    return enrichProductsWithEditorialContent(data.map(mapToProduct), locale);
+    return data.map((row) => mapEmbeddedProduct(row, locale));
 }
 
 const getCachedProducts = unstable_cache(fetchProductsFromDB, ["public-product-list"], {
@@ -402,10 +334,16 @@ async function fetchProductBySlugFromDB(slug: string, locale: ProductLocale): Pr
       .select(`
         *,
         pricing_tiers (*),
-        category:categories (*)
+        category:categories (*),
+        product_localizations (*),
+        product_faqs (*),
+        product_images (*)
       `)
       .eq("slug", slug)
       .eq("is_active", true)
+      .eq("product_localizations.locale", locale)
+      .eq("product_faqs.locale", locale)
+      .eq("product_images.is_primary", true)
       .single();
 
     if (error || !data) {
@@ -414,14 +352,7 @@ async function fetchProductBySlugFromDB(slug: string, locale: ProductLocale): Pr
       throw error || new Error("Product not found");
     }
 
-    // Merge: DB data + static FAQs
-    const dbProduct = mapToProduct(data);
-    const staticProduct = staticGetBySlug(slug);
-    if (staticProduct?.faqs) {
-      dbProduct.faqs = staticProduct.faqs;
-    }
-
-    return enrichProductWithEditorialContent(dbProduct, locale);
+    return mapEmbeddedProduct(data, locale);
 }
 
 const getCachedProductBySlug = unstable_cache(fetchProductBySlugFromDB, ["public-product-detail"], {
@@ -451,16 +382,22 @@ async function fetchProductsByCategoryFromDB(categorySlug: string, locale: Produ
       .select(`
         *,
         pricing_tiers (*),
-        category:categories!inner (*)
+        category:categories!inner (*),
+        product_localizations (*),
+        product_faqs (*),
+        product_images (*)
       `)
       .eq("category.slug", categorySlug)
       .eq("is_active", true)
+      .eq("product_localizations.locale", locale)
+      .eq("product_faqs.locale", locale)
+      .eq("product_images.is_primary", true)
       .order("name");
 
     if (error) throw error;
     if (!data) return [];
 
-    return enrichProductsWithEditorialContent(data.map(mapToProduct), locale);
+    return data.map((row) => mapEmbeddedProduct(row, locale));
 }
 
 const getCachedProductsByCategory = unstable_cache(

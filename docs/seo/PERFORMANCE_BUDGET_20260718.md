@@ -58,6 +58,12 @@ expire the shared tag immediately, including partial-write error paths. Repeated
 public requests therefore avoid Supabase latency without delaying normal backend
 updates; the TTL only protects against changes made directly in the database.
 
+The cold catalogue path now embeds localizations, FAQs and the approved primary
+image in the core PostgREST query. This reduces an uncached category render from
+four Supabase round trips to one. A production-build test against live Supabase
+recorded 704 ms for the first category request and 117-125 ms for the next two
+requests; all returned the expected five live Travel & Outdoors products.
+
 Machine-readable baseline: `docs/seo/performance-budget-live-20260718.json`.
 
 ## Post-deployment verification
