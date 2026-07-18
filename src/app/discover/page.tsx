@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import type { Metadata } from "next";
 import { getPublishedDestinations, getDestinationsByHub } from "@/content/destinations";
+import { getHubCollectionJsonLd } from "@/lib/jsonld";
 
 export const metadata: Metadata = {
   title: "Discover Valencia — Neighbourhood, Beach & Event Guides",
@@ -55,6 +56,21 @@ export default function DiscoverHub() {
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(getHubCollectionJsonLd({
+            name: "Discover Valencia",
+            description: "Local guides to Valencia neighbourhoods, beaches, attractions, events and day trips.",
+            url: "https://rentanything.es/discover",
+            locale: "en",
+            items: allDestinations.map((destination) => ({
+              name: destination.name,
+              url: `https://rentanything.es/discover/${destination.slug}`,
+            })),
+          })),
+        }}
+      />
       {/* Breadcrumb */}
       <nav className="bg-neutral-50 border-b border-border py-3">
         <div className="container-site">

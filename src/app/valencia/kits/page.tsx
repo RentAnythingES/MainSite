@@ -3,6 +3,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import BundleCard from "@/components/BundleCard";
 import { rentalBundles } from "@/data/bundles";
+import { getHubCollectionJsonLd } from "@/lib/jsonld";
 
 export const metadata: Metadata = {
   title: "Valencia Rental Kits & Bundles",
@@ -16,6 +17,21 @@ export const metadata: Metadata = {
 export default function ValenciaKitsPage() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(getHubCollectionJsonLd({
+            name: "Valencia Rental Kits & Bundles",
+            description: "Configurable rental-kit starting points for family, beach, accessibility, remote-work and apartment stays in Valencia.",
+            url: "https://rentanything.es/valencia/kits",
+            locale: "en",
+            items: rentalBundles.map((bundle) => ({
+              name: bundle.name,
+              url: `https://rentanything.es/valencia/kits/${bundle.slug}`,
+            })),
+          })),
+        }}
+      />
       <section className="relative overflow-hidden">
         <div className="absolute inset-0">
           <Image

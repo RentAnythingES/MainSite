@@ -158,3 +158,43 @@ Beach gear is available at chiringuitos (€9-10/day for sunbed or umbrella) but
 | `alquiler scooter eléctrico movilidad Valencia` | Amigo24, Movi24 territory |
 | `alquiler aire acondicionado portátil Valencia` | **Zero competition** |
 | `alquiler monitor Valencia` | **Zero competition** |
+
+---
+
+## Search landscape update — 18 July 2026
+
+Fresh search-result checks show that two previous "zero competition" assumptions
+are no longer accurate:
+
+- **Remote work:** Monis now has a Valencia location page targeting monitor,
+  desk/chair, gaming and computer rental. The page currently uses a waitlist CTA,
+  so RentAnything still has a transactional advantage when live availability and
+  checkout are available. Source: <https://www.monis.rent/locations/valencia>.
+- **Portable AC:** Cloud of Goods now exposes a Valencia portable-air-conditioner
+  rental page, while Páginas Amarillas and commercial HVAC suppliers also surface
+  for broader Spanish queries. RentAnything should compete on residential stays,
+  verified room/setup requirements and local delivery rather than claiming no
+  alternatives. Sources: <https://www.cloudofgoods.com/valencia-es/tools_%26_equipment-rentals/portable-air-conditioner-411>
+  and <https://www.paginasamarillas.es/a/acondicionador-de-aire-portatil/valencia/xirivella/>.
+- **Baby equipment:** Baby Roller now offers direct online stroller booking,
+  delivery, station pickup, deposits and English transactional copy. Babonbo and
+  BabyQuip retain broad category/location inventory pages. Sources:
+  <https://www.babyroller.es/>,
+  <https://www.babonbo.com/en/places/spain/valencian-community/valencia/cribs-cots>,
+  and <https://www.babyquip.com/h/valencia-spain/cribs-sleep>.
+- **Mobility:** Amigo 24, Scooter a Domicilio and Cloud of Goods remain visible
+  for Valencia scooter/wheelchair intent. RentAnything's differentiation should
+  be bilingual stay planning, mixed-category kits and accommodation delivery—not
+  an unsupported claim of having no online competitors. Sources:
+  <https://www.amigo24.com/en/valencia>, <https://scooteradomicilio.com/>, and
+  <https://www.cloudofgoods.com/valencia-es/mobility-scooter-rentals>.
+- **Beach equipment:** RentAnything's Beach & Outdoor category already appears in
+  search results while the surrounding results remain fragmented between beach
+  concessions, retailers and non-Valencia rental examples. This supports keeping
+  `/rental/travel-outdoors` as the main transactional owner and strengthening it,
+  rather than creating overlapping umbrella/chair category pages.
+
+Strategic correction: Remote Work and Apartment Comfort are **low-specialist-
+competition opportunities**, not uncontested blue oceans. Copy and planning docs
+must avoid "only platform" or "zero competition" claims unless a new dated SERP
+review supports them.

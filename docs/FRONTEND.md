@@ -100,7 +100,18 @@ interface ProductWidget {
   afterSection: string;   // which section the strip appears after
 }
 ```
-The `[slug]/page.tsx` template resolves widgets via `getProductsByCategory()` and renders compact horizontal strips.
+The `[slug]/page.tsx` template resolves widgets through the cached Supabase
+product service and renders active catalogue items in compact horizontal strips.
+The rendered page depends on the shared public-product cache tag, so admin
+catalogue changes invalidate stale guide widgets.
+
+## Hub structured data
+
+The homepage publishes linked `LocalBusiness` and `WebSite` entities. Valencia,
+Blog, Discover and Kits hubs publish `CollectionPage` plus `ItemList` structured
+data from the same products, posts, destinations or bundles visible on the page.
+Use `getHubCollectionJsonLd()` for future indexable hubs rather than constructing
+inconsistent schema inline.
 
 ## Booking Flow (BookingWidget)
 Online checkout is gated by server-side Supabase availability, blocked dates, and inventory holds. Product widgets route unavailable requests to WhatsApp.

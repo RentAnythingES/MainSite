@@ -5,6 +5,7 @@ import BundleCard from "@/components/BundleCard";
 import { rentalBundles } from "@/data/bundles";
 import ProductCard from "@/components/ProductCard";
 import { getProductsFromDB } from "@/lib/product-service";
+import { getHubCollectionJsonLd } from "@/lib/jsonld";
 
 export const revalidate = 60;
 
@@ -36,6 +37,21 @@ export default async function ValenciaPage() {
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(getHubCollectionJsonLd({
+            name: "Equipment Rental in Valencia",
+            description: "Browse active rental equipment for Valencia stays, with pickup, delivery and collection options.",
+            url: "https://rentanything.es/valencia",
+            locale: "en",
+            items: products.map((product) => ({
+              name: product.name,
+              url: `https://rentanything.es/product/${product.slug}`,
+            })),
+          })),
+        }}
+      />
       {/* Hero */}
       <section className="relative overflow-hidden">
         <div className="absolute inset-0">

@@ -4,38 +4,80 @@ export function getLocalBusinessJsonLd() {
   return {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
+    "@id": "https://rentanything.es/#business",
     name: "RentAnything.es",
+    legalName: "Escalera Labs S.L.",
+    taxID: "ESB22961221",
     description:
       "Short-term rental of baby gear, mobility aids, remote work equipment & more in Valencia, Spain. Delivered to your accommodation.",
     url: "https://rentanything.es",
+    logo: "https://rentanything.es/icon.png",
+    image: "https://rentanything.es/hero/valencia-1.webp",
     telephone: "+34684708013",
     email: "hello@rentanything.es",
     address: {
       "@type": "PostalAddress",
-      addressLocality: "Valencia",
+      streetAddress: "Calle Obispo Muñoz 73",
+      postalCode: "46100",
+      addressLocality: "Burjassot",
       addressRegion: "Comunidad Valenciana",
       addressCountry: "ES",
     },
-    geo: {
-      "@type": "GeoCoordinates",
-      latitude: 39.4699,
-      longitude: -0.3763,
-    },
-    areaServed: {
-      "@type": "City",
-      name: "Valencia",
-    },
-    priceRange: "€€",
-    openingHoursSpecification: {
-      "@type": "OpeningHoursSpecification",
-      dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
-      opens: "09:00",
-      closes: "20:00",
-    },
-    sameAs: [
-      "https://instagram.com/rentanything.es",
-      "https://facebook.com/rentanything.es",
+    areaServed: [
+      { "@type": "City", name: "Valencia" },
+      { "@type": "AdministrativeArea", name: "Valencia" },
     ],
+    knowsLanguage: ["en", "es"],
+    currenciesAccepted: "EUR",
+    paymentAccepted: "Credit Card",
+    priceRange: "€€",
+  };
+}
+
+export function getWebsiteJsonLd(locale: "en" | "es" = "en") {
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "@id": "https://rentanything.es/#website",
+    name: "RentAnything.es",
+    alternateName: "Rent Anything Valencia",
+    url: "https://rentanything.es",
+    inLanguage: locale,
+    publisher: { "@id": "https://rentanything.es/#business" },
+  };
+}
+
+export function getHubCollectionJsonLd({
+  name,
+  description,
+  url,
+  locale,
+  items,
+}: {
+  name: string;
+  description: string;
+  url: string;
+  locale: "en" | "es";
+  items: Array<{ name: string; url: string }>;
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name,
+    description,
+    url,
+    inLanguage: locale,
+    isPartOf: { "@id": "https://rentanything.es/#website" },
+    mainEntity: {
+      "@type": "ItemList",
+      numberOfItems: items.length,
+      itemListElement: items.map((item, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        name: item.name,
+        url: item.url,
+      })),
+    },
   };
 }
 

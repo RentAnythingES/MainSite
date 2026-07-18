@@ -3,6 +3,7 @@ import Image from "next/image";
 import type { Metadata } from "next";
 import NewsletterSignup from "@/components/NewsletterSignup";
 import { getPublishedPosts } from "@/content/blog";
+import { getHubCollectionJsonLd } from "@/lib/jsonld";
 
 export const metadata: Metadata = {
   title: "Blog — Travel Tips, Guides & Rental Advice | RentAnything.es",
@@ -26,6 +27,21 @@ export default function BlogPage() {
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(getHubCollectionJsonLd({
+            name: "Valencia Travel Tips & Guides",
+            description: "Practical Valencia guides for families, accessibility needs, remote workers and seasonal stays.",
+            url: "https://rentanything.es/blog",
+            locale: "en",
+            items: posts.map((post) => ({
+              name: post.title,
+              url: `https://rentanything.es/blog/${post.slug}`,
+            })),
+          })),
+        }}
+      />
       {/* Hero */}
       <section className="bg-gradient-to-br from-neutral-50 to-teal-50/20 py-16 md:py-24">
         <div className="container-site">

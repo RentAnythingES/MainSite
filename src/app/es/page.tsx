@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import type { Metadata } from "next";
-import { getLocalBusinessJsonLd } from "@/lib/jsonld";
+import { getLocalBusinessJsonLd, getWebsiteJsonLd } from "@/lib/jsonld";
 import HeroCarousel from "@/components/HeroCarousel";
 import { getDictionary } from "@/i18n/getDictionary";
 
@@ -44,6 +44,10 @@ export default function HomePageES() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(getLocalBusinessJsonLd()) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(getWebsiteJsonLd("es")) }}
       />
 
       {/* ===== HERO SECTION ===== */}

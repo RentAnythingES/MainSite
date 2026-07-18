@@ -94,7 +94,10 @@ function extractInternalImages(html) {
 
 function getRequiredJsonLdTypes(url) {
   const pathname = new URL(url).pathname.replace(/\/$/, "") || "/";
-  if (pathname === "/" || pathname === "/es") return ["LocalBusiness"];
+  if (pathname === "/" || pathname === "/es") return ["LocalBusiness", "WebSite"];
+  if (["/valencia", "/es/valencia", "/blog", "/discover", "/valencia/kits"].includes(pathname)) {
+    return ["CollectionPage"];
+  }
   if (/^\/(?:es\/)?product\/[^/]+$/.test(pathname)) return ["Product", "BreadcrumbList"];
   if (/^\/(?:es\/)?rental\/[^/]+$/.test(pathname)) return ["CollectionPage", "BreadcrumbList"];
   if (/^\/blog\/[^/]+$/.test(pathname)) return ["Article", "BreadcrumbList"];

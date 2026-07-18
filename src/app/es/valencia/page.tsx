@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import ProductCard from "@/components/ProductCard";
 import { getDictionary } from "@/i18n/getDictionary";
 import { getProductsFromDB } from "@/lib/product-service";
+import { getHubCollectionJsonLd } from "@/lib/jsonld";
 
 const t = getDictionary("es");
 
@@ -32,6 +33,21 @@ export default async function ValenciaPageES() {
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(getHubCollectionJsonLd({
+            name: "Alquiler de Equipamiento en Valencia",
+            description: "Consulta equipamiento de alquiler activo para estancias en Valencia, con opciones de recogida, entrega y devolución.",
+            url: "https://rentanything.es/es/valencia",
+            locale: "es",
+            items: products.map((product) => ({
+              name: product.name,
+              url: `https://rentanything.es/es/product/${product.slug}`,
+            })),
+          })),
+        }}
+      />
       <section className="relative overflow-hidden">
         <div className="absolute inset-0">
           <Image src="/hero/valencia-3.webp" alt="Paseo marítimo de Valencia al atardecer" fill className="object-cover" priority sizes="100vw" />

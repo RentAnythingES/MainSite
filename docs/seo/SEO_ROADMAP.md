@@ -60,6 +60,8 @@
 - [x] 99-URL production technical audit with zero errors, warnings, orphan pages or broken links
 - [x] Shared product metadata-length safeguards and active-catalogue discovery widgets
 - [x] Launch-readiness audit aligned with the authoritative product indexability gate
+- [x] Verified business/WebSite entity graph and ItemList schema on primary Valencia, Blog, Discover and Kits hubs
+- [x] Fresh SERP review corrected outdated zero-competition claims and formalized query-to-hub ownership
 
 ---
 
