@@ -10,6 +10,13 @@ if (fs.existsSync(envPath)) for (const line of fs.readFileSync(envPath, "utf8").
 }
 
 const requiredEnvironment = ["NEXT_PUBLIC_SUPABASE_URL", "NEXT_PUBLIC_SUPABASE_ANON_KEY", "SUPABASE_SERVICE_ROLE_KEY", "STRIPE_SECRET_KEY", "STRIPE_WEBHOOK_SECRET", "RESEND_API_KEY", "NEXT_PUBLIC_SITE_URL"];
+const publicCategories = new Set(["baby-gear", "kids-family", "mobility", "remote-work", "home-living", "travel-outdoors"]);
+const approvedImageRights = new Set(["owned", "licensed", "manufacturer_approved"]);
+
+function getLegacySlugs() {
+  const source = fs.readFileSync(path.join(process.cwd(), "src/data/products.ts"), "utf8");
+  return new Set([...source.matchAll(/^\s+slug:\s+"([^"]+)",/gm)].map((match) => match[1]));
+}
 
 async function count(supabase, table, configure = (query) => query) {
   const result = await configure(supabase.from(table).select("id", { count: "exact", head: true }));
@@ -24,17 +31,29 @@ async function main() {
   }
   if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) throw new Error("Supabase service configuration is required");
   const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY);
+  const legacySlugs = getLegacySlugs();
   const tables = ["products", "booking_drafts", "booking_inventory_blocks", "bookings", "booking_payment_events", "booking_documents", "invoice_settings", "newsletter_subscribers", "system_incidents", "inventory_units", "inventory_unit_events", "booking_inventory_unit_assignments", "monitoring_runs"];
   for (const table of tables) report.database[table] = await count(supabase, table);
   for (const [table, status] of Object.entries(report.database)) if (!status.available) report.critical.push(`${table} is unavailable: ${status.error}`);
 
-  const { data: activeProducts, error: productError } = await supabase.from("products").select("id,slug,name,stock_total,stock_available,content_status,image_url,pricing_tiers(id)").eq("is_active", true);
+  const { data: activeProducts, error: productError } = await supabase
+    .from("products")
+    .select("id,slug,name,stock_total,stock_available,content_status,image_url,pricing_tiers(id),category:categories(slug),product_images(is_primary,rights_status)")
+    .eq("is_active", true);
   if (productError) report.critical.push(`Could not audit active products: ${productError.message}`);
   else {
     report.activeProducts = activeProducts.length;
     report.activeProductIssues = activeProducts.flatMap((product) => {
       const issues = [];
-      if (product.content_status !== "content_ready") issues.push("content is not ready");
+      const category = Array.isArray(product.category) ? product.category[0] : product.category;
+      const primaryImage = product.product_images?.find((image) => image.is_primary);
+      if (!publicCategories.has(category?.slug)) issues.push("category is not publicly supported");
+      if (
+        !legacySlugs.has(product.slug) &&
+        (product.content_status !== "content_ready" || !primaryImage || !approvedImageRights.has(primaryImage.rights_status))
+      ) {
+        issues.push("editorial approval is incomplete");
+      }
       if (!product.image_url) issues.push("image is missing");
       if (!product.stock_total || product.stock_available < 0 || product.stock_available > product.stock_total) issues.push("stock is invalid");
       if (!product.pricing_tiers?.length) issues.push("pricing is missing");

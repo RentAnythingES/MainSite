@@ -59,6 +59,9 @@ The July 18 production rerun confirms the baseline remains 178 catalogue records
 24 active products, and 20 indexable products in each language. Code-side SEO,
 image and rendered-page audits pass; the four blocked active products remain
 intentional editorial/category decisions rather than technical failures.
+The broader launch-readiness audit now applies the same legacy-content,
+public-category and approved-image rules, so it reports these four products rather
+than incorrectly flagging all 18 active legacy records with draft status.
 
 1. Complete legitimate editorial/image-rights review for the three blocked
    products; do not bypass the approval gate.

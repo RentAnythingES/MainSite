@@ -59,6 +59,7 @@
 - [x] CDN-regenerated EN/ES category pages with immediate catalogue invalidation
 - [x] 99-URL production technical audit with zero errors, warnings, orphan pages or broken links
 - [x] Shared product metadata-length safeguards and active-catalogue discovery widgets
+- [x] Launch-readiness audit aligned with the authoritative product indexability gate
 
 ---
 
