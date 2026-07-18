@@ -1,10 +1,13 @@
 import { Product } from "@/data/products";
 
+export const BUSINESS_SCHEMA_ID = "https://rentanything.es/#business";
+export const WEBSITE_SCHEMA_ID = "https://rentanything.es/#website";
+
 export function getLocalBusinessJsonLd() {
   return {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
-    "@id": "https://rentanything.es/#business",
+    "@id": BUSINESS_SCHEMA_ID,
     name: "RentAnything.es",
     legalName: "Escalera Labs S.L.",
     taxID: "ESB22961221",
@@ -38,12 +41,12 @@ export function getWebsiteJsonLd(locale: "en" | "es" = "en") {
   return {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    "@id": "https://rentanything.es/#website",
+    "@id": WEBSITE_SCHEMA_ID,
     name: "RentAnything.es",
     alternateName: "Rent Anything Valencia",
     url: "https://rentanything.es",
     inLanguage: locale,
-    publisher: { "@id": "https://rentanything.es/#business" },
+    publisher: { "@id": BUSINESS_SCHEMA_ID },
   };
 }
 
@@ -67,7 +70,7 @@ export function getHubCollectionJsonLd({
     description,
     url,
     inLanguage: locale,
-    isPartOf: { "@id": "https://rentanything.es/#website" },
+    isPartOf: { "@id": WEBSITE_SCHEMA_ID },
     mainEntity: {
       "@type": "ItemList",
       numberOfItems: items.length,
@@ -103,16 +106,16 @@ export function getProductJsonLd(
     description: product.description,
     image: product.image,
     inLanguage: locale,
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": productUrl,
+    },
     brand: {
       "@type": "Brand",
       name: product.brand,
     },
     category: product.category,
-    seller: {
-      "@type": "Organization",
-      name: "RentAnything.es",
-      url: "https://rentanything.es",
-    },
+    seller: { "@id": BUSINESS_SCHEMA_ID },
     ...(lowestPrice !== undefined && highestPrice !== undefined
       ? {
           offers: {
@@ -182,6 +185,7 @@ export function getCategoryCollectionJsonLd({
     description,
     url,
     inLanguage: locale,
+    isPartOf: { "@id": WEBSITE_SCHEMA_ID },
     mainEntity: {
       "@type": "ItemList",
       numberOfItems: products.length,

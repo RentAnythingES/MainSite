@@ -7,7 +7,7 @@ import BundleConfigurator from "@/components/BundleConfigurator";
 import ProductCard from "@/components/ProductCard";
 import { getBlogPostBySlug } from "@/content/blog";
 import { getBundleBySlug, getBundleProducts, rentalBundles } from "@/data/bundles";
-import { getBreadcrumbJsonLd } from "@/lib/jsonld";
+import { BUSINESS_SCHEMA_ID, getBreadcrumbJsonLd } from "@/lib/jsonld";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -54,6 +54,7 @@ export default async function BundlePage({ params }: Props) {
     .map((guideSlug) => getBlogPostBySlug(guideSlug))
     .filter((guide): guide is NonNullable<typeof guide> => Boolean(guide));
   const otherBundles = rentalBundles.filter((item) => item.slug !== bundle.slug).slice(0, 3);
+  const bundleUrl = `https://rentanything.es/valencia/kits/${bundle.slug}`;
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -61,6 +62,8 @@ export default async function BundlePage({ params }: Props) {
     name: bundle.name,
     description: bundle.seo.description,
     image: `https://rentanything.es${bundle.image}`,
+    url: bundleUrl,
+    mainEntityOfPage: { "@type": "WebPage", "@id": bundleUrl },
     brand: {
       "@type": "Brand",
       name: "RentAnything.es",
@@ -70,6 +73,7 @@ export default async function BundlePage({ params }: Props) {
       name: "Valencia",
     },
     category: bundle.eyebrow,
+    seller: { "@id": BUSINESS_SCHEMA_ID },
   };
 
   return (

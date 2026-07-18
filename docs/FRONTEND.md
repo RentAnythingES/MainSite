@@ -114,6 +114,11 @@ bundles visible on the page. Discover sub-hubs also publish `BreadcrumbList`.
 Use `getHubCollectionJsonLd()` for future indexable hubs rather than constructing
 inconsistent schema inline.
 
+Public products and kits reference `https://rentanything.es/#business` as their
+seller. Editorial pages use the same entity for author and publisher and reference
+`https://rentanything.es/#website`. Do not create anonymous organization objects
+or publish `Event` schema for an evergreen event guide without occurrence dates.
+
 ## Booking Flow (BookingWidget)
 Online checkout is gated by server-side Supabase availability, blocked dates, and inventory holds. Product widgets route unavailable requests to WhatsApp.
 

@@ -63,6 +63,7 @@
 - [x] Verified business/WebSite entity graph and ItemList schema on primary Valencia, Blog, Discover and Kits hubs
 - [x] Fresh SERP review corrected outdated zero-competition claims and formalized query-to-hub ownership
 - [x] Discover neighbourhood, day-trip, attraction and event sub-hubs expose guide ItemLists and breadcrumb schema
+- [x] Product, kit, category and editorial schema connected to stable business/WebSite IDs; evergreen event guides corrected to Article markup
 
 ---
 

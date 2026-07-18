@@ -106,7 +106,7 @@ function getRequiredJsonLdTypes(url) {
   if (/^\/blog\/[^/]+$/.test(pathname)) return ["Article", "BreadcrumbList"];
   if (/^\/valencia\/kits\/[^/]+$/.test(pathname)) return ["Product", "BreadcrumbList"];
   if (/^\/discover\/[^/]+$/.test(pathname) && !["/discover/neighbourhoods", "/discover/day-trips", "/discover/attractions", "/discover/events"].includes(pathname)) {
-    return ["BreadcrumbList", "TouristDestination|Event"];
+    return ["BreadcrumbList", "TouristDestination|Article"];
   }
   return [];
 }

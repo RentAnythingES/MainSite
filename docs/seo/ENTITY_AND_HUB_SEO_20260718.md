@@ -50,6 +50,12 @@ pickup/delivery configuration and connected kits.
 - Kits: `CollectionPage` with the available scenario-led kit inventory.
 - Stable entity IDs connect hubs to `https://rentanything.es/#website` and
   `https://rentanything.es/#business`.
+- Product sellers, kit sellers, article authors and article publishers reference
+  the same verified business ID rather than creating anonymous duplicate entities.
+- Product, kit and article markup identifies its canonical page as the main entity
+  page. Category collections and articles reference the shared WebSite entity.
+- Evergreen event planning guides use `Article` markup. A dated `Event` entity is
+  reserved for pages that represent a specific occurrence with verified dates.
 
 Unverified social profiles and assumed opening hours were removed from business
 schema. The legal entity, CIF, address, service area, languages and currency are

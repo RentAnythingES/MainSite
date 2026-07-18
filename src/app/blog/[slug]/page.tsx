@@ -8,7 +8,7 @@ import {
   isPublished,
   type BlogPost,
 } from "@/content/blog";
-import { getBreadcrumbJsonLd } from "@/lib/jsonld";
+import { BUSINESS_SCHEMA_ID, getBreadcrumbJsonLd, WEBSITE_SCHEMA_ID } from "@/lib/jsonld";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -46,22 +46,21 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 function getArticleJsonLd(post: BlogPost) {
+  const postUrl = `https://rentanything.es/blog/${post.slug}`;
   return {
     "@context": "https://schema.org",
     "@type": "Article",
     headline: post.title,
     description: post.description,
     datePublished: post.date,
-    author: {
-      "@type": "Organization",
-      name: "RentAnything.es",
-      url: "https://rentanything.es",
+    inLanguage: "en",
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": postUrl,
     },
-    publisher: {
-      "@type": "Organization",
-      name: "RentAnything.es",
-      url: "https://rentanything.es",
-    },
+    isPartOf: { "@id": WEBSITE_SCHEMA_ID },
+    author: { "@id": BUSINESS_SCHEMA_ID },
+    publisher: { "@id": BUSINESS_SCHEMA_ID },
     ...(post.heroImage && {
       image: `https://rentanything.es${post.heroImage}`,
     }),

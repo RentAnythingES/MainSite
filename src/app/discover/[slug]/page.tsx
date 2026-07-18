@@ -8,7 +8,7 @@ import {
 } from "@/content/destinations";
 import { getProductsByCategoryFromDB } from "@/lib/product-service";
 import { getBlogPostBySlug } from "@/content/blog";
-import { getBreadcrumbJsonLd } from "@/lib/jsonld";
+import { BUSINESS_SCHEMA_ID, getBreadcrumbJsonLd, WEBSITE_SCHEMA_ID } from "@/lib/jsonld";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -142,19 +142,29 @@ export default async function DiscoverPage({ params }: Props) {
     .filter(Boolean);
 
   // JSON-LD
+  const destinationUrl = `https://rentanything.es/discover/${dest.slug}`;
   const jsonLd = dest.type === "event"
     ? {
         "@context": "https://schema.org",
-        "@type": "Event",
-        name: dest.name,
+        "@type": "Article",
+        headline: dest.name,
         description: dest.description,
-        location: { "@type": "Place", name: "Valencia, Spain" },
+        datePublished: dest.date,
+        dateModified: dest.lastUpdated,
+        inLanguage: "en",
+        mainEntityOfPage: { "@type": "WebPage", "@id": destinationUrl },
+        isPartOf: { "@id": WEBSITE_SCHEMA_ID },
+        author: { "@id": BUSINESS_SCHEMA_ID },
+        publisher: { "@id": BUSINESS_SCHEMA_ID },
+        ...(dest.heroImage && { image: `https://rentanything.es${dest.heroImage}` }),
       }
     : {
         "@context": "https://schema.org",
         "@type": "TouristDestination",
         name: dest.name,
         description: dest.description,
+        url: destinationUrl,
+        mainEntityOfPage: { "@type": "WebPage", "@id": destinationUrl },
         touristType: dest.audiences,
       };
 
