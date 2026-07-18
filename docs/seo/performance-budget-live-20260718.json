@@ -1,0 +1,133 @@
+{
+  "generatedAt": "2026-07-18T08:16:32.359Z",
+  "baseUrl": "https://www.rentanything.es",
+  "budgets": {
+    "htmlBytes": 120000,
+    "scriptBytes": 800000,
+    "stylesheetBytes": 120000,
+    "preloadImageBytes": 150000,
+    "responseTimeMs": 2000
+  },
+  "summary": {
+    "pages": 5,
+    "pagesWithErrors": 0,
+    "pagesWithWarnings": 0,
+    "maxHtmlBytes": 90969,
+    "maxScriptBytes": 706069,
+    "maxStylesheetBytes": 81165,
+    "maxPreloadImageBytes": 75935,
+    "maxResponseTimeMs": 1997
+  },
+  "pages": [
+    {
+      "route": "/",
+      "url": "https://www.rentanything.es/",
+      "document": {
+        "status": 200,
+        "bytes": 75935,
+        "responseTimeMs": 1187,
+        "cacheControl": "private, no-cache, no-store, max-age=0, must-revalidate"
+      },
+      "resourceCounts": {
+        "scripts": 10,
+        "stylesheets": 1,
+        "preloadImages": 1
+      },
+      "totals": {
+        "scriptBytes": 682560,
+        "stylesheetBytes": 81165,
+        "largestPreloadImageBytes": 75935
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "route": "/rental/travel-outdoors",
+      "url": "https://www.rentanything.es/rental/travel-outdoors",
+      "document": {
+        "status": 200,
+        "bytes": 71737,
+        "responseTimeMs": 1997,
+        "cacheControl": "private, no-cache, no-store, max-age=0, must-revalidate"
+      },
+      "resourceCounts": {
+        "scripts": 9,
+        "stylesheets": 1,
+        "preloadImages": 1
+      },
+      "totals": {
+        "scriptBytes": 681419,
+        "stylesheetBytes": 81165,
+        "largestPreloadImageBytes": 75935
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "route": "/product/beach-umbrella-set",
+      "url": "https://www.rentanything.es/product/beach-umbrella-set",
+      "document": {
+        "status": 200,
+        "bytes": 80853,
+        "responseTimeMs": 1707,
+        "cacheControl": "private, no-cache, no-store, max-age=0, must-revalidate"
+      },
+      "resourceCounts": {
+        "scripts": 10,
+        "stylesheets": 1,
+        "preloadImages": 1
+      },
+      "totals": {
+        "scriptBytes": 706069,
+        "stylesheetBytes": 81165,
+        "largestPreloadImageBytes": 75935
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "route": "/valencia/kits/family-beach-kit",
+      "url": "https://www.rentanything.es/valencia/kits/family-beach-kit",
+      "document": {
+        "status": 200,
+        "bytes": 83278,
+        "responseTimeMs": 210,
+        "cacheControl": "private, no-cache, no-store, max-age=0, must-revalidate"
+      },
+      "resourceCounts": {
+        "scripts": 10,
+        "stylesheets": 1,
+        "preloadImages": 1
+      },
+      "totals": {
+        "scriptBytes": 688388,
+        "stylesheetBytes": 81165,
+        "largestPreloadImageBytes": 75935
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "route": "/discover/malvarrosa-beach",
+      "url": "https://www.rentanything.es/discover/malvarrosa-beach",
+      "document": {
+        "status": 200,
+        "bytes": 90969,
+        "responseTimeMs": 275,
+        "cacheControl": "private, no-cache, no-store, max-age=0, must-revalidate"
+      },
+      "resourceCounts": {
+        "scripts": 9,
+        "stylesheets": 1,
+        "preloadImages": 1
+      },
+      "totals": {
+        "scriptBytes": 681419,
+        "stylesheetBytes": 81165,
+        "largestPreloadImageBytes": 75935
+      },
+      "errors": [],
+      "warnings": []
+    }
+  ]
+}

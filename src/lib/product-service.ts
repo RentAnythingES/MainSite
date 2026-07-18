@@ -38,6 +38,7 @@ function normalizeImageUrl(value: unknown): string {
 type ProductLocale = "en" | "es";
 
 type ProductLocalization = {
+  product_id: string;
   short_description: string | null;
   detail_description: string | null;
   includes_text: string | null;
@@ -49,11 +50,13 @@ type ProductLocalization = {
 };
 
 type ProductFaqRow = {
+  product_id: string;
   question: string;
   answer: string;
 };
 
 type ProductImage = {
+  product_id: string;
   image_url: string;
   alt_text: string | null;
   rights_status: "unknown" | "owned" | "licensed" | "manufacturer_approved";
@@ -186,6 +189,7 @@ async function fetchProductSeoRows(slug?: string): Promise<ProductSeoRow[]> {
 
 interface OptionalContentQuery<T> {
   eq: (column: string, value: string | boolean) => OptionalContentQuery<T>;
+  in: (column: string, values: string[]) => OptionalContentQuery<T>;
   order: (column: string, options?: { ascending?: boolean }) => Promise<{ data: T[] | null; error: unknown }>;
 }
 
@@ -206,6 +210,32 @@ function canUseEditorialImage(image: ProductImage | undefined): image is Product
     ["owned", "licensed", "manufacturer_approved"].includes(image.rights_status) &&
     normalizeImageUrl(image.image_url) !== "/products/placeholder.png"
   );
+}
+
+function mergeProductEditorialContent(
+  product: Product,
+  localization: ProductLocalization | undefined,
+  faqRows: ProductFaqRow[],
+  primaryImage: ProductImage | undefined,
+): Product {
+  const faqs: ProductFAQ[] = faqRows
+    .filter((faq) => faq.question.trim() && faq.answer.trim())
+    .map((faq) => ({ question: faq.question, answer: faq.answer }));
+
+  return {
+    ...product,
+    description: localization?.short_description?.trim() || product.description,
+    detailDescription: localization?.detail_description?.trim() || undefined,
+    includesText: localization?.includes_text?.trim() || undefined,
+    constraintsText: localization?.constraints_text?.trim() || undefined,
+    deliverySetupNote: localization?.delivery_setup_note?.trim() || undefined,
+    careNote: localization?.care_note?.trim() || undefined,
+    seoTitle: localization?.seo_title?.trim() || undefined,
+    seoDescription: localization?.seo_description?.trim() || undefined,
+    image: canUseEditorialImage(primaryImage) ? normalizeImageUrl(primaryImage.image_url) : product.image,
+    imageAlt: canUseEditorialImage(primaryImage) ? primaryImage.alt_text?.trim() || product.name : product.name,
+    faqs: faqs.length > 0 ? faqs : product.faqs,
+  };
 }
 
 async function enrichProductWithEditorialContent(product: Product, locale: ProductLocale): Promise<Product> {
@@ -241,25 +271,53 @@ async function enrichProductWithEditorialContent(product: Product, locale: Produ
   }
 
   const localization = localizationResult.data?.[0];
-  const faqs: ProductFAQ[] = (faqResult.data || [])
-    .filter((faq) => faq.question.trim() && faq.answer.trim())
-    .map((faq) => ({ question: faq.question, answer: faq.answer }));
   const primaryImage = imageResult.data?.[0];
 
-  return {
-    ...product,
-    description: localization?.short_description?.trim() || product.description,
-    detailDescription: localization?.detail_description?.trim() || undefined,
-    includesText: localization?.includes_text?.trim() || undefined,
-    constraintsText: localization?.constraints_text?.trim() || undefined,
-    deliverySetupNote: localization?.delivery_setup_note?.trim() || undefined,
-    careNote: localization?.care_note?.trim() || undefined,
-    seoTitle: localization?.seo_title?.trim() || undefined,
-    seoDescription: localization?.seo_description?.trim() || undefined,
-    image: canUseEditorialImage(primaryImage) ? normalizeImageUrl(primaryImage.image_url) : product.image,
-    imageAlt: canUseEditorialImage(primaryImage) ? primaryImage.alt_text?.trim() || product.name : product.name,
-    faqs: faqs.length > 0 ? faqs : product.faqs,
-  };
+  return mergeProductEditorialContent(product, localization, faqResult.data || [], primaryImage);
+}
+
+async function enrichProductsWithEditorialContent(products: Product[], locale: ProductLocale): Promise<Product[]> {
+  const eligibleProducts = products.filter(
+    (product) => product.id && (legacyStaticSlugs.has(product.slug) || product.contentStatus === "content_ready"),
+  );
+  const productIds = eligibleProducts.map((product) => product.id as string);
+  if (productIds.length === 0) return products;
+
+  const contentClient = supabase as unknown as OptionalContentClient;
+  const [localizationResult, faqResult, imageResult] = await Promise.all([
+    contentClient
+      .from<ProductLocalization>("product_localizations")
+      .select("*")
+      .in("product_id", productIds)
+      .eq("locale", locale)
+      .order("updated_at", { ascending: false }),
+    contentClient
+      .from<ProductFaqRow>("product_faqs")
+      .select("product_id, question, answer")
+      .in("product_id", productIds)
+      .eq("locale", locale)
+      .order("sort_order", { ascending: true }),
+    contentClient
+      .from<ProductImage>("product_images")
+      .select("product_id, image_url, alt_text, rights_status")
+      .in("product_id", productIds)
+      .eq("is_primary", true)
+      .order("sort_order", { ascending: true }),
+  ]);
+
+  for (const result of [localizationResult, faqResult, imageResult]) {
+    if (result.error && !isMissingOptionalContentTable(result.error)) {
+      console.warn("[product-service] Batched editorial content fetch failed:", result.error);
+    }
+  }
+
+  return products.map((product) => {
+    if (!product.id) return product;
+    const localization = localizationResult.data?.find((row) => row.product_id === product.id);
+    const faqs = (faqResult.data || []).filter((row) => row.product_id === product.id);
+    const primaryImage = imageResult.data?.find((row) => row.product_id === product.id);
+    return mergeProductEditorialContent(product, localization, faqs, primaryImage);
+  });
 }
 
 /**
@@ -317,7 +375,7 @@ export async function getProductsFromDB(city = "valencia", locale: ProductLocale
     if (error) throw error;
     if (!data) return [];
 
-    return Promise.all(data.map((row) => enrichProductWithEditorialContent(mapToProduct(row), locale)));
+    return enrichProductsWithEditorialContent(data.map(mapToProduct), locale);
   } catch (err) {
     console.warn("[product-service] Supabase fetch failed, using static fallback:", err);
     return staticProducts.filter((p) => p.city === city);
@@ -396,7 +454,7 @@ export async function getProductsByCategoryFromDB(categorySlug: string, locale: 
     if (error) throw error;
     if (!data) return [];
 
-    return Promise.all(data.map((row) => enrichProductWithEditorialContent(mapToProduct(row), locale)));
+    return enrichProductsWithEditorialContent(data.map(mapToProduct), locale);
   } catch (err) {
     console.warn("[product-service] Supabase category fetch failed:", categorySlug, err);
     return staticGetByCategory(categorySlug);
