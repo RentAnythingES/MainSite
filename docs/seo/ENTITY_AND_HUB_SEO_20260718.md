@@ -67,3 +67,10 @@ represented using confirmed business information.
 4. Build authority off-site through the Google Business Profile, accommodation
    partners and relevant Valencia/family/accessibility directories.
 
+## Production verification
+
+Deployed as commit `967896a` on 18 July 2026. The post-deployment technical crawl
+covered all 99 sitemap URLs and returned zero pages with errors or warnings, zero
+orphan pages, zero broken internal links, and zero broken internal images. It also
+confirmed `LocalBusiness` plus `WebSite` on both homepages and `CollectionPage`
+schema on Valencia EN/ES, Blog, Discover and Kits.
