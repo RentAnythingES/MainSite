@@ -82,6 +82,13 @@ templates was 1,400 ms. These are individual network samples rather than a field
 percentile, so GA4 Core Web Vitals remains the source for long-term user-impact
 assessment.
 
+After commit `b7a2367`, the first request to the regenerated Travel & Outdoors
+page completed in 960 ms with `X-Vercel-Cache: PRERENDER`. The following ten CDN
+hits averaged 154 ms, with 122 ms p50, 233 ms p90 and a 96-248 ms range. The
+Spanish equivalent returned the expected Spanish content, `Content-Language: es`
+and a prerendered response. This resolves the 1,248-2,084 ms request-time category
+latency for normal visitors.
+
 ## Interpreting results
 
 Response latency is intentionally a warning because a single remote request can
