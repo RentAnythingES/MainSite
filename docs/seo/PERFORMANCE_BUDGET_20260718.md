@@ -54,6 +54,15 @@ pattern from homepage and category rendering.
 
 Machine-readable baseline: `docs/seo/performance-budget-live-20260718.json`.
 
+## Post-deployment verification
+
+After commit `0106e88` reached production, the same five-template audit passed
+with zero errors and zero warnings. The category response improved from 1,997 ms
+in the saved baseline to 1,248 ms, while the slowest document across all five
+templates was 1,400 ms. These are individual network samples rather than a field
+percentile, so GA4 Core Web Vitals remains the source for long-term user-impact
+assessment.
+
 ## Interpreting results
 
 Response latency is intentionally a warning because a single remote request can
