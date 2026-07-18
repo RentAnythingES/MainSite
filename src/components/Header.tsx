@@ -20,6 +20,8 @@ export default function Header() {
     pathname === "/blog/valencia-summer-survival-guide" ||
     pathname === "/blog/valencia-with-kids-complete-guide" ||
     pathname === "/blog/wheelchair-accessibility-valencia" ||
+    pathname === "/blog/digital-nomad-guide-valencia" ||
+    pathname === "/blog/best-day-trips-from-valencia" ||
     pathname.startsWith("/product/") ||
     pathname.startsWith("/rental/");
 

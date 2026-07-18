@@ -486,4 +486,243 @@ export const spanishBlogPosts: BlogPost[] = [
       },
     ],
   },
+  {
+    slug: "digital-nomad-guide-valencia",
+    title: "Nómadas digitales en Valencia: guía práctica 2026",
+    h1: "Guía práctica para teletrabajar desde Valencia",
+    description:
+      "Organiza una estancia de teletrabajo en Valencia: visado, barrios, conexión, coworking y cómo montar un espacio de trabajo cómodo en tu alojamiento.",
+    category: "guide",
+    keywords: [
+      "nómadas digitales Valencia",
+      "teletrabajar desde Valencia",
+      "trabajo remoto Valencia",
+      "coworking Valencia",
+      "visado nómada digital España",
+    ],
+    date: "2026-07-18",
+    readTime: "9 min de lectura",
+    excerpt:
+      "Visado, alojamiento, conexión y ergonomía: lo que debes comprobar antes de convertir una estancia en Valencia en una base de trabajo real.",
+    tags: ["nómadas digitales", "teletrabajo", "Valencia", "coworking", "guía"],
+    sections: [
+      {
+        heading: "Valencia como base de trabajo, no sólo de vacaciones",
+        paragraphs: [
+          "Valencia ofrece una combinación atractiva para estancias de trabajo remoto: tamaño manejable, barrios con servicios, playa urbana y conexiones ferroviarias con otras ciudades. Aun así, una buena experiencia depende menos de la imagen mediterránea y más de resolver bien cuatro cuestiones: situación legal, alojamiento, internet y ergonomía.",
+          "Una semana de correos desde una mesa de comedor no exige la misma preparación que dos meses de videollamadas. Antes de reservar, define cuántas horas vas a trabajar, qué equipo necesitas, si compartirás vivienda y cuánto ruido puedes tolerar. Esa lista permite escoger barrio y alojamiento con criterios objetivos.",
+          "También conviene separar el presupuesto turístico del presupuesto de instalación. Una tarifa de alojamiento aparentemente barata puede dejar de serlo si obliga a pagar coworking cada día o a desplazarse para encontrar una conexión estable.",
+        ],
+      },
+      {
+        heading: "Visado y residencia: qué comprobar antes de llegar",
+        paragraphs: [
+          "Las condiciones dependen de tu nacionalidad, duración de estancia y relación laboral. Los ciudadanos de la Unión Europea tienen un marco distinto al de nacionales de terceros países y pueden existir obligaciones de registro aunque no se necesite un visado de entrada.",
+          "España dispone de un visado de residencia para teletrabajo internacional. El <a href=\"https://www.exteriores.gob.es/en/ServiciosAlCiudadano/Paginas/Servicios-consulares.aspx?scca=Visados&scco=Estados+Unidos&scd=180&scs=Visados+Nacionales+-+Visado+de+residencia+para+teletrabajo+%28n%C3%B3mada+digital%29\" target=\"_blank\" rel=\"noopener\">Ministerio de Asuntos Exteriores</a> explica que se dirige a personas que trabajan a distancia para empresas situadas fuera de España. Para profesionales por cuenta propia, el trabajo para clientes españoles está limitado a una parte de la actividad.",
+          "Los requisitos incluyen recursos económicos vinculados al salario mínimo, relación profesional previa, cualificación o experiencia, cobertura sanitaria y obligaciones de Seguridad Social. Las cifras y documentos pueden cambiar; confirma el consulado competente y solicita asesoramiento migratorio y fiscal antes de tomar decisiones. Este artículo no sustituye una revisión legal.",
+        ],
+      },
+      {
+        heading: "Alojamiento e internet: preguntas antes de reservar",
+        paragraphs: [
+          "No aceptes únicamente la frase «wifi rápido». Pide una captura reciente de una prueba de velocidad realizada en la habitación donde trabajarás y pregunta por velocidad de subida, estabilidad y acceso al router. Una videollamada depende tanto de la latencia y la subida como de la cifra máxima de descarga.",
+          "Confirma también si la conexión es privada o compartida con otros apartamentos, dónde está el router y si existe cobertura móvil de respaldo. Para trabajo sensible, utiliza las medidas de seguridad exigidas por tu empresa y evita depender de redes públicas abiertas.",
+          "Revisa fotografías del puesto de trabajo. Una mesa decorativa puede ser demasiado estrecha para portátil y monitor; una silla de comedor puede resultar incómoda después de varias jornadas. Comprueba enchufes, luz natural, persianas, climatización y ruido de la calle o de otras habitaciones.",
+        ],
+      },
+      {
+        heading: "Coworking o espacio de trabajo en casa",
+        paragraphs: [
+          "El coworking aporta estructura, salas de reuniones y contacto social. Es útil si necesitas separar trabajo y alojamiento o si viajas solo. Antes de contratar, comprueba horarios, política de llamadas, cabinas, pases de prueba y si el puesto es fijo o rotatorio.",
+          "Trabajar desde el alojamiento ofrece privacidad y elimina desplazamientos, pero requiere una configuración adecuada. Un <a href=\"/es/product/monitor-27\">monitor de 27 pulgadas</a>, una <a href=\"/es/product/ergonomic-chair\">silla ergonómica</a> o un <a href=\"/es/product/standing-desk\">escritorio regulable</a> pueden convertir una vivienda temporal en un puesto funcional sin comprar mobiliario para después abandonarlo.",
+          "Para una estancia larga, compara el coste completo. Algunos días de coworking pueden ser suficientes para reuniones y vida social, mientras el trabajo concentrado se realiza en casa. La mejor solución puede ser híbrida, no una elección exclusiva.",
+        ],
+      },
+      {
+        heading: "Barrios según tu forma de trabajar",
+        paragraphs: [
+          "Ruzafa y Eixample permiten ir caminando al centro y concentran restauración y servicios. También pueden tener más ruido nocturno y precios altos. Visita la calle concreta a distintas horas o consulta reseñas recientes del edificio antes de comprometerte.",
+          "Benimaclet tiene ambiente universitario y conexiones de metro y tranvía. Cabanyal acerca la estancia a la playa y al tranvía, pero no todos sus edificios ofrecen el mismo aislamiento, ascensor o calidad de reforma. En barrios residenciales más alejados suele haber más espacio, aunque aumenta la dependencia del transporte.",
+          "No elijas sólo por la reputación del barrio. Mide el trayecto hasta coworking, supermercado, gimnasio o colegio, según tus prioridades. Para teletrabajo, la calidad de una vivienda y su calle concreta suele importar más que una etiqueta de moda.",
+        ],
+      },
+      {
+        heading: "Lista de comprobación para una estancia productiva",
+        paragraphs: [
+          "Antes de pagar el alojamiento, confirma internet, mesa, silla, climatización, ruido, enchufes y política de visitas. Si trabajas con información confidencial, pregunta si puedes cerrar la habitación y cómo se gestiona el acceso a la vivienda.",
+          "Lleva adaptadores, auriculares y cualquier periférico específico. El equipo voluminoso puede alquilarse localmente. Consulta nuestro <a href=\"/es/rental/remote-work\">equipamiento para trabajo remoto en Valencia</a> y comprueba medidas y conexiones antes de confirmar.",
+          "Planifica también el final de la estancia: devolución del equipo, última jornada laboral, salida del alojamiento y traslado. Resolver esa logística con antelación evita convertir el último día en una carrera entre una videollamada y el aeropuerto.",
+        ],
+      },
+    ],
+    faqs: [
+      {
+        question: "¿Necesito visado para teletrabajar desde Valencia?",
+        answer:
+          "Depende de tu nacionalidad, duración y actividad. Los ciudadanos de la UE siguen un marco distinto al de terceros países. Consulta el consulado español competente y asesoramiento profesional antes de viajar o establecer residencia fiscal.",
+      },
+      {
+        question: "¿Cómo compruebo el internet de un apartamento?",
+        answer:
+          "Solicita una prueba reciente realizada en la zona de trabajo y revisa descarga, subida y latencia. Pregunta si la red es privada o compartida, dónde está el router y qué alternativa existe si falla.",
+      },
+      {
+        question: "¿Es mejor coworking o trabajar desde el alojamiento?",
+        answer:
+          "El coworking ofrece comunidad y salas; el alojamiento aporta privacidad y elimina trayectos. Para muchas estancias funciona una combinación: puesto bien equipado en casa y pases de coworking para reuniones o contacto social.",
+      },
+      {
+        question: "¿Puedo alquilar monitor y silla en Valencia?",
+        answer:
+          "Sí, sujeto a disponibilidad. Confirma tamaño, conexiones, espacio del alojamiento, acceso para la entrega y fechas. También puedes combinar monitor, silla y escritorio según la duración de la estancia.",
+      },
+      {
+        question: "¿Qué barrio de Valencia es mejor para teletrabajar?",
+        answer:
+          "Depende de ruido, presupuesto y desplazamientos. Ruzafa y Eixample son céntricos; Benimaclet tiene ambiente universitario; Cabanyal acerca la playa. La conexión y calidad de la vivienda concreta son más importantes que el nombre del barrio.",
+      },
+    ],
+    crossLinks: [
+      {
+        title: "Equipamiento para trabajo remoto",
+        href: "/es/rental/remote-work",
+        description: "Monitores, escritorios y sillas para alojamientos temporales",
+      },
+      {
+        title: "Monitor de 27 pulgadas",
+        href: "/es/product/monitor-27",
+        description: "Más espacio de pantalla para jornadas de trabajo prolongadas",
+      },
+      {
+        title: "Silla ergonómica",
+        href: "/es/product/ergonomic-chair",
+        description: "Apoyo ajustable para un puesto temporal más cómodo",
+      },
+      {
+        title: "Escritorio regulable",
+        href: "/es/product/standing-desk",
+        description: "Alterna posiciones sin comprar mobiliario permanente",
+      },
+    ],
+  },
+  {
+    slug: "best-day-trips-from-valencia",
+    title: "Mejores excursiones desde Valencia: 4 escapadas",
+    h1: "Cuatro excursiones de un día desde Valencia",
+    description:
+      "Compara cuatro excursiones desde Valencia: Xàtiva, Sagunto, Requena y la Albufera, con transporte, accesos y consejos para organizar el día.",
+    category: "guide",
+    keywords: [
+      "excursiones desde Valencia",
+      "qué ver cerca de Valencia",
+      "Xàtiva desde Valencia",
+      "Sagunto desde Valencia",
+      "Albufera desde Valencia",
+      "Requena desde Valencia",
+    ],
+    date: "2026-07-18",
+    readTime: "10 min de lectura",
+    excerpt:
+      "Castillos, patrimonio romano, bodegas y naturaleza: cuatro escapadas desde Valencia con una planificación realista del transporte y los accesos.",
+    tags: ["excursiones", "Valencia", "Xàtiva", "Sagunto", "Requena", "Albufera"],
+    sections: [
+      {
+        heading: "Cómo elegir una excursión desde Valencia",
+        paragraphs: [
+          "Xàtiva, Sagunto, Requena y la Albufera ofrecen cuatro experiencias muy distintas sin cambiar de alojamiento. La elección depende de algo más que la distancia: desnivel, horarios de monumentos, frecuencia del transporte y temperatura pueden transformar por completo el día.",
+          "Renfe conecta Xàtiva mediante la línea C-2, Sagunto mediante la C-6 y Requena mediante la C-3. La <a href=\"https://www.renfe.com/es/es/cercanias/cercanias-valencia/lineas\" target=\"_blank\" rel=\"noopener\">red de Cercanías Valencia</a> puede sufrir obras o cambios de origen, así que consulta el trayecto concreto el mismo día y no bases una conexión ajustada en tiempos orientativos.",
+          "Para la Albufera, las líneas 24 y 25 de EMT conectan la ciudad con distintas zonas del parque. Ninguna opción es universalmente mejor: Xàtiva y Sagunto implican cuestas; Requena requiere reservar visitas si quieres entrar en una bodega; la Albufera depende más del clima y de los horarios de autobús y barca.",
+        ],
+      },
+      {
+        heading: "Xàtiva: fortaleza, vistas y una subida exigente",
+        paragraphs: [
+          "El castillo de Xàtiva ocupa una cresta sobre la ciudad y reúne dos fortificaciones conectadas. Desde el casco histórico se puede subir a pie, utilizar servicios turísticos cuando estén operativos o acceder en vehículo bajo determinadas condiciones. La pendiente y la exposición al sol hacen recomendable comenzar temprano.",
+          "La web oficial de <a href=\"https://xativaturismo.com/entradas-castillo/\" target=\"_blank\" rel=\"noopener\">Xàtiva Turismo</a> publica horarios estacionales, entradas y restricciones de acceso. También advierte que el castillo no es accesible para sillas de ruedas ni cochecitos. No prometas una visita completa a una persona con movilidad reducida sin revisar alternativas en el casco histórico.",
+          "Además del castillo, la ciudad conserva museos, fuentes y espacios vinculados a la familia Borja. Reserva tiempo para bajar con calma y comer en el centro. En verano, lleva agua suficiente: el recorrido combina piedra, desnivel y pocas zonas de sombra.",
+        ],
+      },
+      {
+        heading: "Sagunto: patrimonio romano en una escapada flexible",
+        paragraphs: [
+          "Sagunto es una opción práctica para combinar casco histórico, teatro romano y castillo. La línea C-6 llega desde València y permite plantear una visita de medio día o una jornada completa, según los monumentos y el ritmo del grupo.",
+          "El teatro está situado en la ladera y el castillo se extiende por la parte alta. La oficina de turismo provincial reúne información sobre el <a href=\"https://turisme.dival.es/ca/destino/sagunt/\" target=\"_blank\" rel=\"noopener\">patrimonio de Sagunto</a>, incluidos el teatro, el museo histórico, la judería y otros espacios arqueológicos. Los horarios varían por temporada y algunos recintos cierran antes los domingos o festivos.",
+          "La subida vuelve a ser el principal factor. Con niños pequeños, prioriza menos puntos y evita las horas centrales. Con movilidad reducida, confirma accesos de cada monumento: que la estación o una plaza sean accesibles no significa que el recorrido completo hasta la fortaleza lo sea.",
+        ],
+      },
+      {
+        heading: "Requena: casco medieval y cultura del vino",
+        paragraphs: [
+          "Requena combina el barrio de La Villa, cuevas subterráneas y el paisaje vitivinícola de Utiel-Requena. La línea C-3 forma parte de la red de Cercanías, pero el servicio y la estación de salida pueden cambiar; comprueba Renfe antes de viajar y deja margen para el regreso.",
+          "Las Cuevas de la Villa y las bodegas tienen aforo y horarios propios. Si la cata es una parte esencial de la excursión, reserva directamente con el espacio y confirma cómo llegar desde la estación. Muchas bodegas están fuera del centro urbano y no deben darse por accesibles a pie.",
+          "La visita funciona también sin cata: las calles de La Villa, su arquitectura y los museos ofrecen un día cultural. Si vas a consumir alcohol, utiliza transporte público o conductor designado y revisa la última conexión antes de empezar la actividad.",
+        ],
+      },
+      {
+        heading: "Albufera: naturaleza, arroz y transporte por autobús",
+        paragraphs: [
+          "La Albufera es la escapada más cercana y la que más depende de escoger bien la parada. Visit València indica que las líneas 24 y 25 conectan con el parque: la 24 llega a El Palmar y la 25 continúa hacia El Perellonet. Consulta la <a href=\"https://www.visitvalencia.com/en/what-to-see-valencia/albufera-natural-park\" target=\"_blank\" rel=\"noopener\">información oficial del parque</a> y los horarios actuales de EMT.",
+          "El Palmar concentra restaurantes y embarcaderos. Una ruta en barca puede ofrecer vistas de arrozales y aves, especialmente al final de la tarde, pero debe reservarse con un operador y está sujeta a condiciones meteorológicas. Pregunta por chalecos, acceso, duración y punto exacto de embarque.",
+          "Si el objetivo es comer arroz, reserva mesa y confirma el tipo de menú. «Paella» no describe todos los arroces locales y los tiempos de preparación son largos. Evita programar una salida de autobús inmediatamente después de la hora prevista de la comida.",
+        ],
+      },
+      {
+        heading: "Planificación práctica para familias y movilidad",
+        paragraphs: [
+          "Consulta transporte de ida y vuelta, previsión meteorológica, horarios oficiales y reservas la víspera. Lleva agua, batería externa, protección solar y calzado adecuado. En castillos y cascos históricos, el desnivel importa más que la distancia indicada en el mapa.",
+          "Un <a href=\"/es/product/compact-stroller\">cochecito compacto</a> ayuda en estaciones y zonas llanas, pero Xàtiva Turismo prohíbe el acceso con cochecito al castillo. Para familias, puede ser mejor utilizar una mochila portabebés adecuada y repartir el itinerario. Consulta también nuestra <a href=\"/es/blog/valencia-with-kids-complete-guide\">guía de Valencia con niños</a>.",
+          "Si una persona necesita silla, scooter o andador, revisa estación, taxi, pavimento, pendiente y monumento por separado. Nuestro <a href=\"/es/rental/mobility\">equipamiento de movilidad</a> puede facilitar determinados trayectos, pero no elimina barreras físicas ni convierte un castillo en accesible.",
+        ],
+      },
+    ],
+    faqs: [
+      {
+        question: "¿Cuál es la mejor excursión de un día desde Valencia?",
+        answer:
+          "Xàtiva destaca por su castillo; Sagunto es flexible para patrimonio romano; Requena combina casco histórico y vino; la Albufera ofrece naturaleza y gastronomía. La mejor depende del desnivel, clima, reservas y necesidades del grupo.",
+      },
+      {
+        question: "¿Puedo hacer excursiones desde Valencia sin coche?",
+        answer:
+          "Sí. Renfe conecta Xàtiva, Sagunto y Requena mediante Cercanías, y EMT conecta con la Albufera. Comprueba horarios, estación de salida y posibles incidencias antes de cada viaje.",
+      },
+      {
+        question: "¿Xàtiva o Sagunto para una excursión corta?",
+        answer:
+          "Sagunto suele permitir una escapada más corta desde Valencia. Xàtiva requiere más tiempo para la subida y visita al castillo. En ambos casos, el calor y las pendientes deben formar parte de la planificación.",
+      },
+      {
+        question: "¿Cómo llego a la Albufera desde Valencia?",
+        answer:
+          "Las líneas 24 y 25 de EMT llegan a diferentes zonas: la 24 conecta con El Palmar y la 25 con El Perellonet. Elige primero el embarcadero, restaurante o sendero y después la parada adecuada.",
+      },
+      {
+        question: "¿Son accesibles estas excursiones con silla de ruedas?",
+        answer:
+          "Depende de cada tramo. El castillo de Xàtiva indica que no es accesible para sillas de ruedas. Confirma transporte, pendientes, pavimento y acceso de cada monumento; no asumas que una ciudad completa tiene un único nivel de accesibilidad.",
+      },
+    ],
+    crossLinks: [
+      {
+        title: "Valencia con niños",
+        href: "/es/blog/valencia-with-kids-complete-guide",
+        description: "Consejos para transporte, horarios y equipamiento familiar",
+      },
+      {
+        title: "Guía de accesibilidad en Valencia",
+        href: "/es/blog/wheelchair-accessibility-valencia",
+        description: "Cómo comprobar rutas, transporte y equipamiento de movilidad",
+      },
+      {
+        title: "Equipamiento para bebés",
+        href: "/es/rental/baby-gear",
+        description: "Cochecitos y otros artículos para una estancia familiar",
+      },
+      {
+        title: "Equipamiento de movilidad",
+        href: "/es/rental/mobility",
+        description: "Sillas, scooters y andadores con compatibilidad confirmada",
+      },
+    ],
+  },
 ];

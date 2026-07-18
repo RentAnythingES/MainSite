@@ -350,3 +350,5 @@ Priority pilot logic: start with one narrow bundle, collect usage evidence, then
 - [x] Publish a fact-checked Spanish accessibility adaptation using current
   Metrovalencia and municipal accessible-bathing sources.
 - [x] Restrict reciprocal article hreflang to guides with complete locale parity.
+- [x] Complete Spanish parity for all six English planning guides, including
+  Remote Work and day-trip intent.

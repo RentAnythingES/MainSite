@@ -222,3 +222,27 @@ not competitor summaries:
 Copy rule: never describe the entire network, city or beach as unconditionally
 "fully accessible." Explain the relevant route, boarding gap, equipment,
 dimensions and seasonal service, and direct readers to the current official notice.
+
+---
+
+## Official remote-work and day-trip source check — 18 July 2026
+
+- **International telework visa:** Spain's Ministry of Foreign Affairs describes
+  the visa as covering remote work for companies outside Spain. Employees may work
+  only for foreign companies; self-employed professionals may perform a limited
+  share of their activity for Spanish clients. Resources are expressed as a
+  percentage of the current minimum wage, so copy must not hard-code an amount.
+  Source: <https://www.exteriores.gob.es/en/ServiciosAlCiudadano/Paginas/Servicios-consulares.aspx?scca=Visados&scco=Estados+Unidos&scd=180&scs=Visados+Nacionales+-+Visado+de+residencia+para+teletrabajo+%28n%C3%B3mada+digital%29>.
+- **Cercanías destinations:** Renfe's current Valencia map lists C-2 for Xàtiva,
+  C-3 for Requena and C-6 for Sagunt. Origins, frequencies and works can change,
+  so planning copy links to the live network rather than promising a fixed fare or
+  journey time. Source:
+  <https://www.renfe.com/es/es/cercanias/cercanias-valencia/lineas>.
+- **Xàtiva Castle:** official tourism information publishes seasonal opening and
+  access rules and explicitly states that the castle is not accessible to
+  wheelchairs or pushchairs. Source:
+  <https://xativaturismo.com/entradas-castillo/>.
+- **Albufera:** Visit València identifies EMT 24 for El Palmar and EMT 25 for El
+  Perellonet. Copy must distinguish the destination before recommending a line.
+  Source:
+  <https://www.visitvalencia.com/en/what-to-see-valencia/albufera-natural-park>.
