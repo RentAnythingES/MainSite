@@ -74,21 +74,52 @@ const faqs = [
   },
   {
     q: "What areas do you deliver to?",
-    a: "We deliver across Valencia city centre, the beach areas (Malvarrosa, Patacona, El Cabanyal), and surrounding neighbourhoods. Contact us for locations outside central Valencia.",
+    a: "The booking form shows the Valencia service zones currently available for online delivery. Contact us for a custom quote if your address falls outside them.",
   },
   {
     q: "What payment methods do you accept?",
-    a: "We accept Visa, Mastercard, American Express, Apple Pay, and Google Pay via our secure Stripe checkout.",
+    a: "Online payments are handled by Stripe. The payment methods available for your device and account are shown directly in secure Stripe Checkout.",
   },
   {
     q: "What if I need to extend my rental?",
-    a: "No problem! Just message us on WhatsApp or email and we'll extend your booking. You'll only be charged for the additional days.",
+    a: "Message us on WhatsApp or email before the rental ends. Extensions depend on the item's next booking and are confirmed only after we verify availability and any additional charge.",
   },
 ];
+
+const howToSchema = {
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  name: "How to rent equipment in Valencia with RentAnything.es",
+  description: "Choose equipment and dates, pay securely, receive or collect the item, then return it using the agreed fulfillment option.",
+  step: steps.map((step, index) => ({
+    "@type": "HowToStep",
+    position: index + 1,
+    name: step.title,
+    text: step.description,
+    url: `https://rentanything.es/how-it-works#step-${index + 1}`,
+  })),
+};
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqs.map((faq) => ({
+    "@type": "Question",
+    name: faq.q,
+    acceptedAnswer: { "@type": "Answer", text: faq.a },
+  })),
+};
 
 export default function HowItWorksPage() {
   return (
     <>
+      {[howToSchema, faqSchema].map((schema) => (
+        <script
+          key={schema["@type"]}
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(schema).replace(/</g, "\\u003c") }}
+        />
+      ))}
       {/* Hero */}
       <section className="bg-gradient-to-br from-neutral-50 to-teal-50/20 py-16 md:py-24">
         <div className="container-site text-center">
@@ -109,6 +140,7 @@ export default function HowItWorksPage() {
             {steps.map((step, i) => (
               <div
                 key={step.number}
+                id={`step-${i + 1}`}
                 className={`flex flex-col ${i % 2 === 1 ? "md:flex-row-reverse" : "md:flex-row"} items-center gap-10 md:gap-16`}
               >
                 {/* Visual */}

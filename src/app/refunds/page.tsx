@@ -45,11 +45,11 @@ export default function RefundsPage() {
           </div>
 
           <div>
-            <h2 className="text-xl font-bold mb-3">Security Deposits</h2>
+            <h2 className="text-xl font-bold mb-3">Deposits and damage</h2>
             <p className="text-neutral-600">
-              Security deposits are automatically released within 5 business days after your rental ends,
-              provided equipment is returned in good condition. If deductions are necessary, we will contact
-              you first with photographic evidence.
+              Our current online checkout does not automatically add a security deposit. If a future rental
+              requires one, the amount, authorization method, return conditions, and any proposed deduction
+              will be disclosed clearly before payment and documented with you.
             </p>
           </div>
 

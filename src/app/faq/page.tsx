@@ -14,15 +14,15 @@ const faqSections = [
     items: [
       {
         q: "How do I make a booking?",
-        a: "Browse our product catalog, select your rental dates, add items to your cart, and checkout securely with Stripe. You'll receive an instant confirmation email with all the details.",
+        a: "Open a product, choose your start and end date and time, select pickup or an available delivery option, and check availability. If the item is available, enter your details and continue to secure Stripe Checkout. We email the booking details after payment is confirmed.",
       },
       {
         q: "What payment methods do you accept?",
-        a: "We accept Visa, Mastercard, American Express, Apple Pay, and Google Pay through our secure Stripe payment system. All transactions are encrypted.",
+        a: "Online bookings are paid through Stripe. The payment methods available to you are shown securely in Stripe Checkout and can vary by device, browser, and account configuration.",
       },
       {
         q: "Is a deposit required?",
-        a: "Yes, a refundable security deposit is held on your card at the time of booking. The amount varies by product. It is automatically released within 5 business days after the rental ends, provided the equipment is returned in good condition.",
+        a: "Our current online checkout does not automatically add a security deposit. If a particular rental requires one in the future, the amount and return conditions will be disclosed before you pay.",
       },
       {
         q: "How far in advance should I book?",
@@ -30,7 +30,7 @@ const faqSections = [
       },
       {
         q: "Can I modify or cancel my booking?",
-        a: "Yes. Free cancellation is available up to 48 hours before your delivery date. Modifications to dates or items can be made anytime via WhatsApp or email. See our Refunds & Cancellations policy for full details.",
+        a: "Contact us by WhatsApp or email as soon as possible. Changes depend on inventory and operational availability. Free cancellation is available 48 or more hours before the scheduled handover; see our Refunds & Cancellations policy for the complete terms.",
       },
     ],
   },
@@ -39,23 +39,23 @@ const faqSections = [
     items: [
       {
         q: "Where do you deliver?",
-        a: "We deliver across Valencia city centre, El Carmen, Ruzafa, the beach areas (Malvarrosa, Patacona, El Cabanyal), and surrounding neighbourhoods. For locations outside central Valencia, please contact us.",
+        a: "The booking form shows the Valencia service zones currently available for online delivery. If your address is outside those zones, contact us and we can assess a custom-distance quote.",
       },
       {
         q: "What are the delivery hours?",
-        a: "Standard delivery is available between 9:00 AM and 8:00 PM, seven days a week. Evening deliveries can be arranged on request.",
+        a: "Available handover times depend on the selected dates, service zone, and operational schedule. Choose your preferred start and end time in the booking form; we confirm the practical handover details with your booking.",
       },
       {
         q: "Is there a delivery fee?",
-        a: "Delivery within central Valencia is free for orders over €50. A small delivery fee applies for smaller orders or locations outside the core delivery zone. The exact amount is shown at checkout.",
+        a: "Delivery and collection fees depend on the selected service zone and service type. The exact charge is calculated from the active configuration and shown before Stripe Checkout. Custom-distance requests are quoted separately.",
       },
       {
         q: "Can I pick up items instead?",
-        a: "Yes! Self-pickup is available from our Valencia location. You'll receive the address after booking. This option is free regardless of order value.",
+        a: "Yes. Free self-pickup is available from the active pickup points shown in the booking form, currently including Burjassot and Paterna. Select the location that suits you before checking availability.",
       },
       {
         q: "How does return work?",
-        a: "We collect items from your accommodation at the end of your rental period. Just leave them inside your accommodation and we'll coordinate a pickup time. No cleaning required — we handle all sanitisation.",
+        a: "Return follows the fulfillment option in your booking: bring the item back to the agreed pickup point, or hand it over at the collection address and time if you paid for collection. Your confirmation messages contain the relevant instructions.",
       },
     ],
   },
@@ -99,9 +99,28 @@ const faqSections = [
   },
 ];
 
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqSections.flatMap((section) =>
+    section.items.map((faq) => ({
+      "@type": "Question",
+      name: faq.q,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: faq.a,
+      },
+    })),
+  ),
+};
+
 export default function FAQPage() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema).replace(/</g, "\\u003c") }}
+      />
       {/* Hero */}
       <section className="bg-gradient-to-br from-neutral-50 to-teal-50/20 py-16 md:py-24">
         <div className="container-site text-center">

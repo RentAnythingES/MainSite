@@ -5,6 +5,12 @@
 
 ## ✅ Completed
 
+- [x] Evergreen trust-page hardening: `/faq`, `/how-it-works`, and `/refunds`
+  now match the live booking, fulfillment, payment, and deposit behavior. FAQPage and
+  HowTo structured data are generated from visible copy and protected by rendered
+  regression checks. Production baseline: 110 sitemap URLs, zero crawl errors,
+  broken links, broken images, orphan pages, or indexable sitemap gaps (19 July 2026).
+
 - [x] 16 product pages with structured data (JSON-LD Product)
 - [x] 5 category pages
 - [x] Dynamic sitemap (`src/app/sitemap.ts`)

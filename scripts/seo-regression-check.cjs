@@ -118,7 +118,7 @@ function assertPageEnhancements(html, expectedText = [], schemaTypes = [], conte
 }
 
 async function main() {
-  const [home, product, productEs, noindexProduct, robots, sitemap, categoryPages, discoverHierarchyPages, hostServices, hostServicesEs, partners, partnersEs] = await Promise.all([
+  const [home, product, productEs, noindexProduct, robots, sitemap, categoryPages, discoverHierarchyPages, hostServices, hostServicesEs, partners, partnersEs, faqPage, howItWorks] = await Promise.all([
     get("/"),
     get(`/product/${productSlug}`),
     get(`/es/product/${productSlug}`),
@@ -142,6 +142,8 @@ async function main() {
     get("/es/valencia/servicios-anfitriones"),
     get("/partners"),
     get("/es/colaboraciones"),
+    get("/faq"),
+    get("/how-it-works"),
   ]);
 
   assert(canonical(home) === "https://rentanything.es", "Homepage canonical is incorrect");
@@ -317,6 +319,20 @@ async function main() {
     sitemap.includes("https://rentanything.es/es/colaboraciones"),
     "Spanish partnerships is missing from the sitemap"
   );
+  assert(canonical(faqPage) === "https://rentanything.es/faq", "FAQ canonical is incorrect");
+  assertPageEnhancements(
+    faqPage,
+    ["Our current online checkout does not automatically add a security deposit."],
+    ["FAQPage"],
+    "FAQ page"
+  );
+  assert(canonical(howItWorks) === "https://rentanything.es/how-it-works", "How It Works canonical is incorrect");
+  assertPageEnhancements(
+    howItWorks,
+    ["Extensions depend on the item&#x27;s next booking"],
+    ["HowTo", "FAQPage"],
+    "How It Works page"
+  );
 
   console.log(JSON.stringify({
     baseUrl,
@@ -331,6 +347,8 @@ async function main() {
     spanishHostServicesCanonical: canonical(hostServicesEs),
     partnershipsCanonical: canonical(partners),
     spanishPartnershipsCanonical: canonical(partnersEs),
+    faqCanonical: canonical(faqPage),
+    howItWorksCanonical: canonical(howItWorks),
     status: "passed",
   }, null, 2));
 }
