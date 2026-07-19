@@ -244,7 +244,7 @@ Data-driven `/discover/[slug]` pages. 5 destinations live. Hub pages for neighbo
   - Production verified 18 July 2026: responsive layout has no horizontal overflow; live crawl reports zero page errors, warnings, broken internal links, or broken images.
 
 **Open design items:**
-- [ ] **Real photos** — 4 of 14 hero assets replaced with licensed real photography; visible attribution, a rights register, and `npm run audit:discover-images` now prevent undocumented replacements. Ten unverified assets remain.
+- [x] **Real photos** — All 14 Discover hero assets use sourced, licensed photography with visible attribution, a maintained rights register, and strict `npm run audit:discover-images` enforcement.
 - [x] **Restaurant source tracking** — All 35 published recommendations carry a source note, source URL, and verification date; stale or misplaced venues were corrected and `npm run audit:discover-sources` enforces six-month review
 - [x] **Staying vs Visiting** — All 5 published neighbourhoods have complete staying guidance and all 14 published Discover guides have complete visiting guidance, enforced by `npm run audit:discover-intent`
 

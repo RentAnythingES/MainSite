@@ -41,6 +41,7 @@ for (const destination of destinations) {
 
   if (provenance.status === "unverified") {
     unverified.push(destination.slug);
+    issues.push(`${prefix}:unverified_provenance`);
     continue;
   }
 
