@@ -261,6 +261,16 @@ async function main() {
     ["Service", "FAQPage", "BreadcrumbList"],
     "Spanish host services page"
   );
+  assertPathway(
+    hostServices,
+    "/es/valencia/servicios-anfitriones",
+    "Host services locale switch"
+  );
+  assertPathway(
+    hostServicesEs,
+    "/valencia/host-services",
+    "Spanish host services locale switch"
+  );
   assert(
     sitemap.includes("https://rentanything.es/valencia/host-services"),
     "Host services is missing from the sitemap"

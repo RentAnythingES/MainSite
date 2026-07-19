@@ -6,13 +6,24 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { seoCategoryClusters } from "@/data/seo-clusters";
 
+const localizedRoutePairs = [
+  {
+    en: "/valencia/host-services",
+    es: "/es/valencia/servicios-anfitriones",
+  },
+] as const;
+
 export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [browseOpen, setBrowseOpen] = useState(false);
   const pathname = usePathname();
   const isSpanish = pathname.startsWith("/es");
   const prefix = isSpanish ? "/es" : "";
+  const explicitLocalePair = localizedRoutePairs.find(
+    (pair) => pair.en === pathname || pair.es === pathname,
+  );
   const hasSpanishEquivalent =
+    Boolean(explicitLocalePair) ||
     pathname === "/" ||
     pathname === "/valencia" ||
     pathname === "/blog" ||
@@ -25,11 +36,15 @@ export default function Header() {
     pathname.startsWith("/product/") ||
     pathname.startsWith("/rental/");
 
-  const switchLocaleHref = isSpanish
-    ? pathname.replace(/^\/es/, "") || "/"
-    : hasSpanishEquivalent
-      ? `/es${pathname === "/" ? "" : pathname}`
-      : "/es";
+  const switchLocaleHref = explicitLocalePair
+    ? isSpanish
+      ? explicitLocalePair.en
+      : explicitLocalePair.es
+    : isSpanish
+      ? pathname.replace(/^\/es/, "") || "/"
+      : hasSpanishEquivalent
+        ? `/es${pathname === "/" ? "" : pathname}`
+        : "/es";
   const switchLocaleLabel = isSpanish ? "EN 🇬🇧" : "ES 🇪🇸";
 
   const categories = seoCategoryClusters.map((category) => ({
