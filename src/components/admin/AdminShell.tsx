@@ -11,6 +11,7 @@ const navItems = [
   { name: "Availability", href: "/admin/availability", icon: "📅" },
   { name: "Fulfillment", href: "/admin/fulfillment", icon: "F" },
   { name: "Bookings", href: "/admin/bookings", icon: "📋" },
+  { name: "Reviews", href: "/admin/reviews", icon: "★" },
   { name: "Invoicing", href: "/admin/invoicing", icon: "🧾" },
 ];
 

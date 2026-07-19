@@ -40,6 +40,7 @@ App Router with static generation (`generateStaticParams`). Prefix-based i18n (`
 | `/admin/products/new` | Client | Add new product form |
 | `/admin/fulfillment` | Client | Pickup locations, service zones, instructions, fees |
 | `/admin/bookings` | Client | Booking management, finance ledger, document PDF downloads and email resend controls |
+| `/admin/reviews` | Client | Consent-aware moderation of verified-booking feedback |
 
 ## Component Patterns
 - Server Components by default
@@ -117,6 +118,16 @@ plus `ItemList` structured data from the same products, posts, destinations or
 bundles visible on the page. Discover sub-hubs also publish `BreadcrumbList`.
 Use `getHubCollectionJsonLd()` for future indexable hubs rather than constructing
 inconsistent schema inline.
+
+## Verified reviews
+
+`/review/[token]` is a dynamic, `noindex` customer utility route. Completing a
+booking creates one private invitation and includes its tokenized URL in the
+completion email. `ReviewForm` accepts feedback without requiring publication
+consent. Only feedback that has explicit consent and is manually approved at
+`/admin/reviews` can appear through `VerifiedReviews` on the homepages. Customer
+email and booking identity remain internal, and the site does not emit aggregate
+rating structured data from first-party reviews.
 
 The Discover hub includes `DestinationMap`, a client-side orientation component.
 Marker positions are deliberately schematic rather than navigation coordinates;

@@ -296,6 +296,13 @@ language, while delivery bookings show delivery/collection language. Customer
 status emails include the full rental datetime window and the configured pickup
 location or delivery/collection details.
 
+Moving a booking to `completed` also creates a one-time verified review invitation
+when `supabase/migrations/20260719_verified_booking_reviews.sql` is installed. The
+completion email links to a private, `noindex` feedback form. Submission and consent
+to publish are separate: staff can approve public display only when the customer has
+explicitly opted in. Reviews remain tied to completed bookings internally without
+exposing customer contact details publicly.
+
 Migration `supabase/migrations/20260711_booking_ops_tasks.sql` adds internal
 per-booking ops checklist tasks. The admin booking detail can track whether the
 customer was contacted, equipment prepared, handoff confirmed, return scheduled,

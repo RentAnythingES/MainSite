@@ -23,6 +23,7 @@ async function main() {
         (select count(*)::int from public.products where is_active) as active_products,
         (select count(*)::int from public.bookings) as bookings,
         (select count(*)::int from public.booking_ops_tasks) as ops_tasks,
+        (select count(*)::int from public.booking_reviews) as booking_reviews,
         (select count(*)::int from public.pickup_locations where is_active) as active_pickup_locations,
         (select count(*)::int from public.service_zones where is_active) as active_service_zones
     `);
@@ -59,6 +60,24 @@ async function main() {
         returning id
       `);
       checks.monitoringTransactionalWrite = monitoring.rows.length === 1;
+
+      const existingReview = await client.query("select id, updated_at from public.booking_reviews order by created_at limit 1");
+      if (existingReview.rows.length > 0) {
+        const review = await client.query(
+          "update public.booking_reviews set updated_at = now() where id = $1 returning id",
+          [existingReview.rows[0].id]
+        );
+        checks.bookingReviewTransactionalWrite = review.rows.length === 1;
+      } else {
+        const review = await client.query(`
+          insert into public.booking_reviews (booking_id, product_id)
+          select booking.id, booking.product_id
+          from public.bookings booking
+          limit 1
+          returning id
+        `);
+        checks.bookingReviewTransactionalWrite = review.rows.length === 1;
+      }
     } finally {
       await client.query("rollback");
     }

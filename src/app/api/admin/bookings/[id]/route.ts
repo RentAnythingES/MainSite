@@ -6,6 +6,7 @@ import { stripe } from "@/lib/stripe";
 import { fetchPickupLocationsById, fetchServiceZonesById } from "@/lib/fulfillment-options";
 import { recordBookingPaymentEvent } from "@/lib/payment-ledger";
 import { createBookingDocumentForPaymentEvent, getCustomerDocumentUrl } from "@/lib/booking-documents";
+import { createBookingReviewInvitation } from "@/lib/booking-reviews";
 
 const VALID_TRANSITIONS: Record<string, string[]> = {
   pending: ["confirmed", "cancelled"],
@@ -243,6 +244,10 @@ export async function PUT(
               .join(" · ")
           : (b.delivery_address as string);
 
+    const reviewUrl = status === "completed"
+      ? await createBookingReviewInvitation(supabase, id, (b.product_id as string) || null)
+      : null;
+
     const emailSent = await sendBookingStatusUpdate(
       {
         bookingRef: b.booking_ref as string,
@@ -277,6 +282,7 @@ export async function PUT(
         stripeCheckoutSessionId: (b.stripe_checkout_session_id as string) || null,
         stripePaymentIntentId: (b.stripe_payment_intent_id as string) || null,
         documentLinks,
+        reviewUrl,
       },
       status
     );

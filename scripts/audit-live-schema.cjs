@@ -16,6 +16,7 @@ const expectedTables = [
   "booking_inventory_unit_assignments",
   "booking_ops_tasks",
   "booking_payment_events",
+  "booking_reviews",
   "bookings",
   "categories",
   "inventory_unit_events",
@@ -49,6 +50,7 @@ const expectedColumns = {
   booking_documents: ["customer_access_token", "customer_access_expires_at", "customer_access_last_sent_at", "invoice_format", "tax_rate_bps", "tax_inclusive", "tax_base_cents", "customer_tax_id", "customer_billing_address", "rectifies_document_id", "immutable_at"],
   booking_document_counters: ["series_prefix"],
   products: ["content_status"],
+  booking_reviews: ["public_token", "rating", "review_body", "consent_to_publish", "status", "published_at"],
 };
 
 const expectedRlsTables = [
@@ -60,6 +62,7 @@ const expectedRlsTables = [
   "booking_inventory_unit_assignments",
   "booking_ops_tasks",
   "booking_payment_events",
+  "booking_reviews",
   "inventory_unit_events",
   "inventory_units",
   "invoice_settings",

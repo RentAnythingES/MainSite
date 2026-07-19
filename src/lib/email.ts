@@ -43,6 +43,7 @@ export interface BookingEmailData {
   stripeCheckoutSessionId?: string | null;
   stripePaymentIntentId?: string | null;
   documentLinks?: DocumentEmailLink[];
+  reviewUrl?: string | null;
 }
 
 export interface ContactEmailData {
@@ -300,7 +301,7 @@ export async function sendBookingStatusUpdate(data: BookingEmailData, newStatus:
     completed: {
       subject: `Rental complete — thank you (${data.bookingRef})`,
       title: "Thanks for renting with us",
-      message: `Your rental of <strong>${escapeHtml(data.productName)}</strong> is complete. We hope it made your time in Valencia easier.<br><br>If you're planning another visit, we'd love to help again. And if you have a moment, a review would really help other travellers find us.`,
+      message: `Your rental of <strong>${escapeHtml(data.productName)}</strong> is complete. We hope it made your time in Valencia easier.<br><br>If you're planning another visit, we'd love to help again.`,
     },
     cancelled: {
       subject: `Booking cancelled — ${data.bookingRef}`,
@@ -331,6 +332,7 @@ export async function sendBookingStatusUpdate(data: BookingEmailData, newStatus:
         ${bookingDetailsTable(data)}
         ${fulfillmentInstructionsBox(data)}
         ${documentsBox(data)}
+        ${data.reviewUrl ? `<div style="margin:24px 0;padding:18px;border-radius:12px;background:#f0fdfa;border:1px solid #99f6e4;"><p style="font-size:14px;color:#115e59;line-height:1.6;margin:0 0 14px;">How did the rental go? Your private feedback link is tied to this completed booking. We only publish feedback if you explicitly allow it.</p>${button(data.reviewUrl, "Share your feedback")}</div>` : ""}
         <p style="font-size:14px;color:#6b7280;line-height:1.6;">Questions? Reply to this email or reach us on WhatsApp.</p>
         ${button(WHATSAPP_URL, "Message us on WhatsApp", "#25d366")}
       `, template.subject),

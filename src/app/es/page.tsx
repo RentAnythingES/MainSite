@@ -3,7 +3,10 @@ import Image from "next/image";
 import type { Metadata } from "next";
 import { getLocalBusinessJsonLd, getWebsiteJsonLd } from "@/lib/jsonld";
 import HeroCarousel from "@/components/HeroCarousel";
+import VerifiedReviews from "@/components/VerifiedReviews";
 import { getDictionary } from "@/i18n/getDictionary";
+
+export const revalidate = 300;
 
 const t = getDictionary("es");
 
@@ -116,6 +119,8 @@ export default function HomePageES() {
           </div>
         </div>
       </section>
+
+      <VerifiedReviews locale="es" />
 
       {/* ===== FEATURED PRODUCTS ===== */}
       <section className="section bg-white" id="featured-products">

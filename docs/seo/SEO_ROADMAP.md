@@ -318,7 +318,15 @@ Create city landing pages as SEO land-grab before entering markets.
 - Exercise equipment (yoga mats, resistance bands)
 
 ### 4.4 Reviews/testimonials system
-Connect to Google Reviews or build custom review collection.
+Initial verified-booking review system implemented 19 July 2026. Completed rentals
+receive a one-time private feedback link; public display requires explicit customer
+consent plus manual admin approval. Review pages are `noindex`, public output excludes
+customer contact data, and no self-serving aggregate rating schema is emitted. Apply
+`20260719_verified_booking_reviews.sql` and collect the first genuine reviews before
+evaluating a separate Google Business Profile integration.
+
+Unsupported homepage vanity metrics (including invented rental/review counts) were
+replaced with factual service statements while the real review corpus is established.
 
 ### 4.5 Distribution channel listings
 List our products on Babonbo, BabyQuip, Cloud of Goods (20% commission) as secondary distribution. Always prefer direct organic traffic.

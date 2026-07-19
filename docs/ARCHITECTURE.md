@@ -60,6 +60,7 @@ Supabase (CRUD products, pricing, bookings)
 | `invoice_settings` | Issuer identity, invoice series, VAT policy, and compliance status | Admin/API only |
 | `booking_document_counters` | Yearly sequential counters for booking document numbers | Admin/API only |
 | `booking_ops_tasks` | Internal per-booking operations checklist tasks | Admin/API only |
+| `booking_reviews` | Tokenized post-rental feedback, publication consent, and moderation state | Server/admin only |
 | `newsletter_subscribers` | Newsletter signup consent records | Admin/API only |
 | `product_localizations` | Locale-specific product copy and SEO metadata | Public read for active products |
 | `product_faqs` | Locale-specific pre-rental product FAQs | Public read for active products |
@@ -162,6 +163,7 @@ POST /api/webhooks/stripe
 | `/api/newsletter` | POST | Store newsletter consent + send welcome email |
 | `/api/availability` | GET | Check product availability for date range |
 | `/api/documents/[token]/pdf` | GET | Customer-safe invoice/refund PDF download |
+| `/api/reviews/[token]` | GET, POST | Read and submit one-time post-rental feedback for a completed booking |
 
 ### Stripe Webhook Flow
 ```
@@ -205,6 +207,8 @@ Stripe Checkout
 | `/api/admin/bookings/[id]` | PUT | Update booking status |
 | `/api/admin/bookings/[id]/inventory-units` | GET, POST, PATCH | List, assign, hand over, return, or release physical units |
 | `/api/admin/bookings/[id]/ops-tasks` | PATCH | Toggle internal booking operations checklist tasks |
+| `/api/admin/reviews` | GET | List review invitations and submissions for moderation |
+| `/api/admin/reviews/[id]` | PUT | Approve or reject submitted feedback; approval requires publication consent |
 | `/api/admin/bookings/[id]/documents/[documentId]/pdf` | GET | Download protected invoice/refund PDF |
 | `/api/admin/bookings/[id]/documents/[documentId]/email` | POST | Email customer a document PDF link |
 | `/api/admin/categories` | GET | List categories (for dropdowns) |
@@ -225,6 +229,7 @@ Protected by Supabase Auth. Server-side cookie check in `admin/layout.tsx` — r
 | `/admin/availability` | Calendar availability manager with selected-date actions plus selected/all-product range blocking |
 | `/admin/inventory` | Physical asset registry with status, condition, location, notes, and inspections |
 | `/admin/bookings` | Expandable booking cards, status filters, physical-unit assignment, ops checklist, lifecycle controls |
+| `/admin/reviews` | Verified-booking feedback queue with consent-aware approve/reject controls |
 | `/admin/login` | Supabase Auth email/password login |
 
 ---

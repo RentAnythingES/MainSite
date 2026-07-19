@@ -3,6 +3,9 @@ import Image from "next/image";
 import type { Metadata } from "next";
 import { getLocalBusinessJsonLd, getWebsiteJsonLd } from "@/lib/jsonld";
 import HeroCarousel from "@/components/HeroCarousel";
+import VerifiedReviews from "@/components/VerifiedReviews";
+
+export const revalidate = 300;
 
 export const metadata: Metadata = {
   title: "Rent Equipment in Valencia | RentAnything.es",
@@ -231,6 +234,8 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      <VerifiedReviews locale="en" />
 
       {/* ===== FEATURED PRODUCTS ===== */}
       <section className="section bg-white" id="featured-products">
