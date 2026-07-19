@@ -47,3 +47,16 @@ declare reciprocal hreflang and self-canonicals; the Spanish header/footer now r
 to the localized pages; and all three URLs enter the sitemap. This raises the expected
 indexable sitemap count from 110 to 113 and adds three reciprocal locale pairs. The
 Spanish FAQ and process schemas are generated from their visible translated content.
+
+## About and Contact parity follow-up
+
+The About and Contact pages previously contained unsupported promises about response
+times, "hospital-grade" cleaning, universal premium-brand stock, and pickup or delivery
+availability. The July 19 parity batch replaces those claims with statements that match
+the operating model and adds full Spanish pages at `/es/about` and `/es/contact`.
+
+Both language pairs now expose reciprocal hreflang and self-canonicals. The About pages
+publish an AboutPage/Organization graph, while the Contact pages publish ContactPage
+markup. The Spanish contact form and customer auto-reply are localized end to end. The
+two additional sitemap routes raise the expected indexable total from 113 to 115 and
+the reciprocal locale-pair count from 38 to 40 after deployment.

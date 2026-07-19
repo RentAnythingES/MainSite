@@ -52,6 +52,7 @@ export interface ContactEmailData {
   subject?: string;
   message: string;
   productName?: string;
+  locale?: "en" | "es";
 }
 
 export interface SignupWelcomeEmailData {
@@ -488,16 +489,19 @@ export async function sendContactAutoReply(data: ContactEmailData): Promise<bool
   if (!resend) return false;
 
   try {
+    const isSpanish = data.locale === "es";
     const result = await resend.emails.send({
       from: FROM,
       to: data.email,
-      subject: "We received your message — RentAnything.es",
-      html: emailWrapper("Thanks for reaching out", `
-        <p style="font-size:15px;color:#374151;line-height:1.6;margin-top:0;">Hi ${escapeHtml(data.name)},</p>
-        <p style="font-size:15px;color:#374151;line-height:1.6;">We've received your message and will get back to you as soon as we can. If it is urgent or related to arrival timing, WhatsApp is usually the fastest way to reach us.</p>
-        ${data.productName ? infoBox(`<p style="font-size:14px;color:#0f766e;line-height:1.6;margin:0;"><strong>About:</strong> ${escapeHtml(data.productName)}</p>`) : ""}
-        ${button(WHATSAPP_URL, "Message us on WhatsApp", "#25d366")}
-      `, "We received your RentAnything.es message."),
+      subject: isSpanish ? "Hemos recibido tu mensaje — RentAnything.es" : "We received your message — RentAnything.es",
+      html: emailWrapper(isSpanish ? "Gracias por escribirnos" : "Thanks for reaching out", `
+        <p style="font-size:15px;color:#374151;line-height:1.6;margin-top:0;">${isSpanish ? "Hola" : "Hi"} ${escapeHtml(data.name)},</p>
+        <p style="font-size:15px;color:#374151;line-height:1.6;">${isSpanish
+          ? "Hemos recibido tu mensaje y responderemos en cuanto podamos. Si está relacionado con una llegada próxima, WhatsApp suele ser la forma más directa de localizarnos."
+          : "We've received your message and will get back to you as soon as we can. If it is related to an upcoming arrival, WhatsApp is usually the most direct way to reach us."}</p>
+        ${data.productName ? infoBox(`<p style="font-size:14px;color:#0f766e;line-height:1.6;margin:0;"><strong>${isSpanish ? "Sobre" : "About"}:</strong> ${escapeHtml(data.productName)}</p>`) : ""}
+        ${button(WHATSAPP_URL, isSpanish ? "Escribir por WhatsApp" : "Message us on WhatsApp", "#25d366")}
+      `, isSpanish ? "Hemos recibido tu mensaje para RentAnything.es." : "We received your RentAnything.es message."),
     });
 
     return !result.error;

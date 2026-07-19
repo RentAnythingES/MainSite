@@ -13,6 +13,10 @@
 - [x] Spanish trust-page parity: `/es/faq`, `/es/how-it-works`, and `/es/refunds`
   include self-canonicals, reciprocal hreflang, localized navigation, sitemap entries,
   and content-matched FAQPage/HowTo markup where applicable (19 July 2026).
+- [x] About and Contact trust-page parity: inaccurate response-time, hygiene, brand,
+  pickup and fulfilment claims were replaced with verifiable copy; `/es/about` and
+  `/es/contact` add localized navigation, contact forms, confirmation emails,
+  reciprocal hreflang, sitemap coverage and AboutPage/ContactPage schema (19 July 2026).
 
 - [x] 16 product pages with structured data (JSON-LD Product)
 - [x] 5 category pages

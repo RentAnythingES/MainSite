@@ -1,5 +1,5 @@
 # RentAnything.es — SEO Strategy & Audit
-> **Last updated**: 2026-07-19 · **Build**: ✅ Clean · **Indexable sitemap pages**: 113
+> **Last updated**: 2026-07-19 · **Build**: ✅ Clean · **Indexable sitemap pages**: 115
 
 This is the **living SEO strategy document** for rentanything.es. Updated after every SEO-related change. For prioritized fixes, see [SEO_ROADMAP.md](./SEO_ROADMAP.md).
 

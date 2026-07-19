@@ -40,6 +40,8 @@ export default function Header() {
     pathname === "/faq" ||
     pathname === "/how-it-works" ||
     pathname === "/refunds" ||
+    pathname === "/about" ||
+    pathname === "/contact" ||
     pathname.startsWith("/product/") ||
     pathname.startsWith("/rental/");
 
@@ -65,7 +67,7 @@ export default function Header() {
     { name: "Valencia", href: `${prefix}/valencia` },
     { name: isSpanish ? "Descubrir" : "Discover", href: isSpanish ? "/discover" : "/discover" },
     { name: isSpanish ? "Cómo Funciona" : "How It Works", href: `${prefix}/how-it-works` },
-    { name: isSpanish ? "Sobre Nosotros" : "About", href: "/about" },
+    { name: isSpanish ? "Sobre Nosotros" : "About", href: `${prefix}/about` },
     { name: isSpanish ? "Preguntas" : "FAQ", href: `${prefix}/faq` },
     { name: "Blog", href: `${prefix}/blog` },
   ];

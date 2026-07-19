@@ -2,11 +2,11 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "About RentAnything.es | Valencia Rental Service",
+  title: "Sobre RentAnything.es | Alquiler en Valencia",
   description:
-    "Learn why RentAnything.es helps visitors travel lighter with practical equipment rentals, local pickup and delivery options in Valencia.",
+    "Conoce por qué RentAnything.es ayuda a viajar más ligero con alquiler de equipamiento, recogida local y opciones de entrega en Valencia.",
   alternates: {
-    canonical: "https://rentanything.es/about",
+    canonical: "https://rentanything.es/es/about",
     languages: {
       en: "https://rentanything.es/about",
       es: "https://rentanything.es/es/about",
@@ -18,23 +18,23 @@ export const metadata: Metadata = {
 const values = [
   {
     icon: "♻️",
-    title: "Thoughtful reuse",
-    description: "Renting makes practical equipment available to more visitors without every trip requiring another purchase.",
+    title: "Reutilización responsable",
+    description: "El alquiler permite que más visitantes utilicen equipamiento práctico sin tener que comprarlo para un solo viaje.",
   },
   {
     icon: "🔎",
-    title: "Clear product information",
-    description: "We identify brands, models and verified specifications so you can choose equipment that suits your stay.",
+    title: "Información clara",
+    description: "Identificamos marcas, modelos y especificaciones verificadas para ayudarte a elegir el equipo adecuado.",
   },
   {
     icon: "🧼",
-    title: "Cleaned and checked",
-    description: "Items are cleaned and checked between rentals as part of our operating process.",
+    title: "Limpieza y revisión",
+    description: "Limpiamos y comprobamos los artículos entre alquileres como parte de nuestro proceso operativo.",
   },
   {
     icon: "💬",
-    title: "Human support",
-    description: "Contact us directly when you need help choosing an item, arranging fulfilment or changing a booking.",
+    title: "Atención humana",
+    description: "Habla directamente con nosotros para elegir un artículo, organizar la entrega o modificar una reserva.",
   },
 ];
 
@@ -43,10 +43,10 @@ const structuredData = {
   "@graph": [
     {
       "@type": "AboutPage",
-      "@id": "https://rentanything.es/about#page",
-      url: "https://rentanything.es/about",
-      name: "About RentAnything.es",
-      inLanguage: "en",
+      "@id": "https://rentanything.es/es/about#page",
+      url: "https://rentanything.es/es/about",
+      name: "Sobre RentAnything.es",
+      inLanguage: "es",
       about: { "@id": "https://rentanything.es/#organization" },
     },
     {
@@ -67,19 +67,19 @@ const structuredData = {
   ],
 };
 
-export default function AboutPage() {
+export default function SpanishAboutPage() {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
       <section className="bg-gradient-to-br from-neutral-50 to-teal-50/20 py-16 md:py-24">
         <div className="container-site">
           <div className="max-w-3xl">
-            <span className="badge badge-brand mb-4">About us</span>
+            <span className="badge badge-brand mb-4">Sobre nosotros</span>
             <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-6">
-              Travel light. <span className="text-brand">Feel at home.</span>
+              Viaja ligero. <span className="text-brand">Siéntete como en casa.</span>
             </h1>
             <p className="text-lg text-neutral-600 leading-relaxed">
-              RentAnything.es helps visitors spend less of their trip carrying, buying and storing bulky equipment. Choose the practical items you need and arrange an available pickup or delivery option in Valencia.
+              RentAnything.es ayuda a quienes visitan Valencia a evitar cargar, comprar y guardar equipamiento voluminoso. Elige lo que necesitas y selecciona una opción disponible de recogida o entrega.
             </p>
           </div>
         </div>
@@ -89,24 +89,24 @@ export default function AboutPage() {
         <div className="container-site">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
-              <h2 className="text-3xl font-bold mb-6">Why we built RentAnything.es</h2>
+              <h2 className="text-3xl font-bold mb-6">Por qué creamos RentAnything.es</h2>
               <div className="space-y-4 text-neutral-600 leading-relaxed">
                 <p>
-                  Families, remote workers and travellers with accessibility needs often require useful equipment for only part of a stay. Bringing it from home can mean extra luggage, while buying it locally creates cost and waste.
+                  Las familias, quienes teletrabajan y las personas con necesidades de accesibilidad suelen necesitar determinados artículos solo durante una parte de su estancia. Traerlos de casa supone más equipaje y comprarlos genera gasto y residuos.
                 </p>
                 <p>
-                  We are building a Valencia-first rental catalogue where visitors can compare real products, check availability for their dates and choose from the fulfilment options currently offered at checkout.
+                  Estamos construyendo un catálogo de alquiler centrado en Valencia donde comparar productos reales, comprobar la disponibilidad para unas fechas y elegir entre las modalidades de entrega o recogida activas.
                 </p>
                 <p>
-                  Our aim is simple: make temporary access to practical equipment clearer, more convenient and supported by people who know the local service.
+                  Nuestro objetivo es sencillo: facilitar el acceso temporal a equipamiento práctico con información clara, opciones cómodas y atención de personas que conocen el servicio local.
                 </p>
               </div>
             </div>
             <div className="bg-gradient-to-br from-brand/5 to-accent/5 rounded-2xl p-12 flex items-center justify-center aspect-square md:aspect-auto md:h-full">
               <div className="text-center">
                 <span className="text-6xl block mb-4">📍</span>
-                <p className="text-2xl font-bold text-brand">Valencia, Spain</p>
-                <p className="text-neutral-500 text-sm mt-1">Our first service area</p>
+                <p className="text-2xl font-bold text-brand">Valencia, España</p>
+                <p className="text-neutral-500 text-sm mt-1">Nuestra primera zona de servicio</p>
               </div>
             </div>
           </div>
@@ -115,7 +115,7 @@ export default function AboutPage() {
 
       <section className="section bg-neutral-50">
         <div className="container-site">
-          <h2 className="text-3xl font-bold text-center mb-12">How we approach the service</h2>
+          <h2 className="text-3xl font-bold text-center mb-12">Cómo planteamos el servicio</h2>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {values.map((value) => (
               <div key={value.title} className="bg-white rounded-xl border border-border p-6 text-center hover:shadow-lg transition-all">
@@ -130,14 +130,14 @@ export default function AboutPage() {
 
       <section className="section bg-white">
         <div className="container-site max-w-2xl text-center">
-          <h2 className="text-3xl font-bold mb-6">Company details</h2>
+          <h2 className="text-3xl font-bold mb-6">Datos de la empresa</h2>
           <div className="bg-neutral-50 rounded-xl border border-border p-8">
             <p className="text-neutral-700 font-semibold mb-1">Escalera Labs S.L.</p>
-            <p className="text-sm text-neutral-500 mb-4">CIF ESB22961221 · Registered in Spain</p>
+            <p className="text-sm text-neutral-500 mb-4">CIF ESB22961221 · Sociedad registrada en España</p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-6 text-sm text-neutral-600">
               <span>📍 Burjassot, Valencia</span>
               <span>📧 hello@rentanything.es</span>
-              <span>💬 WhatsApp support</span>
+              <span>💬 Atención por WhatsApp</span>
             </div>
           </div>
         </div>
@@ -145,11 +145,11 @@ export default function AboutPage() {
 
       <section className="bg-brand py-16">
         <div className="container-site text-center">
-          <h2 className="text-3xl font-bold text-white mb-4">How can we help?</h2>
-          <p className="text-teal-100 mb-8">Ask about a product, booking or partnership.</p>
+          <h2 className="text-3xl font-bold text-white mb-4">¿Cómo podemos ayudarte?</h2>
+          <p className="text-teal-100 mb-8">Pregúntanos sobre un producto, una reserva o una colaboración.</p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link href="/contact" className="btn btn-accent btn-lg">Contact us</Link>
-            <Link href="/faq" className="btn btn-lg bg-white/15 text-white hover:bg-white/25 border border-white/20">Read the FAQ</Link>
+            <Link href="/es/contact" className="btn btn-accent btn-lg">Contactar</Link>
+            <Link href="/es/faq" className="btn btn-lg bg-white/15 text-white hover:bg-white/25 border border-white/20">Ver preguntas frecuentes</Link>
           </div>
         </div>
       </section>

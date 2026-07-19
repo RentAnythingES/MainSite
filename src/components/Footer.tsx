@@ -13,7 +13,7 @@ export default function Footer() {
     [isSpanish ? "Información" : "Info & Help"]: [
       { name: isSpanish ? "Cómo Funciona" : "How It Works", href: `${prefix}/how-it-works` },
       { name: isSpanish ? "Descubrir Valencia" : "Discover Valencia", href: "/discover" },
-      { name: isSpanish ? "Sobre Nosotros" : "About Us", href: "/about" },
+      { name: isSpanish ? "Sobre Nosotros" : "About Us", href: `${prefix}/about` },
       { name: isSpanish ? "Preguntas Frecuentes" : "FAQ", href: `${prefix}/faq` },
       {
         name: isSpanish ? "Servicios para Anfitriones" : "Host Services",
@@ -26,7 +26,7 @@ export default function Footer() {
         href: isSpanish ? "/es/colaboraciones" : "/partners",
       },
       { name: "Blog", href: `${prefix}/blog` },
-      { name: isSpanish ? "Contacto" : "Contact", href: "/contact" },
+      { name: isSpanish ? "Contacto" : "Contact", href: `${prefix}/contact` },
     ],
     [isSpanish ? "Categorías" : "Categories"]: [
       { name: "Kits", href: "/valencia/kits" },

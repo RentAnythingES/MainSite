@@ -9,6 +9,7 @@ export async function POST(request: NextRequest) {
 
     const body = await request.json();
     const { name, email, subject, message, productName } = body;
+    const locale: "en" | "es" = body.locale === "es" ? "es" : "en";
 
     if (!name || !email || !message) {
       return NextResponse.json(
@@ -30,6 +31,7 @@ export async function POST(request: NextRequest) {
       subject,
       message,
       productName,
+      locale,
     };
 
     const notificationSent = await sendContactNotification(emailData);
