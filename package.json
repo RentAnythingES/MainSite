@@ -18,6 +18,7 @@
     "audit:performance": "node scripts/performance-budget-audit.cjs",
     "audit:technical-seo": "node scripts/technical-seo-audit.cjs",
     "audit:discover-intent": "node scripts/discover-intent-audit.cjs",
+    "audit:discover-sources": "node scripts/discover-source-audit.cjs",
     "smoke:booking": "node scripts/booking-api-smoke.cjs",
     "db:audit": "node scripts/audit-live-schema.cjs",
     "db:migrate": "node scripts/apply-db-migrations.cjs",

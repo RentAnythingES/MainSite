@@ -245,7 +245,7 @@ Data-driven `/discover/[slug]` pages. 5 destinations live. Hub pages for neighbo
 
 **Open design items:**
 - [ ] **Real photos** — Replace AI-generated images with sourced photography for trust
-- [ ] **Restaurant source tracking** — `sourceNote` fields exist but need populating with research
+- [x] **Restaurant source tracking** — All 35 published recommendations carry a source note, source URL, and verification date; stale or misplaced venues were corrected and `npm run audit:discover-sources` enforces six-month review
 - [x] **Staying vs Visiting** — All 5 published neighbourhoods have complete staying guidance and all 14 published Discover guides have complete visiting guidance, enforced by `npm run audit:discover-intent`
 
 ---

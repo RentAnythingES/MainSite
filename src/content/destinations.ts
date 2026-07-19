@@ -84,6 +84,10 @@ export interface FoodAndDrink {
     familyFriendly?: boolean;
     /** Internal: why we recommend this — source, personal visit, review reference. Not rendered. */
     sourceNote?: string;
+    /** Internal: official venue or authoritative tourism source. Not rendered. */
+    sourceUrl: string;
+    /** Internal: ISO date when the source and venue status were last checked. Not rendered. */
+    sourceCheckedAt: string;
   }[];
   localSpeciality?: string;
 }
@@ -314,12 +318,11 @@ export const destinations: Destination[] = [
     foodAndDrink: {
       summary: "Ruzafa has the highest density of quality restaurants in Valencia — from traditional Valencian rice dishes to Japanese fusion and specialty coffee.",
       recommendations: [
-        { name: "Canalla Bistro", type: "Creative Fusion", priceRange: "€€€", tip: "Book dinner. Lunch walk-ins possible.", familyFriendly: false, sourceNote: "Ricard Camarena group. Consistently ranked top-10 Valencia by El Tenedor + local food blogs. Google 4.3★ (2.8k reviews)." },
-        { name: "Casa Baldo 1915", type: "Traditional Valencian", priceRange: "€€", tip: "Try the esmorzaret (Valencian mid-morning snack)", familyFriendly: true, sourceNote: "100+ year old institution. Known for esmorzaret among locals. Google 4.4★. Recommended by ValenciaSecreta.com." },
-        { name: "Bluebell Coffee", type: "Specialty Coffee & Brunch", priceRange: "€€", tip: "Weekday mornings for no queues", familyFriendly: true, sourceNote: "Top-rated specialty coffee in Ruzafa. Featured in nomad guides (NomadList, Valencia Digital Nomads FB group). Google 4.5★." },
-        { name: "Copenhagen", type: "Vegetarian Tapas", priceRange: "€€", familyFriendly: true, sourceNote: "Best-known vegetarian spot in Ruzafa. Google 4.2★ (1.5k reviews). Consistently appears in 'Best Vegetarian Valencia' lists." },
-        { name: "Nozomi Sushi Bar", type: "Japanese", priceRange: "€€€", tip: "Stunning interior — worth the splurge", familyFriendly: false, sourceNote: "Award-winning Japanese. Architecturally notable interior (design press coverage). Google 4.4★. TripAdvisor Certificate of Excellence." },
-        { name: "Dulce de Leche", type: "Bakery & Cakes", priceRange: "€", tip: "Go on a weekday — weekend queues are long", familyFriendly: true, sourceNote: "Iconic Ruzafa bakery — weekend queues are a neighbourhood landmark. Google 4.5★ (3k+ reviews). Valentina's, local press." },
+        { name: "Canalla Bistro", type: "Creative fusion", priceRange: "€€€", tip: "Reserve ahead for dinner and check the current menu before visiting.", familyFriendly: false, sourceNote: "Official site confirms the Ricard Camarena concept and Maestro José Serrano location.", sourceUrl: "https://www.canallabistro.com/en/home/", sourceCheckedAt: "2026-07-19" },
+        { name: "Bluebell Coffee", type: "Specialty coffee & brunch", priceRange: "€€", tip: "A practical daytime stop; the official site currently lists opening hours until 16:00.", familyFriendly: true, sourceNote: "Official venue site confirms the Buenos Aires 3 location and current daytime hours.", sourceUrl: "https://bluebellcoffeeco.com/contacto/", sourceCheckedAt: "2026-07-19" },
+        { name: "Copenhagen", type: "Vegetarian restaurant", priceRange: "€€", tip: "Check the weekly lunch menu or reserve by phone for dinner.", familyFriendly: true, sourceNote: "Official restaurant site confirms its plant-led menu and Literato Azorín location in Russafa.", sourceUrl: "https://restaurantecopenhagen.es/", sourceCheckedAt: "2026-07-19" },
+        { name: "Nozomi Sushi Bar", type: "Japanese", priceRange: "€€€", tip: "Reservations are advisable; opening days and service times are limited.", familyFriendly: false, sourceNote: "Official venue site confirms the Pedro III El Grande location and current service schedule.", sourceUrl: "https://nozomisushibar.es/en/contact/", sourceCheckedAt: "2026-07-19" },
+        { name: "Dulce de Leche", type: "Bakery & cakes", priceRange: "€", tip: "Allow extra time at popular breakfast and weekend periods.", familyFriendly: true, sourceNote: "Current business directory record confirms the Ruzafa venue at Pintor Gisbert 2.", sourceUrl: "https://www.paginasamarillas.es/f/valencia/dulce-de-leche-boutique-s-l-_225480516_000000001.html", sourceCheckedAt: "2026-07-19" },
       ],
       localSpeciality: "Order an agua de Valencia at any terrace bar — it's the city's signature cocktail (orange juice, cava, vodka, gin). Invented in Valencia and best enjoyed in Ruzafa.",
     },
@@ -496,9 +499,9 @@ export const destinations: Destination[] = [
     foodAndDrink: {
       summary: "The Malvarrosa promenade is where paella was born — specifically, in the beachfront restaurants that have served rice dishes for over a century.",
       recommendations: [
-        { name: "La Pepica", type: "Traditional Paella", priceRange: "€€€", tip: "Book 2+ days ahead for Sunday lunch", familyFriendly: true },
-        { name: "Casa Carmela", type: "Wood-Fired Paella", priceRange: "€€", tip: "One of the most authentic paella experiences in Valencia", familyFriendly: true },
-        { name: "La Más Bonita", type: "Brunch & Cocktails", priceRange: "€€", tip: "Instagram-famous. Better for drinks than food.", familyFriendly: false },
+        { name: "La Pepica", type: "Traditional rice restaurant", priceRange: "€€€", tip: "Reserve for weekend lunch and confirm current service hours directly.", familyFriendly: true, sourceNote: "Official site confirms the beachfront Avenida Neptuno restaurant, rice menu and current hours.", sourceUrl: "https://lapepica.com/menu/", sourceCheckedAt: "2026-07-19" },
+        { name: "Casa Carmela", type: "Wood-fired paella", priceRange: "€€€", tip: "Reserve ahead and order rice for the table rather than as an individual dish.", familyFriendly: true, sourceNote: "Official site confirms its Isabel de Villena location and wood-fired paella tradition since 1922.", sourceUrl: "https://www.casa-carmela.com/es/", sourceCheckedAt: "2026-07-19" },
+        { name: "La Más Bonita", type: "Beachfront café & brunch", priceRange: "€€", tip: "Check the current location hours before relying on it for a specific meal time.", familyFriendly: true, sourceNote: "Official group site confirms the Valencia beachfront venue and current operating locations.", sourceUrl: "https://www.lamasbonita.es/", sourceCheckedAt: "2026-07-19" },
       ],
       localSpeciality: "Order paella Valenciana (chicken, rabbit, beans) or arroz a banda (fish stock rice). Never order paella for dinner — it's a lunch dish in Valencia.",
     },
@@ -960,10 +963,10 @@ export const destinations: Destination[] = [
     foodAndDrink: {
       summary: "El Carmen is tapas paradise. From traditional Valencian bars with €2 cañas to trendy wine bars, every price point is represented.",
       recommendations: [
-        { name: "Mercado Central", type: "Market / Fresh food", priceRange: "€", tip: "Best for breakfast: fresh juice, pastries, and a stand-up coffee.", familyFriendly: true },
-        { name: "Café de las Horas", type: "Cocktail bar / Baroque café", priceRange: "€€", tip: "Famous for its Agua de Valencia cocktail. The ornate interior is worth a visit even for non-drinkers.", familyFriendly: true },
-        { name: "La Pilareta", type: "Traditional tapas bar", priceRange: "€", tip: "Operating since 1917. Famous for mussels (clóchinas) in summer. Cash only, standing room mostly.", familyFriendly: false },
-        { name: "Dulce de Leche", type: "Brunch / Café", priceRange: "€€", tip: "Best brunch in El Carmen. Arrive before 11am on weekends or expect a wait.", familyFriendly: true },
+        { name: "Mercado Central", type: "Market / fresh food", priceRange: "€", tip: "Visit in the morning and check official market hours before planning a meal around it.", familyFriendly: true, sourceNote: "Valencia City Council confirms the market location and morning trading pattern.", sourceUrl: "https://www.valencia.es/es/-/mercado-centr-1", sourceCheckedAt: "2026-07-19" },
+        { name: "Café de las Horas", type: "Cocktail bar / baroque café", priceRange: "€€", tip: "Known for Agua de Valencia; use the current menu and booking details on the venue site.", familyFriendly: true, sourceNote: "Official venue site confirms its city-centre location, menu and Agua de Valencia focus.", sourceUrl: "https://cafedelashoras.com/", sourceCheckedAt: "2026-07-19" },
+        { name: "La Pilareta", type: "Traditional tapas bar", priceRange: "€€", tip: "Clóchinas are seasonal, so check availability rather than assuming they are always on the menu.", familyFriendly: false, sourceNote: "Visit Valencia identifies La Pilareta at Moro Zeid 13 as a traditional place for seasonal clóchinas.", sourceUrl: "https://www.visitvalencia.com/en/what-to-do-valencia/gastronomy/what-to-eat/tapas", sourceCheckedAt: "2026-07-19" },
+        { name: "Horchatería Santa Catalina", type: "Horchata & pastries", priceRange: "€€", tip: "A central stop for horchata and fartons; confirm seasonal opening times directly.", familyFriendly: true, sourceNote: "Official venue site confirms the historic-centre location and horchata, fartons and chocolate menu.", sourceUrl: "https://www.horchateriasantacatalina.com/menu/", sourceCheckedAt: "2026-07-19" },
       ],
       localSpeciality: "Horchata and fartons — a sweet tiger nut milk drink with elongated pastries. Try it at Horchatería Santa Catalina, the most famous in the city.",
     },
@@ -1120,10 +1123,10 @@ export const destinations: Destination[] = [
     foodAndDrink: {
       summary: "Cabanyal is THE place for paella and seafood in Valencia. The beachfront restaurants are institutions — expect to queue on weekends. The back streets have excellent budget tapas.",
       recommendations: [
-        { name: "Casa Carmela", type: "Traditional paella restaurant", priceRange: "€€", tip: "Wood-fired paella cooked the traditional way. Reservations essential, especially weekends. Ask for the socarrat (crispy rice bottom).", familyFriendly: true },
-        { name: "La Pepica", type: "Historic seafood restaurant", priceRange: "€€€", tip: "Hemingway's favourite. On the beachfront since 1898. Tourist-priced but the fideuà (noodle paella) is excellent.", familyFriendly: true },
-        { name: "La Más Bonita", type: "Beachfront brunch bar", priceRange: "€€", tip: "The most Instagram-famous spot in Cabanyal. Great açaí bowls and cocktails. Queue on weekends.", familyFriendly: true },
-        { name: "Bodega Casa Montaña", type: "Wine bar / Tapas", priceRange: "€€", tip: "Operating since 1836. Some of the best traditional tapas in Valencia. The anchovies and mussels are outstanding.", familyFriendly: false },
+        { name: "Casa Carmela", type: "Traditional paella restaurant", priceRange: "€€€", tip: "Reserve ahead for a wood-fired rice lunch and confirm the restaurant's current service days.", familyFriendly: true, sourceNote: "Official site confirms the Isabel de Villena location, wood-fired rice focus and current reservation details.", sourceUrl: "https://www.casa-carmela.com/es/", sourceCheckedAt: "2026-07-19" },
+        { name: "La Pepica", type: "Historic rice & seafood restaurant", priceRange: "€€€", tip: "Reserve for peak lunch periods and check the current menu before choosing a rice dish.", familyFriendly: true, sourceNote: "Official site confirms the Avenida Neptuno location, 125-year history and current rice and seafood menu.", sourceUrl: "https://lapepica.com/menu/", sourceCheckedAt: "2026-07-19" },
+        { name: "La Más Bonita", type: "Beachfront café & brunch", priceRange: "€€", tip: "Check current opening hours if it is an essential stop rather than a flexible café option.", familyFriendly: true, sourceNote: "Official group site confirms the Valencia beachfront venue and current operating locations.", sourceUrl: "https://www.lamasbonita.es/", sourceCheckedAt: "2026-07-19" },
+        { name: "Bodega Casa Montaña", type: "Wine bar / tapas", priceRange: "€€€", tip: "Reserve if the visit matters to your plans; the historic dining rooms have limited capacity.", familyFriendly: false, sourceNote: "Visit Valencia confirms the José Benlliure 69 location, extensive wine cellar and traditional tapas focus.", sourceUrl: "https://www.visitvalencia.com/que-hacer-valencia/gastronomia/restaurantes-valencia/bodega-casa-montana", sourceCheckedAt: "2026-07-19" },
       ],
       localSpeciality: "Paella Valenciana cooked over wood fire — this is the neighbourhood where the tradition lives. Sunday paella lunch is a Valencian institution.",
     },
@@ -1267,12 +1270,12 @@ export const destinations: Destination[] = [
       publicTransportAccess: "Metro L1 Benimaclet has lifts. Tram stops are accessible.",
     },
     foodAndDrink: {
-      summary: "Benimaclet's food scene punches well above its weight. Student economics mean excellent value — this is where locals eat when they want good food without tourist prices.",
+      summary: "Benimaclet mixes long-running neighbourhood cafés with newer bakeries and Valencian restaurants. Check current opening hours because many independent venues close between services or on selected weekdays.",
       recommendations: [
-        { name: "Kaf Café", type: "Speciality coffee / Brunch", priceRange: "€", tip: "The best third-wave coffee in the neighbourhood. Small, cosy, and popular with remote workers in the morning.", familyFriendly: true },
-        { name: "La Finestra", type: "Italian / Pizza", priceRange: "€", tip: "Massive portions at student prices. The four-cheese pizza is legendary among locals.", familyFriendly: true },
-        { name: "Rincón de Diego", type: "Traditional Valencian", priceRange: "€", tip: "The €10 menú del día (three courses + drink) is outstanding value. Packed with locals at lunchtime.", familyFriendly: true },
-        { name: "Punjab Palace", type: "Indian", priceRange: "€", tip: "Authentic north Indian cuisine. The butter chicken and garlic naan are excellent. Very generous portions.", familyFriendly: true },
+        { name: "Kaf Café", type: "Literary café & cultural bar", priceRange: "€", tip: "Check its current social channels for opening times and cultural programming before visiting.", familyFriendly: true, sourceNote: "Benimaclet Entra identifies Kaf Café as a neighbourhood literary and cultural café.", sourceUrl: "https://benimacletentra.org/portfolio-item/kaf-cafe/", sourceCheckedAt: "2026-07-19" },
+        { name: "Bar Verbena", type: "Tapas & neighbourhood bar", priceRange: "€€", tip: "Use the official site for current reservations and service details.", familyFriendly: true, sourceNote: "Official venue site confirms the Utiel 20 location in Benimaclet and its tapas-led concept.", sourceUrl: "https://barverbena.es/", sourceCheckedAt: "2026-07-19" },
+        { name: "Ambra", type: "Traditional Valencian", priceRange: "€€€", tip: "Reserve ahead if you want one of the rice dishes, especially for a weekend meal.", familyFriendly: true, sourceNote: "Current local reporting confirms the Mistral 10 venue, traditional Valencian cooking and rice focus.", sourceUrl: "https://cadenaser.com/comunitat-valenciana/2025/07/04/ambra-el-sabor-de-la-cocina-valenciana-mas-autentica-en-una-casa-de-pueblo-en-benimaclet-radio-valencia/", sourceCheckedAt: "2026-07-19" },
+        { name: "KÜME Café", type: "Bakery & café", priceRange: "€€", tip: "Check the split morning and evening hours before planning a visit.", familyFriendly: true, sourceNote: "Official venue site confirms the Guardia Civil 20 location, bakery range and current hours.", sourceUrl: "https://kumepasteleria.com/", sourceCheckedAt: "2026-07-19" },
       ],
       localSpeciality: "The menú del día — a three-course lunch with bread and drink, typically €10-12. This working-class tradition is strongest in neighbourhoods like Benimaclet where locals, not tourists, set the prices.",
     },
@@ -1424,11 +1427,11 @@ export const destinations: Destination[] = [
       publicTransportAccess: "Metro Alameda exits at park level. Multiple bus stops along the bridges above have ramp access down.",
     },
     foodAndDrink: {
-      summary: "Several cafés and kiosks are scattered along the park. The areas near Pont de Fusta and around the Palau de la Música have the most options.",
+      summary: "The park has cafés and refreshment points, but facilities are spread across a nine-kilometre route. Carry water and treat food stops as flexible rather than relying on one named kiosk being open.",
       recommendations: [
-        { name: "La Pérgola (Palau area)", type: "Café / Terrace", priceRange: "€", tip: "The most popular park café. Good for coffee and a sandwich mid-walk. Terrace seating overlooking the lake.", familyFriendly: true },
-        { name: "Kiosco near Gulliver", type: "Snack bar", priceRange: "€", tip: "Basic drinks and ice creams — exactly what you need after the kids have been climbing Gulliver for an hour.", familyFriendly: true },
-        { name: "Pont de Fusta area", type: "Multiple restaurants", priceRange: "€€", tip: "Climb up to street level at Pont de Fusta bridge for a cluster of restaurants and a Mercadona supermarket for picnic supplies.", familyFriendly: true },
+        { name: "Palau de la Música café area", type: "Café / terrace", priceRange: "€", tip: "Use it as a flexible refreshment stop and confirm opening on the day.", familyFriendly: true, sourceNote: "Visit Valencia's accessibility guide confirms a café and adapted toilet facilities by the Palau de la Música.", sourceUrl: "https://www.visitvalencia.com/en/valencia-accesible/turia-garden", sourceCheckedAt: "2026-07-19" },
+        { name: "Gulliver refreshment area", type: "Café / vending", priceRange: "€", tip: "Bring your own water as a fallback, particularly during split summer opening hours.", familyFriendly: true, sourceNote: "Visit Valencia confirms refreshment and adapted toilet facilities around Gulliver Park.", sourceUrl: "https://www.visitvalencia.com/en/what-to-do-valencia/nature-in-valencia/parks-and-gardens-valencia/gulliver-park", sourceCheckedAt: "2026-07-19" },
+        { name: "Picnic in the Turia", type: "Self-catered picnic", priceRange: "€", tip: "Buy supplies before entering a long park section and take all waste with you.", familyFriendly: true, sourceNote: "Visit Valencia describes the Turia as suitable for picnics and confirms cafés are distributed along the route.", sourceUrl: "https://www.visitvalencia.com/en/what-to-do-valencia/nature-in-valencia/parks-and-gardens-valencia/turia-gardens", sourceCheckedAt: "2026-07-19" },
       ],
       localSpeciality: "Pack a picnic with supplies from Mercado Central or Mercadona — eating under the orange trees in the Turia is a quintessential Valencia experience.",
     },
@@ -1581,10 +1584,10 @@ export const destinations: Destination[] = [
     foodAndDrink: {
       summary: "El Ensanche has Valencia's widest range of dining — from Michelin-starred restaurants to the gorgeous Mercado de Colón food hall.",
       recommendations: [
-        { name: "Mercado de Colón", type: "Gourmet food hall", priceRange: "€€", tip: "Not a traditional market — more an Art Nouveau food court. The horchata at Daniel and the tapas at Ma Khin are highlights.", familyFriendly: true },
-        { name: "Canalla Bistro by Ricard Camarena", type: "Michelin-starred fusion", priceRange: "€€€", tip: "Ricard Camarena's casual concept. Asian-Mediterranean fusion that works. Book 2-3 days ahead.", familyFriendly: false },
-        { name: "El Corte Inglés Rooftop", type: "Restaurant / Views", priceRange: "€€", tip: "The rooftop restaurant has panoramic views and surprisingly decent food. Good for a special lunch without Michelin prices.", familyFriendly: true },
-        { name: "Horchatería Daniel", type: "Traditional / Horchata", priceRange: "€", tip: "Inside Mercado de Colón. The best horchata and fartons in the city. A must-try Valencian experience.", familyFriendly: true },
+        { name: "Mercado de Colón", type: "Food hall & terraces", priceRange: "€€", tip: "Individual businesses set their own hours, so check the venue you want before travelling.", familyFriendly: true, sourceNote: "Official market site confirms the food, drink and terrace businesses operating inside the modernist building.", sourceUrl: "https://mercadocolon.es/", sourceCheckedAt: "2026-07-19" },
+        { name: "Canalla Bistro by Ricard Camarena", type: "Creative global bistro", priceRange: "€€€", tip: "Reserve ahead for dinner and consult the current fixed-menu and à-la-carte options.", familyFriendly: false, sourceNote: "Official site confirms this is Ricard Camarena's informal international bistro; it is not presented as a Michelin-starred venue.", sourceUrl: "https://www.canallabistro.com/en/home/", sourceCheckedAt: "2026-07-19" },
+        { name: "La Plaça at El Corte Inglés Colón", type: "Food hall / city views", priceRange: "€€", tip: "Check department-store opening hours and the current restaurant offer before visiting.", familyFriendly: true, sourceNote: "El Corte Inglés confirms La Plaça on the sixth floor of its Colón store and panoramic city views.", sourceUrl: "https://www.elcorteingles.es/hosteleria/nuevos-conceptos/la-plasa-valencia-colon/", sourceCheckedAt: "2026-07-19" },
+        { name: "Horchatería Daniel", type: "Traditional horchata", priceRange: "€", tip: "Try horchata with fartons and confirm the Mercado de Colón kiosk hours on the day.", familyFriendly: true, sourceNote: "Official Horchatería Daniel and Mercado de Colón pages confirm the market location and horchata focus.", sourceUrl: "https://horchateria-daniel.es/", sourceCheckedAt: "2026-07-19" },
       ],
       localSpeciality: "Horchata and fartons at Mercado de Colón — Valencia's signature sweet drink made from tiger nuts, served ice-cold with sugar-glazed pastries.",
     },
@@ -1729,10 +1732,10 @@ export const destinations: Destination[] = [
       publicTransportAccess: "Sagunto train station is step-free. The walk to the old town is flat (10 minutes). The climb to the castle begins at the theatre.",
     },
     foodAndDrink: {
-      summary: "Sagunto's restaurants serve excellent, affordable local food. This is where locals eat — not tourists.",
+      summary: "Sagunto combines informal old-town cafés with a small number of destination restaurants. Choose between a flexible post-castle stop and a pre-booked meal before travelling.",
       recommendations: [
-        { name: "L'Armeler", type: "Traditional Valencian", priceRange: "€€", tip: "One of the best restaurants in Sagunto. The arroz al horno (oven-baked rice) is outstanding. Book for lunch.", familyFriendly: true },
-        { name: "Cafés on Plaça Major", type: "Café / Terrace", priceRange: "€", tip: "Perfect post-castle recovery spot. Cold drinks, bocadillos, and people-watching.", familyFriendly: true },
+        { name: "Arrels", type: "Contemporary Valencian tasting menus", priceRange: "€€€", tip: "This is a reservation-led special-occasion meal, not a quick stop after the castle.", familyFriendly: true, sourceNote: "Official restaurant and Michelin Guide pages confirm the Castell 18 location, tasting-menu format and current service schedule.", sourceUrl: "https://www.restaurantarrels.com/", sourceCheckedAt: "2026-07-19" },
+        { name: "Cafés around Plaça Major", type: "Café / terrace", priceRange: "€", tip: "Treat this as a flexible refreshment stop and check the venue you choose on arrival.", familyFriendly: true, sourceNote: "Valencia provincial tourism confirms Sagunto's old-town visitor area and local gastronomy; this is area guidance rather than one endorsed business.", sourceUrl: "https://turisme.dival.es/en/destino/sagunto/", sourceCheckedAt: "2026-07-19" },
       ],
       localSpeciality: "Arroz al horno — oven-baked rice with chickpeas, blood sausage, and pork. A Camp de Morvedre speciality you won't find easily in Valencia city.",
     },
@@ -1861,10 +1864,10 @@ export const destinations: Destination[] = [
       publicTransportAccess: "Requena-Utiel train station has step-free access. Taxi or walk to old town (15 min).",
     },
     foodAndDrink: {
-      summary: "Requena's food is hearty inland Valencian cuisine — game, cured meats, mushrooms in autumn, and excellent wine at every table.",
+      summary: "Requena's food is hearty inland Valencian cuisine, with cured meats, rice dishes, seasonal produce and regional wine. Reserve destination restaurants and confirm transport if dining outside the old town.",
       recommendations: [
-        { name: "Mesón de la Villa", type: "Traditional / Game", priceRange: "€€", tip: "Inside the old town. Wild boar, venison, and lamb cooked in wood-fired ovens. Outstanding value.", familyFriendly: true },
-        { name: "Casa Paco", type: "Traditional Valencian", priceRange: "€", tip: "The menú del día is absurdly good value. Local wines by the glass for €2-3.", familyFriendly: true },
+        { name: "Hotel La Villa restaurant", type: "Traditional regional", priceRange: "€€", tip: "Its old-town location is convenient for the caves; confirm current restaurant service with the hotel.", familyFriendly: true, sourceNote: "The Requena tourism guide lists Hotel La Villa Restaurante at Plaza del Albornoz 8 in the historic quarter.", sourceUrl: "https://guiasturisticasct.com/wp-content/uploads/Guia-REQUENA-2023.pdf", sourceCheckedAt: "2026-07-19" },
+        { name: "La Posada de Águeda", type: "Traditional regional", priceRange: "€€", tip: "Located outside the pedestrian old-town circuit, so plan transport and reserve before visiting.", familyFriendly: true, sourceNote: "Michelin Guide confirms the Requena location, traditional local cooking and current lunch-only schedule.", sourceUrl: "https://guide.michelin.com/us/en/comunidad-valenciana/requena/restaurant/la-posada-de-agueda", sourceCheckedAt: "2026-07-19" },
       ],
       localSpeciality: "Embutidos (cured meats) and gazpachos manchegos — a hearty game stew with unleavened bread, not to be confused with the cold Andalusian soup.",
     },
@@ -1875,7 +1878,7 @@ export const destinations: Destination[] = [
       tips: [
         "Start with the Cuevas de la Villa tour (book at tourist office in Plaza del Albornoz).",
         "Wander La Villa medieval quarter after the caves — it's compact and beautiful.",
-        "Lunch at Mesón de la Villa or Casa Paco. Order local wine — it's excellent and cheap.",
+        "Confirm your chosen lunch venue before travelling; old-town and out-of-town restaurants require different transport plans.",
         "Afternoon: visit a bodega outside town (need car) or browse the Museo del Vino.",
       ],
     },
@@ -1949,9 +1952,9 @@ export const destinations: Destination[] = [
       },
       {
         name: "Seafront Paella Restaurants",
-        description: "A row of excellent paella restaurants lines the Paseo Marítimo. Unlike the more touristy Las Arenas strip, these serve to a primarily local crowd and the quality reflects it.",
+        description: "Rice restaurants and Mediterranean terraces line the Paseo Marítimo, making lunch easy to combine with a beach day when booked separately.",
         icon: "🥘",
-        tip: "La Alegría and Restaurante Patacona are local favourites. Book for Sunday lunch — paella by the sea is a weekend ritual here.",
+        tip: "Casa Patacona and La Chipirona both publish current venue information online. Reserve weekend rice lunches directly.",
       },
       {
         name: "Horchata in Alboraya",
@@ -1991,10 +1994,10 @@ export const destinations: Destination[] = [
       publicTransportAccess: "Tram stop La Patacona has step-free platform access.",
     },
     foodAndDrink: {
-      summary: "Patacona has a better food-to-tourist ratio than the city beaches. The seafront restaurants serve excellent rice dishes to a mostly local crowd.",
+      summary: "Patacona's seafront has rice restaurants, cafés and beach-adjacent terraces. Reserve a rice lunch separately from your beach setup and check current service hours before travelling.",
       recommendations: [
-        { name: "La Alegría", type: "Seafood / Paella", priceRange: "€€", tip: "One of the best paella spots on this stretch. The arroz a banda and fideuà are excellent. Book for weekend lunch.", familyFriendly: true },
-        { name: "Chiringuito El Pirata", type: "Beach bar", priceRange: "€", tip: "Cold beers, snacks, and music right on the sand. The sunset views are free.", familyFriendly: true },
+        { name: "Casa Patacona", type: "Mediterranean rice restaurant", priceRange: "€€€", tip: "Reserve rice dishes for weekend lunch and confirm the current menu directly.", familyFriendly: true, sourceNote: "Official site confirms the Paseo Marítimo 14 location, Mediterranean menu and Valencian rice focus.", sourceUrl: "https://casapatacona.com/", sourceCheckedAt: "2026-07-19" },
+        { name: "La Chipirona", type: "Beachfront restaurant & terrace", priceRange: "€€€", tip: "Check current meal service and reserve if the terrace is important to your plans.", familyFriendly: true, sourceNote: "Official venue site confirms the active beachfront hotel and restaurant at La Patacona.", sourceUrl: "https://www.lachipirona.com/", sourceCheckedAt: "2026-07-19" },
       ],
       localSpeciality: "Arroz a banda — a rich fish stock rice dish where the fish is served separately. A fisherman's dish originally from this coast, and it's outstanding here.",
     },
@@ -2134,10 +2137,10 @@ export const destinations: Destination[] = [
       publicTransportAccess: "Xàtiva train station has step-free access. The walk to the old town is flat (10 minutes).",
     },
     foodAndDrink: {
-      summary: "Xàtiva's food scene is excellent and affordable. The local specialities are distinctive and not easily found in Valencia city.",
+      summary: "Xàtiva's traditional restaurants are a useful place to try local rice dishes and desserts after the castle. Opening days vary, so reserve or confirm service before travelling.",
       recommendations: [
-        { name: "Casa La Abuela", type: "Traditional Valencian", priceRange: "€€", tip: "The most popular restaurant in Xàtiva. Outstanding arròs al forn and local specialities. Book ahead for weekend lunch.", familyFriendly: true },
-        { name: "Hostal Murta", type: "Traditional / Regional", priceRange: "€€", tip: "A classic with a beautiful garden terrace. The menú del día is excellent value. Try the arnadí dessert.", familyFriendly: true },
+        { name: "Casa La Abuela", type: "Traditional Valencian", priceRange: "€€", tip: "Reserve for lunch and ask which Xàtiva specialities are available that day.", familyFriendly: true, sourceNote: "Xàtiva tourism and current local reporting confirm the Reina 17 restaurant, its long history and arròs al forn tradition.", sourceUrl: "https://xativaturismo.com/wp-content/uploads/2021/10/fira-gastro-quadrat.pdf", sourceCheckedAt: "2026-07-19" },
+        { name: "El Cullerot", type: "Traditional Mediterranean & rice", priceRange: "€€", tip: "Check its limited opening days and reserve rice dishes in advance.", familyFriendly: true, sourceNote: "Official restaurant site confirms the Plaça del Mercat 10 location, current hours and rice-focused menu.", sourceUrl: "https://elcullerot.com/", sourceCheckedAt: "2026-07-19" },
       ],
       localSpeciality: "Arnadí — a unique Xàtiva dessert made from pumpkin, almonds, sugar, and egg. Found almost nowhere else. Also try the coca de llanda (simple sponge cake) that every bakery makes.",
     },
@@ -2149,7 +2152,7 @@ export const destinations: Destination[] = [
         "Take the tourist road train (trenecito) up, walk down through the old town. Saves energy for exploring the castle itself.",
         "The castle has two sections — Castell Menor (ruined, atmospheric) and Castell Major (restored, museum). Both are worth exploring.",
         "Descend through the old town streets (not the road). Stop at the Colegiata and museum on the way down.",
-        "Lunch at Casa La Abuela or Hostal Murta. Order arnadí dessert — you won't find it anywhere else.",
+        "Reserve lunch at a currently operating old-town restaurant and ask whether arnadí or another local dessert is available.",
       ],
     },
     practicalTips: [
@@ -2172,7 +2175,7 @@ export const destinations: Destination[] = [
         audience: "couples",
         tips: [
           "One of the most romantic day trips from Valencia. The castle views are breathtaking, the old town is atmospheric.",
-          "Lunch at Hostal Murta's garden terrace is a highlight. Book ahead on weekends.",
+          "Reserve a current old-town restaurant for lunch and leave enough time to walk down from the castle.",
           "The walk down from the castle through the medieval streets at golden hour is magical.",
         ],
       },
