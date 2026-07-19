@@ -375,7 +375,7 @@ async function main() {
   );
   assertPageEnhancements(
     aboutPageEs,
-    ["Viaja ligero.", "SiÃ©ntete como en casa.", "Limpieza y revisiÃ³n"],
+    ["Viaja ligero.", "RentAnything.es ayuda", "Nuestra primera zona de servicio"],
     ["AboutPage", "Organization"],
     "Spanish About page"
   );
