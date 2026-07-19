@@ -235,7 +235,7 @@ Spain receives 97M international visitors/year. Language priority based on verif
 Data-driven `/discover/[slug]` pages. 5 destinations live. Hub pages for neighbourhoods, day-trips, attractions, events.
 
 **Completed design items:**
-- [x] **Photo heroes** — AI-generated hero images for all 5 destinations
+- [x] **Photo heroes** — Every published Discover guide has a local hero asset
 - [x] **Category-based product strips** — Compact, thematic horizontal scrolling widgets (mobility, baby, remote work)
 - [x] **Two-layer overlay** — Consistent `bg-black/50` + gradient pattern on all photo heroes
 - [x] **Widget spacing** — No two product strips adjacent; contextually placed after relevant sections
@@ -244,7 +244,7 @@ Data-driven `/discover/[slug]` pages. 5 destinations live. Hub pages for neighbo
   - Production verified 18 July 2026: responsive layout has no horizontal overflow; live crawl reports zero page errors, warnings, broken internal links, or broken images.
 
 **Open design items:**
-- [ ] **Real photos** — Replace AI-generated images with sourced photography for trust
+- [ ] **Real photos** — 4 of 14 hero assets replaced with licensed real photography; visible attribution, a rights register, and `npm run audit:discover-images` now prevent undocumented replacements. Ten unverified assets remain.
 - [x] **Restaurant source tracking** — All 35 published recommendations carry a source note, source URL, and verification date; stale or misplaced venues were corrected and `npm run audit:discover-sources` enforces six-month review
 - [x] **Staying vs Visiting** — All 5 published neighbourhoods have complete staying guidance and all 14 published Discover guides have complete visiting guidance, enforced by `npm run audit:discover-intent`
 

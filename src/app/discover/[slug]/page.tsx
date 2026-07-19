@@ -260,6 +260,29 @@ export default async function DiscoverPage({ params }: Props) {
                 </div>
               )}
               <p className="text-xs text-white/50 mt-4">Last updated: {dest.lastUpdated}</p>
+              {dest.heroImageProvenance.status === "licensed" && (
+                <p className="mt-2 text-xs text-white/70">
+                  Photo:{" "}
+                  <a
+                    href={dest.heroImageProvenance.sourceUrl}
+                    className="underline underline-offset-2 hover:text-white"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    {dest.heroImageProvenance.creator}
+                  </a>{" "}
+                  ·{" "}
+                  <a
+                    href={dest.heroImageProvenance.licenseUrl}
+                    className="underline underline-offset-2 hover:text-white"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    {dest.heroImageProvenance.license}
+                  </a>{" "}
+                  · cropped for display
+                </p>
+              )}
             </div>
           </>
         ) : (

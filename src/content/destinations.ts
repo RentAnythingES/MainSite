@@ -128,6 +128,20 @@ export interface DestinationFAQ {
   answer: string;
 }
 
+export type HeroImageProvenance =
+  | {
+      status: "licensed";
+      creator: string;
+      sourceUrl: string;
+      license: string;
+      licenseUrl: string;
+      verifiedAt: string;
+      modifications: string;
+    }
+  | {
+      status: "unverified";
+    };
+
 // ===== CORE INTERFACE =====
 
 export interface Destination {
@@ -138,6 +152,7 @@ export interface Destination {
   tagline: string;
   heroImage?: string;
   heroImageAlt?: string;
+  heroImageProvenance: HeroImageProvenance;
 
   // SEO
   title: string;
@@ -232,7 +247,16 @@ export const destinations: Destination[] = [
     type: "neighbourhood",
     tagline: "Valencia's creative heart — cafes, galleries, and the best brunch in the city",
     heroImage: "/discover/ruzafa.webp",
-    heroImageAlt: "Colourful street scene with terrace cafes and street art in Ruzafa, Valencia",
+    heroImageAlt: "Carrer de Russafa in central Valencia, looking along the neighbourhood's main shopping street",
+    heroImageProvenance: {
+      status: "licensed",
+      creator: "Joanbanjo",
+      sourceUrl: "https://commons.wikimedia.org/wiki/File:Carrer_de_Russafa,_Val%C3%A8ncia.jpg",
+      license: "CC BY-SA 4.0",
+      licenseUrl: "https://creativecommons.org/licenses/by-sa/4.0/",
+      verifiedAt: "2026-07-19",
+      modifications: "Cropped and resized to 16:9 WebP.",
+    },
     title: "Ruzafa, Valencia: Neighbourhood Guide",
     description: "The complete guide to Ruzafa — Valencia's trendiest neighbourhood. Best restaurants, coworking spaces, what to do, and how to explore.",
     keywords: ["Ruzafa Valencia", "Russafa", "best neighbourhood Valencia", "Ruzafa restaurants", "Ruzafa guide"],
@@ -423,6 +447,7 @@ export const destinations: Destination[] = [
     tagline: "Valencia's favourite urban beach — wide sand, warm water, and a legendary promenade",
     heroImage: "/discover/malvarrosa-beach.webp",
     heroImageAlt: "Golden sandy beach at Malvarrosa with Mediterranean sea and promenade",
+    heroImageProvenance: { status: "unverified" },
     title: "Malvarrosa Beach Guide — Valencia's Best Urban Beach",
     description: "Complete guide to Malvarrosa Beach in Valencia. Amenities, accessibility, chiringuitos, best times, and practical tips from locals.",
     keywords: ["Malvarrosa beach Valencia", "Valencia beach guide", "best beach Valencia", "Malvarrosa"],
@@ -540,6 +565,7 @@ export const destinations: Destination[] = [
     tagline: "Europe's wildest street festival — fire, art, and controlled chaos every March",
     heroImage: "/discover/fallas.webp",
     heroImageAlt: "Enormous falla sculpture burning during the Cremà at Las Fallas festival in Valencia",
+    heroImageProvenance: { status: "unverified" },
     title: "Las Fallas Valencia Guide — Everything You Need to Know",
     description: "Complete guide to Las Fallas in Valencia. Dates, what to expect, safety tips, where to watch the Cremà, and practical advice for families.",
     keywords: ["Fallas Valencia", "Las Fallas guide", "Fallas 2027", "Valencia fire festival"],
@@ -662,6 +688,7 @@ export const destinations: Destination[] = [
     tagline: "Sunset boat rides, wild rice fields, and the birthplace of paella — 15 minutes from the city",
     heroImage: "/discover/albufera.webp",
     heroImageAlt: "Sunset over Albufera lagoon with traditional boat and reflections on calm water",
+    heroImageProvenance: { status: "unverified" },
     title: "Albufera Natural Park — Valencia Day Trip Guide",
     description: "Visit Albufera Natural Park from Valencia. Boat rides, paella at source, birdwatching, and sunset tours. Just 15 minutes by bus.",
     keywords: ["Albufera Valencia", "Albufera boat trip", "Albufera Natural Park", "day trip from Valencia"],
@@ -765,6 +792,7 @@ export const destinations: Destination[] = [
     tagline: "Valencia's futuristic landmark — aquarium, science museum, and stunning architecture by Calatrava",
     heroImage: "/discover/city-of-arts-and-sciences.webp",
     heroImageAlt: "Futuristic white Calatrava architecture reflected in turquoise pool at City of Arts and Sciences",
+    heroImageProvenance: { status: "unverified" },
     title: "City of Arts & Sciences — Valencia Visitor Guide",
     description: "Complete guide to Valencia's City of Arts and Sciences. Oceanogràfic, Hemisfèric, Science Museum — tickets, tips, and what's worth your time.",
     keywords: ["City of Arts and Sciences Valencia", "Oceanogràfic", "Calatrava Valencia", "Ciudad de las Artes"],
@@ -872,7 +900,16 @@ export const destinations: Destination[] = [
     type: "neighbourhood",
     tagline: "Medieval walls, street art, and the beating heart of Valencia's old town",
     heroImage: "/discover/el-carmen-hero.webp",
-    heroImageAlt: "Narrow cobblestone streets of El Carmen with colourful street art and historic buildings in Valencia",
+    heroImageAlt: "Carrer de Baix pedestrian street through the historic El Carmen neighbourhood in Valencia",
+    heroImageProvenance: {
+      status: "licensed",
+      creator: "Joanbanjo",
+      sourceUrl: "https://commons.wikimedia.org/wiki/File:Carrer_de_Baix_(Val%C3%A8ncia).JPG",
+      license: "CC BY-SA 3.0",
+      licenseUrl: "https://creativecommons.org/licenses/by-sa/3.0/",
+      verifiedAt: "2026-07-19",
+      modifications: "Cropped and resized to 16:9 WebP.",
+    },
     title: "El Carmen, Valencia — Guide to the Historic Old Town",
     description: "Explore El Carmen in Valencia's old town, from medieval towers and street art to tapas bars, family-friendly plazas and practical visitor tips.",
     keywords: ["El Carmen Valencia", "Valencia old town", "Barrio del Carmen", "Valencia historic centre", "street art Valencia"],
@@ -1039,7 +1076,16 @@ export const destinations: Destination[] = [
     type: "neighbourhood",
     tagline: "Valencia's colourful maritime village reborn as the city's coolest beach quarter",
     heroImage: "/discover/cabanyal-hero.webp",
-    heroImageAlt: "Colourful tiled facades of traditional fishermen's houses in Cabanyal neighbourhood, Valencia",
+    heroImageAlt: "Carrer de la Reina through Valencia's historic Cabanyal maritime neighbourhood",
+    heroImageProvenance: {
+      status: "licensed",
+      creator: "Joanbanjo",
+      sourceUrl: "https://commons.wikimedia.org/wiki/File:Carrer_de_la_Reina,_Cabanyal,_Pa%C3%ADs_Valenci%C3%A0.JPG",
+      license: "CC BY-SA 3.0",
+      licenseUrl: "https://creativecommons.org/licenses/by-sa/3.0/",
+      verifiedAt: "2026-07-19",
+      modifications: "Cropped and resized to 16:9 WebP.",
+    },
     title: "Cabanyal, Valencia — Guide to the Maritime Beach Quarter",
     description: "Discover Cabanyal, Valencia's maritime neighbourhood, with colourful tiled houses, local restaurants, Las Arenas beach and practical visitor tips.",
     keywords: ["Cabanyal Valencia", "Valencia beach neighbourhood", "Cabanyal guide", "Poblats Marítims Valencia", "Las Arenas beach"],
@@ -1190,7 +1236,16 @@ export const destinations: Destination[] = [
     type: "neighbourhood",
     tagline: "Valencia's village-within-a-city — students, street markets, and authentic neighbourhood life",
     heroImage: "/discover/benimaclet-hero.webp",
-    heroImageAlt: "Quiet tree-lined plaza in Benimaclet with locals at outdoor café terraces in Valencia",
+    heroImageAlt: "The church and traditional village square at the heart of Benimaclet, Valencia",
+    heroImageProvenance: {
+      status: "licensed",
+      creator: "Joanbanjo",
+      sourceUrl: "https://commons.wikimedia.org/wiki/File:Pla%C3%A7a_de_Benimaclet.JPG",
+      license: "CC BY-SA 3.0",
+      licenseUrl: "https://creativecommons.org/licenses/by-sa/3.0/",
+      verifiedAt: "2026-07-19",
+      modifications: "Cropped and resized to 16:9 WebP.",
+    },
     title: "Benimaclet Valencia: Local Neighbourhood Guide",
     description: "Explore Benimaclet's village atmosphere, weekly market, local food and transport links, with practical advice for experiencing this Valencia neighbourhood.",
     keywords: ["Benimaclet Valencia", "Valencia student neighbourhood", "Benimaclet guide", "alternative Valencia", "local Valencia"],
@@ -1339,6 +1394,7 @@ export const destinations: Destination[] = [
     tagline: "Europe's largest urban park — 9km of green in Valencia's old riverbed",
     heroImage: "/discover/turia-gardens-hero.webp",
     heroImageAlt: "Lush green Turia Gardens park with cyclists on paths, palm trees, and Valencia's medieval bridges overhead",
+    heroImageProvenance: { status: "unverified" },
     title: "Turia Gardens Valencia: Complete Visitor Guide",
     description: "Plan a visit to Valencia's Turia Gardens, with practical guidance on cycling routes, Gulliver Park, walking paths, access points and family activities.",
     keywords: ["Turia Gardens Valencia", "Jardín del Turia", "Valencia park", "Gulliver playground Valencia", "cycling Valencia"],
@@ -1501,6 +1557,7 @@ export const destinations: Destination[] = [
     tagline: "Wide boulevards, designer shopping, and Valencia's most elegant dining quarter",
     heroImage: "/discover/el-ensanche-hero.webp",
     heroImageAlt: "Elegant tree-lined Calle Colón shopping boulevard with Art Nouveau buildings in Valencia's Ensanche district",
+    heroImageProvenance: { status: "unverified" },
     title: "El Ensanche Valencia: Shopping & Dining Guide",
     description: "Explore El Ensanche in Valencia, including Calle Colón, Mercado de Colón, restaurants, transport links and practical advice on staying in the district.",
     keywords: ["El Ensanche Valencia", "Calle Colón Valencia", "shopping Valencia", "Mercado de Colón", "Valencia shopping guide"],
@@ -1652,6 +1709,7 @@ export const destinations: Destination[] = [
     tagline: "Ancient hilltop castle, Roman theatre, and a charming old town — 30 minutes from Valencia",
     heroImage: "/discover/sagunto-hero.webp",
     heroImageAlt: "Panoramic view of Sagunto Castle ruins on the hilltop with the town and Mediterranean coast visible below",
+    heroImageProvenance: { status: "unverified" },
     title: "Sagunto Day Trip from Valencia: Castle & Roman Theatre",
     description: "Plan a Sagunto day trip from Valencia, with train guidance and practical tips for visiting the hilltop castle, Roman theatre and historic old town.",
     keywords: ["Sagunto day trip", "Sagunto castle", "Sagunto from Valencia", "Roman theatre Sagunto", "day trips from Valencia"],
@@ -1786,6 +1844,7 @@ export const destinations: Destination[] = [
     tagline: "Medieval wine town with underground caves, Bobal vineyards, and unforgettable gastronomy",
     heroImage: "/discover/requena-hero.webp",
     heroImageAlt: "Panoramic view of Requena's medieval old town with terracotta rooftops and vineyards in the background",
+    heroImageProvenance: { status: "unverified" },
     title: "Requena Day Trip from Valencia: Wine & Caves",
     description: "Plan a Requena day trip from Valencia, with transport guidance and practical tips for exploring wine caves, Bobal wineries and the medieval old town.",
     keywords: ["Requena day trip", "Requena wine", "Valencia wine country", "Bobal wine", "day trips from Valencia"],
@@ -1916,6 +1975,7 @@ export const destinations: Destination[] = [
     tagline: "Valencia's quieter, more local beach — families, volleyball, and sunset paella",
     heroImage: "/discover/patacona-hero.webp",
     heroImageAlt: "Wide golden sand beach at Patacona with beach volleyball nets, families, and Valencia skyline in the background",
+    heroImageProvenance: { status: "unverified" },
     title: "Patacona Beach Valencia: Local Visitor Guide",
     description: "Plan a day at Patacona Beach in Valencia, with practical guidance on access, facilities, family visits, beach restaurants and nearby Malvarrosa.",
     keywords: ["Patacona beach Valencia", "best beaches Valencia", "quiet beach Valencia", "Alboraya beach", "Valencia beaches guide"],
@@ -2057,6 +2117,7 @@ export const destinations: Destination[] = [
     tagline: "Dramatic hilltop castle, Borgia family history, and one of Spain's most beautiful small towns",
     heroImage: "/discover/xativa-hero.webp",
     heroImageAlt: "Xàtiva Castle perched on a dramatic rocky ridge above the town with mountains and plains stretching behind",
+    heroImageProvenance: { status: "unverified" },
     title: "Xàtiva Day Trip from Valencia: Castle Guide",
     description: "Plan a Xàtiva day trip from Valencia, with train guidance and practical tips for visiting the hilltop castle, Borgia landmarks and historic old town.",
     keywords: ["Xàtiva day trip", "Xàtiva castle", "Xàtiva from Valencia", "Borgia family", "day trips Valencia Spain"],
