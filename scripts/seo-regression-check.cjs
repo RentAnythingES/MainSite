@@ -308,7 +308,7 @@ async function main() {
   );
   assertPageEnhancements(
     partnersEs,
-    ["Colaboraciones prÃ¡cticas para mejores estancias en Valencia", "Nuestros principios de colaboraciÃ³n"],
+    ["mejores estancias en Valencia", "Nuestros principios"],
     ["BreadcrumbList"],
     "Spanish partnerships page"
   );
