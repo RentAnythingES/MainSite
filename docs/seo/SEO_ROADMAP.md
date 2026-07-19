@@ -45,6 +45,7 @@
 - [x] Baby, mobility, remote-work and apartment-comfort hubs expanded with EN/ES commercial FAQs and regression-protected FAQ schema
 - [x] Spanish category and product pathways now prefer localized planning guides wherever full ES parity exists
 - [x] Technical crawler reports sitemap inbound-link counts and shortest homepage click depth; Discover child breadcrumbs and the long-stay kitchen pathway close the first weak-link set
+- [x] Discover intent audit enforces complete staying guidance for neighbourhoods and visiting guidance for every published guide type
 - [x] Apartment Comfort cluster connected across category, summer kit, guide and cooling products
 - [x] Remote Work cluster connected across category, apartment kit, guide and workstation products
 - [x] Kids & Family cluster connected across category, Toddler City kit, Family Beach kit and family guide
@@ -245,7 +246,7 @@ Data-driven `/discover/[slug]` pages. 5 destinations live. Hub pages for neighbo
 **Open design items:**
 - [ ] **Real photos** — Replace AI-generated images with sourced photography for trust
 - [ ] **Restaurant source tracking** — `sourceNote` fields exist but need populating with research
-- [ ] **Staying vs Visiting** — Data model supports both angles; content needs fleshing out
+- [x] **Staying vs Visiting** — All 5 published neighbourhoods have complete staying guidance and all 14 published Discover guides have complete visiting guidance, enforced by `npm run audit:discover-intent`
 
 ---
 

@@ -508,6 +508,16 @@ export const destinations: Destination[] = [
       "The showers and foot-wash stations are free and located at regular intervals along the promenade.",
       "If you're coming with kids, the southern end near the port is slightly less crowded than the main central section.",
     ],
+    visitingHere: {
+      summary: "Malvarrosa works as a short promenade visit or a full beach day. Decide whether you mainly want a swim, a long lunch, accessible seafront time or a complete family setup before choosing where to stop.",
+      idealDuration: "3-6 hours",
+      bestTimeOfDay: "Morning for space and gentler heat; late afternoon for a promenade walk",
+      tips: [
+        "Use the promenade as your orientation point and choose a section before carrying equipment onto the sand.",
+        "Check the current beach flag, lifeguard coverage and assisted-bathing arrangements on the day of your visit.",
+        "Reserve a beachfront lunch separately from any equipment booking, especially on summer weekends.",
+      ],
+    },
     productWidgets: [
       { categorySlug: "travel-outdoors", heading: "Beach day essentials", afterSection: "Practical Tips" },
       { categorySlug: "mobility", heading: "Need mobility support?", afterSection: "Accessibility" },
@@ -620,6 +630,16 @@ export const destinations: Destination[] = [
       "The city smells of gunpowder for the entire festival. Your clothes will too. Don't wear anything precious.",
       "Banks and shops in the city centre may have reduced hours during Fallas week. Stock up on cash.",
     ],
+    visitingHere: {
+      summary: "A Fallas visit needs a route rather than a checklist. Choose one or two neighbourhoods, leave generous walking time and use the official programme for that year's confirmed event locations and access restrictions.",
+      idealDuration: "Half a day for neighbourhood fallas; a full day for several major events",
+      bestTimeOfDay: "Daytime for families and sculpture viewing; evening for lights and atmosphere",
+      tips: [
+        "Check the current official programme before leaving because routes, closures and event times can change.",
+        "Avoid trying to cross the city quickly; crowds and temporary barriers make short distances take much longer.",
+        "Plan a quieter meeting point away from the busiest squares in case your group becomes separated.",
+      ],
+    },
     productWidgets: [
       { categorySlug: "baby-gear", heading: "Bringing kids to Fallas?", afterSection: "Accessibility" },
     ],
@@ -714,6 +734,16 @@ export const destinations: Destination[] = [
       "The sunset boat ride is the highlight — time your visit so you're on the water as the sun goes down.",
       "Don't swim in the lagoon. It's a freshwater ecosystem, not a swimming lake.",
     ],
+    visitingHere: {
+      summary: "Albufera is easiest as a planned half-day trip built around one main experience: a boat ride, a meal in El Palmar, birdwatching or a walking route. Combining everything requires careful transport timing.",
+      idealDuration: "4-6 hours",
+      bestTimeOfDay: "Late afternoon if sunset is the priority; lunchtime for paella in El Palmar",
+      tips: [
+        "Check the return transport before choosing a sunset boat so you are not stranded after the last practical connection.",
+        "Book restaurants and boat trips separately when visiting on weekends or during holiday periods.",
+        "Bring water, sun protection and seasonal insect repellent; shade is limited away from the village.",
+      ],
+    },
     productWidgets: [
       { categorySlug: "mobility", heading: "Need mobility support?", afterSection: "Accessibility" },
     ],
@@ -809,6 +839,16 @@ export const destinations: Destination[] = [
       "Bring water and sunscreen if walking the grounds in summer — there's minimal shade outside.",
       "The restaurant inside the Oceanogràfic (Submarino) lets you eat surrounded by fish — worth booking for the novelty, though the food is average.",
     ],
+    visitingHere: {
+      summary: "The complex can be a free architecture stop, a focused museum visit or a full attraction day. Choose the buildings you genuinely want to enter before buying tickets, because distances and indoor visit times add up.",
+      idealDuration: "2 hours for the exterior; 4-8 hours with ticketed attractions",
+      bestTimeOfDay: "Opening time for major attractions; late afternoon for exterior photography",
+      tips: [
+        "Pre-book the specific ticketed attractions you want rather than assuming one short visit covers the whole complex.",
+        "Allow walking time between buildings and identify a meeting point if your group splits up.",
+        "Use the Turia Gardens route for a flatter approach and bring sun protection for the exposed outdoor areas.",
+      ],
+    },
     productWidgets: [
       { categorySlug: "mobility", heading: "Need mobility support?", afterSection: "Accessibility" },
       { categorySlug: "baby-gear", heading: "Visiting with kids?", afterSection: "Practical Tips" },
