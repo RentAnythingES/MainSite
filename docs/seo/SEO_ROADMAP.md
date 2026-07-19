@@ -332,7 +332,13 @@ replaced with factual service statements while the real review corpus is establi
 List our products on Babonbo, BabyQuip, Cloud of Goods (20% commission) as secondary distribution. Always prefer direct organic traffic.
 
 ### 4.6 Partner/affiliate page
-Backlink opportunities from travel bloggers and influencers.
+Completed 19 July 2026. `/partners` and `/es/colaboraciones` provide a factual,
+bilingual destination for accommodation referrals, travel/relocation collaboration,
+and narrow product pilots. The pages include a working Resend-backed enquiry form,
+explicit EN/ES alternates, sitemap coverage, footer discovery, and links to the
+separate Host Services and Kits intent owners. No unconfirmed logos, endorsements,
+performance claims, or affiliate offers are shown. See
+[PARTNERSHIP_AUTHORITY_SURFACE_20260719.md](./PARTNERSHIP_AUTHORITY_SURFACE_20260719.md).
 
 ### 4.7 Brand partnership surfaces
 Build only after core kit pages exist. Future surfaces should support narrow, measurable pilots rather than generic ads:

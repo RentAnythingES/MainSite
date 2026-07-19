@@ -119,6 +119,15 @@ bundles visible on the page. Discover sub-hubs also publish `BreadcrumbList`.
 Use `getHubCollectionJsonLd()` for future indexable hubs rather than constructing
 inconsistent schema inline.
 
+## Partnership pages
+
+`/partners` and `/es/colaboraciones` share `PartnershipsPage` and the localized
+`PartnerInquiryForm`. They are static B2B authority/conversion surfaces rather than
+consumer rental landing pages. Both versions link to the correct Host Services page
+and Kits, appear in the global footer and sitemap, and map directly in the language
+switcher. The enquiry form sends through `/api/contact`; it does not create a public
+partner record or imply that a relationship already exists.
+
 ## Verified reviews
 
 `/review/[token]` is a dynamic, `noindex` customer utility route. Completing a

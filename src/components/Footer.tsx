@@ -21,6 +21,10 @@ export default function Footer() {
           ? "/es/valencia/servicios-anfitriones"
           : "/valencia/host-services",
       },
+      {
+        name: isSpanish ? "Colaboraciones" : "Partnerships",
+        href: isSpanish ? "/es/colaboraciones" : "/partners",
+      },
       { name: "Blog", href: `${prefix}/blog` },
       { name: isSpanish ? "Contacto" : "Contact", href: "/contact" },
     ],

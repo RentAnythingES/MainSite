@@ -19,6 +19,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${BASE_URL}/valencia`, changeFrequency: "weekly", priority: 0.9 },
     { url: `${BASE_URL}/valencia/kits`, changeFrequency: "weekly", priority: 0.9 },
     { url: `${BASE_URL}/valencia/host-services`, changeFrequency: "monthly", priority: 0.7 },
+    { url: `${BASE_URL}/partners`, changeFrequency: "monthly", priority: 0.5 },
     { url: `${BASE_URL}/blog`, changeFrequency: "weekly", priority: 0.8 },
     { url: `${BASE_URL}/how-it-works`, changeFrequency: "monthly", priority: 0.7 },
     { url: `${BASE_URL}/about`, changeFrequency: "monthly", priority: 0.5 },
@@ -82,6 +83,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${BASE_URL}/es`, changeFrequency: "weekly", priority: 0.9 },
     { url: `${BASE_URL}/es/valencia`, changeFrequency: "weekly", priority: 0.8 },
     { url: `${BASE_URL}/es/valencia/servicios-anfitriones`, changeFrequency: "monthly", priority: 0.7 },
+    { url: `${BASE_URL}/es/colaboraciones`, changeFrequency: "monthly", priority: 0.5 },
     { url: `${BASE_URL}/es/blog`, changeFrequency: "weekly", priority: 0.7 },
   ];
 

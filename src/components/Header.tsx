@@ -11,6 +11,10 @@ const localizedRoutePairs = [
     en: "/valencia/host-services",
     es: "/es/valencia/servicios-anfitriones",
   },
+  {
+    en: "/partners",
+    es: "/es/colaboraciones",
+  },
 ] as const;
 
 export default function Header() {

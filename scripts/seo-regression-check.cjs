@@ -118,7 +118,7 @@ function assertPageEnhancements(html, expectedText = [], schemaTypes = [], conte
 }
 
 async function main() {
-  const [home, product, productEs, noindexProduct, robots, sitemap, categoryPages, discoverHierarchyPages, hostServices, hostServicesEs] = await Promise.all([
+  const [home, product, productEs, noindexProduct, robots, sitemap, categoryPages, discoverHierarchyPages, hostServices, hostServicesEs, partners, partnersEs] = await Promise.all([
     get("/"),
     get(`/product/${productSlug}`),
     get(`/es/product/${productSlug}`),
@@ -140,6 +140,8 @@ async function main() {
     ),
     get("/valencia/host-services"),
     get("/es/valencia/servicios-anfitriones"),
+    get("/partners"),
+    get("/es/colaboraciones"),
   ]);
 
   assert(canonical(home) === "https://rentanything.es", "Homepage canonical is incorrect");
@@ -279,6 +281,42 @@ async function main() {
     sitemap.includes("https://rentanything.es/es/valencia/servicios-anfitriones"),
     "Spanish host services is missing from the sitemap"
   );
+  assert(canonical(partners) === "https://rentanything.es/partners", "Partnerships canonical is incorrect");
+  assert(
+    canonical(partnersEs) === "https://rentanything.es/es/colaboraciones",
+    "Spanish partnerships canonical is incorrect"
+  );
+  assert(
+    alternate(partners, "es") === "https://rentanything.es/es/colaboraciones",
+    "Partnerships lacks Spanish hreflang"
+  );
+  assert(
+    alternate(partnersEs, "en") === "https://rentanything.es/partners",
+    "Spanish partnerships lacks English hreflang"
+  );
+  assertPathway(partners, "/valencia/host-services", "Partnerships host-services pathway");
+  assertPathway(partners, "/valencia/kits", "Partnerships kits pathway");
+  assertPathway(partnersEs, "/es/valencia/servicios-anfitriones", "Spanish partnerships host-services pathway");
+  assertPathway(partnersEs, "/valencia/kits", "Spanish partnerships kits pathway");
+  assertPathway(partners, "/es/colaboraciones", "Partnerships locale switch");
+  assertPathway(partnersEs, "/partners", "Spanish partnerships locale switch");
+  assertPageEnhancements(
+    partners,
+    ["Practical partnerships for better Valencia stays", "Our partnership principles"],
+    ["BreadcrumbList"],
+    "Partnerships page"
+  );
+  assertPageEnhancements(
+    partnersEs,
+    ["Colaboraciones prÃ¡cticas para mejores estancias en Valencia", "Nuestros principios de colaboraciÃ³n"],
+    ["BreadcrumbList"],
+    "Spanish partnerships page"
+  );
+  assert(sitemap.includes("https://rentanything.es/partners"), "Partnerships is missing from the sitemap");
+  assert(
+    sitemap.includes("https://rentanything.es/es/colaboraciones"),
+    "Spanish partnerships is missing from the sitemap"
+  );
 
   console.log(JSON.stringify({
     baseUrl,
@@ -291,6 +329,8 @@ async function main() {
     checkedCategoryClusters: categoryPages.map((categoryPage) => categoryPage.slug),
     hostServicesCanonical: canonical(hostServices),
     spanishHostServicesCanonical: canonical(hostServicesEs),
+    partnershipsCanonical: canonical(partners),
+    spanishPartnershipsCanonical: canonical(partnersEs),
     status: "passed",
   }, null, 2));
 }
