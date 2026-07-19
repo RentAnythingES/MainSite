@@ -114,6 +114,25 @@ export default async function ValenciaPageES() {
           </div>
         </div>
       </section>
+
+      <section className="section bg-white">
+        <div className="container-site">
+          <div className="rounded-2xl border border-neutral-200 bg-neutral-50 p-8 md:flex md:items-center md:justify-between md:gap-10 md:p-10">
+            <div className="max-w-3xl">
+              <span className="badge badge-brand mb-3">Para equipos de alojamiento en Valencia</span>
+              <h2 className="text-3xl font-bold">Equipamiento para solicitudes de huéspedes</h2>
+              <p className="mt-3 leading-relaxed text-neutral-600">
+                Los anfitriones y gestores pueden derivar al huésped directamente o
+                consultar un proceso revisado para solicitudes recurrentes de bebé,
+                movilidad, confort, teletrabajo y playa.
+              </p>
+            </div>
+            <Link href="/es/valencia/servicios-anfitriones" className="btn btn-outline mt-6 shrink-0 md:mt-0">
+              Ver servicios para anfitriones
+            </Link>
+          </div>
+        </div>
+      </section>
     </>
   );
 }

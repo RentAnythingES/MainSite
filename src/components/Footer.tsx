@@ -15,6 +15,12 @@ export default function Footer() {
       { name: isSpanish ? "Descubrir Valencia" : "Discover Valencia", href: "/discover" },
       { name: isSpanish ? "Sobre Nosotros" : "About Us", href: "/about" },
       { name: isSpanish ? "Preguntas Frecuentes" : "FAQ", href: "/faq" },
+      {
+        name: isSpanish ? "Servicios para Anfitriones" : "Host Services",
+        href: isSpanish
+          ? "/es/valencia/servicios-anfitriones"
+          : "/valencia/host-services",
+      },
       { name: "Blog", href: `${prefix}/blog` },
       { name: isSpanish ? "Contacto" : "Contact", href: "/contact" },
     ],

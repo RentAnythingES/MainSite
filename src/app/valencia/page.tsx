@@ -218,6 +218,26 @@ export default async function ValenciaPage() {
         </div>
       </section>
 
+      {/* Host Services */}
+      <section className="section bg-neutral-50">
+        <div className="container-site">
+          <div className="rounded-2xl border border-neutral-200 bg-white p-8 md:flex md:items-center md:justify-between md:gap-10 md:p-10">
+            <div className="max-w-3xl">
+              <span className="badge badge-brand mb-3">For Valencia accommodation teams</span>
+              <h2 className="text-3xl font-bold">Equipment support for guest requests</h2>
+              <p className="mt-3 leading-relaxed text-neutral-600">
+                Hosts and property managers can refer guests directly or discuss a
+                staff-reviewed process for recurring baby, mobility, comfort, work,
+                and beach-equipment requests.
+              </p>
+            </div>
+            <Link href="/valencia/host-services" className="btn btn-outline mt-6 shrink-0 md:mt-0">
+              Explore host services
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* CTA */}
       <section className="bg-brand py-16">
         <div className="container-site text-center">

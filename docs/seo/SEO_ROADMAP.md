@@ -70,6 +70,7 @@
 - [x] Discover neighbourhood, day-trip, attraction and event sub-hubs expose guide ItemLists and breadcrumb schema
 - [x] Product, kit, category and editorial schema connected to stable business/WebSite IDs; evergreen event guides corrected to Article markup
 - [x] Spanish planning coverage launched with a localized blog hub plus complete Beach and Summer guides and selective reciprocal hreflang
+- [x] EN/ES Host Services cluster launched for guest-equipment support without competing for generic property-management intent
 
 ---
 
@@ -247,6 +248,22 @@ Data-driven `/discover/[slug]` pages. 5 destinations live. Hub pages for neighbo
 - [x] **Real photos** — All 14 Discover hero assets use sourced, licensed photography with visible attribution, a maintained rights register, and strict `npm run audit:discover-images` enforcement.
 - [x] **Restaurant source tracking** — All 35 published recommendations carry a source note, source URL, and verification date; stale or misplaced venues were corrected and `npm run audit:discover-sources` enforces six-month review
 - [x] **Staying vs Visiting** — All 5 published neighbourhoods have complete staying guidance and all 14 published Discover guides have complete visiting guidance, enforced by `npm run audit:discover-intent`
+
+---
+
+### 2.5 Host Services B2B cluster
+**Impact**: Medium-High · **Effort**: 2-3 hours · **Status**: ✅ Initial EN/ES layer live
+
+The dedicated `/valencia/host-services` and
+`/es/valencia/servicios-anfitriones` pages own the narrow equipment-support
+intent for holiday-rental hosts, property managers, aparthotels, and relocation
+teams. They deliberately exclude generic property management, cleaning, keys,
+licensing, and unsupported availability or pricing promises.
+
+Both pages include reciprocal hreflang, Service, FAQ and breadcrumb schema,
+category and kit pathways, sitemap coverage, and links from the Valencia hubs and
+global footer. Search-intent evidence and page boundaries are maintained in
+[HOST_SERVICES_CLUSTER.md](./HOST_SERVICES_CLUSTER.md).
 
 ---
 

@@ -118,7 +118,7 @@ function assertPageEnhancements(html, expectedText = [], schemaTypes = [], conte
 }
 
 async function main() {
-  const [home, product, productEs, noindexProduct, robots, sitemap, categoryPages, discoverHierarchyPages] = await Promise.all([
+  const [home, product, productEs, noindexProduct, robots, sitemap, categoryPages, discoverHierarchyPages, hostServices, hostServicesEs] = await Promise.all([
     get("/"),
     get(`/product/${productSlug}`),
     get(`/es/product/${productSlug}`),
@@ -138,6 +138,8 @@ async function main() {
         html: await get(`/discover/${check.child}`),
       }))
     ),
+    get("/valencia/host-services"),
+    get("/es/valencia/servicios-anfitriones"),
   ]);
 
   assert(canonical(home) === "https://rentanything.es", "Homepage canonical is incorrect");
@@ -231,6 +233,42 @@ async function main() {
     !sitemap.includes(`https://rentanything.es/product/${noindexProductSlug}`),
     "Incomplete reference product leaked into the sitemap"
   );
+  assert(
+    canonical(hostServices) === "https://rentanything.es/valencia/host-services",
+    "Host services canonical is incorrect"
+  );
+  assert(
+    canonical(hostServicesEs) === "https://rentanything.es/es/valencia/servicios-anfitriones",
+    "Spanish host services canonical is incorrect"
+  );
+  assert(
+    alternate(hostServices, "es") === "https://rentanything.es/es/valencia/servicios-anfitriones",
+    "Host services lacks Spanish hreflang"
+  );
+  assert(
+    alternate(hostServicesEs, "en") === "https://rentanything.es/valencia/host-services",
+    "Spanish host services lacks English hreflang"
+  );
+  assertPageEnhancements(
+    hostServices,
+    ["Guest equipment without permanent storage"],
+    ["Service", "FAQPage", "BreadcrumbList"],
+    "Host services page"
+  );
+  assertPageEnhancements(
+    hostServicesEs,
+    ["Equipamiento para huéspedes sin almacenarlo"],
+    ["Service", "FAQPage", "BreadcrumbList"],
+    "Spanish host services page"
+  );
+  assert(
+    sitemap.includes("https://rentanything.es/valencia/host-services"),
+    "Host services is missing from the sitemap"
+  );
+  assert(
+    sitemap.includes("https://rentanything.es/es/valencia/servicios-anfitriones"),
+    "Spanish host services is missing from the sitemap"
+  );
 
   console.log(JSON.stringify({
     baseUrl,
@@ -241,6 +279,8 @@ async function main() {
     spanishProductCanonical: canonical(productEs),
     productCategory,
     checkedCategoryClusters: categoryPages.map((categoryPage) => categoryPage.slug),
+    hostServicesCanonical: canonical(hostServices),
+    spanishHostServicesCanonical: canonical(hostServicesEs),
     status: "passed",
   }, null, 2));
 }
