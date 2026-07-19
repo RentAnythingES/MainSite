@@ -157,6 +157,28 @@ Stripe metadata should not be the source of truth for customer details, product 
 pricing, delivery address, or dates. Those values belong in `booking_drafts` and are
 copied into `bookings` after successful payment.
 
+## Post-booking transport amendments
+
+Staff can change an eligible confirmed or paid customer-pickup booking to delivery
+only or delivery and collection without creating a second rental booking. The admin
+creates either a quote based on active service-zone fees or an explicit custom-distance
+quote. The customer receives a private, expiring, noindex URL and pays only the added
+transport fee through Stripe Checkout.
+
+The quote does not mutate the booking when it is created or when Checkout opens. The
+signed Stripe webhook records a `manual_adjustment` payment event and calls
+`apply_paid_fulfillment_amendment(...)`, which locks both records, verifies that the
+booking is still eligible, applies the new fulfillment snapshot once, and increments
+the booking total once. The adjustment creates its own VAT-aware invoice document;
+the original rental invoice remains unchanged.
+
+Only one open quote can exist per booking. Expired quotes are closed before creating
+a replacement, paid Stripe sessions cannot be cancelled, and webhook retries do not
+reapply the charge or resend the confirmation. The first release deliberately supports
+only `customer_pickup` bookings in `confirmed` or `paid` status before handover starts.
+
+Migration: `supabase/migrations/20260719_fulfillment_amendments.sql`.
+
 Webhook event required before reopening:
 
 - `checkout.session.completed`

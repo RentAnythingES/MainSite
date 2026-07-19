@@ -181,10 +181,20 @@ export async function createBookingDocumentForPaymentEvent(
   if (!bookingId) return null;
   const settings = await getInvoiceSettings(supabase);
   if (!settings) return null;
+  const isFulfillmentAmendment =
+    paymentEvent.metadata?.document_scope === "fulfillment_amendment";
+  const amendmentDeliveryFeeCents = isFulfillmentAmendment
+    ? Number(paymentEvent.metadata?.delivery_fee_cents) || 0
+    : 0;
+  const amendmentCollectionFeeCents = isFulfillmentAmendment
+    ? Number(paymentEvent.metadata?.collection_fee_cents) || 0
+    : 0;
 
   const grossCents = isRefund
     ? paymentEvent.amount_cents
-    : (booking.total_cents as number) || paymentEvent.amount_cents;
+    : isFulfillmentAmendment
+      ? paymentEvent.amount_cents
+      : (booking.total_cents as number) || paymentEvent.amount_cents;
   const tax = calculateTax(grossCents, settings);
   const invoiceFormat = isRefund
     ? "rectifying"
@@ -214,9 +224,9 @@ export async function createBookingDocumentForPaymentEvent(
     rectifies_document_id: originalInvoice?.id || null,
     status: "issued",
     currency: paymentEvent.currency || "eur",
-    subtotal_cents: isRefund ? 0 : (booking.subtotal_cents as number) || 0,
-    delivery_fee_cents: isRefund ? 0 : (booking.delivery_fee_cents as number) || 0,
-    collection_fee_cents: isRefund ? 0 : (booking.collection_fee_cents as number) || 0,
+    subtotal_cents: isRefund || isFulfillmentAmendment ? 0 : (booking.subtotal_cents as number) || 0,
+    delivery_fee_cents: isRefund ? 0 : isFulfillmentAmendment ? amendmentDeliveryFeeCents : (booking.delivery_fee_cents as number) || 0,
+    collection_fee_cents: isRefund ? 0 : isFulfillmentAmendment ? amendmentCollectionFeeCents : (booking.collection_fee_cents as number) || 0,
     deposit_cents: isRefund ? 0 : (booking.deposit_cents as number) || 0,
     tax_rate_bps: settings.default_tax_rate_bps,
     tax_inclusive: settings.prices_include_tax,
@@ -262,7 +272,9 @@ export async function createBookingDocumentForPaymentEvent(
     },
     notes: isRefund
       ? `Rectifying invoice generated from Stripe refund event${originalInvoice?.document_number ? `; rectifies ${originalInvoice.document_number}.` : "."}`
-      : "Generated from Stripe Checkout payment.",
+      : isFulfillmentAmendment
+        ? "Additional transport service added after the original rental booking."
+        : "Generated from Stripe Checkout payment.",
     customer_access_token: createCustomerAccessToken(),
     customer_access_expires_at: createCustomerAccessExpiry(),
     issued_at: paymentEvent.occurred_at || new Date().toISOString(),

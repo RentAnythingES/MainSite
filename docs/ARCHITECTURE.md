@@ -54,6 +54,7 @@ Supabase (CRUD products, pricing, bookings)
 | `pickup_locations` | Customer pickup options | Public read active |
 | `service_zones` | Valencia delivery/collection zones and fees | Public read active |
 | `booking_drafts` | Pre-payment booking drafts and Stripe Checkout source of truth | Admin/API only |
+| `booking_fulfillment_amendments` | Tokenized, paid post-booking changes from customer pickup to delivery services | Server/admin only |
 | `booking_inventory_blocks` | Datetime inventory holds and paid booking blocks | Admin/API only |
 | `booking_payment_events` | Durable payment/refund/deposit ledger for bookings | Admin/API only |
 | `booking_documents` | Invoice, refund receipt, and rental agreement document records | Admin/API only |
@@ -159,6 +160,8 @@ POST /api/webhooks/stripe
 | `/api/checkout` | POST | Create Stripe Checkout session for paid bookings |
 | `/api/checkout/session` | GET | Read a completed Checkout session for the success page |
 | `/api/webhooks/stripe` | POST | Verify Stripe events, create paid bookings, block dates |
+| `/api/fulfillment-amendments/[token]` | GET | Read a private transport amendment quote |
+| `/api/fulfillment-amendments/[token]/checkout` | POST | Create or resume Stripe Checkout for the quoted transport fee |
 | `/api/contact` | POST | Send contact email via Resend |
 | `/api/newsletter` | POST | Store newsletter consent + send welcome email |
 | `/api/availability` | GET | Check product availability for date range |
@@ -205,6 +208,9 @@ Stripe Checkout
 | `/api/admin/availability` | GET, POST, DELETE | View, block, and unblock product availability dates |
 | `/api/admin/bookings` | GET | List bookings (optional status filter) |
 | `/api/admin/bookings/[id]` | PUT | Update booking status |
+| `/api/admin/bookings/[id]/fulfillment-amendments` | POST | Create a configured-zone or custom transport quote |
+| `/api/admin/bookings/[id]/fulfillment-amendments/[amendmentId]` | DELETE | Cancel an unpaid transport quote |
+| `/api/admin/bookings/[id]/fulfillment-amendments/[amendmentId]/email` | POST | Email the private quote link to the customer |
 | `/api/admin/bookings/[id]/inventory-units` | GET, POST, PATCH | List, assign, hand over, return, or release physical units |
 | `/api/admin/bookings/[id]/ops-tasks` | PATCH | Toggle internal booking operations checklist tasks |
 | `/api/admin/reviews` | GET | List review invitations and submissions for moderation |

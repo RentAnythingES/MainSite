@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { stripe } from "@/lib/stripe";
 import { createAdminClient } from "@/lib/supabase-admin";
-import { sendBookingConfirmation } from "@/lib/email";
+import { sendBookingConfirmation, sendFulfillmentAmendmentConfirmation } from "@/lib/email";
 import { fetchPickupLocationsById, fetchServiceZonesById } from "@/lib/fulfillment-options";
 import { recordBookingPaymentEvent } from "@/lib/payment-ledger";
 import { createBookingDocumentForPaymentEvent, getCustomerDocumentUrl } from "@/lib/booking-documents";
@@ -99,6 +99,9 @@ export async function POST(request: NextRequest) {
  */
 async function handleCheckoutCompleted(session: Stripe.Checkout.Session): Promise<boolean> {
   const meta = session.metadata;
+  if (meta?.checkout_type === "fulfillment_amendment" && meta.fulfillment_amendment_id) {
+    return handleFulfillmentAmendmentCheckoutCompleted(session, meta.fulfillment_amendment_id);
+  }
   if (meta?.booking_draft_id) {
     return handleDraftCheckoutCompleted(session, meta.booking_draft_id);
   }
@@ -228,6 +231,123 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session): Promis
       ? [{ label: "Download invoice", url: invoiceUrl, documentNumber: invoiceDocument?.document_number }]
       : undefined,
   });
+
+  return true;
+}
+
+async function handleFulfillmentAmendmentCheckoutCompleted(
+  session: Stripe.Checkout.Session,
+  amendmentId: string,
+): Promise<boolean> {
+  const supabase = createAdminClient();
+  const { data: amendment, error } = await supabase
+    .from("booking_fulfillment_amendments")
+    .select(`
+      *,
+      booking:bookings!inner (*, product:products(name))
+    `)
+    .eq("id", amendmentId)
+    .maybeSingle();
+
+  if (error || !amendment) {
+    console.error("[webhook] Fulfillment amendment not found", { amendmentId, error });
+    return false;
+  }
+
+  const expectedTotal = amendment.delivery_fee_cents + amendment.collection_fee_cents;
+  if (session.payment_status !== "paid" || session.amount_total !== expectedTotal) {
+    console.error("[webhook] Fulfillment amendment payment mismatch", {
+      amendmentId,
+      paymentStatus: session.payment_status,
+      expectedTotal,
+      receivedTotal: session.amount_total,
+    });
+    return false;
+  }
+
+  const paymentIntentId =
+    typeof session.payment_intent === "string" ? session.payment_intent : session.payment_intent?.id || null;
+  const booking = amendment.booking as unknown as Record<string, unknown> & {
+    id: string;
+    product?: { name?: string } | null;
+  };
+  const paidAt = new Date((session.created || Math.floor(Date.now() / 1000)) * 1000).toISOString();
+  const providerEventId = `checkout_session:${session.id}:fulfillment_amendment`;
+  const paymentEvent = await recordBookingPaymentEvent(supabase, {
+    bookingId: booking.id,
+    eventType: "manual_adjustment",
+    status: "succeeded",
+    provider: "stripe",
+    currency: session.currency || amendment.currency,
+    amountCents: expectedTotal,
+    stripeCheckoutSessionId: session.id,
+    stripePaymentIntentId: paymentIntentId,
+    providerEventId,
+    description: amendment.fulfillment_mode === "delivery_and_collection"
+      ? "Post-booking delivery and collection service"
+      : "Post-booking delivery service",
+    metadata: {
+      document_scope: "fulfillment_amendment",
+      fulfillment_amendment_id: amendment.id,
+      delivery_fee_cents: amendment.delivery_fee_cents,
+      collection_fee_cents: amendment.collection_fee_cents,
+      is_custom_quote: amendment.is_custom_quote,
+    },
+    occurredAt: paidAt,
+  });
+
+  if (!paymentEvent) {
+    console.error("[webhook] Fulfillment amendment ledger event could not be persisted", { amendmentId });
+    return false;
+  }
+
+  const { data: appliedNow, error: applyError } = await supabase.rpc("apply_paid_fulfillment_amendment", {
+    p_amendment_id: amendment.id,
+    p_checkout_session_id: session.id,
+    p_payment_intent_id: paymentIntentId,
+    p_paid_at: paidAt,
+  });
+  if (applyError) {
+    console.error("[webhook] Fulfillment amendment could not be applied", applyError);
+    return false;
+  }
+
+  const { data: updatedBooking, error: updatedBookingError } = await supabase
+    .from("bookings")
+    .select("*, product:products(name)")
+    .eq("id", booking.id)
+    .single();
+  if (updatedBookingError || !updatedBooking) {
+    console.error("[webhook] Updated booking could not be loaded", updatedBookingError);
+    return false;
+  }
+
+  const invoiceDocument = await createBookingDocumentForPaymentEvent(supabase, {
+    booking: updatedBooking as unknown as Record<string, unknown>,
+    paymentEvent,
+    productName: (updatedBooking.product as unknown as { name?: string } | null)?.name || booking.product?.name || null,
+  });
+
+  if (appliedNow === true) {
+    await sendFulfillmentAmendmentConfirmation({
+      customerName: updatedBooking.customer_name,
+      customerEmail: updatedBooking.customer_email,
+      bookingRef: updatedBooking.booking_ref,
+      productName:
+        (updatedBooking.product as unknown as { name?: string } | null)?.name ||
+        booking.product?.name ||
+        "Rental equipment",
+      serviceLabel:
+        amendment.fulfillment_mode === "delivery_and_collection"
+          ? "Delivery and collection"
+          : "Delivery only",
+      deliveryAddress: amendment.delivery_address,
+      collectionAddress: amendment.collection_address,
+      totalCents: expectedTotal,
+      customerUrl: `https://rentanything.es/booking/fulfillment/${amendment.public_token}`,
+      documentUrl: getCustomerDocumentUrl(invoiceDocument),
+    });
+  }
 
   return true;
 }

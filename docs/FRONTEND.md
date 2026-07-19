@@ -40,6 +40,7 @@ App Router with static generation (`generateStaticParams`). Prefix-based i18n (`
 | `/admin/products/new` | Client | Add new product form |
 | `/admin/fulfillment` | Client | Pickup locations, service zones, instructions, fees |
 | `/admin/bookings` | Client | Booking management, finance ledger, document PDF downloads and email resend controls |
+| `/booking/fulfillment/[token]` | Client | Private, noindex transport-quote review and Stripe payment handoff |
 | `/admin/reviews` | Client | Consent-aware moderation of verified-booking feedback |
 
 ## Component Patterns
@@ -160,6 +161,15 @@ Normal v2 flow:
 5. **Draft** — `/api/booking-drafts` calculates pricing server-side and creates a temporary inventory hold.
 6. **Checkout** — `/api/checkout` creates Stripe Checkout from `draftId`; Stripe metadata contains stable server IDs only. Client and Stripe API requests have a 20-second timeout so a stalled handoff returns to the recoverable WhatsApp fallback instead of remaining on a loading state.
 7. **Webhook** — `/api/webhooks/stripe` turns paid drafts into bookings and converts the hold into a booking inventory block.
+
+### Post-booking delivery changes
+
+Eligible customer-pickup bookings expose a transport amendment panel inside the
+expanded `/admin/bookings` card. Staff can select standard service zones or enter a
+custom quote, add delivery and collection addresses, set an expiry, copy the private
+customer URL, send it by email, or cancel it before payment. The customer page displays
+the quoted service and fee, opens Stripe Checkout, then polls for signed webhook
+confirmation before showing the updated state.
 
 Falls back to WhatsApp deep-link if checkout cannot be created.
 

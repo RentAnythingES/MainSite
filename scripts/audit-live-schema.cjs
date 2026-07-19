@@ -12,6 +12,7 @@ const expectedTables = [
   "booking_document_counters",
   "booking_documents",
   "booking_drafts",
+  "booking_fulfillment_amendments",
   "booking_inventory_blocks",
   "booking_inventory_unit_assignments",
   "booking_ops_tasks",
@@ -36,6 +37,7 @@ const expectedTables = [
 
 const expectedFunctions = [
   "assign_booking_inventory_unit",
+  "apply_paid_fulfillment_amendment",
   "next_booking_document_number",
   "reserve_booking_inventory",
   "set_booking_document_number",
@@ -51,6 +53,7 @@ const expectedColumns = {
   booking_document_counters: ["series_prefix"],
   products: ["content_status"],
   booking_reviews: ["public_token", "rating", "review_body", "consent_to_publish", "status", "published_at"],
+  booking_fulfillment_amendments: ["public_token", "status", "fulfillment_mode", "delivery_fee_cents", "collection_fee_cents", "stripe_checkout_session_id", "paid_at", "applied_at"],
 };
 
 const expectedRlsTables = [
@@ -58,6 +61,7 @@ const expectedRlsTables = [
   "booking_document_counters",
   "booking_documents",
   "booking_drafts",
+  "booking_fulfillment_amendments",
   "booking_inventory_blocks",
   "booking_inventory_unit_assignments",
   "booking_ops_tasks",
@@ -80,6 +84,7 @@ const expectedTriggers = [
   "booking_documents_set_number",
   "booking_documents_updated_at",
   "booking_drafts_updated_at",
+  "booking_fulfillment_amendments_updated_at",
   "booking_ops_tasks_updated_at",
   "invoice_settings_updated_at",
   "newsletter_subscribers_updated_at",

@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import BookingUnitAssignments from "@/components/admin/BookingUnitAssignments";
+import BookingFulfillmentAmendments from "@/components/admin/BookingFulfillmentAmendments";
 
 interface BookingProduct {
   id: string;
@@ -69,6 +70,20 @@ interface BookingOpsTask {
   note?: string | null;
 }
 
+interface FulfillmentAmendment {
+  id: string;
+  status: string;
+  fulfillment_mode: "delivery_only" | "delivery_and_collection";
+  delivery_address: string;
+  collection_address: string | null;
+  delivery_fee_cents: number;
+  collection_fee_cents: number;
+  is_custom_quote: boolean;
+  expires_at: string;
+  paid_at: string | null;
+  customer_url: string;
+}
+
 interface Booking {
   id: string;
   booking_ref: string;
@@ -106,6 +121,7 @@ interface Booking {
   payment_events?: PaymentEvent[];
   documents?: BookingDocument[];
   ops_tasks?: BookingOpsTask[];
+  fulfillment_amendments?: FulfillmentAmendment[];
   status: string;
   created_at: string;
 }
@@ -160,6 +176,7 @@ export default function AdminBookingsPage() {
   const [updatingStatus, setUpdatingStatus] = useState<string | null>(null);
   const [updatingOpsTask, setUpdatingOpsTask] = useState<string | null>(null);
   const [bookingOpsTasksAvailable, setBookingOpsTasksAvailable] = useState(true);
+  const [fulfillmentAmendmentsAvailable, setFulfillmentAmendmentsAvailable] = useState(true);
 
   const fetchBookings = useCallback(async () => {
     try {
@@ -168,6 +185,7 @@ export default function AdminBookingsPage() {
       const data = await res.json();
       setBookings(data.bookings || []);
       setBookingOpsTasksAvailable(data.capabilities?.bookingOpsTasks !== false);
+      setFulfillmentAmendmentsAvailable(data.capabilities?.fulfillmentAmendments !== false);
     } catch {
       setError("Failed to load bookings. Check Supabase connection.");
     } finally {
@@ -563,6 +581,15 @@ export default function AdminBookingsPage() {
                       )}
                     </div>
                   </div>
+
+                  <BookingFulfillmentAmendments
+                    bookingId={booking.id}
+                    bookingStatus={booking.status}
+                    fulfillmentMode={booking.fulfillment_mode}
+                    amendments={booking.fulfillment_amendments || []}
+                    available={fulfillmentAmendmentsAvailable}
+                    onChanged={fetchBookings}
+                  />
 
                   <BookingUnitAssignments bookingId={booking.id} />
 

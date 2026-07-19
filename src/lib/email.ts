@@ -71,6 +71,20 @@ export interface BookingDocumentEmailData {
   documentUrl: string;
 }
 
+export interface FulfillmentAmendmentEmailData {
+  customerName: string;
+  customerEmail: string;
+  bookingRef: string;
+  productName: string;
+  serviceLabel: string;
+  deliveryAddress: string;
+  collectionAddress?: string | null;
+  totalCents: number;
+  customerUrl: string;
+  expiresAt?: string | null;
+  documentUrl?: string | null;
+}
+
 function escapeHtml(value: string | number | null | undefined): string {
   return String(value ?? "")
     .replaceAll("&", "&amp;")
@@ -373,6 +387,62 @@ export async function sendBookingDocumentLink(data: BookingDocumentEmailData): P
     return !result.error;
   } catch (err) {
     console.error("[email] Failed to send booking document link:", err);
+    return false;
+  }
+}
+
+export async function sendFulfillmentAmendmentQuote(data: FulfillmentAmendmentEmailData): Promise<boolean> {
+  const resend = getResend();
+  if (!resend) return false;
+
+  try {
+    const result = await resend.emails.send({
+      from: FROM,
+      to: data.customerEmail,
+      subject: `Transport quote — ${data.bookingRef}`,
+      html: emailWrapper("Transport option for your booking", `
+        <p style="font-size:15px;color:#374151;line-height:1.6;margin-top:0;">Hi ${escapeHtml(data.customerName)},</p>
+        <p style="font-size:15px;color:#374151;line-height:1.6;">Here is the transport option prepared for your <strong>${escapeHtml(data.productName)}</strong> rental.</p>
+        <table style="width:100%;border-collapse:collapse;margin:16px 0;">
+          <tr><td style="padding:8px 0;color:#6b7280;font-size:14px;width:145px;">Booking ref</td><td style="padding:8px 0;font-weight:700;font-size:14px;font-family:monospace;color:#0e7c73;">${escapeHtml(data.bookingRef)}</td></tr>
+          <tr><td style="padding:8px 0;color:#6b7280;font-size:14px;">Service</td><td style="padding:8px 0;font-weight:600;font-size:14px;">${escapeHtml(data.serviceLabel)}</td></tr>
+          <tr><td style="padding:8px 0;color:#6b7280;font-size:14px;">Delivery</td><td style="padding:8px 0;font-size:14px;">${escapeHtml(data.deliveryAddress)}</td></tr>
+          ${data.collectionAddress ? `<tr><td style="padding:8px 0;color:#6b7280;font-size:14px;">Collection</td><td style="padding:8px 0;font-size:14px;">${escapeHtml(data.collectionAddress)}</td></tr>` : ""}
+          <tr><td style="padding:8px 0;color:#6b7280;font-size:14px;">Total</td><td style="padding:8px 0;font-weight:700;font-size:14px;">${formatEuros(data.totalCents)}</td></tr>
+        </table>
+        ${button(data.customerUrl, "Review and pay securely")}
+        ${data.expiresAt ? `<p style="font-size:12px;color:#6b7280;line-height:1.6;margin-top:18px;">This private quote is valid until ${escapeHtml(formatDateTime(data.expiresAt))}.</p>` : ""}
+        <p style="font-size:14px;color:#6b7280;line-height:1.6;">Your original booking remains unchanged unless this transport quote is paid.</p>
+      `, `Transport quote for booking ${data.bookingRef}.`),
+    });
+    return !result.error;
+  } catch (error) {
+    console.error("[email] Failed to send fulfillment amendment quote:", error);
+    return false;
+  }
+}
+
+export async function sendFulfillmentAmendmentConfirmation(data: FulfillmentAmendmentEmailData): Promise<boolean> {
+  const resend = getResend();
+  if (!resend) return false;
+
+  try {
+    const result = await resend.emails.send({
+      from: FROM,
+      to: data.customerEmail,
+      subject: `Transport confirmed — ${data.bookingRef}`,
+      html: emailWrapper("Transport service confirmed", `
+        <p style="font-size:15px;color:#374151;line-height:1.6;margin-top:0;">Hi ${escapeHtml(data.customerName)},</p>
+        <p style="font-size:15px;color:#374151;line-height:1.6;">We received your transport payment and updated booking <strong>${escapeHtml(data.bookingRef)}</strong>.</p>
+        ${infoBox(`<p style="font-size:14px;color:#0f766e;line-height:1.7;margin:0;"><strong>${escapeHtml(data.serviceLabel)}</strong><br>Delivery: ${escapeHtml(data.deliveryAddress)}${data.collectionAddress ? `<br>Collection: ${escapeHtml(data.collectionAddress)}` : ""}<br>Paid: ${formatEuros(data.totalCents)}</p>`)}
+        <p style="font-size:14px;color:#6b7280;line-height:1.6;">We will confirm the exact operational timing separately.</p>
+        ${data.documentUrl ? button(data.documentUrl, "Download transport invoice") : ""}
+        ${button(WHATSAPP_URL, "Message us on WhatsApp", "#25d366")}
+      `, `Transport confirmed for booking ${data.bookingRef}.`),
+    });
+    return !result.error;
+  } catch (error) {
+    console.error("[email] Failed to send fulfillment amendment confirmation:", error);
     return false;
   }
 }

@@ -24,6 +24,7 @@ async function main() {
         (select count(*)::int from public.bookings) as bookings,
         (select count(*)::int from public.booking_ops_tasks) as ops_tasks,
         (select count(*)::int from public.booking_reviews) as booking_reviews,
+        (select count(*)::int from public.booking_fulfillment_amendments) as fulfillment_amendments,
         (select count(*)::int from public.pickup_locations where is_active) as active_pickup_locations,
         (select count(*)::int from public.service_zones where is_active) as active_service_zones
     `);
@@ -77,6 +78,31 @@ async function main() {
           returning id
         `);
         checks.bookingReviewTransactionalWrite = review.rows.length === 1;
+      }
+
+      const eligibleBooking = await client.query(`
+        select id, fulfillment_mode
+        from public.bookings
+        where status in ('confirmed', 'paid')
+          and fulfillment_mode = 'customer_pickup'
+        order by created_at desc
+        limit 1
+      `);
+      if (eligibleBooking.rows.length > 0) {
+        const amendment = await client.query(`
+          insert into public.booking_fulfillment_amendments (
+            booking_id,
+            fulfillment_mode,
+            delivery_address,
+            delivery_fee_cents,
+            is_custom_quote,
+            quote_notes
+          ) values ($1, 'delivery_only', 'Rollback-only verification address', 1, true, 'Automated rollback-only verification')
+          returning id
+        `, [eligibleBooking.rows[0].id]);
+        checks.fulfillmentAmendmentTransactionalWrite = amendment.rows.length === 1;
+      } else {
+        checks.fulfillmentAmendmentTransactionalWrite = "skipped_no_eligible_booking";
       }
     } finally {
       await client.query("rollback");

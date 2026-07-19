@@ -48,6 +48,7 @@ export async function GET(request: NextRequest) {
     monitoringReady,
     latestMonitoringRun,
     reviewsReady,
+    fulfillmentAmendmentsReady,
   ] = await Promise.all([
     supabase
       .from("booking_drafts")
@@ -86,6 +87,7 @@ export async function GET(request: NextRequest) {
     isAvailable(supabase.from("monitoring_runs").select("id", { head: true })),
     supabase.from("monitoring_runs").select("status,issues,alert_sent,created_at").order("created_at", { ascending: false }).limit(1).maybeSingle(),
     isAvailable(supabase.from("booking_reviews").select("id", { head: true })),
+    isAvailable(supabase.from("booking_fulfillment_amendments").select("id", { head: true })),
   ]);
 
   return NextResponse.json({
@@ -136,6 +138,7 @@ export async function GET(request: NextRequest) {
       productContentReady: productContentStatusReady && productLocalizationsReady && productFaqsReady && productImagesReady,
       newsletterReady,
       reviewsReady,
+      fulfillmentAmendmentsReady,
     },
   });
 }

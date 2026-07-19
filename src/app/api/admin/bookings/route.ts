@@ -5,6 +5,11 @@ import { fetchPickupLocationsById, fetchServiceZonesById } from "@/lib/fulfillme
 import { fetchBookingPaymentEventsByBookingId } from "@/lib/payment-ledger";
 import { fetchBookingDocumentsByBookingId } from "@/lib/booking-documents";
 import { DEFAULT_OPS_TASKS, isMissingBookingOpsTasksTable } from "@/lib/booking-ops";
+import {
+  fetchFulfillmentAmendmentsByBookingIds,
+  getFulfillmentAmendmentUrl,
+  isMissingFulfillmentAmendmentsTable,
+} from "@/lib/fulfillment-amendments";
 
 /**
  * GET /api/admin/bookings — List all bookings with product info
@@ -52,6 +57,7 @@ export async function GET(request: NextRequest) {
       paymentEventsResult,
       bookingDocumentsResult,
       opsTasksResult,
+      fulfillmentAmendmentsResult,
     ] = await Promise.all([
       fetchPickupLocationsById(supabase, pickupLocationIds),
       fetchServiceZonesById(supabase, serviceZoneIds),
@@ -70,6 +76,7 @@ export async function GET(request: NextRequest) {
             .in("booking_id", bookingIds)
             .order("sort_order", { ascending: true })
         : Promise.resolve({ data: [], error: null }),
+      fetchFulfillmentAmendmentsByBookingIds(supabase, bookingIds),
     ]);
 
     if (pickupLocationsResult.error) throw pickupLocationsResult.error;
@@ -79,6 +86,13 @@ export async function GET(request: NextRequest) {
       throw opsTasksResult.error;
     }
     const bookingOpsTasksAvailable = !opsTasksResult.error;
+    if (
+      fulfillmentAmendmentsResult.error &&
+      !isMissingFulfillmentAmendmentsTable(fulfillmentAmendmentsResult.error)
+    ) {
+      throw fulfillmentAmendmentsResult.error;
+    }
+    const fulfillmentAmendmentsAvailable = !fulfillmentAmendmentsResult.error;
 
     const pickupLocationById = new Map(
       (pickupLocationsResult.data || []).map((location: { id: string }) => [location.id, location])
@@ -90,6 +104,7 @@ export async function GET(request: NextRequest) {
     const paymentEventsByBookingId = new Map<string, unknown[]>();
     const bookingDocumentsByBookingId = new Map<string, unknown[]>();
     const opsTasksByBookingId = new Map<string, unknown[]>();
+    const fulfillmentAmendmentsByBookingId = new Map<string, unknown[]>();
 
     for (const block of inventoryBlocksResult.data || []) {
       const bookingId = (block as { booking_id?: string | null }).booking_id;
@@ -123,6 +138,16 @@ export async function GET(request: NextRequest) {
       opsTasksByBookingId.set(bookingId, existing);
     }
 
+    for (const amendment of fulfillmentAmendmentsResult.data || []) {
+      const bookingId = amendment.booking_id;
+      const existing = fulfillmentAmendmentsByBookingId.get(bookingId) || [];
+      existing.push({
+        ...amendment,
+        customer_url: getFulfillmentAmendmentUrl(amendment.public_token),
+      });
+      fulfillmentAmendmentsByBookingId.set(bookingId, existing);
+    }
+
     const enrichedBookings = bookings.map((booking) => ({
       ...booking,
       pickup_location: booking.pickup_location_id
@@ -145,11 +170,15 @@ export async function GET(request: NextRequest) {
           completed_at: null,
           note: null,
         })),
+      fulfillment_amendments: fulfillmentAmendmentsByBookingId.get(booking.id as string) || [],
     }));
 
     return NextResponse.json({
       bookings: enrichedBookings,
-      capabilities: { bookingOpsTasks: bookingOpsTasksAvailable },
+      capabilities: {
+        bookingOpsTasks: bookingOpsTasksAvailable,
+        fulfillmentAmendments: fulfillmentAmendmentsAvailable,
+      },
     });
   } catch (err) {
     console.error("[admin/bookings] GET error:", err);
