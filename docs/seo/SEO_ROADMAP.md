@@ -10,6 +10,9 @@
   HowTo structured data are generated from visible copy and protected by rendered
   regression checks. Production baseline: 110 sitemap URLs, zero crawl errors,
   broken links, broken images, orphan pages, or indexable sitemap gaps (19 July 2026).
+- [x] Spanish trust-page parity: `/es/faq`, `/es/how-it-works`, and `/es/refunds`
+  include self-canonicals, reciprocal hreflang, localized navigation, sitemap entries,
+  and content-matched FAQPage/HowTo markup where applicable (19 July 2026).
 
 - [x] 16 product pages with structured data (JSON-LD Product)
 - [x] 5 category pages

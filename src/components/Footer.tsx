@@ -11,10 +11,10 @@ export default function Footer() {
 
   const footerLinks = {
     [isSpanish ? "Información" : "Info & Help"]: [
-      { name: isSpanish ? "Cómo Funciona" : "How It Works", href: "/how-it-works" },
+      { name: isSpanish ? "Cómo Funciona" : "How It Works", href: `${prefix}/how-it-works` },
       { name: isSpanish ? "Descubrir Valencia" : "Discover Valencia", href: "/discover" },
       { name: isSpanish ? "Sobre Nosotros" : "About Us", href: "/about" },
-      { name: isSpanish ? "Preguntas Frecuentes" : "FAQ", href: "/faq" },
+      { name: isSpanish ? "Preguntas Frecuentes" : "FAQ", href: `${prefix}/faq` },
       {
         name: isSpanish ? "Servicios para Anfitriones" : "Host Services",
         href: isSpanish
@@ -46,7 +46,7 @@ export default function Footer() {
     { name: isSpanish ? "Privacidad" : "Privacy Policy", href: "/privacy" },
     { name: "Cookies", href: "/cookies" },
     { name: isSpanish ? "Condiciones" : "T&Cs", href: "/terms" },
-    { name: isSpanish ? "Devoluciones" : "Refunds & Cancellations", href: "/refunds" },
+    { name: isSpanish ? "Devoluciones" : "Refunds & Cancellations", href: `${prefix}/refunds` },
     { name: "Hojas de Reclamaciones", href: "https://www.hojasderereclamaciones.com/", external: true },
   ];
 

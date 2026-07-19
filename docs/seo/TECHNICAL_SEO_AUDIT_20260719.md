@@ -38,3 +38,12 @@ requires these canonicals, statements, and schema types.
 After deployment, resubmit `sitemap.xml` in Google Search Console and inspect `/faq`
 and `/how-it-works` alongside the existing representative category and product set.
 Monitor enhancement parsing, canonical selection, and crawled-not-indexed changes.
+
+## Spanish trust-page parity follow-up
+
+The next code batch adds complete Spanish versions of the three operational trust
+pages at `/es/faq`, `/es/how-it-works`, and `/es/refunds`. English and Spanish pages
+declare reciprocal hreflang and self-canonicals; the Spanish header/footer now route
+to the localized pages; and all three URLs enter the sitemap. This raises the expected
+indexable sitemap count from 110 to 113 and adds three reciprocal locale pairs. The
+Spanish FAQ and process schemas are generated from their visible translated content.

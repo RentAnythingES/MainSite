@@ -5,7 +5,14 @@ export const metadata: Metadata = {
   title: "How It Works — Browse, Book, Deliver, Return",
   description:
     "Renting is simple. Browse our range, pick your dates, choose delivery or pickup, and we handle the rest. Delivered to your door in Valencia.",
-  alternates: { canonical: "https://rentanything.es/how-it-works" },
+  alternates: {
+    canonical: "https://rentanything.es/how-it-works",
+    languages: {
+      en: "https://rentanything.es/how-it-works",
+      es: "https://rentanything.es/es/how-it-works",
+      "x-default": "https://rentanything.es/how-it-works",
+    },
+  },
 };
 
 const steps = [

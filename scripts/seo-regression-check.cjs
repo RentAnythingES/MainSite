@@ -118,7 +118,7 @@ function assertPageEnhancements(html, expectedText = [], schemaTypes = [], conte
 }
 
 async function main() {
-  const [home, product, productEs, noindexProduct, robots, sitemap, categoryPages, discoverHierarchyPages, hostServices, hostServicesEs, partners, partnersEs, faqPage, howItWorks] = await Promise.all([
+  const [home, product, productEs, noindexProduct, robots, sitemap, categoryPages, discoverHierarchyPages, hostServices, hostServicesEs, partners, partnersEs, faqPage, faqPageEs, howItWorks, howItWorksEs, refundsPage, refundsPageEs] = await Promise.all([
     get("/"),
     get(`/product/${productSlug}`),
     get(`/es/product/${productSlug}`),
@@ -143,7 +143,11 @@ async function main() {
     get("/partners"),
     get("/es/colaboraciones"),
     get("/faq"),
+    get("/es/faq"),
     get("/how-it-works"),
+    get("/es/how-it-works"),
+    get("/refunds"),
+    get("/es/refunds"),
   ]);
 
   assert(canonical(home) === "https://rentanything.es", "Homepage canonical is incorrect");
@@ -320,19 +324,44 @@ async function main() {
     "Spanish partnerships is missing from the sitemap"
   );
   assert(canonical(faqPage) === "https://rentanything.es/faq", "FAQ canonical is incorrect");
+  assert(canonical(faqPageEs) === "https://rentanything.es/es/faq", "Spanish FAQ canonical is incorrect");
+  assert(alternate(faqPage, "es") === "https://rentanything.es/es/faq", "FAQ lacks Spanish hreflang");
+  assert(alternate(faqPageEs, "en") === "https://rentanything.es/faq", "Spanish FAQ lacks English hreflang");
   assertPageEnhancements(
     faqPage,
     ["Our current online checkout does not automatically add a security deposit."],
     ["FAQPage"],
     "FAQ page"
   );
+  assertPageEnhancements(
+    faqPageEs,
+    ["Nuestro proceso de pago online actual no añade una fianza automáticamente."],
+    ["FAQPage"],
+    "Spanish FAQ page"
+  );
   assert(canonical(howItWorks) === "https://rentanything.es/how-it-works", "How It Works canonical is incorrect");
+  assert(canonical(howItWorksEs) === "https://rentanything.es/es/how-it-works", "Spanish How It Works canonical is incorrect");
+  assert(alternate(howItWorks, "es") === "https://rentanything.es/es/how-it-works", "How It Works lacks Spanish hreflang");
+  assert(alternate(howItWorksEs, "en") === "https://rentanything.es/how-it-works", "Spanish How It Works lacks English hreflang");
   assertPageEnhancements(
     howItWorks,
     ["Extensions depend on the item&#x27;s next booking"],
     ["HowTo", "FAQPage"],
     "How It Works page"
   );
+  assertPageEnhancements(
+    howItWorksEs,
+    ["La ampliación depende de la siguiente reserva del artículo"],
+    ["HowTo", "FAQPage"],
+    "Spanish How It Works page"
+  );
+  assert(canonical(refundsPage) === "https://rentanything.es/refunds", "Refunds canonical is incorrect");
+  assert(canonical(refundsPageEs) === "https://rentanything.es/es/refunds", "Spanish refunds canonical is incorrect");
+  assert(alternate(refundsPage, "es") === "https://rentanything.es/es/refunds", "Refunds lacks Spanish hreflang");
+  assert(alternate(refundsPageEs, "en") === "https://rentanything.es/refunds", "Spanish refunds lacks English hreflang");
+  for (const path of ["/es/faq", "/es/how-it-works", "/es/refunds"]) {
+    assert(sitemap.includes(`https://rentanything.es${path}`), `${path} is missing from the sitemap`);
+  }
 
   console.log(JSON.stringify({
     baseUrl,
@@ -348,7 +377,11 @@ async function main() {
     partnershipsCanonical: canonical(partners),
     spanishPartnershipsCanonical: canonical(partnersEs),
     faqCanonical: canonical(faqPage),
+    spanishFaqCanonical: canonical(faqPageEs),
     howItWorksCanonical: canonical(howItWorks),
+    spanishHowItWorksCanonical: canonical(howItWorksEs),
+    refundsCanonical: canonical(refundsPage),
+    spanishRefundsCanonical: canonical(refundsPageEs),
     status: "passed",
   }, null, 2));
 }
