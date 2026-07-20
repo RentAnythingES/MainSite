@@ -312,10 +312,28 @@ widget when there is no strong fit.
 - [x] Add guide-level source and freshness fields
 - [x] Extend source audits for stale records, missing governance, and invalid dates
 - [x] Extend audits for hub membership
-- [ ] Extend audits for future locale completeness
-- Define hub and guide conversion events in GA4
+- [x] Extend audits for future locale completeness
+- [x] Define hub and guide conversion events in GA4
 
 **Exit gate:** every existing guide has an owner, source status, and next review date.
+
+`npm run audit:discover-locales` now validates every published Spanish guide
+against its English source, localized hub ownership, required editorial depth,
+related-guide references, and genuinely localized metadata. Spanish guide pages
+derive their badge, breadcrumbs, related-guide heading, commercial pathway, and
+structured-data type from the English guide's canonical type and hub rather than
+assuming every guide is a beach.
+
+Discover guide pathways emit three consent-aware GA4 events through the shared
+analytics layer:
+
+- `discover_guide_click` for guide-to-guide navigation
+- `discover_commercial_click` for guide-to-category or guide-to-product navigation
+- `discover_editorial_click` for guide-to-blog navigation
+
+Each event includes `locale`, `source_guide`, target identifiers, and placement
+where relevant. Automatic page views remain the basis for hub and guide traffic;
+these events measure onward movement without collecting customer-entered data.
 
 ### Phase 1 — hub consolidation
 

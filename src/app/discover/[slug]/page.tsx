@@ -11,6 +11,7 @@ import { hasSpanishDestination } from "@/content/destinations-es";
 import { getProductsByCategoryFromDB } from "@/lib/product-service";
 import { getBlogPostBySlug } from "@/content/blog";
 import { BUSINESS_SCHEMA_ID, getBreadcrumbJsonLd, WEBSITE_SCHEMA_ID } from "@/lib/jsonld";
+import TrackedLink from "@/components/analytics/TrackedLink";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -117,18 +118,22 @@ export default async function DiscoverPage({ params }: Props) {
               <div className="container-site">
                 <div className="flex items-center justify-between mb-3">
                   <h3 className="text-sm font-semibold text-neutral-700">{w.heading}</h3>
-                  <Link
+                  <TrackedLink
                     href={`/rental/${w.categorySlug}`}
+                    eventName="discover_commercial_click"
+                    eventParams={{ locale: "en", source_guide: dest.slug, target_type: "category", target_slug: w.categorySlug }}
                     className="text-xs font-medium text-brand hover:underline"
                   >
                     View all →
-                  </Link>
+                  </TrackedLink>
                 </div>
                 <div className="flex gap-3 overflow-x-auto pb-2 -mx-1 px-1 snap-x scrollbar-hide">
                   {products.map((product) => (
-                    <Link
+                    <TrackedLink
                       key={product.slug}
                       href={`/product/${product.slug}`}
+                      eventName="discover_commercial_click"
+                      eventParams={{ locale: "en", source_guide: dest.slug, target_type: "product", target_slug: product.slug }}
                       className="flex-shrink-0 w-36 group"
                     >
                       <div className="aspect-square bg-white rounded-lg border border-border relative overflow-hidden mb-1.5">
@@ -146,7 +151,7 @@ export default async function DiscoverPage({ params }: Props) {
                       <p className="text-xs text-brand font-semibold mt-0.5">
                         From €{product.pricing[product.pricing.length - 1].perDay}/day
                       </p>
-                    </Link>
+                    </TrackedLink>
                   ))}
                 </div>
               </div>
@@ -669,16 +674,18 @@ export default async function DiscoverPage({ params }: Props) {
             <h2 className="text-2xl font-bold mb-6">Related Guides</h2>
             <div className="grid sm:grid-cols-2 gap-6">
               {resolvedBlogPosts.map((post) => post && (
-                <Link
+                <TrackedLink
                   key={post.slug}
                   href={`/blog/${post.slug}`}
+                  eventName="discover_editorial_click"
+                  eventParams={{ locale: "en", source_guide: dest.slug, target_type: "blog", target_slug: post.slug }}
                   className="card p-6 hover:shadow-md transition-shadow group"
                 >
                   <span className="badge badge-brand capitalize mb-2">{post.category}</span>
                   <h3 className="font-bold text-lg mb-2 group-hover:text-brand transition-colors">{post.title}</h3>
                   <p className="text-sm text-neutral-500 leading-relaxed">{post.excerpt}</p>
                   <span className="text-sm font-semibold text-brand mt-3 inline-block">Read guide →</span>
-                </Link>
+                </TrackedLink>
               ))}
             </div>
           </div>
