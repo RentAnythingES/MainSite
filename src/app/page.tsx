@@ -62,7 +62,7 @@ const heroCategories = [
 
 const trustStats = [
   { number: "Valencia", label: "Local service area" },
-  { number: "EN · ES", label: "Bilingual support" },
+  { number: "EN · ES · DE", label: "Multilingual support" },
   { number: "Flexible", label: "Short and longer rentals" },
   { number: "Local", label: "Pickup and delivery options" },
 ];

@@ -38,7 +38,7 @@ const es: Dictionary = {
     categoriesSubtitle: "Todo lo que necesitas para tu estancia en Valencia, en un solo lugar.",
     trustStats: [
       { number: "Valencia", label: "Área de servicio local" },
-      { number: "EN · ES", label: "Atención bilingüe" },
+      { number: "EN · ES · DE", label: "Atención multilingüe" },
       { number: "Flexible", label: "Alquileres cortos y largos" },
       { number: "Local", label: "Opciones de recogida y entrega" },
     ],
