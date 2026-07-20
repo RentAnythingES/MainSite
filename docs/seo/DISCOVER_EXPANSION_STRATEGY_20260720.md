@@ -417,6 +417,14 @@ Attractions hubs without creating new competing URLs. Each page passes the
 locale-depth audit, inherits its canonical English governance record and image
 rights, and receives reciprocal hreflang plus sitemap inclusion automatically.
 
+**Second Phase 4 translation checkpoint — 20 July 2026:** Sagunto, Requena, and
+Xàtiva now have complete Spanish planning guides, raising Spanish Discover
+coverage from 18 to 21 of 26 English guides. Together with Albufera, Buñol, and
+Cullera, this completes bilingual coverage for every published Day Trips child
+guide. The adaptations keep transport, opening, reservation, terrain, alcohol,
+and accessibility advice conditional on current official information rather
+than carrying old prices or schedules into Spanish search results.
+
 ## Measurement Framework
 
 ### Search metrics
