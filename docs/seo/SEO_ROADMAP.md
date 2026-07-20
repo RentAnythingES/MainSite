@@ -95,6 +95,7 @@
 - [x] Bilingual day-trip cluster expanded with source-governed Buñol and Cullera guides plus a localized Spanish comparison hub
 - [x] Discover Phase 3 completed with bilingual Corpus Christi and Christmas guides, annual refresh controls and licensed local imagery
 - [x] Discover locale governance and GA4 pathway measurement: all Spanish guides now inherit correct hub/type/schema context, locale depth is audit-enforced, and guide-to-guide, editorial and commercial clicks emit consent-aware events
+- [x] First measured-breadth translation batch: complete Spanish Fallas, Albufera, City of Arts and Sciences, and Turia Gardens guides expand localized Discover coverage from 14 to 18 guides
 - [x] EN/ES Host Services cluster launched for guest-equipment support without competing for generic property-management intent
 
 ---

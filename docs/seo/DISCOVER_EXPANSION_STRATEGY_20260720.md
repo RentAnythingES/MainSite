@@ -409,6 +409,14 @@ pages launch in EN/ES with licensed local photography and official source record
   or a clear commercial pathway justifies them
 - Consolidate weak or overlapping pages rather than preserving page count
 
+**First Phase 4 translation checkpoint — 20 July 2026:** complete Spanish
+adaptations are now published in code for Las Fallas, l'Albufera, the City of
+Arts and Sciences, and Turia Gardens. The batch raises Spanish Discover coverage
+from 14 to 18 of 26 English guides and strengthens the Events, Day Trips, and
+Attractions hubs without creating new competing URLs. Each page passes the
+locale-depth audit, inherits its canonical English governance record and image
+rights, and receives reciprocal hreflang plus sitemap inclusion automatically.
+
 ## Measurement Framework
 
 ### Search metrics
