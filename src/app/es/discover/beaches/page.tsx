@@ -5,7 +5,7 @@ import { getPublishedSpanishDestinations } from "@/content/destinations-es";
 import { getBreadcrumbJsonLd, getFaqJsonLd, getHubCollectionJsonLd } from "@/lib/jsonld";
 
 const url = "https://rentanything.es/es/discover/beaches";
-const description = "Compara las playas de Valencia para familias, accesibilidad, transporte y días tranquilos, con guías prácticas de Malvarrosa y Patacona.";
+const description = "Compara las playas de Valencia para familias, accesibilidad, transporte y naturaleza, con guías prácticas de Malvarrosa, Patacona, Pinedo y El Saler.";
 const faqs = [
   { question: "¿Qué playa de Valencia está mejor conectada con el centro?", answer: "La Malvarrosa y Las Arenas suelen ser las opciones urbanas más directas. Comprueba EMT y Metrovalencia desde tu alojamiento porque las rutas y frecuencias pueden cambiar." },
   { question: "¿Malvarrosa o Patacona para ir con niños?", answer: "Las dos son adecuadas. Malvarrosa ofrece conexiones urbanas sencillas y muchos servicios; Patacona suele sentirse más tranquila y espaciosa. La distancia desde tu alojamiento puede decidir la mejor opción." },
@@ -50,7 +50,7 @@ export default function SpanishBeachesHub() {
             <h2 className="text-3xl font-bold mb-4">Cómo elegir playa en Valencia</h2>
             <div className="space-y-4 text-neutral-600 leading-relaxed">
               <p>El litoral combina playas urbanas con servicios, zonas más tranquilas al norte y espacios naturales hacia el sur. La mejor elección depende de dónde te alojas, cuánto equipamiento transportas y si necesitas accesos adaptados.</p>
-              <p>La Malvarrosa es un punto de partida sencillo para una primera visita. La Patacona continúa hacia el norte con un ambiente más residencial. Publicaremos nuevas guías cuando la información de transporte, accesibilidad y servicios esté completamente verificada.</p>
+              <p>La Malvarrosa es un punto de partida sencillo para una primera visita y la Patacona continúa hacia el norte con un ambiente más residencial. Al sur del puerto, Pinedo destaca por su punto accesible y El Saler ofrece dunas, pinar y una jornada más natural que requiere mayor planificación.</p>
             </div>
           </div>
           <aside className="card p-6 bg-teal-50/40">

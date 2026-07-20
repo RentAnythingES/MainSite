@@ -2,11 +2,14 @@ import Image from "next/image";
 import Link from "next/link";
 import type { SpanishDiscoverGuide } from "@/content/destinations-es";
 import { getSpanishDestinationBySlug, getSpanishDestinationSources } from "@/content/destinations-es";
+import { getDestinationBySlug } from "@/content/destinations";
 import { BUSINESS_SCHEMA_ID, getBreadcrumbJsonLd, getFaqJsonLd, WEBSITE_SCHEMA_ID } from "@/lib/jsonld";
 
 export default function SpanishDestinationGuidePage({ guide }: { guide: SpanishDiscoverGuide }) {
   const url = `https://rentanything.es/es/discover/${guide.slug}`;
   const sources = getSpanishDestinationSources(guide.slug);
+  const englishGuide = getDestinationBySlug(guide.slug);
+  const imageProvenance = englishGuide?.heroImageProvenance;
   const relatedGuides = guide.relatedGuides
     .map((slug) => getSpanishDestinationBySlug(slug))
     .filter((item): item is SpanishDiscoverGuide => Boolean(item));
@@ -167,6 +170,12 @@ export default function SpanishDestinationGuidePage({ guide }: { guide: SpanishD
         <section className="border-t border-border bg-white py-8">
           <div className="container-site max-w-4xl text-sm text-neutral-500">
             <p>Contenido revisado el {new Intl.DateTimeFormat("es-ES", { dateStyle: "long" }).format(new Date(guide.lastUpdated))}.</p>
+            {imageProvenance?.status === "licensed" && (
+              <p className="mt-2">
+                Foto: <a href={imageProvenance.sourceUrl} target="_blank" rel="noreferrer" className="text-brand hover:underline">{imageProvenance.creator}</a>{" "}
+                (<a href={imageProvenance.licenseUrl} target="_blank" rel="noreferrer" className="text-brand hover:underline">{imageProvenance.license}</a>).
+              </p>
+            )}
             {sources.length > 0 && (
               <p className="mt-2">
                 Fuentes consultadas: {sources.map((source, index) => (

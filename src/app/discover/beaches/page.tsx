@@ -45,6 +45,18 @@ const comparisons = [
     feel: "Relaxed continuation of the city seafront",
     href: "/discover/patacona-beach",
   },
+  {
+    name: "Pinedo",
+    bestFor: "Accessible facilities and a quieter local beach",
+    feel: "Semi-rural beach south of the port",
+    href: "/discover/pinedo-beach",
+  },
+  {
+    name: "El Saler",
+    bestFor: "Dunes, nature and a planned full beach day",
+    feel: "Long natural beach within the Albufera landscape",
+    href: "/discover/el-saler-beach",
+  },
 ];
 
 export const metadata: Metadata = {
@@ -150,7 +162,7 @@ export default function BeachesHub() {
                 Valencia&apos;s coastline includes busy urban beaches, quieter stretches north of the city, and more natural beaches towards Albufera. The best choice depends on where you are staying, how much equipment you are carrying, and whether you need step-free routes or family facilities.
               </p>
               <p>
-                Malvarrosa is the simplest starting point for many first-time visitors. Patacona continues north with a calmer feel and is especially convenient from Alboraya and northern neighbourhoods. Future guides will add the southern beaches once their transport, seasonal services, and accessibility details are fully sourced.
+                Malvarrosa is the simplest starting point for many first-time visitors. Patacona continues north with a calmer feel. South of the port, Pinedo combines local character with an established accessible point, while El Saler offers dunes, pine forest and a more natural day out that needs additional transport and equipment planning.
               </p>
             </div>
           </div>

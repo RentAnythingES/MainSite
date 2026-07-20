@@ -15,7 +15,7 @@ a reason to exist beyond repeating an official tourism page.
 
 The existing system is technically strong:
 
-- 14 published English guides
+- 16 published English guides
 - 5 neighbourhood guides
 - 4 day-trip guides
 - 2 attraction guides
@@ -41,7 +41,7 @@ The main weaknesses are portfolio depth and language coverage:
 
 ### Implementation checkpoint — 20 July 2026
 
-- Guide-level governance is live for all 14 published guides with refresh class,
+- Guide-level governance is live for all 16 published guides with refresh class,
   content review date, next review date, authoritative sources, supported claims,
   and source check dates.
 - `npm run audit:discover-sources` now fails on missing governance, invalid dates,
@@ -343,10 +343,16 @@ pass focused lint, source, intent, image-rights, build, and rendered-route check
 - Gran Fira de València
 - Oceanogràfic
 - Central Market and La Lonja
-- El Saler Beach
-- Pinedo Beach
+- [x] El Saler Beach — published in EN/ES with municipal service and accessibility sources
+- [x] Pinedo Beach — published in EN/ES with municipal charter and accessible-beach sources
 
 Publish in EN and ES with licensed imagery and complete source records.
+
+The first two pages were validated on 20 July 2026 against Valencia City Council
+beach-service information, the municipal accessible-bathing programme, the Pinedo
+service charter and Visit Valencia's accessible-beach guide. Hero photographs are
+local Wikimedia Commons assets with verified CC BY or CC BY-SA licences recorded
+in `DISCOVER_IMAGE_SOURCES.md`.
 
 **Exit gate:** six bilingual guides published with no technical audit regressions.
 

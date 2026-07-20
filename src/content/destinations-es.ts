@@ -105,7 +105,7 @@ const spanishDiscoverGuides: SpanishDiscoverGuide[] = [
         answer: "El paseo es llano y existen accesos adaptados y pasarelas estacionales. Los servicios de baño asistido dependen del calendario municipal, por lo que deben confirmarse antes de la visita.",
       },
     ],
-    relatedGuides: ["patacona-beach"],
+    relatedGuides: ["patacona-beach", "pinedo-beach", "el-saler-beach"],
   },
   {
     slug: "patacona-beach",
@@ -187,7 +187,139 @@ const spanishDiscoverGuides: SpanishDiscoverGuide[] = [
         answer: "Sí. El paseo marítimo cuenta con restaurantes y terrazas. Para comer arroz durante el fin de semana es recomendable reservar directamente con el local.",
       },
     ],
-    relatedGuides: ["malvarrosa-beach"],
+    relatedGuides: ["malvarrosa-beach", "pinedo-beach"],
+  },
+  {
+    slug: "el-saler-beach",
+    name: "Playa de El Saler",
+    title: "Playa de El Saler: guía natural de Valencia",
+    description: "Planifica un día en la playa de El Saler: transporte, dunas protegidas, servicios, accesibilidad y consejos para familias cerca de Valencia.",
+    tagline: "Dunas, pinar y una jornada de playa más natural al sur de Valencia",
+    heroImage: "/discover/el-saler-beach.jpg",
+    heroImageAlt: "Arena, dunas y mar Mediterráneo en la playa de El Saler",
+    lastUpdated: "2026-07-20",
+    region: "Parque Natural de la Albufera",
+    quickFacts: [
+      { label: "Longitud", value: "Aproximadamente 2,6 km" },
+      { label: "Entorno", value: "Dunas y pinar dentro del paisaje de la Albufera" },
+      { label: "Mejor para", value: "Naturaleza, espacio y días completos" },
+      { label: "Desde Valencia", value: "Aproximadamente 25-35 minutos" },
+    ],
+    overview: [
+      "El Saler ofrece una experiencia más natural que las playas urbanas de Valencia. Se encuentra al sur de la ciudad, dentro del entorno del Parque Natural de la Albufera, con unos 2,6 kilómetros de arena fina y dorada protegidos por dunas y una amplia zona de pinar.",
+      "La playa dispone de servicios estivales, postas sanitarias, aseos, duchas, mesas de pícnic, zonas de sombra y accesos adaptados. Como las instalaciones están repartidas entre diferentes entradas, elegir el punto de llegada es importante cuando se transportan sillas, neveras o equipamiento infantil.",
+    ],
+    sections: [
+      {
+        heading: "Cómo llegar a El Saler",
+        paragraphs: ["Autobús, taxi, bicicleta y coche son opciones posibles. Revisa la ruta actual y guarda el acceso concreto antes de salir: la playa es larga y la distancia final desde una parada o aparcamiento puede variar mucho."],
+        bullets: [
+          "Autobús: EMT conecta Valencia con el entorno de El Saler; consulta la ruta vigente.",
+          "Bicicleta: es una opción para ciclistas con experiencia, teniendo en cuenta el calor y el regreso.",
+          "Coche: utiliza únicamente aparcamientos delimitados y evita dunas o vegetación protegida.",
+          "Accesibilidad: el punto municipal se sitúa frente a la posta sanitaria 2 durante la temporada correspondiente.",
+        ],
+      },
+      {
+        heading: "Dunas y entorno protegido",
+        paragraphs: [
+          "El paisaje de dunas y pinar es parte esencial de El Saler. Utiliza siempre pasarelas y caminos señalizados, no cruces zonas valladas y recoge todos los residuos.",
+          "El pinar no proporciona sombra sobre la arena. Para una estancia larga necesitas una sombrilla o refugio estable, protección solar y suficiente agua para todo el grupo.",
+        ],
+      },
+      {
+        heading: "Servicios y accesibilidad",
+        paragraphs: ["La información municipal incluye aparcamiento adaptado, pasarelas, aseos y duchas accesibles, además de un punto estacional junto a la posta 2. La ayuda para entrar al mar requiere confirmación previa con el servicio municipal."],
+        bullets: [
+          "Postas sanitarias y vigilancia durante la temporada indicada.",
+          "Aseos, duchas, lavapiés y fuentes distribuidos por distintos accesos.",
+          "Mesas de pícnic y zonas de sombra fuera de la arena.",
+          "Ayuda al baño sujeta a cita y disponibilidad estacional.",
+        ],
+      },
+      {
+        heading: "Planificar un día completo",
+        paragraphs: ["El Saler funciona mejor como salida de medio día o día completo. Lleva comida bien conservada o confirma previamente dónde vas a comer. Llega temprano en fines de semana de verano para reducir el calor y la presión sobre el aparcamiento."],
+      },
+    ],
+    practicalTips: [
+      "Guarda el acceso exacto antes de salir y no dependas de un marcador genérico de la playa.",
+      "Lleva más agua de la que crees necesaria y conserva los alimentos en frío.",
+      "Consulta la bandera, la vigilancia y la ayuda al baño el mismo día.",
+      "Protege las dunas utilizando exclusivamente caminos y pasarelas señalizados.",
+    ],
+    faqs: [
+      { question: "¿Cómo se llega a la playa de El Saler?", answer: "Puedes llegar en autobús, taxi, bicicleta o coche. Consulta la ruta actual y elige un acceso específico porque la playa tiene 2,6 kilómetros y los servicios están repartidos." },
+      { question: "¿El Saler es buena playa para familias?", answer: "Sí, especialmente para quienes buscan espacio y naturaleza. Requiere más planificación que una playa urbana: lleva sombra, agua y comida y llega temprano en verano." },
+      { question: "¿La playa de El Saler es accesible?", answer: "La ciudad publica aparcamiento, accesos, aseos y duchas adaptadas, además de un punto estacional junto a la posta 2. Confirma previamente la ayuda al baño." },
+    ],
+    relatedGuides: ["pinedo-beach", "malvarrosa-beach", "patacona-beach"],
+  },
+  {
+    slug: "pinedo-beach",
+    name: "Playa de Pinedo",
+    title: "Playa de Pinedo: guía accesible de Valencia",
+    description: "Guía de la playa de Pinedo con accesibilidad, transporte, servicios de temporada y consejos prácticos para organizar una visita desde Valencia.",
+    tagline: "Una playa local al sur del puerto con un punto accesible consolidado y ambiente tranquilo",
+    heroImage: "/discover/pinedo-beach.jpg",
+    heroImageAlt: "Arena amplia y mar Mediterráneo en la playa de Pinedo, Valencia",
+    lastUpdated: "2026-07-20",
+    region: "Poblats del Sud, Valencia",
+    quickFacts: [
+      { label: "Longitud", value: "Aproximadamente 1,5 km" },
+      { label: "Mejor para", value: "Accesibilidad, familias y ambiente local" },
+      { label: "Punto accesible", value: "Junto a la posta sanitaria 1" },
+      { label: "Desde Valencia", value: "Aproximadamente 20-30 minutos" },
+    ],
+    overview: [
+      "Pinedo es la primera playa situada al sur del puerto de Valencia y marca el inicio del litoral más natural que continúa hacia la Albufera. La carta municipal de servicios describe unos 1.500 metros de arena fina y dorada, ocupación moderada y un entorno menos urbano que la Malvarrosa.",
+      "Su principal ventaja es el punto accesible situado junto a la posta sanitaria 1. Los servicios publicados incluyen pasarelas, aseos, vestuario y duchas adaptadas, aparcamiento reservado, información en braille y ayuda al baño durante la temporada correspondiente.",
+    ],
+    sections: [
+      {
+        heading: "Cómo llegar a Pinedo",
+        paragraphs: ["Se puede llegar en autobús, taxi, bicicleta o coche. Consulta la ruta actual de EMT y el acceso exacto antes de salir, especialmente si necesitas llegar al punto accesible o transportas equipamiento."],
+        bullets: [
+          "Autobús: utiliza el planificador actual de EMT para localizar la parada más próxima.",
+          "Bicicleta: es posible llegar hacia el sur, pero hay que valorar el calor y la distancia de regreso.",
+          "Coche: existen aparcamientos públicos y plazas adaptadas, sin garantía de disponibilidad.",
+          "Accesibilidad: toma la posta sanitaria 1 como referencia para organizar la llegada.",
+        ],
+      },
+      {
+        heading: "Accesibilidad y baño asistido",
+        paragraphs: [
+          "Pinedo es una de las playas accesibles designadas por la ciudad. Su punto dispone de rutas y equipamiento adaptado, una zona reservada y asistencia estacional mediante sillas anfibias y otros elementos de apoyo.",
+          "Las fechas, horarios, aforo y necesidad de reserva pueden cambiar. Confirma el servicio directamente antes del desplazamiento y no asumas que todos los accesos de la playa ofrecen las mismas instalaciones.",
+        ],
+      },
+      {
+        heading: "Servicios y ambiente",
+        paragraphs: ["Pinedo combina un entorno local con aseos, duchas, fuentes, pasarelas, vigilancia y servicios temporales durante la temporada de baño. Su ocupación suele ser más moderada que la de las grandes playas urbanas."],
+        bullets: [
+          "Arena fina y dorada con accesos señalizados.",
+          "Servicios públicos y vigilancia sujetos al calendario estacional.",
+          "Restaurantes y quioscos en el entorno, con horarios que deben confirmarse.",
+          "Zona canina separada cuando el servicio municipal estacional está activo.",
+        ],
+      },
+      {
+        heading: "Organizar una visita en familia",
+        paragraphs: ["Llega por la mañana para reducir el calor y simplificar la instalación. Lleva agua, protección solar y sombra suficiente. Si viajas con carrito, utiliza los accesos principales: la arena suelta sigue siendo difícil para ruedas convencionales fuera de las pasarelas."],
+      },
+    ],
+    practicalTips: [
+      "Comprueba la bandera del estado del mar antes de bañarte.",
+      "Reserva o confirma la ayuda al baño cuando el servicio vigente lo requiera.",
+      "Elige el acceso antes de salir; las instalaciones no son idénticas en toda la playa.",
+      "Si vas con perro, confirma las fechas y normas actuales de la zona canina separada.",
+    ],
+    faqs: [
+      { question: "¿La playa de Pinedo es accesible?", answer: "Sí. Cuenta con un punto accesible junto a la posta sanitaria 1, instalaciones adaptadas y ayuda al baño estacional. Confirma fechas y condiciones antes de viajar." },
+      { question: "¿Cómo se llega desde Valencia?", answer: "Puedes llegar en autobús, taxi, bicicleta o coche. Consulta EMT para la ruta actual y selecciona el acceso exacto con antelación." },
+      { question: "¿Se admiten perros en Pinedo?", answer: "Valencia ha habilitado una zona canina estacional y separada en Pinedo. Su calendario y normativa pueden cambiar, por lo que debes confirmar la información municipal vigente." },
+    ],
+    relatedGuides: ["el-saler-beach", "malvarrosa-beach", "patacona-beach"],
   },
 ];
 
