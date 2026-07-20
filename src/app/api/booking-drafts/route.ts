@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createServiceClient } from "@/lib/supabase";
+import { getIncidentErrorMessage, recordSystemIncident } from "@/lib/system-incidents";
 import {
   BOOKING_TIMEZONE,
   DEFAULT_DRAFT_TTL_MINUTES,
@@ -170,6 +171,12 @@ export async function POST(request: NextRequest) {
     });
   } catch (err) {
     console.error("[booking-drafts] Error:", err);
+    await recordSystemIncident({
+      source: "booking_drafts",
+      eventType: "booking_draft_creation_failed",
+      severity: "error",
+      message: getIncidentErrorMessage(err),
+    });
     return NextResponse.json({ error: "Failed to create booking draft" }, { status: 500 });
   }
 }

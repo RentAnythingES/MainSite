@@ -1,5 +1,5 @@
 # RentAnything.es — SEO Strategy & Audit
-> **Last updated**: 2026-07-19 · **Build**: ✅ Clean · **Indexable sitemap pages**: 115
+> **Last updated**: 2026-07-20 · **Build**: ✅ Clean · **Indexable sitemap pages**: 118
 
 This is the **living SEO strategy document** for rentanything.es. Updated after every SEO-related change. For prioritized fixes, see [SEO_ROADMAP.md](./SEO_ROADMAP.md).
 
@@ -46,17 +46,18 @@ Priority structural changes:
 rentanything.es/
 ├── /                               Homepage (photo carousel hero, photo categories)
 │
-├── /product/                       Product pages (16 products)
+├── /product/                       Product pages (20 EN + 20 ES indexable)
 │   └── /product/[slug]             Individual product + BookingWidget
 │
-├── /rental/                        Category pages (5 categories)
+├── /rental/                        Category pages (6 categories per locale)
 │   ├── /rental/baby-gear
 │   ├── /rental/mobility
 │   ├── /rental/remote-work
 │   ├── /rental/home-living
-│   └── /rental/travel-outdoors
+│   ├── /rental/travel-outdoors
+│   └── /rental/kids-family
 │
-├── /blog/                          Blog hub (4 posts live)
+├── /blog/                          Blog hub (6 posts live per locale)
 │   └── /blog/[slug]                Individual posts (Article + FAQ JSON-LD)
 │
 ├── /discover/                      Discover hub (photo-backed)
@@ -64,11 +65,11 @@ rentanything.es/
 │   ├── /discover/day-trips         Hub: day trip guides
 │   ├── /discover/attractions       Hub: attraction guides
 │   ├── /discover/events            Hub: event guides
-│   └── /discover/[slug]            Individual destination guides (5 live)
+│   └── /discover/[slug]            Individual destination guides (14 live)
 │
 ├── /valencia                       Valencia landing page (photo hero)
 ├── /valencia/kits                  Kit/bundle hub
-│   └── /valencia/kits/[slug]       Individual kit pages (6 live)
+│   └── /valencia/kits/[slug]       Individual kit pages (8 live)
 ├── /about                          About page
 ├── /contact                        Contact form (Resend-powered)
 │
@@ -109,23 +110,23 @@ Admin Dashboard:
 
 ## Cluster Health
 
-### 🛒 Products (16 pages) — ✅ Complete
-- All products rendered from `src/data/products.ts`
+### 🛒 Products (20 indexable pages per locale) — 🟠 Editorial queue active
+- Live database baseline: 178 total products, 24 active, 20 indexable in English and Spanish
 - Each page has: name, brand, description, features, specs, pricing tiers
 - BookingWidget with date picker, tiered pricing calculator, WhatsApp deep-link
 - JSON-LD Product structured data
 - Internal links to category page + related products
 
-### 📂 Categories (5 pages) — ✅ Complete
+### 📂 Categories (6 pages per locale) — ✅ Complete
 - Rendered from product data, grouped by category
 - Each page: category description, product grid, internal links
 
-### 📝 Blog (4 posts live) — ✅ Complete
+### 📝 Blog (6 posts live per locale) — ✅ Initial library complete
 - Data-driven architecture (`src/content/blog.ts`)
-- 4 launch posts live with Article JSON-LD + FAQ schema
+- 6 planning posts live in English and Spanish with Article JSON-LD + FAQ schema
 - Cross-linked to products, categories, and discover pages
 
-### 📦 Kits & Bundles (7 pages) — ✅ Initial Layer Live
+### 📦 Kits & Bundles (9 pages including hub) — ✅ Initial Layer Live
 - Data-driven architecture (`src/data/bundles.ts`)
 - Hub page at `/valencia/kits`
 - 8 individual kit pages with related products, guides, add-ons, FAQ, and Product JSON-LD
@@ -135,8 +136,8 @@ Admin Dashboard:
 - Local SEO landing page
 - Valencia-specific content, neighbourhood mentions
 
-### 📄 Legal (4 pages) — ✅ Complete
-- Privacy, Terms, Refunds, Cookies
+### 📄 Legal (4 pages per locale) — ✅ Complete
+- Privacy, Terms, Refunds and Cookies in English and Spanish
 
 ---
 

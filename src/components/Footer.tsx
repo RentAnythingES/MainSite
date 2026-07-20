@@ -43,9 +43,9 @@ export default function Footer() {
   };
 
   const legalLinks = [
-    { name: isSpanish ? "Privacidad" : "Privacy Policy", href: "/privacy" },
-    { name: "Cookies", href: "/cookies" },
-    { name: isSpanish ? "Condiciones" : "T&Cs", href: "/terms" },
+    { name: isSpanish ? "Privacidad" : "Privacy Policy", href: `${prefix}/privacy` },
+    { name: "Cookies", href: `${prefix}/cookies` },
+    { name: isSpanish ? "Condiciones" : "T&Cs", href: `${prefix}/terms` },
     { name: isSpanish ? "Devoluciones" : "Refunds & Cancellations", href: `${prefix}/refunds` },
     { name: "Hojas de Reclamaciones", href: "https://www.hojasderereclamaciones.com/", external: true },
   ];

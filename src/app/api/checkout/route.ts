@@ -151,13 +151,23 @@ export async function POST(request: NextRequest) {
         { idempotencyKey: `booking-draft-${bookingDraft.id}` }
       );
 
-      await supabase
+      const { error: checkoutStateError } = await supabase
         .from("booking_drafts")
         .update({
           status: "checkout_created",
           stripe_checkout_session_id: session.id,
         })
         .eq("id", bookingDraft.id);
+
+      if (checkoutStateError) {
+        await recordSystemIncident({
+          source: "checkout",
+          eventType: "checkout_session_state_persistence_failed",
+          severity: "critical",
+          message: checkoutStateError.message,
+          context: { draftId: bookingDraft.id, sessionId: session.id },
+        });
+      }
 
       return NextResponse.json({
         checkoutUrl: session.url,

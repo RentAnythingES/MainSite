@@ -60,3 +60,13 @@ publish an AboutPage/Organization graph, while the Contact pages publish Contact
 markup. The Spanish contact form and customer auto-reply are localized end to end. The
 two additional sitemap routes raise the expected indexable total from 113 to 115 and
 the reciprocal locale-pair count from 38 to 40 after deployment.
+
+## Spanish legal and consent parity follow-up
+
+The July 20 batch corrects stale legal statements about deposits, public cookies,
+retention, fulfilment and cancellation before adding `/es/privacy`, `/es/terms`, and
+`/es/cookies`. Contact, partnership, newsletter and cookie-consent interfaces now
+use Spanish copy and Spanish policy links on `/es/` routes. The expected production
+sitemap grows from 115 to 118 URLs and reciprocal hreflang coverage from 40 to 43
+pairs. Regression checks cover every legal canonical, locale alternate, sitemap entry,
+and the operational statements most likely to drift.

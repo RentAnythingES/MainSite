@@ -118,7 +118,7 @@ export default function SpanishBlogPage() {
           <p className="text-teal-100 mb-8 max-w-lg mx-auto">
             Guías estacionales y recomendaciones prácticas. Sin mensajes innecesarios y con baja fácil.
           </p>
-          <NewsletterSignup source="es_blog_footer" dark />
+          <NewsletterSignup source="es_blog_footer" locale="es" dark />
         </div>
       </section>
     </>

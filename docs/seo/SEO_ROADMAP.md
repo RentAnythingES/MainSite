@@ -1,5 +1,5 @@
 # RentAnything.es — SEO Roadmap
-> **Last updated**: 2026-07-18 · Prioritized by estimated traffic impact × effort
+> **Last updated**: 2026-07-20 · Prioritized by estimated traffic impact × effort
 
 ---
 
@@ -17,15 +17,24 @@
   pickup and fulfilment claims were replaced with verifiable copy; `/es/about` and
   `/es/contact` add localized navigation, contact forms, confirmation emails,
   reciprocal hreflang, sitemap coverage and AboutPage/ContactPage schema (19 July 2026).
+- [x] Spanish legal and consent parity: corrected the English privacy, rental-terms,
+  and cookie source pages to match the live processors, checkout, deposit, cancellation,
+  and browser-storage behavior; added complete `/es/privacy`, `/es/terms`, and
+  `/es/cookies` routes plus localized consent surfaces and reciprocal hreflang
+  (20 July 2026).
+- [x] Booking failure visibility: unexpected booking-draft failures now create persistent
+  system incidents, Stripe-session persistence failures are recorded as critical, and
+  the customer UI no longer mislabels infrastructure failures as unavailable inventory
+  (20 July 2026).
 
-- [x] 16 product pages with structured data (JSON-LD Product)
-- [x] 5 category pages
+- [x] 20 English and 20 Spanish indexable product pages with Product structured data
+- [x] 6 English and 6 Spanish category pages
 - [x] Dynamic sitemap (`src/app/sitemap.ts`)
 - [x] Automated title and description length reporting with editorial exceptions tracked
 - [x] Canonical tags on all pages
 - [x] Open Graph / Twitter meta on all pages
 - [x] Valencia landing page (local SEO)
-- [x] Legal pages (privacy, terms, refunds, cookies)
+- [x] Legal pages in English and Spanish (privacy, terms, refunds, cookies)
 - [x] BookingWidget with pricing calculator
 - [x] Contact form (Resend-powered)
 - [x] Google Analytics integration (env var ready)
@@ -202,8 +211,8 @@ turn verified inventory into indexable Valencia product pages. Follow
 4. Enrich and publish a first 12–20 conversion-ready products only.
 5. Add guide/category/kit links and measure product-assisted conversion.
 
-The July 15 live baseline is 24 active products, 20 English-indexable products,
-and 20 Spanish-indexable products. The admin product list now separates public
+The 20 July live baseline is 178 total products, 24 active products, 20
+English-indexable products, and 20 Spanish-indexable products. The admin product list now separates public
 activation from EN/ES search readiness and exposes the blocking reason. Run
 `npm run audit:product-seo` for the full cluster report; the persistent baseline
 and next actions live in [PRODUCT_INDEXABILITY_AUDIT.md](./PRODUCT_INDEXABILITY_AUDIT.md).

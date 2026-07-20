@@ -163,7 +163,7 @@ export default function ContactForm({ locale = "en" }: { locale?: "en" | "es" })
         {status === "sending" ? text.sending : text.submit}
       </button>
       <p className="text-xs text-neutral-400 text-center">
-        {text.consentPrefix} <Link href="/privacy" className="underline hover:text-brand">{text.privacy}</Link>.
+        {text.consentPrefix} <Link href={locale === "es" ? "/es/privacy" : "/privacy"} className="underline hover:text-brand">{text.privacy}</Link>.
       </p>
     </form>
   );

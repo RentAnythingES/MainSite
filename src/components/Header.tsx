@@ -42,6 +42,9 @@ export default function Header() {
     pathname === "/refunds" ||
     pathname === "/about" ||
     pathname === "/contact" ||
+    pathname === "/privacy" ||
+    pathname === "/terms" ||
+    pathname === "/cookies" ||
     pathname.startsWith("/product/") ||
     pathname.startsWith("/rental/");
 

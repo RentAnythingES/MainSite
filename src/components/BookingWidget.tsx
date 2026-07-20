@@ -406,12 +406,14 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
       const draftData = await draftRes.json();
 
       if (!draftRes.ok || !draftData.draftId) {
-        setAvailabilityStatus("unavailable");
-        setBookingError("availability");
+        const isAvailabilityConflict = draftRes.status === 409;
+        setAvailabilityStatus(isAvailabilityConflict ? "unavailable" : "available");
+        setBookingError(isAvailabilityConflict ? "availability" : "checkout");
         setSubmitting(false);
         trackBookingEvent("booking_draft_failed", {
           productSlug: product.slug,
           fulfillmentMode,
+          status: draftRes.status,
         });
         return;
       }

@@ -159,7 +159,7 @@ export default function PartnerInquiryForm({ locale }: { locale: Locale }) {
         {status === "sending" ? text.sending : text.submit}
       </button>
       <p className="text-center text-xs text-neutral-500">
-        {text.privacyLead} <Link href="/privacy" className="underline hover:text-brand">{text.privacy}</Link>.
+        {text.privacyLead} <Link href={locale === "es" ? "/es/privacy" : "/privacy"} className="underline hover:text-brand">{text.privacy}</Link>.
       </p>
     </form>
   );

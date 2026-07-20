@@ -72,6 +72,11 @@ Supabase (CRUD products, pricing, bookings)
 | `booking_inventory_unit_assignments` | Physical-unit reservation, handover, return, and release history per booking | Admin/API only |
 | `monitoring_runs` | Scheduled production health results and alert deduplication | Server/admin only |
 
+Unexpected booking-draft creation failures and Stripe Checkout session-state
+persistence failures are written to `system_incidents`. Expected customer conflicts,
+such as unavailable inventory or expired drafts, remain ordinary 409 responses rather
+than operational incidents. The admin system-health panel exposes unresolved incidents.
+
 ### Storage
 | Bucket | Purpose | Access |
 |--------|---------|--------|

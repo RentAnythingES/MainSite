@@ -118,7 +118,7 @@ function assertPageEnhancements(html, expectedText = [], schemaTypes = [], conte
 }
 
 async function main() {
-  const [home, product, productEs, noindexProduct, robots, sitemap, categoryPages, discoverHierarchyPages, hostServices, hostServicesEs, partners, partnersEs, faqPage, faqPageEs, howItWorks, howItWorksEs, refundsPage, refundsPageEs, aboutPage, aboutPageEs, contactPage, contactPageEs] = await Promise.all([
+  const [home, product, productEs, noindexProduct, robots, sitemap, categoryPages, discoverHierarchyPages, hostServices, hostServicesEs, partners, partnersEs, faqPage, faqPageEs, howItWorks, howItWorksEs, refundsPage, refundsPageEs, aboutPage, aboutPageEs, contactPage, contactPageEs, privacyPage, privacyPageEs, termsPage, termsPageEs, cookiesPage, cookiesPageEs] = await Promise.all([
     get("/"),
     get(`/product/${productSlug}`),
     get(`/es/product/${productSlug}`),
@@ -152,6 +152,12 @@ async function main() {
     get("/es/about"),
     get("/contact"),
     get("/es/contact"),
+    get("/privacy"),
+    get("/es/privacy"),
+    get("/terms"),
+    get("/es/terms"),
+    get("/cookies"),
+    get("/es/cookies"),
   ]);
 
   assert(canonical(home) === "https://rentanything.es", "Homepage canonical is incorrect");
@@ -385,7 +391,26 @@ async function main() {
   assert(alternate(contactPageEs, "en") === "https://rentanything.es/contact", "Spanish Contact lacks English hreflang");
   assertPageEnhancements(contactPage, ["Available pickup options appear during booking"], ["ContactPage"], "Contact page");
   assertPageEnhancements(contactPageEs, ["Las opciones de recogida disponibles aparecen al reservar"], ["ContactPage"], "Spanish Contact page");
-  for (const path of ["/es/faq", "/es/how-it-works", "/es/refunds", "/es/about", "/es/contact"]) {
+  const legalPairs = [
+    { name: "Privacy", en: privacyPage, es: privacyPageEs, enPath: "/privacy", esPath: "/es/privacy" },
+    { name: "Terms", en: termsPage, es: termsPageEs, enPath: "/terms", esPath: "/es/terms" },
+    { name: "Cookies", en: cookiesPage, es: cookiesPageEs, enPath: "/cookies", esPath: "/es/cookies" },
+  ];
+  for (const legalPair of legalPairs) {
+    const englishUrl = `https://rentanything.es${legalPair.enPath}`;
+    const spanishUrl = `https://rentanything.es${legalPair.esPath}`;
+    assert(canonical(legalPair.en) === englishUrl, `${legalPair.name} canonical is incorrect`);
+    assert(canonical(legalPair.es) === spanishUrl, `Spanish ${legalPair.name} canonical is incorrect`);
+    assert(alternate(legalPair.en, "es") === spanishUrl, `${legalPair.name} lacks Spanish hreflang`);
+    assert(alternate(legalPair.es, "en") === englishUrl, `Spanish ${legalPair.name} lacks English hreflang`);
+  }
+  assertPageEnhancements(privacyPage, ["Escalera Labs S.L.", "Google Analytics does not load until you allow analytics"], [], "Privacy page");
+  assertPageEnhancements(privacyPageEs, ["Escalera Labs S.L.", "Google Analytics no se carga"], [], "Spanish Privacy page");
+  assertPageEnhancements(termsPage, ["does not automatically add a security deposit", "Between 24 and 48 hours"], [], "Terms page");
+  assertPageEnhancements(termsPageEs, ["Stripe procesa el pago", "Entre 24 y 48 horas"], [], "Spanish Terms page");
+  assertPageEnhancements(cookiesPage, ["rentanything_analytics_consent", "does not load unless you select"], [], "Cookies page");
+  assertPageEnhancements(cookiesPageEs, ["rentanything_analytics_consent", "no se carga salvo que selecciones"], [], "Spanish Cookies page");
+  for (const path of ["/es/faq", "/es/how-it-works", "/es/refunds", "/es/about", "/es/contact", "/es/privacy", "/es/terms", "/es/cookies"]) {
     assert(sitemap.includes(`https://rentanything.es${path}`), `${path} is missing from the sitemap`);
   }
 
@@ -412,6 +437,7 @@ async function main() {
     spanishAboutCanonical: canonical(aboutPageEs),
     contactCanonical: canonical(contactPage),
     spanishContactCanonical: canonical(contactPageEs),
+    spanishLegalCanonicals: legalPairs.map((legalPair) => canonical(legalPair.es)),
     status: "passed",
   }, null, 2));
 }

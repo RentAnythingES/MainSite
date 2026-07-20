@@ -30,6 +30,9 @@ App Router with static generation (`generateStaticParams`). Prefix-based i18n (`
 | `/es/rental/[category]` | SSG | Same categories, Spanish dictionary |
 | `/es/blog` | Static | Complete Spanish planning guides only |
 | `/es/blog/[slug]` | SSG | `content/blog-es.ts` + shared article renderer |
+| `/es/about` | Static | Localized company and service information |
+| `/es/contact` | Static + Client | Localized contact form and confirmation flow |
+| `/es/privacy`, `/es/terms`, `/es/refunds`, `/es/cookies` | Static | Localized legal and consent information |
 
 ### Admin (protected)
 | Route | Type | Purpose |
@@ -49,7 +52,9 @@ App Router with static generation (`generateStaticParams`). Prefix-based i18n (`
   - `HeroCarousel` — auto-advancing homepage photo carousel
   - `BookingWidget` — booking flow with rental window, availability check, draft creation, and Stripe handoff
   - `BundleConfigurator` — kit request builder with selectable included items/add-ons and WhatsApp handoff
-  - `ContactForm` — contact form with Resend
+- `ContactForm` — contact form with Resend
+- `CookieConsent` — locale-aware analytics choice stored in browser local storage
+- `NewsletterSignup` — locale-aware explicit marketing consent and unsubscribe messaging
 - `NewsletterSignup` — newsletter consent capture with `/api/newsletter`
 - `DestinationMap` — dependency-free schematic map with city/day-trip views and keyboard-accessible guide selection
 - `Header` / `Footer` — locale-aware navigation (detects `/es/` prefix)

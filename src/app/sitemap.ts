@@ -89,7 +89,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${BASE_URL}/es/about`, changeFrequency: "monthly", priority: 0.5 },
     { url: `${BASE_URL}/es/faq`, changeFrequency: "monthly", priority: 0.6 },
     { url: `${BASE_URL}/es/contact`, changeFrequency: "monthly", priority: 0.5 },
+    { url: `${BASE_URL}/es/privacy`, changeFrequency: "yearly", priority: 0.2 },
+    { url: `${BASE_URL}/es/terms`, changeFrequency: "yearly", priority: 0.2 },
     { url: `${BASE_URL}/es/refunds`, changeFrequency: "yearly", priority: 0.3 },
+    { url: `${BASE_URL}/es/cookies`, changeFrequency: "yearly", priority: 0.2 },
   ];
 
   const spanishBlogPages: MetadataRoute.Sitemap = getPublishedSpanishPosts().map((post) => ({

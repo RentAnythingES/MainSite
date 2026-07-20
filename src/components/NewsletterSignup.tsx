@@ -10,6 +10,23 @@ interface NewsletterSignupProps {
 }
 
 export default function NewsletterSignup({ source, locale = "en", dark = false }: NewsletterSignupProps) {
+  const text = locale === "es"
+    ? {
+        email: "Correo electrónico",
+        submitting: "Suscribiendo...",
+        submit: "Suscribirme",
+        consent: "Acepto recibir correos de RentAnything.es con consejos para estancias en Valencia, novedades de productos, nuevos kits y ofertas ocasionales. Puedo darme de baja en cualquier momento.",
+        success: "Ya estás suscrito. Revisa tu correo para ver el mensaje de bienvenida.",
+        error: "No hemos podido completar la suscripción.",
+      }
+    : {
+        email: "Email address",
+        submitting: "Subscribing...",
+        submit: "Subscribe",
+        consent: "I agree to receive RentAnything.es emails with Valencia stay tips, product updates, kit launches, and occasional offers. I can unsubscribe at any time.",
+        success: "You're subscribed — please check your inbox for the welcome email.",
+        error: "Could not subscribe",
+      };
   const [email, setEmail] = useState("");
   const [consent, setConsent] = useState(false);
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
@@ -35,7 +52,7 @@ export default function NewsletterSignup({ source, locale = "en", dark = false }
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.error || "Could not subscribe");
+        throw new Error(data.error || text.error);
       }
 
       trackEvent("newsletter_signup_submit", {
@@ -49,7 +66,7 @@ export default function NewsletterSignup({ source, locale = "en", dark = false }
       setConsent(false);
     } catch (err) {
       setStatus("error");
-      setError(err instanceof Error ? err.message : "Could not subscribe");
+      setError(err instanceof Error ? err.message : text.error);
     }
   }
 
@@ -70,10 +87,10 @@ export default function NewsletterSignup({ source, locale = "en", dark = false }
           placeholder="your@email.com"
           required
           className={inputClass}
-          aria-label="Email address"
+          aria-label={text.email}
         />
         <button type="submit" className="btn btn-accent whitespace-nowrap" disabled={status === "submitting"}>
-          {status === "submitting" ? "Subscribing..." : "Subscribe"}
+          {status === "submitting" ? text.submitting : text.submit}
         </button>
       </div>
 
@@ -86,13 +103,13 @@ export default function NewsletterSignup({ source, locale = "en", dark = false }
           className="mt-0.5 h-4 w-4 accent-amber-500"
         />
         <span>
-          I agree to receive RentAnything.es emails with Valencia stay tips, product updates, kit launches, and occasional offers. I can unsubscribe at any time.
+          {text.consent}
         </span>
       </label>
 
       {status === "success" && (
         <p className={`mt-4 text-sm font-semibold ${messageClass}`}>
-          You&apos;re subscribed — please check your inbox for the welcome email.
+          {text.success}
         </p>
       )}
       {status === "error" && (
