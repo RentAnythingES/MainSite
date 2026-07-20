@@ -93,6 +93,7 @@
 - [x] Product, kit, category and editorial schema connected to stable business/WebSite IDs; evergreen event guides corrected to Article markup
 - [x] Spanish planning coverage launched with a localized blog hub plus complete Beach and Summer guides and selective reciprocal hreflang
 - [x] Bilingual day-trip cluster expanded with source-governed Buñol and Cullera guides plus a localized Spanish comparison hub
+- [x] Discover Phase 3 completed with bilingual Corpus Christi and Christmas guides, annual refresh controls and licensed local imagery
 - [x] EN/ES Host Services cluster launched for guest-equipment support without competing for generic property-management intent
 
 ---

@@ -31,7 +31,8 @@ const editorial = {
     { title: "Fallas", description: "Valencia's largest festival, with monuments, fireworks, processions, major crowds, and city-wide disruption.", href: "/discover/fallas" },
     { title: "Maritime traditions", description: "Semana Santa Marinera connects processions and neighbourhood traditions around Cabanyal and the seafront.", href: "/discover/semana-santa-marinera-valencia" },
     { title: "Summer festivals", description: "Feria de Julio and the Gran Fira programme bring outdoor culture, fireworks and traditions across Valencia.", href: "/discover/gran-fira-valencia" },
-    { title: "Historic celebrations", description: "Corpus Christi and 9 d'Octubre need focused route, crowd, and access guidance rather than generic calendar listings." },
+    { title: "Historic processions", description: "Corpus Christi brings La Moma, the Rocas, the Convite Parade and the solemn procession into Ciutat Vella.", href: "/discover/corpus-christi-valencia" },
+    { title: "Christmas season", description: "Plan lights, nativity scenes, markets, New Year's Eve and Three Kings without relying on last year's programme.", href: "/discover/christmas-valencia" },
   ],
   planningTitle: "Check again before the event",
   planningPoints: [

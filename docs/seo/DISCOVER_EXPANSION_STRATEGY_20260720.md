@@ -363,8 +363,8 @@ unstable programme details.
 
 ### Phase 3 — second expansion batch
 
-- Corpus Christi
-- Christmas in Valencia
+- [x] Corpus Christi — published in EN/ES with official tradition, procession and municipal museum sources plus annual programme controls
+- [x] Christmas in Valencia — published in EN/ES as a stable seasonal-planning guide with an explicit November refresh gate for the unpublished 2026 programme
 - [x] BIOPARC Valencia — published in EN/ES with official calendar, FAQ, access, family, food and accessibility sources
 - [x] Valencia historic centre — published in EN/ES with a municipal route and regional heritage sources
 - [x] Buñol — published in EN/ES as an evergreen castle, old-town and nature day-trip guide with an explicit La Tomatina planning boundary
@@ -376,7 +376,13 @@ The day-trip pair also launches `/es/discover/day-trips`, adds reciprocal hub
 hreflang, and expands the published Discover portfolio from 22 to 24 English
 guides. Both heroes use verified CC BY-SA assets, and all transport, castle,
 beach and accessibility claims trace to municipal, national-tourism or official
-destination sources. Phase 3 is now 4/6 complete.
+destination sources. This brought Phase 3 to 4/6 before the final event pair.
+
+The final event pair expands the published Discover portfolio from 24 to 26
+English guides and completes Phase 3. Corpus Christi owns historic-procession
+intent; Christmas owns the full lights, nativity, market, New Year and Three
+Kings planning journey without presenting old annual details as current. Both
+pages launch in EN/ES with licensed local photography and official source records.
 
 ### Phase 4 — measured breadth
 

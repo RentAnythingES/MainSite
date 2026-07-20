@@ -824,6 +824,113 @@ const spanishDiscoverGuides: SpanishDiscoverGuide[] = [
     ],
     relatedGuides: ["el-saler-beach", "bunol-day-trip", "valencia-historic-centre"],
   },
+  {
+    slug: "corpus-christi-valencia",
+    name: "Corpus Christi de Valencia",
+    title: "Corpus Christi de Valencia: procesión y tradiciones",
+    description: "Organiza el Corpus Christi de Valencia con la Cabalgata del Convite, la Moma, las Rocas, la procesión y comprobaciones del programa oficial.",
+    tagline: "Danzas históricas, carros ceremoniales y procesiones por el centro antiguo",
+    heroImage: "/discover/corpus-christi-valencia.jpg",
+    heroImageAlt: "La Moma y otro personaje durante la Cabalgata del Convite del Corpus de Valencia",
+    lastUpdated: "2026-07-20",
+    region: "Ciutat Vella, Valencia",
+    quickFacts: [
+      { label: "Origen", value: "Celebrado en Valencia desde 1263" },
+      { label: "Zona principal", value: "Ciutat Vella y plaza de la Virgen" },
+      { label: "Acceso", value: "Los actos en la calle suelen ser gratuitos" },
+      { label: "Fecha", value: "Cambia cada año con el calendario de Pascua" },
+    ],
+    overview: [
+      "El Corpus Christi es una de las celebraciones cívicas y religiosas más antiguas de Valencia. Sus orígenes se remontan a 1263 y la procesión formal se estableció en 1355. El fin de semana combina ceremonia católica, vestuario, música, danza y simbolismo popular.",
+      "Entre los actos más característicos están el traslado y paso de las Rocas, los Misterios, la Cabalgata del Convite y la procesión solemne. La Moma, vestida de blanco, representa la virtud frente a los siete pecados capitales.",
+      "La fecha se mueve con la Pascua y el programa cambia cada año. Utiliza esta guía para comprender la celebración y confirma después fecha, recorrido, horarios y accesos en la programación oficial vigente.",
+    ],
+    sections: [
+      {
+        heading: "Cabalgata del Convite y la Moma",
+        paragraphs: ["El Convite reúne gigantes, danzas, personajes simbólicos, músicos y la Degolla. La Moma protagoniza una de las danzas rituales más reconocibles."],
+        bullets: ["Elige un tramo amplio si vas con niños.", "Llega antes del inicio publicado.", "Mantén una salida clara entre la multitud."],
+      },
+      {
+        heading: "Rocas y procesión solemne",
+        paragraphs: ["Las Rocas son carros ceremoniales históricos conservados en la Casa de las Rocas. La procesión posterior tiene un carácter religioso más formal y reúne parroquias, personajes bíblicos, la Senyera y la Custodia."],
+      },
+      {
+        heading: "Transporte y accesibilidad",
+        paragraphs: ["Los actos principales ocupan calles de Ciutat Vella. EMT puede aplicar desvíos y el pavimento histórico, las calles estrechas y las barreras complican el acceso. Confirma cualquier zona adaptada en el programa anual."],
+      },
+      {
+        heading: "Una visita alternativa al museo",
+        paragraphs: ["El Museo del Corpus — Casa de las Rocas permite conocer los carros y la historia de la fiesta con más calma fuera del momento de máxima afluencia."],
+      },
+    ],
+    practicalTips: [
+      "Comprueba el programa del año actual y no reutilices horarios antiguos.",
+      "Elige entre el Convite, más vivo, y la procesión solemne, más formal.",
+      "Evita las calles más estrechas con carrito o ayuda de movilidad.",
+      "Respeta el carácter religioso de la procesión al moverte o hacer fotografías.",
+    ],
+    faqs: [
+      { question: "¿Cuándo se celebra el Corpus Christi en Valencia?", answer: "La fecha cambia con el calendario de Pascua y los actos principales se concentran alrededor del domingo posterior al Corpus. Confirma siempre el programa vigente." },
+      { question: "¿Qué es la Moma?", answer: "Es la figura vestida de blanco que representa la virtud en una danza ritual frente a los siete pecados capitales." },
+      { question: "¿Hace falta entrada?", answer: "Los principales desfiles y la procesión en la calle suelen ser gratuitos. Otros espacios o zonas reservadas pueden tener condiciones propias." },
+      { question: "¿Es adecuado para niños?", answer: "Sí, especialmente la Cabalgata del Convite, pero la Degolla, los caballos, el ruido y la multitud exigen supervisión y un punto de encuentro." },
+    ],
+    relatedGuides: ["valencia-historic-centre", "central-market-la-lonja"],
+  },
+  {
+    slug: "christmas-valencia",
+    name: "Navidad en Valencia",
+    title: "Navidad en Valencia: mercados, luces y tradiciones",
+    description: "Planifica la Navidad en Valencia con luces, belenes, mercados, Nochevieja y Reyes Magos, además de transporte y cierres festivos.",
+    tagline: "Luces, belenes, mercados y tradiciones de Reyes por toda la ciudad",
+    heroImage: "/discover/christmas-valencia.jpg",
+    heroImageAlt: "Luces de una estrella y un belén sobre una calle de Valencia por la noche",
+    lastUpdated: "2026-07-20",
+    region: "Toda Valencia",
+    quickFacts: [
+      { label: "Temporada", value: "De finales de noviembre al 6 de enero" },
+      { label: "Final familiar", value: "Reyes Magos, 5 y 6 de enero" },
+      { label: "Zona principal", value: "Centro histórico y plaza del Ayuntamiento" },
+      { label: "Programa 2026", value: "Aún no publicado; revisar en noviembre" },
+    ],
+    overview: [
+      "La Navidad en Valencia es una temporada, no un único evento. Las luces, belenes, mercados, conciertos y actividades familiares ocupan diciembre, seguidos por Nochevieja y las tradiciones de Reyes que culminan los días 5 y 6 de enero.",
+      "Una primera ruta práctica recorre la plaza del Ayuntamiento, la plaza de la Reina, el entorno del Mercado Central y varios belenes municipales o culturales confirmados. Añade como máximo una actividad con entrada para mantener un ritmo familiar realista.",
+      "El programa municipal, los mercados, los horarios de luces y el recorrido de Reyes cambian cada año. En julio de 2026 todavía no se ha publicado la programación de Navidad 2026. Confirma todos los detalles cuando aparezcan las fuentes oficiales.",
+    ],
+    sections: [
+      {
+        heading: "Luces y ruta por el centro",
+        paragraphs: ["La plaza del Ayuntamiento y las calles comerciales cercanas forman el recorrido nocturno más sencillo cuando comienza la iluminación anual. Comprueba la fecha de encendido y los horarios del año actual."],
+      },
+      {
+        heading: "Belenes y mercados",
+        paragraphs: ["Los belenes municipales, museos, iglesias y mercados permiten crear una ruta cultural por Ciutat Vella. Las ubicaciones, fechas y aperturas cambian, por lo que conviene elegir tres puntos próximos del listado vigente."],
+      },
+      {
+        heading: "Nochevieja y Reyes Magos",
+        paragraphs: ["La Nochevieja y la Cabalgata del 5 de enero necesitan planes independientes por sus multitudes, cortes de tráfico y transporte. El recorrido y la llegada de los Reyes se confirman cada temporada."],
+      },
+      {
+        heading: "Familias y accesibilidad",
+        paragraphs: ["El centro es accesible mediante transporte público, pero los puestos temporales, barreras, adoquines y concentraciones reducen el espacio. Elige una hora temprana y confirma accesos sin escalones en recintos interiores."],
+      },
+    ],
+    practicalTips: [
+      "Vuelve a consultar esta guía en noviembre para acceder al programa oficial 2026.",
+      "Agrupa plaza del Ayuntamiento, plaza de la Reina y Mercado Central en una sola ruta.",
+      "Comprueba la apertura de cada recinto los días 24, 25 y 31 de diciembre y 1 y 6 de enero.",
+      "Consulta el último transporte antes de celebraciones nocturnas.",
+    ],
+    faqs: [
+      { question: "¿Cuándo empieza la Navidad en Valencia?", answer: "Normalmente comienza a finales de noviembre o principios de diciembre y continúa hasta Reyes, el 6 de enero. Las fechas de luces, mercados y actividades se confirman cada año." },
+      { question: "¿Las actividades de Navidad son gratuitas?", answer: "Las luces, plazas públicas y muchos belenes son gratuitos. Algunos espectáculos, atracciones, talleres o actividades con reserva requieren entrada." },
+      { question: "¿Dónde están los principales puntos navideños?", answer: "La plaza del Ayuntamiento, la plaza de la Reina y el entorno del Mercado Central forman una primera ruta práctica, complementada por los listados municipales vigentes." },
+      { question: "¿Cuándo es la Cabalgata de Reyes?", answer: "Tradicionalmente se celebra el 5 de enero, pero la llegada, recorrido y hora cambian. Consulta el programa municipal de la temporada." },
+    ],
+    relatedGuides: ["valencia-historic-centre", "central-market-la-lonja"],
+  },
 ];
 
 export function getPublishedSpanishDestinations(): SpanishDiscoverGuide[] {
