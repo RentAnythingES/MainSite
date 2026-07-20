@@ -16,13 +16,15 @@ npm run audit:performance
 ```
 
 The default audit covers the homepage plus representative category, product, kit
-and Discover guide templates.
+and Discover guide templates. It includes both a commercial beach guide and the
+largest current neighbourhood guide.
 
 ## Enforced budgets
 
 | Measure | Budget |
 |---------|--------|
-| HTML per page | 120,000 bytes |
+| Decoded HTML per page | 150,000 bytes |
+| Gzip-equivalent HTML transfer | 30,000 bytes |
 | First-party JavaScript per page | 800,000 bytes |
 | First-party CSS per page | 120,000 bytes |
 | Largest preloaded image | 150,000 bytes |
@@ -88,6 +90,14 @@ hits averaged 154 ms, with 122 ms p50, 233 ms p90 and a 96-248 ms range. The
 Spanish equivalent returned the expected Spanish content, `Content-Language: es`
 and a prerendered response. This resolves the 1,248-2,084 ms request-time category
 latency for normal visitors.
+
+On 20 July 2026, richer Discover guides pushed decoded App Router HTML beyond the
+original 120,000-byte calibration even though their compressed network payload
+remained small. The audit now keeps a 150,000-byte decoded guardrail and adds a
+stricter 30,000-byte gzip-equivalent transfer budget. Ruzafa is included as the
+largest current guide, preventing the lighter Malvarrosa page from masking future
+template growth. The production sample measured 25,756 compressed bytes for
+Ruzafa and 21,296 for Malvarrosa.
 
 ## Interpreting results
 

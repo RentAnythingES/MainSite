@@ -415,6 +415,9 @@ Priority pilot logic: start with one narrow bundle, collect usage evidence, then
   El Ensanche without introducing competing locale URLs.
 - [x] Enforce localized Beaches, Attractions, Day Trips, Events, and
   Neighbourhoods hubs in the Discover locale audit.
+- [x] Correct technical-schema auditing for localized hubs and event articles,
+  and enforce both decoded and compressed HTML budgets against the largest
+  published Discover guide.
 
 ---
 

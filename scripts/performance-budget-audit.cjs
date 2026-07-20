@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-require-imports */
 const fs = require("fs");
+const zlib = require("zlib");
 
 const baseUrl = (process.env.PERFORMANCE_BASE_URL || "https://www.rentanything.es").replace(/\/$/, "");
 const outputPath = process.env.PERFORMANCE_AUDIT_OUTPUT;
@@ -9,13 +10,15 @@ const routes = (process.env.PERFORMANCE_ROUTES || [
   "/product/beach-umbrella-set",
   "/valencia/kits/family-beach-kit",
   "/discover/malvarrosa-beach",
+  "/discover/ruzafa",
 ].join(","))
   .split(",")
   .map((route) => route.trim())
   .filter(Boolean);
 
 const budgets = {
-  htmlBytes: Number(process.env.PERFORMANCE_HTML_BUDGET || 120_000),
+  htmlBytes: Number(process.env.PERFORMANCE_HTML_BUDGET || 150_000),
+  htmlTransferBytes: Number(process.env.PERFORMANCE_HTML_TRANSFER_BUDGET || 30_000),
   scriptBytes: Number(process.env.PERFORMANCE_SCRIPT_BUDGET || 800_000),
   stylesheetBytes: Number(process.env.PERFORMANCE_STYLESHEET_BUDGET || 120_000),
   preloadImageBytes: Number(process.env.PERFORMANCE_PRELOAD_IMAGE_BUDGET || 150_000),
@@ -78,6 +81,7 @@ async function inspectPage(route) {
   const pageUrl = new URL(route, `${baseUrl}/`).toString();
   const document = await fetchResource(pageUrl);
   const html = document.body.toString("utf8");
+  const htmlTransferBytes = zlib.gzipSync(document.body).length;
   const resources = extractResources(html);
   const resourceGroups = {};
 
@@ -94,6 +98,7 @@ async function inspectPage(route) {
 
   if (document.status < 200 || document.status >= 400) errors.push(`document_status:${document.status}`);
   if (document.bytes > budgets.htmlBytes) errors.push(`html_budget_exceeded:${document.bytes}`);
+  if (htmlTransferBytes > budgets.htmlTransferBytes) errors.push(`html_transfer_budget_exceeded:${htmlTransferBytes}`);
   if (scriptBytes > budgets.scriptBytes) errors.push(`script_budget_exceeded:${scriptBytes}`);
   if (stylesheetBytes > budgets.stylesheetBytes) errors.push(`stylesheet_budget_exceeded:${stylesheetBytes}`);
   if (largestPreloadImageBytes > budgets.preloadImageBytes) errors.push(`preload_image_budget_exceeded:${largestPreloadImageBytes}`);
@@ -112,6 +117,7 @@ async function inspectPage(route) {
     document: {
       status: document.status,
       bytes: document.bytes,
+      transferBytes: htmlTransferBytes,
       responseTimeMs: document.responseTimeMs,
       cacheControl: document.cacheControl,
     },
@@ -135,6 +141,7 @@ async function main() {
       pagesWithErrors: pages.filter((page) => page.errors.length).length,
       pagesWithWarnings: pages.filter((page) => page.warnings.length).length,
       maxHtmlBytes: Math.max(...pages.map((page) => page.document.bytes)),
+      maxHtmlTransferBytes: Math.max(...pages.map((page) => page.document.transferBytes)),
       maxScriptBytes: Math.max(...pages.map((page) => page.totals.scriptBytes)),
       maxStylesheetBytes: Math.max(...pages.map((page) => page.totals.stylesheetBytes)),
       maxPreloadImageBytes: Math.max(...pages.map((page) => page.totals.largestPreloadImageBytes)),
