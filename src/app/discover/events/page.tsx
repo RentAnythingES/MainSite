@@ -12,7 +12,10 @@ const hubDescription =
 export const metadata: Metadata = {
   title: "Valencia Events — Festivals, Holidays & Seasonal Highlights",
   description: hubDescription,
-  alternates: { canonical: hubUrl },
+  alternates: {
+    canonical: hubUrl,
+    languages: { en: hubUrl, es: "https://rentanything.es/es/discover/events", "x-default": hubUrl },
+  },
 };
 
 const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -26,8 +29,8 @@ const editorial = {
   choiceTitle: "Build the trip around the right event type",
   choices: [
     { title: "Fallas", description: "Valencia's largest festival, with monuments, fireworks, processions, major crowds, and city-wide disruption.", href: "/discover/fallas" },
-    { title: "Maritime traditions", description: "Semana Santa Marinera connects processions and neighbourhood traditions around Cabanyal and the seafront. A bilingual guide is next in the expansion plan." },
-    { title: "Summer festivals", description: "Gran Fira and seasonal programmes add outdoor events across July. Current-year schedules require annual verification." },
+    { title: "Maritime traditions", description: "Semana Santa Marinera connects processions and neighbourhood traditions around Cabanyal and the seafront.", href: "/discover/semana-santa-marinera-valencia" },
+    { title: "Summer festivals", description: "Feria de Julio and the Gran Fira programme bring outdoor culture, fireworks and traditions across Valencia.", href: "/discover/gran-fira-valencia" },
     { title: "Historic celebrations", description: "Corpus Christi and 9 d'Octubre need focused route, crowd, and access guidance rather than generic calendar listings." },
   ],
   planningTitle: "Check again before the event",

@@ -466,6 +466,147 @@ const spanishDiscoverGuides: SpanishDiscoverGuide[] = [
     ],
     relatedGuides: ["el-carmen", "el-ensanche"],
   },
+  {
+    slug: "semana-santa-marinera-valencia",
+    name: "Semana Santa Marinera",
+    title: "Semana Santa Marinera de Valencia: guía 2026",
+    description: "Planifica la Semana Santa Marinera de Valencia 2026 con fechas, procesiones principales, rutas, accesibilidad y consejos para familias.",
+    tagline: "La Semana Santa de los barrios marítimos, entre procesiones, tradición vecinal y vínculos con el mar",
+    heroImage: "/discover/semana-santa-marinera.jpg",
+    heroImageAlt: "Procesión de la Semana Santa Marinera en los barrios marítimos de Valencia",
+    lastUpdated: "2026-07-20",
+    region: "Poblats Marítims, Valencia",
+    quickFacts: [
+      { label: "Fechas 2026", value: "Del 27 de marzo al 5 de abril" },
+      { label: "Zona principal", value: "Cabanyal, Canyamelar y Grau" },
+      { label: "Precio", value: "Las procesiones en la calle son gratuitas" },
+      { label: "Planificación", value: "Consulta el programa oficial vigente" },
+    ],
+    overview: [
+      "La Semana Santa Marinera es la celebración de Semana Santa propia de los Poblats Marítims de Valencia. Sus procesiones recorren calles residenciales y mantienen tradiciones vinculadas a las comunidades marineras, con 31 hermandades, cofradías y corporaciones participantes en 2026.",
+      "Para organizar la visita, conviene elegir uno de los tres grandes actos colectivos: la Visita a los Santos Monumentos del Jueves Santo, la Procesión General del Santo Entierro del Viernes Santo o el Desfile de Resurrección del Domingo de Pascua.",
+      "Es una celebración religiosa y vecinal activa, no una representación creada para turistas. Deja paso a los participantes, evita bloquear portales y respeta las imágenes expuestas en viviendas particulares.",
+    ],
+    sections: [
+      {
+        heading: "Qué acto elegir",
+        paragraphs: [
+          "El Santo Entierro ofrece el momento colectivo más solemne. El Desfile de Resurrección tiene un ambiente más festivo y puede resultar más sencillo para una primera visita en familia. Los actos del Jueves Santo permiten conocer la relación entre hermandades, parroquias y barrios.",
+        ],
+        bullets: [
+          "Elige un único tramo de la ruta en lugar de intentar seguir toda la procesión.",
+          "Consulta hora, recorrido y posibles cambios en la web oficial.",
+          "Llega antes de los cortes de tráfico y mantén libres los cruces.",
+        ],
+      },
+      {
+        heading: "Cómo llegar y moverse",
+        paragraphs: [
+          "Tranvía y autobús conectan el centro con los barrios marítimos, pero las procesiones provocan desvíos y cortes. Selecciona primero el punto de la ruta que quieres ver y después calcula el transporte hasta ese tramo.",
+        ],
+        bullets: [
+          "Comprueba el planificador de Metrovalencia o EMT el mismo día.",
+          "Evita depender del aparcamiento dentro de la zona procesional.",
+          "Las barreras pueden alargar trayectos cortos entre Cabanyal, Canyamelar y Grau.",
+        ],
+      },
+      {
+        heading: "Familias y accesibilidad",
+        paragraphs: [
+          "El Ayuntamiento publica información inclusiva y orientación sobre espacios reservados para personas con movilidad reducida en los principales actos. Confirma la ubicación y el acceso vigentes antes de desplazarte.",
+          "Con niños pequeños, un carrito compacto facilita los desplazamientos. Acuerda un punto de encuentro, lleva agua y elige una zona menos densa en lugar de situarte junto a los cruces principales.",
+        ],
+      },
+      {
+        heading: "Tradición durante todo el año",
+        paragraphs: [
+          "El Museo de la Semana Santa Marinera Salvador Caurín, en la calle Rosario 1, permite conocer el patrimonio de la celebración fuera de las fechas de Pascua. Consulta por separado sus horarios actuales.",
+        ],
+      },
+    ],
+    practicalTips: [
+      "Descarga el programa oficial del año; las fechas, rutas y horarios cambian.",
+      "Guarda un punto de encuentro fuera del recorrido si visitas en grupo.",
+      "Lleva calzado cómodo, agua y una capa ligera para los actos nocturnos.",
+      "Mantén un comportamiento respetuoso y pide permiso antes de fotografiar a corta distancia.",
+    ],
+    faqs: [
+      { question: "¿Cuándo es la Semana Santa Marinera en 2026?", answer: "El programa oficial de 2026 se celebra del 27 de marzo al 5 de abril. Consulta los horarios y recorridos concretos en la web del Ayuntamiento de Valencia." },
+      { question: "¿Hay que comprar entrada?", answer: "No se necesita entrada para ver las procesiones públicas en la calle. Otras actividades o espacios pueden tener condiciones propias." },
+      { question: "¿Qué procesión es mejor para familias?", answer: "El Desfile de Resurrección ofrece un ambiente más festivo. Elige un tramo menos congestionado, lleva agua y acuerda un punto de encuentro." },
+      { question: "¿Hay zonas accesibles?", answer: "El Ayuntamiento publica información inclusiva y zonas de visionado para personas con movilidad reducida en actos principales. Comprueba la ubicación vigente antes de salir." },
+    ],
+    relatedGuides: ["cabanyal", "malvarrosa-beach"],
+  },
+  {
+    slug: "gran-fira-valencia",
+    name: "Feria de Julio / Gran Fira",
+    title: "Feria de Julio Valencia 2026: guía de la Gran Fira",
+    description: "Organiza la Feria de Julio de Valencia 2026: Gran Nit, Batalla de Flores, actividades familiares, entradas, calor y transporte.",
+    tagline: "Un mes de cultura al aire libre, música, fuegos artificiales y tradiciones por toda Valencia",
+    heroImage: "/discover/gran-fira-valencia.jpg",
+    heroImageAlt: "Carrozas decoradas con flores durante la Batalla de Flores de Valencia",
+    lastUpdated: "2026-07-20",
+    region: "Toda Valencia",
+    quickFacts: [
+      { label: "Programa 2026", value: "Del 1 al 26 de julio" },
+      { label: "Escala", value: "Alrededor de 300 actividades" },
+      { label: "Gran Nit", value: "18 de julio de 2026" },
+      { label: "Batalla de Flores", value: "26 de julio, paseo de la Alameda" },
+    ],
+    overview: [
+      "La Feria de Julio de Valencia, conocida también como Gran Fira, reúne en 2026 alrededor de 300 propuestas de música, cultura, tradición, fuegos artificiales y ocio. No funciona como un recinto único: las actividades se distribuyen por el centro, los barrios, las pedanías y espacios como los Jardines de Viveros.",
+      "La Gran Nit del 18 de julio y la Batalla de Flores del 26 de julio son dos hitos del programa, pero responden a planes distintos. La primera concentra actividades nocturnas en varios puntos; la segunda es un acto concreto en el paseo de la Alameda.",
+      "El contenido exacto cambia cada año. Utiliza esta guía para elegir el tipo de plan y preparar calor, desplazamientos y multitudes; confirma después horarios, ubicaciones, inscripciones, entradas y posibles cambios en la web oficial.",
+    ],
+    sections: [
+      {
+        heading: "Cómo elegir actividades",
+        paragraphs: [
+          "Filtra el programa oficial por fecha y zona. Combinar dos actividades próximas suele funcionar mejor que cruzar Valencia varias veces, especialmente con calor o durante la Gran Nit.",
+        ],
+        bullets: [
+          "Distingue las actividades gratuitas de conciertos o propuestas con inscripción.",
+          "Agrupa los planes por barrio o corredor de transporte.",
+          "Comprueba de nuevo el estado del evento el mismo día.",
+        ],
+      },
+      {
+        heading: "Gran Nit y Batalla de Flores",
+        paragraphs: [
+          "La Gran Nit convierte una noche de julio en un programa simultáneo de cultura y entretenimiento. Elige pocos objetivos y deja margen para caminar, esperar y regresar al alojamiento.",
+          "La Batalla de Flores cierra tradicionalmente la feria con carrozas cubiertas de flores en el paseo de la Alameda. Confirma las condiciones actuales de acceso, asientos y entradas en el programa oficial.",
+        ],
+      },
+      {
+        heading: "Calor, familias y ruido",
+        paragraphs: [
+          "Julio puede presentar temperaturas altas incluso al final de la tarde. Programa una pausa larga en interior o a la sombra, lleva agua y evita encadenar actividades diurnas con una noche completa de eventos.",
+          "Con niños, selecciona propuestas familiares concretas y lleva protección auditiva para fuegos artificiales o actuaciones ruidosas. Un carrito compacto facilita los recorridos entre zonas concurridas.",
+        ],
+      },
+      {
+        heading: "Transporte y accesibilidad",
+        paragraphs: [
+          "No existe una única parada para la feria. Calcula cada trayecto según el recinto indicado y consulta posibles desvíos de EMT, horarios de Metrovalencia y cortes de tráfico.",
+          "La accesibilidad depende del lugar. Si necesitas una ruta sin escalones, espacio reservado o asistencia, comprueba la ficha del acto y contacta con la organización antes de asistir.",
+        ],
+      },
+    ],
+    practicalTips: [
+      "Guarda el programa oficial en el teléfono y revisa cambios el mismo día.",
+      "Planifica agua, protección solar y descansos en interior.",
+      "Acuerda un punto de encuentro para la Gran Nit y la Batalla de Flores.",
+      "Consulta el transporte de vuelta antes de empezar una actividad nocturna.",
+    ],
+    faqs: [
+      { question: "¿Cuándo es la Feria de Julio de Valencia en 2026?", answer: "El programa oficial de 2026 reúne actividades del 1 al 26 de julio. La Gran Nit se celebra el 18 de julio y la Batalla de Flores el 26 de julio." },
+      { question: "¿La Feria de Julio es gratuita?", answer: "Muchas actividades son gratuitas, pero algunos conciertos y propuestas requieren entrada o inscripción previa. Revisa cada ficha del programa oficial." },
+      { question: "¿Dónde se celebra la Gran Fira?", answer: "En distintos puntos de Valencia, no en un único recinto. El programa incluye espacios céntricos, barrios, pedanías, Viveros y el paseo de la Alameda." },
+      { question: "¿Es adecuada para niños?", answer: "Sí, existen actividades familiares. Elige horarios compatibles con el calor, prepara descansos y utiliza protección auditiva en fuegos artificiales o espectáculos ruidosos." },
+    ],
+    relatedGuides: ["turia-gardens", "malvarrosa-beach", "albufera"],
+  },
 ];
 
 export function getPublishedSpanishDestinations(): SpanishDiscoverGuide[] {

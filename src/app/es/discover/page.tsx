@@ -19,6 +19,7 @@ export default function SpanishDiscoverHub() {
   const guides = getPublishedSpanishDestinations();
   const beachGuides = getSpanishDestinationsByHub("beaches");
   const attractionGuides = getSpanishDestinationsByHub("attractions");
+  const eventGuides = getSpanishDestinationsByHub("events");
   return (
     <>
       <script
@@ -59,7 +60,7 @@ export default function SpanishDiscoverHub() {
           <p className="max-w-3xl text-neutral-600 mb-8">
             Publicamos cada sección en español cuando sus guías están traducidas, revisadas y conectadas con información útil para planificar la visita.
           </p>
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             <Link href="/es/discover/beaches" className="group relative block overflow-hidden rounded-2xl aspect-[16/9]">
               <Image src="/discover/malvarrosa-beach.webp" alt="Playas de Valencia" fill className="object-cover group-hover:scale-105 transition-transform duration-500" sizes="(max-width: 768px) 100vw, 50vw" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
@@ -76,6 +77,15 @@ export default function SpanishDiscoverHub() {
                 <h3 className="text-2xl font-bold">Atracciones de Valencia</h3>
                 <p className="mt-1 text-white/85">Organiza visitas, tiempos, accesibilidad y desplazamientos.</p>
                 <span className="mt-3 inline-block text-sm font-semibold">{attractionGuides.length} guías disponibles →</span>
+              </div>
+            </Link>
+            <Link href="/es/discover/events" className="group relative block overflow-hidden rounded-2xl aspect-[16/9]">
+              <Image src="/discover/gran-fira-valencia.jpg" alt="Fiestas y eventos de Valencia" fill className="object-cover group-hover:scale-105 transition-transform duration-500" sizes="(max-width: 768px) 100vw, 33vw" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+              <div className="absolute inset-x-0 bottom-0 p-6 text-white">
+                <h3 className="text-2xl font-bold">Fiestas y eventos</h3>
+                <p className="mt-1 text-white/85">Prepara fechas, programas, transporte y multitudes.</p>
+                <span className="mt-3 inline-block text-sm font-semibold">{eventGuides.length} guías disponibles →</span>
               </div>
             </Link>
           </div>

@@ -267,14 +267,14 @@ Data-driven `/discover/[slug]` pages. 5 destinations live. Hub pages for neighbo
   - Production verified 18 July 2026: responsive layout has no horizontal overflow; live crawl reports zero page errors, warnings, broken internal links, or broken images.
 
 **Open design items:**
-- [x] **Real photos** — All 14 Discover hero assets use sourced, licensed photography with visible attribution, a maintained rights register, and strict `npm run audit:discover-images` enforcement.
+- [x] **Real photos** — All 20 Discover hero assets use sourced, licensed photography with visible attribution, a maintained rights register, and strict `npm run audit:discover-images` enforcement.
 - [x] **Restaurant source tracking** — All 35 published recommendations carry a source note, source URL, and verification date; stale or misplaced venues were corrected and `npm run audit:discover-sources` enforces six-month review
-- [x] **Staying vs Visiting** — All 5 published neighbourhoods have complete staying guidance and all 18 published Discover guides have complete visiting guidance, enforced by `npm run audit:discover-intent`
+- [x] **Staying vs Visiting** — All 5 published neighbourhoods have complete staying guidance and all 20 published Discover guides have complete visiting guidance, enforced by `npm run audit:discover-intent`
 
-The 20 July portfolio audit found a strong 14-guide English foundation but only
-one event guide and narrow attraction coverage. Hub consolidation and the source
+The 20 July portfolio audit established a 20-guide English foundation, including
+the first three-guide event cluster. Hub consolidation and the source
 governance layer are now complete. Spanish Discover architecture is live for the
-Discover hub, Beaches hub, Malvarrosa and Patacona, with reciprocal hreflang and
+Discover hub, Beaches, Attractions, and Events hubs, with reciprocal hreflang and
 selective sitemap inclusion only for complete translations. The expansion sequence,
 keyword ownership, bilingual policy, publication gates, and candidate backlog are defined in
 [DISCOVER_EXPANSION_STRATEGY_20260720.md](./DISCOVER_EXPANSION_STRATEGY_20260720.md).
@@ -285,7 +285,7 @@ keyword ownership, bilingual policy, publication gates, and candidate backlog ar
 2. Discover hub consolidation is complete across Beaches, Neighbourhoods, Day
    Trips, Attractions, and Events.
 3. Spanish Discover architecture and the first beach cluster are complete.
-4. First bilingual expansion batch is 4/6 complete: El Saler, Pinedo, Oceanogràfic, and Central Market with La Lonja are live in EN/ES; two event guides remain.
+4. First bilingual expansion batch is 6/6 complete: El Saler, Pinedo, Oceanogràfic, Central Market with La Lonja, Semana Santa Marinera, and Feria de Julio are live in EN/ES with reciprocal event hubs.
 5. Expand only where GSC, seasonality, user demand, or commercial relevance supports it.
 
 ---

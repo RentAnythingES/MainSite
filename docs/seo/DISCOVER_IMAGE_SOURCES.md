@@ -29,9 +29,12 @@ public guide renders attribution directly beneath the hero copy.
 | Xàtiva | `/discover/xativa-hero.webp` | Manuel pino | [Castillo de Xàtiva](https://commons.wikimedia.org/wiki/File:Castillo_de_x%C3%A1tiva_-_panoramio.jpg) | [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/) | Cropped and resized to 1920×1080 WebP |
 | Las Fallas | `/discover/fallas.webp` | ChiralJon | [La Cremà](https://commons.wikimedia.org/wiki/File:La_Crema_Fallas.jpg) | [CC BY 2.0](https://creativecommons.org/licenses/by/2.0/) | Cropped and resized to 1920×1080 WebP |
 
+| Semana Santa Marinera | `/discover/semana-santa-marinera.jpg` | Jorge Sanz | [Semana Santa Marinera](https://commons.wikimedia.org/wiki/File:Semana_Santa_Marinera_(16997625666).jpg) | [CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0/) | Resized to 1280 px wide by Wikimedia Commons |
+| Feria de Julio / Gran Fira | `/discover/gran-fira-valencia.jpg` | Rafa Esteve | [Gran Fira Valencia 2016 - Batalla de Flors](https://commons.wikimedia.org/wiki/File:Gran_Fira_Valencia_2016_Batalla_de_Flors_03.jpg) | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) | Resized to 1280 px wide by Wikimedia Commons |
+
 ## Verification Status
 
-All 18 published Discover hero assets now have documented authorship, source,
+All 20 published Discover hero assets now have documented authorship, source,
 license, and modification details.
 
 Run `npm run audit:discover-images` after any Discover image change. The audit

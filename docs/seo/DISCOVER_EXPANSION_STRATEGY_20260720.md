@@ -15,12 +15,12 @@ a reason to exist beyond repeating an official tourism page.
 
 The existing system is technically strong:
 
-- 18 published English guides
+- 20 published English guides
 - 5 neighbourhood guides
 - 4 day-trip guides
 - 4 attraction guides
 - 4 beach guides
-- 1 event guide
+- 3 event guides
 - 5 data-driven sub-hubs: neighbourhoods, beaches, day trips, attractions, and events
 - Licensed hero imagery on every guide
 - Complete staying guidance for neighbourhoods and visiting guidance for all guides
@@ -31,16 +31,16 @@ The existing system is technically strong:
 
 The main weaknesses are portfolio depth and language coverage:
 
-- Events has only one guide: Fallas.
+- The first event cluster now covers Fallas, Semana Santa Marinera, and Feria de Julio; future expansion should follow seasonal demand and GSC evidence.
 - Attractions still needs more depth beyond the first four guides.
 - Existing hub introductions are too thin to own broad planning intent well.
-- Spanish coverage is selective and currently concentrated on beaches and attractions.
+- Spanish coverage is selective and now spans beaches, attractions, and the first event cluster.
 - Mutable guide facts outside restaurant recommendations do not yet have a
   consistent source and review-date model.
 
 ### Implementation checkpoint — 20 July 2026
 
-- Guide-level governance is live for all 18 published guides with refresh class,
+- Guide-level governance is live for all 20 published guides with refresh class,
   content review date, next review date, authoritative sources, supported claims,
   and source check dates.
 - `npm run audit:discover-sources` now fails on missing governance, invalid dates,
@@ -338,8 +338,8 @@ pass focused lint, source, intent, image-rights, build, and rendered-route check
 
 ### Phase 2 — first bilingual expansion batch
 
-- Semana Santa Marinera
-- Gran Fira de València
+- [x] Semana Santa Marinera — published in EN/ES with official 2026 programme, inclusive-access, and festival sources
+- [x] Feria de Julio / Gran Fira — published in EN/ES with the official 2026 programme and annual refresh control
 - [x] Oceanogràfic — published in EN/ES with official visitor, FAQ, and accessibility sources
 - [x] Central Market and La Lonja — published in EN/ES with official heritage and working-market sources
 - [x] El Saler Beach — published in EN/ES with municipal service and accessibility sources
@@ -347,7 +347,7 @@ pass focused lint, source, intent, image-rights, build, and rendered-route check
 
 Publish in EN and ES with licensed imagery and complete source records.
 
-The first four pages were validated on 20 July 2026 against Valencia City Council
+All six pages were validated on 20 July 2026 against Valencia City Council
 beach-service information, the municipal accessible-bathing programme, the Pinedo
 service charter and Visit Valencia's accessible-beach guide. Hero photographs are
 local Wikimedia Commons assets with verified CC BY or CC BY-SA licences recorded
@@ -355,7 +355,11 @@ in `DISCOVER_IMAGE_SOURCES.md`. The attraction pair adds an official-source-led
 Oceanogràfic planning guide and a combined historic-market route, plus a Spanish
 attractions hub with reciprocal hreflang.
 
-**Exit gate:** six bilingual guides published with no technical audit regressions.
+The event pair also adds a Spanish events hub, reciprocal hreflang, official
+current-year programme links, and annual review controls without hard-coding
+unstable programme details.
+
+**Exit gate complete:** six bilingual guides published with no technical audit regressions.
 
 ### Phase 3 — second expansion batch
 
