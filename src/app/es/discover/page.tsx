@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
-import { getPublishedSpanishDestinations } from "@/content/destinations-es";
+import { getPublishedSpanishDestinations, getSpanishDestinationsByHub } from "@/content/destinations-es";
 import { getHubCollectionJsonLd } from "@/lib/jsonld";
 
 const url = "https://rentanything.es/es/discover";
@@ -17,6 +17,8 @@ export const metadata: Metadata = {
 
 export default function SpanishDiscoverHub() {
   const guides = getPublishedSpanishDestinations();
+  const beachGuides = getSpanishDestinationsByHub("beaches");
+  const attractionGuides = getSpanishDestinationsByHub("attractions");
   return (
     <>
       <script
@@ -57,15 +59,26 @@ export default function SpanishDiscoverHub() {
           <p className="max-w-3xl text-neutral-600 mb-8">
             Publicamos cada sección en español cuando sus guías están traducidas, revisadas y conectadas con información útil para planificar la visita.
           </p>
-          <Link href="/es/discover/beaches" className="group relative block max-w-xl overflow-hidden rounded-2xl aspect-[16/9]">
-            <Image src="/discover/malvarrosa-beach.webp" alt="Playas de Valencia" fill className="object-cover group-hover:scale-105 transition-transform duration-500" sizes="576px" />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-            <div className="absolute inset-x-0 bottom-0 p-6 text-white">
-              <h3 className="text-2xl font-bold">Playas de Valencia</h3>
-              <p className="mt-1 text-white/85">Compara accesos, ambiente, servicios y opciones para familias.</p>
-              <span className="mt-3 inline-block text-sm font-semibold">{guides.length} guías disponibles →</span>
-            </div>
-          </Link>
+          <div className="grid md:grid-cols-2 gap-6">
+            <Link href="/es/discover/beaches" className="group relative block overflow-hidden rounded-2xl aspect-[16/9]">
+              <Image src="/discover/malvarrosa-beach.webp" alt="Playas de Valencia" fill className="object-cover group-hover:scale-105 transition-transform duration-500" sizes="(max-width: 768px) 100vw, 50vw" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+              <div className="absolute inset-x-0 bottom-0 p-6 text-white">
+                <h3 className="text-2xl font-bold">Playas de Valencia</h3>
+                <p className="mt-1 text-white/85">Compara accesos, ambiente, servicios y opciones para familias.</p>
+                <span className="mt-3 inline-block text-sm font-semibold">{beachGuides.length} guías disponibles →</span>
+              </div>
+            </Link>
+            <Link href="/es/discover/attractions" className="group relative block overflow-hidden rounded-2xl aspect-[16/9]">
+              <Image src="/discover/oceanografic-valencia.jpg" alt="Atracciones de Valencia" fill className="object-cover group-hover:scale-105 transition-transform duration-500" sizes="(max-width: 768px) 100vw, 50vw" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+              <div className="absolute inset-x-0 bottom-0 p-6 text-white">
+                <h3 className="text-2xl font-bold">Atracciones de Valencia</h3>
+                <p className="mt-1 text-white/85">Organiza visitas, tiempos, accesibilidad y desplazamientos.</p>
+                <span className="mt-3 inline-block text-sm font-semibold">{attractionGuides.length} guías disponibles →</span>
+              </div>
+            </Link>
+          </div>
         </div>
       </section>
 
@@ -79,7 +92,7 @@ export default function SpanishDiscoverHub() {
                   <Image src={guide.heroImage} alt={guide.heroImageAlt} fill className="object-cover group-hover:scale-105 transition-transform duration-300" sizes="(max-width: 768px) 100vw, 50vw" />
                 </div>
                 <div className="p-6">
-                  <span className="badge badge-brand text-xs">Playa</span>
+                  <span className="badge badge-brand text-xs">Guía local</span>
                   <h3 className="text-xl font-bold mt-3 mb-2 group-hover:text-brand">{guide.name}</h3>
                   <p className="text-sm text-neutral-600 leading-relaxed">{guide.tagline}</p>
                   <span className="mt-4 inline-block text-sm font-semibold text-brand">Leer la guía →</span>

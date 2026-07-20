@@ -269,7 +269,7 @@ Data-driven `/discover/[slug]` pages. 5 destinations live. Hub pages for neighbo
 **Open design items:**
 - [x] **Real photos** — All 14 Discover hero assets use sourced, licensed photography with visible attribution, a maintained rights register, and strict `npm run audit:discover-images` enforcement.
 - [x] **Restaurant source tracking** — All 35 published recommendations carry a source note, source URL, and verification date; stale or misplaced venues were corrected and `npm run audit:discover-sources` enforces six-month review
-- [x] **Staying vs Visiting** — All 5 published neighbourhoods have complete staying guidance and all 16 published Discover guides have complete visiting guidance, enforced by `npm run audit:discover-intent`
+- [x] **Staying vs Visiting** — All 5 published neighbourhoods have complete staying guidance and all 18 published Discover guides have complete visiting guidance, enforced by `npm run audit:discover-intent`
 
 The 20 July portfolio audit found a strong 14-guide English foundation but only
 one event guide and narrow attraction coverage. Hub consolidation and the source
@@ -285,7 +285,7 @@ keyword ownership, bilingual policy, publication gates, and candidate backlog ar
 2. Discover hub consolidation is complete across Beaches, Neighbourhoods, Day
    Trips, Attractions, and Events.
 3. Spanish Discover architecture and the first beach cluster are complete.
-4. First bilingual expansion batch is 2/6 complete: El Saler and Pinedo are live in EN/ES; four event and attraction guides remain.
+4. First bilingual expansion batch is 4/6 complete: El Saler, Pinedo, Oceanogràfic, and Central Market with La Lonja are live in EN/ES; two event guides remain.
 5. Expand only where GSC, seasonality, user demand, or commercial relevance supports it.
 
 ---

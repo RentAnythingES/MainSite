@@ -1,6 +1,6 @@
 # Discover Image Rights Register
 
-> Last updated: 2026-07-19
+> Last updated: 2026-07-20
 
 This register records the source and reuse terms for Discover hero photography.
 The matching structured data lives in `src/content/destinations.ts`, where the
@@ -24,12 +24,14 @@ public guide renders attribution directly beneath the hero copy.
 | Patacona Beach | `/discover/patacona-hero.webp` | JaGa9480 | [Playa de la Patacona](https://commons.wikimedia.org/wiki/File:Playa_de_la_Patacona.jpg) | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) | Cropped and resized to 1920×1080 WebP |
 | Pinedo Beach | `/discover/pinedo-beach.jpg` | Boris Dzhingarov | [Playa de Pinedo](https://commons.wikimedia.org/wiki/File:Playa_de_Pinedo,_Valencia,_Spain_(29813566664).jpg) | [CC BY 2.0](https://creativecommons.org/licenses/by/2.0/) | Resized to 1280 px wide by Wikimedia Commons |
 | El Saler Beach | `/discover/el-saler-beach.jpg` | Ron Oliver | [El Saler beach](https://commons.wikimedia.org/wiki/File:El_Saler_beach.jpg) | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) | Resized to 1280 px wide by Wikimedia Commons |
+| Oceanogràfic Valencia | `/discover/oceanografic-valencia.jpg` | Andrew Stobart | [Oceanogràfic Valencia](https://commons.wikimedia.org/wiki/File:Oceanogr%C3%A0fic_Valencia.jpg) | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) | Resized to 1280 px wide by Wikimedia Commons |
+| Central Market and La Lonja | `/discover/central-market-la-lonja.jpg` | Pamdelinaza | [Lonja de la Seda, Valencia](https://commons.wikimedia.org/wiki/File:Lonja_de_la_Seda,_Valencia,_Espa%C3%B1a.jpg) | [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/) | Resized to 1280 px wide by Wikimedia Commons |
 | Xàtiva | `/discover/xativa-hero.webp` | Manuel pino | [Castillo de Xàtiva](https://commons.wikimedia.org/wiki/File:Castillo_de_x%C3%A1tiva_-_panoramio.jpg) | [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/) | Cropped and resized to 1920×1080 WebP |
 | Las Fallas | `/discover/fallas.webp` | ChiralJon | [La Cremà](https://commons.wikimedia.org/wiki/File:La_Crema_Fallas.jpg) | [CC BY 2.0](https://creativecommons.org/licenses/by/2.0/) | Cropped and resized to 1920×1080 WebP |
 
 ## Verification Status
 
-All 14 published Discover hero assets now have documented authorship, source,
+All 18 published Discover hero assets now have documented authorship, source,
 license, and modification details.
 
 Run `npm run audit:discover-images` after any Discover image change. The audit

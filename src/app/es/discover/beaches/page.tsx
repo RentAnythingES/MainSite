@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
-import { getPublishedSpanishDestinations } from "@/content/destinations-es";
+import { getSpanishDestinationsByHub } from "@/content/destinations-es";
 import { getBreadcrumbJsonLd, getFaqJsonLd, getHubCollectionJsonLd } from "@/lib/jsonld";
 
 const url = "https://rentanything.es/es/discover/beaches";
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
 };
 
 export default function SpanishBeachesHub() {
-  const guides = getPublishedSpanishDestinations();
+  const guides = getSpanishDestinationsByHub("beaches");
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(getHubCollectionJsonLd({ name: "Guía de playas de Valencia", description, url, locale: "es", items: guides.map((guide) => ({ name: guide.name, url: `https://rentanything.es/es/discover/${guide.slug}` })) })) }} />

@@ -1,4 +1,4 @@
-import { getDestinationBySlug, getDestinationGovernance } from "@/content/destinations";
+import { getDestinationBySlug, getDestinationGovernance, type HubType } from "@/content/destinations";
 
 export interface SpanishDiscoverSection {
   heading: string;
@@ -321,10 +321,161 @@ const spanishDiscoverGuides: SpanishDiscoverGuide[] = [
     ],
     relatedGuides: ["el-saler-beach", "malvarrosa-beach", "patacona-beach"],
   },
+  {
+    slug: "oceanografic-valencia",
+    name: "Oceanogràfic Valencia",
+    title: "Oceanogràfic Valencia: guía práctica de visita",
+    description: "Planifica tu visita al Oceanogràfic de Valencia con consejos sobre horarios, recorrido, accesibilidad, familias, comida y transporte.",
+    tagline: "Acuarios, hábitats marinos y un recorrido que conviene organizar con tiempo",
+    heroImage: "/discover/oceanografic-valencia.jpg",
+    heroImageAlt: "Edificios blancos curvos y agua en el Oceanogràfic de Valencia",
+    lastUpdated: "2026-07-20",
+    region: "Ciudad de las Artes y las Ciencias, Valencia",
+    quickFacts: [
+      { label: "Mejor para", value: "Vida marina, familias y un día de atracción" },
+      { label: "Tiempo orientativo", value: "Como mínimo medio día" },
+      { label: "Comida exterior", value: "No está permitida dentro del recinto" },
+      { label: "Accesibilidad", value: "Rampas, ascensores y recorridos adaptados" },
+    ],
+    overview: [
+      "El Oceanogràfic forma parte de la Ciudad de las Artes y las Ciencias y se presenta como el mayor acuario de Europa. El recorrido conecta hábitats del Mediterráneo, océanos, islas tropicales, Ártico y Antártico mediante edificios interiores y trayectos exteriores.",
+      "No es una visita rápida a una sola sala. Conviene organizar el día alrededor de las distancias, las comidas, los descansos y el programa de actividades. Una visita selectiva puede ocupar medio día; una familia que recorra la mayoría de zonas puede utilizar gran parte de la jornada.",
+      "Los horarios, precios y actividades cambian según la fecha. Consulta siempre el calendario oficial para el día concreto y revisa el programa al llegar.",
+    ],
+    sections: [
+      {
+        heading: "Cómo organizar el recorrido",
+        paragraphs: [
+          "Consulta el mapa oficial y elige los hábitats prioritarios antes de empezar. El túnel submarino, las zonas polares y las actividades programadas suelen condicionar el orden, pero no es necesario correr para verlo todo.",
+        ],
+        bullets: [
+          "Fotografía o guarda el programa del día al entrar.",
+          "Añade tiempo real para caminar entre edificios.",
+          "Acuerda un punto de encuentro si el grupo se separa.",
+          "Lleva calzado cómodo para varias horas de recorrido.",
+        ],
+      },
+      {
+        heading: "Familias, bebés y comidas",
+        paragraphs: [
+          "El recinto admite carritos y dispone de salas de lactancia y cambio de bebés detrás del punto de información. El tamaño del complejo hace recomendable viajar con un carrito manejable y planificar descansos.",
+          "La comida del exterior no está permitida. Revisa las opciones disponibles dentro del recinto y consulta directamente cualquier necesidad alimentaria antes de la visita.",
+        ],
+      },
+      {
+        heading: "Accesibilidad",
+        paragraphs: [
+          "La información oficial describe rampas, ascensores, puertas automáticas, pavimento antideslizante y recorridos adaptados. También ofrece préstamo de sillas de ruedas manuales sujeto a disponibilidad y depósito reembolsable.",
+          "Si el préstamo de silla o una ruta concreta es esencial, confirma las condiciones actuales antes de desplazarte. El aparcamiento cuenta con plazas adaptadas, pero su disponibilidad no está garantizada.",
+        ],
+      },
+      {
+        heading: "Cómo llegar",
+        paragraphs: [
+          "Se puede llegar en autobús, bicicleta, taxi, caminando por el Jardín del Turia o en coche. Utiliza el planificador actual de EMT y selecciona Oceanogràfic como destino, no solo el conjunto general de la Ciudad de las Artes y las Ciencias.",
+        ],
+        bullets: [
+          "Autobús: comprueba la parada más próxima y las posibles modificaciones.",
+          "Bicicleta: el Jardín del Turia ofrece una aproximación llana.",
+          "A pie: el recorrido es agradable, pero añade distancia antes de una visita larga.",
+          "Coche: revisa las condiciones vigentes del aparcamiento oficial.",
+        ],
+      },
+    ],
+    practicalTips: [
+      "Llega cerca de la apertura para empezar con menos concentración de visitantes.",
+      "No dependas de horarios o precios publicados en guías antiguas.",
+      "Las actividades pueden modificarse por razones operativas, meteorológicas o de bienestar animal.",
+      "La salida y reentrada están limitadas; confirma las condiciones antes de abandonar el recinto.",
+    ],
+    faqs: [
+      { question: "¿Cuánto tiempo necesito para visitar el Oceanogràfic?", answer: "Reserva como mínimo medio día. Con niños, actividades programadas y un ritmo tranquilo, la visita puede ocupar gran parte de la jornada." },
+      { question: "¿Puedo llevar comida al Oceanogràfic?", answer: "La FAQ oficial indica que no se permite introducir comida del exterior. Consulta las opciones internas y cualquier requisito dietético antes de visitar." },
+      { question: "¿Es accesible en silla de ruedas?", answer: "El recinto dispone de rampas, ascensores y recorridos adaptados. También ofrece sillas manuales sujetas a disponibilidad; confirma las condiciones si necesitas depender del servicio." },
+      { question: "¿Conviene comprar entradas con antelación?", answer: "Sí para fechas de alta demanda, pero utiliza el calendario oficial del Oceanogràfic porque horarios, precios y combinaciones pueden cambiar." },
+    ],
+    relatedGuides: ["city-of-arts-and-sciences", "turia-gardens"],
+  },
+  {
+    slug: "central-market-la-lonja",
+    name: "Mercado Central y Lonja de la Seda",
+    title: "Mercado Central y Lonja de Valencia: guía",
+    description: "Organiza una visita al Mercado Central y la Lonja de la Seda de Valencia con ruta, contexto histórico, accesibilidad y consejos prácticos.",
+    tagline: "Una ruta de mañana entre el mercado modernista y la Lonja gótica declarada Patrimonio Mundial",
+    heroImage: "/discover/central-market-la-lonja.jpg",
+    heroImageAlt: "Fachada gótica de la Lonja de la Seda en Valencia",
+    lastUpdated: "2026-07-20",
+    region: "Centro histórico de Valencia",
+    quickFacts: [
+      { label: "Orden recomendado", value: "Mercado Central y después la Lonja" },
+      { label: "Tiempo orientativo", value: "Entre 2 y 3 horas" },
+      { label: "Arquitectura", value: "Mercado modernista y monumento gótico civil" },
+      { label: "Ubicación", value: "A ambos lados de la Plaça del Mercat" },
+    ],
+    overview: [
+      "El Mercado Central y la Lonja de la Seda se encuentran frente a frente en el centro histórico, por lo que forman una de las combinaciones culturales más sencillas de Valencia. El mercado es un espacio de alimentación en funcionamiento dentro de un edificio modernista; la Lonja es una obra maestra del gótico civil reconocida por la UNESCO.",
+      "Visita primero el mercado mientras mantiene su actividad comercial y cruza después la Plaça del Mercat para entrar en la Lonja. El trayecto es corto, pero los dos edificios merecen tiempo propio: uno por la cultura alimentaria local y el otro por sus columnas helicoidales y la historia comercial de Valencia.",
+      "Los horarios del mercado y del monumento son independientes y pueden cambiar. Confirma la información oficial antes de acudir, especialmente en domingos, festivos y fechas con eventos locales.",
+    ],
+    sections: [
+      {
+        heading: "El mejor orden para la visita",
+        paragraphs: [
+          "Empieza por el Mercado Central durante la mañana y continúa después en la Lonja. Si todavía tienes tiempo y energía, la ruta se puede ampliar hacia El Carmen, la Catedral o la Plaça de la Reina sin cruzar la ciudad.",
+        ],
+        bullets: [
+          "Consulta por separado los horarios oficiales de ambos edificios.",
+          "Llega temprano para moverte con más facilidad por los pasillos.",
+          "Guarda las compras perecederas de forma adecuada si continúas caminando.",
+          "No añadas otra gran atracción al otro extremo de Valencia durante la misma mañana.",
+        ],
+      },
+      {
+        heading: "Visitar un mercado en funcionamiento",
+        paragraphs: [
+          "El Mercado Central no es únicamente un escenario turístico. Los comerciantes trabajan y los residentes realizan sus compras. Mantén libres los pasillos y mostradores, pide permiso antes de fotografiar de cerca y aparta el grupo antes de detenerte.",
+          "Una bolsa reutilizable resulta útil, pero compra solo lo que puedas transportar y conservar de forma segura durante el resto del día.",
+        ],
+      },
+      {
+        heading: "La Lonja de la Seda",
+        paragraphs: [
+          "La Lonja es uno de los grandes edificios del gótico civil europeo y fue declarada Patrimonio Mundial por la UNESCO. Su Salón Columnario, con columnas helicoidales y bóvedas elevadas, refleja la importancia comercial de Valencia durante el auge de la seda.",
+          "El edificio ocupa aproximadamente 1.990 metros cuadrados y se encuentra frente al mercado y junto a la iglesia de los Santos Juanes.",
+        ],
+      },
+      {
+        heading: "Accesibilidad y movilidad",
+        paragraphs: [
+          "La distancia entre ambos edificios es corta y el entorno es principalmente peatonal, pero hay pavimentos históricos, aglomeraciones y accesos monumentales. Confirma la entrada sin escalones vigente para cada edificio si resulta imprescindible.",
+          "Para sillas de ruedas o carritos, una visita temprana facilita el movimiento dentro del mercado. El acceso final desde autobús o metro se realiza a pie por superficies urbanas variadas.",
+        ],
+      },
+    ],
+    practicalTips: [
+      "Trata el mercado como un lugar de trabajo y no bloquees el paso al detenerte.",
+      "Utiliza transporte público o camina; acceder en coche al centro histórico suele ser poco práctico.",
+      "Comprueba los horarios actuales en fuentes oficiales en lugar de confiar en listados antiguos.",
+      "Lleva una bolsa reutilizable y planifica cómo conservar cualquier alimento perecedero.",
+    ],
+    faqs: [
+      { question: "¿Qué debo visitar primero, el Mercado Central o la Lonja?", answer: "Empieza por el Mercado Central durante su actividad de mañana y cruza después a la Lonja. Confirma los horarios oficiales de ambos antes de salir." },
+      { question: "¿Cuánto tiempo necesito para ver los dos?", answer: "Reserva entre dos y tres horas para recorrer el mercado sin prisa, visitar la Lonja y disfrutar de la Plaça del Mercat." },
+      { question: "¿El Mercado Central es adecuado para niños?", answer: "Sí, pero es un espacio concurrido y operativo. Mantén a los niños cerca, utiliza un carrito compacto y evita bloquear los pasillos." },
+      { question: "¿La Lonja de la Seda es Patrimonio Mundial?", answer: "Sí. La UNESCO reconoce la Lonja de la Seda como Patrimonio Mundial y como una obra destacada de la arquitectura gótica civil." },
+    ],
+    relatedGuides: ["el-carmen", "el-ensanche"],
+  },
 ];
 
 export function getPublishedSpanishDestinations(): SpanishDiscoverGuide[] {
   return spanishDiscoverGuides.filter((guide) => Boolean(getDestinationBySlug(guide.slug)));
+}
+
+export function getSpanishDestinationsByHub(hub: HubType): SpanishDiscoverGuide[] {
+  return getPublishedSpanishDestinations().filter((guide) =>
+    getDestinationBySlug(guide.slug)?.hubs.includes(hub)
+  );
 }
 
 export function getSpanishDestinationBySlug(slug: string): SpanishDiscoverGuide | undefined {

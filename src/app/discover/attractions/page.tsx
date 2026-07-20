@@ -7,12 +7,15 @@ import DiscoverHubEditorial from "@/components/DiscoverHubEditorial";
 const hubUrl = "https://rentanything.es/discover/attractions";
 const hubName = "Valencia Sights & Attractions";
 const hubDescription =
-  "Practical guides to Valencia sights and attractions, including the City of Arts and Sciences, Malvarrosa Beach and the Turia Gardens.";
+  "Practical guides to Valencia sights and attractions, including Oceanogràfic, the City of Arts and Sciences, Central Market, La Lonja and Turia Gardens.";
 
 export const metadata: Metadata = {
   title: "Valencia Sights & Attractions — What to See & Do",
   description: hubDescription,
-  alternates: { canonical: hubUrl },
+  alternates: {
+    canonical: hubUrl,
+    languages: { en: hubUrl, es: "https://rentanything.es/es/discover/attractions", "x-default": hubUrl },
+  },
 };
 
 const editorial = {
@@ -24,8 +27,9 @@ const editorial = {
   choiceTitle: "Choose by the experience you want",
   choices: [
     { title: "City of Arts and Sciences", description: "For architecture, science, marine life, and a full family day with several ticketed venues.", href: "/discover/city-of-arts-and-sciences" },
+    { title: "Oceanogràfic", description: "For a focused aquarium day with family logistics, long walking routes, and date-specific activities.", href: "/discover/oceanografic-valencia" },
     { title: "Turia Gardens", description: "For walking, cycling, playgrounds, green space, and a flexible route across the city.", href: "/discover/turia-gardens" },
-    { title: "Historic Valencia", description: "For markets, monuments, squares, and shorter stops connected by walking. A dedicated guide is in the planned expansion batch." },
+    { title: "Central Market and La Lonja", description: "For a compact morning route through Valencia's food culture and UNESCO-listed trading history.", href: "/discover/central-market-la-lonja" },
     { title: "Bioparc and Cabecera Park", description: "For a family-focused western-city day. A sourced standalone guide is planned before this becomes its own search landing page." },
   ],
   planningTitle: "Make the visit easier",

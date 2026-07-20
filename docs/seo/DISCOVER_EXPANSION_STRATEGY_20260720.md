@@ -15,13 +15,13 @@ a reason to exist beyond repeating an official tourism page.
 
 The existing system is technically strong:
 
-- 16 published English guides
+- 18 published English guides
 - 5 neighbourhood guides
 - 4 day-trip guides
-- 2 attraction guides
-- 2 beach guides
+- 4 attraction guides
+- 4 beach guides
 - 1 event guide
-- 4 data-driven sub-hubs: neighbourhoods, day trips, attractions, and events
+- 5 data-driven sub-hubs: neighbourhoods, beaches, day trips, attractions, and events
 - Licensed hero imagery on every guide
 - Complete staying guidance for neighbourhoods and visiting guidance for all guides
 - Source tracking for all published restaurant recommendations
@@ -32,16 +32,15 @@ The existing system is technically strong:
 The main weaknesses are portfolio depth and language coverage:
 
 - Events has only one guide: Fallas.
-- Attractions covers only a narrow part of the city's main visitor demand.
-- Beaches do not have their own hub despite their commercial and early search value.
+- Attractions still needs more depth beyond the first four guides.
 - Existing hub introductions are too thin to own broad planning intent well.
-- Discover has no Spanish route layer.
+- Spanish coverage is selective and currently concentrated on beaches and attractions.
 - Mutable guide facts outside restaurant recommendations do not yet have a
   consistent source and review-date model.
 
 ### Implementation checkpoint — 20 July 2026
 
-- Guide-level governance is live for all 16 published guides with refresh class,
+- Guide-level governance is live for all 18 published guides with refresh class,
   content review date, next review date, authoritative sources, supported claims,
   and source check dates.
 - `npm run audit:discover-sources` now fails on missing governance, invalid dates,
@@ -341,18 +340,20 @@ pass focused lint, source, intent, image-rights, build, and rendered-route check
 
 - Semana Santa Marinera
 - Gran Fira de València
-- Oceanogràfic
-- Central Market and La Lonja
+- [x] Oceanogràfic — published in EN/ES with official visitor, FAQ, and accessibility sources
+- [x] Central Market and La Lonja — published in EN/ES with official heritage and working-market sources
 - [x] El Saler Beach — published in EN/ES with municipal service and accessibility sources
 - [x] Pinedo Beach — published in EN/ES with municipal charter and accessible-beach sources
 
 Publish in EN and ES with licensed imagery and complete source records.
 
-The first two pages were validated on 20 July 2026 against Valencia City Council
+The first four pages were validated on 20 July 2026 against Valencia City Council
 beach-service information, the municipal accessible-bathing programme, the Pinedo
 service charter and Visit Valencia's accessible-beach guide. Hero photographs are
 local Wikimedia Commons assets with verified CC BY or CC BY-SA licences recorded
-in `DISCOVER_IMAGE_SOURCES.md`.
+in `DISCOVER_IMAGE_SOURCES.md`. The attraction pair adds an official-source-led
+Oceanogràfic planning guide and a combined historic-market route, plus a Spanish
+attractions hub with reciprocal hreflang.
 
 **Exit gate:** six bilingual guides published with no technical audit regressions.
 
