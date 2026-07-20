@@ -8,7 +8,14 @@ import { getHubCollectionJsonLd } from "@/lib/jsonld";
 export const metadata: Metadata = {
   title: "Discover Valencia — Neighbourhood, Beach & Event Guides",
   description: "Your complete travel guide to Valencia. Explore neighbourhoods, day trips, beaches, attractions, and local events — with honest advice from locals.",
-  alternates: { canonical: "https://rentanything.es/discover" },
+  alternates: {
+    canonical: "https://rentanything.es/discover",
+    languages: {
+      en: "https://rentanything.es/discover",
+      es: "https://rentanything.es/es/discover",
+      "x-default": "https://rentanything.es/discover",
+    },
+  },
 };
 
 const typeLabels: Record<string, string> = {

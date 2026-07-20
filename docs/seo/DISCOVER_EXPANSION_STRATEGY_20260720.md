@@ -329,6 +329,14 @@ widget when there is no strong fit.
 editorial guidance and FAQs, expose their complete child-guide collections, and
 pass focused lint, source, intent, image-rights, build, and rendered-route checks.
 
+### Spanish foundation checkpoint — 20 July 2026
+
+- [x] Launch `/es/discover` with selective publication of complete translations
+- [x] Launch `/es/discover/beaches` with comparison copy, FAQs, and commercial pathways
+- [x] Publish complete Spanish Malvarrosa and Patacona guides
+- [x] Add reciprocal EN/ES/x-default hreflang only to translated guide pairs
+- [x] Add complete Spanish Discover routes to the sitemap and technical schema audit
+
 ### Phase 2 — first bilingual expansion batch
 
 - Semana Santa Marinera

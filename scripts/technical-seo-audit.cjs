@@ -95,10 +95,10 @@ function extractInternalImages(html) {
 function getRequiredJsonLdTypes(url) {
   const pathname = new URL(url).pathname.replace(/\/$/, "") || "/";
   if (pathname === "/" || pathname === "/es") return ["LocalBusiness", "WebSite"];
-  if (["/valencia", "/es/valencia", "/blog", "/es/blog", "/discover", "/valencia/kits"].includes(pathname)) {
+  if (["/valencia", "/es/valencia", "/blog", "/es/blog", "/discover", "/es/discover", "/valencia/kits"].includes(pathname)) {
     return ["CollectionPage"];
   }
-  if (["/discover/neighbourhoods", "/discover/beaches", "/discover/day-trips", "/discover/attractions", "/discover/events"].includes(pathname)) {
+  if (["/discover/neighbourhoods", "/discover/beaches", "/discover/day-trips", "/discover/attractions", "/discover/events", "/es/discover/beaches"].includes(pathname)) {
     return ["CollectionPage", "BreadcrumbList"];
   }
   if (/^\/(?:es\/)?product\/[^/]+$/.test(pathname)) return ["Product", "BreadcrumbList"];
@@ -107,6 +107,9 @@ function getRequiredJsonLdTypes(url) {
   if (/^\/valencia\/kits\/[^/]+$/.test(pathname)) return ["Product", "BreadcrumbList"];
   if (/^\/discover\/[^/]+$/.test(pathname) && !["/discover/neighbourhoods", "/discover/beaches", "/discover/day-trips", "/discover/attractions", "/discover/events"].includes(pathname)) {
     return ["BreadcrumbList", "TouristDestination|Article"];
+  }
+  if (/^\/es\/discover\/[^/]+$/.test(pathname) && pathname !== "/es/discover/beaches") {
+    return ["BreadcrumbList", "TouristDestination"];
   }
   return [];
 }

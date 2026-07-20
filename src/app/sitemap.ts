@@ -3,6 +3,7 @@ import { rentalBundles } from "@/data/bundles";
 import { getPublishedPosts } from "@/content/blog";
 import { getPublishedSpanishPosts } from "@/content/blog-es";
 import { getPublishedDestinations } from "@/content/destinations";
+import { getPublishedSpanishDestinations } from "@/content/destinations-es";
 import { getIndexableProductsForSeo } from "@/lib/product-service";
 import { seoCategorySlugs } from "@/data/seo-clusters";
 
@@ -86,6 +87,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${BASE_URL}/es/valencia/servicios-anfitriones`, changeFrequency: "monthly", priority: 0.7 },
     { url: `${BASE_URL}/es/colaboraciones`, changeFrequency: "monthly", priority: 0.5 },
     { url: `${BASE_URL}/es/blog`, changeFrequency: "weekly", priority: 0.7 },
+    { url: `${BASE_URL}/es/discover`, changeFrequency: "weekly", priority: 0.8 },
+    { url: `${BASE_URL}/es/discover/beaches`, changeFrequency: "weekly", priority: 0.8 },
     { url: `${BASE_URL}/es/how-it-works`, changeFrequency: "monthly", priority: 0.7 },
     { url: `${BASE_URL}/es/about`, changeFrequency: "monthly", priority: 0.5 },
     { url: `${BASE_URL}/es/faq`, changeFrequency: "monthly", priority: 0.6 },
@@ -101,6 +104,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     lastModified: post.date,
     changeFrequency: "monthly" as const,
     priority: 0.6,
+  }));
+
+  const spanishDiscoverPages: MetadataRoute.Sitemap = getPublishedSpanishDestinations().map((destination) => ({
+    url: `${BASE_URL}/es/discover/${destination.slug}`,
+    lastModified: destination.lastUpdated,
+    changeFrequency: "monthly" as const,
+    priority: 0.7,
   }));
 
   // Spanish product pages
@@ -120,5 +130,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.7,
   }));
 
-  return [...staticPages, ...categoryPages, ...productPages, ...bundlePages, ...blogPages, ...discoverHubs, ...discoverPages, ...spanishStaticPages, ...spanishBlogPages, ...spanishProductPages, ...spanishCategoryPages];
+  return [...staticPages, ...categoryPages, ...productPages, ...bundlePages, ...blogPages, ...discoverHubs, ...discoverPages, ...spanishStaticPages, ...spanishBlogPages, ...spanishDiscoverPages, ...spanishProductPages, ...spanishCategoryPages];
 }

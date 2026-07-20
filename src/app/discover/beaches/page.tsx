@@ -50,7 +50,14 @@ const comparisons = [
 export const metadata: Metadata = {
   title: "Valencia Beaches Guide — Compare the Best Beaches",
   description: hubDescription,
-  alternates: { canonical: hubUrl },
+  alternates: {
+    canonical: hubUrl,
+    languages: {
+      en: hubUrl,
+      es: "https://rentanything.es/es/discover/beaches",
+      "x-default": hubUrl,
+    },
+  },
   openGraph: {
     title: "Valencia Beaches Guide",
     description: hubDescription,

@@ -1,5 +1,5 @@
 # RentAnything.es — Frontend Guide
-> **Last updated**: 2026-07-07
+> **Last updated**: 2026-07-20
 
 ## Routing
 App Router with static generation (`generateStaticParams`). Prefix-based i18n (`/es/` for Spanish).
@@ -30,6 +30,9 @@ App Router with static generation (`generateStaticParams`). Prefix-based i18n (`
 | `/es/rental/[category]` | SSG | Same categories, Spanish dictionary |
 | `/es/blog` | Static | Complete Spanish planning guides only |
 | `/es/blog/[slug]` | SSG | `content/blog-es.ts` + shared article renderer |
+| `/es/discover` | Static | Complete Spanish Discover coverage only |
+| `/es/discover/beaches` | Static | Spanish beach comparison and planning hub |
+| `/es/discover/[slug]` | SSG | `content/destinations-es.ts` + shared Spanish guide renderer |
 | `/es/about` | Static | Localized company and service information |
 | `/es/contact` | Static + Client | Localized contact form and confirmation flow |
 | `/es/privacy`, `/es/terms`, `/es/refunds`, `/es/cookies` | Static | Localized legal and consent information |
@@ -69,6 +72,7 @@ App Router with static generation (`generateStaticParams`). Prefix-based i18n (`
 | `src/data/bundles.ts` | Static kit/bundle data + helpers (`getBundleBySlug`, `getBundleProducts`) |
 | `src/lib/product-service.ts` | Supabase-first product fetching with static fallback |
 | `src/content/destinations.ts` | Discover guide data + `ProductWidget` interface |
+| `src/content/destinations-es.ts` | Complete, reviewed Spanish Discover adaptations |
 | `src/content/blog.ts` | Blog post data |
 | `src/content/blog-es.ts` | Complete Spanish blog adaptations |
 | `src/i18n/dictionaries/es.ts` | Spanish translations for all public pages |

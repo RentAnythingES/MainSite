@@ -7,6 +7,7 @@ import {
   getDestinationGovernance,
   getAllDestinationSlugsForBuild,
 } from "@/content/destinations";
+import { hasSpanishDestination } from "@/content/destinations-es";
 import { getProductsByCategoryFromDB } from "@/lib/product-service";
 import { getBlogPostBySlug } from "@/content/blog";
 import { BUSINESS_SCHEMA_ID, getBreadcrumbJsonLd, WEBSITE_SCHEMA_ID } from "@/lib/jsonld";
@@ -23,14 +24,22 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const dest = getDestinationBySlug(slug);
   if (!dest) return { title: "Not Found" };
+  const canonical = `https://rentanything.es/discover/${dest.slug}`;
+  const languages = hasSpanishDestination(dest.slug)
+    ? {
+        en: canonical,
+        es: `https://rentanything.es/es/discover/${dest.slug}`,
+        "x-default": canonical,
+      }
+    : undefined;
   return {
     title: dest.title,
     description: dest.description,
-    alternates: { canonical: `https://rentanything.es/discover/${dest.slug}` },
+    alternates: { canonical, languages },
     openGraph: {
       title: dest.title,
       description: dest.description,
-      url: `https://rentanything.es/discover/${dest.slug}`,
+      url: canonical,
       images: [
         {
           url: dest.heroImage || "/hero/valencia-1.webp",
