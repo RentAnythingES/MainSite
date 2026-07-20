@@ -34,10 +34,12 @@ public guide renders attribution directly beneath the hero copy.
 
 | BIOPARC Valencia | `/discover/bioparc-valencia.jpg` | Gabriel Villena | [Bioparc Valencia II](https://commons.wikimedia.org/wiki/File:Bioparc_Valencia_II_(2787453634).jpg) | [CC BY 2.0](https://creativecommons.org/licenses/by/2.0/) | Resized to 1280 px wide by Wikimedia Commons |
 | Valencia Historic Centre | `/discover/valencia-historic-centre.jpg` | Jl FilpoC | [Plaza de la Virgen, Valencia](https://commons.wikimedia.org/wiki/File:Plaza_de_la_Virgen,_Valencia.jpg) | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) | Resized to 1280 px wide by Wikimedia Commons |
+| Buñol | `/discover/bunol-day-trip.jpg` | Enrique Íñiguez Rodríguez | [Buñol. Castillo. Vistas](https://commons.wikimedia.org/wiki/File:Bu%C3%B1ol._Castillo._Vistas.jpg) | [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/) | Resized to 1280 px wide by Wikimedia Commons |
+| Cullera | `/discover/cullera-day-trip.jpg` | velomartinez | [Cullera](https://commons.wikimedia.org/wiki/File:Cullera_-_panoramio.jpg) | [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/) | Resized to 1280 px wide by Wikimedia Commons |
 
 ## Verification Status
 
-All 22 published Discover hero assets now have documented authorship, source,
+All 24 published Discover hero assets now have documented authorship, source,
 license, and modification details.
 
 Run `npm run audit:discover-images` after any Discover image change. The audit

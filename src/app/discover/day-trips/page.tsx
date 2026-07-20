@@ -7,12 +7,15 @@ import DiscoverHubEditorial from "@/components/DiscoverHubEditorial";
 const hubUrl = "https://rentanything.es/discover/day-trips";
 const hubName = "Day Trips from Valencia";
 const hubDescription =
-  "The best day trips from Valencia: Albufera, Sagunto, Requena and Xàtiva. Practical guides with transport information and local planning advice.";
+  "Compare day trips from Valencia including Albufera, castles, inland towns and Cullera's coast, with practical transport and planning advice.";
 
 export const metadata: Metadata = {
   title: "Day Trips from Valencia — Beaches, Mountains & Castles",
   description: hubDescription,
-  alternates: { canonical: hubUrl },
+  alternates: {
+    canonical: hubUrl,
+    languages: { en: hubUrl, es: "https://rentanything.es/es/discover/day-trips", "x-default": hubUrl },
+  },
 };
 
 const editorial = {
@@ -27,6 +30,8 @@ const editorial = {
     { title: "Sagunto", description: "For a compact historic trip combining a hilltop castle, Roman theatre, and old town.", href: "/discover/sagunto" },
     { title: "Xàtiva", description: "For the most dramatic castle day, with a longer climb and a rewarding historic centre.", href: "/discover/xativa" },
     { title: "Requena", description: "For wine-country atmosphere, underground caves, and a slower full-day inland visit.", href: "/discover/requena" },
+    { title: "Buñol", description: "For a castle embedded in the old town, historic fountains, and an optional nature stop beyond La Tomatina.", href: "/discover/bunol-day-trip" },
+    { title: "Cullera", description: "For a morning castle visit followed by one carefully chosen Mediterranean beach.", href: "/discover/cullera-day-trip" },
   ],
   planningTitle: "Check these before leaving Valencia",
   planningPoints: [
@@ -96,7 +101,7 @@ export default function DayTripsHub() {
           <span className="text-5xl block mb-4">🚗</span>
           <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-3">Day Trips from Valencia</h1>
           <p className="text-lg text-neutral-600 max-w-2xl">
-            Beaches, mountains, hot springs, and medieval castles — all within an hour of Valencia. No overnight stay needed.
+            Castles, wetlands, inland towns, and the coast — practical outings you can plan without an overnight stay.
           </p>
         </div>
       </section>

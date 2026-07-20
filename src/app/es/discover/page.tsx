@@ -20,6 +20,7 @@ export default function SpanishDiscoverHub() {
   const beachGuides = getSpanishDestinationsByHub("beaches");
   const attractionGuides = getSpanishDestinationsByHub("attractions");
   const eventGuides = getSpanishDestinationsByHub("events");
+  const dayTripGuides = getSpanishDestinationsByHub("day-trips");
   return (
     <>
       <script
@@ -86,6 +87,15 @@ export default function SpanishDiscoverHub() {
                 <h3 className="text-2xl font-bold">Fiestas y eventos</h3>
                 <p className="mt-1 text-white/85">Prepara fechas, programas, transporte y multitudes.</p>
                 <span className="mt-3 inline-block text-sm font-semibold">{eventGuides.length} guías disponibles →</span>
+              </div>
+            </Link>
+            <Link href="/es/discover/day-trips" className="group relative block overflow-hidden rounded-2xl aspect-[16/9]">
+              <Image src="/discover/cullera-day-trip.jpg" alt="Excursiones desde Valencia" fill className="object-cover group-hover:scale-105 transition-transform duration-500" sizes="(max-width: 768px) 100vw, 33vw" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+              <div className="absolute inset-x-0 bottom-0 p-6 text-white">
+                <h3 className="text-2xl font-bold">Excursiones desde Valencia</h3>
+                <p className="mt-1 text-white/85">Compara castillos, costa, transporte y tiempos reales.</p>
+                <span className="mt-3 inline-block text-sm font-semibold">{dayTripGuides.length} guías disponibles →</span>
               </div>
             </Link>
           </div>

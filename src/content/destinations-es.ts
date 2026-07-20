@@ -716,6 +716,114 @@ const spanishDiscoverGuides: SpanishDiscoverGuide[] = [
     ],
     relatedGuides: ["central-market-la-lonja", "el-carmen", "el-ensanche"],
   },
+  {
+    slug: "bunol-day-trip",
+    name: "Buñol",
+    title: "Excursión a Buñol desde Valencia: castillo y casco antiguo",
+    description: "Organiza una excursión a Buñol desde Valencia con castillo, casco antiguo, naturaleza, transporte actualizado y avisos específicos para la Tomatina.",
+    tagline: "Un pueblo con castillo y paisaje fluvial más allá de su famosa fiesta del tomate",
+    heroImage: "/discover/bunol-day-trip.jpg",
+    heroImageAlt: "Centro histórico y cúpula de tejas azules vistos desde el Castillo de Buñol",
+    lastUpdated: "2026-07-20",
+    region: "Hoya de Buñol, Valencia",
+    quickFacts: [
+      { label: "Mejor para", value: "Castillo, casco antiguo y paisaje interior" },
+      { label: "Visita base", value: "Medio día; más con una ruta natural" },
+      { label: "Entrada al castillo", value: "Turismo municipal indica acceso gratuito" },
+      { label: "Excepción importante", value: "La Tomatina exige una planificación distinta" },
+    ],
+    overview: [
+      "Buñol es conocido internacionalmente por la Tomatina, pero durante el resto del año ofrece una excursión completamente diferente. Su castillo medieval forma parte del casco antiguo, mientras que las calles, fuentes y el paisaje del río permiten organizar una jornada interior compacta.",
+      "Empieza por el castillo y el centro histórico. Añade después un único espacio natural si el tiempo, la luz y el transporte de regreso lo permiten. La oferta municipal incluye el Parque de San Luis, Molino Galán, fuentes históricas y rutas por el entorno.",
+      "La planificación de un día normal no sirve durante la Tomatina u otros eventos importantes. Los controles de acceso, las aglomeraciones y el transporte pueden cambiar por completo.",
+    ],
+    sections: [
+      {
+        heading: "Castillo y casco antiguo",
+        paragraphs: ["El castillo de los siglos XI y XII se integra en el núcleo histórico. Combínalo con la iglesia de San Pedro, las calles tradicionales y las fuentes sin intentar recorrer todos los puntos del municipio."],
+        bullets: ["Consulta cualquier aviso temporal en la web municipal.", "Lleva calzado para cuestas, escalones y superficies irregulares.", "Empieza la visita antes de las horas de más calor."],
+      },
+      {
+        heading: "Naturaleza y segunda parte del día",
+        paragraphs: ["El Parque de San Luis y las rutas naturales ofrecen una segunda parte más verde. Selecciona el recorrido antes de salir y adapta su longitud a la estación y al último transporte de vuelta."],
+      },
+      {
+        heading: "Cómo llegar desde Valencia",
+        paragraphs: ["Consulta Renfe Cercanías para comprobar el servicio C-3, posibles transportes alternativos y la última opción de regreso. Los servicios regionales por carretera pueden servir como alternativa según la fecha."],
+      },
+      {
+        heading: "Accesibilidad",
+        paragraphs: ["Las pendientes, escalones y superficies históricas pueden dificultar el recorrido completo. Confirma con turismo municipal la entrada práctica al castillo y con el operador la accesibilidad del transporte elegido."],
+      },
+    ],
+    practicalTips: [
+      "Comprueba los avisos municipales y el operador de transporte poco antes de viajar.",
+      "Guarda el último servicio de regreso y una alternativa.",
+      "Separa por completo la planificación de la Tomatina de una visita ordinaria.",
+      "Con calor, prioriza castillo y casco antiguo frente a una ruta larga y expuesta.",
+    ],
+    faqs: [
+      { question: "¿Merece la pena visitar Buñol fuera de la Tomatina?", answer: "Sí. El castillo, el casco antiguo, las fuentes y el entorno natural forman una excursión interior propia, mucho más tranquila que la jornada del festival." },
+      { question: "¿Puedo ir a Buñol en tren desde Valencia?", answer: "Buñol forma parte de la red de Cercanías Valencia, pero los servicios y transportes alternativos pueden cambiar. Consulta la información actual de la C-3 y el último regreso directamente con Renfe." },
+      { question: "¿El Castillo de Buñol es gratuito?", answer: "La web municipal de turismo indica actualmente acceso gratuito. Comprueba posibles cierres o cambios antes de viajar." },
+      { question: "¿Buñol es accesible con silla de ruedas o carrito?", answer: "El casco histórico y el castillo presentan pendientes, escalones y superficies irregulares. Confirma una ruta adaptada concreta y prepara una alternativa más corta." },
+    ],
+    relatedGuides: ["cullera-day-trip", "valencia-historic-centre"],
+  },
+  {
+    slug: "cullera-day-trip",
+    name: "Cullera",
+    title: "Excursión a Cullera desde Valencia: castillo y playas",
+    description: "Planifica una excursión a Cullera desde Valencia con acceso al castillo, elección de playa, traslado desde la estación y consejos de accesibilidad.",
+    tagline: "Castillo, casco antiguo y amplias playas mediterráneas en una excursión costera",
+    heroImage: "/discover/cullera-day-trip.jpg",
+    heroImageAlt: "Playa de San Antonio con palmeras y la montaña de Cullera al fondo",
+    lastUpdated: "2026-07-20",
+    region: "Ribera Baixa, Valencia",
+    quickFacts: [
+      { label: "Mejor para", value: "Castillo por la mañana y playa por la tarde" },
+      { label: "Visita base", value: "Día completo" },
+      { label: "Litoral", value: "Más de 15 km repartidos en 11 playas" },
+      { label: "Traslado desde la estación", value: "Planifica autobús local, taxi o caminata larga" },
+    ],
+    overview: [
+      "Cullera combina un núcleo histórico en la ladera con un extenso litoral mediterráneo. El castillo y el santuario dominan el casco antiguo, los arrozales, el río Júcar y la bahía, mientras que sus once playas ofrecen ambientes urbanos, tranquilos, deportivos y naturales.",
+      "Para una primera excursión, elige dos puntos principales: el castillo y una sola zona de playa. San Antonio es la opción urbana más sencilla por su paseo y servicios; otras playas permiten buscar más tranquilidad o un entorno diferente.",
+      "La estación de tren está en el interior y no junto al mar. La información oficial indica que el autobús local conecta estación, centro, playas y faro, por lo que debes comprobar su horario antes de viajar.",
+    ],
+    sections: [
+      {
+        heading: "Castillo de Cullera",
+        paragraphs: ["La fortaleza de origen islámico alberga el Museo de Historia y Arqueología y comparte la ladera con el santuario. Horarios y tarifas cambian según la temporada; verifica siempre la fecha concreta."],
+        bullets: ["Visita el castillo antes del calor fuerte.", "El Camino del Calvario tiene una subida exigente.", "El ascensor panorámico tiene horarios propios y no funciona con lluvia o viento."],
+      },
+      {
+        heading: "Elegir una playa",
+        paragraphs: ["San Antonio, Racó y Los Olivos son opciones urbanas con servicios. Escollera, Marenyet-L'Illa, Brosquil y Estany ofrecen ambientes más tranquilos, mientras que otras zonas se orientan a deportes acuáticos o paisaje dunar."],
+      },
+      {
+        heading: "Cómo llegar y moverse",
+        paragraphs: ["Renfe Cercanías conecta Valencia con Cullera en dirección Gandia. Añade al plan el autobús local o taxi entre la estación, el castillo y la costa, y guarda el último tren de regreso."],
+      },
+      {
+        heading: "Accesibilidad",
+        paragraphs: ["El autobús local se describe como accesible. San Antonio, Escollera, Racó y Los Olivos disponen de puntos accesibles estacionales. El castillo ofrece aparcamiento adaptado y ascensor panorámico, sujeto a horario y meteorología."],
+      },
+    ],
+    practicalTips: [
+      "No des por hecho que la estación está junto a la playa; organiza el traslado local.",
+      "Elige la playa antes de salir de Valencia.",
+      "Consulta la bandera de baño y el servicio de socorrismo al llegar.",
+      "Confirma el ascensor del castillo si es imprescindible para tu visita.",
+    ],
+    faqs: [
+      { question: "¿Puedo visitar Cullera desde Valencia sin coche?", answer: "Sí. Cercanías conecta Valencia con Cullera y el autobús local enlaza la estación con el centro, las playas y el faro. Comprueba ambos horarios y el último regreso." },
+      { question: "¿Qué playa de Cullera conviene para una primera visita?", answer: "San Antonio es la opción urbana más sencilla por su paseo y servicios. Si buscas tranquilidad, naturaleza o deportes acuáticos, compara las demás playas antes de elegir." },
+      { question: "¿El Castillo de Cullera es accesible?", answer: "Dispone de aparcamiento adaptado y ascensor panorámico, pero el ascensor tiene horario estacional y no funciona con lluvia o viento. Confirma las condiciones actuales." },
+      { question: "¿Puedo combinar castillo y playa en un día?", answer: "Sí. Visita el castillo por la mañana y dedica la tarde a una sola playa. Incluye en el horario los traslados locales y el tren de regreso." },
+    ],
+    relatedGuides: ["el-saler-beach", "bunol-day-trip", "valencia-historic-centre"],
+  },
 ];
 
 export function getPublishedSpanishDestinations(): SpanishDiscoverGuide[] {

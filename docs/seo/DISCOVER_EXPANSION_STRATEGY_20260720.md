@@ -367,10 +367,16 @@ unstable programme details.
 - Christmas in Valencia
 - [x] BIOPARC Valencia — published in EN/ES with official calendar, FAQ, access, family, food and accessibility sources
 - [x] Valencia historic centre — published in EN/ES with a municipal route and regional heritage sources
-- Buñol
-- Cullera
+- [x] Buñol — published in EN/ES as an evergreen castle, old-town and nature day-trip guide with an explicit La Tomatina planning boundary
+- [x] Cullera — published in EN/ES as a castle-and-coast day-trip guide with station-transfer, beach-choice and accessibility guidance
 
 Ordering should be adjusted using GSC impressions and seasonality.
+
+The day-trip pair also launches `/es/discover/day-trips`, adds reciprocal hub
+hreflang, and expands the published Discover portfolio from 22 to 24 English
+guides. Both heroes use verified CC BY-SA assets, and all transport, castle,
+beach and accessibility claims trace to municipal, national-tourism or official
+destination sources. Phase 3 is now 4/6 complete.
 
 ### Phase 4 — measured breadth
 
