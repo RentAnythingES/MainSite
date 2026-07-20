@@ -119,7 +119,7 @@ catalogue changes invalidate stale guide widgets.
 ## Hub structured data
 
 The homepage publishes linked `LocalBusiness` and `WebSite` entities. Valencia,
-Blog, Discover, the four Discover sub-hubs, and Kits publish `CollectionPage`
+Blog, Discover, the five Discover sub-hubs, and Kits publish `CollectionPage`
 plus `ItemList` structured data from the same products, posts, destinations or
 bundles visible on the page. Discover sub-hubs also publish `BreadcrumbList`.
 Use `getHubCollectionJsonLd()` for future indexable hubs rather than constructing

@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { getDestinationsByHub } from "@/content/destinations";
 import { getBreadcrumbJsonLd, getHubCollectionJsonLd } from "@/lib/jsonld";
+import DiscoverHubEditorial from "@/components/DiscoverHubEditorial";
 
 const hubUrl = "https://rentanything.es/discover/day-trips";
 const hubName = "Day Trips from Valencia";
@@ -12,6 +13,38 @@ export const metadata: Metadata = {
   title: "Day Trips from Valencia — Beaches, Mountains & Castles",
   description: hubDescription,
   alternates: { canonical: hubUrl },
+};
+
+const editorial = {
+  introTitle: "Choose a day trip that fits your time and energy",
+  intro: [
+    "A good Valencia day trip is not only about distance. Train frequency, the walk from the station, midday heat, attraction opening times, and the return journey can determine whether a destination feels relaxed or rushed.",
+    "Albufera suits nature and food, Sagunto and Xàtiva suit castle and history days, and Requena offers a slower inland experience. Start with the experience you want, then check the current transport timetable before committing.",
+  ],
+  choiceTitle: "Compare the current day-trip guides",
+  choices: [
+    { title: "Albufera", description: "For wetlands, rice fields, boat rides, sunsets, and the landscape behind Valencia's paella tradition.", href: "/discover/albufera" },
+    { title: "Sagunto", description: "For a compact historic trip combining a hilltop castle, Roman theatre, and old town.", href: "/discover/sagunto" },
+    { title: "Xàtiva", description: "For the most dramatic castle day, with a longer climb and a rewarding historic centre.", href: "/discover/xativa" },
+    { title: "Requena", description: "For wine-country atmosphere, underground caves, and a slower full-day inland visit.", href: "/discover/requena" },
+  ],
+  planningTitle: "Check these before leaving Valencia",
+  planningPoints: [
+    "Confirm the outbound and final practical return service on the day of travel.",
+    "Check closures, ticket rules, and whether advance reservations are required.",
+    "Plan exposed climbs and walking routes around summer heat.",
+    "Carry water and only bring equipment that remains practical on public transport.",
+  ],
+  pathways: [
+    { title: "Travelling with children", description: "Our Valencia family guide covers pacing, transport, heat, and equipment decisions for days inside and outside the city.", href: "/blog/valencia-with-kids-complete-guide", label: "Read the family guide" },
+    { title: "Need a simpler city day instead?", description: "Compare Valencia attractions when a full return journey would add too much time or effort.", href: "/discover/attractions", label: "Browse Valencia attractions" },
+  ],
+  faqs: [
+    { question: "What is the easiest day trip from Valencia without a car?", answer: "Sagunto and Xàtiva have direct rail options, while Albufera can be reached by bus. Ease still depends on the current timetable, the walk at the destination, and your group's mobility and heat tolerance." },
+    { question: "Which Valencia day trip is best with children?", answer: "Albufera works well for families interested in nature and a boat ride, while castles can appeal to older children who are comfortable with steep and uneven walking. Match the outing to attention span, weather, and travel time." },
+    { question: "Can I visit Albufera and a beach on the same day?", answer: "It is possible with careful transport planning, particularly around the southern beaches, but trying to combine too many stops can make the day rushed. Prioritise either a nature-and-lunch itinerary or a longer beach visit." },
+    { question: "Do day-trip transport times stay the same all year?", answer: "No. Rail, bus, seasonal tourism services, and attraction hours can change. Treat guide times as planning context and verify the official operator schedule shortly before travel." },
+  ],
 };
 
 export default function DayTripsHub() {
@@ -87,6 +120,7 @@ export default function DayTripsHub() {
           )}
         </div>
       </section>
+      <DiscoverHubEditorial {...editorial} />
     </>
   );
 }

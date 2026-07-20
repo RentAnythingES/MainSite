@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { getDestinationsByHub } from "@/content/destinations";
 import { getBreadcrumbJsonLd, getHubCollectionJsonLd } from "@/lib/jsonld";
+import DiscoverHubEditorial from "@/components/DiscoverHubEditorial";
 
 const hubUrl = "https://rentanything.es/discover/events";
 const hubName = "Valencia Events";
@@ -15,6 +16,38 @@ export const metadata: Metadata = {
 };
 
 const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+const editorial = {
+  introTitle: "Plan around Valencia's festivals, not just their dates",
+  intro: [
+    "A major Valencia event can change transport, street access, noise, opening hours, restaurant availability, and the amount of time needed to move through the city. The event itself may be free while accommodation and practical planning require decisions months earlier.",
+    "Our event pages separate evergreen traditions from the current annual programme. Confirm exact dates, routes, ticket rules, and public-transport changes through official sources shortly before attending.",
+  ],
+  choiceTitle: "Build the trip around the right event type",
+  choices: [
+    { title: "Fallas", description: "Valencia's largest festival, with monuments, fireworks, processions, major crowds, and city-wide disruption.", href: "/discover/fallas" },
+    { title: "Maritime traditions", description: "Semana Santa Marinera connects processions and neighbourhood traditions around Cabanyal and the seafront. A bilingual guide is next in the expansion plan." },
+    { title: "Summer festivals", description: "Gran Fira and seasonal programmes add outdoor events across July. Current-year schedules require annual verification." },
+    { title: "Historic celebrations", description: "Corpus Christi and 9 d'Octubre need focused route, crowd, and access guidance rather than generic calendar listings." },
+  ],
+  planningTitle: "Check again before the event",
+  planningPoints: [
+    "Verify the current-year programme and route through an official organiser or tourism source.",
+    "Allow extra time for road closures, crowded stations, and changed bus routes.",
+    "Plan hearing protection, meeting points, water, and rest breaks for children or sensitive travellers.",
+    "Confirm whether accessible viewing areas or assistance require advance registration.",
+  ],
+  pathways: [
+    { title: "Staying during a busy festival", description: "Compare Valencia neighbourhoods for noise, walking access, transport, and the practical trade-offs of being close to the programme.", href: "/discover/neighbourhoods", label: "Compare neighbourhoods" },
+    { title: "Travelling with family", description: "Use the family guide to plan pacing, equipment, and realistic days around Valencia's busiest periods.", href: "/blog/valencia-with-kids-complete-guide", label: "Read the family guide" },
+  ],
+  faqs: [
+    { question: "What is the biggest festival in Valencia?", answer: "Fallas is Valencia's largest and most internationally recognised festival. Its main celebrations take place in March, with monuments, fireworks, processions, and extensive changes to normal city movement." },
+    { question: "Do Valencia festival dates stay the same every year?", answer: "Some celebrations have fixed anchor dates, while programmes, routes, and individual activities change annually. Always verify the current official programme before making travel decisions." },
+    { question: "Is Valencia suitable for families during major events?", answer: "Yes with preparation, but crowds, noise, fireworks, late schedules, and road closures can be demanding. Choose suitable activities, establish a meeting plan, and allow children regular breaks away from the busiest areas." },
+    { question: "How far ahead should I book accommodation for Fallas?", answer: "Fallas creates exceptional demand, so earlier planning gives more choice. We avoid fake urgency or fixed booking claims: compare accommodation and cancellation terms as soon as your travel dates are reasonably certain." },
+  ],
+};
 
 export default function EventsHub() {
   const destinations = getDestinationsByHub("events");
@@ -132,6 +165,7 @@ export default function EventsHub() {
           )}
         </div>
       </section>
+      <DiscoverHubEditorial {...editorial} />
     </>
   );
 }

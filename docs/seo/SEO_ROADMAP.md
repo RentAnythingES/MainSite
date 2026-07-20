@@ -271,6 +271,22 @@ Data-driven `/discover/[slug]` pages. 5 destinations live. Hub pages for neighbo
 - [x] **Restaurant source tracking** — All 35 published recommendations carry a source note, source URL, and verification date; stale or misplaced venues were corrected and `npm run audit:discover-sources` enforces six-month review
 - [x] **Staying vs Visiting** — All 5 published neighbourhoods have complete staying guidance and all 14 published Discover guides have complete visiting guidance, enforced by `npm run audit:discover-intent`
 
+The 20 July portfolio audit found a strong 14-guide English foundation but thin
+hub copy, only one event guide, narrow attraction coverage, no dedicated Beaches
+hub, no Spanish Discover routes, and no guide-wide source/freshness model for
+mutable operational facts. The expansion sequence, keyword ownership, bilingual
+policy, publication gates, and candidate backlog are defined in
+[DISCOVER_EXPANSION_STRATEGY_20260720.md](./DISCOVER_EXPANSION_STRATEGY_20260720.md).
+
+**Next implementation order:**
+
+1. Source/freshness governance is complete; record the 28-day GSC baseline.
+2. Discover hub consolidation is complete across Beaches, Neighbourhoods, Day
+   Trips, Attractions, and Events.
+3. Add Spanish Discover architecture and translate the strongest existing pages.
+4. Publish the first six bilingual event, attraction, and beach guides.
+5. Expand only where GSC, seasonality, user demand, or commercial relevance supports it.
+
 ---
 
 ### 2.5 Host Services B2B cluster

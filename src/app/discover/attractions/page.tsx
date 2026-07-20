@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { getDestinationsByHub } from "@/content/destinations";
 import { getBreadcrumbJsonLd, getHubCollectionJsonLd } from "@/lib/jsonld";
+import DiscoverHubEditorial from "@/components/DiscoverHubEditorial";
 
 const hubUrl = "https://rentanything.es/discover/attractions";
 const hubName = "Valencia Sights & Attractions";
@@ -12,6 +13,38 @@ export const metadata: Metadata = {
   title: "Valencia Sights & Attractions — What to See & Do",
   description: hubDescription,
   alternates: { canonical: hubUrl },
+};
+
+const editorial = {
+  introTitle: "Plan Valencia attractions around a realistic day",
+  intro: [
+    "Valencia's major sights range from compact historic monuments to large complexes and a nine-kilometre park. Opening hours matter, but so do walking distances, queues, shade, surfaces, and how much of the day one attraction can comfortably occupy.",
+    "Choose one main area, then add nearby stops. The City of Arts and Sciences pairs naturally with the eastern Turia Gardens, while the historic centre is better treated as a separate walking day than a rushed add-on.",
+  ],
+  choiceTitle: "Choose by the experience you want",
+  choices: [
+    { title: "City of Arts and Sciences", description: "For architecture, science, marine life, and a full family day with several ticketed venues.", href: "/discover/city-of-arts-and-sciences" },
+    { title: "Turia Gardens", description: "For walking, cycling, playgrounds, green space, and a flexible route across the city.", href: "/discover/turia-gardens" },
+    { title: "Historic Valencia", description: "For markets, monuments, squares, and shorter stops connected by walking. A dedicated guide is in the planned expansion batch." },
+    { title: "Bioparc and Cabecera Park", description: "For a family-focused western-city day. A sourced standalone guide is planned before this becomes its own search landing page." },
+  ],
+  planningTitle: "Make the visit easier",
+  planningPoints: [
+    "Check current opening hours and timed-entry requirements on the official venue site.",
+    "Estimate total walking inside large complexes, not only the journey there.",
+    "Plan shade, water, and indoor breaks during hot months.",
+    "Confirm step-free routes, accessible toilets, and equipment rules directly with the venue when needed.",
+  ],
+  pathways: [
+    { title: "Visiting with children", description: "Plan pacing, meals, transport, naps, and equipment around Valencia's family attractions.", href: "/blog/valencia-with-kids-complete-guide", label: "Read Valencia with kids" },
+    { title: "Need mobility support for the stay", description: "Browse wheelchairs, rollators, scooters, and related equipment, then check availability for your dates.", href: "/rental/mobility", label: "View mobility equipment" },
+  ],
+  faqs: [
+    { question: "What are the best Valencia attractions for a first visit?", answer: "The historic centre, City of Arts and Sciences, Turia Gardens, and the seafront cover very different sides of Valencia. Choose by interest and group needs rather than trying to fit every major sight into one day." },
+    { question: "How long should I allow for the City of Arts and Sciences?", answer: "The outdoor complex can be explored relatively quickly, but ticketed venues such as the Oceanogràfic or Science Museum can turn it into most of a day. Decide which venues matter before buying tickets and planning other stops." },
+    { question: "Are Valencia attractions suitable for wheelchairs and strollers?", answer: "Many major attractions provide step-free routes, but surfaces, entrances, lifts, toilets, and temporary closures vary. Use each guide as an orientation and confirm critical access requirements with the official venue." },
+    { question: "Should I book Valencia attraction tickets in advance?", answer: "Advance booking can be useful for major ticketed venues and busy dates. Requirements and offers change, so purchase only through the official attraction or a clearly authorised seller after confirming your schedule." },
+  ],
 };
 
 export default function AttractionsHub() {
@@ -84,6 +117,7 @@ export default function AttractionsHub() {
           )}
         </div>
       </section>
+      <DiscoverHubEditorial {...editorial} />
     </>
   );
 }

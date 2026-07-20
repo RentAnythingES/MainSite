@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import {
   getDestinationBySlug,
+  getDestinationGovernance,
   getAllDestinationSlugsForBuild,
 } from "@/content/destinations";
 import { getProductsByCategoryFromDB } from "@/lib/product-service";
@@ -52,6 +53,7 @@ const typeLabels: Record<string, string> = {
 
 const hubLabels = {
   neighbourhoods: "Neighbourhoods",
+  beaches: "Beaches",
   "day-trips": "Day Trips",
   attractions: "Attractions",
   events: "Events",
@@ -78,6 +80,7 @@ export default async function DiscoverPage({ params }: Props) {
   const { slug } = await params;
   const dest = getDestinationBySlug(slug);
   if (!dest) notFound();
+  const governance = getDestinationGovernance(dest.slug);
   const primaryHub = dest.hubs[0] || "attractions";
   const primaryHubLabel = hubLabels[primaryHub];
 
@@ -159,7 +162,7 @@ export default async function DiscoverPage({ params }: Props) {
         headline: dest.name,
         description: dest.description,
         datePublished: dest.date,
-        dateModified: dest.lastUpdated,
+        dateModified: governance?.contentReviewedAt || dest.lastUpdated,
         inLanguage: "en",
         mainEntityOfPage: { "@type": "WebPage", "@id": destinationUrl },
         isPartOf: { "@id": WEBSITE_SCHEMA_ID },
@@ -669,6 +672,29 @@ export default async function DiscoverPage({ params }: Props) {
                 </Link>
               ))}
             </div>
+          </div>
+        </section>
+      )}
+
+      {governance && (
+        <section className="border-t border-border bg-neutral-50 py-8">
+          <div className="container-site max-w-3xl text-sm text-neutral-500">
+            <p className="mb-3">
+              Guide information reviewed on {new Intl.DateTimeFormat("en-GB", { dateStyle: "long" }).format(new Date(`${governance.contentReviewedAt}T00:00:00Z`))}.
+            </p>
+            <details>
+              <summary className="cursor-pointer font-semibold text-neutral-700 hover:text-brand">Information sources</summary>
+              <ul className="mt-3 space-y-2">
+                {governance.sources.map((source) => (
+                  <li key={source.url}>
+                    <a href={source.url} target="_blank" rel="noreferrer" className="text-brand hover:underline">
+                      {source.label}
+                    </a>{" "}
+                    <span>— {source.publisher}</span>
+                  </li>
+                ))}
+              </ul>
+            </details>
           </div>
         </section>
       )}

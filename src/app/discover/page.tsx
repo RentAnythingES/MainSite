@@ -30,6 +30,13 @@ const hubs = [
     hubKey: "neighbourhoods" as const,
   },
   {
+    title: "Beaches",
+    description: "Compare city beaches, access, facilities, and atmosphere",
+    image: "/discover/malvarrosa-beach.webp",
+    href: "/discover/beaches",
+    hubKey: "beaches" as const,
+  },
+  {
     title: "Day Trips",
     description: "Beaches, mountains, and castles within an hour",
     image: "/discover/hubs/day-trips.webp",
@@ -127,7 +134,7 @@ export default function DiscoverHub() {
       <section className="section bg-white">
         <div className="container-site">
           <h2 className="text-3xl font-bold mb-8">Explore by Theme</h2>
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+          <div className="grid grid-cols-2 lg:grid-cols-5 gap-4 md:gap-6">
             {hubs.map((hub) => {
               const count = getDestinationsByHub(hub.hubKey).length;
               return (

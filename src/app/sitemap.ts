@@ -65,6 +65,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const discoverHubs: MetadataRoute.Sitemap = [
     { url: `${BASE_URL}/discover`, changeFrequency: "weekly" as const, priority: 0.8 },
     { url: `${BASE_URL}/discover/neighbourhoods`, changeFrequency: "weekly" as const, priority: 0.7 },
+    { url: `${BASE_URL}/discover/beaches`, changeFrequency: "weekly" as const, priority: 0.8 },
     { url: `${BASE_URL}/discover/day-trips`, changeFrequency: "weekly" as const, priority: 0.7 },
     { url: `${BASE_URL}/discover/attractions`, changeFrequency: "weekly" as const, priority: 0.7 },
     { url: `${BASE_URL}/discover/events`, changeFrequency: "weekly" as const, priority: 0.7 },

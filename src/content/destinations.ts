@@ -21,7 +21,28 @@ export type AudienceTag =
   | "budget"
   | "luxury";
 
-export type HubType = "neighbourhoods" | "day-trips" | "attractions" | "events";
+export type HubType = "neighbourhoods" | "beaches" | "day-trips" | "attractions" | "events";
+
+export type GuideRefreshClass =
+  | "evergreen"
+  | "six-month"
+  | "annual-event"
+  | "seasonal";
+
+export interface GuideSource {
+  label: string;
+  url: string;
+  publisher: string;
+  supports: string[];
+  checkedAt: string;
+}
+
+export interface DestinationGovernance {
+  refreshClass: GuideRefreshClass;
+  contentReviewedAt: string;
+  nextReviewAt: string;
+  sources: GuideSource[];
+}
 
 // ===== SECTION INTERFACES =====
 
@@ -205,6 +226,186 @@ export interface Destination {
   faqs: DestinationFAQ[];
 }
 
+export const destinationGovernance: Record<string, DestinationGovernance> = {
+  ruzafa: {
+    refreshClass: "six-month",
+    contentReviewedAt: "2026-07-20",
+    nextReviewAt: "2027-01-20",
+    sources: [{
+      label: "Ruzafa neighbourhood guide",
+      url: "https://www.visitvalencia.com/en/what-to-see-valencia/ruzafa-and-ensanche/ruzafa-neighborhood",
+      publisher: "Visit Valencia",
+      supports: ["neighbourhood character", "location", "visitor highlights"],
+      checkedAt: "2026-07-20",
+    }],
+  },
+  "malvarrosa-beach": {
+    refreshClass: "seasonal",
+    contentReviewedAt: "2026-07-20",
+    nextReviewAt: "2027-04-01",
+    sources: [{
+      label: "Valencia beaches overview",
+      url: "https://www.visitvalencia.com/en/what-to-see-valencia",
+      publisher: "Visit Valencia",
+      supports: ["beach location", "public access", "visitor context"],
+      checkedAt: "2026-07-20",
+    }],
+  },
+  fallas: {
+    refreshClass: "annual-event",
+    contentReviewedAt: "2026-07-20",
+    nextReviewAt: "2027-01-15",
+    sources: [{
+      label: "Official Fallas guide",
+      url: "https://www.visitvalencia.com/en/events-valencia/festivities/the-fallas",
+      publisher: "Visit Valencia",
+      supports: ["festival format", "recurrence", "major traditions"],
+      checkedAt: "2026-07-20",
+    }],
+  },
+  albufera: {
+    refreshClass: "six-month",
+    contentReviewedAt: "2026-07-20",
+    nextReviewAt: "2027-01-20",
+    sources: [{
+      label: "Valencia areas and Albufera overview",
+      url: "https://www.visitvalencia.com/en/what-to-see-valencia/neighbourhoods-and-areas-valencia",
+      publisher: "Visit Valencia",
+      supports: ["distance", "transport", "visitor activities"],
+      checkedAt: "2026-07-20",
+    }],
+  },
+  "city-of-arts-and-sciences": {
+    refreshClass: "six-month",
+    contentReviewedAt: "2026-07-20",
+    nextReviewAt: "2027-01-20",
+    sources: [{
+      label: "City of Arts and Sciences visitor guide",
+      url: "https://www.visitvalencia.com/en/what-to-see-valencia/city-of-arts-and-sciences/what-to-see",
+      publisher: "Visit Valencia",
+      supports: ["complex layout", "main venues", "visit planning"],
+      checkedAt: "2026-07-20",
+    }],
+  },
+  "el-carmen": {
+    refreshClass: "six-month",
+    contentReviewedAt: "2026-07-20",
+    nextReviewAt: "2027-01-20",
+    sources: [{
+      label: "El Carmen neighbourhood guide",
+      url: "https://www.visitvalencia.com/en/what-to-see-valencia/historical-centre/del-carmen-neighborhood",
+      publisher: "Visit Valencia",
+      supports: ["history", "location", "visitor highlights"],
+      checkedAt: "2026-07-20",
+    }],
+  },
+  cabanyal: {
+    refreshClass: "six-month",
+    contentReviewedAt: "2026-07-20",
+    nextReviewAt: "2027-01-20",
+    sources: [{
+      label: "El Cabanyal visitor guide",
+      url: "https://blog.visitvalencia.com/en/explore-el-cabanyal-valencias-trendy-neighbourhood",
+      publisher: "Visit Valencia",
+      supports: ["neighbourhood character", "architecture", "visitor activities"],
+      checkedAt: "2026-07-20",
+    }],
+  },
+  benimaclet: {
+    refreshClass: "six-month",
+    contentReviewedAt: "2026-07-20",
+    nextReviewAt: "2027-01-20",
+    sources: [{
+      label: "Valencia neighbourhoods overview",
+      url: "https://www.visitvalencia.com/en/what-to-see-valencia/neighbourhoods-and-areas-valencia",
+      publisher: "Visit Valencia",
+      supports: ["city district context", "visitor orientation"],
+      checkedAt: "2026-07-20",
+    }],
+  },
+  "turia-gardens": {
+    refreshClass: "six-month",
+    contentReviewedAt: "2026-07-20",
+    nextReviewAt: "2027-01-20",
+    sources: [
+      {
+        label: "Turia Gardens visitor guide",
+        url: "https://www.visitvalencia.com/en/what-to-do-valencia/nature-in-valencia/parks-and-gardens-valencia/turia-gardens",
+        publisher: "Visit Valencia",
+        supports: ["route", "history", "facilities"],
+        checkedAt: "2026-07-20",
+      },
+      {
+        label: "Turia Gardens accessibility guide",
+        url: "https://www.visitvalencia.com/en/valencia-accesible/turia-garden",
+        publisher: "Visit Valencia",
+        supports: ["access", "surfaces", "accessible facilities"],
+        checkedAt: "2026-07-20",
+      },
+    ],
+  },
+  "el-ensanche": {
+    refreshClass: "six-month",
+    contentReviewedAt: "2026-07-20",
+    nextReviewAt: "2027-01-20",
+    sources: [{
+      label: "Valencia neighbourhoods overview",
+      url: "https://www.visitvalencia.com/en/what-to-see-valencia/neighbourhoods-and-areas-valencia",
+      publisher: "Visit Valencia",
+      supports: ["Ensanche character", "shopping", "visitor orientation"],
+      checkedAt: "2026-07-20",
+    }],
+  },
+  sagunto: {
+    refreshClass: "six-month",
+    contentReviewedAt: "2026-07-20",
+    nextReviewAt: "2027-01-20",
+    sources: [{
+      label: "Sagunto official tourism portal",
+      url: "https://turismo.sagunto.es/en/",
+      publisher: "Sagunto Tourism",
+      supports: ["historic sites", "visitor orientation", "destination context"],
+      checkedAt: "2026-07-20",
+    }],
+  },
+  requena: {
+    refreshClass: "six-month",
+    contentReviewedAt: "2026-07-20",
+    nextReviewAt: "2027-01-20",
+    sources: [{
+      label: "Requena municipal tourism portal",
+      url: "https://www.requena.es/",
+      publisher: "Ayuntamiento de Requena",
+      supports: ["destination context", "municipal visitor information"],
+      checkedAt: "2026-07-20",
+    }],
+  },
+  "patacona-beach": {
+    refreshClass: "seasonal",
+    contentReviewedAt: "2026-07-20",
+    nextReviewAt: "2027-04-01",
+    sources: [{
+      label: "Valencia beaches overview",
+      url: "https://www.visitvalencia.com/en/what-to-see-valencia",
+      publisher: "Visit Valencia",
+      supports: ["beach location", "transport context", "visitor orientation"],
+      checkedAt: "2026-07-20",
+    }],
+  },
+  xativa: {
+    refreshClass: "six-month",
+    contentReviewedAt: "2026-07-20",
+    nextReviewAt: "2027-01-20",
+    sources: [{
+      label: "Xàtiva official tourism portal",
+      url: "https://xativaturismo.com/en/",
+      publisher: "Xàtiva Tourist Board",
+      supports: ["castle", "heritage", "visitor information"],
+      checkedAt: "2026-07-20",
+    }],
+  },
+};
+
 // ===== HELPERS =====
 
 export function isPublished(dest: Destination): boolean {
@@ -219,6 +420,10 @@ export function getPublishedDestinations(): Destination[] {
 
 export function getDestinationBySlug(slug: string): Destination | undefined {
   return destinations.find((d) => d.slug === slug);
+}
+
+export function getDestinationGovernance(slug: string): DestinationGovernance | undefined {
+  return destinationGovernance[slug];
 }
 
 export function getDestinationsByHub(hub: HubType): Destination[] {
@@ -464,7 +669,7 @@ export const destinations: Destination[] = [
     audiences: ["families", "couples", "mobility-needs"],
     region: "Valencia City",
     distanceFromValencia: "20 min from city centre",
-    hubs: ["attractions"],
+    hubs: ["beaches"],
     overview: {
       paragraphs: [
         "Malvarrosa is Valencia's most popular urban beach — and for good reason. A wide stretch of golden sand running from the port area north towards Patacona, backed by a lively promenade packed with restaurants, bars, and the historic Las Arenas spa hotel.",
@@ -2055,7 +2260,7 @@ export const destinations: Destination[] = [
     lastUpdated: "2026-06-20",
     audiences: ["families", "couples", "digital-nomads", "budget"],
     region: "Alboraya / North Coast",
-    hubs: ["neighbourhoods"],
+    hubs: ["beaches"],
     overview: {
       paragraphs: [
         "Patacona is the beach Valencians recommend when tourists ask where to go. Just north of the city's main Las Arenas and Malvarrosa beaches, Patacona technically belongs to the municipality of Alboraya but is seamlessly connected — you can walk here from Malvarrosa in 15 minutes along the promenade.",

@@ -98,14 +98,14 @@ function getRequiredJsonLdTypes(url) {
   if (["/valencia", "/es/valencia", "/blog", "/es/blog", "/discover", "/valencia/kits"].includes(pathname)) {
     return ["CollectionPage"];
   }
-  if (["/discover/neighbourhoods", "/discover/day-trips", "/discover/attractions", "/discover/events"].includes(pathname)) {
+  if (["/discover/neighbourhoods", "/discover/beaches", "/discover/day-trips", "/discover/attractions", "/discover/events"].includes(pathname)) {
     return ["CollectionPage", "BreadcrumbList"];
   }
   if (/^\/(?:es\/)?product\/[^/]+$/.test(pathname)) return ["Product", "BreadcrumbList"];
   if (/^\/(?:es\/)?rental\/[^/]+$/.test(pathname)) return ["CollectionPage", "BreadcrumbList"];
   if (/^\/(?:es\/)?blog\/[^/]+$/.test(pathname)) return ["Article", "BreadcrumbList"];
   if (/^\/valencia\/kits\/[^/]+$/.test(pathname)) return ["Product", "BreadcrumbList"];
-  if (/^\/discover\/[^/]+$/.test(pathname) && !["/discover/neighbourhoods", "/discover/day-trips", "/discover/attractions", "/discover/events"].includes(pathname)) {
+  if (/^\/discover\/[^/]+$/.test(pathname) && !["/discover/neighbourhoods", "/discover/beaches", "/discover/day-trips", "/discover/attractions", "/discover/events"].includes(pathname)) {
     return ["BreadcrumbList", "TouristDestination|Article"];
   }
   return [];
