@@ -406,6 +406,16 @@ Priority pilot logic: start with one narrow bundle, collect usage evidence, then
 5. **Internal links — ✅ Graph pass completed 18 July** — Spanish pathways use localized guides; all sitemap pages remain within three homepage clicks; Discover children now link through their sub-hubs; the long-stay kitchen kit gains a contextual Apartment Comfort pathway. Regression checks cover locale-specific editorial links and hierarchy links.
 6. **Authority** — Google Business Profile, reviews and Valencia partner backlinks
 
+### Discover localization — completed 20 July 2026
+
+- [x] Reach full EN/ES parity across all 26 published Valencia Discover guides.
+- [x] Launch `/es/discover/neighbourhoods` with localized comparison copy,
+  FAQs, structured data, breadcrumbs, and contextual Valencia links.
+- [x] Complete Spanish guides for Ruzafa, El Carmen, Cabanyal, Benimaclet, and
+  El Ensanche without introducing competing locale URLs.
+- [x] Enforce localized Beaches, Attractions, Day Trips, Events, and
+  Neighbourhoods hubs in the Discover locale audit.
+
 ---
 
 ## Metrics to Track

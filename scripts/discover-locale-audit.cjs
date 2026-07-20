@@ -30,7 +30,7 @@ const englishBySlug = new Map(englishGuides.map((guide) => [guide.slug, guide]))
 const spanishSlugs = new Set();
 const issues = [];
 const rows = [];
-const localizedHubRoutes = new Set(["beaches", "attractions", "day-trips", "events"]);
+const localizedHubRoutes = new Set(["neighbourhoods", "beaches", "attractions", "day-trips", "events"]);
 
 function hasText(value) {
   return typeof value === "string" && value.trim().length > 0;

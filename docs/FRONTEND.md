@@ -32,6 +32,7 @@ App Router with static generation (`generateStaticParams`). Prefix-based i18n (`
 | `/es/blog/[slug]` | SSG | `content/blog-es.ts` + shared article renderer |
 | `/es/discover` | Static | Complete Spanish Discover coverage only |
 | `/es/discover/beaches` | Static | Spanish beach comparison and planning hub |
+| `/es/discover/neighbourhoods` | Static | Spanish neighbourhood comparison and planning hub |
 | `/es/discover/[slug]` | SSG | `content/destinations-es.ts` + shared Spanish guide renderer |
 | `/es/about` | Static | Localized company and service information |
 | `/es/contact` | Static + Client | Localized contact form and confirmation flow |

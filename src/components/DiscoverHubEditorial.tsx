@@ -28,6 +28,8 @@ interface DiscoverHubEditorialProps {
   planningPoints: string[];
   pathways?: HubPathway[];
   faqs: HubFaq[];
+  guideLabel?: string;
+  faqTitle?: string;
 }
 
 export default function DiscoverHubEditorial({
@@ -39,6 +41,8 @@ export default function DiscoverHubEditorial({
   planningPoints,
   pathways = [],
   faqs,
+  guideLabel = "See the guide →",
+  faqTitle = "Planning questions",
 }: DiscoverHubEditorialProps) {
   return (
     <>
@@ -80,7 +84,7 @@ export default function DiscoverHubEditorial({
                 <>
                   <h3 className="text-lg font-bold mb-2 group-hover:text-brand transition-colors">{choice.title}</h3>
                   <p className="text-sm text-neutral-600 leading-relaxed">{choice.description}</p>
-                  {choice.href && <span className="text-sm font-semibold text-brand mt-4 inline-block">See the guide →</span>}
+                  {choice.href && <span className="text-sm font-semibold text-brand mt-4 inline-block">{guideLabel}</span>}
                 </>
               );
 
@@ -112,7 +116,7 @@ export default function DiscoverHubEditorial({
 
       <section className="section bg-white">
         <div className="container-site max-w-3xl">
-          <h2 className="text-3xl font-bold mb-6">Planning questions</h2>
+          <h2 className="text-3xl font-bold mb-6">{faqTitle}</h2>
           <div className="space-y-4">
             {faqs.map((faq) => (
               <div key={faq.question} className="card p-6">

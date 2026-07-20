@@ -425,6 +425,16 @@ guide. The adaptations keep transport, opening, reservation, terrain, alcohol,
 and accessibility advice conditional on current official information rather
 than carrying old prices or schedules into Spanish search results.
 
+**Third Phase 4 translation checkpoint — 20 July 2026:** Ruzafa, El Carmen,
+Cabanyal, Benimaclet, and El Ensanche now have complete Spanish neighbourhood
+guides, and `/es/discover/neighbourhoods` provides the matching Spanish
+comparison hub. This raises Spanish Discover coverage from 21 to 26 of 26
+English guides and completes full EN/ES parity across the published Discover
+portfolio. The hub and guides use reciprocal hreflang, localized breadcrumbs
+and schema, sitemap inclusion, and contextual links into the wider Valencia
+planning journey. The locale audit now enforces all five localized sub-hubs so
+future English guide additions cannot silently ship without a valid locale path.
+
 ## Measurement Framework
 
 ### Search metrics

@@ -12,7 +12,14 @@ const hubDescription =
 export const metadata: Metadata = {
   title: "Valencia Neighbourhoods — Where to Stay & Explore",
   description: hubDescription,
-  alternates: { canonical: hubUrl },
+  alternates: {
+    canonical: hubUrl,
+    languages: {
+      en: hubUrl,
+      es: "https://rentanything.es/es/discover/neighbourhoods",
+      "x-default": hubUrl,
+    },
+  },
 };
 
 const editorial = {

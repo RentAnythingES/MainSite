@@ -89,6 +89,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${BASE_URL}/es/blog`, changeFrequency: "weekly", priority: 0.7 },
     { url: `${BASE_URL}/es/discover`, changeFrequency: "weekly", priority: 0.8 },
     { url: `${BASE_URL}/es/discover/attractions`, changeFrequency: "weekly", priority: 0.7 },
+    { url: `${BASE_URL}/es/discover/neighbourhoods`, changeFrequency: "weekly", priority: 0.7 },
     { url: `${BASE_URL}/es/discover/beaches`, changeFrequency: "weekly", priority: 0.8 },
     { url: `${BASE_URL}/es/discover/day-trips`, changeFrequency: "weekly", priority: 0.7 },
     { url: `${BASE_URL}/es/discover/events`, changeFrequency: "weekly", priority: 0.7 },
