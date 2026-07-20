@@ -267,11 +267,11 @@ Data-driven `/discover/[slug]` pages. 5 destinations live. Hub pages for neighbo
   - Production verified 18 July 2026: responsive layout has no horizontal overflow; live crawl reports zero page errors, warnings, broken internal links, or broken images.
 
 **Open design items:**
-- [x] **Real photos** — All 20 Discover hero assets use sourced, licensed photography with visible attribution, a maintained rights register, and strict `npm run audit:discover-images` enforcement.
+- [x] **Real photos** — All 22 Discover hero assets use sourced, licensed photography with visible attribution, a maintained rights register, and strict `npm run audit:discover-images` enforcement.
 - [x] **Restaurant source tracking** — All 35 published recommendations carry a source note, source URL, and verification date; stale or misplaced venues were corrected and `npm run audit:discover-sources` enforces six-month review
-- [x] **Staying vs Visiting** — All 5 published neighbourhoods have complete staying guidance and all 20 published Discover guides have complete visiting guidance, enforced by `npm run audit:discover-intent`
+- [x] **Staying vs Visiting** — All 5 published neighbourhoods have complete staying guidance and all 22 published Discover guides have complete visiting guidance, enforced by `npm run audit:discover-intent`
 
-The 20 July portfolio audit established a 20-guide English foundation, including
+The 20 July portfolio audit established a 22-guide English foundation, including
 the first three-guide event cluster. Hub consolidation and the source
 governance layer are now complete. Spanish Discover architecture is live for the
 Discover hub, Beaches, Attractions, and Events hubs, with reciprocal hreflang and

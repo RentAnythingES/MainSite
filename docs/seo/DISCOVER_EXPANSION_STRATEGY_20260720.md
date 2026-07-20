@@ -15,10 +15,10 @@ a reason to exist beyond repeating an official tourism page.
 
 The existing system is technically strong:
 
-- 20 published English guides
+- 22 published English guides
 - 5 neighbourhood guides
 - 4 day-trip guides
-- 4 attraction guides
+- 6 attraction guides
 - 4 beach guides
 - 3 event guides
 - 5 data-driven sub-hubs: neighbourhoods, beaches, day trips, attractions, and events
@@ -40,7 +40,7 @@ The main weaknesses are portfolio depth and language coverage:
 
 ### Implementation checkpoint — 20 July 2026
 
-- Guide-level governance is live for all 20 published guides with refresh class,
+- Guide-level governance is live for all 22 published guides with refresh class,
   content review date, next review date, authoritative sources, supported claims,
   and source check dates.
 - `npm run audit:discover-sources` now fails on missing governance, invalid dates,
@@ -365,8 +365,8 @@ unstable programme details.
 
 - Corpus Christi
 - Christmas in Valencia
-- Bioparc
-- Valencia historic centre
+- [x] BIOPARC Valencia — published in EN/ES with official calendar, FAQ, access, family, food and accessibility sources
+- [x] Valencia historic centre — published in EN/ES with a municipal route and regional heritage sources
 - Buñol
 - Cullera
 

@@ -30,7 +30,8 @@ const editorial = {
     { title: "Oceanogràfic", description: "For a focused aquarium day with family logistics, long walking routes, and date-specific activities.", href: "/discover/oceanografic-valencia" },
     { title: "Turia Gardens", description: "For walking, cycling, playgrounds, green space, and a flexible route across the city.", href: "/discover/turia-gardens" },
     { title: "Central Market and La Lonja", description: "For a compact morning route through Valencia's food culture and UNESCO-listed trading history.", href: "/discover/central-market-la-lonja" },
-    { title: "Bioparc and Cabecera Park", description: "For a family-focused western-city day. A sourced standalone guide is planned before this becomes its own search landing page." },
+    { title: "BIOPARC Valencia", description: "For an immersive wildlife day with ticket, food, accessibility and family logistics planned in advance.", href: "/discover/bioparc-valencia" },
+    { title: "Historic centre", description: "For a practical walking route from Serranos to Quart with selected monuments rather than an overloaded checklist.", href: "/discover/valencia-historic-centre" },
   ],
   planningTitle: "Make the visit easier",
   planningPoints: [

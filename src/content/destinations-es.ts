@@ -607,6 +607,115 @@ const spanishDiscoverGuides: SpanishDiscoverGuide[] = [
     ],
     relatedGuides: ["turia-gardens", "malvarrosa-beach", "albufera"],
   },
+  {
+    slug: "bioparc-valencia",
+    name: "BIOPARC Valencia",
+    title: "BIOPARC Valencia: entradas, acceso y familias",
+    description: "Organiza una visita a BIOPARC Valencia con horarios oficiales, entradas, duración realista, transporte, accesibilidad y normas de comida.",
+    tagline: "Una experiencia de fauna africana integrada en el paisaje junto al Parque de Cabecera",
+    heroImage: "/discover/bioparc-valencia.jpg",
+    heroImageAlt: "Hábitat africano con rocas, agua y vegetación en BIOPARC Valencia",
+    lastUpdated: "2026-07-20",
+    region: "Oeste de Valencia",
+    quickFacts: [
+      { label: "Duración", value: "De medio día a una jornada completa" },
+      { label: "Apertura", value: "Todos los días; cierre variable" },
+      { label: "Accesibilidad", value: "El parque se declara totalmente accesible" },
+      { label: "Reentrada", value: "Normalmente no permitida" },
+    ],
+    overview: [
+      "BIOPARC Valencia es un parque de fauna situado junto al Parque de Cabecera, en el extremo occidental del Jardín del Turia. Su diseño de zoo-inmersión conecta hábitats africanos mediante vegetación, agua, rocas y perspectivas abiertas.",
+      "No lo trates como una visita rápida. La información oficial indica que la experiencia puede ocupar un día completo e incluye una agenda variable de actividades, restauración y zona infantil. Los animales se desplazan y descansan dentro de sus hábitats, por lo que la visibilidad cambia durante la jornada.",
+      "Los horarios de cierre dependen de la fecha y de las horas de luz. Selecciona el día en el calendario oficial antes de comprar entradas y evita depender de precios u horarios publicados en guías antiguas.",
+    ],
+    sections: [
+      {
+        heading: "Entradas, horarios y tiempo real",
+        paragraphs: ["BIOPARC abre todos los días, pero el cierre varía. La entrada se permite hasta una hora antes del cierre y normalmente no se puede salir y volver a entrar con el mismo ticket."],
+        bullets: ["Consulta el calendario para la fecha concreta.", "Elige una franja de entrada compatible con tu ruta.", "Reserva al menos medio día y evita añadir otra gran atracción."],
+      },
+      {
+        heading: "Cómo llegar",
+        paragraphs: ["Metrovalencia, EMT, bicicleta por el Jardín del Turia y coche permiten llegar al entorno. Utiliza la página oficial de acceso y el planificador en tiempo real para confirmar el tramo final."],
+        bullets: ["Las bicicletas no se pueden utilizar dentro del parque.", "Existe aparcamiento subterráneo con condiciones y tarifas variables.", "Combina la visita únicamente con el cercano Parque de Cabecera."],
+      },
+      {
+        heading: "Familias, comida y descansos",
+        paragraphs: ["Las normas actuales no permiten introducir comida o bebida general, salvo agua en recipientes que no sean de cristal, comida para bebés y algunos aperitivos para niños pequeños. El parque ofrece restauración y opciones infantiles."],
+      },
+      {
+        heading: "Accesibilidad",
+        paragraphs: ["La FAQ oficial describe el parque como totalmente accesible. Confirma directamente cualquier ayuda, documentación, acompañante gratuito o restricción relacionada con perros guía y de asistencia antes de viajar."],
+      },
+    ],
+    practicalTips: [
+      "Llega cerca de la apertura para disponer de más horas y temperaturas más suaves.",
+      "Guarda el mapa y la agenda actual antes de iniciar el recorrido.",
+      "Planifica comida y descanso antes de que los niños se cansen.",
+      "Vuelve a los hábitats favoritos; no todos los animales son visibles en todo momento.",
+    ],
+    faqs: [
+      { question: "¿Cuánto tiempo necesito para BIOPARC Valencia?", answer: "Reserva al menos medio día. La información oficial indica que los hábitats, actividades, restaurantes y zonas familiares pueden ocupar una jornada completa." },
+      { question: "¿BIOPARC Valencia es accesible?", answer: "La FAQ oficial describe el parque como totalmente accesible. Confirma cualquier ayuda o requisito documental imprescindible antes de acudir." },
+      { question: "¿Puedo llevar comida?", answer: "Las normas actuales permiten agua en recipientes que no sean de cristal, comida para bebés y algunos aperitivos para niños pequeños, pero no comida exterior general." },
+      { question: "¿Puedo salir y volver a entrar?", answer: "Normalmente no. La reentrada requiere una entrada nueva o una autorización excepcional del personal." },
+    ],
+    relatedGuides: ["turia-gardens", "valencia-historic-centre"],
+  },
+  {
+    slug: "valencia-historic-centre",
+    name: "Centro histórico de Valencia",
+    title: "Centro histórico de Valencia: ruta a pie práctica",
+    description: "Recorre el centro histórico de Valencia desde Serranos hasta Quart con monumentos, tiempos realistas, accesibilidad y consejos para familias.",
+    tagline: "Una ruta práctica por 2.000 años de historia cívica, religiosa y comercial",
+    heroImage: "/discover/valencia-historic-centre.jpg",
+    heroImageAlt: "Plaza de la Virgen, Catedral y Basílica en el centro histórico de Valencia",
+    lastUpdated: "2026-07-20",
+    region: "Ciutat Vella, Valencia",
+    quickFacts: [
+      { label: "Ruta base", value: "Torres de Serranos a Torres de Quart" },
+      { label: "Recorrido sin visitas", value: "Aproximadamente 1 hora" },
+      { label: "Visita realista", value: "Medio día con monumentos seleccionados" },
+      { label: "Mejor estrategia", value: "Elegir 2 o 3 interiores" },
+    ],
+    overview: [
+      "El centro histórico de Valencia reúne origen romano, murallas islámicas, puertas medievales, arquitectura gótica y espacios cívicos posteriores. Turisme Comunitat Valenciana identifica más de 20 bienes culturales reconocidos dentro de este conjunto histórico.",
+      "La ruta municipal propone un recorrido de aproximadamente una hora entre las Torres de Serranos y las Torres de Quart. Ese tiempo corresponde al paseo, no a entrar en la Catedral, la Almoina, la Lonja, el Mercado Central u otros monumentos.",
+      "Esta guía organiza la visión general de Ciutat Vella. Utiliza la guía específica del Mercado Central y la Lonja para esa visita de mañana, y la guía de El Carmen para conocer el barrio o valorar una estancia allí.",
+    ],
+    sections: [
+      {
+        heading: "Una ruta continua por Ciutat Vella",
+        paragraphs: ["Empieza en Serranos, continúa hacia la Plaza de la Virgen y la Catedral, cruza hacia el entorno del Ayuntamiento y la Plaza del Mercado, y termina atravesando El Carmen hasta las Torres de Quart."],
+        bullets: ["No intentes entrar en todos los monumentos.", "Selecciona dos o tres interiores antes de salir.", "Consulta el horario oficial de cada edificio por separado."],
+      },
+      {
+        heading: "Plaza de la Virgen y Catedral",
+        paragraphs: ["Este conjunto concentra la Catedral, el Micalet, la Basílica y la historia arqueológica de la Almoina. Subir al campanario o visitar interiores requiere tiempo adicional y puede limitar la accesibilidad."],
+      },
+      {
+        heading: "Plaza del Mercado y El Carmen",
+        paragraphs: ["El Mercado Central y la Lonja muestran la cultura alimentaria y la riqueza comercial medieval. Desde allí, el recorrido puede terminar por las calles de El Carmen y las Torres de Quart."],
+      },
+      {
+        heading: "Accesibilidad y familias",
+        paragraphs: ["Las plazas y muchas calles peatonales permiten una ruta cómoda, pero el pavimento histórico, las entradas monumentales y las multitudes varían. Confirma el acceso sin escalones de cada interior esencial."],
+      },
+    ],
+    practicalTips: [
+      "Utiliza la ruta Serranos–Quart como estructura, no como una promesa de verlo todo en una hora.",
+      "Empieza por la mañana si quieres visitar el Mercado Central en actividad.",
+      "Programa un descanso sentado antes de acumular fatiga.",
+      "Lleva calzado cómodo, agua y un mapa guardado sin conexión.",
+    ],
+    faqs: [
+      { question: "¿Cuánto tiempo necesito para el centro histórico?", answer: "La ruta municipal básica dura alrededor de una hora sin entrar en monumentos. Reserva entre tres y cinco horas para una primera visita con dos o tres interiores." },
+      { question: "¿Qué debo ver primero?", answer: "Una ruta clara empieza en Serranos, pasa por la Plaza de la Virgen y la Catedral, continúa hacia la Plaza del Mercado y termina en Quart a través de El Carmen." },
+      { question: "¿Es accesible el centro histórico?", answer: "Gran parte es peatonal, pero pavimentos y accesos monumentales varían. Comprueba la entrada adaptada de cada interior imprescindible." },
+      { question: "¿El centro histórico es lo mismo que El Carmen?", answer: "No. El Carmen es uno de los barrios de Ciutat Vella. El centro histórico también incluye la zona de la Catedral, la Plaza del Mercado y otros sectores." },
+    ],
+    relatedGuides: ["central-market-la-lonja", "el-carmen", "el-ensanche"],
+  },
 ];
 
 export function getPublishedSpanishDestinations(): SpanishDiscoverGuide[] {
