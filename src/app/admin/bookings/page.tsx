@@ -91,6 +91,7 @@ interface Booking {
   customer_email: string;
   customer_phone: string | null;
   product: BookingProduct;
+  quantity: number;
   start_date: string;
   end_date: string;
   rental_days: number;
@@ -415,7 +416,7 @@ export default function AdminBookingsPage() {
                     </span>
                   </div>
                   <p className="text-sm text-neutral-400 truncate">
-                    {booking.customer_name} · {booking.product?.name || "Unknown"}
+                    {booking.customer_name} · {booking.quantity > 1 ? `${booking.quantity} × ` : ""}{booking.product?.name || "Unknown"}
                   </p>
                 </div>
                 <div className="text-right hidden sm:block">
@@ -443,6 +444,7 @@ export default function AdminBookingsPage() {
                     </div>
                     <div>
                       <p className="text-xs text-neutral-500 mb-1">Rental Window</p>
+                      <p className="text-sm text-white mb-1">Quantity: {booking.quantity || 1}</p>
                       <p className="text-sm text-neutral-300">
                         {formatDateTime(booking.rental_start_at) || formatDate(booking.start_date)}
                       </p>

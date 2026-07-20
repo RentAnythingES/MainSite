@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo, useEffect, useCallback } from "react";
+import { useState, useMemo, useEffect } from "react";
 import type { Product } from "@/data/products";
 import { trackBookingEvent } from "@/lib/analytics";
 
@@ -46,6 +46,11 @@ const labels = {
     days: "days",
     day: "day",
     rental: "rental",
+    quantity: "Quantity",
+    unit: "unit",
+    units: "units",
+    quantityDiscount: "Quantity discount",
+    availableUnits: "available for these dates",
     delivery: "Delivery",
     deliveryZone: "Delivery Area",
     collectionZone: "Collection Area",
@@ -97,6 +102,11 @@ const labels = {
     days: "días",
     day: "día",
     rental: "alquiler",
+    quantity: "Cantidad",
+    unit: "unidad",
+    units: "unidades",
+    quantityDiscount: "Descuento por cantidad",
+    availableUnits: "disponibles para estas fechas",
     delivery: "Entrega",
     deliveryZone: "Zona de entrega",
     collectionZone: "Zona de recogida",
@@ -182,8 +192,12 @@ interface PickupLocationOption {
 }
 
 interface ServerQuote {
+  quantity: number;
   rentalDays: number;
   perDayCents: number;
+  unitRentalSubtotalCents: number;
+  quantityDiscountBps: number;
+  quantityDiscountCents: number;
   rentalSubtotalCents: number;
   deliveryFeeCents: number;
   collectionFeeCents: number;
@@ -197,6 +211,7 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
   const [startTime, setStartTime] = useState("09:00");
   const [endDate, setEndDate] = useState(formatDate(addDays(tomorrow, 3)));
   const [endTime, setEndTime] = useState("09:00");
+  const [quantity, setQuantity] = useState(1);
   const [deliveryOption, setDeliveryOption] = useState<"standard" | "express">("standard");
   const [fulfillmentMode, setFulfillmentMode] = useState<FulfillmentMode>("delivery_and_collection");
   const [step, setStep] = useState<BookingStep>("dates");
@@ -211,6 +226,7 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
   const [deliveryZoneId, setDeliveryZoneId] = useState("");
   const [collectionZoneId, setCollectionZoneId] = useState("");
   const [pickupLocationId, setPickupLocationId] = useState("");
+  const [maxAvailableQuantity, setMaxAvailableQuantity] = useState(product.stockAvailable || product.stockTotal || 20);
 
   // Form fields
   const [name, setName] = useState("");
@@ -238,12 +254,12 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
       .sort((a, b) => b.days - a.days)
       .find((t) => days >= t.days) || product.pricing[0];
 
-    const subtotal = tier.perDay * days;
+    const subtotal = tier.perDay * days * quantity;
     const deliveryFee = fulfillmentMode === "customer_pickup" ? 0 : deliveryOption === "express" ? 15 : subtotal >= 50 ? 0 : 10;
     const total = subtotal + deliveryFee;
 
-    return { days, perDay: tier.perDay, subtotal, deliveryFee, total };
-  }, [startDate, endDate, deliveryOption, fulfillmentMode, product.pricing]);
+    return { days, perDay: tier.perDay, subtotal, subtotalBeforeDiscount: subtotal, deliveryFee, total, quantityDiscount: 0 };
+  }, [startDate, endDate, deliveryOption, fulfillmentMode, product.pricing, quantity]);
 
   const displayPricing = useMemo(() => {
     if (!serverQuote) {
@@ -254,8 +270,10 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
       days: serverQuote.rentalDays,
       perDay: serverQuote.perDayCents / 100,
       subtotal: serverQuote.rentalSubtotalCents / 100,
+      subtotalBeforeDiscount: (serverQuote.unitRentalSubtotalCents * serverQuote.quantity) / 100,
       deliveryFee: (serverQuote.deliveryFeeCents + serverQuote.collectionFeeCents) / 100,
       total: serverQuote.totalCents / 100,
+      quantityDiscount: serverQuote.quantityDiscountCents / 100,
     };
   }, [pricing, serverQuote]);
 
@@ -297,15 +315,16 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
     setBookingError("none");
     setBlockedDates([]);
     setServerQuote(null);
-  }, [startDate, startTime, endDate, endTime, fulfillmentMode, deliveryZoneId, collectionZoneId, pickupLocationId]);
+  }, [startDate, startTime, endDate, endTime, quantity, fulfillmentMode, deliveryZoneId, collectionZoneId, pickupLocationId]);
 
-  const checkAvailability = useCallback(async () => {
+  const checkAvailability = async () => {
     setAvailabilityStatus("checking");
     trackBookingEvent("availability_check_started", {
       productSlug: product.slug,
       fulfillmentMode,
       startDate,
       endDate,
+      quantity,
     });
 
     try {
@@ -316,6 +335,7 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
         startAt: combineDateTime(startDate, startTime),
         endAt: combineDateTime(endDate, endTime),
         mode: fulfillmentMode,
+        quantity: String(quantity),
       });
 
       if (deliveryZoneId) params.set("deliveryZoneId", deliveryZoneId);
@@ -339,6 +359,9 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
       if (data.quote) {
         setServerQuote(data.quote);
       }
+      if (Number.isInteger(data.maxAvailableQuantity)) {
+        setMaxAvailableQuantity(Math.max(0, data.maxAvailableQuantity));
+      }
 
       if (data.available) {
         setAvailabilityStatus("available");
@@ -348,6 +371,7 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
           productSlug: product.slug,
           fulfillmentMode,
           totalCents: data.quote?.totalCents,
+          quantity,
         });
       } else {
         setAvailabilityStatus("unavailable");
@@ -360,14 +384,14 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
         });
       }
     } catch {
-      // If API fails (no Supabase configured), assume available
-      setAvailabilityStatus("available");
+      setAvailabilityStatus("unavailable");
+      setBookingError("availability");
       trackBookingEvent("availability_check_failed_open", {
         productSlug: product.slug,
         fulfillmentMode,
       });
     }
-  }, [product.slug, startDate, startTime, endDate, endTime, fulfillmentMode, deliveryZoneId, collectionZoneId, pickupLocationId]);
+  };
 
   const handleSubmitBooking = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -382,6 +406,7 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           productSlug: product.slug,
+          quantity,
           customerName: name,
           customerEmail: email,
           customerPhone: phone || null,
@@ -412,6 +437,7 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
         setSubmitting(false);
         trackBookingEvent("booking_draft_failed", {
           productSlug: product.slug,
+          quantity,
           fulfillmentMode,
           status: draftRes.status,
         });
@@ -478,7 +504,7 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
     }
   };
 
-  const whatsappMessage = `Hi! I'd like to book:\n\n📦 ${product.name}\n📅 ${formatDisplayDate(new Date(startDate), locale)} ${startTime} → ${formatDisplayDate(new Date(endDate), locale)} ${endTime} (${displayPricing.days} ${displayPricing.days === 1 ? t.day : t.days})\n💰 €${displayPricing.total} total\n🚚 ${deliveryOption === "express" ? t.express : t.standard} ${t.delivery.toLowerCase()}\n\nPlease confirm availability!`;
+  const whatsappMessage = `Hi! I'd like to book:\n\n📦 ${quantity} × ${product.name}\n📅 ${formatDisplayDate(new Date(startDate), locale)} ${startTime} → ${formatDisplayDate(new Date(endDate), locale)} ${endTime} (${displayPricing.days} ${displayPricing.days === 1 ? t.day : t.days})\n💰 €${displayPricing.total.toFixed(2)} total\n🚚 ${deliveryOption === "express" ? t.express : t.standard} ${t.delivery.toLowerCase()}\n\nPlease confirm availability!`;
   const whatsappUrl = `https://wa.me/34684708013?text=${encodeURIComponent(whatsappMessage)}`;
 
   // Success state
@@ -557,9 +583,15 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
           {/* Price summary */}
           <div className="border-t border-border pt-3 space-y-1.5">
             <div className="flex justify-between text-sm">
-              <span className="text-neutral-500">€{displayPricing.perDay} × {displayPricing.days} {displayPricing.days === 1 ? t.day : t.days}</span>
-              <span className="font-medium">€{displayPricing.subtotal}</span>
+              <span className="text-neutral-500">€{displayPricing.perDay} × {displayPricing.days} {displayPricing.days === 1 ? t.day : t.days} × {quantity}</span>
+              <span className="font-medium">€{displayPricing.subtotalBeforeDiscount.toFixed(2)}</span>
             </div>
+            {displayPricing.quantityDiscount > 0 && (
+              <div className="flex justify-between text-sm text-emerald-700">
+                <span>{t.quantityDiscount}</span>
+                <span>−€{displayPricing.quantityDiscount.toFixed(2)}</span>
+              </div>
+            )}
             <div className="flex justify-between text-sm">
               <span className="text-neutral-500">{t.delivery}</span>
               <span className="font-medium">{displayPricing.deliveryFee === 0 ? <span className="text-green-600">{t.free}</span> : `€${displayPricing.deliveryFee}`}</span>
@@ -645,6 +677,27 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
             className="w-full px-3 py-2.5 rounded-lg border border-border text-sm focus:outline-none focus:ring-2 focus:ring-brand/30 focus:border-brand"
           />
         </div>
+      </div>
+
+      <div className="mb-4">
+        <label htmlFor="booking-quantity" className="text-xs font-medium text-neutral-500 mb-1 block">
+          {t.quantity}
+        </label>
+        <select
+          id="booking-quantity"
+          value={quantity}
+          onChange={(event) => setQuantity(Number(event.target.value))}
+          className="w-full px-3 py-2.5 rounded-lg border border-border text-sm bg-white focus:outline-none focus:ring-2 focus:ring-brand/30 focus:border-brand"
+        >
+          {Array.from({ length: Math.max(1, product.stockTotal || maxAvailableQuantity || 20) }, (_, index) => index + 1).map((value) => (
+            <option key={value} value={value}>{value} {value === 1 ? t.unit : t.units}</option>
+          ))}
+        </select>
+        {availabilityStatus !== "idle" && (
+          <p className="mt-1 text-xs text-neutral-500">
+            {maxAvailableQuantity} {t.units} {t.availableUnits}
+          </p>
+        )}
       </div>
 
       {/* Duration display */}
@@ -816,10 +869,16 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
       <div className="border-t border-border pt-4 mb-4 space-y-2">
         <div className="flex justify-between text-sm">
           <span className="text-neutral-500">
-            €{displayPricing.perDay} × {displayPricing.days} {displayPricing.days === 1 ? t.day : t.days}
+            €{displayPricing.perDay} × {displayPricing.days} {displayPricing.days === 1 ? t.day : t.days} × {quantity}
           </span>
-          <span className="font-medium">€{displayPricing.subtotal}</span>
+          <span className="font-medium">€{displayPricing.subtotalBeforeDiscount.toFixed(2)}</span>
         </div>
+        {displayPricing.quantityDiscount > 0 && (
+          <div className="flex justify-between text-sm text-emerald-700">
+            <span>{t.quantityDiscount}</span>
+            <span>−€{displayPricing.quantityDiscount.toFixed(2)}</span>
+          </div>
+        )}
         <div className="flex justify-between text-sm">
           <span className="text-neutral-500">{t.delivery}</span>
           <span className="font-medium">

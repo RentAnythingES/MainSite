@@ -102,6 +102,7 @@ export async function GET(request: NextRequest) {
             status: bookingRecord.status,
             productName: product?.name || "Rental equipment",
             productSlug: product?.slug || "",
+            quantity: bookingRecord.quantity || 1,
             startDate: formatDateTime((bookingRecord.rental_start_at as string | null) || bookingRecord.start_date as string),
             endDate: formatDateTime((bookingRecord.rental_end_at as string | null) || bookingRecord.end_date as string),
             totalCents: bookingRecord.total_cents,

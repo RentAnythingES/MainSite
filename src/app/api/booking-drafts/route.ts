@@ -16,6 +16,7 @@ import type { FulfillmentMode } from "@/lib/types";
 
 interface DraftRequestBody {
   productSlug?: string;
+  quantity?: number;
   customerName?: string;
   customerEmail?: string;
   customerPhone?: string;
@@ -40,9 +41,14 @@ export async function POST(request: NextRequest) {
   try {
     const body = (await request.json()) as DraftRequestBody;
     const fulfillmentMode = body.fulfillmentMode || "delivery_and_collection";
+    const quantity = Number(body.quantity || 1);
 
     if (!body.productSlug || !body.customerName || !body.customerEmail || !body.startAt || !body.endAt) {
       return NextResponse.json({ error: "Missing required booking details" }, { status: 400 });
+    }
+
+    if (!Number.isInteger(quantity) || quantity < 1) {
+      return NextResponse.json({ error: "Quantity must be a positive integer" }, { status: 400 });
     }
 
     assertFulfillmentFields(
@@ -61,9 +67,9 @@ export async function POST(request: NextRequest) {
     const supabase = createServiceClient();
     await cleanupExpiredBookingDrafts(supabase);
 
-    const { product, tiers } = await getProductWithPricing(supabase, body.productSlug);
+    const { product, tiers, quantityDiscounts } = await getProductWithPricing(supabase, body.productSlug);
 
-    if (product.stock_available <= 0) {
+    if (product.stock_available < quantity || product.stock_total < quantity) {
       return NextResponse.json({ error: "Product not available" }, { status: 409 });
     }
 
@@ -71,6 +77,7 @@ export async function POST(request: NextRequest) {
     const collectionZone = await getServiceZone(supabase, body.collectionZoneId);
     const quote = quoteBooking(
       tiers,
+      quantityDiscounts,
       startAt,
       endAt,
       {
@@ -80,7 +87,8 @@ export async function POST(request: NextRequest) {
         collectionZoneId: body.collectionZoneId,
       },
       deliveryZone,
-      collectionZone
+      collectionZone,
+      quantity
     );
 
     const { data: blockedDates, error: blockedError } = await supabase
@@ -106,6 +114,7 @@ export async function POST(request: NextRequest) {
       .from("booking_drafts")
       .insert({
         product_id: product.id,
+        quantity,
         customer_name: body.customerName,
         customer_email: body.customerEmail,
         customer_phone: body.customerPhone || null,
@@ -149,7 +158,7 @@ export async function POST(request: NextRequest) {
       p_booking_draft_id: draft.id,
       p_starts_at: startAt.toISOString(),
       p_ends_at: endAt.toISOString(),
-      p_quantity: 1,
+      p_quantity: quantity,
     });
 
     if (reserveError || reserved !== true) {
@@ -165,6 +174,7 @@ export async function POST(request: NextRequest) {
         slug: product.slug,
         name: product.name,
       },
+      quantity,
       startAt: startAt.toISOString(),
       endAt: endAt.toISOString(),
       quote,

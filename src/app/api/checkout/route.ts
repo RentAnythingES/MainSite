@@ -4,6 +4,7 @@ import { createServiceClient } from "@/lib/supabase";
 import { cleanupExpiredBookingDrafts } from "@/lib/booking-v2";
 import type { BookingDraft } from "@/lib/types";
 import { getIncidentErrorMessage, recordSystemIncident } from "@/lib/system-incidents";
+import type Stripe from "stripe";
 
 /**
  * POST /api/checkout — Create a Stripe Checkout Session
@@ -118,13 +119,13 @@ export async function POST(request: NextRequest) {
             {
               price_data: {
                 currency: bookingDraft.currency,
-                unit_amount: bookingDraft.rental_subtotal_cents,
+                unit_amount_decimal: (bookingDraft.rental_subtotal_cents / bookingDraft.quantity).toFixed(6) as unknown as Stripe.Decimal,
                 product_data: {
                   name: `${resolvedProduct.name} rental`,
                   description: `${formattedStart} to ${formattedEnd}`,
                 },
               },
-              quantity: 1,
+              quantity: bookingDraft.quantity,
             },
             ...(bookingDraft.delivery_fee_cents + bookingDraft.collection_fee_cents > 0
               ? [
@@ -144,6 +145,7 @@ export async function POST(request: NextRequest) {
           metadata: {
             booking_draft_id: bookingDraft.id,
             product_id: bookingDraft.product_id,
+            quantity: String(bookingDraft.quantity),
           },
           success_url: `${baseUrl}/booking/success?session_id={CHECKOUT_SESSION_ID}`,
           cancel_url: `${baseUrl}/product/${resolvedProduct.slug}`,

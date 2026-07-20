@@ -25,6 +25,7 @@ export interface BookingEmailData {
   customerEmail: string;
   customerPhone?: string;
   productName: string;
+  quantity?: number;
   startDate: string;
   endDate: string;
   rentalStartAt?: string | null;
@@ -222,6 +223,7 @@ function bookingDetailsTable(data: BookingEmailData): string {
     <table style="width:100%;border-collapse:collapse;margin:16px 0;">
       <tr><td style="padding:8px 0;color:#6b7280;font-size:14px;width:145px;">Booking ref</td><td style="padding:8px 0;font-weight:700;font-size:14px;font-family:monospace;color:#0e7c73;">${escapeHtml(data.bookingRef)}</td></tr>
       <tr><td style="padding:8px 0;color:#6b7280;font-size:14px;">Item</td><td style="padding:8px 0;font-weight:600;font-size:14px;">${escapeHtml(data.productName)}</td></tr>
+      <tr><td style="padding:8px 0;color:#6b7280;font-size:14px;">Quantity</td><td style="padding:8px 0;font-weight:600;font-size:14px;">${escapeHtml(data.quantity || 1)}</td></tr>
       <tr><td style="padding:8px 0;color:#6b7280;font-size:14px;">Rental window</td><td style="padding:8px 0;font-size:14px;">${escapeHtml(rentalWindow)} (${escapeHtml(data.rentalDays)} days)</td></tr>
       <tr><td style="padding:8px 0;color:#6b7280;font-size:14px;">${fulfillmentLabel(data)}</td><td style="padding:8px 0;font-size:14px;">${escapeHtml(data.deliveryAddress)}</td></tr>
       <tr><td style="padding:8px 0;color:#6b7280;font-size:14px;">Total</td><td style="padding:8px 0;font-weight:700;font-size:16px;">${formatEuros(data.totalCents)}</td></tr>

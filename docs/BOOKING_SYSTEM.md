@@ -48,6 +48,26 @@ visibility, refund email, and refunded booking state. Treat the system as contro
 release rather than fully open until repeated tests cover each fulfillment mode and
 inventory release is verified after cancellation and refund.
 
+## Multi-unit bookings and volume pricing
+
+- Customers choose a quantity before checking availability.
+- Availability returns the maximum units available for the selected rental window and
+  rejects requests above that capacity.
+- `booking_drafts.quantity` and `bookings.quantity` preserve the selected unit count.
+- `reserve_booking_inventory(...)` atomically reserves that quantity, preventing two
+  overlapping checkouts from overselling aggregate stock.
+- Rental charges multiply by quantity. Delivery and collection fees remain one charge
+  per booking.
+- `product_quantity_discounts` stores product-specific thresholds as basis-point
+  discounts. The highest qualifying threshold applies to the rental subtotal only.
+- Stripe Checkout displays the selected product quantity while charging the exact
+  server-calculated discounted rental total.
+- Confirmation emails, success status, invoices, and admin booking records display the
+  booked quantity.
+
+Example: a threshold of 5 units with a 4,000 basis-point discount means 40% off the
+rental subtotal from five units onward, so five units cost the equivalent of three.
+
 ## Invoicing Compliance Roadmap
 
 The current `booking_documents` implementation creates an operational payment

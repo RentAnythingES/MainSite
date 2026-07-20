@@ -5,6 +5,7 @@ import { getProductReadinessIssues, isValidProductSlug } from "@/lib/product-val
 import { invalidatePublicProductCache } from "@/lib/product-cache";
 
 type PricingTierPayload = { min_days: number; per_day_cents: number };
+type QuantityDiscountPayload = { min_quantity: number; discount_bps: number };
 
 function getErrorMessage(err: unknown) {
   if (err && typeof err === "object" && "message" in err) {
@@ -30,6 +31,23 @@ function validatePricingTiers(tiers: PricingTierPayload[]) {
     tierDays.add(tier.min_days);
   }
 
+  return null;
+}
+
+function validateQuantityDiscounts(tiers: QuantityDiscountPayload[]) {
+  const quantities = new Set<number>();
+  for (const tier of tiers) {
+    if (!Number.isInteger(tier.min_quantity) || tier.min_quantity < 2) {
+      return "Quantity discount minimum must be at least 2 units";
+    }
+    if (!Number.isInteger(tier.discount_bps) || tier.discount_bps < 1 || tier.discount_bps >= 10000) {
+      return "Quantity discount must be greater than 0% and less than 100%";
+    }
+    if (quantities.has(tier.min_quantity)) {
+      return `Duplicate quantity discount for ${tier.min_quantity} units`;
+    }
+    quantities.add(tier.min_quantity);
+  }
   return null;
 }
 
@@ -64,6 +82,13 @@ export async function PUT(
 
     if (body.pricing_tiers) {
       const validationError = validatePricingTiers(body.pricing_tiers);
+      if (validationError) {
+        return NextResponse.json({ error: validationError }, { status: 400 });
+      }
+    }
+
+    if (body.quantity_discounts) {
+      const validationError = validateQuantityDiscounts(body.quantity_discounts);
       if (validationError) {
         return NextResponse.json({ error: validationError }, { status: 400 });
       }
@@ -192,6 +217,32 @@ export async function PUT(
             { error: `Product pricing update failed: ${getErrorMessage(pricingError)}` },
             { status: 400 }
           );
+        }
+      }
+    }
+
+
+    if (body.quantity_discounts) {
+      const { error: deleteDiscountError } = await supabase
+        .from("product_quantity_discounts")
+        .delete()
+        .eq("product_id", id);
+
+      if (deleteDiscountError) {
+        return NextResponse.json({ error: `Quantity discount update failed: ${getErrorMessage(deleteDiscountError)}` }, { status: 400 });
+      }
+
+      if (body.quantity_discounts.length > 0) {
+        const { error: discountError } = await supabase
+          .from("product_quantity_discounts")
+          .insert(body.quantity_discounts.map((tier: QuantityDiscountPayload) => ({
+            product_id: id,
+            min_quantity: tier.min_quantity,
+            discount_bps: tier.discount_bps,
+          })));
+
+        if (discountError) {
+          return NextResponse.json({ error: `Quantity discount update failed: ${getErrorMessage(discountError)}` }, { status: 400 });
         }
       }
     }

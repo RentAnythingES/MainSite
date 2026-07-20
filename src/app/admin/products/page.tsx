@@ -10,6 +10,12 @@ interface PricingTier {
   per_day_cents: number;
 }
 
+interface QuantityDiscountTier {
+  id: string;
+  min_quantity: number;
+  discount_bps: number;
+}
+
 interface Category {
   id: string;
   slug: string;
@@ -32,6 +38,7 @@ interface Product {
   features: string[];
   specs: Record<string, string>;
   pricing_tiers: PricingTier[];
+  quantity_discounts: QuantityDiscountTier[];
   category: Category;
   content_status?: "draft" | "facts_verified" | "content_ready";
   seo?: {
@@ -69,7 +76,7 @@ export default function AdminProductsPage() {
   const [saving, setSaving] = useState(false);
   const [statusChangeId, setStatusChangeId] = useState<string | null>(null);
   const [uploadingImage, setUploadingImage] = useState(false);
-  const [editForm, setEditForm] = useState<Partial<Product & { pricing_tiers: PricingTier[] }>>({});
+  const [editForm, setEditForm] = useState<Partial<Product>>({});
   const [editFeatures, setEditFeatures] = useState<string[]>([]);
   const [editSpecs, setEditSpecs] = useState<EditableSpec[]>([]);
 
@@ -115,6 +122,7 @@ export default function AdminProductsPage() {
       stock_total: product.stock_total,
       stock_available: product.stock_available,
       pricing_tiers: [...product.pricing_tiers].sort((a, b) => a.min_days - b.min_days),
+      quantity_discounts: [...(product.quantity_discounts || [])].sort((a, b) => a.min_quantity - b.min_quantity),
     });
     setEditFeatures(product.features?.length ? product.features : [""]);
     setEditSpecs(
@@ -212,6 +220,12 @@ export default function AdminProductsPage() {
     const tiers = [...(editForm.pricing_tiers || [])];
     tiers[index] = { ...tiers[index], [field]: value };
     setEditForm({ ...editForm, pricing_tiers: tiers });
+  };
+
+  const updateQuantityDiscount = (index: number, field: "min_quantity" | "discount_bps", value: number) => {
+    const tiers = [...(editForm.quantity_discounts || [])];
+    tiers[index] = { ...tiers[index], [field]: value };
+    setEditForm({ ...editForm, quantity_discounts: tiers });
   };
 
   const updateFeature = (index: number, value: string) => {
@@ -739,6 +753,81 @@ export default function AdminProductsPage() {
                       )}
                     </div>
                   ))}
+                </div>
+              </div>
+
+              <div>
+                <div className="flex items-center justify-between mb-2">
+                  <div>
+                    <label className="text-xs font-medium text-neutral-400">Quantity Discounts</label>
+                    <p className="text-[11px] text-neutral-500">Applied to the rental charge only; fulfillment fees are charged once.</p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setEditForm({
+                      ...editForm,
+                      quantity_discounts: [
+                        ...(editForm.quantity_discounts || []),
+                        { id: "", min_quantity: 5, discount_bps: 4000 },
+                      ],
+                    })}
+                    className="text-xs px-2 py-0.5 rounded bg-neutral-800 text-teal-400 hover:bg-neutral-700 transition-colors"
+                  >
+                    + Add Discount
+                  </button>
+                </div>
+                <div className="space-y-2">
+                  {(editForm.quantity_discounts || []).map((tier, index) => {
+                    const discountPercent = tier.discount_bps / 100;
+                    const equivalentUnits = tier.min_quantity * (1 - tier.discount_bps / 10000);
+                    return (
+                      <div key={index} className="rounded-lg border border-neutral-800 bg-neutral-950 p-3">
+                        <div className="flex gap-2 items-center">
+                          <div className="relative flex-1">
+                            <input
+                              aria-label="Minimum quantity"
+                              type="number"
+                              min={2}
+                              value={tier.min_quantity}
+                              onChange={(event) => updateQuantityDiscount(index, "min_quantity", parseInt(event.target.value) || 2)}
+                              className="w-full px-3 pr-14 py-2 rounded-lg bg-neutral-800 border border-neutral-700 text-white text-sm"
+                            />
+                            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-neutral-500">units</span>
+                          </div>
+                          <div className="relative flex-1">
+                            <input
+                              aria-label="Discount percentage"
+                              type="number"
+                              min={0.01}
+                              max={99.99}
+                              step={0.01}
+                              value={discountPercent}
+                              onChange={(event) => updateQuantityDiscount(index, "discount_bps", Math.round((parseFloat(event.target.value) || 0) * 100))}
+                              className="w-full px-3 pr-8 py-2 rounded-lg bg-neutral-800 border border-neutral-700 text-white text-sm"
+                            />
+                            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-neutral-500">%</span>
+                          </div>
+                          <button
+                            type="button"
+                            onClick={() => setEditForm({
+                              ...editForm,
+                              quantity_discounts: (editForm.quantity_discounts || []).filter((_, tierIndex) => tierIndex !== index),
+                            })}
+                            className="px-2 text-neutral-600 hover:text-red-400 transition-colors"
+                            aria-label="Remove quantity discount"
+                          >
+                            ×
+                          </button>
+                        </div>
+                        <p className="mt-2 text-[11px] text-neutral-500">
+                          From {tier.min_quantity} units: {discountPercent.toFixed(2)}% off — {tier.min_quantity} units cost the equivalent of {equivalentUnits.toFixed(2)} units.
+                        </p>
+                      </div>
+                    );
+                  })}
+                  {(editForm.quantity_discounts || []).length === 0 && (
+                    <p className="text-xs text-neutral-600">No quantity discount configured.</p>
+                  )}
                 </div>
               </div>
             </div>

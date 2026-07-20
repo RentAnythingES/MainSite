@@ -17,6 +17,11 @@ export interface PricingTier {
   per_day_cents: number;
 }
 
+export interface QuantityDiscountTier {
+  min_quantity: number;
+  discount_bps: number;
+}
+
 export interface FulfillmentSelection {
   mode: FulfillmentMode;
   pickupLocationId?: string | null;
@@ -25,8 +30,12 @@ export interface FulfillmentSelection {
 }
 
 export interface BookingQuote {
+  quantity: number;
   rentalDays: number;
   perDayCents: number;
+  unitRentalSubtotalCents: number;
+  quantityDiscountBps: number;
+  quantityDiscountCents: number;
   rentalSubtotalCents: number;
   deliveryFeeCents: number;
   collectionFeeCents: number;
@@ -139,7 +148,7 @@ export function choosePricingTier(tiers: PricingTier[], rentalDays: number): Pri
 export async function getProductWithPricing(
   supabase: SupabaseClient<Database>,
   productSlug: string
-): Promise<{ product: BookingProduct; tiers: PricingTier[] }> {
+): Promise<{ product: BookingProduct; tiers: PricingTier[]; quantityDiscounts: QuantityDiscountTier[] }> {
   const { data: product, error: productError } = await supabase
     .from("products")
     .select("id, slug, name, stock_total, stock_available")
@@ -167,9 +176,20 @@ export async function getProductWithPricing(
     throw new Error("No pricing configured for product");
   }
 
+  const { data: quantityDiscounts, error: quantityDiscountError } = await supabase
+    .from("product_quantity_discounts")
+    .select("min_quantity, discount_bps")
+    .eq("product_id", bookingProduct.id)
+    .order("min_quantity", { ascending: true });
+
+  if (quantityDiscountError && quantityDiscountError.code !== "42P01" && quantityDiscountError.code !== "PGRST205") {
+    throw quantityDiscountError;
+  }
+
   return {
     product: bookingProduct,
     tiers: tiers as PricingTier[],
+    quantityDiscounts: (quantityDiscounts || []) as QuantityDiscountTier[],
   };
 }
 
@@ -197,15 +217,28 @@ export async function getServiceZone(
 
 export function quoteBooking(
   tiers: PricingTier[],
+  quantityDiscounts: QuantityDiscountTier[],
   startAt: Date,
   endAt: Date,
   fulfillment: FulfillmentSelection,
   deliveryZone: ServiceZoneFee | null,
-  collectionZone: ServiceZoneFee | null
+  collectionZone: ServiceZoneFee | null,
+  quantity = 1
 ): BookingQuote {
+  if (!Number.isInteger(quantity) || quantity < 1) {
+    throw new Error("Quantity must be a positive integer");
+  }
+
   const rentalDays = calculateRentalDays(startAt, endAt);
   const tier = choosePricingTier(tiers, rentalDays);
-  const rentalSubtotalCents = tier.per_day_cents * rentalDays;
+  const unitRentalSubtotalCents = tier.per_day_cents * rentalDays;
+  const undiscountedRentalSubtotalCents = unitRentalSubtotalCents * quantity;
+  const selectedQuantityDiscount = [...quantityDiscounts]
+    .sort((a, b) => b.min_quantity - a.min_quantity)
+    .find((candidate) => quantity >= candidate.min_quantity);
+  const quantityDiscountBps = selectedQuantityDiscount?.discount_bps || 0;
+  const quantityDiscountCents = Math.round(undiscountedRentalSubtotalCents * quantityDiscountBps / 10000);
+  const rentalSubtotalCents = undiscountedRentalSubtotalCents - quantityDiscountCents;
 
   let deliveryFeeCents = 0;
   let collectionFeeCents = 0;
@@ -225,16 +258,22 @@ export function quoteBooking(
   }
 
   return {
+    quantity,
     rentalDays,
     perDayCents: tier.per_day_cents,
+    unitRentalSubtotalCents,
+    quantityDiscountBps,
+    quantityDiscountCents,
     rentalSubtotalCents,
     deliveryFeeCents,
     collectionFeeCents,
     totalCents: rentalSubtotalCents + deliveryFeeCents + collectionFeeCents,
     pricingSnapshot: {
       timezone: BOOKING_TIMEZONE,
+      quantity,
       rentalDays,
       selectedTier: tier,
+      selectedQuantityDiscount: selectedQuantityDiscount || null,
       fulfillment,
       deliveryZone,
       collectionZone,

@@ -129,6 +129,7 @@ export async function GET(request: NextRequest) {
       .select(`
         *,
         pricing_tiers (id, min_days, per_day_cents),
+        quantity_discounts:product_quantity_discounts (id, min_quantity, discount_bps),
         category:categories (id, slug, name),
         product_localizations (locale, short_description, seo_title, seo_description),
         product_images (is_primary, rights_status)

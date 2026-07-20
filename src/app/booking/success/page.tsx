@@ -8,6 +8,7 @@ import { trackBookingEvent } from "@/lib/analytics";
 interface BookingInfo {
   bookingRef: string;
   productName: string;
+  quantity: number;
   startDate: string;
   endDate: string;
   totalCents: number;
@@ -98,6 +99,10 @@ function BookingSuccessContent() {
               <div className="flex justify-between">
                 <span className="text-neutral-500">Item</span>
                 <span className="font-medium">{booking.productName}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-neutral-500">Quantity</span>
+                <span className="font-medium">{booking.quantity || 1}</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-neutral-500">Dates</span>

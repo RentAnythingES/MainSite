@@ -10,6 +10,7 @@ interface BookingForPdf {
   start_date?: string | null;
   end_date?: string | null;
   rental_days?: number | null;
+  quantity?: number | null;
   fulfillment_mode?: string | null;
   delivery_address?: string | null;
   product?: { name?: string | null; brand?: string | null } | null;
@@ -89,6 +90,7 @@ export function buildBookingDocumentPdf(document: BookingDocument, booking: Book
   const startAt = toAscii(bookingSnapshot.rental_start_at) || booking.rental_start_at || booking.start_date;
   const endAt = toAscii(bookingSnapshot.rental_end_at) || booking.rental_end_at || booking.end_date;
   const fulfillmentMode = toAscii(bookingSnapshot.fulfillment_mode) || booking.fulfillment_mode;
+  const quantity = Number(bookingSnapshot.quantity || booking.quantity || 1);
   const isRefund = document.document_type === "refund_receipt";
   const taxBaseCents = document.tax_base_cents ?? Math.max(0, document.total_cents - document.tax_cents);
   const taxRate = document.tax_rate_bps ? `${(document.tax_rate_bps / 100).toFixed(2)}% IVA` : "IVA";
@@ -121,9 +123,10 @@ export function buildBookingDocumentPdf(document: BookingDocument, booking: Book
 
   content += pdfText("Rental", 330, 548, 13, "F2");
   content += drawKeyValue("Item", productName, 330, 526);
-  content += drawKeyValue("Start", formatDate(startAt), 330, 504);
-  content += drawKeyValue("End", formatDate(endAt), 330, 482);
-  content += drawKeyValue("Fulfillment", labelFulfillment(fulfillmentMode), 330, 460);
+  content += drawKeyValue("Quantity", quantity, 330, 504);
+  content += drawKeyValue("Start", formatDate(startAt), 330, 482);
+  content += drawKeyValue("End", formatDate(endAt), 330, 460);
+  content += drawKeyValue("Fulfillment", labelFulfillment(fulfillmentMode), 330, 438);
 
   content += pdfText("Charges", 48, 408, 13, "F2");
   content += pdfLine(48, 394, 564, 394, 0.6);
@@ -136,7 +139,7 @@ export function buildBookingDocumentPdf(document: BookingDocument, booking: Book
     content += pdfText("Refund / rectification", 58, y, 9, "F1");
     content += pdfText(formatMoney(document.total_cents, document.currency), 484, y, 9, "F1");
   } else {
-    content += pdfText(`Rental - ${productName}`, 58, y, 9, "F1");
+    content += pdfText(`Rental - ${productName} x ${quantity}`, 58, y, 9, "F1");
     content += pdfText(formatMoney(taxBaseCents, document.currency), 484, y, 9, "F1");
     y -= 22;
     content += pdfText(taxRate, 58, y, 9, "F1");

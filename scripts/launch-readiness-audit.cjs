@@ -32,7 +32,7 @@ async function main() {
   if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) throw new Error("Supabase service configuration is required");
   const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY);
   const legacySlugs = getLegacySlugs();
-  const tables = ["products", "booking_drafts", "booking_inventory_blocks", "bookings", "booking_payment_events", "booking_documents", "invoice_settings", "newsletter_subscribers", "system_incidents", "inventory_units", "inventory_unit_events", "booking_inventory_unit_assignments", "monitoring_runs"];
+  const tables = ["products", "product_quantity_discounts", "booking_drafts", "booking_inventory_blocks", "bookings", "booking_payment_events", "booking_documents", "invoice_settings", "newsletter_subscribers", "system_incidents", "inventory_units", "inventory_unit_events", "booking_inventory_unit_assignments", "monitoring_runs"];
   for (const table of tables) report.database[table] = await count(supabase, table);
   for (const [table, status] of Object.entries(report.database)) if (!status.available) report.critical.push(`${table} is unavailable: ${status.error}`);
 

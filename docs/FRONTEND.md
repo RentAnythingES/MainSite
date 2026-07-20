@@ -156,6 +156,10 @@ seller. Editorial pages use the same entity for author and publisher and referen
 or publish `Event` schema for an evergreen event guide without occurrence dates.
 
 ## Booking Flow (BookingWidget)
+
+Quantity is selected before availability. Changing quantity invalidates the previous
+quote, and the server remains authoritative for available units, volume discounts,
+and final totals. Rental charges scale with quantity; fulfillment fees do not.
 Online checkout is gated by server-side Supabase availability, blocked dates, and inventory holds. Product widgets route unavailable requests to WhatsApp.
 
 Normal v2 flow:

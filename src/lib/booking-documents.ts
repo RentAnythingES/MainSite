@@ -255,6 +255,7 @@ export async function createBookingDocumentForPaymentEvent(
     booking_snapshot: {
       booking_ref: booking.booking_ref || null,
       product_name: input.productName || null,
+      quantity: booking.quantity || 1,
       rental_start_at: booking.rental_start_at || booking.start_date || null,
       rental_end_at: booking.rental_end_at || booking.end_date || null,
       rental_days: booking.rental_days || null,

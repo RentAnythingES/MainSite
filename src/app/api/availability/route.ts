@@ -21,6 +21,7 @@ export async function GET(request: NextRequest) {
   const deliveryZoneId = searchParams.get("deliveryZoneId");
   const collectionZoneId = searchParams.get("collectionZoneId");
   const pickupLocationId = searchParams.get("pickupLocationId");
+  const quantity = Number(searchParams.get("quantity") || "1");
 
   if (!slug || (!startAtParam && !start) || (!endAtParam && !end)) {
     return NextResponse.json(
@@ -29,13 +30,17 @@ export async function GET(request: NextRequest) {
     );
   }
 
+  if (!Number.isInteger(quantity) || quantity < 1) {
+    return NextResponse.json({ error: "Quantity must be a positive integer" }, { status: 400 });
+  }
+
   try {
     const supabase = createServiceClient();
     await cleanupExpiredBookingDrafts(supabase);
 
     const startAt = parseRentalDate(startAtParam || `${start}T09:00:00+02:00`, "start");
     const endAt = parseRentalDate(endAtParam || `${end}T09:00:00+02:00`, "end");
-    const { product, tiers } = await getProductWithPricing(supabase, slug);
+    const { product, tiers, quantityDiscounts } = await getProductWithPricing(supabase, slug);
     const rentalDays = calculateRentalDays(startAt, endAt);
 
     // Get all blocked dates in range
@@ -82,11 +87,13 @@ export async function GET(request: NextRequest) {
     const collectionZone = await getServiceZone(supabase, collectionZoneId);
     const quote = quoteBooking(
       tiers,
+      quantityDiscounts,
       startAt,
       endAt,
       { mode, pickupLocationId, deliveryZoneId, collectionZoneId },
       deliveryZone,
-      collectionZone
+      collectionZone,
+      quantity
     );
 
     const [pickupLocationsResult, serviceZonesResult] = await Promise.all([
@@ -94,10 +101,10 @@ export async function GET(request: NextRequest) {
       fetchActiveServiceZones(supabase),
     ]);
 
-    const available =
-      product.stock_available > 0 &&
-      blockedDates.length === 0 &&
-      overlappingQuantity < product.stock_total;
+    const maxAvailableQuantity = blockedDates.length > 0
+      ? 0
+      : Math.max(0, Math.min(product.stock_available, product.stock_total - overlappingQuantity));
+    const available = quantity <= maxAvailableQuantity;
 
     return NextResponse.json({
       available,
@@ -105,6 +112,8 @@ export async function GET(request: NextRequest) {
       stockTotal: product.stock_total,
       stockAvailable: product.stock_available,
       overlappingQuantity,
+      requestedQuantity: quantity,
+      maxAvailableQuantity,
       rentalDays,
       quote,
       pickupLocations: pickupLocationsResult.error ? [] : pickupLocationsResult.data || [],

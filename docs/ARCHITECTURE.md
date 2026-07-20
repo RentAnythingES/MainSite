@@ -49,6 +49,7 @@ Supabase (CRUD products, pricing, bookings)
 | `categories` | Customer-facing categories plus inactive draft-only import categories | Public read |
 | `products` | 16 products with specs, features, stock | Public read (active only) |
 | `pricing_tiers` | Per-product tiered daily rates (in cents) | Public read |
+| `product_quantity_discounts` | Per-product volume discount thresholds in basis points | Admin/API only |
 | `bookings` | Customer bookings with lifecycle status | Admin only |
 | `blocked_dates` | Date-level inventory blocking | Admin only |
 | `pickup_locations` | Customer pickup options | Public read active |
@@ -143,11 +144,11 @@ GET /api/availability
 
 POST /api/booking-drafts
   Resolves product and pricing server-side
-  Creates a booking_draft and temporary inventory hold
+  Creates a quantity-aware booking_draft and temporary inventory hold
 
 POST /api/checkout
   Preferred input: draftId
-  Creates Stripe Checkout using the stored draft totals
+  Creates Stripe Checkout using the stored draft quantity and totals
 
 POST /api/webhooks/stripe
   Fulfills checkout.session.completed from booking_draft_id

@@ -139,6 +139,7 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session): Promis
     .from("bookings")
     .insert({
       product_id: meta.product_id,
+      quantity: parseInt(meta.quantity || "1"),
       customer_name: meta.customer_name,
       customer_email: meta.customer_email || session.customer_email || "",
       customer_phone: meta.customer_phone || null,
@@ -221,6 +222,7 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session): Promis
     customerEmail: meta.customer_email || session.customer_email || "",
     customerPhone: meta.customer_phone || undefined,
     productName: meta.product_name || "Rental equipment",
+    quantity: parseInt(meta.quantity || "1"),
     startDate: meta.start_date,
     endDate: meta.end_date,
     rentalDays: parseInt(meta.rental_days || "1"),
@@ -389,6 +391,7 @@ async function handleDraftCheckoutCompleted(
   const bookingDraft = draft as {
     id: string;
     product_id: string;
+    quantity: number;
     customer_name: string | null;
     customer_email: string | null;
     customer_phone: string | null;
@@ -487,6 +490,7 @@ async function handleDraftCheckoutCompleted(
     .from("bookings")
     .insert({
       product_id: bookingDraft.product_id,
+      quantity: bookingDraft.quantity,
       customer_name: bookingDraft.customer_name || session.customer_details?.name || "Customer",
       customer_email: bookingDraft.customer_email || session.customer_email || "",
       customer_phone: bookingDraft.customer_phone,
@@ -578,6 +582,7 @@ async function handleDraftCheckoutCompleted(
     customerEmail: bookingDraft.customer_email || session.customer_email || "",
     customerPhone: bookingDraft.customer_phone || undefined,
     productName: (product as { name?: string } | null)?.name || "Rental equipment",
+    quantity: bookingDraft.quantity,
     startDate,
     endDate,
     rentalDays: bookingDraft.rental_days,

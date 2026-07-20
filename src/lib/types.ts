@@ -70,6 +70,14 @@ interface PricingTierRow {
   created_at: string;
 }
 
+interface ProductQuantityDiscountRow {
+  id: string;
+  product_id: string;
+  min_quantity: number;
+  discount_bps: number;
+  created_at: string;
+}
+
 interface BookingRow {
   id: string;
   booking_ref: string;
@@ -78,6 +86,7 @@ interface BookingRow {
   customer_phone: string | null;
   customer_whatsapp: string | null;
   product_id: string;
+  quantity: number;
   start_date: string;
   end_date: string;
   rental_days: number;
@@ -177,6 +186,7 @@ interface ServiceZoneRow {
 interface BookingDraftRow {
   id: string;
   product_id: string;
+  quantity: number;
   customer_name: string | null;
   customer_email: string | null;
   customer_phone: string | null;
@@ -299,6 +309,11 @@ export interface Database {
         Row: PricingTierRow;
         Insert: Omit<PricingTierRow, "id" | "created_at">;
         Update: Partial<Omit<PricingTierRow, "id" | "created_at">>;
+      };
+      product_quantity_discounts: {
+        Row: ProductQuantityDiscountRow;
+        Insert: Omit<ProductQuantityDiscountRow, "id" | "created_at">;
+        Update: Partial<Omit<ProductQuantityDiscountRow, "id" | "created_at">>;
       };
       bookings: {
         Row: BookingRow;

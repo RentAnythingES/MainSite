@@ -27,6 +27,8 @@ export interface Product {
   seoTitle?: string;
   seoDescription?: string;
   contentStatus?: "draft" | "facts_verified" | "content_ready";
+  stockTotal?: number;
+  stockAvailable?: number;
   city: string;
   faqs?: ProductFAQ[];
 }

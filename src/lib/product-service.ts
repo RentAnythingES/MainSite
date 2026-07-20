@@ -254,6 +254,8 @@ function mapToProduct(row: Record<string, unknown>): Product {
     image: normalizeImageUrl(row.image_url),
     imageAlt: row.name as string,
     contentStatus: row.content_status as Product["contentStatus"],
+    stockTotal: Number(row.stock_total || 1),
+    stockAvailable: Number(row.stock_available || 0),
     city: (row.city as string) || "valencia",
     // FAQs are not yet in DB — will be added in future migration
     faqs: undefined,

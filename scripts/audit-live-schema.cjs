@@ -30,6 +30,7 @@ const expectedTables = [
   "product_faqs",
   "product_images",
   "product_localizations",
+  "product_quantity_discounts",
   "products",
   "service_zones",
   "system_incidents",
@@ -46,7 +47,8 @@ const expectedFunctions = [
 ];
 
 const expectedColumns = {
-  bookings: ["booking_draft_id", "rental_start_at", "rental_end_at", "timezone", "fulfillment_mode", "pickup_location_id", "delivery_zone_id", "collection_zone_id", "collection_address", "collection_notes", "collection_fee_cents", "pricing_snapshot", "stripe_checkout_session_id", "billing_name", "billing_company_name", "billing_tax_id", "billing_address", "invoice_requested"],
+  bookings: ["booking_draft_id", "quantity", "rental_start_at", "rental_end_at", "timezone", "fulfillment_mode", "pickup_location_id", "delivery_zone_id", "collection_zone_id", "collection_address", "collection_notes", "collection_fee_cents", "pricing_snapshot", "stripe_checkout_session_id", "billing_name", "billing_company_name", "billing_tax_id", "billing_address", "invoice_requested"],
+  booking_drafts: ["quantity"],
   pickup_locations: ["customer_instructions", "internal_notes", "lead_time_hours", "handoff_contact", "confirmation_template"],
   service_zones: ["customer_instructions", "internal_notes", "lead_time_hours", "same_day_cutoff", "delivery_window", "collection_window", "confirmation_template"],
   booking_documents: ["customer_access_token", "customer_access_expires_at", "customer_access_last_sent_at", "invoice_format", "tax_rate_bps", "tax_inclusive", "tax_base_cents", "customer_tax_id", "customer_billing_address", "rectifies_document_id", "immutable_at"],
@@ -76,6 +78,7 @@ const expectedRlsTables = [
   "product_faqs",
   "product_images",
   "product_localizations",
+  "product_quantity_discounts",
   "service_zones",
   "system_incidents",
 ];
