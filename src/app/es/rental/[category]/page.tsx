@@ -63,6 +63,12 @@ const categoryMetaES: Record<string, CategoryContent> = {
         description: "Compara barrios, actividades, transporte y el equipamiento voluminoso que conviene organizar localmente.",
         href: "/es/blog/valencia-with-kids-complete-guide",
       },
+      {
+        eyebrow: "Guía de decisión",
+        title: "Decide qué traer, alquilar o comprar",
+        description: "Compara cada artículo según la duración, el transporte y las condiciones del alojamiento.",
+        href: "/es/blog/rent-vs-buy-baby-gear-valencia",
+      },
     ],
     faqHeading: "Preguntas sobre el alquiler de material de bebé en Valencia",
     faqs: [

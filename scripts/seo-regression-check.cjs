@@ -4,6 +4,12 @@ const noindexProductSlug = process.env.SEO_NOINDEX_PRODUCT_SLUG || "toddler-bike
 const productCategory = process.env.SEO_PRODUCT_CATEGORY || "travel-outdoors";
 const referenceKitSlug = "family-beach-kit";
 const referenceBlogSlug = "rent-vs-buy-baby-gear-valencia";
+const legacyProductRedirects = [
+  ["/product/portable-ac", "/product/mobile-airconditioner-delonghi-pinguino-compact-classic"],
+  ["/es/product/portable-ac", "/es/product/mobile-airconditioner-delonghi-pinguino-compact-classic"],
+  ["/product/mobility-scooter-lightweight", "/product/mobility-scooter-lightweight-foldable"],
+  ["/es/product/mobility-scooter-lightweight", "/es/product/mobility-scooter-lightweight-foldable"],
+];
 const kitSlugs = [
   "family-beach-kit",
   "baby-arrival-kit",
@@ -26,8 +32,14 @@ const categoryChecks = [
   {
     slug: "baby-gear",
     pathways: ["/valencia/kits/baby-arrival-kit"],
-    englishPathways: ["/blog/valencia-with-kids-complete-guide"],
-    spanishPathways: ["/es/blog/valencia-with-kids-complete-guide"],
+    englishPathways: [
+      "/blog/valencia-with-kids-complete-guide",
+      "/blog/rent-vs-buy-baby-gear-valencia",
+    ],
+    spanishPathways: [
+      "/es/blog/valencia-with-kids-complete-guide",
+      "/es/blog/rent-vs-buy-baby-gear-valencia",
+    ],
     requiredEnglishText: ["Baby Equipment Rental in Valencia: FAQs"],
     requiredSpanishText: ["Preguntas sobre el alquiler de material de bebé en Valencia"],
     requiredSchemaTypes: ["FAQPage"],
@@ -97,6 +109,16 @@ async function get(path) {
   const text = await response.text();
   assert(response.ok, `${path} returned ${response.status}`);
   return text;
+}
+
+async function assertPermanentRedirect(source, destination) {
+  const response = await fetch(`${baseUrl}${source}`, { redirect: "manual" });
+  const location = response.headers.get("location");
+  assert(response.status === 308, `${source} returned ${response.status} instead of 308`);
+  assert(
+    location && new URL(location, baseUrl).pathname === destination,
+    `${source} redirects to ${location || "nothing"} instead of ${destination}`
+  );
 }
 
 function canonical(html) {
@@ -177,6 +199,12 @@ async function main() {
     get("/cookies"),
     get("/es/cookies"),
   ]);
+
+  await Promise.all(
+    legacyProductRedirects.map(([source, destination]) =>
+      assertPermanentRedirect(source, destination)
+    )
+  );
 
   assert(canonical(home) === "https://rentanything.es", "Homepage canonical is incorrect");
   for (const categoryPage of categoryPages) {

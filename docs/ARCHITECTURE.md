@@ -285,6 +285,10 @@ Protected by Supabase Auth. Server-side cookie check in `admin/layout.tsx` — r
 Prefix-based routing for SEO parity:
 - English: `/product/[slug]`, `/rental/[category]`, `/valencia`
 - Spanish: `/es/product/[slug]`, `/es/rental/[category]`, `/es/valencia`
+- Product slug replacements require explicit permanent redirects in
+  `next.config.ts` for both English and Spanish paths. Internal editorial and
+  bundle references must move to the current slug; redirects preserve existing
+  indexed URLs and external links rather than serving a product 404.
 
 | File | Purpose |
 |------|---------|

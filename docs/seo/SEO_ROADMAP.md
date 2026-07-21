@@ -21,6 +21,10 @@
   planning intent distinct from the transactional Baby & Toddler hub, uses a
   Valencia-specific decision matrix, reciprocal hreflang, Article/Breadcrumb/FAQ
   schema, original imagery, and regression-protected sitemap coverage (21 July 2026).
+- [x] Legacy product-slug continuity: stale portable-AC and lightweight-scooter
+  editorial pathways now target their current live slugs, while reciprocal EN/ES
+  permanent redirects protect historic URLs. The Baby & Toddler hub also provides
+  a second contextual inbound path to the new decision guide (21 July 2026).
 - [x] About and Contact trust-page parity: inaccurate response-time, hygiene, brand,
   pickup and fulfilment claims were replaced with verifiable copy; `/es/about` and
   `/es/contact` add localized navigation, contact forms, confirmation emails,

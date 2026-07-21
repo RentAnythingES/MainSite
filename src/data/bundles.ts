@@ -232,11 +232,11 @@ export const rentalBundles: RentalBundle[] = [
       { name: "Cooler or beach shade add-on" },
     ],
     addons: [
-      { name: "Portable AC", note: "Best for bedrooms with window venting", productSlug: "portable-ac" },
+      { name: "Portable AC", note: "Best for bedrooms with window venting", productSlug: "mobile-airconditioner-delonghi-pinguino-compact-classic" },
       { name: "Air purifier", note: "For air quality and allergies", productSlug: "air-purifier" },
       { name: "Beach umbrella set", note: "For shade away from the apartment", productSlug: "beach-umbrella-set" },
     ],
-    relatedProductSlugs: ["portable-ac", "air-purifier", "beach-umbrella-set"],
+    relatedProductSlugs: ["mobile-airconditioner-delonghi-pinguino-compact-classic", "air-purifier", "beach-umbrella-set"],
     relatedGuideSlugs: ["valencia-summer-survival-guide", "best-beaches-valencia-families"],
     seo: {
       title: "Summer Apartment Comfort Rental in Valencia",
@@ -271,10 +271,10 @@ export const rentalBundles: RentalBundle[] = [
     ],
     addons: [
       { name: "Lightweight transport wheelchair", note: "For reliable companion-assisted support", productSlug: "transport-wheelchair" },
-      { name: "Mobility scooter", note: "For longer distances", productSlug: "mobility-scooter-lightweight" },
+      { name: "Mobility scooter", note: "For longer distances", productSlug: "mobility-scooter-lightweight-foldable" },
       { name: "Portable ramp", note: "Only where dimensions and safety are confirmed" },
     ],
-    relatedProductSlugs: ["transport-wheelchair", "mobility-scooter-lightweight", "rollator-walker"],
+    relatedProductSlugs: ["transport-wheelchair", "mobility-scooter-lightweight-foldable", "rollator-walker"],
     relatedGuideSlugs: ["wheelchair-accessibility-valencia"],
     seo: {
       title: "Accessible Valencia Kit Rental",
@@ -311,10 +311,10 @@ export const rentalBundles: RentalBundle[] = [
     addons: [
       { name: "Rollator walker", note: "For stable walking support", productSlug: "rollator-walker" },
       { name: "Lightweight transport wheelchair", note: "For companion-assisted longer days out", productSlug: "transport-wheelchair" },
-      { name: "Portable AC", note: "For hot bedrooms where setup allows it", productSlug: "portable-ac" },
-      { name: "Mobility scooter", note: "For longer distances after careful confirmation", productSlug: "mobility-scooter-lightweight" },
+      { name: "Portable AC", note: "For hot bedrooms where setup allows it", productSlug: "mobile-airconditioner-delonghi-pinguino-compact-classic" },
+      { name: "Mobility scooter", note: "For longer distances after careful confirmation", productSlug: "mobility-scooter-lightweight-foldable" },
     ],
-    relatedProductSlugs: ["rollator-walker", "transport-wheelchair", "portable-ac"],
+    relatedProductSlugs: ["rollator-walker", "transport-wheelchair", "mobile-airconditioner-delonghi-pinguino-compact-classic"],
     relatedGuideSlugs: ["wheelchair-accessibility-valencia", "valencia-summer-survival-guide"],
     seo: {
       title: "Grandparents Visiting Kit Rental in Valencia",
@@ -349,10 +349,10 @@ export const rentalBundles: RentalBundle[] = [
     ],
     addons: [
       { name: "Air purifier", note: "For apartment air quality", productSlug: "air-purifier" },
-      { name: "Portable AC", note: "For hot kitchen/living spaces where suitable", productSlug: "portable-ac" },
+      { name: "Portable AC", note: "For hot kitchen/living spaces where suitable", productSlug: "mobile-airconditioner-delonghi-pinguino-compact-classic" },
       { name: "High chair", note: "For family long stays", productSlug: "high-chair" },
     ],
-    relatedProductSlugs: ["air-purifier", "portable-ac", "high-chair"],
+    relatedProductSlugs: ["air-purifier", "mobile-airconditioner-delonghi-pinguino-compact-classic", "high-chair"],
     relatedGuideSlugs: ["digital-nomad-guide-valencia", "valencia-with-kids-complete-guide"],
     seo: {
       title: "Long-Stay Kitchen Equipment Rental in Valencia",

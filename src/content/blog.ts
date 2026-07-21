@@ -225,7 +225,7 @@ export const blogPosts: BlogPost[] = [
       {
         heading: "Practical Tips for Wheelchair Users",
         paragraphs: [
-          "<strong>Renting vs bringing equipment:</strong> If you use a manual wheelchair and want more freedom, renting a <a href=\"/product/mobility-scooter-lightweight\">lightweight mobility scooter</a> for your trip gives you independence without the hassle of transporting heavy equipment by air. Airlines are notoriously rough with mobility equipment, and local rental eliminates that risk entirely.",
+          "<strong>Renting vs bringing equipment:</strong> If you use a manual wheelchair and want more freedom, renting a <a href=\"/product/mobility-scooter-lightweight-foldable\">lightweight mobility scooter</a> for your trip gives you independence without the hassle of transporting heavy equipment by air. Airlines are notoriously rough with mobility equipment, and local rental eliminates that risk entirely.",
           "<strong>Accommodation:</strong> When booking, always confirm \"adapted room\" specifics directly with the property — definitions vary wildly. Ask about door widths, roll-in showers, and grab bars. Holiday apartments in newer buildings (post-2006 Spanish building code) tend to have better accessibility than older hotels.",
           "<strong>Disability discounts:</strong> If you hold an official disability certificate (the Spanish 33% certificado de discapacidad, or an equivalent EU card), carry it everywhere. Major attractions, public transport, and some parking areas offer discounts or free access.",
           "<strong>Planning resources:</strong> The <a href=\"https://www.visitvalencia.com\" target=\"_blank\" rel=\"noopener\">Visit Valencia</a> website has a dedicated accessibility section where you can filter hotels, restaurants, and attractions by accessibility level. It's the best official resource available.",
@@ -263,7 +263,7 @@ export const blogPosts: BlogPost[] = [
       },
       {
         title: "Lightweight Mobility Scooter",
-        href: "/product/mobility-scooter-lightweight",
+        href: "/product/mobility-scooter-lightweight-foldable",
         description: "Portable scooter perfect for city sightseeing"
       },
       {
@@ -410,7 +410,7 @@ export const blogPosts: BlogPost[] = [
         paragraphs: [
           "Many holiday rentals in Valencia don't have air conditioning — or have a single underpowered unit in the bedroom. If your accommodation is hot, here's what actually works:",
           "<strong>Shutters are everything:</strong> Spanish buildings have external shutters (persianas) for a reason. Keep them closed from about 11am to 7pm. This single habit makes more difference than any fan. Open windows wide at night for cross-ventilation when the temperature drops.",
-          "<strong>Portable AC (pinguino):</strong> If your apartment doesn't have AC and you're staying more than a few days in peak summer, a <a href=\"/product/portable-ac\">portable air conditioning unit</a> is genuinely worth renting. They're most effective in bedrooms — a cool room for sleeping transforms your entire summer experience. Locals call them <em>pinguinos</em> (penguins).",
+          "<strong>Portable AC (pinguino):</strong> If your apartment doesn't have AC and you're staying more than a few days in peak summer, a <a href=\"/product/mobile-airconditioner-delonghi-pinguino-compact-classic\">portable air conditioning unit</a> is genuinely worth renting. They're most effective in bedrooms — a cool room for sleeping transforms your entire summer experience. Locals call them <em>pinguinos</em> (penguins).",
           "<strong>Air purifier bonus:</strong> If you're sensitive to air quality, an <a href=\"/product/air-purifier\">air purifier</a> with a fan function serves double duty. Valencia occasionally gets Saharan dust (calima) in summer, and having filtered air makes a noticeable difference on those days.",
           "<strong>Avoid cooking heat:</strong> Use your oven as little as possible. Embrace gazpacho, salads, and the menu del dia at local restaurants. Spanish summer cooking is designed to avoid heating up the kitchen."
         ]
@@ -471,7 +471,7 @@ export const blogPosts: BlogPost[] = [
       },
       {
         title: "Portable Air Conditioner",
-        href: "/product/portable-ac",
+        href: "/product/mobile-airconditioner-delonghi-pinguino-compact-classic",
         description: "Cool your apartment — delivered and ready to use"
       },
       {

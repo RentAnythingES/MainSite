@@ -68,6 +68,12 @@ const categoryMeta: Record<string, CategoryContent> = {
         description: "Compare neighbourhoods, family activities, transport and the bulky equipment worth arranging locally.",
         href: "/blog/valencia-with-kids-complete-guide",
       },
+      {
+        eyebrow: "Decision guide",
+        title: "Decide What to Bring, Rent or Buy",
+        description: "Use a practical item-by-item framework for your trip length, transport plan and accommodation.",
+        href: "/blog/rent-vs-buy-baby-gear-valencia",
+      },
     ],
     faqHeading: "Baby Equipment Rental in Valencia: FAQs",
     faqs: [

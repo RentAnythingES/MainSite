@@ -170,7 +170,7 @@ export const spanishBlogPosts: BlogPost[] = [
           "Cierra persianas y cortinas antes de que el sol caliente las habitaciones. En muchos pisos valencianos, mantener las persianas bajadas entre el final de la mañana y la tarde marca más diferencia que dejar un ventilador funcionando todo el día.",
           "Ventila cuando la temperatura exterior baje, normalmente por la noche y a primera hora. Si puedes crear corriente entre dos fachadas o ventanas opuestas, el aire acumulado sale con más rapidez.",
           "Confirma con el alojamiento qué sistema de climatización existe y en qué habitaciones. Una unidad pequeña en el salón no garantiza una temperatura cómoda en el dormitorio.",
-          "Si no hay aire acondicionado, puedes comprobar la disponibilidad de un <a href=\"/es/product/portable-ac\">aire acondicionado portátil</a>. Funciona mejor en una habitación cerrada y requiere una salida adecuada para el tubo de aire caliente.",
+          "Si no hay aire acondicionado, puedes comprobar la disponibilidad de un <a href=\"/es/product/mobile-airconditioner-delonghi-pinguino-compact-classic\">aire acondicionado portátil</a>. Funciona mejor en una habitación cerrada y requiere una salida adecuada para el tubo de aire caliente.",
         ],
       },
       {
@@ -233,7 +233,7 @@ export const spanishBlogPosts: BlogPost[] = [
       },
       {
         title: "Aire acondicionado portátil",
-        href: "/es/product/portable-ac",
+        href: "/es/product/mobile-airconditioner-delonghi-pinguino-compact-classic",
         description: "Comprueba compatibilidad y disponibilidad para tus fechas",
       },
       {
@@ -408,7 +408,7 @@ export const spanishBlogPosts: BlogPost[] = [
         paragraphs: [
           "El Jardín del Turia permite recorrer varios kilómetros sin tráfico y conecta el entorno del Bioparc con la Ciutat de les Arts i les Ciències. Hay rampas entre el antiguo cauce y la calle, pero la pendiente y la distancia varían; elegir de antemano el punto de entrada y salida evita desvíos innecesarios.",
           "La Ciutat de les Arts i les Ciències tiene grandes superficies peatonales y accesos adaptados en sus edificios principales. Consulta la información oficial de cada recinto para conocer ascensores, aseos, acompañantes y posibles descuentos. Un certificado de discapacidad no produce las mismas condiciones en todas las taquillas.",
-          "En el centro histórico, las plazas principales suelen ser más fáciles que las calles laterales. Diseña un recorrido corto entre puntos confirmados y deja tiempo extra. Una <a href=\"/es/product/mobility-scooter-lightweight\">scooter de movilidad</a> puede aportar autonomía en distancias largas, pero su radio de giro, batería y dimensiones también condicionan ascensores y transporte.",
+          "En el centro histórico, las plazas principales suelen ser más fáciles que las calles laterales. Diseña un recorrido corto entre puntos confirmados y deja tiempo extra. Una <a href=\"/es/product/mobility-scooter-lightweight-foldable\">scooter de movilidad</a> puede aportar autonomía en distancias largas, pero su radio de giro, batería y dimensiones también condicionan ascensores y transporte.",
         ],
       },
       {
@@ -471,7 +471,7 @@ export const spanishBlogPosts: BlogPost[] = [
       },
       {
         title: "Scooter de movilidad ligera",
-        href: "/es/product/mobility-scooter-lightweight",
+        href: "/es/product/mobility-scooter-lightweight-foldable",
         description: "Autonomía para trayectos largos tras comprobar compatibilidad",
       },
       {
