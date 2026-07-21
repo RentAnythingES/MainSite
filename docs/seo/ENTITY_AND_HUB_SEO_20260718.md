@@ -67,9 +67,10 @@ represented using confirmed business information.
    six existing category owners; do not create new pages from impressions alone.
 2. Expand Spanish planning coverage beyond products/categories so Spanish guides
    can support the same commercial clusters without translating weak content.
-3. Add evidence-based comparison/help content around delivery, pickup, deposits,
-   setup constraints and choosing the right equipment—questions that improve
-   conversion as well as long-tail coverage.
+3. **Completed 21 July 2026:** add evidence-based comparison/help content around
+   delivery, pickup, deposits, post-booking transport changes, setup constraints,
+   and choosing the right equipment. `/how-it-works` and its Spanish counterpart
+   own this operational intent rather than introducing a competing thin URL.
 4. Build authority off-site through the Google Business Profile, accommodation
    partners and relevant Valencia/family/accessibility directories.
 

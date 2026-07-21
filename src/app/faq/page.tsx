@@ -64,6 +64,10 @@ const faqSections = [
         q: "How does return work?",
         a: "Return follows the fulfillment option in your booking: bring the item back to the agreed pickup point, or hand it over at the collection address and time if you paid for collection. Your confirmation messages contain the relevant instructions.",
       },
+      {
+        q: "Can I change from self-pickup to delivery after booking?",
+        a: "Contact us before handover. If the confirmed or paid booking is still eligible and delivery is operationally available, we can send a private, expiring quote. You pay only the added transport fee through Stripe before the booking is updated.",
+      },
     ],
   },
   {
@@ -71,19 +75,19 @@ const faqSections = [
     items: [
       {
         q: "Are the products safe and clean?",
-        a: "Absolutely. Every item is deep-cleaned and sanitised between rentals using professional-grade cleaning products. Safety-critical items (car seats, cribs, wheelchairs) are inspected against manufacturer guidelines before every rental.",
+        a: "We clean and check items between rentals. Safety-critical products are reviewed using the available manufacturer information and our operational process before handover.",
       },
       {
         q: "What brands do you stock?",
-        a: "We carry premium brands including Cybex, Stokke, BabyBjörn, Maxi-Cosi, Kinderkraft, Invacare, Dyson, and more. We believe in quality over quantity.",
+        a: "Our catalogue includes different brands and models according to current inventory. Each product page identifies the brand and verified specifications when known.",
       },
       {
         q: "What if an item is damaged during my rental?",
-        a: "Normal wear and tear is expected and covered. For significant damage, the repair or replacement cost may be deducted from your security deposit. We'll always contact you first and provide photos before any charges.",
+        a: "Normal wear and tear is expected. If significant damage occurs, contact us promptly. We inspect the item and explain any documented repair or replacement cost before requesting an additional payment; the current checkout does not rely on an automatic security deposit.",
       },
       {
         q: "Can I request a specific product not listed?",
-        a: "Yes! We're constantly expanding our catalog. Contact us on WhatsApp with what you need and we'll do our best to source it for you.",
+        a: "Yes. Send us the item, dates, and location on WhatsApp. We can check whether a suitable alternative can be sourced, but we do not promise inventory until it is confirmed.",
       },
     ],
   },
@@ -96,11 +100,11 @@ const faqSections = [
       },
       {
         q: "Do you serve other cities?",
-        a: "Currently we serve Valencia only. Barcelona and Madrid are on our roadmap — sign up for our newsletter to be the first to know when we expand.",
+        a: "We currently focus on Valencia. We will expand coverage only when we can support a reliable local operation.",
       },
       {
         q: "Do you work with hotels and property managers?",
-        a: "Yes! We offer B2B partnerships for hotels, Airbnb hosts, and property managers. Contact us for bulk rates and dedicated support.",
+        a: "Yes. We can discuss defined equipment and handover arrangements with hotels, holiday apartments, relocation agencies, and property managers. See our host-services page for the current scope.",
       },
     ],
   },

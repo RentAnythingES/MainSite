@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import FulfillmentDecisionGuide from "@/components/FulfillmentDecisionGuide";
 
 export const metadata: Metadata = {
   title: "Cómo Funciona el Alquiler de Equipamiento",
@@ -74,6 +75,27 @@ const steps = [
   },
 ];
 
+const fulfillmentChoices = [
+  {
+    title: "Recogida por el cliente",
+    label: "Gratis",
+    description: "Recoge el artículo en un punto activo y sigue las instrucciones de devolución incluidas en la confirmación.",
+    points: ["Elige entre los puntos mostrados durante la reserva", "Sin tarifa de entrega ni recogida", "Adecuado si puedes transportar el artículo con seguridad"],
+  },
+  {
+    title: "Solo entrega",
+    label: "Un trayecto de servicio",
+    description: "Entregamos el artículo al inicio. La confirmación explica el método y lugar acordados para la devolución.",
+    points: ["La tarifa se calcula según la zona seleccionada", "Útil cuando la llegada es la parte más difícil", "La devolución no se recoge salvo acuerdo adicional"],
+  },
+  {
+    title: "Entrega y recogida",
+    label: "Puerta a puerta",
+    description: "Entregamos al inicio y recogemos al final en las direcciones, zonas y horas confirmadas en la reserva.",
+    points: ["Ambas tarifas aparecen antes del pago", "Las direcciones de entrega y recogida pueden ser distintas", "Alguien debe estar disponible en ambos momentos"],
+  },
+];
+
 const faqs = [
   {
     q: "¿Con cuánta antelación debería reservar?",
@@ -90,6 +112,14 @@ const faqs = [
   {
     q: "¿Qué ocurre si necesito ampliar el alquiler?",
     a: "Escríbenos por WhatsApp o correo antes de que termine el alquiler. La ampliación depende de la siguiente reserva del artículo y solo se confirma después de comprobar la disponibilidad y cualquier importe adicional.",
+  },
+  {
+    q: "¿Qué ocurre si elijo recogida y después necesito entrega?",
+    a: "Contáctanos antes de la entrega inicial. Si la reserva sigue siendo apta y podemos prestar el servicio, enviamos un presupuesto privado para solo entrega o entrega con recogida. Pagas únicamente el transporte añadido mediante Stripe antes de actualizar la reserva.",
+  },
+  {
+    q: "¿Se añade una fianza al pagar online?",
+    a: "El proceso de pago online actual no añade una fianza automáticamente. Si en el futuro se aplica una fianza específica a un artículo, mostraremos el importe y las condiciones de devolución antes del pago.",
   },
 ];
 
@@ -172,6 +202,16 @@ export default function SpanishHowItWorksPage() {
           </div>
         </div>
       </section>
+
+      <FulfillmentDecisionGuide
+        heading="Elige recogida, entrega o servicio completo"
+        intro="El formulario muestra únicamente las opciones activas para tus fechas y ubicación. Compara quién realiza cada trayecto, la tarifa visible antes del pago y quién debe estar presente en cada entrega."
+        choices={fulfillmentChoices}
+        changeTitle="¿Han cambiado tus planes después de reservar?"
+        changeBody="Si elegiste recogida por el cliente, contáctanos antes de la entrega inicial. Las reservas confirmadas o pagadas que sigan siendo aptas pueden recibir un presupuesto privado y temporal. La reserva solo cambia cuando se confirma el pago adicional mediante Stripe."
+        depositTitle="Sin fianza automática oculta"
+        depositBody="El pago online actual no añade una fianza automáticamente. Cualquier futura fianza específica debe mostrarse junto con sus condiciones de devolución antes del pago."
+      />
 
       <section className="section bg-neutral-50" id="how-it-works-faq">
         <div className="container-site max-w-3xl">

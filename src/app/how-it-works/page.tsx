@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import FulfillmentDecisionGuide from "@/components/FulfillmentDecisionGuide";
 
 export const metadata: Metadata = {
   title: "How It Works — Browse, Book, Deliver, Return",
@@ -74,6 +75,27 @@ const steps = [
   },
 ];
 
+const fulfillmentChoices = [
+  {
+    title: "Self-pickup",
+    label: "Free",
+    description: "Collect the item from an active pickup point and follow the return instructions in your booking confirmation.",
+    points: ["Choose from the pickup points shown in checkout", "No delivery or collection fee", "Best when you can transport the item safely"],
+  },
+  {
+    title: "Delivery only",
+    label: "One service leg",
+    description: "We deliver at the start of the rental. Your confirmation explains the agreed return method and location.",
+    points: ["Delivery fee is calculated from the selected zone", "Useful when arrival is the difficult part", "Return is not collected unless separately arranged"],
+  },
+  {
+    title: "Delivery and collection",
+    label: "Door-to-door",
+    description: "We deliver at the start and collect at the end using the addresses, zones, and times confirmed in the booking.",
+    points: ["Both service fees are shown before payment", "Delivery and collection addresses can differ", "Someone must be available for both handovers"],
+  },
+];
+
 const faqs = [
   {
     q: "How far in advance should I book?",
@@ -90,6 +112,14 @@ const faqs = [
   {
     q: "What if I need to extend my rental?",
     a: "Message us on WhatsApp or email before the rental ends. Extensions depend on the item's next booking and are confirmed only after we verify availability and any additional charge.",
+  },
+  {
+    q: "What if I choose pickup and later need delivery?",
+    a: "Contact us before handover. If the booking is still eligible and we can provide the service, we send a private quote for delivery only or delivery and collection. You pay only the added transport fee through Stripe before the booking is updated.",
+  },
+  {
+    q: "Do you add a security deposit at checkout?",
+    a: "No automatic security deposit is added by the current online checkout. If a future item-specific deposit applies, its amount and return conditions will be shown before payment.",
   },
 ];
 
@@ -184,6 +214,16 @@ export default function HowItWorksPage() {
           </div>
         </div>
       </section>
+
+      <FulfillmentDecisionGuide
+        heading="Choose pickup, delivery, or collection"
+        intro="The booking form shows only the active options for your dates and location. Compare who handles each journey, the fee shown before payment, and who needs to be present at handover."
+        choices={fulfillmentChoices}
+        changeTitle="Plans changed after booking?"
+        changeBody="If you originally chose self-pickup, contact us before handover. Eligible confirmed or paid bookings can receive a private, expiring transport quote. The rental booking changes only after the added Stripe payment is confirmed."
+        depositTitle="No hidden automatic deposit"
+        depositBody="Current online checkout does not add a security deposit automatically. Any future item-specific deposit must be disclosed with its return conditions before you pay."
+      />
 
       {/* Quick FAQ */}
       <section className="section bg-neutral-50" id="how-it-works-faq">

@@ -418,6 +418,10 @@ Priority pilot logic: start with one narrow bundle, collect usage evidence, then
 - [x] Correct technical-schema auditing for localized hubs and event articles,
   and enforce both decoded and compressed HTML budgets against the largest
   published Discover guide.
+- [x] Add bilingual pickup-versus-delivery decision support and explain the
+  paid post-booking transport-change flow without creating another thin URL.
+- [x] Align English and Spanish FAQ claims on deposits, damage, cleaning,
+  brands, product sourcing, expansion, and accommodation partnerships.
 
 ---
 

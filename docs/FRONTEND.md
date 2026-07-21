@@ -61,6 +61,7 @@ route handling while excluding APIs and static assets.
 - `ContactForm` — contact form with Resend
 - `CookieConsent` — locale-aware analytics choice stored in browser local storage
 - `TrackedLink` — internal-link wrapper for consent-aware GA4 pathway events; event parameters must contain route/content identifiers only, never customer-entered data
+- `FulfillmentDecisionGuide` — shared server-rendered EN/ES comparison for pickup, delivery-only, delivery-and-collection, amendments, and deposit clarity
 - `NewsletterSignup` — locale-aware explicit marketing consent and unsubscribe messaging
 - `NewsletterSignup` — newsletter consent capture with `/api/newsletter`
 - `DestinationMap` — dependency-free schematic map with city/day-trip views and keyboard-accessible guide selection

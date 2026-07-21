@@ -355,13 +355,13 @@ async function main() {
   assert(alternate(howItWorksEs, "en") === "https://rentanything.es/how-it-works", "Spanish How It Works lacks English hreflang");
   assertPageEnhancements(
     howItWorks,
-    ["Extensions depend on the item&#x27;s next booking"],
+    ["Extensions depend on the item&#x27;s next booking", "Choose pickup, delivery, or collection", "You pay only the added transport fee through Stripe"],
     ["HowTo", "FAQPage"],
     "How It Works page"
   );
   assertPageEnhancements(
     howItWorksEs,
-    ["La ampliación depende de la siguiente reserva del artículo"],
+    ["La ampliación depende de la siguiente reserva del artículo", "Elige recogida, entrega o servicio completo", "Pagas únicamente el transporte añadido mediante Stripe"],
     ["HowTo", "FAQPage"],
     "Spanish How It Works page"
   );

@@ -64,6 +64,10 @@ const faqSections = [
         q: "¿Cómo funciona la devolución?",
         a: "La devolución sigue la modalidad elegida en la reserva: devuelve el artículo en el punto acordado o entrégalo en la dirección y hora de recogida si contrataste ese servicio. Los mensajes de confirmación incluyen las instrucciones correspondientes.",
       },
+      {
+        q: "¿Puedo cambiar la recogida por entrega después de reservar?",
+        a: "Contáctanos antes de la entrega inicial. Si la reserva confirmada o pagada sigue siendo apta y el servicio está disponible, podemos enviar un presupuesto privado y temporal. Pagas únicamente el transporte añadido mediante Stripe antes de actualizar la reserva.",
+      },
     ],
   },
   {
