@@ -4,6 +4,7 @@ export interface BundleItem {
   name: string;
   quantity?: string;
   note?: string;
+  productSlug?: string;
 }
 
 export interface BundleAddon {
@@ -53,7 +54,7 @@ export const rentalBundles: RentalBundle[] = [
     bestFor: ["Beach days with children", "Malvarrosa or Patacona stays", "Families without a car", "Hot July and August trips"],
     includedItems: [
       { name: "Beach trolley or wagon", note: "For towels, shade, toys, and drinks" },
-      { name: "Beach umbrella or shade tent" },
+      { name: "Beach umbrella or shade tent", productSlug: "beach-umbrella-set" },
       { name: "Cooler bag or box" },
       { name: "Beach chairs or mat", quantity: "2-4" },
       { name: "Sand toys", note: "Age-appropriate starter set" },
@@ -98,9 +99,9 @@ export const rentalBundles: RentalBundle[] = [
     accent: "teal",
     bestFor: ["Babies and toddlers", "Hotels and Airbnbs", "1-4 week family stays", "Parents who want to pack lighter"],
     includedItems: [
-      { name: "Travel cot", note: "With fitted sheet where available" },
-      { name: "High chair" },
-      { name: "Compact stroller" },
+      { name: "Travel cot", note: "With fitted sheet where available", productSlug: "travel-crib" },
+      { name: "High chair", productSlug: "high-chair" },
+      { name: "Compact stroller", productSlug: "compact-stroller" },
       { name: "Baby bath" },
       { name: "Play mat" },
       { name: "Baby monitor", note: "Subject to stock and apartment layout" },
@@ -144,7 +145,7 @@ export const rentalBundles: RentalBundle[] = [
     accent: "green",
     bestFor: ["Toddlers", "Turia Gardens days", "Long city walks", "Families staying near the centre or beach"],
     includedItems: [
-      { name: "Compact stroller" },
+      { name: "Compact stroller", productSlug: "compact-stroller" },
       { name: "Kids scooter or balance bike", note: "Subject to age and stock" },
       { name: "Helmet" },
       { name: "Snack tray or small travel accessory" },
@@ -184,11 +185,11 @@ export const rentalBundles: RentalBundle[] = [
     accent: "blue",
     bestFor: ["Digital nomads", "Long-stay professionals", "Couples working remotely", "Apartments without proper desks"],
     includedItems: [
-      { name: "External monitor", note: "27-inch where available" },
+      { name: "External monitor", note: "27-inch where available", productSlug: "monitor-27" },
       { name: "Laptop stand" },
       { name: "Keyboard and mouse" },
       { name: "USB-C hub or cable kit" },
-      { name: "Ergonomic chair", note: "Optional depending on apartment and delivery constraints" },
+      { name: "Ergonomic chair", note: "Optional depending on apartment and delivery constraints", productSlug: "ergonomic-chair" },
     ],
     addons: [
       { name: "Standing desk", note: "For longer stays", productSlug: "standing-desk" },
@@ -225,7 +226,7 @@ export const rentalBundles: RentalBundle[] = [
     includedItems: [
       { name: "Portable AC or fan", note: "Selected based on room and availability" },
       { name: "Blackout blind", note: "Helpful for bedrooms and naps" },
-      { name: "Air purifier", note: "Useful during dust or allergy periods" },
+      { name: "Air purifier", note: "Useful during dust or allergy periods", productSlug: "air-purifier" },
       { name: "Cooler or beach shade add-on" },
     ],
     addons: [

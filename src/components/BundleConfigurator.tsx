@@ -9,6 +9,17 @@ interface BundleConfiguratorProps {
   bundle: RentalBundle;
 }
 
+type AvailabilityResult = {
+  status: "available" | "unavailable" | "partial";
+  knownRentalSubtotalCents: number;
+  lines: Array<{
+    name: string;
+    status: "available" | "unavailable" | "manual_confirmation";
+    maxAvailableQuantity: number | null;
+    note: string | null;
+  }>;
+};
+
 function todayIsoDate() {
   return new Date().toISOString().slice(0, 10);
 }
@@ -26,6 +37,9 @@ export default function BundleConfigurator({ bundle }: BundleConfiguratorProps) 
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState("");
   const [requestRef, setRequestRef] = useState("");
+  const [availability, setAvailability] = useState<AvailabilityResult | null>(null);
+  const [checkingAvailability, setCheckingAvailability] = useState(false);
+  const [availabilityError, setAvailabilityError] = useState("");
   const [selectedItems, setSelectedItems] = useState(() => new Set(bundle.includedItems.map((item) => item.name)));
   const [selectedAddons, setSelectedAddons] = useState<Set<string>>(new Set());
 
@@ -40,6 +54,8 @@ export default function BundleConfigurator({ bundle }: BundleConfiguratorProps) 
   );
 
   function toggleItem(itemName: string) {
+    setAvailability(null);
+    setAvailabilityError("");
     setSelectedItems((current) => {
       const next = new Set(current);
       if (next.has(itemName)) {
@@ -52,6 +68,8 @@ export default function BundleConfigurator({ bundle }: BundleConfiguratorProps) 
   }
 
   function toggleAddon(addonName: string) {
+    setAvailability(null);
+    setAvailabilityError("");
     setSelectedAddons((current) => {
       const next = new Set(current);
       if (next.has(addonName)) {
@@ -61,6 +79,37 @@ export default function BundleConfigurator({ bundle }: BundleConfiguratorProps) 
       }
       return next;
     });
+  }
+
+  async function handleAvailabilityCheck() {
+    setCheckingAvailability(true);
+    setAvailabilityError("");
+    setAvailability(null);
+    try {
+      const response = await fetch("/api/bundle-availability", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          bundleSlug: bundle.slug,
+          startDate,
+          endDate,
+          selectedItems: selectedItemNames,
+          selectedAddons: selectedAddonNames,
+        }),
+      });
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.error || "Could not check availability");
+      setAvailability(data);
+      trackEvent("bundle_availability_check", {
+        event_category: "bundle",
+        bundle_slug: bundle.slug,
+        result: data.status,
+      });
+    } catch (error) {
+      setAvailabilityError(error instanceof Error ? error.message : "Could not check availability");
+    } finally {
+      setCheckingAvailability(false);
+    }
   }
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -128,7 +177,7 @@ export default function BundleConfigurator({ bundle }: BundleConfiguratorProps) 
                 <input
                   type="date"
                   value={startDate}
-                  onChange={(event) => setStartDate(event.target.value)}
+                  onChange={(event) => { setStartDate(event.target.value); setAvailability(null); }}
                   min={todayIsoDate()}
                   required
                   className="w-full rounded-xl border border-border px-4 py-3 text-sm focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20"
@@ -139,7 +188,7 @@ export default function BundleConfigurator({ bundle }: BundleConfiguratorProps) 
                 <input
                   type="date"
                   value={endDate}
-                  onChange={(event) => setEndDate(event.target.value)}
+                  onChange={(event) => { setEndDate(event.target.value); setAvailability(null); }}
                   min={startDate || todayIsoDate()}
                   required
                   className="w-full rounded-xl border border-border px-4 py-3 text-sm focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20"
@@ -273,6 +322,40 @@ export default function BundleConfigurator({ bundle }: BundleConfiguratorProps) 
                   <p className="text-neutral-500">We confirm stock, substitutions, delivery/collection, and pricing directly.</p>
                 </div>
               </div>
+              <button
+                type="button"
+                onClick={handleAvailabilityCheck}
+                disabled={checkingAvailability || !startDate || !endDate}
+                className="btn btn-outline w-full mt-6 disabled:cursor-not-allowed disabled:opacity-50"
+              >
+                {checkingAvailability ? "Checking inventory…" : "Check known inventory"}
+              </button>
+              {availabilityError && <p role="alert" className="mt-3 text-sm text-red-600">{availabilityError}</p>}
+              {availability && (
+                <div className="mt-4 rounded-2xl border border-border bg-white p-4">
+                  <div className="flex items-center justify-between gap-3">
+                    <p className="font-semibold text-neutral-800">Inventory check</p>
+                    <span className={`rounded-full px-2.5 py-1 text-xs font-semibold ${availability.status === "available" ? "bg-emerald-100 text-emerald-700" : availability.status === "unavailable" ? "bg-red-100 text-red-700" : "bg-amber-100 text-amber-700"}`}>
+                      {availability.status === "available" ? "Known items available" : availability.status === "unavailable" ? "Substitution needed" : "Partly confirmed"}
+                    </span>
+                  </div>
+                  <ul className="mt-3 space-y-2 text-xs">
+                    {availability.lines.map((line) => (
+                      <li key={line.name} className="flex items-start justify-between gap-3 border-t border-neutral-100 pt-2 first:border-0 first:pt-0">
+                        <span className="text-neutral-600">{line.name}</span>
+                        <span className={`shrink-0 font-semibold ${line.status === "available" ? "text-emerald-700" : line.status === "unavailable" ? "text-red-700" : "text-amber-700"}`}>
+                          {line.status === "available" ? "Available" : line.status === "unavailable" ? "Unavailable" : "Staff check"}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                  {availability.knownRentalSubtotalCents > 0 && (
+                    <p className="mt-3 border-t border-neutral-100 pt-3 text-xs text-neutral-500">
+                      Known-item rental estimate: <strong className="text-neutral-700">€{(availability.knownRentalSubtotalCents / 100).toFixed(2)}</strong>. Staff confirm alternatives, delivery and final kit pricing.
+                    </p>
+                  )}
+                </div>
+              )}
               {submitError && (
                 <p role="alert" className="mt-5 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
                   {submitError} If it continues, message us directly on WhatsApp.
@@ -286,7 +369,7 @@ export default function BundleConfigurator({ bundle }: BundleConfiguratorProps) 
               <button
                 type="submit"
                 disabled={submitting}
-                className="btn btn-primary w-full mt-6"
+                className="btn btn-primary w-full mt-4"
                 id={`bundle-configurator-whatsapp-${bundle.slug}`}
               >
                 {submitting ? "Saving request…" : "Save request & open WhatsApp"}

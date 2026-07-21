@@ -68,6 +68,17 @@ inventory release is verified after cancellation and refund.
 Example: a threshold of 5 units with a 4,000 basis-point discount means 40% off the
 rental subtotal from five units onward, so five units cost the equivalent of three.
 
+## Kit availability bridge
+
+Kit requests remain staff-confirmed rather than automatically charged. The
+`/api/bundle-availability` endpoint checks only bundle components with an explicit
+product slug against active aggregate stock, manual date blocks, and overlapping
+inventory holds. It returns a known-item rental estimate without delivery fees and
+marks unmapped or inactive alternatives for manual confirmation. The customer and
+admin kit-request interfaces can rerun this check, but it creates no hold and is not
+a final quote. Atomic multi-product reservation requires a dedicated grouped-draft
+model and complete inventory mapping before it can safely reach Stripe Checkout.
+
 ## Invoicing Compliance Roadmap
 
 The current `booking_documents` implementation creates an operational payment

@@ -207,6 +207,9 @@ add-ons, notes, and explicit enquiry consent. The form posts to
 `/api/bundle-requests`, which validates selections against the server-side kit,
 stores the request, sends notification/confirmation emails, and returns a
 reference plus WhatsApp handoff. Staff manage requests at `/admin/kit-requests`.
+Both customers and staff can call `/api/bundle-availability` to check kit lines
+that explicitly map to active products. The result separates available,
+unavailable, and staff-confirmed components and estimates only known rental lines.
 This layer does not reserve inventory or create Checkout sessions yet.
 
 

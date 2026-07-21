@@ -148,7 +148,7 @@ silently.
 ### 1.5 Build Kits & Bundles architecture
 **Impact**: High · **Effort**: 1-2 days · **Status**: Initial layer live
 
-Initial data-driven bundle layer is live with `/valencia/kits`, individual kit pages, related products, related guides, FAQ, sitemap entries, and a configurator for included items/add-ons. Kit requests are now validated and persisted before WhatsApp handoff, with admin request visibility and lifecycle tracking. The next iteration should add availability-aware add-ons and multi-item booking drafts.
+Initial data-driven bundle layer is live with `/valencia/kits`, individual kit pages, related products, related guides, FAQ, sitemap entries, and a configurator for included items/add-ons. Kit requests are validated and persisted before WhatsApp handoff, with admin request visibility and lifecycle tracking. Exact product-linked components now expose live aggregate availability and known-item rental estimates to customers and staff; ambiguous lines remain explicitly manual. The next iteration is atomic multi-item reservation and Checkout after inventory mappings are complete.
 
 **Initial kit pages:**
 - Family Beach Kit Valencia

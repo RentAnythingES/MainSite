@@ -147,6 +147,12 @@ manage the resulting lifecycle at `/admin/kit-requests`. Kit requests do not res
 inventory or create a booking draft yet; availability-aware multi-item drafts remain
 the next booking-system iteration.
 
+`/api/bundle-availability` is the intermediate safety layer. It maps only explicit
+`productSlug` links from the static kit definition to active Supabase products,
+checks date blocks and overlapping inventory holds, and returns known-item rental
+estimates. Ambiguous components remain marked for manual confirmation; the endpoint
+does not reserve inventory or promise a final bundle price.
+
 ### Booking API v2
 ```
 GET /api/availability
@@ -181,6 +187,7 @@ POST /api/webhooks/stripe
 | `/api/fulfillment-amendments/[token]/checkout` | POST | Create or resume Stripe Checkout for the quoted transport fee |
 | `/api/contact` | POST | Send contact email via Resend |
 | `/api/bundle-requests` | POST | Validate and persist a kit request before WhatsApp handoff |
+| `/api/bundle-availability` | POST | Check mapped kit inventory and estimate known-item rental charges |
 | `/api/newsletter` | POST | Store newsletter consent + send welcome email |
 | `/api/availability` | GET | Check product availability for date range |
 | `/api/documents/[token]/pdf` | GET | Customer-safe invoice/refund PDF download |

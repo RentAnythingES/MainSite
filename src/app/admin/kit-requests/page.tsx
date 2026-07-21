@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { BUNDLE_REQUEST_STATUSES, type BundleRequestStatus } from "@/lib/bundle-requests";
 
 type BundleRequest = {
+  bundle_slug: string;
   id: string;
   request_ref: string;
   bundle_name: string;
@@ -23,6 +24,12 @@ type BundleRequest = {
   created_at: string;
 };
 
+type AvailabilityResult = {
+  status: "available" | "unavailable" | "partial";
+  knownRentalSubtotalCents: number;
+  lines: Array<{ name: string; status: "available" | "unavailable" | "manual_confirmation" }>;
+};
+
 const filters = ["all", ...BUNDLE_REQUEST_STATUSES] as const;
 
 const statusStyles: Record<BundleRequestStatus, string> = {
@@ -40,11 +47,11 @@ export default function AdminKitRequestsPage() {
   const [error, setError] = useState("");
   const [savingId, setSavingId] = useState<string | null>(null);
   const [drafts, setDrafts] = useState<Record<string, { status: BundleRequestStatus; notes: string }>>({});
+  const [availabilityById, setAvailabilityById] = useState<Record<string, AvailabilityResult>>({});
+  const [checkingAvailabilityId, setCheckingAvailabilityId] = useState<string | null>(null);
 
   useEffect(() => {
     let active = true;
-    setLoading(true);
-    setError("");
     fetch(`/api/admin/bundle-requests?status=${filter}`, { cache: "no-store" })
       .then(async (response) => {
         const data = await response.json();
@@ -88,6 +95,31 @@ export default function AdminKitRequestsPage() {
     }
   }
 
+  async function checkAvailability(item: BundleRequest) {
+    setCheckingAvailabilityId(item.id);
+    setError("");
+    try {
+      const response = await fetch("/api/bundle-availability", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          bundleSlug: item.bundle_slug,
+          startDate: item.start_date,
+          endDate: item.end_date,
+          selectedItems: item.selected_items,
+          selectedAddons: item.selected_addons,
+        }),
+      });
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.error || "Could not check availability");
+      setAvailabilityById((current) => ({ ...current, [item.id]: data }));
+    } catch (availabilityError) {
+      setError(availabilityError instanceof Error ? availabilityError.message : "Could not check availability");
+    } finally {
+      setCheckingAvailabilityId(null);
+    }
+  }
+
   return (
     <div>
       <div className="mb-7">
@@ -97,7 +129,7 @@ export default function AdminKitRequestsPage() {
 
       <div className="mb-6 flex flex-wrap gap-2">
         {filters.map((value) => (
-          <button key={value} type="button" onClick={() => setFilter(value)} className={`rounded-full px-4 py-2 text-sm font-medium capitalize ${filter === value ? "bg-teal-500/20 text-teal-300" : "bg-neutral-900 text-neutral-400 hover:text-white"}`}>
+          <button key={value} type="button" onClick={() => { setLoading(true); setError(""); setFilter(value); }} className={`rounded-full px-4 py-2 text-sm font-medium capitalize ${filter === value ? "bg-teal-500/20 text-teal-300" : "bg-neutral-900 text-neutral-400 hover:text-white"}`}>
             {value}
           </button>
         ))}
@@ -121,7 +153,12 @@ export default function AdminKitRequestsPage() {
                     <h2 className="mt-3 text-xl font-semibold text-white">{item.bundle_name}</h2>
                     <p className="mt-1 text-sm text-neutral-400">{item.start_date} → {item.end_date} · {item.accommodation_area}</p>
                   </div>
-                  <p className="text-sm text-neutral-500">{new Date(item.created_at).toLocaleString("en-GB")}</p>
+                  <div className="text-right">
+                    <p className="text-sm text-neutral-500">{new Date(item.created_at).toLocaleString("en-GB")}</p>
+                    <button type="button" onClick={() => checkAvailability(item)} disabled={checkingAvailabilityId === item.id} className="mt-2 text-sm font-semibold text-teal-300 hover:underline disabled:opacity-50">
+                      {checkingAvailabilityId === item.id ? "Checking…" : "Check current inventory"}
+                    </button>
+                  </div>
                 </div>
 
                 <div className="mt-5 grid gap-5 md:grid-cols-3">
@@ -147,6 +184,24 @@ export default function AdminKitRequestsPage() {
                 </div>
 
                 {item.customer_notes && <div className="mt-5 rounded-xl bg-neutral-950 px-4 py-3 text-sm text-neutral-300"><span className="font-semibold text-neutral-100">Customer notes:</span> {item.customer_notes}</div>}
+
+                {availabilityById[item.id] && (
+                  <div className="mt-5 rounded-xl border border-neutral-700 bg-neutral-950 p-4">
+                    <div className="flex flex-wrap items-center justify-between gap-3">
+                      <h3 className="font-semibold text-white">Current inventory result</h3>
+                      <span className={`rounded-full px-2.5 py-1 text-xs font-semibold capitalize ${availabilityById[item.id].status === "available" ? "bg-emerald-500/15 text-emerald-300" : availabilityById[item.id].status === "unavailable" ? "bg-red-500/15 text-red-300" : "bg-amber-500/15 text-amber-300"}`}>{availabilityById[item.id].status}</span>
+                    </div>
+                    <div className="mt-3 grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
+                      {availabilityById[item.id].lines.map((line) => (
+                        <div key={line.name} className="flex items-center justify-between gap-3 rounded-lg bg-neutral-900 px-3 py-2 text-xs">
+                          <span className="text-neutral-300">{line.name}</span>
+                          <span className={line.status === "available" ? "text-emerald-300" : line.status === "unavailable" ? "text-red-300" : "text-amber-300"}>{line.status === "manual_confirmation" ? "staff check" : line.status}</span>
+                        </div>
+                      ))}
+                    </div>
+                    {availabilityById[item.id].knownRentalSubtotalCents > 0 && <p className="mt-3 text-xs text-neutral-400">Known-item rental estimate: €{(availabilityById[item.id].knownRentalSubtotalCents / 100).toFixed(2)} before delivery, substitutions, or custom kit adjustments.</p>}
+                  </div>
+                )}
 
                 <div className="mt-6 grid gap-4 border-t border-neutral-800 pt-5 md:grid-cols-[220px_1fr_auto] md:items-end">
                   <label className="block">
