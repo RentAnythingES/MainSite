@@ -19,6 +19,7 @@ const expectedTables = [
   "booking_payment_events",
   "booking_reviews",
   "bookings",
+  "bundle_requests",
   "categories",
   "inventory_unit_events",
   "inventory_units",
@@ -56,6 +57,7 @@ const expectedColumns = {
   products: ["content_status"],
   booking_reviews: ["public_token", "rating", "review_body", "consent_to_publish", "status", "published_at"],
   booking_fulfillment_amendments: ["public_token", "status", "fulfillment_mode", "delivery_fee_cents", "collection_fee_cents", "stripe_checkout_session_id", "paid_at", "applied_at"],
+  bundle_requests: ["request_ref", "bundle_slug", "customer_email", "selected_items", "selected_addons", "status", "consent_version"],
 };
 
 const expectedRlsTables = [
@@ -69,6 +71,7 @@ const expectedRlsTables = [
   "booking_ops_tasks",
   "booking_payment_events",
   "booking_reviews",
+  "bundle_requests",
   "inventory_unit_events",
   "inventory_units",
   "invoice_settings",

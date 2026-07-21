@@ -1,5 +1,5 @@
 # RentAnything.es — SEO Roadmap
-> **Last updated**: 2026-07-20 · Prioritized by estimated traffic impact × effort
+> **Last updated**: 2026-07-21 · Prioritized by estimated traffic impact × effort
 
 ---
 
@@ -148,7 +148,7 @@ silently.
 ### 1.5 Build Kits & Bundles architecture
 **Impact**: High · **Effort**: 1-2 days · **Status**: Initial layer live
 
-Initial data-driven bundle layer is live with `/valencia/kits`, individual kit pages, related products, related guides, FAQ, sitemap entries, and a first client-side configurator for included items/add-ons with WhatsApp handoff. Next iteration should add availability-aware add-ons, multi-item booking drafts, and admin request visibility.
+Initial data-driven bundle layer is live with `/valencia/kits`, individual kit pages, related products, related guides, FAQ, sitemap entries, and a configurator for included items/add-ons. Kit requests are now validated and persisted before WhatsApp handoff, with admin request visibility and lifecycle tracking. The next iteration should add availability-aware add-ons and multi-item booking drafts.
 
 **Initial kit pages:**
 - Family Beach Kit Valencia

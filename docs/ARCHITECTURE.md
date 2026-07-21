@@ -67,6 +67,7 @@ Supabase (CRUD products, pricing, bookings)
 | `booking_document_counters` | Yearly sequential counters for booking document numbers | Admin/API only |
 | `booking_ops_tasks` | Internal per-booking operations checklist tasks | Admin/API only |
 | `booking_reviews` | Tokenized post-rental feedback, publication consent, and moderation state | Server/admin only |
+| `bundle_requests` | Private kit configurations captured before WhatsApp handoff | Server/admin only |
 | `newsletter_subscribers` | Newsletter signup consent records | Admin/API only |
 | `product_localizations` | Locale-specific product copy and SEO metadata | Public read for active products |
 | `product_faqs` | Locale-specific pre-rental product FAQs | Public read for active products |
@@ -138,7 +139,13 @@ GET /valencia/kits/[slug]
 ```
 
 ### Bundle Configurator
-The first bundle configurator is client-side only. It collects dates, area, selected included items, add-ons, and notes, then generates a structured WhatsApp message. It does not reserve inventory or create a booking draft yet. Future work should connect bundle selections to availability checks, multi-item booking drafts, and admin request visibility.
+The bundle configurator collects dates, contact details, area, selected included
+items, add-ons, notes, and explicit enquiry consent. `/api/bundle-requests`
+validates every selection against the server-side bundle definition, stores the
+request before WhatsApp opens, and sends non-blocking admin/customer emails. Staff
+manage the resulting lifecycle at `/admin/kit-requests`. Kit requests do not reserve
+inventory or create a booking draft yet; availability-aware multi-item drafts remain
+the next booking-system iteration.
 
 ### Booking API v2
 ```
@@ -173,6 +180,7 @@ POST /api/webhooks/stripe
 | `/api/fulfillment-amendments/[token]` | GET | Read a private transport amendment quote |
 | `/api/fulfillment-amendments/[token]/checkout` | POST | Create or resume Stripe Checkout for the quoted transport fee |
 | `/api/contact` | POST | Send contact email via Resend |
+| `/api/bundle-requests` | POST | Validate and persist a kit request before WhatsApp handoff |
 | `/api/newsletter` | POST | Store newsletter consent + send welcome email |
 | `/api/availability` | GET | Check product availability for date range |
 | `/api/documents/[token]/pdf` | GET | Customer-safe invoice/refund PDF download |
@@ -228,6 +236,8 @@ Stripe Checkout
 | `/api/admin/bookings/[id]/documents/[documentId]/pdf` | GET | Download protected invoice/refund PDF |
 | `/api/admin/bookings/[id]/documents/[documentId]/email` | POST | Email customer a document PDF link |
 | `/api/admin/categories` | GET | List categories (for dropdowns) |
+| `/api/admin/bundle-requests` | GET | List and filter private kit requests |
+| `/api/admin/bundle-requests/[id]` | PATCH | Update kit-request status and internal notes |
 
 ---
 
@@ -246,6 +256,7 @@ Protected by Supabase Auth. Server-side cookie check in `admin/layout.tsx` — r
 | `/admin/inventory` | Physical asset registry with status, condition, location, notes, and inspections |
 | `/admin/bookings` | Expandable booking cards, status filters, physical-unit assignment, ops checklist, lifecycle controls |
 | `/admin/reviews` | Verified-booking feedback queue with consent-aware approve/reject controls |
+| `/admin/kit-requests` | Kit enquiry queue with contact, selection, quote and conversion status |
 | `/admin/login` | Supabase Auth email/password login |
 
 ---

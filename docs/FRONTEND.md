@@ -1,5 +1,5 @@
 # RentAnything.es — Frontend Guide
-> **Last updated**: 2026-07-20
+> **Last updated**: 2026-07-21
 
 ## Routing
 App Router with static generation (`generateStaticParams`). Prefix-based i18n (`/es/` for Spanish).
@@ -49,6 +49,7 @@ route handling while excluding APIs and static assets.
 | `/admin/products/new` | Client | Add new product form |
 | `/admin/fulfillment` | Client | Pickup locations, service zones, instructions, fees |
 | `/admin/bookings` | Client | Booking management, finance ledger, document PDF downloads and email resend controls |
+| `/admin/kit-requests` | Client | Saved kit configurations, customer follow-up, quote and conversion statuses |
 | `/booking/fulfillment/[token]` | Client | Private, noindex transport-quote review and Stripe payment handoff |
 | `/admin/reviews` | Client | Consent-aware moderation of verified-booking feedback |
 
@@ -57,7 +58,7 @@ route handling while excluding APIs and static assets.
 - `"use client"` only for interactive widgets:
   - `HeroCarousel` — auto-advancing homepage photo carousel
   - `BookingWidget` — booking flow with rental window, availability check, draft creation, and Stripe handoff
-  - `BundleConfigurator` — kit request builder with selectable included items/add-ons and WhatsApp handoff
+  - `BundleConfigurator` — validated kit request form that persists customer choices before WhatsApp handoff
 - `ContactForm` — contact form with Resend
 - `CookieConsent` — locale-aware analytics choice stored in browser local storage
 - `TrackedLink` — internal-link wrapper for consent-aware GA4 pathway events; event parameters must contain route/content identifiers only, never customer-entered data
@@ -200,7 +201,13 @@ Falls back to WhatsApp deep-link if checkout cannot be created.
 
 ## Bundle configurator flow
 
-Kit pages at `/valencia/kits/[slug]` include a client-side `BundleConfigurator`. It lets users choose dates, accommodation area, included items, optional add-ons, and notes. The first version does not reserve inventory or create checkout sessions; it generates a structured WhatsApp request and tracks `bundle_configurator_whatsapp_click`. Future iterations should connect selections to multi-item availability, booking drafts, and admin visibility.
+Kit pages at `/valencia/kits/[slug]` include a client-side `BundleConfigurator`.
+It collects dates, accommodation area, contact details, included items, optional
+add-ons, notes, and explicit enquiry consent. The form posts to
+`/api/bundle-requests`, which validates selections against the server-side kit,
+stores the request, sends notification/confirmation emails, and returns a
+reference plus WhatsApp handoff. Staff manage requests at `/admin/kit-requests`.
+This layer does not reserve inventory or create Checkout sessions yet.
 
 
 ## Newsletter signup flow

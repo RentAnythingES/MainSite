@@ -25,6 +25,7 @@ async function main() {
         (select count(*)::int from public.booking_ops_tasks) as ops_tasks,
         (select count(*)::int from public.booking_reviews) as booking_reviews,
         (select count(*)::int from public.booking_fulfillment_amendments) as fulfillment_amendments,
+        (select count(*)::int from public.bundle_requests) as bundle_requests,
         (select count(*)::int from public.pickup_locations where is_active) as active_pickup_locations,
         (select count(*)::int from public.service_zones where is_active) as active_service_zones
     `);
@@ -104,6 +105,37 @@ async function main() {
       } else {
         checks.fulfillmentAmendmentTransactionalWrite = "skipped_no_eligible_booking";
       }
+
+      const bundleRequest = await client.query(`
+        insert into public.bundle_requests (
+          request_ref,
+          bundle_slug,
+          bundle_name,
+          customer_name,
+          customer_email,
+          start_date,
+          end_date,
+          accommodation_area,
+          selected_items,
+          selected_addons,
+          consent_version,
+          consent_text
+        ) values (
+          'KIT-VERIFY-' || upper(substr(replace(gen_random_uuid()::text, '-', ''), 1, 8)),
+          'family-beach-kit',
+          'Family Beach Kit Valencia',
+          'Rollback Verification',
+          'schema-check@example.invalid',
+          current_date,
+          current_date + 1,
+          'Rollback-only verification area',
+          '["Beach umbrella or shade tent"]'::jsonb,
+          '[]'::jsonb,
+          'schema-verification',
+          'Automated rollback-only schema verification consent record'
+        ) returning id
+      `);
+      checks.bundleRequestTransactionalWrite = bundleRequest.rows.length === 1;
     } finally {
       await client.query("rollback");
     }

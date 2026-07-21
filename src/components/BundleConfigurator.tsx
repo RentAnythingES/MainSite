@@ -1,6 +1,7 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { FormEvent, useMemo, useState } from "react";
+import Link from "next/link";
 import type { RentalBundle } from "@/data/bundles";
 import { trackEvent } from "@/lib/analytics";
 
@@ -17,6 +18,14 @@ export default function BundleConfigurator({ bundle }: BundleConfiguratorProps) 
   const [endDate, setEndDate] = useState("");
   const [area, setArea] = useState("");
   const [notes, setNotes] = useState("");
+  const [customerName, setCustomerName] = useState("");
+  const [customerEmail, setCustomerEmail] = useState("");
+  const [customerPhone, setCustomerPhone] = useState("");
+  const [consentAccepted, setConsentAccepted] = useState(false);
+  const [website, setWebsite] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState("");
+  const [requestRef, setRequestRef] = useState("");
   const [selectedItems, setSelectedItems] = useState(() => new Set(bundle.includedItems.map((item) => item.name)));
   const [selectedAddons, setSelectedAddons] = useState<Set<string>>(new Set());
 
@@ -54,36 +63,57 @@ export default function BundleConfigurator({ bundle }: BundleConfiguratorProps) 
     });
   }
 
-  const whatsappMessage = [
-    `Hi! I would like to check the ${bundle.shortName} in Valencia.`,
-    "",
-    `Dates: ${startDate || "not sure yet"} to ${endDate || "not sure yet"}`,
-    `Area/accommodation: ${area || "not sure yet"}`,
-    "",
-    "Included items I want:",
-    ...(selectedItemNames.length > 0 ? selectedItemNames.map((item) => `- ${item}`) : ["- Please recommend the right setup"]),
-    "",
-    "Add-ons I am interested in:",
-    ...(selectedAddonNames.length > 0 ? selectedAddonNames.map((addon) => `- ${addon}`) : ["- None yet"]),
-    notes.trim() ? `\nNotes: ${notes.trim()}` : "",
-  ].join("\n");
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setSubmitting(true);
+    setSubmitError("");
 
-  const whatsappUrl = `https://wa.me/34684708013?text=${encodeURIComponent(whatsappMessage)}`;
-
-  function handleWhatsAppClick() {
-    trackEvent("bundle_configurator_whatsapp_click", {
+    trackEvent("bundle_request_submit", {
       event_category: "bundle",
       bundle_slug: bundle.slug,
       selected_items: selectedItemNames.length,
       selected_addons: selectedAddonNames.length,
-      has_dates: Boolean(startDate && endDate),
-      has_area: Boolean(area.trim()),
     });
+
+    try {
+      const response = await fetch("/api/bundle-requests", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          bundleSlug: bundle.slug,
+          customerName,
+          customerEmail,
+          customerPhone,
+          startDate,
+          endDate,
+          area,
+          selectedItems: selectedItemNames,
+          selectedAddons: selectedAddonNames,
+          notes,
+          consentAccepted,
+          website,
+          sourcePath: window.location.pathname,
+        }),
+      });
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.error || "Could not save your request");
+
+      setRequestRef(data.requestRef);
+      trackEvent("bundle_request_saved", {
+        event_category: "bundle",
+        bundle_slug: bundle.slug,
+      });
+      window.location.assign(data.whatsappUrl);
+    } catch (error) {
+      setSubmitError(error instanceof Error ? error.message : "Could not save your request");
+    } finally {
+      setSubmitting(false);
+    }
   }
 
   return (
     <section className="section bg-white" id="configure-kit">
-      <div className="container-site">
+      <form className="container-site" onSubmit={handleSubmit}>
         <div className="grid lg:grid-cols-3 gap-8">
           <div className="lg:col-span-2">
             <span className="badge badge-brand mb-3">Build your request</span>
@@ -99,6 +129,8 @@ export default function BundleConfigurator({ bundle }: BundleConfiguratorProps) 
                   type="date"
                   value={startDate}
                   onChange={(event) => setStartDate(event.target.value)}
+                  min={todayIsoDate()}
+                  required
                   className="w-full rounded-xl border border-border px-4 py-3 text-sm focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20"
                 />
               </label>
@@ -108,6 +140,8 @@ export default function BundleConfigurator({ bundle }: BundleConfiguratorProps) 
                   type="date"
                   value={endDate}
                   onChange={(event) => setEndDate(event.target.value)}
+                  min={startDate || todayIsoDate()}
+                  required
                   className="w-full rounded-xl border border-border px-4 py-3 text-sm focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20"
                 />
               </label>
@@ -118,6 +152,7 @@ export default function BundleConfigurator({ bundle }: BundleConfiguratorProps) 
                   value={area}
                   onChange={(event) => setArea(event.target.value)}
                   placeholder="e.g. Ruzafa, Patacona, Paterna, hotel name, Airbnb area"
+                  required
                   className="w-full rounded-xl border border-border px-4 py-3 text-sm focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20"
                 />
               </label>
@@ -191,6 +226,34 @@ export default function BundleConfigurator({ bundle }: BundleConfiguratorProps) 
                 className="w-full rounded-xl border border-border px-4 py-3 text-sm focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20"
               />
             </label>
+
+            <div className="mt-8 border-t border-border pt-8">
+              <h3 className="text-xl font-bold mb-4">Where should we reply?</h3>
+              <div className="grid sm:grid-cols-2 gap-4">
+                <label className="block">
+                  <span className="block text-sm font-semibold text-neutral-700 mb-2">Name</span>
+                  <input type="text" value={customerName} onChange={(event) => setCustomerName(event.target.value)} autoComplete="name" required maxLength={120} className="w-full rounded-xl border border-border px-4 py-3 text-sm focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20" />
+                </label>
+                <label className="block">
+                  <span className="block text-sm font-semibold text-neutral-700 mb-2">Email</span>
+                  <input type="email" value={customerEmail} onChange={(event) => setCustomerEmail(event.target.value)} autoComplete="email" required maxLength={254} className="w-full rounded-xl border border-border px-4 py-3 text-sm focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20" />
+                </label>
+                <label className="block sm:col-span-2">
+                  <span className="block text-sm font-semibold text-neutral-700 mb-2">WhatsApp number <span className="font-normal text-neutral-400">(optional)</span></span>
+                  <input type="tel" value={customerPhone} onChange={(event) => setCustomerPhone(event.target.value)} autoComplete="tel" maxLength={50} className="w-full rounded-xl border border-border px-4 py-3 text-sm focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20" />
+                </label>
+              </div>
+              <label className="mt-5 flex items-start gap-3 text-sm text-neutral-600">
+                <input type="checkbox" checked={consentAccepted} onChange={(event) => setConsentAccepted(event.target.checked)} required className="mt-1 h-4 w-4 accent-brand" />
+                <span>
+                  I agree that RentAnything.es may use these details to answer and manage my kit request. See our <Link href="/privacy" className="font-semibold text-brand hover:underline">privacy policy</Link>.
+                </span>
+              </label>
+              <label className="absolute -left-[10000px]" aria-hidden="true">
+                Website
+                <input type="text" value={website} onChange={(event) => setWebsite(event.target.value)} tabIndex={-1} autoComplete="off" />
+              </label>
+            </div>
           </div>
 
           <aside className="lg:sticky lg:top-24 h-fit">
@@ -210,23 +273,31 @@ export default function BundleConfigurator({ bundle }: BundleConfiguratorProps) 
                   <p className="text-neutral-500">We confirm stock, substitutions, delivery/collection, and pricing directly.</p>
                 </div>
               </div>
-              <a
-                href={whatsappUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={handleWhatsAppClick}
+              {submitError && (
+                <p role="alert" className="mt-5 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+                  {submitError} If it continues, message us directly on WhatsApp.
+                </p>
+              )}
+              {requestRef && (
+                <p className="mt-5 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700">
+                  Request saved as <strong>{requestRef}</strong>.
+                </p>
+              )}
+              <button
+                type="submit"
+                disabled={submitting}
                 className="btn btn-primary w-full mt-6"
                 id={`bundle-configurator-whatsapp-${bundle.slug}`}
               >
-                Send request on WhatsApp
-              </a>
+                {submitting ? "Saving request…" : "Save request & open WhatsApp"}
+              </button>
               <p className="mt-3 text-xs text-neutral-400 text-center">
-                No online payment for kits until availability is confirmed.
+                We save your choices first, then open WhatsApp. No payment is taken until availability and pricing are confirmed.
               </p>
             </div>
           </aside>
         </div>
-      </div>
+      </form>
     </section>
   );
 }
