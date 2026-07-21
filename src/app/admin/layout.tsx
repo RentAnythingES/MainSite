@@ -32,7 +32,7 @@ export default async function AdminLayout({
   children: React.ReactNode;
 }) {
   // Check if we're on the login page to avoid redirect loop
-  // (x-pathname is set by src/middleware.ts)
+  // (x-pathname is set by src/proxy.ts)
   const headersList = await headers();
   const pathname = headersList.get("x-pathname") || "";
   const isLoginPage = pathname.includes("/admin/login");

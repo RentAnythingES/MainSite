@@ -1,8 +1,8 @@
 # RentAnything.es — Architecture
-> **Last updated**: 2026-06-19
+> **Last updated**: 2026-07-21
 
 ## Tech Stack
-- **Framework**: Next.js 15 (App Router)
+- **Framework**: Next.js 16 (App Router)
 - **Styling**: Tailwind CSS 4
 - **Database**: Supabase (PostgreSQL)
 - **Auth**: Supabase Auth (admin dashboard)
@@ -10,6 +10,10 @@
 - **Hosting**: Vercel
 - **Domain**: rentanything.es
 - **i18n**: Custom dictionary system (`src/i18n/`)
+
+`src/proxy.ts` applies the route locale response header and forwards the current
+pathname to server layouts. Its matcher excludes APIs, Next.js assets, and files;
+admin authentication remains enforced in the admin server layout and API routes.
 
 ---
 

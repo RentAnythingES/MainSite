@@ -3,6 +3,8 @@
 
 ## Routing
 App Router with static generation (`generateStaticParams`). Prefix-based i18n (`/es/` for Spanish).
+`src/proxy.ts` adds `Content-Language` and forwards `x-pathname` for server-layout
+route handling while excluding APIs and static assets.
 
 ## Key Pages
 
