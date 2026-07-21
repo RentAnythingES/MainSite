@@ -283,3 +283,32 @@ hub and Baby Arrival kit only after the decision guidance.
 - Cloud of Goods Valencia baby category: `https://www.cloudofgoods.com/valencia-es/product-rentals/baby_%26_kids`
 - Consumer Reports baby-gear rental guide: `https://www.consumerreports.org/babies-kids/baby-gear-rental-a3701975282/`
 - Babylist rental-company guide: `https://www.babylist.com/hello-baby/best-baby-gear-rental`
+## Temporary home-office setup SERP — 21 July 2026
+
+**Proposed page:** `/blog/home-office-setup-valencia-apartment`
+
+**Intent boundary:** practical how-to for evaluating and improving a temporary
+apartment workstation. `/blog/digital-nomad-guide-valencia` remains the owner of
+broad city, housing, neighbourhood and lifestyle planning; `/rental/remote-work`
+remains the transactional equipment owner.
+
+### Findings and gap
+
+- Valencia nomad and coliving pages promote dedicated workspaces, internet and
+  community, but rarely provide a room-by-room inspection and setup sequence for
+  an ordinary furnished apartment.
+- General ergonomics guidance consistently prioritizes an adjustable chair,
+  external keyboard and mouse, and a screen raised to a comfortable viewing
+  height. It is useful but not adapted to short stays, limited space, apartment
+  access, Spanish summer heat, calls, or the rent-versus-coworking decision.
+- The article should therefore start with a pre-booking evidence checklist, then
+  cover connectivity, desk dimensions, screen/chair setup, light and heat, call
+  conditions, a first-day fallback, and when a coworking pass is the better tool.
+
+### Sources reviewed
+
+- Stanford hybrid/remote ergonomics: `https://ehs.stanford.edu/topic/ergonomics/hybrid-remote-and-on-the-go`
+- University of Pennsylvania home-office ergonomics: `https://ehrs.upenn.edu/health-safety/ergonomics/home-office-ergonomics`
+- Folks Coliving Valencia: `https://folkscoliving.com/`
+- Vivarium Valencia: `https://www.vivariumcoliving.com/`
+- RentAnything digital-nomad guide and Remote Work category SERP results.

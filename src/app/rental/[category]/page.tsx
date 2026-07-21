@@ -185,6 +185,12 @@ const categoryMeta: Record<string, CategoryContent> = {
         description: "Compare apartment working, coworking and neighbourhood considerations for a productive stay.",
         href: "/blog/digital-nomad-guide-valencia",
       },
+      {
+        eyebrow: "Setup checklist",
+        title: "Build a Reliable Apartment Workstation",
+        description: "Check internet, dimensions, light, noise and the minimum equipment before your first working day.",
+        href: "/blog/home-office-setup-valencia-apartment",
+      },
     ],
     faqHeading: "Remote Work Equipment Rental in Valencia: FAQs",
     faqs: [

@@ -4,6 +4,7 @@ const noindexProductSlug = process.env.SEO_NOINDEX_PRODUCT_SLUG || "toddler-bike
 const productCategory = process.env.SEO_PRODUCT_CATEGORY || "travel-outdoors";
 const referenceKitSlug = "family-beach-kit";
 const referenceBlogSlug = "rent-vs-buy-baby-gear-valencia";
+const referenceTutorialSlug = "home-office-setup-valencia-apartment";
 const legacyProductRedirects = [
   ["/product/portable-ac", "/product/mobile-airconditioner-delonghi-pinguino-compact-classic"],
   ["/es/product/portable-ac", "/es/product/mobile-airconditioner-delonghi-pinguino-compact-classic"],
@@ -62,8 +63,14 @@ const categoryChecks = [
   {
     slug: "remote-work",
     pathways: ["/valencia/kits/remote-work-apartment-kit"],
-    englishPathways: ["/blog/digital-nomad-guide-valencia"],
-    spanishPathways: ["/es/blog/digital-nomad-guide-valencia"],
+    englishPathways: [
+      "/blog/digital-nomad-guide-valencia",
+      "/blog/home-office-setup-valencia-apartment",
+    ],
+    spanishPathways: [
+      "/es/blog/digital-nomad-guide-valencia",
+      "/es/blog/home-office-setup-valencia-apartment",
+    ],
     requiredEnglishText: ["Remote Work Equipment Rental in Valencia: FAQs"],
     requiredSpanishText: ["Preguntas sobre el alquiler de equipos de teletrabajo"],
     requiredSchemaTypes: ["FAQPage"],
@@ -152,7 +159,7 @@ function assertPageEnhancements(html, expectedText = [], schemaTypes = [], conte
 }
 
 async function main() {
-  const [home, product, productEs, noindexProduct, robots, sitemap, categoryPages, discoverHierarchyPages, kitsPage, kitsPageEs, kitPage, kitPageEs, blogPage, blogPageEs, hostServices, hostServicesEs, partners, partnersEs, faqPage, faqPageEs, howItWorks, howItWorksEs, refundsPage, refundsPageEs, aboutPage, aboutPageEs, contactPage, contactPageEs, privacyPage, privacyPageEs, termsPage, termsPageEs, cookiesPage, cookiesPageEs] = await Promise.all([
+  const [home, product, productEs, noindexProduct, robots, sitemap, categoryPages, discoverHierarchyPages, kitsPage, kitsPageEs, kitPage, kitPageEs, blogPage, blogPageEs, tutorialPage, tutorialPageEs, hostServices, hostServicesEs, partners, partnersEs, faqPage, faqPageEs, howItWorks, howItWorksEs, refundsPage, refundsPageEs, aboutPage, aboutPageEs, contactPage, contactPageEs, privacyPage, privacyPageEs, termsPage, termsPageEs, cookiesPage, cookiesPageEs] = await Promise.all([
     get("/"),
     get(`/product/${productSlug}`),
     get(`/es/product/${productSlug}`),
@@ -178,6 +185,8 @@ async function main() {
     get(`/es/valencia/kits/${referenceKitSlug}`),
     get(`/blog/${referenceBlogSlug}`),
     get(`/es/blog/${referenceBlogSlug}`),
+    get(`/blog/${referenceTutorialSlug}`),
+    get(`/es/blog/${referenceTutorialSlug}`),
     get("/valencia/host-services"),
     get("/es/valencia/servicios-anfitriones"),
     get("/partners"),
@@ -332,6 +341,16 @@ async function main() {
   );
   assert(sitemap.includes(blogUrl), "Reference blog is missing from the sitemap");
   assert(sitemap.includes(blogUrlEs), "Spanish reference blog is missing from the sitemap");
+  const tutorialUrl = `https://rentanything.es/blog/${referenceTutorialSlug}`;
+  const tutorialUrlEs = `https://rentanything.es/es/blog/${referenceTutorialSlug}`;
+  assert(canonical(tutorialPage) === tutorialUrl, "Reference tutorial canonical is incorrect");
+  assert(canonical(tutorialPageEs) === tutorialUrlEs, "Spanish reference tutorial canonical is incorrect");
+  assert(alternate(tutorialPage, "es") === tutorialUrlEs, "Reference tutorial lacks Spanish hreflang");
+  assert(alternate(tutorialPageEs, "en") === tutorialUrl, "Spanish reference tutorial lacks English hreflang");
+  assertPageEnhancements(tutorialPage, ["Start before booking: ask for evidence, not labels"], ["Article", "BreadcrumbList", "FAQPage"], "Reference tutorial");
+  assertPageEnhancements(tutorialPageEs, ["Antes de reservar: pide pruebas, no etiquetas"], ["Article", "BreadcrumbList", "FAQPage"], "Spanish reference tutorial");
+  assert(sitemap.includes(tutorialUrl), "Reference tutorial is missing from the sitemap");
+  assert(sitemap.includes(tutorialUrlEs), "Spanish reference tutorial is missing from the sitemap");
   assert(
     canonical(hostServices) === "https://rentanything.es/valencia/host-services",
     "Host services canonical is incorrect"
@@ -505,6 +524,8 @@ async function main() {
     productCategory,
     referenceBlogCanonical: canonical(blogPage),
     spanishReferenceBlogCanonical: canonical(blogPageEs),
+    referenceTutorialCanonical: canonical(tutorialPage),
+    spanishReferenceTutorialCanonical: canonical(tutorialPageEs),
     checkedCategoryClusters: categoryPages.map((categoryPage) => categoryPage.slug),
     hostServicesCanonical: canonical(hostServices),
     spanishHostServicesCanonical: canonical(hostServicesEs),

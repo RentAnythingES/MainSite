@@ -174,6 +174,12 @@ const categoryMetaES: Record<string, CategoryContent> = {
         description: "Compara el trabajo desde el apartamento, los espacios de coworking y las zonas más prácticas.",
         href: "/es/blog/digital-nomad-guide-valencia",
       },
+      {
+        eyebrow: "Lista de preparación",
+        title: "Monta un puesto fiable en el apartamento",
+        description: "Comprueba conexión, medidas, luz, ruido y equipo mínimo antes de la primera jornada.",
+        href: "/es/blog/home-office-setup-valencia-apartment",
+      },
     ],
     faqHeading: "Preguntas sobre el alquiler de equipos de teletrabajo",
     faqs: [

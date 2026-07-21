@@ -849,4 +849,72 @@ export const spanishBlogPosts: BlogPost[] = [
       },
     ],
   },
+  {
+    slug: "home-office-setup-valencia-apartment",
+    title: "Cómo montar una oficina en un apartamento de Valencia",
+    h1: "Cómo preparar una oficina temporal en Valencia",
+    description: "Lista práctica para montar una oficina en un apartamento de Valencia: internet, mesa, monitor, silla, llamadas, luz, ruido y calor.",
+    category: "tutorial",
+    keywords: ["oficina en casa Valencia", "teletrabajo apartamento Valencia", "espacio trabajo Valencia", "oficina temporal", "nómada digital Valencia"],
+    date: "2026-07-21",
+    readTime: "7 min de lectura",
+    heroImage: "/blog/home-office-setup-valencia-apartment.webp",
+    heroImageAlt: "Teletrabajador instalando un monitor y una silla ergonómica en un apartamento de Valencia",
+    excerpt: "Convierte un apartamento amueblado en un espacio fiable con una comprobación previa, una prueba el primer día y el equipamiento mínimo necesario.",
+    tags: ["teletrabajo", "Valencia", "oficina en casa", "nómada digital", "tutorial"],
+    sections: [
+      {
+        heading: "Antes de reservar: pide pruebas, no etiquetas",
+        paragraphs: [
+          "Un 'espacio de trabajo' puede ser un escritorio adecuado o una silla de comedor junto a una repisa estrecha. Antes de reservar, solicita una foto reciente que muestre silla, superficie, enchufes y luz natural. Pide altura y anchura útil si necesitas monitor externo.",
+          "Solicita una prueba de velocidad reciente realizada en la habitación donde trabajarás. Confirma si el router está dentro del apartamento, si existe conexión Ethernet y si varias viviendas comparten la red. Para llamadas importantes, pregunta por tráfico, obras, patios interiores y otros huéspedes.",
+          "Prepara una alternativa para el primer día: pase de coworking, datos móviles o un lugar tranquilo cercano. No significa que el apartamento vaya a fallar; evita que un cable ausente o una conexión inestable interrumpan una reunión.",
+        ],
+      },
+      {
+        heading: "Monta el puesto mínimo viable",
+        paragraphs: [
+          "Empieza con lo imprescindible para tu trabajo: superficie estable, silla con apoyo, pantalla a una altura cómoda, teclado y ratón externos, alimentación eléctrica y conexión fiable. Añade equipo solo cuando resuelva un problema concreto.",
+          "Coloca el monitor delante, aproximadamente a la distancia de un brazo, y elévalo para no inclinar el cuello hacia el portátil. Mantén hombros relajados y codos cerca del cuerpo. Una silla regulable facilita el ajuste; si no la tienes, modifica con cuidado la altura y apoya bien los pies.",
+          "Mide antes de organizar una entrega: fondo de mesa, puertas, ascensor, suelo libre, enchufes y posibilidad de mover muebles. Para muchas estancias temporales, un monitor y una buena silla aportan más que intentar reproducir una oficina permanente.",
+        ],
+      },
+      {
+        heading: "Controla luz, calor, ruido y llamadas",
+        paragraphs: [
+          "La luz de Valencia puede producir reflejos intensos. Sitúa la pantalla perpendicular a la ventana cuando sea posible, utiliza persianas para controlar el brillo y añade una lámpara para llamadas nocturnas. Evita una ventana luminosa detrás de ti.",
+          "En verano, la temperatura decide si una habitación sirve para trabajar. Pregunta qué estancia tiene aire acondicionado, si puede funcionar durante llamadas y si un equipo portátil necesita salida por ventana. Cierra persianas en las horas más calurosas y ventila cuando baje la temperatura.",
+          "Haz una llamada real al llegar. Comprueba eco, tráfico, vecinos, electrodomésticos, subida de datos, cámara y micrófono. Los auriculares ayudan, pero no corrigen una conexión inestable ni una habitación demasiado caliente.",
+        ],
+      },
+      {
+        heading: "Elige apartamento, coworking o una combinación",
+        paragraphs: [
+          "Trabaja desde el apartamento si necesitas privacidad, horarios irregulares, llamadas confidenciales o evitar desplazamientos. Elige coworking si necesitas salas, contacto social, conexión de respaldo o separar claramente trabajo y vivienda.",
+          "Una combinación suele funcionar mejor: equipa el apartamento para concentración y llamadas habituales y utiliza pases puntuales de coworking para talleres o reuniones importantes. Compara desplazamiento, horarios, cabinas y equipo, no solo el precio mensual.",
+          "En estancias de varias semanas, alquilar evita comprar, montar y desechar mobiliario. Consulta el <a href=\"/es/rental/remote-work\">equipamiento de teletrabajo en Valencia</a> o solicita el <a href=\"/es/valencia/kits/remote-work-apartment-kit\">Kit de oficina para apartamento</a>. Confirma medidas, conexiones, acceso y fechas.",
+        ],
+      },
+      {
+        heading: "Lista de comprobación para el día de llegada",
+        paragraphs: [
+          "Realiza una prueba de velocidad, conecta todos los dispositivos, comprueba cámara y micrófono y completa una videollamada real. Valora silla y monitor después de al menos 30 minutos, no solo durante la primera impresión.",
+          "Fotografía cables y posición de muebles si tendrás que restaurarlos. Mantén libres salidas y zonas de paso, evita sobrecargar adaptadores y pide permiso antes de mover muebles pesados o fijar elementos a la pared.",
+          "Revisa el puesto tras un día de trabajo y corrige pantalla, silla o luz mientras el problema sea pequeño. Una oficina temporal no necesita parecer permanente; debe ser fiable, cómoda y fácil de retirar.",
+        ],
+      },
+    ],
+    faqs: [
+      { question: "¿Qué debo preguntar antes de reservar un apartamento para teletrabajar?", answer: "Pide foto actual, medidas, prueba de velocidad en la habitación, detalles del router y Ethernet, enchufes, ruido, climatización y permiso para mover muebles." },
+      { question: "¿Necesito un monitor para una oficina temporal?", answer: "No siempre. Ayuda en jornadas largas, diseño, datos, programación o trabajo con varias ventanas. Para tareas ligeras puede bastar un soporte de portátil con teclado y ratón externos." },
+      { question: "¿Es mejor coworking o apartamento en Valencia?", answer: "El coworking aporta comunidad, salas e infraestructura; el apartamento ofrece privacidad y evita desplazamientos. Una estancia larga puede combinar un puesto doméstico con días puntuales de coworking." },
+      { question: "¿Puedo alquilar equipamiento de oficina en Valencia?", answer: "Sí, sujeto a disponibilidad y acceso. Confirma conexiones del monitor, medidas, ascensor o escaleras, horario de entrega y recogida antes de reservar." },
+    ],
+    crossLinks: [
+      { title: "Equipamiento para teletrabajo", href: "/es/rental/remote-work", description: "Compara monitores, sillas y escritorios para estancias temporales" },
+      { title: "Kit de oficina para apartamento", href: "/es/valencia/kits/remote-work-apartment-kit", description: "Solicita un puesto coordinado para tu alojamiento" },
+      { title: "Guía de nómadas digitales", href: "/es/blog/digital-nomad-guide-valencia", description: "Planifica barrios, internet, comunidad y vida diaria" },
+      { title: "Cómo funciona el alquiler", href: "/es/how-it-works", description: "Consulta disponibilidad, reserva, entrega y recogida" },
+    ],
+  },
 ];

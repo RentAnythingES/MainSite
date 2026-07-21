@@ -222,7 +222,7 @@ LLMs surface content that is authoritative, structured, and comprehensive.
 | Renting vs Buying Baby Gear for Your Holiday | rent vs buy baby gear travel | Comparison — ✅ EN/ES live 21 July 2026 |
 | Best Beaches in Valencia for Families | best beaches Valencia families | Local Guide |
 | Las Fallas with Kids — A Survival Guide | Las Fallas with kids | Seasonal |
-| How to Set Up a Home Office in Valencia | remote office Valencia | How-To |
+| How to Set Up a Home Office in Valencia | remote office Valencia | How-To — ✅ EN/ES live 21 July 2026 |
 | Valencia in Winter — What to Rent | Valencia winter travel | Seasonal |
 
 ---
