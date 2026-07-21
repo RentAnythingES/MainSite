@@ -37,10 +37,10 @@ and indexability.
 | Lightweight | Yes | 0 | Facts verified | Complete | Unknown; original MVP asset source undocumented |
 | Heavy-duty | Yes | 0 | Facts verified | Complete | Unknown; original MVP asset source undocumented |
 
-The standard listing is intentionally excluded from SEO indexability until an image
-with documented rights is uploaded or permission for the current asset is recorded.
-The two legacy listings remain indexable under the existing legacy-product rule, but
-their image provenance is now visible internally rather than being guessed.
+All three active listings remain indexable and included in the English and Spanish
+sitemaps. Image-rights verification remains a separate admin publication check: it
+must stay visible internally and must not be guessed, but it does not remove an
+already active, content-ready listing from the sitemap.
 
 ## Required operational follow-up
 
@@ -61,5 +61,4 @@ their image provenance is now visible internally rather than being guessed.
 - Product metadata title lengths: all under 60 characters.
 - Product metadata descriptions: all between 120 and 160 characters.
 - Product image asset audit: zero errors and zero warnings.
-- Product SEO audit: lightweight and heavy-duty indexable in EN/ES; standard blocked
-  only by deliberately unconfirmed image rights.
+- Product SEO audit: all three listings indexable in EN/ES.

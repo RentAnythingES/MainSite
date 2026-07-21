@@ -105,12 +105,6 @@ export type ProductSeoState = {
 
 const legacyStaticSlugs = new Set(staticProducts.map((product) => product.slug));
 const publicSeoCategorySlugs = new Set<string>(seoCategorySlugs);
-const approvedImageRights = new Set<ProductImage["rights_status"]>([
-  "owned",
-  "licensed",
-  "manufacturer_approved",
-]);
-
 function hasText(value: unknown): boolean {
   return typeof value === "string" && value.trim().length > 0;
 }
@@ -119,17 +113,12 @@ function mapProductSeoState(row: ProductSeoRow): ProductSeoState {
   const category = Array.isArray(row.category) ? row.category[0] : row.category;
   const hasPublicCategory = Boolean(category?.slug && publicSeoCategorySlugs.has(category.slug));
   const isLegacyProduct = legacyStaticSlugs.has(row.slug);
-  const hasApprovedPrimaryImage = row.product_images.some(
-    (image) => image.is_primary && approvedImageRights.has(image.rights_status)
-  );
   const hasCoreEnglishContent =
     hasText(row.name) &&
     hasText(row.description) &&
     normalizeImageUrl(row.image_url) !== "/products/placeholder.png" &&
     row.pricing_tiers.length > 0;
-  const hasEditorialApproval =
-    isLegacyProduct ||
-    (row.content_status === "content_ready" && hasApprovedPrimaryImage);
+  const hasEditorialApproval = isLegacyProduct || row.content_status === "content_ready";
   const spanish = row.product_localizations.find(
     (localization) => localization.locale === "es"
   );

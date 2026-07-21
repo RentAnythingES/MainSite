@@ -13,7 +13,6 @@ const publicCategories = new Set([
   "home-living",
   "travel-outdoors",
 ]);
-const approvedImageRights = new Set(["owned", "licensed", "manufacturer_approved"]);
 
 function loadEnvironment() {
   if (!fs.existsSync(envPath)) return;
@@ -43,7 +42,6 @@ function hasUsableImage(value) {
 function evaluateProduct(product, legacySlugs) {
   const category = Array.isArray(product.category) ? product.category[0] : product.category;
   const categorySlug = category?.slug || "uncategorized";
-  const primaryImage = product.product_images.find((image) => image.is_primary);
   const english = product.product_localizations.find((localization) => localization.locale === "en");
   const spanish = product.product_localizations.find((localization) => localization.locale === "es");
   const blockersEn = [];
@@ -53,10 +51,7 @@ function evaluateProduct(product, legacySlugs) {
   if (!hasText(product.name) || !hasText(product.description)) blockersEn.push("missing_core_copy");
   if (!hasUsableImage(product.image_url)) blockersEn.push("missing_usable_image");
   if (product.pricing_tiers.length === 0) blockersEn.push("missing_pricing");
-  if (
-    !legacySlugs.has(product.slug) &&
-    (product.content_status !== "content_ready" || !primaryImage || !approvedImageRights.has(primaryImage.rights_status))
-  ) {
+  if (!legacySlugs.has(product.slug) && product.content_status !== "content_ready") {
     blockersEn.push("editorial_approval");
   }
 

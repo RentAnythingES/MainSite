@@ -403,8 +403,9 @@ Priority pilot logic: start with one narrow bundle, collect usage evidence, then
 2. **Beach cluster — ✅ Completed 18 July** — `/rental/travel-outdoors` owns broad rental and delivery intent; guides own beach-planning queries; product pages own exact-item searches. Consolidated comparison and FAQ coverage avoids overlapping thin landing pages.
 3. **Active catalogue** — complete EN/ES readiness for commercially available products
    - Mobility scooter content review completed 21 July 2026 for standard,
-     lightweight, and heavy-duty listings. EN/ES copy and FAQs are complete; the
-     standard listing awaits a rights-cleared image before returning to the sitemap.
+     lightweight, and heavy-duty listings. EN/ES copy and FAQs are complete and all
+     three active listings remain in both sitemaps. Image-rights follow-up remains an
+     internal publication-compliance task rather than a sitemap exclusion.
      See [MOBILITY_SCOOTER_CONTENT_REVIEW_20260721.md](./MOBILITY_SCOOTER_CONTENT_REVIEW_20260721.md).
 4. **Commercial hubs — ✅ Completed 18 July** — AC, baby gear, mobility and remote-work hubs now absorb closely related rental, delivery, suitability and duration questions in EN/ES without creating competing landing pages.
 5. **Internal links — ✅ Graph pass completed 18 July** — Spanish pathways use localized guides; all sitemap pages remain within three homepage clicks; Discover children now link through their sub-hubs; the long-stay kitchen kit gains a contextual Apartment Comfort pathway. Regression checks cover locale-specific editorial links and hierarchy links.
