@@ -1,5 +1,5 @@
 # RentAnything.es — SEO Strategy & Audit
-> **Last updated**: 2026-07-21 · **Build**: ✅ Clean · **Indexable sitemap pages**: 180
+> **Last updated**: 2026-07-21 · **Build**: ✅ Clean · **Indexable sitemap pages**: 192
 
 This is the **living SEO strategy document** for rentanything.es. Updated after every SEO-related change. For prioritized fixes, see [SEO_ROADMAP.md](./SEO_ROADMAP.md).
 
@@ -23,18 +23,18 @@ Several older counts farther down this document are retained as historical miles
 
 | Layer | English | Spanish | Current role |
 |-------|---------|---------|--------------|
-| Commercial category hubs | 6 | 6 | Broad transactional query owners |
-| Indexable product pages | 22 | 22 | Exact-item and model-level demand |
+| Commercial category hubs | 7 | 7 | Broad transactional query owners |
+| Indexable product pages | 27 | 27 | Exact-item and model-level demand |
 | Blog articles | 8 | 8 | Planning, comparison, seasonal and tutorial intent |
 | Discover sub-hubs | 5 | 5 | Beaches, neighbourhoods, attractions, day trips and events |
 | Discover guides | 26 | 26 | Valencia destination and situational planning |
 | Kit detail pages | 8 | 8 | Multi-item use cases and bundle discovery |
 
-The 180-URL production crawl reports zero page errors, warnings, orphan pages,
-pages beyond three clicks, single-inbound pages, broken internal links, or broken
-internal images. It currently reports three internally linked product URLs that
-remain indexable outside the sitemap after catalogue changes; route-cache
-invalidation must be aligned with the product indexability gate.
+The 192-URL production crawl reports zero page errors, warnings, orphan pages,
+pages beyond three clicks, single-inbound pages, broken internal links, broken
+internal images or indexable internal URLs missing from the sitemap. It includes
+the Sports & Wellness hubs and ball-machine product in both locales. Route-cache
+invalidation now explicitly refreshes catalogue pages, product routes and sitemap.
 
 ### Commercial cluster depth
 
