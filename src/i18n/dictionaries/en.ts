@@ -53,6 +53,7 @@ const en: Dictionary = {
     remoteWork: { name: "Remote Work", desc: "Monitors, desks, chairs & accessories" },
     homeLiving: { name: "Apartment Comfort", desc: "Air purifiers, cooling & comfort" },
     travelOutdoors: { name: "Beach & Outdoor", desc: "Beach gear, coolers & umbrellas" },
+    sportsWellness: { name: "Sports & Wellness", desc: "Tennis, padel & training equipment" },
     pregnancy: { name: "Pregnancy & Postpartum", desc: "Support pillows, comfort essentials" },
   },
 

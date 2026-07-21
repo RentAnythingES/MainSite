@@ -10,7 +10,7 @@ if (fs.existsSync(envPath)) for (const line of fs.readFileSync(envPath, "utf8").
 }
 
 const requiredEnvironment = ["NEXT_PUBLIC_SUPABASE_URL", "NEXT_PUBLIC_SUPABASE_ANON_KEY", "SUPABASE_SERVICE_ROLE_KEY", "STRIPE_SECRET_KEY", "STRIPE_WEBHOOK_SECRET", "RESEND_API_KEY", "NEXT_PUBLIC_SITE_URL"];
-const publicCategories = new Set(["baby-gear", "kids-family", "mobility", "remote-work", "home-living", "travel-outdoors"]);
+const publicCategories = new Set(["baby-gear", "kids-family", "mobility", "remote-work", "home-living", "travel-outdoors", "fitness-wellness"]);
 const approvedImageRights = new Set(["owned", "licensed", "manufacturer_approved"]);
 
 function getLegacySlugs() {

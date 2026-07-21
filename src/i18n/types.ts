@@ -48,6 +48,7 @@ export interface Dictionary {
     remoteWork: { name: string; desc: string };
     homeLiving: { name: string; desc: string };
     travelOutdoors: { name: string; desc: string };
+    sportsWellness: { name: string; desc: string };
     pregnancy: { name: string; desc: string };
   };
 

@@ -26,6 +26,7 @@ const heroCategories = [
   { ...t.categories.remoteWork, href: "/es/rental/remote-work", image: "/categories/remote-work.webp" },
   { ...t.categories.homeLiving, href: "/es/rental/home-living", image: "/categories/home-living.webp" },
   { ...t.categories.travelOutdoors, href: "/es/rental/travel-outdoors", image: "/categories/travel-outdoors.webp" },
+  { ...t.categories.sportsWellness, href: "/es/rental/fitness-wellness", image: "/categories/sports-wellness.webp" },
 ];
 
 const howItWorks = [

@@ -314,6 +314,70 @@ const categoryMeta: Record<string, CategoryContent> = {
       },
     ],
   },
+  "fitness-wellness": {
+    title: "Sports Equipment Rental in Valencia",
+    description: "Rent tennis, padel and practical sports equipment in Valencia, with flexible dates and pickup or delivery options for your accommodation or club.",
+    emoji: "🎾",
+    image: "/categories/sports-wellness.webp",
+    editorialHeading: "Rent Sports Equipment for Your Valencia Stay",
+    editorialParagraphs: [
+      "Sports equipment can be awkward to transport, especially when a trip needs specialist training gear rather than one racket or pair of shoes. Renting locally lets you arrange the equipment around your Valencia dates without carrying it through an airport or buying it for a short stay.",
+      "The published Sports & Wellness catalogue starts with tennis and padel training equipment. Each product page explains the model, included parts, power or charging requirements, transport details and rental conditions so you can check whether it suits your planned session before booking.",
+      "Use the availability checker for your dates and review the offered pickup or delivery options before payment. For equipment used at a club or court, confirm venue permission, access and safe operating space directly with the venue as well as checking the product instructions.",
+    ],
+    blogTags: ["sports", "fitness", "wellness"],
+    featuredHeading: "Plan Sports Equipment Around Your Stay",
+    featuredDescription: "Check how rentals work, then use our local Valencia guidance to plan transport, timing and practical equipment around your activity.",
+    featuredPathways: [
+      {
+        eyebrow: "Rental process",
+        title: "Review Pickup, Delivery and Booking",
+        description: "Understand availability checks, payment, handover and collection before choosing your dates.",
+        href: "/how-it-works",
+      },
+      {
+        eyebrow: "Local guide",
+        title: "Explore the Turia Gardens",
+        description: "Plan a day around Valencia's long urban park, its activity areas and practical access considerations.",
+        href: "/discover/turia-gardens",
+      },
+    ],
+    searchIntentHeading: "Choose Sports Equipment by Activity",
+    searchIntentDescription: "Compare the equipment, included accessories and setup requirements for your Valencia dates rather than relying on a generic sports-hire request.",
+    searchIntents: [
+      {
+        title: "Tennis and padel practice",
+        description: "Check ball capacity, battery runtime, controls, transport dimensions and the space required to operate training equipment safely.",
+      },
+      {
+        title: "Equipment for a short stay",
+        description: "Use local rental when specialist gear would be disproportionate to buy or difficult to carry for a temporary visit.",
+      },
+      {
+        title: "Club or accommodation delivery",
+        description: "Review the delivery options shown during booking and separately confirm that the intended venue permits and can receive the equipment.",
+      },
+    ],
+    faqHeading: "Sports Equipment Rental in Valencia: FAQs",
+    faqs: [
+      {
+        question: "Can I rent tennis or padel equipment in Valencia?",
+        answer: "Yes, when a published item is available for your dates. The current catalogue and each product page show the equipment, included parts, rental pricing and available pickup or delivery options.",
+      },
+      {
+        question: "Can sports equipment be delivered to a tennis or padel club?",
+        answer: "Select the relevant delivery option during booking if the club address falls within a supported service area. You should also confirm the venue's access, reception and equipment-use rules before the handover.",
+      },
+      {
+        question: "What should I check before renting a ball machine?",
+        answer: "Review the battery runtime, ball capacity, controls, packed dimensions, included charger and safe operating guidance on the listing. Confirm that your chosen court permits ball machines and provides enough setup space.",
+      },
+      {
+        question: "Can I rent sports equipment for one day?",
+        answer: "Enter your preferred start and end time on the product page. The availability check will confirm whether the item can be booked and calculate the applicable price for that rental window.",
+      },
+    ],
+  },
 };
 
 interface Props {

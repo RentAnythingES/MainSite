@@ -3,9 +3,11 @@ import { createAdminClient } from "@/lib/supabase-admin";
 import { verifyAdmin, unauthorizedResponse } from "@/lib/admin-auth";
 import { getProductReadinessIssues, isValidProductSlug } from "@/lib/product-validation";
 import { invalidatePublicProductCache } from "@/lib/product-cache";
+import { seoCategorySlugs } from "@/data/seo-clusters";
 
 type PricingTierPayload = { min_days: number; per_day_cents: number };
 type QuantityDiscountPayload = { min_quantity: number; discount_bps: number };
+const publicCategorySlugs = new Set<string>(seoCategorySlugs);
 
 function getErrorMessage(err: unknown) {
   if (err && typeof err === "object" && "message" in err) {
@@ -124,6 +126,20 @@ export async function PUT(
     }
 
     if (body.is_active === true) {
+      const targetCategoryId = String(body.category_id || existingProduct.category_id || "");
+      const { data: targetCategory, error: targetCategoryError } = await supabase
+        .from("categories")
+        .select("slug")
+        .eq("id", targetCategoryId)
+        .single();
+
+      if (targetCategoryError || !targetCategory?.slug || !publicCategorySlugs.has(targetCategory.slug)) {
+        return NextResponse.json(
+          { error: "This product cannot be activated until its category has a public customer-facing hub." },
+          { status: 400 },
+        );
+      }
+
       const issues = getProductReadinessIssues({
         ...existingProduct,
         ...body,
@@ -247,7 +263,7 @@ export async function PUT(
       }
     }
 
-    invalidatePublicProductCache();
+    invalidatePublicProductCache([existingProduct.slug, String(data.slug || existingProduct.slug)]);
     return NextResponse.json({ product: data });
   } catch (err) {
     if (didMutate) invalidatePublicProductCache();
@@ -274,14 +290,16 @@ export async function DELETE(
   try {
     const supabase = createAdminClient();
 
-    const { error } = await supabase
+    const { data: product, error } = await supabase
       .from("products")
       .update({ is_active: false })
-      .eq("id", id);
+      .eq("id", id)
+      .select("slug")
+      .single();
 
     if (error) throw error;
 
-    invalidatePublicProductCache();
+    invalidatePublicProductCache(product?.slug ? [product.slug] : []);
     return NextResponse.json({ success: true });
   } catch (err) {
     console.error("[admin/products] DELETE error:", err);

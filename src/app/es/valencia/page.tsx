@@ -26,6 +26,7 @@ const categoryCards = [
   { ...t.categories.remoteWork, slug: "remote-work", image: "/categories/remote-work.webp" },
   { ...t.categories.homeLiving, slug: "home-living", image: "/categories/home-living.webp" },
   { ...t.categories.travelOutdoors, slug: "travel-outdoors", image: "/categories/travel-outdoors.webp" },
+  { ...t.categories.sportsWellness, slug: "fitness-wellness", image: "/categories/sports-wellness.webp" },
 ];
 
 export default async function ValenciaPageES() {

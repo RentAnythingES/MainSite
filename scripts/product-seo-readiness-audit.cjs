@@ -12,6 +12,7 @@ const publicCategories = new Set([
   "remote-work",
   "home-living",
   "travel-outdoors",
+  "fitness-wellness",
 ]);
 
 function loadEnvironment() {

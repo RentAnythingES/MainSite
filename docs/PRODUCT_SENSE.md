@@ -51,8 +51,9 @@ Priority category direction:
 4. **Remote Work** — Screens, ergonomic setup, desks, accessories
 5. **Apartment Comfort** — Cooling, air quality, kitchen, bedding, long-stay upgrades
 6. **Mobility & Accessibility** — Wheelchairs, rollators, scooters, bathroom safety, senior travel support
-7. **Pregnancy & Postpartum** — Comfort, nursing, recovery, carefully scoped hygiene-sensitive items
-8. **Host Services** — Recurring kits for Airbnb hosts, aparthotels, relocation agencies, and property managers
+7. **Sports & Wellness** — Tennis, padel, training equipment, selected fitness and recovery items
+8. **Pregnancy & Postpartum** — Comfort, nursing, recovery, carefully scoped hygiene-sensitive items
+9. **Host Services** — Recurring kits for Airbnb hosts, aparthotels, relocation agencies, and property managers
 
 Future categories should be added only when they have either real demand, strong SEO logic, clear partner supply, or a bundle use case.
 

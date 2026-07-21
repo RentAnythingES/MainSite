@@ -25,6 +25,7 @@ const categoryNameES: Record<string, string> = {
   "remote-work": "Teletrabajo",
   "home-living": "Hogar y Confort",
   "travel-outdoors": "Playa y Aire Libre",
+  "fitness-wellness": "Deporte y Bienestar",
   "pregnancy": "Embarazo",
 };
 

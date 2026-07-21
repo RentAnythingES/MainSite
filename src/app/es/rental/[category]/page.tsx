@@ -299,6 +299,68 @@ const categoryMetaES: Record<string, CategoryContent> = {
       },
     ],
   },
+  "fitness-wellness": {
+    title: "Alquiler de Material Deportivo en Valencia",
+    description: "Alquila material de tenis, pádel y entrenamiento en Valencia, con fechas flexibles y opciones de recogida o entrega en tu alojamiento o club.",
+    image: "/categories/sports-wellness.webp",
+    editorialHeading: "Alquila material deportivo durante tu estancia en Valencia",
+    editorialParagraphs: [
+      "El material deportivo puede resultar difícil de transportar, especialmente cuando necesitas equipamiento de entrenamiento especializado y no solo una raqueta o unas zapatillas. Alquilar en Valencia permite organizarlo según tus fechas sin llevarlo por el aeropuerto ni comprarlo para una estancia corta.",
+      "El catálogo publicado de Deporte y Bienestar empieza con material para entrenar tenis y pádel. Cada ficha explica el modelo, las piezas incluidas, la alimentación o carga, el transporte y las condiciones de alquiler para que puedas comprobar si encaja con la sesión prevista.",
+      "Comprueba la disponibilidad para tus fechas y revisa las opciones de recogida o entrega antes del pago. Si vas a utilizar el equipo en un club o una pista, confirma también con el recinto el acceso, el espacio disponible y sus normas de uso.",
+    ],
+    featuredHeading: "Organiza el material deportivo para tu estancia",
+    featuredDescription: "Consulta cómo funciona el alquiler y utiliza nuestras guías de Valencia para coordinar transporte, horarios y actividad.",
+    featuredPathways: [
+      {
+        eyebrow: "Proceso de alquiler",
+        title: "Consulta la recogida, entrega y reserva",
+        description: "Revisa la disponibilidad, el pago, la entrega del material y su devolución antes de elegir las fechas.",
+        href: "/es/how-it-works",
+      },
+      {
+        eyebrow: "Guía local",
+        title: "Descubre los Jardines del Turia",
+        description: "Planifica una jornada en el gran parque urbano de Valencia y consulta sus zonas de actividad y accesos.",
+        href: "/es/discover/turia-gardens",
+      },
+    ],
+    searchIntentHeading: "Elige el material según la actividad",
+    searchIntentDescription: "Compara el equipo, los accesorios incluidos y los requisitos de uso para tus fechas en Valencia en lugar de enviar una solicitud deportiva genérica.",
+    searchIntents: [
+      {
+        title: "Entrenamiento de tenis y pádel",
+        description: "Comprueba la capacidad de pelotas, la autonomía, los controles, las medidas de transporte y el espacio necesario para utilizar el equipo con seguridad.",
+      },
+      {
+        title: "Equipamiento para una estancia corta",
+        description: "El alquiler local resulta útil cuando comprar material especializado o transportarlo no compensa para una visita temporal.",
+      },
+      {
+        title: "Entrega en un club o alojamiento",
+        description: "Revisa las opciones de entrega durante la reserva y confirma por separado que el recinto puede recibir y permite utilizar el equipo.",
+      },
+    ],
+    faqHeading: "Preguntas sobre el alquiler de material deportivo en Valencia",
+    faqs: [
+      {
+        question: "¿Puedo alquilar material de tenis o pádel en Valencia?",
+        answer: "Sí, cuando haya un artículo publicado disponible para tus fechas. El catálogo y cada ficha muestran el equipo, las piezas incluidas, el precio y las opciones de recogida o entrega.",
+      },
+      {
+        question: "¿Podéis entregar material deportivo en un club de tenis o pádel?",
+        answer: "Selecciona una opción de entrega durante la reserva si la dirección está dentro de una zona disponible. Confirma también con el club el acceso, la recepción y sus normas de uso del material.",
+      },
+      {
+        question: "¿Qué debo comprobar antes de alquilar una máquina lanzapelotas?",
+        answer: "Revisa la autonomía, la capacidad, los controles, las medidas, el cargador incluido y las indicaciones de uso seguro. Confirma que la pista elegida permite estas máquinas y dispone de espacio suficiente.",
+      },
+      {
+        question: "¿Puedo alquilar material deportivo durante un solo día?",
+        answer: "Introduce la fecha y la hora de inicio y fin en la ficha del producto. La comprobación mostrará si está disponible y calculará el precio aplicable para ese periodo.",
+      },
+    ],
+  },
 };
 
 interface Props {

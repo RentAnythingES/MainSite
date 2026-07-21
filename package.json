@@ -14,6 +14,7 @@
     "audit:launch": "node scripts/launch-readiness-audit.cjs",
     "audit:seo": "node scripts/seo-regression-check.cjs",
     "audit:product-seo": "node scripts/product-seo-readiness-audit.cjs",
+    "audit:category-coverage": "node scripts/category-coverage-audit.cjs",
     "audit:image-seo": "node scripts/image-seo-audit.cjs",
     "audit:performance": "node scripts/performance-budget-audit.cjs",
     "audit:technical-seo": "node scripts/technical-seo-audit.cjs",

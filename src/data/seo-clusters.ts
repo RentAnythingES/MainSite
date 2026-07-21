@@ -47,6 +47,14 @@ export const seoCategoryClusters = [
     primaryKeywordEn: "beach equipment rental Valencia",
     primaryKeywordEs: "alquiler material playa Valencia",
   },
+  {
+    slug: "fitness-wellness",
+    nameEn: "Sports & Wellness",
+    nameEs: "Deporte y Bienestar",
+    emoji: "🎾",
+    primaryKeywordEn: "sports equipment rental Valencia",
+    primaryKeywordEs: "alquiler material deportivo Valencia",
+  },
 ] as const;
 
 export type SeoCategorySlug = (typeof seoCategoryClusters)[number]["slug"];

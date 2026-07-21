@@ -1,5 +1,5 @@
 # RentAnything.es — SEO Strategy & Audit
-> **Last updated**: 2026-07-21 · **Build**: ✅ Clean · **Indexable sitemap pages**: 178
+> **Last updated**: 2026-07-21 · **Build**: ✅ Clean · **Indexable sitemap pages**: 180
 
 This is the **living SEO strategy document** for rentanything.es. Updated after every SEO-related change. For prioritized fixes, see [SEO_ROADMAP.md](./SEO_ROADMAP.md).
 
@@ -13,6 +13,40 @@ This is the **living SEO strategy document** for rentanything.es. Updated after 
 | [SEO_ROADMAP.md](./SEO_ROADMAP.md) | Prioritized action items and fixes |
 | [COMPETITOR_REFERENCE.md](./COMPETITOR_REFERENCE.md) | Crawl-verified competitor data |
 | [BLOG_CONTENT_STRATEGY.md](./BLOG_CONTENT_STRATEGY.md) | Blog quality standards and content pipeline |
+
+---
+
+## Current Portfolio Baseline — 21 July 2026
+
+The live sitemap and database readiness audit are the authoritative inventory sources.
+Several older counts farther down this document are retained as historical milestones.
+
+| Layer | English | Spanish | Current role |
+|-------|---------|---------|--------------|
+| Commercial category hubs | 6 | 6 | Broad transactional query owners |
+| Indexable product pages | 22 | 22 | Exact-item and model-level demand |
+| Blog articles | 8 | 8 | Planning, comparison, seasonal and tutorial intent |
+| Discover sub-hubs | 5 | 5 | Beaches, neighbourhoods, attractions, day trips and events |
+| Discover guides | 26 | 26 | Valencia destination and situational planning |
+| Kit detail pages | 8 | 8 | Multi-item use cases and bundle discovery |
+
+The 180-URL production crawl reports zero page errors, warnings, orphan pages,
+pages beyond three clicks, single-inbound pages, broken internal links, or broken
+internal images. It currently reports three internally linked product URLs that
+remain indexable outside the sitemap after catalogue changes; route-cache
+invalidation must be aligned with the product indexability gate.
+
+### Commercial cluster depth
+
+| Cluster | Indexable products per locale | Main supporting layers | Expansion posture |
+|---------|-------------------------------|------------------------|-------------------|
+| Beach & Outdoor | 6 | Category, Family Beach kit, beach/summer blogs, 4 beach guides | Strongest current cluster; optimize measured winners before adding more broad pages |
+| Baby & Toddler | 6 | Category, Baby Arrival and Toddler City kits, 3 family/baby articles | Strong; add narrow decision content only where query ownership is distinct |
+| Mobility & Accessibility | 4 | Category, 2 accessibility kits, accessibility guide, accessible local guides | Expand commercial comparisons and verified accessibility planning |
+| Remote Work | 3 | Category, Remote Work kit, nomad guide, home-office tutorial | Coherent cluster; deepen exact workstation and temporary-stay decisions |
+| Apartment Comfort | 3 | Category, Summer and Long-Stay kits, summer guide | Commercially relevant but editorially thin; prioritize cooling and long-stay problems |
+| Kids & Family | 0 | Category, 2 shared kits, 2 family articles | Structurally ready but should not expand transactionally before approved inventory |
+| Sports & Wellness | 1 | Category, Turia Gardens guide and product-level pathways | Newly opened cluster; expand only as approved sports inventory becomes available |
 
 ---
 

@@ -97,6 +97,13 @@ const categoryChecks = [
     ],
     requiredSchemaTypes: ["FAQPage"],
   },
+  {
+    slug: "fitness-wellness",
+    pathways: ["/how-it-works", "/discover/turia-gardens"],
+    requiredEnglishText: ["Sports Equipment Rental in Valencia: FAQs"],
+    requiredSpanishText: ["Preguntas sobre el alquiler de material deportivo en Valencia"],
+    requiredSchemaTypes: ["FAQPage"],
+  },
 ];
 
 const productPathways = Object.fromEntries(categoryChecks.map((category) => [

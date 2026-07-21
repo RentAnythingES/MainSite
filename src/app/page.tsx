@@ -58,6 +58,12 @@ const heroCategories = [
     image: "/categories/travel-outdoors.webp",
     description: "Beach gear, coolers & umbrellas",
   },
+  {
+    name: "Sports & Wellness",
+    href: "/rental/fitness-wellness",
+    image: "/categories/sports-wellness.webp",
+    description: "Tennis, padel & training equipment",
+  },
 ];
 
 const trustStats = [

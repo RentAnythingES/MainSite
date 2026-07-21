@@ -65,6 +65,7 @@ const es: Dictionary = {
     remoteWork: { name: "Teletrabajo", desc: "Monitores, escritorios, sillas y accesorios" },
     homeLiving: { name: "Hogar y Confort", desc: "Purificadores de aire, calefactores y confort" },
     travelOutdoors: { name: "Playa y Aire Libre", desc: "Sombrillas, neveras y equipamiento" },
+    sportsWellness: { name: "Deporte y Bienestar", desc: "Tenis, pádel y material de entrenamiento" },
     pregnancy: { name: "Embarazo", desc: "Almohadas de apoyo, artículos de confort" },
   },
 

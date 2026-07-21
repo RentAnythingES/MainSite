@@ -191,6 +191,36 @@ const productSeoPathways: Record<string, ProductSeoPathwaySet> = {
       },
     ],
   },
+  "fitness-wellness": {
+    en: [
+      {
+        eyebrow: "Rental process",
+        title: "How Equipment Rental Works",
+        description: "Review availability, pickup, delivery and return before choosing your dates.",
+        href: "/how-it-works",
+      },
+      {
+        eyebrow: "Local guide",
+        title: "Turia Gardens",
+        description: "Plan activities, access and practical movement through Valencia's urban park.",
+        href: "/discover/turia-gardens",
+      },
+    ],
+    es: [
+      {
+        eyebrow: "Proceso de alquiler",
+        title: "Cómo funciona el alquiler",
+        description: "Consulta la disponibilidad, recogida, entrega y devolución antes de elegir las fechas.",
+        href: "/es/how-it-works",
+      },
+      {
+        eyebrow: "Guía local",
+        title: "Jardines del Turia",
+        description: "Planifica actividades, accesos y desplazamientos por el gran parque urbano de Valencia.",
+        href: "/es/discover/turia-gardens",
+      },
+    ],
+  },
 };
 
 export function getProductSeoPathways(categorySlug: string, locale: "en" | "es") {

@@ -30,6 +30,7 @@ const categoryCards = [
   { name: "Remote Work", slug: "remote-work", image: "/categories/remote-work.webp", desc: "Monitors, desks, ergonomic chairs" },
   { name: "Apartment Comfort", slug: "home-living", image: "/categories/home-living.webp", desc: "Air purifiers, AC units, kitchen" },
   { name: "Beach & Outdoor", slug: "travel-outdoors", image: "/categories/travel-outdoors.webp", desc: "Beach gear, shade, recreation" },
+  { name: "Sports & Wellness", slug: "fitness-wellness", image: "/categories/sports-wellness.webp", desc: "Tennis, padel and training equipment" },
 ];
 
 export default async function ValenciaPage() {
@@ -113,7 +114,7 @@ export default async function ValenciaPage() {
       <section className="section bg-white" id="categories">
         <div className="container-site">
           <h2 className="text-3xl font-bold mb-8">Browse by Category</h2>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {categoryCards.map((cat) => (
               <Link
                 key={cat.slug}

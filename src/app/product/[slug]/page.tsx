@@ -79,6 +79,7 @@ const categoryBlogTags: Record<string, string[]> = {
   "remote-work": ["digital nomad", "remote work"],
   "home-living": ["summer", "seasonal"],
   "travel-outdoors": ["summer", "beach"],
+  "fitness-wellness": ["sports", "fitness", "wellness"],
 };
 
 export default async function ProductPage({ params }: Props) {
