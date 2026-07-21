@@ -1,0 +1,176 @@
+{
+  "review": "2026-07-21-mobility-scooters",
+  "products": [
+    {
+      "slug": "mobility-scooter-standard",
+      "contentStatus": "content_ready",
+      "name": "Standard Mobility Scooter",
+      "brand": "Model confirmed before booking",
+      "imageReview": {
+        "altText": "Standard four-wheel mobility scooter available to rent in Valencia",
+        "sourceUrl": "https://www.mobilityrent.es/alquilar/alquilar-scooter-movilidad-reducida/alquiler-scooter-electrico-mediano/",
+        "rightsStatus": "unknown"
+      },
+      "description": "A stable mid-size four-wheel mobility scooter for comfortable everyday journeys around Valencia. Its swivelling seat, front basket and balanced size make it a practical choice for promenades, parks and accessible urban routes. The exact make, colour and measured performance of the delivered unit are confirmed before payment.",
+      "features": ["Four-wheel stability", "Swivelling adjustable seat", "Front basket", "Front light", "Personal handover and controls briefing"],
+      "specs": {
+        "Maximum speed": "Up to 8 km/h",
+        "Advertised range": "Up to 30 km per charge",
+        "Maximum user weight": "136 kg",
+        "Approximate dimensions": "120 × 62 × 119 cm"
+      },
+      "localizations": {
+        "en": {
+          "short_description": "A stable mid-size mobility scooter for comfortable everyday journeys around Valencia.",
+          "detail_description": "The standard scooter balances comfort, stability and manoeuvrability for accessible routes through Valencia. It is suited to places such as the Turia Gardens, the City of Arts and Sciences and the broad seafront promenades. Range varies with user weight, gradients, surface, temperature and driving style, so we confirm the exact unit and discuss your planned route before payment.",
+          "includes_text": "Mobility scooter, compatible charger, front basket and a handover explaining the controls and charging routine.",
+          "constraints_text": "For paved and accessible routes only. Do not use on sand, steps, high kerbs, flooded surfaces or steep and badly broken ground. Maximum user weight is 136 kg. The listed range is an upper estimate, not a guaranteed journey distance.",
+          "delivery_setup_note": "We confirm access dimensions, the rider's needs and the intended route before payment. At handover, we adjust the seat and controls and explain safe operation and charging.",
+          "care_note": "Charge overnight after use, keep the scooter dry and secure, and contact us before moving it in a vehicle or if any warning light appears.",
+          "seo_title": "Standard Mobility Scooter Rental in Valencia",
+          "seo_description": "Rent a stable standard mobility scooter in Valencia with delivery, charger and personal handover. Ideal for accessible parks and promenades."
+        },
+        "es": {
+          "short_description": "Scooter de movilidad de tamaño medio, estable y cómodo para desplazamientos diarios por Valencia.",
+          "detail_description": "El scooter estándar combina comodidad, estabilidad y maniobrabilidad para rutas accesibles por Valencia. Es adecuado para lugares como el Jardín del Turia, la Ciudad de las Artes y las Ciencias y los paseos marítimos amplios. La autonomía varía según el peso, las pendientes, el firme, la temperatura y la conducción, por lo que confirmamos la unidad exacta y revisamos la ruta prevista antes del pago.",
+          "includes_text": "Scooter de movilidad, cargador compatible, cesta delantera y una entrega con explicación de los controles y la carga.",
+          "constraints_text": "Solo para rutas pavimentadas y accesibles. No debe utilizarse sobre arena, escalones, bordillos altos, zonas inundadas ni terreno muy inclinado o deteriorado. Peso máximo del usuario: 136 kg. La autonomía indicada es una estimación máxima, no una distancia garantizada.",
+          "delivery_setup_note": "Antes del pago confirmamos las medidas de acceso, las necesidades del usuario y la ruta prevista. En la entrega ajustamos el asiento y los controles y explicamos el uso seguro y la carga.",
+          "care_note": "Cárgalo durante la noche después de usarlo, mantenlo seco y seguro, y consúltanos antes de transportarlo en un vehículo o si aparece algún aviso.",
+          "seo_title": "Alquiler scooter de movilidad estándar Valencia",
+          "seo_description": "Alquila un scooter de movilidad estándar en Valencia con entrega, cargador y explicación personal. Para parques y paseos accesibles."
+        }
+      },
+      "faqs": {
+        "en": [
+          {"question": "Is the standard scooter suitable for Valencia city routes?", "answer": "It is intended for paved, accessible routes such as broad pavements, parks and promenades. We recommend checking step-free access at your accommodation and destinations, and avoiding sand, high kerbs and badly broken surfaces."},
+          {"question": "Is the 30 km range guaranteed?", "answer": "No. It is an advertised maximum under favourable conditions. Actual range changes with user weight, gradients, surface, temperature, battery condition and driving style. We will discuss your route and confirm the delivered unit before payment."},
+          {"question": "What is included with the rental?", "answer": "The booking includes the scooter, its compatible charger, the fitted basket and a handover explaining the controls and charging routine. Your confirmation records the exact unit and included accessories."},
+          {"question": "Will it fit through my accommodation entrance?", "answer": "The listed scooter is approximately 62 cm wide, but doors, lifts and turning spaces also matter. Send us the narrowest access measurements and we will check suitability before payment."},
+          {"question": "How should I charge the scooter?", "answer": "Use only the supplied charger in a dry, ventilated place and charge overnight after use. We demonstrate the charging connection during handover."}
+        ],
+        "es": [
+          {"question": "¿Es adecuado para moverse por Valencia?", "answer": "Está pensado para rutas pavimentadas y accesibles, como aceras amplias, parques y paseos. Conviene comprobar el acceso sin escalones en el alojamiento y los destinos, y evitar arena, bordillos altos y firmes muy deteriorados."},
+          {"question": "¿Está garantizada la autonomía de 30 km?", "answer": "No. Es una cifra máxima anunciada en condiciones favorables. La autonomía real cambia según el peso, las pendientes, el firme, la temperatura, el estado de la batería y la conducción. Revisamos la ruta y confirmamos la unidad antes del pago."},
+          {"question": "¿Qué incluye el alquiler?", "answer": "Incluye el scooter, su cargador compatible, la cesta instalada y una entrega con explicación de los controles y la carga. La confirmación detalla la unidad y los accesorios incluidos."},
+          {"question": "¿Cabrá por la entrada de mi alojamiento?", "answer": "El scooter indicado mide aproximadamente 62 cm de ancho, pero también importan las puertas, los ascensores y el espacio de giro. Envíanos la medida del paso más estrecho y comprobaremos la idoneidad antes del pago."},
+          {"question": "¿Cómo se carga el scooter?", "answer": "Utiliza únicamente el cargador suministrado, en un lugar seco y ventilado, y cárgalo durante la noche después de usarlo. Mostramos la conexión durante la entrega."}
+        ]
+      }
+    },
+    {
+      "slug": "mobility-scooter-lightweight",
+      "contentStatus": "facts_verified",
+      "name": "Lightweight Mobility Scooter",
+      "brand": "Model confirmed before booking",
+      "imageReview": {
+        "altText": "Compact four-wheel mobility scooter available to rent in Valencia",
+        "sourceUrl": "Legacy catalogue asset; original source not documented",
+        "rightsStatus": "unknown"
+      },
+      "description": "A compact four-wheel mobility scooter intended for shorter accessible journeys and easier transport or storage. The scooter separates into manageable sections and includes a front basket. Because the exact fleet model is still being matched to its technical record, we confirm dimensions, component weights and performance before payment.",
+      "features": ["Compact four-wheel layout", "Separates for transport", "Swivelling adjustable seat", "Front basket", "Personal handover and controls briefing"],
+      "specs": {
+        "Maximum speed": "Up to 6 km/h",
+        "Advertised range": "Up to 20 km per charge",
+        "Maximum user weight": "115 kg",
+        "Listed total weight": "Approximately 34 kg"
+      },
+      "localizations": {
+        "en": {
+          "short_description": "A compact four-wheel scooter for shorter accessible journeys and easier storage or transport.",
+          "detail_description": "Choose the lightweight class when compact storage and transport matter more than long-distance comfort. It is designed for paved, step-free routes and separates into sections, but lifting still requires a capable adult and a suitable vehicle. We confirm the exact model, dimensions, component weights and realistic range for your plans before payment.",
+          "includes_text": "Mobility scooter, compatible charger, front basket and a handover explaining assembly, controls and charging.",
+          "constraints_text": "For paved, accessible routes only. Not for sand, steps, high kerbs or badly broken ground. Maximum user weight is 115 kg. Do not assume every component is light enough for one person to lift; confirm your vehicle and lifting needs with us.",
+          "delivery_setup_note": "We check access, storage, transport and lifting requirements before payment. At handover, we demonstrate the controls, charging and any separation or reassembly steps for the delivered unit.",
+          "care_note": "Charge overnight after use, keep every component dry and secure, and never lift or transport the scooter by loose or adjustable parts.",
+          "seo_title": "Lightweight Mobility Scooter Rental Valencia",
+          "seo_description": "Rent a compact lightweight mobility scooter in Valencia with charger and personal handover. We confirm access, transport and range before payment."
+        },
+        "es": {
+          "short_description": "Scooter compacto de cuatro ruedas para trayectos accesibles cortos y un almacenamiento o transporte más sencillo.",
+          "detail_description": "La categoría ligera es adecuada cuando el almacenamiento compacto y el transporte importan más que la comodidad en trayectos largos. Está pensada para rutas pavimentadas y sin escalones y se separa en varias piezas, aunque la manipulación requiere una persona capaz y un vehículo adecuado. Antes del pago confirmamos el modelo exacto, las medidas, el peso de las piezas y una autonomía realista para tus planes.",
+          "includes_text": "Scooter de movilidad, cargador compatible, cesta delantera y una entrega con explicación del montaje, los controles y la carga.",
+          "constraints_text": "Solo para rutas pavimentadas y accesibles. No debe usarse sobre arena, escalones, bordillos altos ni terreno muy deteriorado. Peso máximo del usuario: 115 kg. No des por hecho que cada pieza puede levantarla una sola persona; confirma con nosotros el vehículo y la ayuda necesaria.",
+          "delivery_setup_note": "Antes del pago comprobamos los accesos, el almacenamiento, el transporte y la ayuda para levantar las piezas. En la entrega explicamos los controles, la carga y los pasos de separación o montaje de la unidad entregada.",
+          "care_note": "Cárgalo durante la noche después de usarlo, mantén todas las piezas secas y seguras, y no levantes ni transportes el scooter sujetándolo por piezas sueltas o ajustables.",
+          "seo_title": "Alquiler scooter de movilidad ligero Valencia",
+          "seo_description": "Alquila un scooter de movilidad ligero en Valencia con cargador y explicación personal. Confirmamos accesos, transporte y autonomía antes del pago."
+        }
+      },
+      "faqs": {
+        "en": [
+          {"question": "What makes this scooter the lightweight option?", "answer": "It has a compact four-wheel layout and separates into sections for storage or vehicle transport. Lightweight is relative: we confirm the exact component weights and whether your vehicle and helper can manage them before payment."},
+          {"question": "Can it be used on Valencia's old-town paving?", "answer": "Use it on accessible, reasonably even paved routes and cross rough sections slowly. It is not suitable for steps, sand, high kerbs or heavily broken surfaces. A larger scooter may be more comfortable for longer or rougher routes."},
+          {"question": "Is the 20 km range guaranteed?", "answer": "No. It is an advertised maximum. User weight, gradients, surface, temperature, battery condition and driving style all affect real range. We help assess the planned route before payment."},
+          {"question": "Can I put it in a car?", "answer": "Potentially, if the boot is large enough and a capable adult can safely lift the separated sections. Send us the vehicle model and boot measurements so we can check the delivered scooter."},
+          {"question": "What happens at handover?", "answer": "We adjust the seat and controls, show safe operation and charging, and demonstrate separation and reassembly if you plan to transport the scooter."}
+        ],
+        "es": [
+          {"question": "¿Qué hace que este sea el modelo ligero?", "answer": "Tiene un formato compacto de cuatro ruedas y se separa en varias piezas para guardarlo o transportarlo. Ligero es un término relativo: antes del pago confirmamos el peso exacto de las piezas y si el vehículo y la persona de apoyo pueden manejarlas."},
+          {"question": "¿Puede usarse sobre el pavimento del centro histórico?", "answer": "Debe utilizarse en rutas accesibles y razonablemente uniformes, pasando despacio por tramos irregulares. No es adecuado para escalones, arena, bordillos altos ni superficies muy deterioradas. Un scooter mayor puede resultar más cómodo para rutas largas o irregulares."},
+          {"question": "¿Está garantizada la autonomía de 20 km?", "answer": "No. Es una cifra máxima anunciada. El peso, las pendientes, el firme, la temperatura, el estado de la batería y la conducción afectan a la autonomía real. Revisamos la ruta prevista antes del pago."},
+          {"question": "¿Puedo transportarlo en un coche?", "answer": "Posiblemente, si el maletero tiene espacio y una persona capaz puede levantar las piezas con seguridad. Envíanos el modelo del vehículo y las medidas del maletero para comprobar la unidad que se entregará."},
+          {"question": "¿Qué se explica durante la entrega?", "answer": "Ajustamos el asiento y los controles, mostramos el uso seguro y la carga y, si vas a transportarlo, demostramos cómo separar y volver a montar la unidad."}
+        ]
+      }
+    },
+    {
+      "slug": "heavy-duty-mobility-scooter",
+      "contentStatus": "facts_verified",
+      "name": "Heavy-Duty Mobility Scooter",
+      "brand": "Model confirmed before booking",
+      "imageReview": {
+        "altText": "Full-size four-wheel mobility scooter available to rent in Valencia",
+        "sourceUrl": "Legacy catalogue asset; original source not documented",
+        "rightsStatus": "unknown"
+      },
+      "description": "A full-size four-wheel mobility scooter for users who need a higher weight capacity, a more substantial seat and greater comfort on longer paved routes. It is significantly larger and heavier than our other scooter classes, so access, storage and delivery must be checked before payment. The exact fleet model and measured performance are confirmed for every booking.",
+      "features": ["Full-size four-wheel layout", "Suspension", "Supportive adjustable seat", "Lights and mirrors", "Personal handover and controls briefing"],
+      "specs": {
+        "Maximum speed": "Up to 12 km/h",
+        "Advertised range": "Up to 40 km per charge",
+        "Maximum user weight": "160 kg",
+        "Listed scooter weight": "Approximately 68 kg"
+      },
+      "localizations": {
+        "en": {
+          "short_description": "A full-size mobility scooter with higher capacity and greater comfort for longer paved routes.",
+          "detail_description": "The heavy-duty class prioritises a supportive seat, stability and comfort over compact dimensions. It can suit longer accessible routes around Valencia, including broad park and seafront paths, but it needs more turning, lift and storage space than a standard scooter. We confirm access, the exact unit and a realistic route plan before payment.",
+          "includes_text": "Mobility scooter, compatible charger and a personal delivery handover explaining the controls and charging routine. Fitted accessories are confirmed with the exact unit.",
+          "constraints_text": "For paved and accessible routes only. Not for beach sand, steps, high kerbs, flooded surfaces or off-road use. Maximum user weight is 160 kg. The scooter is not intended for routine lifting into a car, and the listed range is an upper estimate rather than a guaranteed distance.",
+          "delivery_setup_note": "Before payment, we agree the handover arrangement, check door, lift, turning and secure overnight storage dimensions and discuss the planned route.",
+          "care_note": "Charge overnight after use, store securely in a dry accessible area and contact us immediately if a warning light, impact or loss of performance occurs.",
+          "seo_title": "Heavy-Duty Mobility Scooter Rental Valencia",
+          "seo_description": "Rent a heavy-duty mobility scooter in Valencia with higher capacity, delivery and personal handover. Access and route suitability checked first."
+        },
+        "es": {
+          "short_description": "Scooter de movilidad de tamaño grande, mayor capacidad y más comodidad para rutas pavimentadas largas.",
+          "detail_description": "La categoría de gran capacidad prioriza un asiento cómodo, estabilidad y confort frente a unas dimensiones compactas. Puede ser adecuada para rutas accesibles más largas por Valencia, incluidos parques amplios y paseos marítimos, pero necesita más espacio de giro, ascensor y almacenamiento que un scooter estándar. Antes del pago confirmamos los accesos, la unidad exacta y una ruta realista.",
+          "includes_text": "Scooter de movilidad, cargador compatible y entrega personal con explicación de los controles y la carga. Los accesorios instalados se confirman con la unidad exacta.",
+          "constraints_text": "Solo para rutas pavimentadas y accesibles. No debe utilizarse sobre arena, escalones, bordillos altos, superficies inundadas ni fuera de vía. Peso máximo del usuario: 160 kg. No está pensado para subirlo habitualmente a un coche y la autonomía indicada es una estimación máxima, no una distancia garantizada.",
+          "delivery_setup_note": "Antes del pago acordamos la forma de entrega o recogida, comprobamos las medidas de puertas, ascensor, giro y almacenamiento nocturno seguro y revisamos la ruta prevista.",
+          "care_note": "Cárgalo durante la noche después de usarlo, guárdalo en una zona seca, segura y accesible, y avísanos de inmediato si aparece un aviso, recibe un golpe o pierde rendimiento.",
+          "seo_title": "Alquiler scooter movilidad gran capacidad Valencia",
+          "seo_description": "Alquila un scooter de movilidad de gran capacidad en Valencia con entrega y explicación personal. Comprobamos primero accesos y ruta."
+        }
+      },
+      "faqs": {
+        "en": [
+          {"question": "Who is the heavy-duty scooter intended for?", "answer": "It is the largest class in our fleet, intended for users who need up to 160 kg capacity, a more supportive seat and greater comfort on longer paved routes. We still confirm fit, controls and individual needs before payment."},
+          {"question": "Will it fit in my accommodation?", "answer": "It needs more door, lift, turning and storage space than our other scooters. Send us the narrowest door width, lift dimensions and overnight storage details so we can check access before payment."},
+          {"question": "Can it be transported in a normal car?", "answer": "It is not intended for routine car transport and should not be lifted without suitable equipment and trained help. We normally deliver and collect this class directly."},
+          {"question": "Is the 40 km range guaranteed?", "answer": "No. It is an advertised maximum under favourable conditions. User weight, gradients, surface, temperature, battery condition and driving style can reduce the real distance significantly."},
+          {"question": "Can it be driven on the beach?", "answer": "It can use suitable paved seafront promenades, but it must not be driven on beach sand. Sand, salt water, steps, flooded areas and high kerbs can damage the scooter and create a safety risk."}
+        ],
+        "es": [
+          {"question": "¿Para quién está pensado el scooter de gran capacidad?", "answer": "Es la categoría más grande de nuestra flota, pensada para usuarios que necesitan hasta 160 kg de capacidad, un asiento con más apoyo y mayor comodidad en rutas pavimentadas largas. Antes del pago confirmamos el ajuste, los controles y las necesidades individuales."},
+          {"question": "¿Cabrá en mi alojamiento?", "answer": "Necesita más espacio de puertas, ascensor, giro y almacenamiento que los otros scooters. Envíanos el ancho del paso más estrecho, las medidas del ascensor y la zona de almacenamiento nocturno para comprobar el acceso antes del pago."},
+          {"question": "¿Puede transportarse en un coche normal?", "answer": "No está pensado para transportarlo habitualmente en coche y no debe levantarse sin equipo adecuado y ayuda preparada. Normalmente entregamos y recogemos directamente esta categoría."},
+          {"question": "¿Está garantizada la autonomía de 40 km?", "answer": "No. Es una cifra máxima anunciada en condiciones favorables. El peso, las pendientes, el firme, la temperatura, el estado de la batería y la conducción pueden reducir considerablemente la distancia real."},
+          {"question": "¿Puede circular por la playa?", "answer": "Puede utilizar paseos marítimos pavimentados adecuados, pero no debe circular sobre la arena. La arena, el agua salada, los escalones, las zonas inundadas y los bordillos altos pueden dañar el scooter y crear un riesgo."}
+        ]
+      }
+    }
+  ]
+}
