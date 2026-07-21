@@ -1,5 +1,5 @@
 # RentAnything.es — SEO Strategy & Audit
-> **Last updated**: 2026-07-20 · **Build**: ✅ Clean · **Indexable sitemap pages**: 118
+> **Last updated**: 2026-07-21 · **Build**: ✅ Clean · **Indexable sitemap pages**: 174
 
 This is the **living SEO strategy document** for rentanything.es. Updated after every SEO-related change. For prioritized fixes, see [SEO_ROADMAP.md](./SEO_ROADMAP.md).
 
@@ -228,3 +228,12 @@ Admin Dashboard:
 | 2026-06-17 | Keyword map established (Tier 1-3) |
 | 2026-06-17 | Supabase backend deployed (schema + seed + API routes) |
 | 2026-06-17 | Contact form backend (Resend) deployed |
+## Spanish kit cluster parity — 21 July 2026
+
+The existing eight scenario-led Valencia kit pages now have complete Spanish
+counterparts under `/es/valencia/kits`. This adds one localized commercial hub and
+eight localized long-tail landing pages without creating new keyword owners or
+changing bundle inventory. English and Spanish pages use reciprocal hreflang and
+localized internal links; both sets remain subordinate to their category and guide
+clusters. The Spanish configurator displays translated item names while submitting
+canonical bundle identifiers to the shared request and availability APIs.

@@ -28,6 +28,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     keywords: bundle.seo.keywords,
     alternates: {
       canonical: `https://rentanything.es/valencia/kits/${bundle.slug}`,
+      languages: {
+        en: `https://rentanything.es/valencia/kits/${bundle.slug}`,
+        es: `https://rentanything.es/es/valencia/kits/${bundle.slug}`,
+        "x-default": `https://rentanything.es/valencia/kits/${bundle.slug}`,
+      },
     },
     openGraph: {
       title: bundle.seo.title,
@@ -75,10 +80,21 @@ export default async function BundlePage({ params }: Props) {
     category: bundle.eyebrow,
     seller: { "@id": BUSINESS_SCHEMA_ID },
   };
+  const faqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    inLanguage: "en",
+    mainEntity: bundle.faqs.map((faq) => ({
+      "@type": "Question",
+      name: faq.question,
+      acceptedAnswer: { "@type": "Answer", text: faq.answer },
+    })),
+  };
 
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{

@@ -136,6 +136,12 @@ GET /valencia/kits
 
 GET /valencia/kits/[slug]
   SEO landing page for each kit with related products, guides, add-ons, configurator UI, and WhatsApp handoff
+
+GET /es/valencia/kits
+  Spanish kit hub with complete parity across all published bundle scenarios
+
+GET /es/valencia/kits/[slug]
+  Localized kit detail pages with Spanish product/guide paths and the shared request flow
 ```
 
 ### Bundle Configurator
@@ -146,6 +152,12 @@ request before WhatsApp opens, and sends non-blocking admin/customer emails. Sta
 manage the resulting lifecycle at `/admin/kit-requests`. Kit requests do not reserve
 inventory or create a booking draft yet; availability-aware multi-item drafts remain
 the next booking-system iteration.
+
+Spanish kit definitions use localized display names plus canonical `requestName`
+values. The configurator submits the canonical English item names expected by the
+existing APIs while rendering Spanish labels and responses to customers. This keeps
+one server-side validation contract instead of creating locale-specific inventory
+identifiers.
 
 `/api/bundle-availability` is the intermediate safety layer. It maps only explicit
 `productSlug` links from the static kit definition to active Supabase products,

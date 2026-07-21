@@ -12,7 +12,7 @@ export default function Footer() {
   const footerLinks = {
     [isSpanish ? "Información" : "Info & Help"]: [
       { name: isSpanish ? "Cómo Funciona" : "How It Works", href: `${prefix}/how-it-works` },
-      { name: isSpanish ? "Descubrir Valencia" : "Discover Valencia", href: "/discover" },
+      { name: isSpanish ? "Descubrir Valencia" : "Discover Valencia", href: `${prefix}/discover` },
       { name: isSpanish ? "Sobre Nosotros" : "About Us", href: `${prefix}/about` },
       { name: isSpanish ? "Preguntas Frecuentes" : "FAQ", href: `${prefix}/faq` },
       {
@@ -29,7 +29,7 @@ export default function Footer() {
       { name: isSpanish ? "Contacto" : "Contact", href: `${prefix}/contact` },
     ],
     [isSpanish ? "Categorías" : "Categories"]: [
-      { name: "Kits", href: "/valencia/kits" },
+      { name: "Kits", href: `${prefix}/valencia/kits` },
       ...seoCategoryClusters.map((category) => ({
         name: isSpanish ? category.nameEs : category.nameEn,
         href: `${prefix}/rental/${category.slug}`,

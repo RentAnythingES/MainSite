@@ -46,7 +46,8 @@ export default function Header() {
     pathname === "/terms" ||
     pathname === "/cookies" ||
     pathname.startsWith("/product/") ||
-    pathname.startsWith("/rental/");
+    pathname.startsWith("/rental/") ||
+    pathname.startsWith("/valencia/kits");
 
   const switchLocaleHref = explicitLocalePair
     ? isSpanish
@@ -66,9 +67,9 @@ export default function Header() {
   }));
 
   const navLinks = [
-    { name: "Kits", href: "/valencia/kits" },
+    { name: "Kits", href: `${prefix}/valencia/kits` },
     { name: "Valencia", href: `${prefix}/valencia` },
-    { name: isSpanish ? "Descubrir" : "Discover", href: isSpanish ? "/discover" : "/discover" },
+    { name: isSpanish ? "Descubrir" : "Discover", href: `${prefix}/discover` },
     { name: isSpanish ? "Cómo Funciona" : "How It Works", href: `${prefix}/how-it-works` },
     { name: isSpanish ? "Sobre Nosotros" : "About", href: `${prefix}/about` },
     { name: isSpanish ? "Preguntas" : "FAQ", href: `${prefix}/faq` },

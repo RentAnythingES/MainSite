@@ -28,6 +28,8 @@ route handling while excluding APIs and static assets.
 |-------|------|--------|
 | `/es` | Static | `es/page.tsx` + `i18n/dictionaries/es.ts` |
 | `/es/valencia` | Static | `es/valencia/page.tsx` |
+| `/es/valencia/kits` | Static | Fully localized `bundles-es.ts` kit hub |
+| `/es/valencia/kits/[slug]` | SSG | Eight localized kit details + shared configurator |
 | `/es/product/[slug]` | SSG | Same products, Spanish dictionary |
 | `/es/rental/[category]` | SSG | Same categories, Spanish dictionary |
 | `/es/blog` | Static | Complete Spanish planning guides only |
@@ -76,6 +78,7 @@ route handling while excluding APIs and static assets.
 |------|----------|
 | `src/data/products.ts` | Static product data + helpers (`getProductBySlug`, `getProductsByCategory`) |
 | `src/data/bundles.ts` | Static kit/bundle data + helpers (`getBundleBySlug`, `getBundleProducts`) |
+| `src/data/bundles-es.ts` | Spanish kit copy mapped to canonical bundle/item identifiers |
 | `src/lib/product-service.ts` | Supabase-first product fetching with static fallback |
 | `src/content/destinations.ts` | Discover guide data + `ProductWidget` interface |
 | `src/content/destinations-es.ts` | Complete, reviewed Spanish Discover adaptations |

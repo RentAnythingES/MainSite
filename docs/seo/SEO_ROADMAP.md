@@ -13,6 +13,10 @@
 - [x] Spanish trust-page parity: `/es/faq`, `/es/how-it-works`, and `/es/refunds`
   include self-canonicals, reciprocal hreflang, localized navigation, sitemap entries,
   and content-matched FAQPage/HowTo markup where applicable (19 July 2026).
+- [x] Spanish commercial-kit parity: `/es/valencia/kits` plus all eight kit details
+  now provide localized copy, product and guide pathways, a bilingual API-safe
+  configurator, reciprocal hreflang, Product/Breadcrumb/FAQ schema, and sitemap
+  coverage (21 July 2026).
 - [x] About and Contact trust-page parity: inaccurate response-time, hygiene, brand,
   pickup and fulfilment claims were replaced with verifiable copy; `/es/about` and
   `/es/contact` add localized navigation, contact forms, confirmation emails,

@@ -117,7 +117,7 @@ const content = {
 export default function PartnershipsPage({ locale }: { locale: Locale }) {
   const text = content[locale] as typeof content.en;
   const hostHref = locale === "es" ? "/es/valencia/servicios-anfitriones" : "/valencia/host-services";
-  const kitsHref = "/valencia/kits";
+  const kitsHref = locale === "es" ? "/es/valencia/kits" : "/valencia/kits";
 
   return (
     <>

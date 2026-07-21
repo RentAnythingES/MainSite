@@ -11,6 +11,11 @@ export const metadata: Metadata = {
     "Choose rental kits for your Valencia stay: baby arrival, family beach days, remote work, summer apartment comfort, and accessibility support.",
   alternates: {
     canonical: "https://rentanything.es/valencia/kits",
+    languages: {
+      en: "https://rentanything.es/valencia/kits",
+      es: "https://rentanything.es/es/valencia/kits",
+      "x-default": "https://rentanything.es/valencia/kits",
+    },
   },
 };
 

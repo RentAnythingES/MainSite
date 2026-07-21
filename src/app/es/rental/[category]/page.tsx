@@ -49,13 +49,13 @@ const categoryMetaES: Record<string, CategoryContent> = {
         eyebrow: "Kit de llegada del bebé",
         title: "Prepara el alojamiento antes de llegar",
         description: "Combina descanso, alimentación, baño y movilidad según la rutina del bebé y la estancia.",
-        href: "/valencia/kits/baby-arrival-kit",
+        href: "/es/valencia/kits/baby-arrival-kit",
       },
       {
         eyebrow: "Kit infantil para la ciudad",
         title: "Configura un conjunto para recorrer Valencia",
         description: "Elige movilidad, paseo y juego para explorar Valencia con un niño pequeño.",
-        href: "/valencia/kits/toddler-city-kit",
+        href: "/es/valencia/kits/toddler-city-kit",
       },
       {
         eyebrow: "Guía local",
@@ -89,13 +89,13 @@ const categoryMetaES: Record<string, CategoryContent> = {
         eyebrow: "Kit para niños pequeños",
         title: "Configura un kit infantil para la ciudad",
         description: "Combina movilidad, juego y elementos prácticos para recorrer Valencia con un niño pequeño.",
-        href: "/valencia/kits/toddler-city-kit",
+        href: "/es/valencia/kits/toddler-city-kit",
       },
       {
         eyebrow: "Kit de playa familiar",
         title: "Prepara un conjunto familiar de playa",
         description: "Reúne sombra, transporte, frío y juegos para los días de playa en Valencia.",
-        href: "/valencia/kits/family-beach-kit",
+        href: "/es/valencia/kits/family-beach-kit",
       },
       {
         eyebrow: "Guía en inglés",
@@ -121,13 +121,13 @@ const categoryMetaES: Record<string, CategoryContent> = {
         eyebrow: "Kit de accesibilidad",
         title: "Configura un kit de Valencia accesible",
         description: "Combina movilidad con apoyo práctico para el baño y la vida diaria en el alojamiento.",
-        href: "/valencia/kits/accessible-valencia-kit",
+        href: "/es/valencia/kits/accessible-valencia-kit",
       },
       {
         eyebrow: "Kit para visitas familiares",
         title: "Prepara la visita de los abuelos",
         description: "Crea un conjunto adaptado con apoyo para caminar, confort y gestión del calor en Valencia.",
-        href: "/valencia/kits/grandparents-visiting-kit",
+        href: "/es/valencia/kits/grandparents-visiting-kit",
       },
       {
         eyebrow: "Guía local",
@@ -160,7 +160,7 @@ const categoryMetaES: Record<string, CategoryContent> = {
         eyebrow: "Kit de teletrabajo",
         title: "Configura un kit de teletrabajo para el apartamento",
         description: "Combina monitor, escritorio, asiento ergonómico y accesorios prácticos según tu estancia.",
-        href: "/valencia/kits/remote-work-apartment-kit",
+        href: "/es/valencia/kits/remote-work-apartment-kit",
       },
       {
         eyebrow: "Guía de Valencia",
@@ -193,13 +193,13 @@ const categoryMetaES: Record<string, CategoryContent> = {
         eyebrow: "Kit de apartamento",
         title: "Configura un kit de apartamento de verano",
         description: "Combina refrigeración y equipos para la calidad del aire según tu alojamiento y tus fechas.",
-        href: "/valencia/kits/summer-apartment-survival-kit",
+        href: "/es/valencia/kits/summer-apartment-survival-kit",
       },
       {
         eyebrow: "Kit para estancias largas · en inglés",
         title: "Mejora una cocina temporal",
         description: "Combina equipamiento práctico para una estancia larga sin comprar electrodomésticos voluminosos.",
-        href: "/valencia/kits/long-stay-kitchen-upgrade-kit",
+        href: "/es/valencia/kits/long-stay-kitchen-upgrade-kit",
       },
       {
         eyebrow: "Guía práctica",
@@ -232,7 +232,7 @@ const categoryMetaES: Record<string, CategoryContent> = {
         eyebrow: "Kit de playa",
         title: "Prepara un kit de playa familiar",
         description: "Combina sombra con complementos prácticos para los días de playa durante tu estancia en Valencia.",
-        href: "/valencia/kits/family-beach-kit",
+        href: "/es/valencia/kits/family-beach-kit",
       },
       {
         eyebrow: "Guía local",

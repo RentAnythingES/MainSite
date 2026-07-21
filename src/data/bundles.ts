@@ -2,6 +2,7 @@ import { products, type Product } from "./products";
 
 export interface BundleItem {
   name: string;
+  requestName?: string;
   quantity?: string;
   note?: string;
   productSlug?: string;
@@ -9,6 +10,7 @@ export interface BundleItem {
 
 export interface BundleAddon {
   name: string;
+  requestName?: string;
   note: string;
   productSlug?: string;
 }

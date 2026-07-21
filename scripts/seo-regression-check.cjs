@@ -2,6 +2,17 @@ const baseUrl = (process.env.SEO_BASE_URL || "https://www.rentanything.es").repl
 const productSlug = process.env.SEO_PRODUCT_SLUG || "beach-umbrella-set";
 const noindexProductSlug = process.env.SEO_NOINDEX_PRODUCT_SLUG || "toddler-bike-lila";
 const productCategory = process.env.SEO_PRODUCT_CATEGORY || "travel-outdoors";
+const referenceKitSlug = "family-beach-kit";
+const kitSlugs = [
+  "family-beach-kit",
+  "baby-arrival-kit",
+  "toddler-city-kit",
+  "remote-work-apartment-kit",
+  "summer-apartment-survival-kit",
+  "accessible-valencia-kit",
+  "grandparents-visiting-kit",
+  "long-stay-kitchen-upgrade-kit",
+];
 
 const discoverHierarchyChecks = [
   { hub: "neighbourhoods", child: "ruzafa" },
@@ -72,7 +83,7 @@ const productPathways = Object.fromEntries(categoryChecks.map((category) => [
   category.slug,
   {
     en: [...category.pathways, ...(category.englishPathways || [])],
-    es: [...category.pathways, ...(category.spanishPathways || [])],
+    es: [...category.pathways.map((pathway) => `/es${pathway}`), ...(category.spanishPathways || [])],
   },
 ]));
 
@@ -118,7 +129,7 @@ function assertPageEnhancements(html, expectedText = [], schemaTypes = [], conte
 }
 
 async function main() {
-  const [home, product, productEs, noindexProduct, robots, sitemap, categoryPages, discoverHierarchyPages, hostServices, hostServicesEs, partners, partnersEs, faqPage, faqPageEs, howItWorks, howItWorksEs, refundsPage, refundsPageEs, aboutPage, aboutPageEs, contactPage, contactPageEs, privacyPage, privacyPageEs, termsPage, termsPageEs, cookiesPage, cookiesPageEs] = await Promise.all([
+  const [home, product, productEs, noindexProduct, robots, sitemap, categoryPages, discoverHierarchyPages, kitsPage, kitsPageEs, kitPage, kitPageEs, hostServices, hostServicesEs, partners, partnersEs, faqPage, faqPageEs, howItWorks, howItWorksEs, refundsPage, refundsPageEs, aboutPage, aboutPageEs, contactPage, contactPageEs, privacyPage, privacyPageEs, termsPage, termsPageEs, cookiesPage, cookiesPageEs] = await Promise.all([
     get("/"),
     get(`/product/${productSlug}`),
     get(`/es/product/${productSlug}`),
@@ -138,6 +149,10 @@ async function main() {
         html: await get(`/discover/${check.child}`),
       }))
     ),
+    get("/valencia/kits"),
+    get("/es/valencia/kits"),
+    get(`/valencia/kits/${referenceKitSlug}`),
+    get(`/es/valencia/kits/${referenceKitSlug}`),
     get("/valencia/host-services"),
     get("/es/valencia/servicios-anfitriones"),
     get("/partners"),
@@ -173,7 +188,7 @@ async function main() {
 
     for (const pathway of categoryPage.pathways) {
       assertPathway(categoryPage.en, pathway, `${categoryPage.slug} English category`);
-      assertPathway(categoryPage.es, pathway, `${categoryPage.slug} Spanish category`);
+      assertPathway(categoryPage.es, `/es${pathway}`, `${categoryPage.slug} Spanish category`);
     }
     for (const pathway of categoryPage.englishPathways || []) {
       assertPathway(categoryPage.en, pathway, `${categoryPage.slug} English category`);
@@ -183,7 +198,7 @@ async function main() {
     }
     for (const pathway of categoryPage.categoryOnlyPathways || []) {
       assertPathway(categoryPage.en, pathway, `${categoryPage.slug} English category`);
-      assertPathway(categoryPage.es, pathway, `${categoryPage.slug} Spanish category`);
+      assertPathway(categoryPage.es, `/es${pathway}`, `${categoryPage.slug} Spanish category`);
     }
     assertPageEnhancements(
       categoryPage.en,
@@ -251,6 +266,21 @@ async function main() {
     !sitemap.includes(`https://rentanything.es/product/${noindexProductSlug}`),
     "Incomplete reference product leaked into the sitemap"
   );
+  assert(canonical(kitsPage) === "https://rentanything.es/valencia/kits", "Kits canonical is incorrect");
+  assert(canonical(kitsPageEs) === "https://rentanything.es/es/valencia/kits", "Spanish kits canonical is incorrect");
+  assert(alternate(kitsPage, "es") === "https://rentanything.es/es/valencia/kits", "Kits hub lacks Spanish hreflang");
+  assert(alternate(kitsPageEs, "en") === "https://rentanything.es/valencia/kits", "Spanish kits hub lacks English hreflang");
+  assert(canonical(kitPage) === `https://rentanything.es/valencia/kits/${referenceKitSlug}`, "Kit canonical is incorrect");
+  assert(canonical(kitPageEs) === `https://rentanything.es/es/valencia/kits/${referenceKitSlug}`, "Spanish kit canonical is incorrect");
+  assert(alternate(kitPage, "es") === `https://rentanything.es/es/valencia/kits/${referenceKitSlug}`, "Kit lacks Spanish hreflang");
+  assert(alternate(kitPageEs, "en") === `https://rentanything.es/valencia/kits/${referenceKitSlug}`, "Spanish kit lacks English hreflang");
+  assertPageEnhancements(kitPage, [], ["Product", "BreadcrumbList", "FAQPage"], "English reference kit");
+  assertPageEnhancements(kitPageEs, ["Configura este kit"], ["Product", "BreadcrumbList", "FAQPage"], "Spanish reference kit");
+  assertPathway(kitsPageEs, `/es/valencia/kits/${referenceKitSlug}`, "Spanish kits hub");
+  for (const kitSlug of kitSlugs) {
+    assert(sitemap.includes(`https://rentanything.es/valencia/kits/${kitSlug}`), `${kitSlug} is missing from the English sitemap`);
+    assert(sitemap.includes(`https://rentanything.es/es/valencia/kits/${kitSlug}`), `${kitSlug} is missing from the Spanish sitemap`);
+  }
   assert(
     canonical(hostServices) === "https://rentanything.es/valencia/host-services",
     "Host services canonical is incorrect"
@@ -313,7 +343,7 @@ async function main() {
   assertPathway(partners, "/valencia/host-services", "Partnerships host-services pathway");
   assertPathway(partners, "/valencia/kits", "Partnerships kits pathway");
   assertPathway(partnersEs, "/es/valencia/servicios-anfitriones", "Spanish partnerships host-services pathway");
-  assertPathway(partnersEs, "/valencia/kits", "Spanish partnerships kits pathway");
+  assertPathway(partnersEs, "/es/valencia/kits", "Spanish partnerships kits pathway");
   assertPathway(partners, "/es/colaboraciones", "Partnerships locale switch");
   assertPathway(partnersEs, "/partners", "Spanish partnerships locale switch");
   assertPageEnhancements(

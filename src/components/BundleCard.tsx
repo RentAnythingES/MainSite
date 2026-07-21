@@ -6,6 +6,8 @@ interface BundleCardProps {
   bundle: RentalBundle;
   id?: string;
   compact?: boolean;
+  basePath?: string;
+  ctaLabel?: string;
 }
 
 const accentClasses = {
@@ -15,11 +17,17 @@ const accentClasses = {
   green: "bg-emerald-100 text-emerald-700 border-emerald-200",
 };
 
-export default function BundleCard({ bundle, id, compact = false }: BundleCardProps) {
+export default function BundleCard({
+  bundle,
+  id,
+  compact = false,
+  basePath = "/valencia/kits",
+  ctaLabel = "View kit →",
+}: BundleCardProps) {
   const previewItems = bundle.includedItems.slice(0, compact ? 3 : 4);
 
   return (
-    <Link href={`/valencia/kits/${bundle.slug}`} className="card group bg-white overflow-hidden" id={id}>
+    <Link href={`${basePath}/${bundle.slug}`} className="card group bg-white overflow-hidden" id={id}>
       <div className="relative aspect-[4/3] overflow-hidden bg-neutral-100">
         <Image
           src={bundle.image}
@@ -50,7 +58,7 @@ export default function BundleCard({ bundle, id, compact = false }: BundleCardPr
           ))}
         </ul>
         <span className="text-sm font-bold text-brand group-hover:text-brand-dark transition-colors">
-          View kit →
+          {ctaLabel}
         </span>
       </div>
     </Link>

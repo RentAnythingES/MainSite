@@ -28,10 +28,10 @@ const productSeoPathways: Record<string, ProductSeoPathwaySet> = {
     ],
     es: [
       {
-        eyebrow: "Kit completo · en inglés",
+        eyebrow: "Kit completo",
         title: "Kit de llegada con bebé",
         description: "Organiza el equipamiento esencial para los primeros días en Valencia.",
-        href: "/valencia/kits/baby-arrival-kit",
+        href: "/es/valencia/kits/baby-arrival-kit",
       },
       {
         eyebrow: "Guía local",
@@ -58,10 +58,10 @@ const productSeoPathways: Record<string, ProductSeoPathwaySet> = {
     ],
     es: [
       {
-        eyebrow: "Kit familiar · en inglés",
+        eyebrow: "Kit familiar",
         title: "Kit urbano para niños pequeños",
         description: "Combina equipamiento práctico para recorrer Valencia con niños pequeños.",
-        href: "/valencia/kits/toddler-city-kit",
+        href: "/es/valencia/kits/toddler-city-kit",
       },
       {
         eyebrow: "Guía local",
@@ -88,10 +88,10 @@ const productSeoPathways: Record<string, ProductSeoPathwaySet> = {
     ],
     es: [
       {
-        eyebrow: "Kit accesible · en inglés",
+        eyebrow: "Kit accesible",
         title: "Kit para una Valencia accesible",
         description: "Combina ayudas de movilidad para una estancia más cómoda en Valencia.",
-        href: "/valencia/kits/accessible-valencia-kit",
+        href: "/es/valencia/kits/accessible-valencia-kit",
       },
       {
         eyebrow: "Guía local",
@@ -118,10 +118,10 @@ const productSeoPathways: Record<string, ProductSeoPathwaySet> = {
     ],
     es: [
       {
-        eyebrow: "Kit de trabajo · en inglés",
+        eyebrow: "Kit de trabajo",
         title: "Kit de teletrabajo para apartamento",
         description: "Monta un espacio de trabajo cómodo en tu alojamiento de Valencia.",
-        href: "/valencia/kits/remote-work-apartment-kit",
+        href: "/es/valencia/kits/remote-work-apartment-kit",
       },
       {
         eyebrow: "Guía local",
@@ -148,10 +148,10 @@ const productSeoPathways: Record<string, ProductSeoPathwaySet> = {
     ],
     es: [
       {
-        eyebrow: "Kit de apartamento · en inglés",
+        eyebrow: "Kit de apartamento",
         title: "Kit para el verano en Valencia",
         description: "Combina refrigeración y confort para los meses más cálidos.",
-        href: "/valencia/kits/summer-apartment-survival-kit",
+        href: "/es/valencia/kits/summer-apartment-survival-kit",
       },
       {
         eyebrow: "Guía práctica",
@@ -178,10 +178,10 @@ const productSeoPathways: Record<string, ProductSeoPathwaySet> = {
     ],
     es: [
       {
-        eyebrow: "Kit de playa · en inglés",
+        eyebrow: "Kit de playa",
         title: "Kit de playa familiar",
         description: "Combina sombra, asientos y básicos familiares para un día más fácil.",
-        href: "/valencia/kits/family-beach-kit",
+        href: "/es/valencia/kits/family-beach-kit",
       },
       {
         eyebrow: "Guía local",

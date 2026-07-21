@@ -7,6 +7,7 @@ import { trackEvent } from "@/lib/analytics";
 
 interface BundleConfiguratorProps {
   bundle: RentalBundle;
+  locale?: "en" | "es";
 }
 
 type AvailabilityResult = {
@@ -24,7 +25,31 @@ function todayIsoDate() {
   return new Date().toISOString().slice(0, 10);
 }
 
-export default function BundleConfigurator({ bundle }: BundleConfiguratorProps) {
+const copy = {
+  en: {
+    badge: "Build your request", title: "Configure this kit", intro: "This is the first version of bundle configurability. It does not reserve inventory yet; it creates a structured request so we can confirm the best available setup directly.",
+    startDate: "Start date", endDate: "End date", area: "Accommodation area", areaPlaceholder: "e.g. Ruzafa, Patacona, Paterna, hotel name, Airbnb area",
+    included: "Included items", addons: "Optional add-ons", notes: "Anything we should know?", notesPlaceholder: "Child ages, lift access, apartment constraints, delivery timing, special requests...",
+    reply: "Where should we reply?", name: "Name", email: "Email", phone: "WhatsApp number", optional: "(optional)", consentBefore: "I agree that RentAnything.es may use these details to answer and manage my kit request. See our", privacy: "privacy policy",
+    summary: "Request summary", dates: "Dates", unsure: "Not sure yet", selected: "Items selected", includedCount: "included", addonCount: "add-ons", next: "Next step", nextText: "We confirm stock, substitutions, delivery/collection, and pricing directly.",
+    checking: "Checking inventory…", check: "Check known inventory", inventory: "Inventory check", available: "Known items available", unavailable: "Substitution needed", partial: "Partly confirmed", lineAvailable: "Available", lineUnavailable: "Unavailable", staffCheck: "Staff check",
+    estimate: "Known-item rental estimate", estimateNote: "Staff confirm alternatives, delivery and final kit pricing.", directWhatsapp: "If it continues, message us directly on WhatsApp.", saved: "Request saved as", saving: "Saving request…", submit: "Save request & open WhatsApp", footer: "We save your choices first, then open WhatsApp. No payment is taken until availability and pricing are confirmed.",
+    availabilityError: "Could not check availability", submitError: "Could not save your request",
+  },
+  es: {
+    badge: "Prepara tu solicitud", title: "Configura este kit", intro: "Esta primera versión no reserva el inventario. Guarda una solicitud estructurada para que podamos confirmar directamente la mejor combinación disponible.",
+    startDate: "Fecha de inicio", endDate: "Fecha de fin", area: "Zona del alojamiento", areaPlaceholder: "p. ej., Ruzafa, Patacona, Paterna, nombre del hotel o zona del apartamento",
+    included: "Artículos incluidos", addons: "Extras opcionales", notes: "¿Hay algo que debamos saber?", notesPlaceholder: "Edades, acceso en ascensor, limitaciones del alojamiento, horario o solicitudes especiales...",
+    reply: "¿Dónde debemos responder?", name: "Nombre", email: "Correo electrónico", phone: "Número de WhatsApp", optional: "(opcional)", consentBefore: "Acepto que RentAnything.es utilice estos datos para responder y gestionar mi solicitud. Consulta nuestra", privacy: "política de privacidad",
+    summary: "Resumen de la solicitud", dates: "Fechas", unsure: "Por confirmar", selected: "Artículos seleccionados", includedCount: "incluidos", addonCount: "extras", next: "Siguiente paso", nextText: "Confirmamos directamente el stock, las sustituciones, la entrega o recogida y el precio.",
+    checking: "Comprobando inventario…", check: "Comprobar inventario conocido", inventory: "Comprobación de inventario", available: "Artículos conocidos disponibles", unavailable: "Hace falta una sustitución", partial: "Confirmación parcial", lineAvailable: "Disponible", lineUnavailable: "No disponible", staffCheck: "Revisión manual",
+    estimate: "Estimación de artículos conocidos", estimateNote: "Nuestro equipo confirma alternativas, entrega y precio final del kit.", directWhatsapp: "Si continúa, escríbenos directamente por WhatsApp.", saved: "Solicitud guardada como", saving: "Guardando solicitud…", submit: "Guardar y abrir WhatsApp", footer: "Primero guardamos tus elecciones y después abrimos WhatsApp. No se cobra nada hasta confirmar disponibilidad y precio.",
+    availabilityError: "No se pudo comprobar la disponibilidad", submitError: "No se pudo guardar la solicitud",
+  },
+} as const;
+
+export default function BundleConfigurator({ bundle, locale = "en" }: BundleConfiguratorProps) {
+  const text = copy[locale];
   const [startDate, setStartDate] = useState(todayIsoDate());
   const [endDate, setEndDate] = useState("");
   const [area, setArea] = useState("");
@@ -44,14 +69,20 @@ export default function BundleConfigurator({ bundle }: BundleConfiguratorProps) 
   const [selectedAddons, setSelectedAddons] = useState<Set<string>>(new Set());
 
   const selectedItemNames = useMemo(
-    () => bundle.includedItems.filter((item) => selectedItems.has(item.name)).map((item) => item.name),
+    () => bundle.includedItems.filter((item) => selectedItems.has(item.name)).map((item) => item.requestName || item.name),
     [bundle.includedItems, selectedItems]
   );
 
   const selectedAddonNames = useMemo(
-    () => bundle.addons.filter((addon) => selectedAddons.has(addon.name)).map((addon) => addon.name),
+    () => bundle.addons.filter((addon) => selectedAddons.has(addon.name)).map((addon) => addon.requestName || addon.name),
     [bundle.addons, selectedAddons]
   );
+
+  function displayAvailabilityName(name: string) {
+    return bundle.includedItems.find((item) => (item.requestName || item.name) === name)?.name
+      || bundle.addons.find((addon) => (addon.requestName || addon.name) === name)?.name
+      || name;
+  }
 
   function toggleItem(itemName: string) {
     setAvailability(null);
@@ -98,7 +129,7 @@ export default function BundleConfigurator({ bundle }: BundleConfiguratorProps) 
         }),
       });
       const data = await response.json();
-      if (!response.ok) throw new Error(data.error || "Could not check availability");
+      if (!response.ok) throw new Error(data.error || text.availabilityError);
       setAvailability(data);
       trackEvent("bundle_availability_check", {
         event_category: "bundle",
@@ -106,7 +137,7 @@ export default function BundleConfigurator({ bundle }: BundleConfiguratorProps) 
         result: data.status,
       });
     } catch (error) {
-      setAvailabilityError(error instanceof Error ? error.message : "Could not check availability");
+      setAvailabilityError(error instanceof Error ? error.message : text.availabilityError);
     } finally {
       setCheckingAvailability(false);
     }
@@ -145,7 +176,7 @@ export default function BundleConfigurator({ bundle }: BundleConfiguratorProps) 
         }),
       });
       const data = await response.json();
-      if (!response.ok) throw new Error(data.error || "Could not save your request");
+      if (!response.ok) throw new Error(data.error || text.submitError);
 
       setRequestRef(data.requestRef);
       trackEvent("bundle_request_saved", {
@@ -154,7 +185,7 @@ export default function BundleConfigurator({ bundle }: BundleConfiguratorProps) 
       });
       window.location.assign(data.whatsappUrl);
     } catch (error) {
-      setSubmitError(error instanceof Error ? error.message : "Could not save your request");
+      setSubmitError(error instanceof Error ? error.message : text.submitError);
     } finally {
       setSubmitting(false);
     }
@@ -165,15 +196,15 @@ export default function BundleConfigurator({ bundle }: BundleConfiguratorProps) 
       <form className="container-site" onSubmit={handleSubmit}>
         <div className="grid lg:grid-cols-3 gap-8">
           <div className="lg:col-span-2">
-            <span className="badge badge-brand mb-3">Build your request</span>
-            <h2 className="text-3xl font-bold mb-3">Configure this kit</h2>
+            <span className="badge badge-brand mb-3">{text.badge}</span>
+            <h2 className="text-3xl font-bold mb-3">{text.title}</h2>
             <p className="text-neutral-600 leading-relaxed max-w-2xl mb-8">
-              This is the first version of bundle configurability. It does not reserve inventory yet; it creates a structured request so we can confirm the best available setup directly.
+              {text.intro}
             </p>
 
             <div className="grid md:grid-cols-2 gap-4 mb-8">
               <label className="block">
-                <span className="block text-sm font-semibold text-neutral-700 mb-2">Start date</span>
+                <span className="block text-sm font-semibold text-neutral-700 mb-2">{text.startDate}</span>
                 <input
                   type="date"
                   value={startDate}
@@ -184,7 +215,7 @@ export default function BundleConfigurator({ bundle }: BundleConfiguratorProps) 
                 />
               </label>
               <label className="block">
-                <span className="block text-sm font-semibold text-neutral-700 mb-2">End date</span>
+                <span className="block text-sm font-semibold text-neutral-700 mb-2">{text.endDate}</span>
                 <input
                   type="date"
                   value={endDate}
@@ -195,12 +226,12 @@ export default function BundleConfigurator({ bundle }: BundleConfiguratorProps) 
                 />
               </label>
               <label className="md:col-span-2 block">
-                <span className="block text-sm font-semibold text-neutral-700 mb-2">Accommodation area</span>
+                <span className="block text-sm font-semibold text-neutral-700 mb-2">{text.area}</span>
                 <input
                   type="text"
                   value={area}
                   onChange={(event) => setArea(event.target.value)}
-                  placeholder="e.g. Ruzafa, Patacona, Paterna, hotel name, Airbnb area"
+                  placeholder={text.areaPlaceholder}
                   required
                   className="w-full rounded-xl border border-border px-4 py-3 text-sm focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20"
                 />
@@ -208,7 +239,7 @@ export default function BundleConfigurator({ bundle }: BundleConfiguratorProps) 
             </div>
 
             <div className="mb-8">
-              <h3 className="font-bold text-xl mb-4">Included items</h3>
+              <h3 className="font-bold text-xl mb-4">{text.included}</h3>
               <div className="grid sm:grid-cols-2 gap-3">
                 {bundle.includedItems.map((item) => (
                   <label
@@ -237,7 +268,7 @@ export default function BundleConfigurator({ bundle }: BundleConfiguratorProps) 
             </div>
 
             <div className="mb-8">
-              <h3 className="font-bold text-xl mb-4">Optional add-ons</h3>
+              <h3 className="font-bold text-xl mb-4">{text.addons}</h3>
               <div className="grid sm:grid-cols-2 gap-3">
                 {bundle.addons.map((addon) => (
                   <label
@@ -266,36 +297,36 @@ export default function BundleConfigurator({ bundle }: BundleConfiguratorProps) 
             </div>
 
             <label className="block">
-              <span className="block text-sm font-semibold text-neutral-700 mb-2">Anything we should know?</span>
+              <span className="block text-sm font-semibold text-neutral-700 mb-2">{text.notes}</span>
               <textarea
                 value={notes}
                 onChange={(event) => setNotes(event.target.value)}
                 rows={4}
-                placeholder="Child ages, lift access, apartment constraints, delivery timing, special requests..."
+                placeholder={text.notesPlaceholder}
                 className="w-full rounded-xl border border-border px-4 py-3 text-sm focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20"
               />
             </label>
 
             <div className="mt-8 border-t border-border pt-8">
-              <h3 className="text-xl font-bold mb-4">Where should we reply?</h3>
+              <h3 className="text-xl font-bold mb-4">{text.reply}</h3>
               <div className="grid sm:grid-cols-2 gap-4">
                 <label className="block">
-                  <span className="block text-sm font-semibold text-neutral-700 mb-2">Name</span>
+                  <span className="block text-sm font-semibold text-neutral-700 mb-2">{text.name}</span>
                   <input type="text" value={customerName} onChange={(event) => setCustomerName(event.target.value)} autoComplete="name" required maxLength={120} className="w-full rounded-xl border border-border px-4 py-3 text-sm focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20" />
                 </label>
                 <label className="block">
-                  <span className="block text-sm font-semibold text-neutral-700 mb-2">Email</span>
+                  <span className="block text-sm font-semibold text-neutral-700 mb-2">{text.email}</span>
                   <input type="email" value={customerEmail} onChange={(event) => setCustomerEmail(event.target.value)} autoComplete="email" required maxLength={254} className="w-full rounded-xl border border-border px-4 py-3 text-sm focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20" />
                 </label>
                 <label className="block sm:col-span-2">
-                  <span className="block text-sm font-semibold text-neutral-700 mb-2">WhatsApp number <span className="font-normal text-neutral-400">(optional)</span></span>
+                  <span className="block text-sm font-semibold text-neutral-700 mb-2">{text.phone} <span className="font-normal text-neutral-400">{text.optional}</span></span>
                   <input type="tel" value={customerPhone} onChange={(event) => setCustomerPhone(event.target.value)} autoComplete="tel" maxLength={50} className="w-full rounded-xl border border-border px-4 py-3 text-sm focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20" />
                 </label>
               </div>
               <label className="mt-5 flex items-start gap-3 text-sm text-neutral-600">
                 <input type="checkbox" checked={consentAccepted} onChange={(event) => setConsentAccepted(event.target.checked)} required className="mt-1 h-4 w-4 accent-brand" />
                 <span>
-                  I agree that RentAnything.es may use these details to answer and manage my kit request. See our <Link href="/privacy" className="font-semibold text-brand hover:underline">privacy policy</Link>.
+                  {text.consentBefore} <Link href={locale === "es" ? "/es/privacy" : "/privacy"} className="font-semibold text-brand hover:underline">{text.privacy}</Link>.
                 </span>
               </label>
               <label className="absolute -left-[10000px]" aria-hidden="true">
@@ -307,19 +338,19 @@ export default function BundleConfigurator({ bundle }: BundleConfiguratorProps) 
 
           <aside className="lg:sticky lg:top-24 h-fit">
             <div className="card p-6 bg-neutral-50">
-              <h3 className="text-xl font-bold mb-4">Request summary</h3>
+              <h3 className="text-xl font-bold mb-4">{text.summary}</h3>
               <div className="space-y-4 text-sm">
                 <div>
-                  <p className="font-semibold text-neutral-800">Dates</p>
-                  <p className="text-neutral-500">{startDate || "Not sure yet"} → {endDate || "Not sure yet"}</p>
+                  <p className="font-semibold text-neutral-800">{text.dates}</p>
+                  <p className="text-neutral-500">{startDate || text.unsure} → {endDate || text.unsure}</p>
                 </div>
                 <div>
-                  <p className="font-semibold text-neutral-800">Items selected</p>
-                  <p className="text-neutral-500">{selectedItemNames.length} included · {selectedAddonNames.length} add-ons</p>
+                  <p className="font-semibold text-neutral-800">{text.selected}</p>
+                  <p className="text-neutral-500">{selectedItemNames.length} {text.includedCount} · {selectedAddonNames.length} {text.addonCount}</p>
                 </div>
                 <div>
-                  <p className="font-semibold text-neutral-800">Next step</p>
-                  <p className="text-neutral-500">We confirm stock, substitutions, delivery/collection, and pricing directly.</p>
+                  <p className="font-semibold text-neutral-800">{text.next}</p>
+                  <p className="text-neutral-500">{text.nextText}</p>
                 </div>
               </div>
               <button
@@ -328,42 +359,42 @@ export default function BundleConfigurator({ bundle }: BundleConfiguratorProps) 
                 disabled={checkingAvailability || !startDate || !endDate}
                 className="btn btn-outline w-full mt-6 disabled:cursor-not-allowed disabled:opacity-50"
               >
-                {checkingAvailability ? "Checking inventory…" : "Check known inventory"}
+                {checkingAvailability ? text.checking : text.check}
               </button>
               {availabilityError && <p role="alert" className="mt-3 text-sm text-red-600">{availabilityError}</p>}
               {availability && (
                 <div className="mt-4 rounded-2xl border border-border bg-white p-4">
                   <div className="flex items-center justify-between gap-3">
-                    <p className="font-semibold text-neutral-800">Inventory check</p>
+                    <p className="font-semibold text-neutral-800">{text.inventory}</p>
                     <span className={`rounded-full px-2.5 py-1 text-xs font-semibold ${availability.status === "available" ? "bg-emerald-100 text-emerald-700" : availability.status === "unavailable" ? "bg-red-100 text-red-700" : "bg-amber-100 text-amber-700"}`}>
-                      {availability.status === "available" ? "Known items available" : availability.status === "unavailable" ? "Substitution needed" : "Partly confirmed"}
+                      {availability.status === "available" ? text.available : availability.status === "unavailable" ? text.unavailable : text.partial}
                     </span>
                   </div>
                   <ul className="mt-3 space-y-2 text-xs">
                     {availability.lines.map((line) => (
                       <li key={line.name} className="flex items-start justify-between gap-3 border-t border-neutral-100 pt-2 first:border-0 first:pt-0">
-                        <span className="text-neutral-600">{line.name}</span>
+                        <span className="text-neutral-600">{displayAvailabilityName(line.name)}</span>
                         <span className={`shrink-0 font-semibold ${line.status === "available" ? "text-emerald-700" : line.status === "unavailable" ? "text-red-700" : "text-amber-700"}`}>
-                          {line.status === "available" ? "Available" : line.status === "unavailable" ? "Unavailable" : "Staff check"}
+                          {line.status === "available" ? text.lineAvailable : line.status === "unavailable" ? text.lineUnavailable : text.staffCheck}
                         </span>
                       </li>
                     ))}
                   </ul>
                   {availability.knownRentalSubtotalCents > 0 && (
                     <p className="mt-3 border-t border-neutral-100 pt-3 text-xs text-neutral-500">
-                      Known-item rental estimate: <strong className="text-neutral-700">€{(availability.knownRentalSubtotalCents / 100).toFixed(2)}</strong>. Staff confirm alternatives, delivery and final kit pricing.
+                      {text.estimate}: <strong className="text-neutral-700">€{(availability.knownRentalSubtotalCents / 100).toFixed(2)}</strong>. {text.estimateNote}
                     </p>
                   )}
                 </div>
               )}
               {submitError && (
                 <p role="alert" className="mt-5 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
-                  {submitError} If it continues, message us directly on WhatsApp.
+                  {submitError} {text.directWhatsapp}
                 </p>
               )}
               {requestRef && (
                 <p className="mt-5 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700">
-                  Request saved as <strong>{requestRef}</strong>.
+                  {text.saved} <strong>{requestRef}</strong>.
                 </p>
               )}
               <button
@@ -372,10 +403,10 @@ export default function BundleConfigurator({ bundle }: BundleConfiguratorProps) 
                 className="btn btn-primary w-full mt-4"
                 id={`bundle-configurator-whatsapp-${bundle.slug}`}
               >
-                {submitting ? "Saving request…" : "Save request & open WhatsApp"}
+                {submitting ? text.saving : text.submit}
               </button>
               <p className="mt-3 text-xs text-neutral-400 text-center">
-                We save your choices first, then open WhatsApp. No payment is taken until availability and pricing are confirmed.
+                {text.footer}
               </p>
             </div>
           </aside>

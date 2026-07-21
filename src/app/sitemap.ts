@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { rentalBundles } from "@/data/bundles";
+import { spanishRentalBundles } from "@/data/bundles-es";
 import { getPublishedPosts } from "@/content/blog";
 import { getPublishedSpanishPosts } from "@/content/blog-es";
 import { getPublishedDestinations } from "@/content/destinations";
@@ -54,6 +55,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.8,
   }));
 
+  const spanishBundlePages: MetadataRoute.Sitemap = spanishRentalBundles.map((bundle) => ({
+    url: `${BASE_URL}/es/valencia/kits/${bundle.slug}`,
+    changeFrequency: "weekly" as const,
+    priority: 0.8,
+  }));
+
   // Blog posts (only published)
   const blogPages: MetadataRoute.Sitemap = getPublishedPosts().map((post) => ({
     url: `${BASE_URL}/blog/${post.slug}`,
@@ -84,6 +91,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const spanishStaticPages: MetadataRoute.Sitemap = [
     { url: `${BASE_URL}/es`, changeFrequency: "weekly", priority: 0.9 },
     { url: `${BASE_URL}/es/valencia`, changeFrequency: "weekly", priority: 0.8 },
+    { url: `${BASE_URL}/es/valencia/kits`, changeFrequency: "weekly", priority: 0.9 },
     { url: `${BASE_URL}/es/valencia/servicios-anfitriones`, changeFrequency: "monthly", priority: 0.7 },
     { url: `${BASE_URL}/es/colaboraciones`, changeFrequency: "monthly", priority: 0.5 },
     { url: `${BASE_URL}/es/blog`, changeFrequency: "weekly", priority: 0.7 },
@@ -134,5 +142,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.7,
   }));
 
-  return [...staticPages, ...categoryPages, ...productPages, ...bundlePages, ...blogPages, ...discoverHubs, ...discoverPages, ...spanishStaticPages, ...spanishBlogPages, ...spanishDiscoverPages, ...spanishProductPages, ...spanishCategoryPages];
+  return [...staticPages, ...categoryPages, ...productPages, ...bundlePages, ...blogPages, ...discoverHubs, ...discoverPages, ...spanishStaticPages, ...spanishBundlePages, ...spanishBlogPages, ...spanishDiscoverPages, ...spanishProductPages, ...spanishCategoryPages];
 }
