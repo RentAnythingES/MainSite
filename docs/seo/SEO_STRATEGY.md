@@ -1,5 +1,5 @@
 # RentAnything.es — SEO Strategy & Audit
-> **Last updated**: 2026-07-21 · **Build**: ✅ Clean · **Indexable sitemap pages**: 174
+> **Last updated**: 2026-07-21 · **Build**: ✅ Clean · **Indexable sitemap pages**: 176
 
 This is the **living SEO strategy document** for rentanything.es. Updated after every SEO-related change. For prioritized fixes, see [SEO_ROADMAP.md](./SEO_ROADMAP.md).
 
@@ -57,7 +57,7 @@ rentanything.es/
 │   ├── /rental/travel-outdoors
 │   └── /rental/kids-family
 │
-├── /blog/                          Blog hub (6 posts live per locale)
+├── /blog/                          Blog hub (7 posts live per locale)
 │   └── /blog/[slug]                Individual posts (Article + FAQ JSON-LD)
 │
 ├── /discover/                      Discover hub (photo-backed)
@@ -121,9 +121,9 @@ Admin Dashboard:
 - Rendered from product data, grouped by category
 - Each page: category description, product grid, internal links
 
-### 📝 Blog (6 posts live per locale) — ✅ Initial library complete
+### 📝 Blog (7 posts live per locale) — ✅ Initial library complete
 - Data-driven architecture (`src/content/blog.ts`)
-- 6 planning posts live in English and Spanish with Article JSON-LD + FAQ schema
+- 7 planning posts live in English and Spanish with Article JSON-LD + FAQ schema
 - Cross-linked to products, categories, and discover pages
 
 ### 📦 Kits & Bundles (9 pages including hub) — ✅ Initial Layer Live
@@ -155,7 +155,7 @@ Admin Dashboard:
 | Google Search Console | 🔲 | Needs verification + sitemap submission |
 | Internal linking | ✅ | Products ↔ blog ↔ categories ↔ discover all cross-linked |
 | i18n / hreflang | 🔲 | Planned (EN + ES) — not yet implemented |
-| Blog | ✅ | 4 posts live with Article + FAQ JSON-LD |
+| Blog | ✅ | 7 bilingual posts live with Article + FAQ JSON-LD |
 | Discover guides | ✅ | 5 destination guides live with photo heroes + product widgets |
 
 ---

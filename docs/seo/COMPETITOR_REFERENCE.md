@@ -246,3 +246,40 @@ dimensions and seasonal service, and direct readers to the current official noti
   Perellonet. Copy must distinguish the destination before recommending a line.
   Source:
   <https://www.visitvalencia.com/en/what-to-see-valencia/albufera-natural-park>.
+## Baby gear decision-content SERP — 21 July 2026
+
+**Proposed page:** `/blog/rent-vs-buy-baby-gear-valencia`
+
+**Primary intent:** comparison and trip planning for visitors deciding whether to
+bring, rent, buy locally, or request baby equipment from their accommodation.
+The page must not target the transactional owner `baby gear rental Valencia`,
+which remains `/rental/baby-gear`.
+
+### Search findings
+
+- BabyQuip, Babonbo, and Cloud of Goods rank with Valencia inventory/category
+  pages. Their pages answer availability and booking intent, but do not provide a
+  neutral Valencia-specific rent/bring/buy decision framework.
+- Consumer Reports and Babylist cover general travel-rental benefits, provider
+  checks, and accommodation-supplied equipment, but are not localized to Valencia.
+- Current comparison articles tend to frame the choice as rent versus bring and
+  use generic cost tables. They rarely account for apartment storage, old-town
+  streets, beach days, trip length, a child's familiarity with safety-sensitive
+  equipment, or the practical value of a hybrid packing strategy in Valencia.
+
+### Content gap and framing
+
+Create a bilingual comparison guide that begins with a decision matrix rather
+than a sales claim. Recommend bringing familiar personal and safety-sensitive
+items when that is the better choice, checking accommodation inventory before
+paying for anything, renting bulky short-stay items when delivery removes real
+friction, and buying consumables locally. Link commercially to the Baby & Toddler
+hub and Baby Arrival kit only after the decision guidance.
+
+### Sources reviewed
+
+- BabyQuip Valencia category: `https://www.babyquip.com/h/valencia-spain/cribs-sleep`
+- Babonbo Valencia category: `https://www.babonbo.com/en/places/spain/valencian-community/valencia`
+- Cloud of Goods Valencia baby category: `https://www.cloudofgoods.com/valencia-es/product-rentals/baby_%26_kids`
+- Consumer Reports baby-gear rental guide: `https://www.consumerreports.org/babies-kids/baby-gear-rental-a3701975282/`
+- Babylist rental-company guide: `https://www.babylist.com/hello-baby/best-baby-gear-rental`

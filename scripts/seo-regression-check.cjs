@@ -3,6 +3,7 @@ const productSlug = process.env.SEO_PRODUCT_SLUG || "beach-umbrella-set";
 const noindexProductSlug = process.env.SEO_NOINDEX_PRODUCT_SLUG || "toddler-bike-lila";
 const productCategory = process.env.SEO_PRODUCT_CATEGORY || "travel-outdoors";
 const referenceKitSlug = "family-beach-kit";
+const referenceBlogSlug = "rent-vs-buy-baby-gear-valencia";
 const kitSlugs = [
   "family-beach-kit",
   "baby-arrival-kit",
@@ -129,7 +130,7 @@ function assertPageEnhancements(html, expectedText = [], schemaTypes = [], conte
 }
 
 async function main() {
-  const [home, product, productEs, noindexProduct, robots, sitemap, categoryPages, discoverHierarchyPages, kitsPage, kitsPageEs, kitPage, kitPageEs, hostServices, hostServicesEs, partners, partnersEs, faqPage, faqPageEs, howItWorks, howItWorksEs, refundsPage, refundsPageEs, aboutPage, aboutPageEs, contactPage, contactPageEs, privacyPage, privacyPageEs, termsPage, termsPageEs, cookiesPage, cookiesPageEs] = await Promise.all([
+  const [home, product, productEs, noindexProduct, robots, sitemap, categoryPages, discoverHierarchyPages, kitsPage, kitsPageEs, kitPage, kitPageEs, blogPage, blogPageEs, hostServices, hostServicesEs, partners, partnersEs, faqPage, faqPageEs, howItWorks, howItWorksEs, refundsPage, refundsPageEs, aboutPage, aboutPageEs, contactPage, contactPageEs, privacyPage, privacyPageEs, termsPage, termsPageEs, cookiesPage, cookiesPageEs] = await Promise.all([
     get("/"),
     get(`/product/${productSlug}`),
     get(`/es/product/${productSlug}`),
@@ -153,6 +154,8 @@ async function main() {
     get("/es/valencia/kits"),
     get(`/valencia/kits/${referenceKitSlug}`),
     get(`/es/valencia/kits/${referenceKitSlug}`),
+    get(`/blog/${referenceBlogSlug}`),
+    get(`/es/blog/${referenceBlogSlug}`),
     get("/valencia/host-services"),
     get("/es/valencia/servicios-anfitriones"),
     get("/partners"),
@@ -281,6 +284,26 @@ async function main() {
     assert(sitemap.includes(`https://rentanything.es/valencia/kits/${kitSlug}`), `${kitSlug} is missing from the English sitemap`);
     assert(sitemap.includes(`https://rentanything.es/es/valencia/kits/${kitSlug}`), `${kitSlug} is missing from the Spanish sitemap`);
   }
+  const blogUrl = `https://rentanything.es/blog/${referenceBlogSlug}`;
+  const blogUrlEs = `https://rentanything.es/es/blog/${referenceBlogSlug}`;
+  assert(canonical(blogPage) === blogUrl, "Reference blog canonical is incorrect");
+  assert(canonical(blogPageEs) === blogUrlEs, "Spanish reference blog canonical is incorrect");
+  assert(alternate(blogPage, "es") === blogUrlEs, "Reference blog lacks Spanish hreflang");
+  assert(alternate(blogPageEs, "en") === blogUrl, "Spanish reference blog lacks English hreflang");
+  assertPageEnhancements(
+    blogPage,
+    ["The short answer: use a hybrid approach", "/blog/rent-vs-buy-baby-gear-valencia.webp"],
+    ["Article", "BreadcrumbList", "FAQPage"],
+    "Reference comparison blog"
+  );
+  assertPageEnhancements(
+    blogPageEs,
+    ["Respuesta breve: combina las cuatro opciones", "/blog/rent-vs-buy-baby-gear-valencia.webp"],
+    ["Article", "BreadcrumbList", "FAQPage"],
+    "Spanish comparison blog"
+  );
+  assert(sitemap.includes(blogUrl), "Reference blog is missing from the sitemap");
+  assert(sitemap.includes(blogUrlEs), "Spanish reference blog is missing from the sitemap");
   assert(
     canonical(hostServices) === "https://rentanything.es/valencia/host-services",
     "Host services canonical is incorrect"
@@ -452,6 +475,8 @@ async function main() {
     productCanonical: canonical(product),
     spanishProductCanonical: canonical(productEs),
     productCategory,
+    referenceBlogCanonical: canonical(blogPage),
+    spanishReferenceBlogCanonical: canonical(blogPageEs),
     checkedCategoryClusters: categoryPages.map((categoryPage) => categoryPage.slug),
     hostServicesCanonical: canonical(hostServices),
     spanishHostServicesCanonical: canonical(hostServicesEs),

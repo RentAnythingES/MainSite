@@ -17,6 +17,10 @@
   now provide localized copy, product and guide pathways, a bilingual API-safe
   configurator, reciprocal hreflang, Product/Breadcrumb/FAQ schema, and sitemap
   coverage (21 July 2026).
+- [x] Bilingual baby-gear decision guide: the rent/bring/buy comparison owns a
+  planning intent distinct from the transactional Baby & Toddler hub, uses a
+  Valencia-specific decision matrix, reciprocal hreflang, Article/Breadcrumb/FAQ
+  schema, original imagery, and regression-protected sitemap coverage (21 July 2026).
 - [x] About and Contact trust-page parity: inaccurate response-time, hygiene, brand,
   pickup and fulfilment claims were replaced with verifiable copy; `/es/about` and
   `/es/contact` add localized navigation, contact forms, confirmation emails,
@@ -318,7 +322,7 @@ global footer. Search-intent evidence and page boundaries are maintained in
 ## 🟡 Tier 3 — Medium Impact, Higher Effort
 
 ### 3.1 Blog cadence — 2 posts/month
-**Impact**: 🟡 Medium · **Effort**: Ongoing
+**Impact**: 🟡 Medium · **Effort**: Ongoing · **Status**: 7 EN/ES posts live
 
 Maintain publishing cadence. Seasonal content planned around:
 - **July-Aug**: Summer/beach content
