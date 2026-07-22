@@ -1,6 +1,6 @@
 const baseUrl = (process.env.SEO_BASE_URL || "https://www.rentanything.es").replace(/\/$/, "");
 const productSlug = process.env.SEO_PRODUCT_SLUG || "beach-umbrella-set";
-const noindexProductSlug = process.env.SEO_NOINDEX_PRODUCT_SLUG || "toddler-bike-lila";
+const configuredNoindexProductSlug = process.env.SEO_NOINDEX_PRODUCT_SLUG || null;
 const productCategory = process.env.SEO_PRODUCT_CATEGORY || "travel-outdoors";
 const referenceKitSlug = "family-beach-kit";
 const referenceBlogSlug = "rent-vs-buy-baby-gear-valencia";
@@ -166,12 +166,7 @@ function assertPageEnhancements(html, expectedText = [], schemaTypes = [], conte
 }
 
 async function main() {
-  const [home, product, productEs, noindexProduct, robots, sitemap, categoryPages, discoverHierarchyPages, kitsPage, kitsPageEs, kitPage, kitPageEs, blogPage, blogPageEs, tutorialPage, tutorialPageEs, hostServices, hostServicesEs, partners, partnersEs, faqPage, faqPageEs, howItWorks, howItWorksEs, refundsPage, refundsPageEs, aboutPage, aboutPageEs, contactPage, contactPageEs, privacyPage, privacyPageEs, termsPage, termsPageEs, cookiesPage, cookiesPageEs] = await Promise.all([
-    get("/"),
-    get(`/product/${productSlug}`),
-    get(`/es/product/${productSlug}`),
-    get(`/product/${noindexProductSlug}`),
-    get("/robots.txt"),
+  const [sitemap, categoryPages] = await Promise.all([
     get("/sitemap.xml"),
     Promise.all(
       categoryChecks.map(async (categoryCheck) => ({
@@ -180,6 +175,22 @@ async function main() {
         es: await get(`/es/rental/${categoryCheck.slug}`),
       }))
     ),
+  ]);
+  const linkedProductSlugs = [
+    ...new Set(categoryPages.flatMap((categoryPage) =>
+      [...categoryPage.en.matchAll(/href="\/product\/([^"?#]+)"/g)].map((match) => match[1])
+    )),
+  ];
+  const noindexProductSlug = configuredNoindexProductSlug || linkedProductSlugs.find((slug) =>
+    !sitemap.includes(`https://rentanything.es/product/${slug}`)
+  ) || null;
+
+  const [home, product, productEs, noindexProduct, robots, discoverHierarchyPages, kitsPage, kitsPageEs, kitPage, kitPageEs, blogPage, blogPageEs, tutorialPage, tutorialPageEs, hostServices, hostServicesEs, partners, partnersEs, faqPage, faqPageEs, howItWorks, howItWorksEs, refundsPage, refundsPageEs, aboutPage, aboutPageEs, contactPage, contactPageEs, privacyPage, privacyPageEs, termsPage, termsPageEs, cookiesPage, cookiesPageEs] = await Promise.all([
+    get("/"),
+    get(`/product/${productSlug}`),
+    get(`/es/product/${productSlug}`),
+    noindexProductSlug ? get(`/product/${noindexProductSlug}`) : Promise.resolve(null),
+    get("/robots.txt"),
     Promise.all(
       discoverHierarchyChecks.map(async (check) => ({
         ...check,
@@ -293,10 +304,12 @@ async function main() {
   for (const pathway of productPathways[productCategory]?.es || []) {
     assertPathway(productEs, pathway, "Spanish reference product");
   }
-  assert(
-    robotsMeta(noindexProduct).includes("noindex"),
-    "Incomplete reference product is unexpectedly indexable"
-  );
+  if (noindexProductSlug) {
+    assert(
+      robotsMeta(noindexProduct).includes("noindex"),
+      "Incomplete reference product is unexpectedly indexable"
+    );
+  }
   assert(!robots.includes("Disallow: /_next/"), "Next.js rendering assets are blocked");
   assert(robots.includes("Disallow: /admin/"), "Admin routes are not blocked in robots.txt");
   assert(
@@ -309,10 +322,12 @@ async function main() {
   );
   assert(!sitemap.includes("/admin/"), "Admin URL leaked into the sitemap");
   assert(!sitemap.includes("/booking/success"), "Booking success URL leaked into the sitemap");
-  assert(
-    !sitemap.includes(`https://rentanything.es/product/${noindexProductSlug}`),
-    "Incomplete reference product leaked into the sitemap"
-  );
+  if (noindexProductSlug) {
+    assert(
+      !sitemap.includes(`https://rentanything.es/product/${noindexProductSlug}`),
+      "Incomplete reference product leaked into the sitemap"
+    );
+  }
   assert(canonical(kitsPage) === "https://rentanything.es/valencia/kits", "Kits canonical is incorrect");
   assert(canonical(kitsPageEs) === "https://rentanything.es/es/valencia/kits", "Spanish kits canonical is incorrect");
   assert(alternate(kitsPage, "es") === "https://rentanything.es/es/valencia/kits", "Kits hub lacks Spanish hreflang");

@@ -338,6 +338,11 @@ Maintain publishing cadence. Seasonal content planned around:
 - **October**: Autumn/winter content
 - **March**: Las Fallas family guide
 
+The English wheelchair-accessibility guide was refreshed on 22 July after Search
+Console showed 45 impressions at average position 8.2 but only one click. Its title
+and snippet now lead with practical 2026 intent, and its guidance matches the
+source-linked, non-absolute standard already used by the Spanish article.
+
 ---
 
 ### 3.2 Stripe payment integration
@@ -427,6 +432,9 @@ Priority pilot logic: start with one narrow bundle, collect usage evidence, then
      three active listings remain in both sitemaps. Image-rights follow-up remains an
      internal publication-compliance task rather than a sitemap exclusion.
      See [MOBILITY_SCOOTER_CONTENT_REVIEW_20260721.md](./MOBILITY_SCOOTER_CONTENT_REVIEW_20260721.md).
+   - Live follow-up on 22 July: 33 products are indexable in English and 32 in
+     Spanish. Complete Spanish SEO copy for `toddler-bike-lila`; keep
+     `bladeless-fan-ventilator` noindexed until editorial/image approval is complete.
 4. **Commercial hubs — ✅ Completed 18 July** — AC, baby gear, mobility and remote-work hubs now absorb closely related rental, delivery, suitability and duration questions in EN/ES without creating competing landing pages.
 5. **Internal links — ✅ Graph pass completed 18 July** — Spanish pathways use localized guides; all sitemap pages remain within three homepage clicks; Discover children now link through their sub-hubs; the long-stay kitchen kit gains a contextual Apartment Comfort pathway. Regression checks cover locale-specific editorial links and hierarchy links.
 6. **Authority — current highest-leverage gap** — complete an accurate service-area

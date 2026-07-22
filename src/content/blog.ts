@@ -177,82 +177,85 @@ export const blogPosts: BlogPost[] = [
   },
   {
     slug: "wheelchair-accessibility-valencia",
-    title: "Wheelchair Accessible Valencia: An Honest Guide",
-    h1: "An honest guide to wheelchair accessibility in Valencia",
-    description: "A practical guide to navigating Valencia in a wheelchair or mobility scooter — accessible beaches, transport, attractions, and what to expect.",
+    title: "Wheelchair Accessible Valencia: Practical 2026 Guide",
+    h1: "A practical guide to wheelchair-accessible Valencia",
+    description: "Plan wheelchair-accessible Valencia with verified advice on transport, beaches, attractions, accommodation and mobility equipment rental.",
     category: "guide",
     keywords: ["wheelchair accessible Valencia", "Valencia disabled access", "mobility scooter Valencia", "accessible beaches Valencia", "Valencia accessibility guide"],
     date: "2026-06-15",
-    readTime: "7 min read",
-    excerpt: "A practical guide to navigating Valencia with a wheelchair or mobility scooter — accessible attractions, transport tips, and what to expect.",
+    readTime: "9 min read",
+    excerpt: "A realistic guide to planning transport, sightseeing, beach visits and accommodation in Valencia with a wheelchair or mobility scooter.",
     tags: ["mobility", "accessibility", "Valencia", "wheelchair", "guide"],
     sections: [
       {
-        heading: "Valencia's Accessibility Reputation — and the Reality",
+        heading: "Valencia Is Flat, but Every Route Still Needs Checking",
         paragraphs: [
-          "Valencia is consistently rated as one of the most accessible cities in Spain, and for good reason. The city is almost entirely flat — built on a former floodplain with no significant hills — which makes it fundamentally easier to navigate in a wheelchair or mobility scooter than places like Barcelona, Lisbon, or Rome.",
-          "That said, no city is perfect. The modern areas (City of Arts and Sciences, the beach promenade, Turia Gardens) are excellent. The historic old town has sections with cobblestones and narrow lanes that require more planning. This guide gives you the honest picture — what works well, where to be careful, and how to prepare.",
-          "The city government has invested significantly in accessible infrastructure, and organisations like <a href=\"https://accessiblevalencia.es\" target=\"_blank\" rel=\"noopener\">Accessible Valencia</a> offer specialised barrier-free guided tours if you want expert local guidance."
-        ]
+          "Valencia's generally flat terrain makes many journeys easier with a wheelchair or mobility scooter. Turia Gardens, the City of Arts and Sciences and the seafront promenade offer broad, mostly paved routes. That advantage does not make the whole city barrier-free.",
+          "Ciutat Vella retains cobbles, uneven surfaces, kerbs and narrow streets. A lift, ramp or accessible toilet can also be temporarily unavailable. The most reliable approach is to check each route and confirm any essential access directly before setting out.",
+          "This guide does not apply one universal accessibility label to whole neighbourhoods or attractions. It explains where movement is often simpler, which official information to check and what to ask based on each person's dimensions, independence and support needs.",
+        ],
       },
       {
-        heading: "Getting Around: Transport Accessibility",
+        heading: "Metro, Tram, Bus and Accessible Taxis",
         paragraphs: [
-          "<strong>Metro and tram:</strong> The Metrovalencia network is fully accessible. Every station has lifts or ramps for step-free access. The tram system is level-boarding throughout. This is genuinely one of the best metro systems in Europe for wheelchair access — it was designed from the ground up with accessibility in mind.",
-          "<strong>Buses:</strong> EMT city buses are equipped with ramps and designated wheelchair spaces. Drivers are generally helpful, though rush hour can make boarding more difficult. The bus system also features NaviLens codes at stops, which allow visually impaired travellers to access route information via smartphone apps.",
-          "<strong>Taxis:</strong> Standard Valencia taxis can accommodate folding wheelchairs in the boot. For larger powerchairs or scooters, you'll need to book an adapted taxi (euro-taxi) in advance. Ask your hotel or accommodation to arrange one — they're available but not as plentiful as standard taxis.",
-          "<strong>Moving around on your own:</strong> If you're using a manual wheelchair, the flat terrain means self-propelling is genuinely feasible for most routes. For longer distances or if you prefer independence, a <a href=\"/rental/mobility\">lightweight mobility scooter</a> opens up the entire city — from the Turia Gardens to the beach, you can cover serious ground comfortably."
-        ]
+          "Metrovalencia says its stations and stops provide adapted routes using ramps and lifts. However, the gap between platform and train is not identical across the network: some stations have boarding platforms, while a manual ramp may be requested elsewhere. Check Metrovalencia's <a href=\"https://www.metrovalencia.es/es/accesibilidad/\" target=\"_blank\" rel=\"noopener\">official accessibility information</a>, lift notices and assistance contacts before travelling.",
+          "Confirm both your origin and destination stations, lift status and any size restrictions for a wheelchair or scooter. Some trains beginning or ending at València Sud can have limitations; station displays should indicate whether the service is accessible.",
+          "City buses provide reserved spaces and boarding systems, but crowding and the layout of a particular stop still affect the journey. For a large powerchair or scooter, reserve an adapted taxi in advance and provide its dimensions, total weight and transfer requirements. Do not assume a standard taxi can carry every device.",
+        ],
       },
       {
-        heading: "Accessible Attractions and Sightseeing",
+        heading: "Routes and Attractions with Fewer Barriers",
         paragraphs: [
-          "<strong>City of Arts and Sciences:</strong> This futuristic complex is fully wheelchair accessible with flat, wide surfaces throughout. The Oceanografic aquarium, Hemisferic IMAX cinema, and Science Museum all have step-free access, adapted toilets, and wheelchair-friendly viewing areas. If you hold an official disability certificate, you may be entitled to discounted tickets.",
-          "<strong>Mercado Central:</strong> Valencia's stunning central market is accessible via the main entrance. The interior is spacious enough for wheelchairs, though it gets very crowded mid-morning. Visit before 10am or after 1pm for a more comfortable experience.",
-          "<strong>Turia Gardens:</strong> The 9km park that runs through the old riverbed is one of the best accessible green spaces in any European city. Paths are paved, flat, and wide throughout. You can wheel from the Bioparc at one end to the City of Arts and Sciences at the other without encountering a single step.",
-          "<strong>The Old Town (El Carmen):</strong> This is where honesty matters. Parts of the historic centre have cobblestones and uneven surfaces that are genuinely challenging in a wheelchair. The main plazas (Plaza de la Virgen, Plaza de la Reina) are accessible, and the major buildings (Cathedral, La Lonja de la Seda) have ramp access. But the narrow side streets between them can be rough. A power wheelchair or mobility scooter handles cobblestones much better than a manual chair."
-        ]
+          "Turia Gardens provides several kilometres away from road traffic and connects the Bioparc area with the City of Arts and Sciences. Ramps link the former riverbed with street level, but their gradient and spacing vary. Choosing entry and exit points before the trip helps avoid unnecessary detours.",
+          "The City of Arts and Sciences has large pedestrian areas and adapted access in its main buildings. Check each venue's official information for current details about lifts, toilets, companions and possible discounts. A disability certificate does not produce identical conditions at every ticket desk.",
+          "In the historic centre, the main squares are usually easier than the side streets. Plan a short route between confirmed access points and allow extra time. A <a href=\"/product/mobility-scooter-lightweight-foldable\">mobility scooter</a> can support independence over longer distances, but turning radius, battery range and dimensions also affect lifts and public transport.",
+        ],
       },
       {
-        heading: "Accessible Beaches",
+        heading: "Accessible Beaches and Assisted Bathing",
         paragraphs: [
-          "Valencia takes beach accessibility seriously. La Malvarrosa, El Cabanyal, and Pinedo beaches all offer designated accessible facilities including reserved parking, boardwalk paths to the shoreline, adapted toilets, and accessible showers.",
-          "<strong>Assisted bathing service:</strong> During summer (typically June through mid-September), Valencia's accessible beaches provide amphibious wheelchairs, crutches, and even lifting cranes to help visitors enter the water. Red Cross volunteers staff these points and assist with transfers. Check schedules in advance, as specific hours and dates vary by location.",
-          "The beach promenade (Paseo Maritimo) that runs along Malvarrosa and Las Arenas is fully paved and flat — perfect for an evening roll along the Mediterranean with plenty of accessible restaurants along the way.",
-          "For a calmer experience, Pinedo beach (south of the port) tends to be less crowded and has the same accessible infrastructure. It's reachable by bus or a short taxi ride."
-        ]
+          "Valencia City Council operates an <a href=\"https://www.valencia.es/cas/playas/accesibilidad-en-las-playas\" target=\"_blank\" rel=\"noopener\">official assisted-bathing programme</a>. Its 2026 information lists summer service points at Malvarrosa, Cabanyal and Pinedo, with appointment-based services at El Saler and El Perellonet during July and August.",
+          "Dates, hours and conditions can change each season. Check the municipal page shortly before visiting and book where required. Groups need an appointment, and some additional service points operate only through advance telephone booking.",
+          "A boardwalk can provide a route towards the shoreline, but it does not mean an everyday wheelchair can cross sand or enter the water. Ask what equipment the service point provides, who assists with transfers, whether a companion is required and whether sea conditions allow the service to operate that day.",
+        ],
       },
       {
-        heading: "Practical Tips for Wheelchair Users",
+        heading: "How to Confirm Suitable Accommodation",
         paragraphs: [
-          "<strong>Renting vs bringing equipment:</strong> If you use a manual wheelchair and want more freedom, renting a <a href=\"/product/mobility-scooter-lightweight-foldable\">lightweight mobility scooter</a> for your trip gives you independence without the hassle of transporting heavy equipment by air. Airlines are notoriously rough with mobility equipment, and local rental eliminates that risk entirely.",
-          "<strong>Accommodation:</strong> When booking, always confirm \"adapted room\" specifics directly with the property — definitions vary wildly. Ask about door widths, roll-in showers, and grab bars. Holiday apartments in newer buildings (post-2006 Spanish building code) tend to have better accessibility than older hotels.",
-          "<strong>Disability discounts:</strong> If you hold an official disability certificate (the Spanish 33% certificado de discapacidad, or an equivalent EU card), carry it everywhere. Major attractions, public transport, and some parking areas offer discounts or free access.",
-          "<strong>Planning resources:</strong> The <a href=\"https://www.visitvalencia.com\" target=\"_blank\" rel=\"noopener\">Visit Valencia</a> website has a dedicated accessibility section where you can filter hotels, restaurants, and attractions by accessibility level. It's the best official resource available.",
-          "<strong>When to visit:</strong> The best months are April-June and September-October. Temperatures are comfortable for extended outdoor time, tourist crowds are manageable, and all seasonal accessibility services (beach assistance, outdoor terraces) are operational."
-        ]
+          "The phrase “accessible room” does not define a person's specific needs. Ask for door widths, bed height, lateral transfer space, lift access, shower type, grab rails and any level changes from the street. Request current photographs when a detail is essential.",
+          "Check the complete route: building entrance, lobby, lift, corridors, room and bathroom. An apartment may have an adapted shower while still having a step at the main entrance or a lift that is too narrow.",
+          "If rental equipment will be delivered, confirm where it can be handed over and stored, whether there is a suitable socket for charging a scooter and who can assist with any transfer. These questions are more useful than relying on a generic booking-platform category.",
+        ],
+      },
+      {
+        heading: "Choosing and Renting Mobility Equipment",
+        paragraphs: [
+          "Different mobility aids serve different needs. A <a href=\"/product/transport-wheelchair\">transport wheelchair</a> requires a companion who can push it. A self-propelled chair, scooter and <a href=\"/product/rollator-walker\">rollator walker</a> each support different users and situations.",
+          "Before renting, provide height, weight, transfer ability, intended environment and any critical measurements. For a scooter, also consider range, charger, width, turning radius and secure storage. Rental equipment does not replace a clinical assessment and should not be chosen from a photograph alone.",
+          "Browse our <a href=\"/rental/mobility\">wheelchair and mobility scooter rentals in Valencia</a>. We confirm availability and logistics for your dates; if a product does not fit the user or route, we look for a more suitable option instead of forcing the booking.",
+        ],
       }
     ],
     faqs: [
       {
         question: "Is Valencia wheelchair accessible?",
-        answer: "Yes — Valencia is one of Spain's most accessible cities. The flat terrain, fully accessible metro system, and paved parks make it significantly easier to navigate than many European cities. Modern areas are excellent; the historic old town has some cobblestone challenges."
-      },
-      {
-        question: "Are Valencia beaches accessible for wheelchair users?",
-        answer: "Yes — La Malvarrosa, El Cabanyal, and Pinedo beaches offer boardwalk paths, adapted toilets, and during summer months, amphibious wheelchairs and assisted bathing services with Red Cross volunteers."
-      },
-      {
-        question: "Can I rent a wheelchair or mobility scooter in Valencia?",
-        answer: "Yes — manual wheelchairs, transport wheelchairs, lightweight mobility scooters, and heavy-duty scooters are all available for rent with delivery to your accommodation. This avoids the risk of airline damage to your own equipment."
+        answer: "Many areas are relatively easy to navigate because of the flat terrain, particularly Turia Gardens, the City of Arts and Sciences and the seafront. The historic centre has cobbles, kerbs and narrow streets, so every important route should be checked."
       },
       {
         question: "Is the Valencia metro wheelchair accessible?",
-        answer: "Fully accessible — every station has lifts or ramps for step-free access, and the tram system uses level-boarding throughout. It is one of the most accessible metro networks in Europe."
+        answer: "Metrovalencia provides adapted routes using ramps and lifts, but boarding between platform and train varies by station. Check boarding platforms, lift notices and manual-ramp assistance on the official accessibility page."
       },
       {
-        question: "Are there disability discounts for attractions in Valencia?",
-        answer: "Yes — if you hold an official disability certificate (Spanish 33% certificado or EU equivalent), many attractions including the Oceanografic offer discounted or free entry. Always carry your documentation."
+        question: "Are there accessible beaches in Valencia?",
+        answer: "Yes. Valencia City Council publishes a seasonal assisted-bathing programme for several beaches. Locations, hours, booking rules and operating conditions change, so check the current municipal information before travelling."
+      },
+      {
+        question: "Can I rent a wheelchair or mobility scooter in Valencia?",
+        answer: "Yes, subject to availability and suitability. Confirm measurements, weight, range, transfer ability, companion support and intended environment before choosing a transport chair, manual wheelchair, rollator or scooter."
+      },
+      {
+        question: "How do I book an accessible taxi in Valencia?",
+        answer: "Book in advance and request a eurotaxi or adapted vehicle. Provide the equipment dimensions and weight, passenger count and whether the wheelchair user remains seated during the journey."
       }
     ],
     crossLinks: [
@@ -269,7 +272,12 @@ export const blogPosts: BlogPost[] = [
       {
         title: "Lightweight Transport Wheelchair",
         href: "/product/transport-wheelchair",
-        description: "Compact companion-pushed chair for sightseeing and transfers"
+        description: "Compact companion-pushed option for sightseeing and transfers"
+      },
+      {
+        title: "Rollator Walker",
+        href: "/product/rollator-walker",
+        description: "Stable walking support with a seat for pauses during the day"
       }
     ]
   },

@@ -1,5 +1,5 @@
 # RentAnything.es — SEO Strategy & Audit
-> **Last updated**: 2026-07-22 · **Build**: ✅ Clean · **Indexability-ready pages after sitemap refresh**: 200
+> **Last updated**: 2026-07-22 · **Build**: ✅ Clean · **Indexability-ready pages after sitemap refresh**: 203
 
 This is the **living SEO strategy document** for rentanything.es. Updated after every SEO-related change. For prioritized fixes, see [SEO_ROADMAP.md](./SEO_ROADMAP.md).
 
@@ -24,7 +24,7 @@ Several older counts farther down this document are retained as historical miles
 | Layer | English | Spanish | Current role |
 |-------|---------|---------|--------------|
 | Commercial category hubs | 7 | 7 | Broad transactional query owners |
-| Indexable product pages | 31 | 31 | Exact-item and model-level demand |
+| Indexable product pages | 33 | 32 | Exact-item and model-level demand |
 | Blog articles | 8 | 8 | Planning, comparison, seasonal and tutorial intent |
 | Discover sub-hubs | 5 | 5 | Beaches, neighbourhoods, attractions, day trips and events |
 | Discover guides | 26 | 26 | Valencia destination and situational planning |
@@ -37,18 +37,22 @@ are gone and the 12 newly indexable product URLs are present. Sitemap revalidati
 now matches the five-minute public product cache instead of retaining product-state
 changes for up to one hour. One stale Spanish blog link found by the crawl was also
 updated to the current compact beach shelter slug.
+After subsequent catalogue approvals, a fresh local sitemap render contains 203
+URLs: 33 English product pages and 32 Spanish product pages. The toddler bike is
+now indexable in English but remains excluded from Spanish until localized SEO copy
+is complete; the Dreame fan remains excluded in both locales.
 
 ### Commercial cluster depth
 
-| Cluster | Indexable products per locale | Main supporting layers | Expansion posture |
-|---------|-------------------------------|------------------------|-------------------|
-| Beach & Outdoor | 12 | Category, Family Beach kit, beach/summer blogs, 4 beach guides | Strongest current cluster; optimize measured winners before adding more broad pages |
-| Baby & Toddler | 6 | Category, Baby Arrival and Toddler City kits, 3 family/baby articles | Strong; add narrow decision content only where query ownership is distinct |
-| Mobility & Accessibility | 5 | Category, 2 accessibility kits, accessibility guide, accessible local guides | Expand commercial comparisons and verified accessibility planning |
-| Remote Work | 3 | Category, Remote Work kit, nomad guide, home-office tutorial | Coherent cluster; deepen exact workstation and temporary-stay decisions |
-| Apartment Comfort | 4 | Category, Summer and Long-Stay kits, summer guide | Commercially relevant but editorially thin; prioritize cooling and long-stay problems |
-| Kids & Family | 0 | Category, 2 shared kits, 2 family articles | Structurally ready but should not expand transactionally before approved inventory |
-| Sports & Wellness | 1 | Category, Turia Gardens guide and product-level pathways | Newly opened cluster; expand only as approved sports inventory becomes available |
+| Cluster | EN / ES indexable products | Main supporting layers | Expansion posture |
+|---------|----------------------------|------------------------|-------------------|
+| Beach & Outdoor | 12 / 12 | Category, Family Beach kit, beach/summer blogs, 4 beach guides | Strongest current cluster; optimize measured winners before adding more broad pages |
+| Baby & Toddler | 7 / 7 | Category, Baby Arrival and Toddler City kits, 3 family/baby articles | Strong; add narrow decision content only where query ownership is distinct |
+| Mobility & Accessibility | 5 / 5 | Category, 2 accessibility kits, accessibility guide, accessible local guides | Expand commercial comparisons and verified accessibility planning |
+| Remote Work | 3 / 3 | Category, Remote Work kit, nomad guide, home-office tutorial | Coherent cluster; deepen exact workstation and temporary-stay decisions |
+| Apartment Comfort | 4 / 4 | Category, Summer and Long-Stay kits, summer guide | Commercially relevant but editorially thin; prioritize cooling and long-stay problems |
+| Kids & Family | 1 / 0 | Category, 2 shared kits, 2 family articles | Complete Spanish toddler-bike SEO before expanding transactionally |
+| Sports & Wellness | 1 / 1 | Category, Turia Gardens guide and product-level pathways | Newly opened cluster; expand only as approved sports inventory becomes available |
 
 ---
 
@@ -95,7 +99,7 @@ Priority structural changes:
 rentanything.es/
 ├── /                               Homepage (photo carousel hero, photo categories)
 │
-├── /product/                       Product pages (31 EN + 31 ES indexable)
+├── /product/                       Product pages (33 EN + 32 ES indexable)
 │   └── /product/[slug]             Individual product + BookingWidget
 │
 ├── /rental/                        Category pages (6 categories per locale)
@@ -159,8 +163,8 @@ Admin Dashboard:
 
 ## Cluster Health
 
-### 🛒 Products (31 indexable pages per locale) — 🟠 Editorial queue active
-- Live database baseline: 178 total products, 34 active, 31 indexable in English and Spanish
+### 🛒 Products (33 EN / 32 ES indexable pages) — 🟠 Editorial queue active
+- Live database baseline: 178 total products, 34 active, 33 indexable in English and 32 in Spanish
 - Each page has: name, brand, description, features, specs, pricing tiers
 - BookingWidget with date picker, tiered pricing calculator, WhatsApp deep-link
 - JSON-LD Product structured data

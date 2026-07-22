@@ -92,3 +92,16 @@ The production sitemap was still serving its cached 192-URL/54-product-URL
 version immediately after the database update. Product data caches revalidate
 within five minutes and `sitemap.xml` revalidates hourly unless the normal admin
 save path explicitly clears them.
+
+## Live follow-up — 22 July 2026
+
+A later readiness audit recorded 178 total products, 34 active, 33 English-indexable
+and 32 Spanish-indexable. The rendered sitemap now contains 203 URLs.
+
+- `thule-chariot-sport-1-bike-trailer` is indexable in English and Spanish.
+- `toddler-bike-lila` is indexable in English but remains excluded from Spanish
+  because localized SEO copy is missing.
+- `bladeless-fan-ventilator` remains excluded in both locales while editorial/image
+  approval is incomplete.
+- The regression audit now discovers an active noindex product from rendered
+  category links instead of relying on a fixed product that may later be approved.

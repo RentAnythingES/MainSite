@@ -85,8 +85,37 @@ few branded or one-impression queries.
   production crawl returned 200 sitemap URLs with zero errors, warnings, orphans,
   pages beyond three clicks or indexable URLs omitted from the sitemap.
 - The crawl exposed and corrected one stale Spanish blog link to the retired
-  Decathlon beach-shelter slug. The only remaining unlisted product links point to
-  three intentionally noindexed products awaiting image-rights approval.
+  Decathlon beach-shelter slug. At crawl time, the remaining unlisted product links
+  pointed to three intentionally noindexed products awaiting approval.
+- A later live readiness refresh showed 33 English and 32 Spanish indexable products
+  and a 203-URL sitemap. The Thule trailer is now indexable in both locales and the
+  toddler bike in English. The toddler bike still needs Spanish SEO copy; the Dreame
+  fan remains blocked from both locales pending editorial/image approval.
+
+### Search Console landing-page follow-up
+
+A signed-in 28-day landing-page review on 22 July showed where Google is already
+testing the site. The leading pages were:
+
+| Landing page | Clicks | Impressions | Average position |
+|---|---:|---:|---:|
+| `/rental/travel-outdoors` | 25 | 479 | 7.4 |
+| `/rental/home-living` | 6 | 71 | 22.4 |
+| `/rental/baby-gear` | 4 | 64 | 26.2 |
+| `/rental/mobility` | 1 | 65 | 42.9 |
+| `/blog/wheelchair-accessibility-valencia` | 1 | 45 | 8.2 |
+| `/product/monitor-27` | 2 | 12 | 19.3 |
+| Homepage | 6 | 30 | 14.7 |
+| `/how-it-works` | 1 | 18 | 11.9 |
+
+The accessibility guide is the clearest snippet/content opportunity: it is already
+on the first page on average but has 2.2% CTR. Search Console disclosed only two
+one-impression queries for that filtered URL, so there is not enough query-level
+evidence to split or retarget the page. The English guide was instead brought to
+parity with the newer Spanish version: a clearer 2026 title and description,
+nuanced transport/accessibility language, official Metrovalencia and municipal
+beach sources, accommodation checks, equipment-selection guidance and four direct
+commercial pathways.
 
 ### First 30 days
 
