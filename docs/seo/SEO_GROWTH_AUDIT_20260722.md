@@ -87,10 +87,11 @@ few branded or one-impression queries.
 - The crawl exposed and corrected one stale Spanish blog link to the retired
   Decathlon beach-shelter slug. At crawl time, the remaining unlisted product links
   pointed to three intentionally noindexed products awaiting approval.
-- A later live readiness refresh showed 33 English and 32 Spanish indexable products
-  and a 203-URL sitemap. The Thule trailer is now indexable in both locales and the
-  toddler bike in English. The toddler bike still needs Spanish SEO copy; the Dreame
-  fan remains blocked from both locales pending editorial/image approval.
+- A later live readiness refresh showed 34 English and 33 Spanish indexable products,
+  producing a 205-URL sitemap after cache refresh. The Dreame fan and Thule trailer
+  are now indexable in both locales and the toddler bike in English. The toddler bike
+  still needs Spanish SEO copy. The Dreame image-rights field remains `unknown` and
+  must not be represented internally as approved until documentation exists.
 
 ### Search Console landing-page follow-up
 

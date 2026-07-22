@@ -95,13 +95,14 @@ save path explicitly clears them.
 
 ## Live follow-up — 22 July 2026
 
-A later readiness audit recorded 178 total products, 34 active, 33 English-indexable
-and 32 Spanish-indexable. The rendered sitemap now contains 203 URLs.
+A later readiness audit recorded 178 total products, 34 active, 34 English-indexable
+and 33 Spanish-indexable. The next sitemap refresh contains 205 URLs.
 
 - `thule-chariot-sport-1-bike-trailer` is indexable in English and Spanish.
 - `toddler-bike-lila` is indexable in English but remains excluded from Spanish
   because localized SEO copy is missing.
-- `bladeless-fan-ventilator` remains excluded in both locales while editorial/image
-  approval is incomplete.
+- `bladeless-fan-ventilator` is indexable in both locales after explicit publication.
+  Its primary image still has `rights_status = unknown`; this remains an internal
+  compliance warning and was not changed to an unsupported approval state.
 - The regression audit now discovers an active noindex product from rendered
   category links instead of relying on a fixed product that may later be approved.
