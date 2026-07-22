@@ -415,7 +415,11 @@ Priority pilot logic: start with one narrow bundle, collect usage evidence, then
 
 ## Priority Execution Order (Next Session)
 
-1. **Deploy + validate** — run `npm run audit:seo`, resubmit sitemap, inspect representative URLs in GSC
+1. **Sitemap refresh — ✅ Code and local verification completed 22 July** — the
+   sitemap now revalidates every five minutes. A production-build crawl returned
+   200 URLs with the four retired URLs removed and all 12 newly indexable URLs
+   present. Deploy, resubmit the sitemap in Search Console, then inspect the
+   Apartment Comfort, Beach, Baby and Mobility owners plus their top products.
 2. **Beach cluster — ✅ Completed 18 July** — `/rental/travel-outdoors` owns broad rental and delivery intent; guides own beach-planning queries; product pages own exact-item searches. Consolidated comparison and FAQ coverage avoids overlapping thin landing pages.
 3. **Active catalogue** — complete EN/ES readiness for commercially available products
    - Mobility scooter content review completed 21 July 2026 for standard,
@@ -425,7 +429,14 @@ Priority pilot logic: start with one narrow bundle, collect usage evidence, then
      See [MOBILITY_SCOOTER_CONTENT_REVIEW_20260721.md](./MOBILITY_SCOOTER_CONTENT_REVIEW_20260721.md).
 4. **Commercial hubs — ✅ Completed 18 July** — AC, baby gear, mobility and remote-work hubs now absorb closely related rental, delivery, suitability and duration questions in EN/ES without creating competing landing pages.
 5. **Internal links — ✅ Graph pass completed 18 July** — Spanish pathways use localized guides; all sitemap pages remain within three homepage clicks; Discover children now link through their sub-hubs; the long-stay kitchen kit gains a contextual Apartment Comfort pathway. Regression checks cover locale-specific editorial links and hierarchy links.
-6. **Authority** — Google Business Profile, reviews and Valencia partner backlinks
+6. **Authority — current highest-leverage gap** — complete an accurate service-area
+   Google Business Profile, request honest reviews from completed renters, and earn
+   Valencia accommodation/accessibility/family-travel partner links. A 22 July web
+   mention check found only one obvious external brand mention, so authority and
+   local prominence now matter more than increasing on-page keyword repetition.
+
+The supporting 30/60/90-day plan and 7–19 July Search Console baseline are recorded
+in [SEO_GROWTH_AUDIT_20260722.md](./SEO_GROWTH_AUDIT_20260722.md).
 
 ### Discover localization — completed 20 July 2026
 

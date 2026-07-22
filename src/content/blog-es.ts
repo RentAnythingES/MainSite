@@ -118,7 +118,7 @@ export const spanishBlogPosts: BlogPost[] = [
       },
       {
         title: "Refugio de playa compacto",
-        href: "/es/product/decathlon-iwiko-180-compact-beach-shelter",
+        href: "/es/product/compact-beach-shelter",
         description: "Protección UPF 50 para tres personas",
       },
       {

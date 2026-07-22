@@ -71,3 +71,24 @@ than incorrectly flagging all 18 active legacy records with draft status.
    indexing the ball-machine product.
 4. Re-run this audit after each catalogue publishing batch and update this file
    when the baseline materially changes.
+
+## Production rerun — July 22, 2026
+
+The live readiness audit now reports 178 catalogue records, 34 active products,
+and 31 indexable products in each language.
+
+- `mobile-airconditioner-delonghi-pinguino-compact-classic` is now
+  `content_ready` and indexable in English and Spanish. Its manufacturer-sourced
+  primary image already had `manufacturer_approved` permission recorded.
+- `bladeless-fan-ventilator` and `thule-chariot-sport-1-bike-trailer` now have
+  verified core facts, complete English and Spanish editorial content, four FAQs
+  per locale, pricing, stock, and primary-image source records.
+- Those latter two remain intentionally blocked at `facts_verified` because the
+  uploaded images still have `rights_status = unknown`. Official manufacturer
+  fact sources do not by themselves prove catalogue image permission.
+- `toddler-bike-lila` remains the other blocked active product.
+
+The production sitemap was still serving its cached 192-URL/54-product-URL
+version immediately after the database update. Product data caches revalidate
+within five minutes and `sitemap.xml` revalidates hourly unless the normal admin
+save path explicitly clears them.

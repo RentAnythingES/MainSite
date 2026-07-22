@@ -1,5 +1,5 @@
 # RentAnything.es — SEO Strategy & Audit
-> **Last updated**: 2026-07-21 · **Build**: ✅ Clean · **Indexable sitemap pages**: 192
+> **Last updated**: 2026-07-22 · **Build**: ✅ Clean · **Indexability-ready pages after sitemap refresh**: 200
 
 This is the **living SEO strategy document** for rentanything.es. Updated after every SEO-related change. For prioritized fixes, see [SEO_ROADMAP.md](./SEO_ROADMAP.md).
 
@@ -16,7 +16,7 @@ This is the **living SEO strategy document** for rentanything.es. Updated after 
 
 ---
 
-## Current Portfolio Baseline — 21 July 2026
+## Current Portfolio Baseline — 22 July 2026
 
 The live sitemap and database readiness audit are the authoritative inventory sources.
 Several older counts farther down this document are retained as historical milestones.
@@ -24,27 +24,29 @@ Several older counts farther down this document are retained as historical miles
 | Layer | English | Spanish | Current role |
 |-------|---------|---------|--------------|
 | Commercial category hubs | 7 | 7 | Broad transactional query owners |
-| Indexable product pages | 27 | 27 | Exact-item and model-level demand |
+| Indexable product pages | 31 | 31 | Exact-item and model-level demand |
 | Blog articles | 8 | 8 | Planning, comparison, seasonal and tutorial intent |
 | Discover sub-hubs | 5 | 5 | Beaches, neighbourhoods, attractions, day trips and events |
 | Discover guides | 26 | 26 | Valencia destination and situational planning |
 | Kit detail pages | 8 | 8 | Multi-item use cases and bundle discovery |
 
-The 192-URL production crawl reports zero page errors, warnings, orphan pages,
-pages beyond three clicks, single-inbound pages, broken internal links, broken
-internal images or indexable internal URLs missing from the sitemap. It includes
-the Sports & Wellness hubs and ball-machine product in both locales. Route-cache
-invalidation now explicitly refreshes catalogue pages, product routes and sitemap.
+The post-fix local production crawl contains 200 sitemap URLs and reports zero page
+errors, warnings, orphan pages, pages beyond three clicks, indexable internal URLs
+missing from the sitemap, or broken internal images. The four retired product URLs
+are gone and the 12 newly indexable product URLs are present. Sitemap revalidation
+now matches the five-minute public product cache instead of retaining product-state
+changes for up to one hour. One stale Spanish blog link found by the crawl was also
+updated to the current compact beach shelter slug.
 
 ### Commercial cluster depth
 
 | Cluster | Indexable products per locale | Main supporting layers | Expansion posture |
 |---------|-------------------------------|------------------------|-------------------|
-| Beach & Outdoor | 6 | Category, Family Beach kit, beach/summer blogs, 4 beach guides | Strongest current cluster; optimize measured winners before adding more broad pages |
+| Beach & Outdoor | 12 | Category, Family Beach kit, beach/summer blogs, 4 beach guides | Strongest current cluster; optimize measured winners before adding more broad pages |
 | Baby & Toddler | 6 | Category, Baby Arrival and Toddler City kits, 3 family/baby articles | Strong; add narrow decision content only where query ownership is distinct |
-| Mobility & Accessibility | 4 | Category, 2 accessibility kits, accessibility guide, accessible local guides | Expand commercial comparisons and verified accessibility planning |
+| Mobility & Accessibility | 5 | Category, 2 accessibility kits, accessibility guide, accessible local guides | Expand commercial comparisons and verified accessibility planning |
 | Remote Work | 3 | Category, Remote Work kit, nomad guide, home-office tutorial | Coherent cluster; deepen exact workstation and temporary-stay decisions |
-| Apartment Comfort | 3 | Category, Summer and Long-Stay kits, summer guide | Commercially relevant but editorially thin; prioritize cooling and long-stay problems |
+| Apartment Comfort | 4 | Category, Summer and Long-Stay kits, summer guide | Commercially relevant but editorially thin; prioritize cooling and long-stay problems |
 | Kids & Family | 0 | Category, 2 shared kits, 2 family articles | Structurally ready but should not expand transactionally before approved inventory |
 | Sports & Wellness | 1 | Category, Turia Gardens guide and product-level pathways | Newly opened cluster; expand only as approved sports inventory becomes available |
 
@@ -66,6 +68,19 @@ bottom-funnel item demand only after verified facts, operational readiness,
 metadata, local links, and locale content are complete; they do not replace the
 guide and kit layers.
 
+### Product Content Review Pipeline
+
+Imported products remain inactive by default. Editorial enrichment is completed
+in small, source-backed batches and recorded in
+`PRODUCT_CONTENT_BATCH_01.md`, `PRODUCT_CONTENT_BATCH_02.md`,
+`PRODUCT_CONTENT_BATCH_03.md`, `PRODUCT_CONTENT_BATCH_04.md`, and
+`PRODUCT_CONTENT_BATCH_05.md`, `PRODUCT_CONTENT_BATCH_06.md`, and
+`PRODUCT_CONTENT_BATCH_07.md`, `PRODUCT_CONTENT_BATCH_08.md`, and
+`PRODUCT_CONTENT_BATCH_09.md` through `PRODUCT_CONTENT_BATCH_20.md`. A product may progress to `facts_verified` when
+its model facts, English SEO copy, and FAQs are source-checked, but it cannot be
+published until physical stock, approved pricing, image-use status, and the full
+`content_ready` checklist are complete.
+
 Priority structural changes:
 
 - Split `Baby & Children` into `Baby & Toddler` and `Kids & Family`
@@ -80,7 +95,7 @@ Priority structural changes:
 rentanything.es/
 ├── /                               Homepage (photo carousel hero, photo categories)
 │
-├── /product/                       Product pages (20 EN + 20 ES indexable)
+├── /product/                       Product pages (31 EN + 31 ES indexable)
 │   └── /product/[slug]             Individual product + BookingWidget
 │
 ├── /rental/                        Category pages (6 categories per locale)
@@ -144,8 +159,8 @@ Admin Dashboard:
 
 ## Cluster Health
 
-### 🛒 Products (20 indexable pages per locale) — 🟠 Editorial queue active
-- Live database baseline: 178 total products, 24 active, 20 indexable in English and Spanish
+### 🛒 Products (31 indexable pages per locale) — 🟠 Editorial queue active
+- Live database baseline: 178 total products, 34 active, 31 indexable in English and Spanish
 - Each page has: name, brand, description, features, specs, pricing tiers
 - BookingWidget with date picker, tiered pricing calculator, WhatsApp deep-link
 - JSON-LD Product structured data

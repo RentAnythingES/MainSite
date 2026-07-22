@@ -119,8 +119,8 @@ const categoryMeta: Record<string, CategoryContent> = {
     ],
   },
   "mobility": {
-    title: "Mobility & Accessibility Rental in Valencia",
-    description: "Rent wheelchairs, mobility scooters, walkers & daily aids in Valencia. Delivered to your hotel or Airbnb.",
+    title: "Wheelchair & Mobility Scooter Rental in Valencia",
+    description: "Rent wheelchairs, mobility scooters, walkers and daily aids in Valencia, with delivery and collection for your hotel or apartment.",
     emoji: "♿",
     editorialHeading: "Exploring Valencia with Mobility Equipment",
     editorialParagraphs: [
@@ -201,7 +201,7 @@ const categoryMeta: Record<string, CategoryContent> = {
     ],
   },
   "home-living": {
-    title: "Apartment Equipment Rental in Valencia",
+    title: "Portable Air Conditioner Rental in Valencia",
     description: "Rent portable air conditioners, air purifiers and apartment comfort equipment in Valencia, with delivery and collection for short and long stays.",
     emoji: "🏠",
     editorialHeading: "Make Your Valencia Apartment Work for Your Stay",

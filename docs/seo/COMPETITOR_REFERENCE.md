@@ -312,3 +312,47 @@ remains the transactional equipment owner.
 - Folks Coliving Valencia: `https://folkscoliving.com/`
 - Vivarium Valencia: `https://www.vivariumcoliving.com/`
 - RentAnything digital-nomad guide and Remote Work category SERP results.
+
+## Commercial rental SERP pulse — 22 July 2026
+
+Queries reviewed: `rent portable air conditioner Valencia`, `beach equipment
+rental Valencia`, `wheelchair rental Valencia`, `baby equipment rental Valencia`,
+plus exact-site checks for the current RentAnything category and product owners.
+
+### Findings
+
+- RentAnything's homepage and Beach & Outdoor category are already being surfaced
+  for broad equipment and beach-rental discovery. The beach category has the
+  clearest current combination of inventory depth, indexed content and Search
+  Console click evidence.
+- The new De'Longhi and KOENIC portable-air-conditioner pages are crawlable and
+  indexable in the application, but exact-site search checks did not reliably
+  surface them yet. This is consistent with the site's age and a production
+  sitemap that was still serving a cached pre-publication URL set during the audit.
+- Baby equipment is the most visibly competitive cluster. Babonbo exposes a large
+  Valencia inventory and substantial review proof, while Baby Roller combines a
+  focused stroller fleet with direct booking, delivery/pickup details and clear
+  transactional FAQs.
+- Mobility results include established specialist providers and orthopaedic
+  businesses such as Amigo 24, L3 Ortopedia and Amayores. RentAnything's stronger
+  differentiation is accommodation delivery plus bilingual Valencia planning and
+  mixed mobility/comfort kits, not catalogue size.
+- Beach search results remain fragmented across activity operators, concessions
+  and individual water-sports providers. RentAnything should continue owning the
+  family beach-setup and accommodation-delivery angle rather than competing for
+  every surf/SUP operator query.
+- A web mention search found only one obvious external brand mention, on
+  `escalera.ai`. This is directional rather than a complete backlink index, but it
+  supports treating local authority and citations as the largest off-page gap.
+
+### Sources reviewed
+
+- RentAnything homepage and category/product results: `https://www.rentanything.es/`
+  and `https://www.rentanything.es/rental/travel-outdoors`
+- Babonbo Valencia: `https://www.babonbo.com/en/places/spain/valencian-community/valencia`
+- Baby Roller: `https://www.babyroller.es/`
+- Amigo 24 Valencia: `https://www.amigo24.com/en/valencia`
+- L3 Ortopedia wheelchair rental: `https://l3ortopedia.es/ortopedia/sillas-de-ruedas-de-alquiler/`
+- Sup & Sea Valencia: `https://supseavalencia.com/`
+- Xsa Surf Valencia: `https://escueladesurfvalencia.es/actividades/alquiler-material-surf-en-valencia/`
+- Escalera AI portfolio mention: `https://escalera.ai/`

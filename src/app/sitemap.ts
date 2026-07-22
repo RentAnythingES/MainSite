@@ -10,7 +10,9 @@ import { seoCategorySlugs } from "@/data/seo-clusters";
 
 const BASE_URL = "https://rentanything.es";
 
-export const revalidate = 3600;
+// Keep sitemap publication close to the product cache window so newly approved
+// products and retired slugs reach crawlers promptly.
+export const revalidate = 300;
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const products = await getIndexableProductsForSeo();

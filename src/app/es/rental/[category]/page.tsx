@@ -113,7 +113,7 @@ const categoryMetaES: Record<string, CategoryContent> = {
   },
   "mobility": {
     title: "Alquiler de Sillas de Ruedas y Scooters en Valencia",
-    description: "Alquila sillas de ruedas, scooters de movilidad, andadores y ayudas diarias en Valencia. Entrega en tu hotel o Airbnb.",
+    description: "Alquila sillas de ruedas, scooters de movilidad, andadores y ayudas diarias en Valencia, con entrega y recogida en tu hotel o apartamento.",
     editorialHeading: "Explorar Valencia con equipos de movilidad",
     editorialParagraphs: [
       "Valencia es una de las ciudades más accesibles de España. El terreno llano, el metro totalmente accesible y los amplios paseos marítimos la hacen ideal para usuarios de silla de ruedas y visitantes con movilidad reducida.",
@@ -190,7 +190,7 @@ const categoryMetaES: Record<string, CategoryContent> = {
     ],
   },
   "home-living": {
-    title: "Alquiler de Equipamiento para Apartamentos en Valencia",
+    title: "Alquiler de Aire Acondicionado Portátil en Valencia",
     description: "Alquila aire acondicionado portátil, purificadores y equipamiento de confort en Valencia, con entrega y recogida para estancias cortas o largas.",
     editorialHeading: "Adapta tu apartamento de Valencia a tu estancia",
     editorialParagraphs: [
