@@ -38,6 +38,11 @@ Initial Booking System v2 code is now in place:
 - `/api/admin/health` exposes authenticated, non-secret configuration status for Stripe, Resend, Supabase, and booking health.
 - `/api/admin/bookings/[id]/inventory-units` manages physical-unit assignment and lifecycle transitions.
 - Expired draft cleanup now runs before availability checks, draft creation, checkout creation, and admin health checks.
+- Checkout cancellation expires the open Stripe session and releases the unpaid inventory hold immediately.
+- Returning customers can resume their active payment instead of being blocked by their own checkout hold.
+- Client-generated draft IDs let failed or timed-out requests release a hold even if the draft response never reaches the browser.
+- Stripe Checkout expiry is aligned with the database draft expiry.
+- Paid booking inventory blocks always count toward availability, including blocks that retain their paid draft link.
 - `npm run smoke:booking` performs safe, read-only checks against booking options and availability.
 - `npm run audit:launch` checks required configuration, core tables, active-product readiness, and expired drafts.
 - Checkout and signed-webhook processing failures are written to `system_incidents` and surfaced in admin health after the incident migration is applied.
@@ -140,6 +145,7 @@ the company adviser before relying on the system for production invoicing.
 6. API creates a booking draft and temporary inventory hold.
 7. Stripe Checkout uses only the booking draft ID in metadata.
 8. Stripe webhook marks the draft paid, creates the booking, and converts the hold into a booking inventory block.
+9. Cancelling Checkout expires the payment session and releases the temporary hold before returning to the product.
 
 ### Fulfillment Modes
 

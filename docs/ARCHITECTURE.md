@@ -179,6 +179,9 @@ POST /api/checkout
   Preferred input: draftId
   Creates Stripe Checkout using the stored draft quantity and totals
 
+POST /api/booking-drafts/[id]/cancel
+  Expires an open Stripe Checkout session and releases its unpaid inventory hold
+
 POST /api/webhooks/stripe
   Fulfills checkout.session.completed from booking_draft_id
   Creates paid booking and converts hold into a booking inventory block
@@ -194,6 +197,7 @@ POST /api/webhooks/stripe
 | `/api/bookings` | POST | Create booking + block dates |
 | `/api/checkout` | POST | Create Stripe Checkout session for paid bookings |
 | `/api/checkout/session` | GET | Read a completed Checkout session for the success page |
+| `/api/booking-drafts/[id]/cancel` | POST | Cancel an unpaid checkout attempt and immediately release its inventory hold |
 | `/api/webhooks/stripe` | POST | Verify Stripe events, create paid bookings, block dates |
 | `/api/fulfillment-amendments/[token]` | GET | Read a private transport amendment quote |
 | `/api/fulfillment-amendments/[token]/checkout` | POST | Create or resume Stripe Checkout for the quoted transport fee |

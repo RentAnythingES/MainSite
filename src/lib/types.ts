@@ -337,7 +337,7 @@ export interface Database {
       };
       booking_drafts: {
         Row: BookingDraftRow;
-        Insert: Omit<BookingDraftRow, "id" | "created_at" | "updated_at">;
+        Insert: Omit<BookingDraftRow, "id" | "created_at" | "updated_at"> & { id?: string };
         Update: Partial<Omit<BookingDraftRow, "id" | "created_at" | "updated_at">>;
       };
       booking_inventory_blocks: {

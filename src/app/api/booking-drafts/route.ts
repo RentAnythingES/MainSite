@@ -15,6 +15,7 @@ import {
 import type { FulfillmentMode } from "@/lib/types";
 
 interface DraftRequestBody {
+  draftId?: string;
   productSlug?: string;
   quantity?: number;
   customerName?: string;
@@ -37,6 +38,8 @@ interface DraftRequestBody {
   invoiceRequested?: boolean;
 }
 
+const UUID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+
 export async function POST(request: NextRequest) {
   try {
     const body = (await request.json()) as DraftRequestBody;
@@ -45,6 +48,10 @@ export async function POST(request: NextRequest) {
 
     if (!body.productSlug || !body.customerName || !body.customerEmail || !body.startAt || !body.endAt) {
       return NextResponse.json({ error: "Missing required booking details" }, { status: 400 });
+    }
+
+    if (!body.draftId || !UUID_PATTERN.test(body.draftId)) {
+      return NextResponse.json({ error: "Invalid booking attempt identifier" }, { status: 400 });
     }
 
     if (!Number.isInteger(quantity) || quantity < 1) {
@@ -113,6 +120,7 @@ export async function POST(request: NextRequest) {
     const { data: draft, error: draftError } = await supabase
       .from("booking_drafts")
       .insert({
+        id: body.draftId,
         product_id: product.id,
         quantity,
         customer_name: body.customerName,

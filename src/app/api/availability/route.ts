@@ -4,6 +4,10 @@ import { calculateRentalDays, cleanupExpiredBookingDrafts, getProductWithPricing
 import { fetchActivePickupLocations, fetchActiveServiceZones } from "@/lib/fulfillment-options";
 import type { FulfillmentMode } from "@/lib/types";
 
+export const dynamic = "force-dynamic";
+
+const UUID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+
 /**
  * GET /api/availability?slug=compact-stroller&start=2026-07-01&end=2026-07-07
  * 
@@ -22,6 +26,7 @@ export async function GET(request: NextRequest) {
   const collectionZoneId = searchParams.get("collectionZoneId");
   const pickupLocationId = searchParams.get("pickupLocationId");
   const quantity = Number(searchParams.get("quantity") || "1");
+  const draftId = searchParams.get("draftId");
 
   if (!slug || (!startAtParam && !start) || (!endAtParam && !end)) {
     return NextResponse.json(
@@ -42,6 +47,27 @@ export async function GET(request: NextRequest) {
     const endAt = parseRentalDate(endAtParam || `${end}T09:00:00+02:00`, "end");
     const { product, tiers, quantityDiscounts } = await getProductWithPricing(supabase, slug);
     const rentalDays = calculateRentalDays(startAt, endAt);
+    let resumableDraftId: string | null = null;
+
+    if (draftId && UUID_PATTERN.test(draftId)) {
+      const { data: ownedDraft } = await supabase
+        .from("booking_drafts")
+        .select("id,product_id,quantity,rental_start_at,rental_end_at,status,expires_at")
+        .eq("id", draftId)
+        .eq("product_id", product.id)
+        .in("status", ["draft", "checkout_created"])
+        .gt("expires_at", new Date().toISOString())
+        .maybeSingle();
+
+      if (
+        ownedDraft &&
+        ownedDraft.quantity === quantity &&
+        new Date(ownedDraft.rental_start_at).getTime() === startAt.getTime() &&
+        new Date(ownedDraft.rental_end_at).getTime() === endAt.getTime()
+      ) {
+        resumableDraftId = ownedDraft.id;
+      }
+    }
 
     // Get all blocked dates in range
     const { data: blockedRows, error: blockedError } = await supabase
@@ -55,10 +81,13 @@ export async function GET(request: NextRequest) {
 
     const blockedDates = (blockedRows || []).map((r: { blocked_date: string }) => r.blocked_date);
     let overlappingQuantity = 0;
+    let overlappingCheckoutQuantity = 0;
+    let overlappingBookingQuantity = 0;
+    const holdExpirations: string[] = [];
 
     const { data: blockRows, error: blockError } = await supabase
       .from("booking_inventory_blocks")
-      .select("quantity, booking_drafts!left(status, expires_at)")
+      .select("quantity, booking_id, booking_draft_id, booking_drafts!left(status, expires_at)")
       .eq("product_id", product.id)
       .lt("starts_at", endAt.toISOString())
       .gt("ends_at", startAt.toISOString());
@@ -71,14 +100,27 @@ export async function GET(request: NextRequest) {
       overlappingQuantity = blockRows.reduce((total, row) => {
         const block = row as {
           quantity: number;
+          booking_id?: string | null;
+          booking_draft_id?: string | null;
           booking_drafts?: { status?: string; expires_at?: string } | null;
         };
+        if (block.booking_draft_id === resumableDraftId) return total;
+
         const draft = block.booking_drafts;
+        if (block.booking_id) {
+          overlappingBookingQuantity += block.quantity;
+          return total + block.quantity;
+        }
+
         const draftActive = !draft || (
           ["draft", "checkout_created"].includes(draft.status || "") &&
           new Date(draft.expires_at || 0).getTime() > Date.now()
         );
 
+        if (draftActive) {
+          overlappingCheckoutQuantity += block.quantity;
+          if (draft?.expires_at) holdExpirations.push(draft.expires_at);
+        }
         return draftActive ? total + block.quantity : total;
       }, 0);
     }
@@ -105,13 +147,27 @@ export async function GET(request: NextRequest) {
       ? 0
       : Math.max(0, Math.min(product.stock_available, product.stock_total - overlappingQuantity));
     const available = quantity <= maxAvailableQuantity;
+    const availabilityReason = available
+      ? "available"
+      : blockedDates.length > 0
+        ? "calendar_block"
+        : overlappingBookingQuantity > 0
+          ? "booked"
+          : overlappingCheckoutQuantity > 0
+            ? "checkout_hold"
+            : "out_of_stock";
 
     return NextResponse.json({
       available,
+      availabilityReason,
       blockedDates,
       stockTotal: product.stock_total,
       stockAvailable: product.stock_available,
       overlappingQuantity,
+      overlappingCheckoutQuantity,
+      overlappingBookingQuantity,
+      holdExpiresAt: holdExpirations.sort()[0] || null,
+      resumableDraft: Boolean(resumableDraftId),
       requestedQuantity: quantity,
       maxAvailableQuantity,
       rentalDays,
@@ -123,6 +179,10 @@ export async function GET(request: NextRequest) {
       end: end || endAt.toISOString().slice(0, 10),
       startAt: startAt.toISOString(),
       endAt: endAt.toISOString(),
+    }, {
+      headers: {
+        "Cache-Control": "no-store, no-cache, must-revalidate",
+      },
     });
   } catch (err) {
     console.error("[availability] Error:", err);

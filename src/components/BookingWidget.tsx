@@ -3,6 +3,12 @@
 import { useState, useMemo, useEffect } from "react";
 import type { Product } from "@/data/products";
 import { trackBookingEvent } from "@/lib/analytics";
+import {
+  type ActiveCheckout,
+  clearActiveCheckout,
+  readActiveCheckout,
+  saveActiveCheckout,
+} from "@/lib/active-checkout";
 
 interface BookingWidgetProps {
   product: Product;
@@ -71,6 +77,13 @@ const labels = {
     unavailable: "This item is currently fully booked for that time frame.",
     unavailableHelp:
       "Contact us directly via WhatsApp and we can see if we can find alternative inventory.",
+    temporarilyHeld: "Another customer is currently completing checkout for this item.",
+    temporarilyHeldHelp:
+      "This hold may be released shortly. Try again in a few minutes, or message us and we’ll help.",
+    activeCheckout: "Your checkout is still active for these dates.",
+    resumeCheckout: "Resume secure payment",
+    cancelCheckout: "Release these dates",
+    cancellingCheckout: "Releasing dates…",
     checkoutUnavailable: "Payment could not be started.",
     checkoutUnavailableHelp:
       "Your selected dates may still be available. Please contact us via WhatsApp and we will finish the booking manually.",
@@ -127,6 +140,13 @@ const labels = {
     unavailable: "Este artículo está completamente reservado para esas fechas.",
     unavailableHelp:
       "Contáctanos directamente por WhatsApp y veremos si podemos encontrar inventario alternativo.",
+    temporarilyHeld: "Otro cliente está completando el pago de este artículo.",
+    temporarilyHeldHelp:
+      "La reserva temporal puede liberarse pronto. Inténtalo de nuevo en unos minutos o escríbenos y te ayudaremos.",
+    activeCheckout: "Tu pago sigue activo para estas fechas.",
+    resumeCheckout: "Continuar con el pago seguro",
+    cancelCheckout: "Liberar estas fechas",
+    cancellingCheckout: "Liberando fechas…",
     checkoutUnavailable: "No se pudo iniciar el pago.",
     checkoutUnavailableHelp:
       "Es posible que tus fechas sigan disponibles. Contáctanos por WhatsApp y terminaremos la reserva manualmente.",
@@ -219,7 +239,7 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
   // Availability
   const [availabilityStatus, setAvailabilityStatus] = useState<"idle" | "checking" | "available" | "unavailable">("idle");
   const [bookingError, setBookingError] = useState<"none" | "availability" | "checkout">("none");
-  const [blockedDates, setBlockedDates] = useState<string[]>([]);
+  const [availabilityReason, setAvailabilityReason] = useState("");
   const [serviceZones, setServiceZones] = useState<ServiceZoneOption[]>([]);
   const [pickupLocations, setPickupLocations] = useState<PickupLocationOption[]>([]);
   const [serverQuote, setServerQuote] = useState<ServerQuote | null>(null);
@@ -240,7 +260,9 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
   const [billingTaxId, setBillingTaxId] = useState("");
   const [billingAddress, setBillingAddress] = useState("");
   const [submitting, setSubmitting] = useState(false);
-  const [bookingRef, setBookingRef] = useState("");
+  const [activeCheckout, setActiveCheckout] = useState<ActiveCheckout | null>(null);
+  const [cancellingCheckout, setCancellingCheckout] = useState(false);
+  const [bookingRef] = useState("");
   const selectedPickupLocation = pickupLocations.find((location) => location.id === pickupLocationId);
   const selectedDeliveryZone = serviceZones.find((zone) => zone.id === deliveryZoneId);
   const selectedCollectionZone = serviceZones.find((zone) => zone.id === collectionZoneId);
@@ -277,6 +299,21 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
     };
   }, [pricing, serverQuote]);
 
+  const activeCheckoutMatchesSelection = Boolean(
+    activeCheckout &&
+    activeCheckout.productSlug === product.slug &&
+    activeCheckout.quantity === quantity &&
+    new Date(activeCheckout.startAt).getTime() === new Date(combineDateTime(startDate, startTime)).getTime() &&
+    new Date(activeCheckout.endAt).getTime() === new Date(combineDateTime(endDate, endTime)).getTime()
+  );
+
+  useEffect(() => {
+    const frameId = window.requestAnimationFrame(() => {
+      setActiveCheckout(readActiveCheckout(product.slug));
+    });
+    return () => window.cancelAnimationFrame(frameId);
+  }, [product.slug]);
+
   useEffect(() => {
     let active = true;
 
@@ -311,10 +348,13 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
 
   // Reset availability when dates change
   useEffect(() => {
-    setAvailabilityStatus("idle");
-    setBookingError("none");
-    setBlockedDates([]);
-    setServerQuote(null);
+    const timeoutId = window.setTimeout(() => {
+      setAvailabilityStatus("idle");
+      setBookingError("none");
+      setAvailabilityReason("");
+      setServerQuote(null);
+    }, 0);
+    return () => window.clearTimeout(timeoutId);
   }, [startDate, startTime, endDate, endTime, quantity, fulfillmentMode, deliveryZoneId, collectionZoneId, pickupLocationId]);
 
   const checkAvailability = async () => {
@@ -341,9 +381,13 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
       if (deliveryZoneId) params.set("deliveryZoneId", deliveryZoneId);
       if (collectionZoneId) params.set("collectionZoneId", collectionZoneId);
       if (pickupLocationId) params.set("pickupLocationId", pickupLocationId);
+      if (activeCheckoutMatchesSelection && activeCheckout) {
+        params.set("draftId", activeCheckout.draftId);
+      }
 
-      const res = await fetch(`/api/availability?${params.toString()}`);
+      const res = await fetch(`/api/availability?${params.toString()}`, { cache: "no-store" });
       const data = await res.json();
+      setAvailabilityReason(data.availabilityReason || "");
 
       if (Array.isArray(data.serviceZones)) {
         setServiceZones(data.serviceZones);
@@ -366,7 +410,6 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
       if (data.available) {
         setAvailabilityStatus("available");
         setBookingError("none");
-        setBlockedDates([]);
         trackBookingEvent("availability_check_available", {
           productSlug: product.slug,
           fulfillmentMode,
@@ -376,7 +419,6 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
       } else {
         setAvailabilityStatus("unavailable");
         setBookingError("availability");
-        setBlockedDates(data.blockedDates || []);
         trackBookingEvent("availability_check_unavailable", {
           productSlug: product.slug,
           fulfillmentMode,
@@ -393,11 +435,47 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
     }
   };
 
+  const releaseCheckout = async (draftId: string) => {
+    const response = await fetch(`/api/booking-drafts/${encodeURIComponent(draftId)}/cancel`, {
+      method: "POST",
+      cache: "no-store",
+    });
+    if (!response.ok) throw new Error("Could not release checkout");
+    clearActiveCheckout(draftId);
+    setActiveCheckout((current) => current?.draftId === draftId ? null : current);
+  };
+
+  const handleCancelActiveCheckout = async () => {
+    if (!activeCheckout) return;
+    setCancellingCheckout(true);
+    try {
+      await releaseCheckout(activeCheckout.draftId);
+      setAvailabilityStatus("idle");
+      setAvailabilityReason("");
+      setBookingError("none");
+    } catch {
+      setBookingError("checkout");
+    } finally {
+      setCancellingCheckout(false);
+    }
+  };
+
   const handleSubmitBooking = async (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitting(true);
+    let attemptedDraftId: string | null = null;
 
     try {
+      if (activeCheckout && activeCheckoutMatchesSelection) {
+        window.location.assign(activeCheckout.checkoutUrl);
+        return;
+      }
+
+      if (activeCheckout) {
+        await releaseCheckout(activeCheckout.draftId);
+      }
+
+      attemptedDraftId = window.crypto.randomUUID();
       const selectedDeliveryZoneId = deliveryZoneId || serviceZones[0]?.id || null;
       const selectedCollectionZoneId = collectionZoneId || serviceZones[0]?.id || null;
       const selectedPickupLocationId = pickupLocationId || pickupLocations[0]?.id || null;
@@ -405,6 +483,7 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
+          draftId: attemptedDraftId,
           productSlug: product.slug,
           quantity,
           customerName: name,
@@ -431,6 +510,7 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
       const draftData = await draftRes.json();
 
       if (!draftRes.ok || !draftData.draftId) {
+        await releaseCheckout(attemptedDraftId).catch(() => {});
         const isAvailabilityConflict = draftRes.status === 409;
         setAvailabilityStatus(isAvailabilityConflict ? "unavailable" : "available");
         setBookingError(isAvailabilityConflict ? "availability" : "checkout");
@@ -472,12 +552,24 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
           deliveryAddress: address,
           deliveryCity: "valencia",
           deliveryNotes: notes || null,
+          locale,
         }),
       });
 
       const data = await res.json();
 
       if (res.ok && data.checkoutUrl) {
+        const checkoutState: ActiveCheckout = {
+          draftId: draftData.draftId,
+          checkoutUrl: data.checkoutUrl,
+          productSlug: product.slug,
+          startAt: draftData.startAt,
+          endAt: draftData.endAt,
+          quantity,
+          expiresAt: data.expiresAt || draftData.expiresAt,
+        };
+        saveActiveCheckout(checkoutState);
+        setActiveCheckout(checkoutState);
         // Redirect to Stripe Checkout
         trackBookingEvent("checkout_redirect_started", {
           productSlug: product.slug,
@@ -486,6 +578,7 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
         });
         window.location.assign(data.checkoutUrl);
       } else {
+        await releaseCheckout(draftData.draftId).catch(() => {});
         setBookingError("checkout");
         trackBookingEvent("checkout_redirect_failed_whatsapp", {
           productSlug: product.slug,
@@ -495,6 +588,9 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
         setSubmitting(false);
       }
     } catch {
+      if (attemptedDraftId) {
+        await releaseCheckout(attemptedDraftId).catch(() => {});
+      }
       setBookingError("checkout");
       trackBookingEvent("checkout_exception_whatsapp", {
         productSlug: product.slug,
@@ -616,6 +712,29 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
   return (
     <div className="bg-white rounded-2xl border border-border shadow-sm p-6" id="booking-widget">
       <h3 className="font-bold text-lg mb-4">{t.bookTitle}</h3>
+
+      {activeCheckout && (
+        <div className="bg-teal-50 border border-teal-200 rounded-lg p-3 mb-4">
+          <p className="text-sm text-teal-900 font-semibold mb-2">{t.activeCheckout}</p>
+          <div className="flex flex-col sm:flex-row gap-2">
+            <button
+              type="button"
+              className="btn btn-primary flex-1"
+              onClick={() => window.location.assign(activeCheckout.checkoutUrl)}
+            >
+              {t.resumeCheckout}
+            </button>
+            <button
+              type="button"
+              className="btn btn-outline flex-1"
+              disabled={cancellingCheckout}
+              onClick={handleCancelActiveCheckout}
+            >
+              {cancellingCheckout ? t.cancellingCheckout : t.cancelCheckout}
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* Date Pickers */}
       <div className="grid grid-cols-2 gap-3 mb-4">
@@ -903,8 +1022,12 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
       )}
       {availabilityStatus === "unavailable" && (
         <div className="bg-amber-50 border border-amber-200 rounded-lg p-3 mb-4">
-          <p className="text-sm text-amber-800 font-semibold mb-1">{t.unavailable}</p>
-          <p className="text-xs text-amber-700">{t.unavailableHelp}</p>
+          <p className="text-sm text-amber-800 font-semibold mb-1">
+            {availabilityReason === "checkout_hold" ? t.temporarilyHeld : t.unavailable}
+          </p>
+          <p className="text-xs text-amber-700">
+            {availabilityReason === "checkout_hold" ? t.temporarilyHeldHelp : t.unavailableHelp}
+          </p>
         </div>
       )}
       {bookingError === "checkout" && (

@@ -55,6 +55,7 @@ export async function POST(request: NextRequest) {
       deliveryAddress,
       deliveryCity,
       deliveryNotes,
+      locale,
     } = body;
 
     const supabase = createServiceClient();
@@ -82,9 +83,13 @@ export async function POST(request: NextRequest) {
 
       if (bookingDraft.stripe_checkout_session_id) {
         const existingSession = await stripe.checkout.sessions.retrieve(bookingDraft.stripe_checkout_session_id);
+        if (existingSession.status !== "open" || !existingSession.url) {
+          return NextResponse.json({ error: "Booking checkout is no longer active" }, { status: 409 });
+        }
         return NextResponse.json({
           checkoutUrl: existingSession.url,
           sessionId: existingSession.id,
+          expiresAt: new Date(existingSession.expires_at * 1000).toISOString(),
         });
       }
 
@@ -111,9 +116,16 @@ export async function POST(request: NextRequest) {
         timeZone: bookingDraft.timezone,
       });
 
+      const checkoutExpiresAt = Math.floor(Date.now() / 1000) + 31 * 60;
+      const cancelParams = new URLSearchParams({
+        draft_id: bookingDraft.id,
+        slug: resolvedProduct.slug,
+        locale: locale === "es" ? "es" : "en",
+      });
       const session = await stripe.checkout.sessions.create(
         {
           mode: "payment",
+          expires_at: checkoutExpiresAt,
           customer_email: bookingDraft.customer_email || undefined,
           line_items: [
             {
@@ -148,7 +160,7 @@ export async function POST(request: NextRequest) {
             quantity: String(bookingDraft.quantity),
           },
           success_url: `${baseUrl}/booking/success?session_id={CHECKOUT_SESSION_ID}`,
-          cancel_url: `${baseUrl}/product/${resolvedProduct.slug}`,
+          cancel_url: `${baseUrl}/booking/cancel?${cancelParams.toString()}`,
         },
         { idempotencyKey: `booking-draft-${bookingDraft.id}` }
       );
@@ -158,10 +170,23 @@ export async function POST(request: NextRequest) {
         .update({
           status: "checkout_created",
           stripe_checkout_session_id: session.id,
+          expires_at: new Date(session.expires_at * 1000).toISOString(),
         })
         .eq("id", bookingDraft.id);
 
       if (checkoutStateError) {
+        if (session.status === "open") {
+          await stripe.checkout.sessions.expire(session.id);
+        }
+        await supabase
+          .from("booking_drafts")
+          .update({ status: "cancelled" })
+          .eq("id", bookingDraft.id);
+        await supabase
+          .from("booking_inventory_blocks")
+          .delete()
+          .eq("booking_draft_id", bookingDraft.id)
+          .is("booking_id", null);
         await recordSystemIncident({
           source: "checkout",
           eventType: "checkout_session_state_persistence_failed",
@@ -169,11 +194,16 @@ export async function POST(request: NextRequest) {
           message: checkoutStateError.message,
           context: { draftId: bookingDraft.id, sessionId: session.id },
         });
+        return NextResponse.json(
+          { error: "Payment could not be started. Your dates have been released." },
+          { status: 500 },
+        );
       }
 
       return NextResponse.json({
         checkoutUrl: session.url,
         sessionId: session.id,
+        expiresAt: new Date(session.expires_at * 1000).toISOString(),
       });
     }
 
