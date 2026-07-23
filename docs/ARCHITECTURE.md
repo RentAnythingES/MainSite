@@ -266,7 +266,7 @@ Stripe Checkout
 
 ## Admin Dashboard (`/admin`)
 
-Protected by Supabase Auth. Server-side cookie check in `admin/layout.tsx` — redirects to `/admin/login` if unauthenticated.
+Protected by Supabase Auth. Server-side cookie check in `admin/layout.tsx` — redirects to `/admin/login` if unauthenticated. Authorization also requires immutable Supabase `app_metadata.role = "admin"`; a valid non-admin user session cannot access admin pages or APIs.
 
 | Page | Features |
 |------|----------|

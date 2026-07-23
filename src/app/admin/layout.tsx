@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import { createClient } from "@supabase/supabase-js";
 import type { Metadata } from "next";
 import AdminShell from "@/components/admin/AdminShell";
+import { isAdminUser } from "@/lib/admin-auth";
 
 export const metadata: Metadata = {
   robots: { index: false, follow: false, nocache: true },
@@ -22,7 +23,7 @@ async function getUser() {
   });
 
   const { data: { user }, error } = await supabase.auth.getUser(token);
-  if (error || !user) return null;
+  if (error || !user || !isAdminUser(user)) return null;
   return user;
 }
 

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
+import { isAdminUser } from "@/lib/admin-auth";
 
 export async function POST(request: NextRequest) {
   try {
@@ -23,6 +24,11 @@ export async function POST(request: NextRequest) {
 
     if (error || !data.session) {
       return NextResponse.json({ error: "Invalid credentials" }, { status: 401 });
+    }
+
+    if (!isAdminUser(data.user)) {
+      await supabase.auth.signOut();
+      return NextResponse.json({ error: "Admin access required" }, { status: 403 });
     }
 
     // Set tokens as httpOnly cookies

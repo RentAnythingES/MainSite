@@ -1,5 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
+import type { User } from "@supabase/supabase-js";
+
+export function isAdminUser(user: Pick<User, "app_metadata"> | null | undefined) {
+  return user?.app_metadata?.role === "admin";
+}
 
 /**
  * Verify the admin session from a request.
@@ -19,7 +24,7 @@ export async function verifyAdmin(request: NextRequest) {
   });
 
   const { data: { user }, error } = await supabase.auth.getUser(token);
-  if (error || !user) return null;
+  if (error || !user || !isAdminUser(user)) return null;
 
   return user;
 }
