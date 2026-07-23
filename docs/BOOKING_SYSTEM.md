@@ -1,5 +1,5 @@
 # Booking System
-> Last updated: 2026-07-13
+> Last updated: 2026-07-23
 
 ## Current Status
 
@@ -287,10 +287,11 @@ before attempting a new reservation.
 - Set idempotency key from draft ID.
 - Never trust client-submitted totals.
 
-Status: `draftId` path implemented in `/api/checkout`. Legacy payload path remains
-as a bridge while online bookings are paused. Checkout now cleans expired holds
-before loading a draft, and customer-facing checkout failures are shown as payment
-startup issues rather than inventory being fully booked.
+Status: `draftId` path implemented in `/api/checkout`. The legacy client-priced
+payload path is a critical production risk and must be retired; it must not be used
+as a bridge now that online bookings are live. Checkout cleans expired holds before
+loading a draft, and customer-facing checkout failures are shown as payment startup
+issues rather than inventory being fully booked.
 
 ### Phase 5 — Webhook Fulfillment
 
@@ -366,6 +367,9 @@ Migration `supabase/migrations/20260711_booking_ops_tasks.sql` adds internal
 per-booking ops checklist tasks. The admin booking detail can track whether the
 customer was contacted, equipment prepared, handoff confirmed, return scheduled,
 and return inspected without overloading the customer-facing booking status.
+Checklist completion currently does not advance booking status, and new bookings do
+not receive task rows until the checklist endpoint is first used. This is an
+operational gap, not a display problem. See `docs/BACKEND_AUDIT_2026-07-23.md`.
 Until that additive migration is applied, the bookings list remains available and
 shows the default checklist in a disabled state with a migration warning; booking
 status, payments, documents, inventory, and customer-email actions remain usable.
