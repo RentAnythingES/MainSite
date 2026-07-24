@@ -117,6 +117,25 @@ const categoryMeta: Record<string, CategoryContent> = {
         href: "/blog/valencia-with-kids-complete-guide",
       },
     ],
+    faqHeading: "Kids & Family Equipment Rental in Valencia: FAQs",
+    faqs: [
+      {
+        question: "What children's equipment can I rent in Valencia?",
+        answer: "The published collection shows the balance bikes, activity equipment and other family items currently offered. Choose a product and enter your dates to check its live availability before payment.",
+      },
+      {
+        question: "How do I check whether an item suits my child?",
+        answer: "Use the age guidance, height or weight limits, dimensions and included parts on the individual product page. If the fit is unclear, contact us with your child's measurements before booking.",
+      },
+      {
+        question: "Can children's equipment be delivered to my accommodation?",
+        answer: "The booking flow shows the pickup and delivery options available for the selected product, address and dates. Any access, timing or handover details can be confirmed before delivery.",
+      },
+      {
+        question: "Should I choose one product or a family kit?",
+        answer: "Choose an individual product for one specific need. The Toddler City and Family Beach kits are useful planning starting points when you need several items; submit the configuration so the complete request can be reviewed.",
+      },
+    ],
   },
   "mobility": {
     title: "Wheelchair & Mobility Scooter Rental in Valencia",

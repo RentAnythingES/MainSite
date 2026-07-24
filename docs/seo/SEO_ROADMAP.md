@@ -5,6 +5,11 @@
 
 ## ✅ Completed
 
+- [x] Kids & Family category FAQ parity: added four customer-decision questions
+  in English and Spanish covering current catalogue scope, child fit, fulfillment,
+  and individual-item versus kit selection. Both category routes now use the
+  existing visible FAQ section and matching FAQPage schema (24 July 2026).
+
 - [x] Active-product FAQ parity: localized 15 reviewed answers across the
   acupressure, gravel-bike, kayak, and paddle-board pages. The product readiness
   audit now fails when a non-legacy content-ready product lacks three FAQs in

@@ -54,6 +54,12 @@ FAQs in both English and Spanish. The readiness audit enforces that parity so a
 future editorial publication cannot silently omit decision-support content or
 FAQPage structured data in one locale.
 
+The 24 July category review found one remaining bilingual structured-content gap:
+the Kids & Family hub had strong editorial copy and internal pathways but no
+customer-decision FAQ section. Four English and Spanish questions now cover
+catalogue scope, child suitability, fulfillment, and when to use a family kit;
+the visible answers feed the existing FAQPage schema in both locales.
+
 ### Commercial cluster depth
 
 | Cluster | EN / ES indexable products | Main supporting layers | Expansion posture |

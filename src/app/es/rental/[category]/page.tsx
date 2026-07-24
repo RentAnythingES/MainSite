@@ -110,6 +110,25 @@ const categoryMetaES: Record<string, CategoryContent> = {
         href: "/es/blog/valencia-with-kids-complete-guide",
       },
     ],
+    faqHeading: "Preguntas sobre el alquiler de equipamiento infantil en Valencia",
+    faqs: [
+      {
+        question: "¿Qué equipamiento infantil puedo alquilar en Valencia?",
+        answer: "El catálogo publicado muestra las bicicletas de equilibrio, material de actividades y otros artículos familiares que se ofrecen actualmente. Elige un producto e introduce tus fechas para comprobar su disponibilidad antes del pago.",
+      },
+      {
+        question: "¿Cómo compruebo si un artículo es adecuado para mi hijo?",
+        answer: "Consulta la orientación de edad, los límites de altura o peso, las medidas y los elementos incluidos en la ficha del producto. Si el ajuste no está claro, contáctanos con las medidas del niño antes de reservar.",
+      },
+      {
+        question: "¿Podéis entregar equipamiento infantil en mi alojamiento?",
+        answer: "La reserva muestra las opciones de recogida y entrega disponibles para el producto, la dirección y las fechas seleccionadas. Los detalles de acceso, horario o entrega pueden confirmarse previamente.",
+      },
+      {
+        question: "¿Me conviene un producto individual o un kit familiar?",
+        answer: "Elige un producto individual para una necesidad concreta. Los kits Infantil para la Ciudad y Playa Familiar son puntos de partida útiles cuando necesitas varios artículos; envía la configuración para que podamos revisar la solicitud completa.",
+      },
+    ],
   },
   "mobility": {
     title: "Alquiler de Sillas de Ruedas y Scooters en Valencia",
