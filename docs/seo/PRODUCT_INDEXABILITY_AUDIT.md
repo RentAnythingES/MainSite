@@ -118,3 +118,18 @@ and complete parity at 37 English-indexable and 37 Spanish-indexable pages.
   instead of an English-only commercial pathway.
 - The next sitemap refresh contains 212 URLs, including the newly indexable Spanish
   toddler-bike URL with reciprocal English and Spanish alternates.
+
+### FAQ parity follow-up
+
+The rendered crawl exposed five active, content-ready products that had three
+reviewed English FAQs but no Spanish FAQs: the acupressure mat, gravel bike, two
+inflatable kayaks, and inflatable paddle board.
+
+All 15 existing answers were localized without changing their source-backed
+limits, inclusions, medical caution, water-safety wording, or operational caveats.
+Each of the five Spanish pages now renders visible FAQs and matching FAQPage
+structured data.
+
+`npm run audit:product-seo` now reports FAQ counts per active product and fails
+when a non-legacy `content_ready` product has fewer than three FAQs in either
+English or Spanish. The live audit reports zero active FAQ gaps.

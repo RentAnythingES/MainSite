@@ -49,6 +49,11 @@ to 122,143 bytes while retaining product previews and a labelled route to the
 complete category. See
 [DISCOVER_PERFORMANCE_AUDIT_20260724.md](./DISCOVER_PERFORMANCE_AUDIT_20260724.md).
 
+All active, non-legacy `content_ready` products now have at least three reviewed
+FAQs in both English and Spanish. The readiness audit enforces that parity so a
+future editorial publication cannot silently omit decision-support content or
+FAQPage structured data in one locale.
+
 ### Commercial cluster depth
 
 | Cluster | EN / ES indexable products | Main supporting layers | Expansion posture |

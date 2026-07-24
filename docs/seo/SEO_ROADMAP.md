@@ -5,6 +5,11 @@
 
 ## ✅ Completed
 
+- [x] Active-product FAQ parity: localized 15 reviewed answers across the
+  acupressure, gravel-bike, kayak, and paddle-board pages. The product readiness
+  audit now fails when a non-legacy content-ready product lacks three FAQs in
+  either English or Spanish (24 July 2026).
+
 - [x] Discover guide HTML budget: category widgets now render four-item previews
   with a full-count category link. The Malvarrosa build artifact fell from
   181,413 to 122,143 bytes while preserving the commercial category pathway

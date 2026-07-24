@@ -43,8 +43,11 @@ function hasUsableImage(value) {
 function evaluateProduct(product, legacySlugs) {
   const category = Array.isArray(product.category) ? product.category[0] : product.category;
   const categorySlug = category?.slug || "uncategorized";
+  const isLegacyProduct = legacySlugs.has(product.slug);
   const english = product.product_localizations.find((localization) => localization.locale === "en");
   const spanish = product.product_localizations.find((localization) => localization.locale === "es");
+  const faqCountEn = product.product_faqs.filter((faq) => faq.locale === "en").length;
+  const faqCountEs = product.product_faqs.filter((faq) => faq.locale === "es").length;
   const blockersEn = [];
 
   if (!product.is_active) blockersEn.push("inactive");
@@ -52,13 +55,13 @@ function evaluateProduct(product, legacySlugs) {
   if (!hasText(product.name) || !hasText(product.description)) blockersEn.push("missing_core_copy");
   if (!hasUsableImage(product.image_url)) blockersEn.push("missing_usable_image");
   if (product.pricing_tiers.length === 0) blockersEn.push("missing_pricing");
-  if (!legacySlugs.has(product.slug) && product.content_status !== "content_ready") {
+  if (!isLegacyProduct && product.content_status !== "content_ready") {
     blockersEn.push("editorial_approval");
   }
 
   const indexableEn = blockersEn.length === 0;
   const blockersEs = [...blockersEn];
-  if (!legacySlugs.has(product.slug) && product.content_status !== "content_ready") blockersEs.push("content_not_ready");
+  if (!isLegacyProduct && product.content_status !== "content_ready") blockersEs.push("content_not_ready");
   if (!spanish || !hasText(spanish.short_description) || !hasText(spanish.seo_title) || !hasText(spanish.seo_description)) {
     blockersEs.push("missing_spanish_seo");
   }
@@ -72,6 +75,9 @@ function evaluateProduct(product, legacySlugs) {
     blockersEn,
     blockersEs: [...new Set(blockersEs)],
     hasEnglishSeo: Boolean(english && hasText(english.seo_title) && hasText(english.seo_description)),
+    faqCountEn,
+    faqCountEs,
+    faqCoverageRequired: !isLegacyProduct && product.content_status === "content_ready",
   };
 }
 
@@ -102,6 +108,7 @@ async function main() {
       category:categories (slug),
       pricing_tiers (min_days),
       product_localizations (locale, short_description, seo_title, seo_description),
+      product_faqs (locale),
       product_images (is_primary, rights_status)
     `)
     .order("slug");
@@ -133,15 +140,29 @@ async function main() {
     }));
   const activeProducts = products
     .filter((product) => !product.blockersEn.includes("inactive"))
-    .map(({ slug, category, contentStatus, indexableEn, indexableEs, blockersEn, blockersEs, hasEnglishSeo }) => ({
+    .map(({ slug, category, contentStatus, indexableEn, indexableEs, blockersEn, blockersEs, hasEnglishSeo, faqCountEn, faqCountEs }) => ({
       slug,
       category,
       contentStatus,
       indexableEn,
       indexableEs,
       hasEnglishSeo,
+      faqCountEn,
+      faqCountEs,
       blockersEn,
       blockersEs,
+    }));
+  const activeFaqGaps = products
+    .filter((product) =>
+      !product.blockersEn.includes("inactive") &&
+      product.faqCoverageRequired &&
+      (product.faqCountEn < 3 || product.faqCountEs < 3)
+    )
+    .map(({ slug, category, faqCountEn, faqCountEs }) => ({
+      slug,
+      category,
+      faqCountEn,
+      faqCountEs,
     }));
 
   console.log(JSON.stringify({
@@ -155,8 +176,16 @@ async function main() {
     clusters,
     blockerTotals,
     activeProducts,
+    activeFaqGaps,
     blockedActiveProducts,
   }, null, 2));
+
+  if (activeFaqGaps.length > 0) {
+    console.error(
+      `[product-seo-readiness] ${activeFaqGaps.length} active content-ready products lack three FAQs in both locales`
+    );
+    process.exitCode = 1;
+  }
 }
 
 main().catch((error) => {

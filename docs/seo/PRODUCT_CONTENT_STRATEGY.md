@@ -167,14 +167,15 @@ before publication. A database category alone is not an SEO cluster.
 
 1. Imported drafts are deliberately incomplete: most lack confirmed brand, specs,
    features, positive price, stock, and metadata.
-2. The page metadata currently derives from `name`, price, and `description`; it
-   does not consume the existing database `meta_title` or `meta_description` fields.
-3. New database products have no database-backed FAQ model; only static legacy
-   products receive FAQs from `src/data/products.ts`.
-4. Product images have no per-image alt text, source, or rights metadata.
-5. The Spanish product template currently displays shared English product content;
-   it needs real product-localisation fields before imported products are indexed in Spanish.
-6. New draft-only categories do not yet have customer-facing category pages, editorial
+2. Some older active products still rely on the static catalogue for editorial
+   fields and FAQs. Move them to the database workflow only when their facts and
+   operations are reviewed; do not bulk-copy stale content.
+3. Locale-specific descriptions, metadata and FAQs are database-backed, but the
+   base product name, features and specification keys remain shared. Fully
+   localized structured specifications need an intentional model extension.
+4. Product images support alt text, source and rights records, but unresolved
+   rights warnings must remain visible until permission is documented.
+5. New draft-only categories do not yet have customer-facing category pages, editorial
    copy, kit connections, or sitemap strategy.
 
 ## Content Production Workflow
