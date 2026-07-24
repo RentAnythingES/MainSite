@@ -15,18 +15,21 @@ that role. Public signup no longer grants admin access.
 
 ## P0 — checkout security
 
+Status: remediated in application code on 2026-07-24. Both retired paths now return
+`410 Gone`; production-runtime regression checks confirmed that manipulated legacy
+requests create neither a Stripe session nor a booking.
+
 ### Remove the legacy client-priced checkout path
 
 `POST /api/checkout` still accepts a legacy payload when `draftId` is absent. That
 branch trusts browser-supplied totals and bypasses the atomic v2 reservation flow,
 permitting price manipulation and an oversell race.
 
-Required action: return `410 Gone` for the legacy branch and accept only a valid,
+Resolution: the legacy branch was removed. `/api/checkout` accepts only a valid,
 server-priced booking draft.
 
-`POST /api/bookings` is currently stopped by the booking pause setting, but also
-trusts client totals and uses non-atomic date blocking. Remove it or make it
-permanently unavailable so a configuration change cannot silently re-enable it.
+`POST /api/bookings` previously trusted client totals and used non-atomic date
+blocking. It is now permanently unavailable and returns `410 Gone`.
 
 ### Add abuse controls
 

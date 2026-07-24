@@ -1,5 +1,5 @@
 # RentAnything.es — Architecture
-> **Last updated**: 2026-07-21
+> **Last updated**: 2026-07-24
 
 ## Tech Stack
 - **Framework**: Next.js 16 (App Router)
@@ -27,7 +27,7 @@ Next.js Server Components (SSG)
   ↓ props
 Client Components (BookingWidget, HeroCarousel)
   ↓ fetch
-API Routes (/api/bookings, /api/availability)
+API Routes (/api/booking-drafts, /api/checkout, /api/availability)
   ↓ service role client
 Supabase (write bookings, check blocked_dates)
 ```
@@ -176,7 +176,7 @@ POST /api/booking-drafts
   Creates a quantity-aware booking_draft and temporary inventory hold
 
 POST /api/checkout
-  Preferred input: draftId
+  Required input: draftId
   Creates Stripe Checkout using the stored draft quantity and totals
 
 POST /api/booking-drafts/[id]/cancel
@@ -194,8 +194,8 @@ POST /api/webhooks/stripe
 ### Public
 | Route | Method | Purpose |
 |-------|--------|---------|
-| `/api/bookings` | POST | Create booking + block dates |
-| `/api/checkout` | POST | Create Stripe Checkout session for paid bookings |
+| `/api/bookings` | POST | Retired legacy endpoint; always returns `410 Gone` |
+| `/api/checkout` | POST | Create Stripe Checkout only from a server-priced booking draft |
 | `/api/checkout/session` | GET | Read a completed Checkout session for the success page |
 | `/api/booking-drafts/[id]/cancel` | POST | Cancel an unpaid checkout attempt and immediately release its inventory hold |
 | `/api/webhooks/stripe` | POST | Verify Stripe events, create paid bookings, block dates |

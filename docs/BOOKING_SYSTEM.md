@@ -1,5 +1,5 @@
 # Booking System
-> Last updated: 2026-07-23
+> Last updated: 2026-07-24
 
 ## Current Status
 
@@ -287,11 +287,12 @@ before attempting a new reservation.
 - Set idempotency key from draft ID.
 - Never trust client-submitted totals.
 
-Status: `draftId` path implemented in `/api/checkout`. The legacy client-priced
-payload path is a critical production risk and must be retired; it must not be used
-as a bridge now that online bookings are live. Checkout cleans expired holds before
-loading a draft, and customer-facing checkout failures are shown as payment startup
-issues rather than inventory being fully booked.
+Status: `/api/checkout` requires `draftId` and uses only the server-priced booking
+draft as its source of truth. The legacy client-priced payload path and direct
+`/api/bookings` creation route were retired on 2026-07-24 and return `410 Gone`.
+Checkout cleans expired holds before loading a draft, and customer-facing checkout
+failures are shown as payment startup issues rather than inventory being fully
+booked.
 
 ### Phase 5 — Webhook Fulfillment
 
