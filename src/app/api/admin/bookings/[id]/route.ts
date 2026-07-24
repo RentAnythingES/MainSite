@@ -60,27 +60,137 @@ export async function PUT(
       );
     }
 
+    const bookingRecord = booking as Record<string, unknown>;
+    let documentLinks:
+      | Array<{ label: string; url: string; documentNumber?: string | null }>
+      | undefined;
+
+    // A paid booking must not change state or release inventory until Stripe
+    // confirms the refund. The idempotency key makes network retries safe.
+    if (status === "cancelled" || status === "refunded") {
+      const paymentIntentId = bookingRecord.stripe_payment_intent_id as string | null;
+      if (paymentIntentId) {
+        if (!stripe) {
+          return NextResponse.json(
+            { error: "Refund processing is unavailable. The booking was not changed." },
+            { status: 503 },
+          );
+        }
+
+        try {
+          const createdRefund = await stripe.refunds.create(
+            { payment_intent: paymentIntentId },
+            { idempotencyKey: `booking-refund-${id}` },
+          );
+          const refund =
+            createdRefund.status === "succeeded"
+              ? createdRefund
+              : await stripe.refunds.retrieve(createdRefund.id);
+          const refundSucceeded = refund.status === "succeeded";
+          const paymentEvent = await recordBookingPaymentEvent(supabase, {
+            bookingId: id,
+            bookingDraftId: bookingRecord.booking_draft_id as string | null,
+            eventType: "refund",
+            status:
+              refundSucceeded
+                ? "succeeded"
+                : refund.status === "failed" || refund.status === "canceled"
+                  ? "failed"
+                  : "pending",
+            currency: refund.currency || "eur",
+            amountCents: refund.amount,
+            stripeCheckoutSessionId: bookingRecord.stripe_checkout_session_id as string | null,
+            stripePaymentIntentId: paymentIntentId,
+            stripeRefundId: refund.id,
+            stripeChargeId: typeof refund.charge === "string" ? refund.charge : refund.charge?.id || null,
+            providerEventId: `refund:${refund.id}`,
+            description: status === "cancelled" ? "Stripe refund issued after cancellation" : "Stripe refund issued",
+            metadata: {
+              requested_booking_status: status,
+              refund_status: refund.status,
+            },
+            occurredAt: refund.created ? new Date(refund.created * 1000).toISOString() : null,
+          });
+
+          if (!refundSucceeded) {
+            return NextResponse.json(
+              {
+                error: `Stripe refund is ${refund.status}. The booking and inventory were not changed.`,
+                refundStatus: refund.status,
+              },
+              { status: refund.status === "failed" || refund.status === "canceled" ? 502 : 409 },
+            );
+          }
+
+          const refundDocument = await createBookingDocumentForPaymentEvent(supabase, {
+            booking: bookingRecord,
+            paymentEvent,
+            productName: (bookingRecord.product as { name?: string } | null)?.name || "Rental equipment",
+          });
+          const refundUrl = getCustomerDocumentUrl(refundDocument);
+          if (refundUrl) {
+            documentLinks = [
+              {
+                label: "Download refund receipt",
+                url: refundUrl,
+                documentNumber: refundDocument?.document_number,
+              },
+            ];
+          }
+        } catch (refundErr) {
+          console.error(`[admin/bookings] Stripe refund failed for ${paymentIntentId}:`, refundErr);
+          await recordBookingPaymentEvent(supabase, {
+            bookingId: id,
+            bookingDraftId: bookingRecord.booking_draft_id as string | null,
+            eventType: "refund",
+            status: "failed",
+            currency: "eur",
+            amountCents: bookingRecord.total_cents as number,
+            stripeCheckoutSessionId: bookingRecord.stripe_checkout_session_id as string | null,
+            stripePaymentIntentId: paymentIntentId,
+            providerEventId: `refund_failed:${paymentIntentId}:${Date.now()}`,
+            description: "Stripe refund attempt failed",
+            metadata: {
+              requested_booking_status: status,
+              error: refundErr instanceof Error ? refundErr.message : "Unknown refund error",
+            },
+          });
+          return NextResponse.json(
+            { error: "Stripe could not confirm the refund. The booking and inventory were not changed." },
+            { status: 502 },
+          );
+        }
+      }
+    }
+
     // Build update
     const updates: Record<string, unknown> = { status };
     if (status === "cancelled") updates.cancelled_at = new Date().toISOString();
     if (status === "completed") updates.completed_at = new Date().toISOString();
     if (status === "paid") updates.paid_at = new Date().toISOString();
 
-    const { data, error } = await supabase
-      .from("bookings")
-      .update(updates)
-      .eq("id", id)
-      .select()
-      .single();
+    const releasesInventory =
+      status === "cancelled" || status === "refunded" || status === "completed";
+    const transitionResult = releasesInventory
+      ? await supabase
+          .rpc("transition_booking_terminal_status", {
+            p_booking_id: id,
+            p_expected_status: currentStatus,
+            p_new_status: status,
+          })
+          .single()
+      : await supabase
+          .from("bookings")
+          .update(updates)
+          .eq("id", id)
+          .eq("status", currentStatus)
+          .select()
+          .single();
+    const { data, error } = transitionResult;
 
     if (error) throw error;
 
-    let documentLinks:
-      | Array<{ label: string; url: string; documentNumber?: string | null }>
-      | undefined;
-
     if (status === "paid") {
-      const bookingRecord = booking as Record<string, unknown>;
       const hasStripePayment = Boolean(bookingRecord.stripe_payment_intent_id);
       if (!hasStripePayment) {
         const paymentEvent = await recordBookingPaymentEvent(supabase, {
@@ -112,84 +222,6 @@ export async function PUT(
               documentNumber: invoiceDocument?.document_number,
             },
           ];
-        }
-      }
-    }
-
-    // If cancelled/refunded/completed, release inventory blocks.
-    if (status === "cancelled" || status === "refunded" || status === "completed") {
-      await supabase
-        .from("blocked_dates")
-        .delete()
-        .eq("booking_id", id);
-
-      await supabase
-        .from("booking_inventory_blocks")
-        .delete()
-        .eq("booking_id", id);
-    }
-
-    // If cancelled/refunded, issue Stripe refund when payment was collected.
-    if (status === "cancelled" || status === "refunded") {
-      // Issue Stripe refund if payment was collected
-      const paymentIntentId = (booking as Record<string, unknown>).stripe_payment_intent_id as string | null;
-      if (paymentIntentId && stripe) {
-        try {
-          const refund = await stripe.refunds.create({ payment_intent: paymentIntentId });
-          const paymentEvent = await recordBookingPaymentEvent(supabase, {
-            bookingId: id,
-            bookingDraftId: (booking as Record<string, unknown>).booking_draft_id as string | null,
-            eventType: "refund",
-            status: refund.status === "failed" || refund.status === "canceled" ? "failed" : "succeeded",
-            currency: refund.currency || "eur",
-            amountCents: refund.amount,
-            stripeCheckoutSessionId: (booking as Record<string, unknown>).stripe_checkout_session_id as string | null,
-            stripePaymentIntentId: paymentIntentId,
-            stripeRefundId: refund.id,
-            stripeChargeId: typeof refund.charge === "string" ? refund.charge : refund.charge?.id || null,
-            providerEventId: `refund:${refund.id}`,
-            description: status === "cancelled" ? "Stripe refund issued after cancellation" : "Stripe refund issued",
-            metadata: {
-              booking_status: status,
-              refund_status: refund.status,
-            },
-            occurredAt: refund.created ? new Date(refund.created * 1000).toISOString() : null,
-          });
-          const refundDocument = await createBookingDocumentForPaymentEvent(supabase, {
-            booking: booking as Record<string, unknown>,
-            paymentEvent,
-            productName: ((booking as Record<string, unknown>).product as { name?: string } | null)?.name || "Rental equipment",
-          });
-          const refundUrl = getCustomerDocumentUrl(refundDocument);
-          if (refundUrl) {
-            documentLinks = [
-              {
-                label: "Download refund receipt",
-                url: refundUrl,
-                documentNumber: refundDocument?.document_number,
-              },
-            ];
-          }
-          console.log(`[admin/bookings] Stripe refund issued for ${paymentIntentId}`);
-        } catch (refundErr) {
-          // Log but don't block — refund may already exist or payment may not be refundable
-          console.error(`[admin/bookings] Stripe refund failed for ${paymentIntentId}:`, refundErr);
-          await recordBookingPaymentEvent(supabase, {
-            bookingId: id,
-            bookingDraftId: (booking as Record<string, unknown>).booking_draft_id as string | null,
-            eventType: "refund",
-            status: "failed",
-            currency: "eur",
-            amountCents: (booking as Record<string, unknown>).total_cents as number,
-            stripeCheckoutSessionId: (booking as Record<string, unknown>).stripe_checkout_session_id as string | null,
-            stripePaymentIntentId: paymentIntentId,
-            providerEventId: `refund_failed:${paymentIntentId}:${Date.now()}`,
-            description: "Stripe refund attempt failed",
-            metadata: {
-              booking_status: status,
-              error: refundErr instanceof Error ? refundErr.message : "Unknown refund error",
-            },
-          });
         }
       }
     }

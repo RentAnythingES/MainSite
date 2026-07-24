@@ -114,6 +114,8 @@ pending → confirmed → paid → delivering → active → returning → compl
                             ↘ refunded
 ```
 - Cancellation/refund auto-releases blocked dates
+- Paid cancellation/refund confirms Stripe first; terminal status and inventory
+  release then commit atomically through `transition_booking_terminal_status(...)`
 - Auto-generated booking refs: `RA-20260619-XXXX`
 - Timestamps auto-set on status transitions
 

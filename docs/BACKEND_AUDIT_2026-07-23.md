@@ -68,8 +68,13 @@ The admin cancellation/refund route changes the booking and releases inventory
 before requesting the Stripe refund. If Stripe rejects it, local state can say
 refunded while the captured payment remains.
 
-Required action: model refund processing explicitly, commit financial state after
-Stripe confirmation, and alert/reconcile ambiguous failures.
+Status: remediated on 2026-07-24. Stripe must confirm a successful refund before the
+booking changes state. Refund creation uses a booking-scoped idempotency key, failed
+or pending refunds leave booking and inventory unchanged, and the terminal status
+plus both inventory-release operations commit in one database transaction.
+
+Remaining action: subscribe to Stripe refund lifecycle events and alert/reconcile
+pending or externally initiated refunds.
 
 ### Enforce fulfillment configuration server-side
 

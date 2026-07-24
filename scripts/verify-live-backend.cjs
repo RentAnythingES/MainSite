@@ -184,6 +184,42 @@ async function main() {
       } else {
         checks.paymentLedgerIdempotentWrite = "skipped_no_booking";
       }
+
+      const terminalBooking = await client.query(`
+        select
+          booking.id,
+          booking.status,
+          (
+            select count(*)::int
+            from public.booking_inventory_blocks block
+            where block.booking_id = booking.id
+          ) as inventory_blocks_before
+        from public.bookings booking
+        where booking.status = 'paid'
+        order by inventory_blocks_before desc, booking.created_at desc
+        limit 1
+      `);
+      if (terminalBooking.rows.length > 0) {
+        const booking = terminalBooking.rows[0];
+        const transitioned = await client.query(
+          "select id, status from public.transition_booking_terminal_status($1, $2, $3)",
+          [booking.id, booking.status, "refunded"],
+        );
+        const remainingBlocks = await client.query(
+          `
+            select
+              (select count(*)::int from public.booking_inventory_blocks where booking_id = $1) as inventory_blocks,
+              (select count(*)::int from public.blocked_dates where booking_id = $1) as blocked_dates
+          `,
+          [booking.id],
+        );
+        checks.terminalBookingTransitionTransactionalWrite =
+          transitioned.rows[0]?.status === "refunded" &&
+          remainingBlocks.rows[0]?.inventory_blocks === 0 &&
+          remainingBlocks.rows[0]?.blocked_dates === 0;
+      } else {
+        checks.terminalBookingTransitionTransactionalWrite = "skipped_no_paid_booking";
+      }
     } finally {
       await client.query("rollback");
     }

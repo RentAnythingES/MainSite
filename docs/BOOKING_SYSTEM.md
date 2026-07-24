@@ -364,6 +364,12 @@ language, while delivery bookings show delivery/collection language. Customer
 status emails include the full rental datetime window and the configured pickup
 location or delivery/collection details.
 
+Paid cancellations/refunds are financially ordered: Stripe must confirm a successful,
+idempotent refund before the local booking status changes. Failed or pending refunds
+leave inventory reserved and return an actionable admin error. The database function
+`transition_booking_terminal_status(...)` atomically locks the expected booking
+state, applies the terminal status, and releases legacy and v2 inventory blocks.
+
 Moving a booking to `completed` also creates a one-time verified review invitation
 when `supabase/migrations/20260719_verified_booking_reviews.sql` is installed. The
 completion email links to a private, `noindex` feedback form. Submission and consent
