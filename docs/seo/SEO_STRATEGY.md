@@ -1,5 +1,5 @@
 # RentAnything.es — SEO Strategy & Audit
-> **Last updated**: 2026-07-22 · **Build**: ✅ Clean · **Indexability-ready pages after sitemap refresh**: 205
+> **Last updated**: 2026-07-24 · **Build**: ✅ Clean · **Indexability-ready pages after sitemap refresh**: 212
 
 This is the **living SEO strategy document** for rentanything.es. Updated after every SEO-related change. For prioritized fixes, see [SEO_ROADMAP.md](./SEO_ROADMAP.md).
 
@@ -16,7 +16,7 @@ This is the **living SEO strategy document** for rentanything.es. Updated after 
 
 ---
 
-## Current Portfolio Baseline — 22 July 2026
+## Current Portfolio Baseline — 24 July 2026
 
 The live sitemap and database readiness audit are the authoritative inventory sources.
 Several older counts farther down this document are retained as historical milestones.
@@ -24,7 +24,7 @@ Several older counts farther down this document are retained as historical miles
 | Layer | English | Spanish | Current role |
 |-------|---------|---------|--------------|
 | Commercial category hubs | 7 | 7 | Broad transactional query owners |
-| Indexable product pages | 34 | 33 | Exact-item and model-level demand |
+| Indexable product pages | 37 | 37 | Exact-item and model-level demand |
 | Blog articles | 8 | 8 | Planning, comparison, seasonal and tutorial intent |
 | Discover sub-hubs | 5 | 5 | Beaches, neighbourhoods, attractions, day trips and events |
 | Discover guides | 26 | 26 | Valencia destination and situational planning |
@@ -37,22 +37,22 @@ are gone and the 12 newly indexable product URLs are present. Sitemap revalidati
 now matches the five-minute public product cache instead of retaining product-state
 changes for up to one hour. One stale Spanish blog link found by the crawl was also
 updated to the current compact beach shelter slug.
-After subsequent catalogue approvals, the next sitemap render contains 205 URLs:
-34 English product pages and 33 Spanish product pages. The Dreame fan and Thule bike
-trailer are indexable in both locales. The toddler bike is indexable in English but
-remains excluded from Spanish until localized SEO copy is complete. The Dreame image
-still has an internal `unknown` rights status and requires separate documentation.
+After subsequent catalogue approvals and the 24 July localization pass, the next
+sitemap render contains 212 URLs: 37 English and 37 Spanish product pages. The
+Dreame fan, Thule bike trailer, and PUKY toddler bike are indexable in both locales.
+The Dreame image still has an internal `unknown` rights status and requires separate
+documentation.
 
 ### Commercial cluster depth
 
 | Cluster | EN / ES indexable products | Main supporting layers | Expansion posture |
 |---------|----------------------------|------------------------|-------------------|
-| Beach & Outdoor | 12 / 12 | Category, Family Beach kit, beach/summer blogs, 4 beach guides | Strongest current cluster; optimize measured winners before adding more broad pages |
+| Beach & Outdoor | 15 / 15 | Category, Family Beach kit, beach/summer blogs, 4 beach guides | Strongest current cluster; optimize measured winners before adding more broad pages |
 | Baby & Toddler | 7 / 7 | Category, Baby Arrival and Toddler City kits, 3 family/baby articles | Strong; add narrow decision content only where query ownership is distinct |
 | Mobility & Accessibility | 5 / 5 | Category, 2 accessibility kits, accessibility guide, accessible local guides | Expand commercial comparisons and verified accessibility planning |
 | Remote Work | 3 / 3 | Category, Remote Work kit, nomad guide, home-office tutorial | Coherent cluster; deepen exact workstation and temporary-stay decisions |
 | Apartment Comfort | 5 / 5 | Category, Summer and Long-Stay kits, summer guide | Commercially relevant but editorially thin; prioritize cooling and long-stay problems |
-| Kids & Family | 1 / 0 | Category, 2 shared kits, 2 family articles | Complete Spanish toddler-bike SEO before expanding transactionally |
+| Kids & Family | 1 / 1 | Category, 2 shared kits, 2 family articles | Bilingual product support is live; expand only with verified inventory and distinct demand |
 | Sports & Wellness | 1 / 1 | Category, Turia Gardens guide and product-level pathways | Newly opened cluster; expand only as approved sports inventory becomes available |
 
 ---
@@ -100,7 +100,7 @@ Priority structural changes:
 rentanything.es/
 ├── /                               Homepage (photo carousel hero, photo categories)
 │
-├── /product/                       Product pages (34 EN + 33 ES indexable)
+├── /product/                       Product pages (37 EN + 37 ES indexable)
 │   └── /product/[slug]             Individual product + BookingWidget
 │
 ├── /rental/                        Category pages (6 categories per locale)
@@ -164,8 +164,8 @@ Admin Dashboard:
 
 ## Cluster Health
 
-### 🛒 Products (34 EN / 33 ES indexable pages) — 🟠 Editorial queue active
-- Live database baseline: 178 total products, 34 active, 34 indexable in English and 33 in Spanish
+### 🛒 Products (37 EN / 37 ES indexable pages) — 🟠 Editorial queue active
+- Live database baseline: 178 total products, 37 active, 37 indexable in English and 37 in Spanish
 - Each page has: name, brand, description, features, specs, pricing tiers
 - BookingWidget with date picker, tiered pricing calculator, WhatsApp deep-link
 - JSON-LD Product structured data

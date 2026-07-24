@@ -106,3 +106,15 @@ and 33 Spanish-indexable. The next sitemap refresh contains 205 URLs.
   compliance warning and was not changed to an unsupported approval state.
 - The regression audit now discovers an active noindex product from rendered
   category links instead of relying on a fixed product that may later be approved.
+
+## Live follow-up — 24 July 2026
+
+The production readiness audit now records 178 total products, 37 active products,
+and complete parity at 37 English-indexable and 37 Spanish-indexable pages.
+
+- `toddler-bike-lila` now has verified Spanish short and detail copy, metadata,
+  constraints, delivery/care notes, and three localized FAQs.
+- The Kids & Family cluster therefore has one indexable product in each locale
+  instead of an English-only commercial pathway.
+- The next sitemap refresh contains 212 URLs, including the newly indexable Spanish
+  toddler-bike URL with reciprocal English and Spanish alternates.

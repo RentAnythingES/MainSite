@@ -432,9 +432,9 @@ Priority pilot logic: start with one narrow bundle, collect usage evidence, then
      three active listings remain in both sitemaps. Image-rights follow-up remains an
      internal publication-compliance task rather than a sitemap exclusion.
      See [MOBILITY_SCOOTER_CONTENT_REVIEW_20260721.md](./MOBILITY_SCOOTER_CONTENT_REVIEW_20260721.md).
-   - Live follow-up on 22 July: 34 products are indexable in English and 33 in
-     Spanish. The Dreame fan and Thule trailer are live in both locales. Complete
-     Spanish SEO copy for `toddler-bike-lila`, and retain the Dreame image-rights
+   - Live follow-up on 24 July: all 37 active products are indexable in English and
+     Spanish. The PUKY toddler bike now has localized product copy, metadata, and
+     FAQs, closing the Kids & Family locale gap. Retain the Dreame image-rights
      warning until supporting permission is documented.
 4. **Commercial hubs — ✅ Completed 18 July** — AC, baby gear, mobility and remote-work hubs now absorb closely related rental, delivery, suitability and duration questions in EN/ES without creating competing landing pages.
 5. **Internal links — ✅ Graph pass completed 18 July** — Spanish pathways use localized guides; all sitemap pages remain within three homepage clicks; Discover children now link through their sub-hubs; the long-stay kitchen kit gains a contextual Apartment Comfort pathway. Regression checks cover locale-specific editorial links and hierarchy links.
