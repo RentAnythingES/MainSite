@@ -400,6 +400,7 @@ async function handleDraftCheckoutCompleted(
     timezone: string;
     rental_days: number;
     fulfillment_mode: "customer_pickup" | "delivery_only" | "delivery_and_collection";
+    delivery_type: "standard" | "express";
     pickup_location_id: string | null;
     delivery_zone_id: string | null;
     collection_zone_id: string | null;
@@ -503,7 +504,7 @@ async function handleDraftCheckoutCompleted(
       delivery_fee_cents: bookingDraft.delivery_fee_cents,
       total_cents: bookingDraft.total_cents,
       deposit_cents: bookingDraft.deposit_cents,
-      delivery_type: "standard",
+      delivery_type: bookingDraft.delivery_type,
       delivery_address: bookingDraft.delivery_address || bookingDraft.collection_address || "Customer pickup",
       delivery_city: "valencia",
       delivery_notes: bookingDraft.delivery_notes,

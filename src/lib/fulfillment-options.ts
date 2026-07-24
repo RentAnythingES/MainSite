@@ -9,9 +9,9 @@ const PICKUP_LOCATION_FALLBACK_SELECT =
   "id, slug, name, address, city, pickup_instructions, opening_hours, sort_order";
 
 const SERVICE_ZONE_SELECT =
-  "id, slug, name, city, description, customer_instructions, internal_notes, lead_time_hours, same_day_cutoff, delivery_window, collection_window, delivery_fee_cents, collection_fee_cents, roundtrip_fee_cents, express_surcharge_cents, minimum_order_cents, sort_order";
+  "id, slug, name, city, description, customer_instructions, internal_notes, lead_time_hours, same_day_cutoff, delivery_window, collection_window, delivery_fee_cents, collection_fee_cents, roundtrip_fee_cents, express_surcharge_cents, minimum_order_cents, automatic_checkout_enabled, sort_order";
 const PUBLIC_SERVICE_ZONE_SELECT =
-  "id, slug, name, city, description, customer_instructions, lead_time_hours, same_day_cutoff, delivery_window, collection_window, delivery_fee_cents, collection_fee_cents, roundtrip_fee_cents, express_surcharge_cents, minimum_order_cents, sort_order";
+  "id, slug, name, city, description, customer_instructions, lead_time_hours, same_day_cutoff, delivery_window, collection_window, delivery_fee_cents, collection_fee_cents, roundtrip_fee_cents, express_surcharge_cents, minimum_order_cents, automatic_checkout_enabled, sort_order";
 const SERVICE_ZONE_FALLBACK_SELECT =
   "id, slug, name, city, description, delivery_fee_cents, collection_fee_cents, roundtrip_fee_cents, express_surcharge_cents, minimum_order_cents, sort_order";
 
@@ -55,6 +55,7 @@ export async function fetchActiveServiceZones(supabase: SupabaseClient<Database>
     .from("service_zones")
     .select(PUBLIC_SERVICE_ZONE_SELECT)
     .eq("is_active", true)
+    .eq("automatic_checkout_enabled", true)
     .order("sort_order", { ascending: true });
 
   if (!result.error || !shouldFallback(result.error)) return result;

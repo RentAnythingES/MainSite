@@ -1,5 +1,5 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
-import type { Database, FulfillmentMode } from "@/lib/types";
+import type { Database, DeliveryType, FulfillmentMode } from "@/lib/types";
 
 export const BOOKING_TIMEZONE = "Europe/Madrid";
 export const DEFAULT_DRAFT_TTL_MINUTES = 30;
@@ -57,6 +57,23 @@ export interface ServiceZoneFee {
   collection_fee_cents: number;
   roundtrip_fee_cents: number;
   express_surcharge_cents: number;
+  minimum_order_cents: number;
+  automatic_checkout_enabled: boolean;
+  lead_time_hours: number;
+  same_day_cutoff: string | null;
+}
+
+export interface PickupLocationRule {
+  id: string;
+  name: string;
+  lead_time_hours: number;
+}
+
+export class BookingRuleError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = "BookingRuleError";
+  }
 }
 
 export async function cleanupExpiredBookingDrafts(
@@ -203,16 +220,40 @@ export async function getServiceZone(
 
   const { data, error } = await supabase
     .from("service_zones")
-    .select("id, slug, name, delivery_fee_cents, collection_fee_cents, roundtrip_fee_cents, express_surcharge_cents")
+    .select("id, slug, name, delivery_fee_cents, collection_fee_cents, roundtrip_fee_cents, express_surcharge_cents, minimum_order_cents, automatic_checkout_enabled, lead_time_hours, same_day_cutoff")
     .eq("id", zoneId)
     .eq("is_active", true)
     .single();
 
   if (error || !data) {
-    throw new Error("Service zone not found");
+    throw new BookingRuleError("Service zone not found");
   }
 
-  return data as ServiceZoneFee;
+  const zone = data as ServiceZoneFee;
+  if (!zone.automatic_checkout_enabled) {
+    throw new BookingRuleError(`${zone.name} requires a custom delivery quote.`);
+  }
+  return zone;
+}
+
+export async function getPickupLocation(
+  supabase: SupabaseClient<Database>,
+  pickupLocationId?: string | null,
+): Promise<PickupLocationRule | null> {
+  if (!pickupLocationId) return null;
+
+  const { data, error } = await supabase
+    .from("pickup_locations")
+    .select("id, name, lead_time_hours")
+    .eq("id", pickupLocationId)
+    .eq("is_active", true)
+    .single();
+
+  if (error || !data) {
+    throw new BookingRuleError("Pickup location not found");
+  }
+
+  return data as PickupLocationRule;
 }
 
 export function quoteBooking(
@@ -223,7 +264,8 @@ export function quoteBooking(
   fulfillment: FulfillmentSelection,
   deliveryZone: ServiceZoneFee | null,
   collectionZone: ServiceZoneFee | null,
-  quantity = 1
+  quantity = 1,
+  deliveryType: DeliveryType = "standard",
 ): BookingQuote {
   if (!Number.isInteger(quantity) || quantity < 1) {
     throw new Error("Quantity must be a positive integer");
@@ -257,6 +299,20 @@ export function quoteBooking(
     }
   }
 
+  if (fulfillment.mode !== "customer_pickup" && deliveryType === "express") {
+    deliveryFeeCents += deliveryZone?.express_surcharge_cents ?? 0;
+  }
+
+  const minimumOrderCents = Math.max(
+    deliveryZone?.minimum_order_cents || 0,
+    collectionZone?.minimum_order_cents || 0,
+  );
+  if (rentalSubtotalCents < minimumOrderCents) {
+    throw new BookingRuleError(
+      `This delivery zone requires a minimum rental value of €${(minimumOrderCents / 100).toFixed(2)}.`,
+    );
+  }
+
   return {
     quantity,
     rentalDays,
@@ -275,10 +331,70 @@ export function quoteBooking(
       selectedTier: tier,
       selectedQuantityDiscount: selectedQuantityDiscount || null,
       fulfillment,
+      deliveryType,
       deliveryZone,
       collectionZone,
     },
   };
+}
+
+function madridDateAndMinutes(value: Date) {
+  const parts = new Intl.DateTimeFormat("en-GB", {
+    timeZone: BOOKING_TIMEZONE,
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    hourCycle: "h23",
+  }).formatToParts(value);
+  const part = (type: Intl.DateTimeFormatPartTypes) =>
+    parts.find((candidate) => candidate.type === type)?.value || "";
+  return {
+    date: `${part("year")}-${part("month")}-${part("day")}`,
+    minutes: Number(part("hour")) * 60 + Number(part("minute")),
+  };
+}
+
+export function assertFulfillmentTiming(
+  startAt: Date,
+  deliveryType: DeliveryType,
+  pickupLocation: PickupLocationRule | null,
+  deliveryZone: ServiceZoneFee | null,
+  collectionZone: ServiceZoneFee | null,
+  now = new Date(),
+) {
+  if (startAt.getTime() <= now.getTime()) {
+    throw new BookingRuleError("Rental start must be in the future.");
+  }
+
+  const leadTimeHours = Math.max(
+    pickupLocation?.lead_time_hours || 0,
+    deliveryZone?.lead_time_hours || 0,
+    collectionZone?.lead_time_hours || 0,
+  );
+
+  if (deliveryType === "standard") {
+    const earliestStart = now.getTime() + leadTimeHours * 60 * 60 * 1000;
+    if (startAt.getTime() < earliestStart) {
+      throw new BookingRuleError(`This fulfillment option requires ${leadTimeHours} hours of lead time.`);
+    }
+    return;
+  }
+
+  const madridNow = madridDateAndMinutes(now);
+  const madridStart = madridDateAndMinutes(startAt);
+  if (madridNow.date !== madridStart.date) return;
+
+  const cutoff = deliveryZone?.same_day_cutoff;
+  if (!cutoff) {
+    throw new BookingRuleError("Same-day express delivery is not available for this zone.");
+  }
+
+  const [cutoffHour, cutoffMinute] = cutoff.split(":").map(Number);
+  if (madridNow.minutes > cutoffHour * 60 + cutoffMinute) {
+    throw new BookingRuleError(`Same-day express delivery must be booked before ${cutoff.slice(0, 5)}.`);
+  }
 }
 
 export function assertFulfillmentFields(

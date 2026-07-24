@@ -34,6 +34,24 @@ async function main() {
     const invoiceSettings = await client.query("select count(*)::int as count from public.invoice_settings");
     checks.invoiceSettingsPresent = invoiceSettings.rows[0].count > 0;
 
+    const customZone = await client.query(`
+      select automatic_checkout_enabled
+      from public.service_zones
+      where slug = 'valencia-region-custom'
+      limit 1
+    `);
+    checks.customZoneExcludedFromAutomaticCheckout =
+      customZone.rows[0]?.automatic_checkout_enabled === false;
+
+    const deliveryTypeColumn = await client.query(`
+      select count(*)::int as count
+      from information_schema.columns
+      where table_schema = 'public'
+        and table_name = 'booking_drafts'
+        and column_name = 'delivery_type'
+    `);
+    checks.bookingDraftDeliveryTypePresent = deliveryTypeColumn.rows[0].count === 1;
+
     await client.query("begin");
     await client.query("set local statement_timeout = '10s'");
     try {

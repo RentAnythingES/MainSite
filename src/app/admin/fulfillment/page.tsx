@@ -35,6 +35,7 @@ interface ServiceZone {
   roundtrip_fee_cents: number;
   express_surcharge_cents: number;
   minimum_order_cents: number;
+  automatic_checkout_enabled: boolean;
   is_active: boolean;
   sort_order: number;
 }
@@ -71,7 +72,8 @@ export default function AdminFulfillmentPage() {
   }, []);
 
   useEffect(() => {
-    fetchFulfillment();
+    const timeoutId = window.setTimeout(fetchFulfillment, 0);
+    return () => window.clearTimeout(timeoutId);
   }, [fetchFulfillment]);
 
   const startPickupEdit = (location: PickupLocation) => {
@@ -225,8 +227,8 @@ export default function AdminFulfillmentPage() {
                     <h3 className="font-bold text-white">{zone.name}</h3>
                     <p className="text-xs text-neutral-500">{zone.slug}</p>
                   </div>
-                  <span className={`text-xs px-2 py-1 rounded-full ${zone.is_active ? "bg-emerald-500/10 text-emerald-400" : "bg-neutral-800 text-neutral-400"}`}>
-                    {zone.is_active ? "Active" : "Inactive"}
+                   <span className={`text-xs px-2 py-1 rounded-full ${zone.is_active && zone.automatic_checkout_enabled ? "bg-emerald-500/10 text-emerald-400" : "bg-neutral-800 text-neutral-400"}`}>
+                     {!zone.is_active ? "Inactive" : zone.automatic_checkout_enabled ? "Online checkout" : "Manual quote"}
                   </span>
                 </div>
 
@@ -240,7 +242,7 @@ export default function AdminFulfillmentPage() {
                       <input className={inputClass} value={form.delivery_window || ""} onChange={(e) => setEditField("delivery_window", e.target.value)} placeholder="Delivery window" />
                       <input className={inputClass} value={form.collection_window || ""} onChange={(e) => setEditField("collection_window", e.target.value)} placeholder="Collection window" />
                     </div>
-                    <div className="grid sm:grid-cols-3 gap-3">
+                     <div className="grid sm:grid-cols-3 gap-3">
                       <label className="text-xs text-neutral-400">Delivery fee €
                         <input className={`${inputClass} mt-1`} value={centsToEuros(form.delivery_fee_cents)} onChange={(e) => setEditField("delivery_fee_cents", eurosToCents(e.target.value))} />
                       </label>
@@ -250,16 +252,31 @@ export default function AdminFulfillmentPage() {
                       <label className="text-xs text-neutral-400">Roundtrip €
                         <input className={`${inputClass} mt-1`} value={centsToEuros(form.roundtrip_fee_cents)} onChange={(e) => setEditField("roundtrip_fee_cents", eurosToCents(e.target.value))} />
                       </label>
-                    </div>
+                     </div>
+                     <div className="grid sm:grid-cols-3 gap-3">
+                       <label className="text-xs text-neutral-400">Express surcharge €
+                         <input className={`${inputClass} mt-1`} value={centsToEuros(form.express_surcharge_cents)} onChange={(e) => setEditField("express_surcharge_cents", eurosToCents(e.target.value))} />
+                       </label>
+                       <label className="text-xs text-neutral-400">Minimum rental €
+                         <input className={`${inputClass} mt-1`} value={centsToEuros(form.minimum_order_cents)} onChange={(e) => setEditField("minimum_order_cents", eurosToCents(e.target.value))} />
+                       </label>
+                       <label className="text-xs text-neutral-400">Same-day cutoff
+                         <input className={`${inputClass} mt-1`} type="time" value={(form.same_day_cutoff || "").slice(0, 5)} onChange={(e) => setEditField("same_day_cutoff", e.target.value || null)} />
+                       </label>
+                     </div>
                     <div className="grid grid-cols-2 gap-3">
                       <label className="text-xs text-neutral-400">
                         Lead time hours
                         <input className={`${inputClass} mt-1`} type="number" value={form.lead_time_hours ?? 24} onChange={(e) => setEditField("lead_time_hours", Number(e.target.value))} />
                       </label>
-                      <label className="flex items-center gap-2 text-sm text-neutral-300 mt-5">
+                       <label className="flex items-center gap-2 text-sm text-neutral-300 mt-5">
                         <input type="checkbox" checked={Boolean(form.is_active)} onChange={(e) => setEditField("is_active", e.target.checked)} />
-                        Active
-                      </label>
+                         Active
+                       </label>
+                       <label className="flex items-center gap-2 text-sm text-neutral-300 mt-5">
+                         <input type="checkbox" checked={Boolean(form.automatic_checkout_enabled)} onChange={(e) => setEditField("automatic_checkout_enabled", e.target.checked)} />
+                         Allow online checkout
+                       </label>
                     </div>
                   </div>
                 ) : (
@@ -268,11 +285,14 @@ export default function AdminFulfillmentPage() {
                     <p className="text-neutral-400">Customer: {zone.customer_instructions || "Not set"}</p>
                     <p className="text-amber-300">Internal: {zone.internal_notes || "Not set"}</p>
                     <p className="text-neutral-500 text-xs">
-                      Delivery {centsToEuros(zone.delivery_fee_cents)} · Collection {centsToEuros(zone.collection_fee_cents)} · Roundtrip {centsToEuros(zone.roundtrip_fee_cents)}
+                       Delivery {centsToEuros(zone.delivery_fee_cents)} · Collection {centsToEuros(zone.collection_fee_cents)} · Roundtrip {centsToEuros(zone.roundtrip_fee_cents)}
                     </p>
                     <p className="text-neutral-500 text-xs">
-                      Windows: {zone.delivery_window || "delivery not set"} / {zone.collection_window || "collection not set"} · Lead time {zone.lead_time_hours || 24}h
-                    </p>
+                       Windows: {zone.delivery_window || "delivery not set"} / {zone.collection_window || "collection not set"} · Lead time {zone.lead_time_hours || 24}h
+                     </p>
+                     <p className="text-neutral-500 text-xs">
+                       Express +{centsToEuros(zone.express_surcharge_cents)} · Minimum {centsToEuros(zone.minimum_order_cents)} · Cutoff {zone.same_day_cutoff?.slice(0, 5) || "not available"}
+                     </p>
                   </div>
                 )}
 

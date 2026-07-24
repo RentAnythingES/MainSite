@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createServiceClient } from "@/lib/supabase";
-import { calculateRentalDays, cleanupExpiredBookingDrafts, getProductWithPricing, getServiceZone, parseRentalDate, quoteBooking } from "@/lib/booking-v2";
+import { BookingRuleError, assertFulfillmentTiming, calculateRentalDays, cleanupExpiredBookingDrafts, getPickupLocation, getProductWithPricing, getServiceZone, parseRentalDate, quoteBooking } from "@/lib/booking-v2";
 import { fetchActivePickupLocations, fetchActiveServiceZones } from "@/lib/fulfillment-options";
-import type { FulfillmentMode } from "@/lib/types";
+import type { DeliveryType, FulfillmentMode } from "@/lib/types";
 
 export const dynamic = "force-dynamic";
 
@@ -22,6 +22,7 @@ export async function GET(request: NextRequest) {
   const startAtParam = searchParams.get("startAt");
   const endAtParam = searchParams.get("endAt");
   const mode = (searchParams.get("mode") || "delivery_and_collection") as FulfillmentMode;
+  const requestedDeliveryType = (searchParams.get("deliveryType") || "standard") as DeliveryType;
   const deliveryZoneId = searchParams.get("deliveryZoneId");
   const collectionZoneId = searchParams.get("collectionZoneId");
   const pickupLocationId = searchParams.get("pickupLocationId");
@@ -38,6 +39,13 @@ export async function GET(request: NextRequest) {
   if (!Number.isInteger(quantity) || quantity < 1) {
     return NextResponse.json({ error: "Quantity must be a positive integer" }, { status: 400 });
   }
+
+  if (!["standard", "express"].includes(requestedDeliveryType)) {
+    return NextResponse.json({ error: "Invalid delivery speed" }, { status: 400 });
+  }
+
+  const deliveryType: DeliveryType =
+    mode === "customer_pickup" ? "standard" : requestedDeliveryType;
 
   try {
     const supabase = createServiceClient();
@@ -125,8 +133,12 @@ export async function GET(request: NextRequest) {
       }, 0);
     }
 
-    const deliveryZone = await getServiceZone(supabase, deliveryZoneId);
-    const collectionZone = await getServiceZone(supabase, collectionZoneId);
+    const [pickupLocation, deliveryZone, collectionZone] = await Promise.all([
+      getPickupLocation(supabase, pickupLocationId),
+      getServiceZone(supabase, deliveryZoneId),
+      getServiceZone(supabase, collectionZoneId),
+    ]);
+    assertFulfillmentTiming(startAt, deliveryType, pickupLocation, deliveryZone, collectionZone);
     const quote = quoteBooking(
       tiers,
       quantityDiscounts,
@@ -135,7 +147,8 @@ export async function GET(request: NextRequest) {
       { mode, pickupLocationId, deliveryZoneId, collectionZoneId },
       deliveryZone,
       collectionZone,
-      quantity
+      quantity,
+      deliveryType,
     );
 
     const [pickupLocationsResult, serviceZonesResult] = await Promise.all([
@@ -185,6 +198,12 @@ export async function GET(request: NextRequest) {
       },
     });
   } catch (err) {
+    if (err instanceof BookingRuleError) {
+      return NextResponse.json(
+        { available: false, availabilityReason: "fulfillment_rule", error: err.message },
+        { status: 409 },
+      );
+    }
     console.error("[availability] Error:", err);
     return NextResponse.json(
       { error: "Failed to check availability" },

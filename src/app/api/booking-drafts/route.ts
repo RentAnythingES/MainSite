@@ -3,16 +3,19 @@ import { createServiceClient } from "@/lib/supabase";
 import { getIncidentErrorMessage, recordSystemIncident } from "@/lib/system-incidents";
 import {
   BOOKING_TIMEZONE,
+  BookingRuleError,
   DEFAULT_DRAFT_TTL_MINUTES,
   assertFulfillmentFields,
+  assertFulfillmentTiming,
   cleanupExpiredBookingDrafts,
   getProductWithPricing,
+  getPickupLocation,
   getServiceZone,
   parseRentalDate,
   quoteBooking,
   toDateOnly,
 } from "@/lib/booking-v2";
-import type { FulfillmentMode } from "@/lib/types";
+import type { DeliveryType, FulfillmentMode } from "@/lib/types";
 import { consumeRateLimits, getClientIp } from "@/lib/rate-limit";
 
 interface DraftRequestBody {
@@ -25,6 +28,7 @@ interface DraftRequestBody {
   startAt?: string;
   endAt?: string;
   fulfillmentMode?: FulfillmentMode;
+  deliveryType?: DeliveryType;
   pickupLocationId?: string | null;
   deliveryZoneId?: string | null;
   collectionZoneId?: string | null;
@@ -45,6 +49,7 @@ export async function POST(request: NextRequest) {
   try {
     const body = (await request.json()) as DraftRequestBody;
     const fulfillmentMode = body.fulfillmentMode || "delivery_and_collection";
+    const requestedDeliveryType = body.deliveryType || "standard";
     const quantity = Number(body.quantity || 1);
 
     if (!body.productSlug || !body.customerName || !body.customerEmail || !body.startAt || !body.endAt) {
@@ -58,6 +63,13 @@ export async function POST(request: NextRequest) {
     if (!Number.isInteger(quantity) || quantity < 1) {
       return NextResponse.json({ error: "Quantity must be a positive integer" }, { status: 400 });
     }
+
+    if (!["standard", "express"].includes(requestedDeliveryType)) {
+      return NextResponse.json({ error: "Invalid delivery speed" }, { status: 400 });
+    }
+
+    const deliveryType: DeliveryType =
+      fulfillmentMode === "customer_pickup" ? "standard" : requestedDeliveryType;
 
     const supabase = createServiceClient();
     const clientIp = getClientIp(request);
@@ -113,8 +125,12 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Product not available" }, { status: 409 });
     }
 
-    const deliveryZone = await getServiceZone(supabase, body.deliveryZoneId);
-    const collectionZone = await getServiceZone(supabase, body.collectionZoneId);
+    const [pickupLocation, deliveryZone, collectionZone] = await Promise.all([
+      getPickupLocation(supabase, body.pickupLocationId),
+      getServiceZone(supabase, body.deliveryZoneId),
+      getServiceZone(supabase, body.collectionZoneId),
+    ]);
+    assertFulfillmentTiming(startAt, deliveryType, pickupLocation, deliveryZone, collectionZone);
     const quote = quoteBooking(
       tiers,
       quantityDiscounts,
@@ -128,7 +144,8 @@ export async function POST(request: NextRequest) {
       },
       deliveryZone,
       collectionZone,
-      quantity
+      quantity,
+      deliveryType,
     );
 
     const { data: blockedDates, error: blockedError } = await supabase
@@ -164,6 +181,7 @@ export async function POST(request: NextRequest) {
         timezone: BOOKING_TIMEZONE,
         rental_days: quote.rentalDays,
         fulfillment_mode: fulfillmentMode,
+        delivery_type: deliveryType,
         pickup_location_id: body.pickupLocationId || null,
         delivery_zone_id: body.deliveryZoneId || null,
         collection_zone_id: body.collectionZoneId || null,
@@ -221,6 +239,9 @@ export async function POST(request: NextRequest) {
       quote,
     });
   } catch (err) {
+    if (err instanceof BookingRuleError) {
+      return NextResponse.json({ error: err.message }, { status: 409 });
+    }
     console.error("[booking-drafts] Error:", err);
     await recordSystemIncident({
       source: "booking_drafts",

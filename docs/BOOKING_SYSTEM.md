@@ -34,6 +34,11 @@ Initial Booking System v2 code is now in place:
 - `/api/booking-drafts` creates server-priced booking drafts and temporary inventory holds.
 - Booking-draft creation is rate-limited across Vercel instances by IP,
   IP/product, and email before an inventory hold can be created.
+- Quote-only service zones never appear as automatic checkout options and remain
+  rejected server-side if submitted directly.
+- Booking drafts preserve standard/express delivery speed. The quote engine applies
+  configured express surcharges and minimum rental values, then validates standard
+  lead time or same-day express cutoff before reserving inventory.
 - `/api/checkout` can create Stripe Checkout from a `draftId`.
 - `/api/checkout/status` joins Stripe session, booking draft, booking, and inventory state for the success page.
 - `/api/webhooks/stripe` can fulfill `checkout.session.completed` from a booking draft.
@@ -244,6 +249,7 @@ Migration:
 - `supabase/migrations/20260707_booking_system_v2.sql`
 - `supabase/migrations/20260724_api_rate_limits.sql`
 - `supabase/migrations/20260724_fix_api_rate_limit_clock.sql`
+- `supabase/migrations/20260724_fulfillment_checkout_enforcement.sql`
 
 ### Phase 2 — Availability API
 

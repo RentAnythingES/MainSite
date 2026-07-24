@@ -83,8 +83,12 @@ a manual quote. Express delivery is client-only and is neither priced nor stored
 Configured minimum orders, same-day cutoffs, and lead times are returned but not
 enforced by the server quote.
 
-Required action: exclude quote-only zones from automatic checkout and enforce every
-fulfillment rule in the server pricing path.
+Status: remediated on 2026-07-24. Service zones now have an explicit
+`automatic_checkout_enabled` state; manual-quote zones are excluded from public
+options and rejected by both availability and draft creation. Delivery speed is
+stored on the draft and booking, express surcharge and minimum rental values are
+server-priced, and lead-time/same-day cutoff rules are enforced before inventory
+is held.
 
 ## P1 — booking operations
 

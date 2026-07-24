@@ -177,6 +177,7 @@ interface ServiceZoneRow {
   delivery_window: string | null;
   collection_window: string | null;
   confirmation_template: string | null;
+  automatic_checkout_enabled: boolean;
   is_active: boolean;
   sort_order: number;
   created_at: string;
@@ -195,6 +196,7 @@ interface BookingDraftRow {
   timezone: string;
   rental_days: number;
   fulfillment_mode: FulfillmentMode;
+  delivery_type: DeliveryType;
   pickup_location_id: string | null;
   delivery_zone_id: string | null;
   collection_zone_id: string | null;

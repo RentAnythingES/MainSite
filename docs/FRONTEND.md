@@ -183,12 +183,18 @@ Online checkout is gated by server-side Supabase availability, blocked dates, an
 
 Normal v2 flow:
 1. **Booking options** — `/api/booking-options` loads active pickup locations and service zones from Supabase.
-2. **Rental window** — Pick start/end date, start/end time, fulfillment mode, pickup location or delivery/collection zones, and delivery option.
+2. **Rental window** — Pick start/end date, start/end time, fulfillment mode, pickup location or an automatic-checkout delivery/collection zone, and delivery speed.
 3. **Availability** — `/api/availability` resolves the product server-side and checks stock, blocked dates, datetime inventory holds, and server pricing.
 4. **Details** — Customer enters contact details plus delivery/collection address where required.
 5. **Draft** — `/api/booking-drafts` calculates pricing server-side and creates a temporary inventory hold.
 6. **Checkout** — `/api/checkout` creates Stripe Checkout from `draftId`; Stripe metadata contains stable server IDs only. Client and Stripe API requests have a 20-second timeout so a stalled handoff returns to the recoverable WhatsApp fallback instead of remaining on a loading state.
 7. **Webhook** — `/api/webhooks/stripe` turns paid drafts into bookings and converts the hold into a booking inventory block.
+
+Changing fulfillment mode, pickup location, delivery/collection zone, or delivery
+speed invalidates the displayed server quote. A resumable Checkout is reused only
+when all of those fields still match. Manual-quote zones are kept out of the public
+selector, while the server remains authoritative for express surcharge, minimum
+rental value, lead time, and same-day cutoff.
 
 ### Post-booking delivery changes
 

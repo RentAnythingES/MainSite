@@ -17,6 +17,7 @@ const ALLOWED_FIELDS = [
   "roundtrip_fee_cents",
   "express_surcharge_cents",
   "minimum_order_cents",
+  "automatic_checkout_enabled",
   "is_active",
   "sort_order",
 ];

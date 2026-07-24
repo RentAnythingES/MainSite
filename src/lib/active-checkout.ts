@@ -7,6 +7,11 @@ export interface ActiveCheckout {
   startAt: string;
   endAt: string;
   quantity: number;
+  fulfillmentMode: string;
+  deliveryType: string;
+  pickupLocationId: string | null;
+  deliveryZoneId: string | null;
+  collectionZoneId: string | null;
   expiresAt: string;
 }
 

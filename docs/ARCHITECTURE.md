@@ -107,6 +107,12 @@ customer instructions, lead-time fields, delivery/collection windows, and intern
 notes for pickup locations and service zones. API reads are backward-compatible and
 fall back to the older column set until that migration is applied.
 
+Automatic checkout eligibility is explicit per service zone. Public booking options
+return only active zones with `automatic_checkout_enabled = true`; availability and
+draft creation independently reject manual-quote zones. Draft pricing persists
+delivery speed and enforces zone surcharge, minimum order, lead time, and same-day
+cutoff rules on the server.
+
 ### Booking Lifecycle
 ```
 pending → confirmed → paid → delivering → active → returning → completed

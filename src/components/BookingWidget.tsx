@@ -194,6 +194,8 @@ interface ServiceZoneOption {
   delivery_fee_cents: number;
   collection_fee_cents: number;
   roundtrip_fee_cents: number;
+  express_surcharge_cents: number;
+  minimum_order_cents: number;
   description?: string | null;
   customer_instructions?: string | null;
   lead_time_hours?: number | null;
@@ -277,11 +279,25 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
       .find((t) => days >= t.days) || product.pricing[0];
 
     const subtotal = tier.perDay * days * quantity;
-    const deliveryFee = fulfillmentMode === "customer_pickup" ? 0 : deliveryOption === "express" ? 15 : subtotal >= 50 ? 0 : 10;
+    let deliveryFeeCents = 0;
+    if (fulfillmentMode === "delivery_only") {
+      deliveryFeeCents = selectedDeliveryZone?.delivery_fee_cents || 0;
+    } else if (fulfillmentMode === "delivery_and_collection") {
+      deliveryFeeCents =
+        selectedDeliveryZone?.id === selectedCollectionZone?.id &&
+        (selectedDeliveryZone?.roundtrip_fee_cents || 0) > 0
+          ? selectedDeliveryZone?.roundtrip_fee_cents || 0
+          : (selectedDeliveryZone?.delivery_fee_cents || 0) +
+            (selectedCollectionZone?.collection_fee_cents || 0);
+    }
+    if (fulfillmentMode !== "customer_pickup" && deliveryOption === "express") {
+      deliveryFeeCents += selectedDeliveryZone?.express_surcharge_cents || 0;
+    }
+    const deliveryFee = deliveryFeeCents / 100;
     const total = subtotal + deliveryFee;
 
     return { days, perDay: tier.perDay, subtotal, subtotalBeforeDiscount: subtotal, deliveryFee, total, quantityDiscount: 0 };
-  }, [startDate, endDate, deliveryOption, fulfillmentMode, product.pricing, quantity]);
+  }, [startDate, endDate, deliveryOption, fulfillmentMode, product.pricing, quantity, selectedDeliveryZone, selectedCollectionZone]);
 
   const displayPricing = useMemo(() => {
     if (!serverQuote) {
@@ -303,6 +319,11 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
     activeCheckout &&
     activeCheckout.productSlug === product.slug &&
     activeCheckout.quantity === quantity &&
+    activeCheckout.fulfillmentMode === fulfillmentMode &&
+    activeCheckout.deliveryType === deliveryOption &&
+    activeCheckout.pickupLocationId === (fulfillmentMode === "customer_pickup" ? pickupLocationId || null : null) &&
+    activeCheckout.deliveryZoneId === (fulfillmentMode !== "customer_pickup" ? deliveryZoneId || null : null) &&
+    activeCheckout.collectionZoneId === (fulfillmentMode === "delivery_and_collection" ? collectionZoneId || null : null) &&
     new Date(activeCheckout.startAt).getTime() === new Date(combineDateTime(startDate, startTime)).getTime() &&
     new Date(activeCheckout.endAt).getTime() === new Date(combineDateTime(endDate, endTime)).getTime()
   );
@@ -355,7 +376,7 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
       setServerQuote(null);
     }, 0);
     return () => window.clearTimeout(timeoutId);
-  }, [startDate, startTime, endDate, endTime, quantity, fulfillmentMode, deliveryZoneId, collectionZoneId, pickupLocationId]);
+  }, [startDate, startTime, endDate, endTime, quantity, fulfillmentMode, deliveryOption, deliveryZoneId, collectionZoneId, pickupLocationId]);
 
   const checkAvailability = async () => {
     setAvailabilityStatus("checking");
@@ -381,6 +402,7 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
       if (deliveryZoneId) params.set("deliveryZoneId", deliveryZoneId);
       if (collectionZoneId) params.set("collectionZoneId", collectionZoneId);
       if (pickupLocationId) params.set("pickupLocationId", pickupLocationId);
+      params.set("deliveryType", deliveryOption);
       if (activeCheckoutMatchesSelection && activeCheckout) {
         params.set("draftId", activeCheckout.draftId);
       }
@@ -492,6 +514,7 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
           startAt: combineDateTime(startDate, startTime),
           endAt: combineDateTime(endDate, endTime),
           fulfillmentMode,
+          deliveryType: deliveryOption,
           pickupLocationId: fulfillmentMode === "customer_pickup" ? selectedPickupLocationId : null,
           deliveryZoneId: fulfillmentMode !== "customer_pickup" ? selectedDeliveryZoneId : null,
           collectionZoneId: fulfillmentMode === "delivery_and_collection" ? selectedCollectionZoneId : null,
@@ -519,6 +542,7 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
           productSlug: product.slug,
           quantity,
           fulfillmentMode,
+          deliveryType: deliveryOption,
           status: draftRes.status,
         });
         return;
@@ -566,6 +590,11 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
           startAt: draftData.startAt,
           endAt: draftData.endAt,
           quantity,
+          fulfillmentMode,
+          deliveryType: deliveryOption,
+          pickupLocationId: fulfillmentMode === "customer_pickup" ? selectedPickupLocationId : null,
+          deliveryZoneId: fulfillmentMode !== "customer_pickup" ? selectedDeliveryZoneId : null,
+          collectionZoneId: fulfillmentMode === "delivery_and_collection" ? selectedCollectionZoneId : null,
           expiresAt: data.expiresAt || draftData.expiresAt,
         };
         saveActiveCheckout(checkoutState);
