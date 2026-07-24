@@ -24,6 +24,7 @@ async function main() {
         (select count(*)::int from public.bookings) as bookings,
         (select count(*)::int from public.booking_ops_tasks) as ops_tasks,
         (select count(*)::int from public.booking_status_events) as booking_status_events,
+        (select count(*)::int from public.inventory_stock_events) as inventory_stock_events,
         (select count(*)::int from public.booking_reviews) as booking_reviews,
         (select count(*)::int from public.booking_fulfillment_amendments) as fulfillment_amendments,
         (select count(*)::int from public.bundle_requests) as bundle_requests,
@@ -184,6 +185,102 @@ async function main() {
         rateLimitAttempts[0]?.allowed === true &&
         rateLimitAttempts[1]?.allowed === true &&
         rateLimitAttempts[2]?.allowed === false;
+
+      const inventoryBooking = await client.query(`
+        select booking.id, booking.product_id, booking.status
+        from public.bookings booking
+        where booking.status in ('paid', 'delivering')
+          and booking.quantity = 1
+        order by case when booking.status = 'delivering' then 0 else 1 end, booking.created_at desc
+        limit 1
+      `);
+      if (inventoryBooking.rows.length > 0) {
+        const booking = inventoryBooking.rows[0];
+        const productState = await client.query(`
+          select
+            product.stock_total,
+            product.stock_available,
+            (
+              select count(*)::int
+              from public.inventory_units unit
+              where unit.product_id = product.id and unit.status <> 'retired'
+            ) as physical_count
+          from public.products product
+          where product.id = $1
+        `, [booking.product_id]);
+        const targetTotal = Math.max(
+          productState.rows[0].stock_total,
+          productState.rows[0].physical_count,
+        ) + 1;
+        const expectedCreated = targetTotal - productState.rows[0].physical_count;
+        const capacity = await client.query(
+          "select id, stock_total, stock_available from public.update_product_inventory_capacity($1, $2, $3, null)",
+          [booking.product_id, targetTotal, 0],
+        );
+        const capacityReservation = await client.query(
+          "select public.reserve_booking_inventory($1, gen_random_uuid(), now() + interval '30 days', now() + interval '31 days', 1) as reserved",
+          [booking.product_id],
+        );
+        const registered = await client.query(
+          "select public.register_missing_inventory_units($1, null, 'Rollback verification') as result",
+          [booking.product_id],
+        );
+        const unit = await client.query(
+          "select id from public.inventory_units where product_id = $1 and status = 'available' order by created_at desc limit 1",
+          [booking.product_id],
+        );
+        const assignment = await client.query(
+          "select public.assign_booking_inventory_unit($1, $2, null, 'Rollback verification') as id",
+          [booking.id, unit.rows[0].id],
+        );
+        const extraUnit = await client.query(`
+          insert into public.inventory_units (product_id, asset_code)
+          values ($1, 'RA-VERIFY-' || upper(substr(replace(gen_random_uuid()::text, '-', ''), 1, 10)))
+          returning id
+        `, [booking.product_id]);
+        await client.query("savepoint inventory_assignment_limit");
+        let assignmentLimitRejected = false;
+        try {
+          await client.query(
+            "select public.assign_booking_inventory_unit($1, $2, null, null)",
+            [booking.id, extraUnit.rows[0].id],
+          );
+        } catch {
+          assignmentLimitRejected = true;
+          await client.query("rollback to savepoint inventory_assignment_limit");
+        }
+        await client.query(
+          "select public.transition_booking_inventory_unit($1, $2, 'hand_over', null)",
+          [booking.id, assignment.rows[0].id],
+        );
+        await client.query(
+          "select public.transition_booking_inventory_unit($1, $2, 'return', null)",
+          [booking.id, assignment.rows[0].id],
+        );
+        const reconciled = await client.query(`
+          select
+            booking.status as booking_status,
+            assignment.status as assignment_status,
+            unit.status as unit_status,
+            (select count(*)::int from public.inventory_stock_events where product_id = booking.product_id) as stock_events
+          from public.bookings booking
+          join public.booking_inventory_unit_assignments assignment on assignment.booking_id = booking.id
+          join public.inventory_units unit on unit.id = assignment.inventory_unit_id
+          where assignment.id = $1
+        `, [assignment.rows[0].id]);
+        checks.inventoryReconciliationTransactionalWrite =
+          capacity.rows[0]?.stock_total === targetTotal &&
+          capacity.rows[0]?.stock_available === 0 &&
+          capacityReservation.rows[0]?.reserved === false &&
+          registered.rows[0].result?.created_count === expectedCreated &&
+          assignmentLimitRejected &&
+          reconciled.rows[0]?.booking_status === "completed" &&
+          reconciled.rows[0]?.assignment_status === "returned" &&
+          reconciled.rows[0]?.unit_status === "available" &&
+          reconciled.rows[0]?.stock_events > 0;
+      } else {
+        checks.inventoryReconciliationTransactionalWrite = "skipped_no_open_single_unit_booking";
+      }
 
       const lifecycleBooking = await client.query(`
         select id

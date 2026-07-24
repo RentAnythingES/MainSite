@@ -138,6 +138,18 @@ interface BookingStatusEventRow {
   created_at: string;
 }
 
+interface InventoryStockEventRow {
+  id: string;
+  product_id: string;
+  previous_stock_total: number;
+  new_stock_total: number;
+  previous_online_capacity: number;
+  new_online_capacity: number;
+  source: string;
+  actor_id: string | null;
+  created_at: string;
+}
+
 interface BlockedDateRow {
   id: string;
   product_id: string;
@@ -338,6 +350,11 @@ export interface Database {
         Insert: Omit<BookingStatusEventRow, "id" | "created_at">;
         Update: Partial<Omit<BookingStatusEventRow, "id" | "created_at">>;
       };
+      inventory_stock_events: {
+        Row: InventoryStockEventRow;
+        Insert: Omit<InventoryStockEventRow, "id" | "created_at">;
+        Update: Partial<Omit<InventoryStockEventRow, "id" | "created_at">>;
+      };
       blocked_dates: {
         Row: BlockedDateRow;
         Insert: Omit<BlockedDateRow, "id" | "created_at">;
@@ -388,6 +405,7 @@ export type Product = ProductRow;
 export type PricingTier = PricingTierRow;
 export type Booking = BookingRow;
 export type BookingStatusEvent = BookingStatusEventRow;
+export type InventoryStockEvent = InventoryStockEventRow;
 export type BlockedDate = BlockedDateRow;
 export type PickupLocation = PickupLocationRow;
 export type ServiceZone = ServiceZoneRow;

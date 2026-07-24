@@ -158,7 +158,10 @@ export async function GET(request: NextRequest) {
 
     const maxAvailableQuantity = blockedDates.length > 0
       ? 0
-      : Math.max(0, Math.min(product.stock_available, product.stock_total - overlappingQuantity));
+      : Math.max(
+          0,
+          Math.min(product.stock_available, product.stock_total) - overlappingQuantity,
+        );
     const available = quantity <= maxAvailableQuantity;
     const availabilityReason = available
       ? "available"

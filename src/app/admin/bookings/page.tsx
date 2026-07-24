@@ -610,7 +610,7 @@ export default function AdminBookingsPage() {
                     onChanged={fetchBookings}
                   />
 
-                  <BookingUnitAssignments bookingId={booking.id} />
+                  <BookingUnitAssignments bookingId={booking.id} onChanged={fetchBookings} />
 
                   <div className="mb-4 pt-4 border-t border-neutral-800">
                     <p className="text-xs text-neutral-500 mb-2">Timeline</p>

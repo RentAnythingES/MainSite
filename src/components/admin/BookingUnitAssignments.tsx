@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
 type InventoryUnit = {
@@ -17,12 +18,21 @@ type Assignment = {
   inventory_units: InventoryUnit | null;
 };
 
-export default function BookingUnitAssignments({ bookingId }: { bookingId: string }) {
+export default function BookingUnitAssignments({
+  bookingId,
+  onChanged,
+}: {
+  bookingId: string;
+  onChanged?: () => void | Promise<void>;
+}) {
   const [assignments, setAssignments] = useState<Assignment[]>([]);
   const [units, setUnits] = useState<InventoryUnit[]>([]);
   const [selectedUnitId, setSelectedUnitId] = useState("");
+  const [requiredQuantity, setRequiredQuantity] = useState(1);
+  const [productName, setProductName] = useState("this product");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
+  const [notice, setNotice] = useState("");
 
   const load = useCallback(async () => {
     const response = await fetch(`/api/admin/bookings/${bookingId}/inventory-units`);
@@ -30,18 +40,30 @@ export default function BookingUnitAssignments({ bookingId }: { bookingId: strin
     if (!response.ok) throw new Error(data.error || "Failed to load physical inventory");
     setAssignments(data.assignments || []);
     setUnits(data.units || []);
+    setRequiredQuantity(data.requiredQuantity || 1);
+    setProductName(data.productName || "this product");
   }, [bookingId]);
 
   useEffect(() => {
-    load().catch((loadError) => setError(loadError instanceof Error ? loadError.message : "Failed to load physical inventory"));
+    const timeoutId = window.setTimeout(() => {
+      void load().catch((loadError) =>
+        setError(loadError instanceof Error ? loadError.message : "Failed to load physical inventory"),
+      );
+    }, 0);
+    return () => window.clearTimeout(timeoutId);
   }, [load]);
 
   const availableUnits = useMemo(() => units.filter((unit) => unit.status === "available"), [units]);
+  const activeAssignments = useMemo(
+    () => assignments.filter((assignment) => ["assigned", "handed_over"].includes(assignment.status)),
+    [assignments],
+  );
 
   const assign = async () => {
     if (!selectedUnitId) return;
     setBusy(true);
     setError("");
+    setNotice("");
     try {
       const response = await fetch(`/api/admin/bookings/${bookingId}/inventory-units`, {
         method: "POST",
@@ -52,6 +74,7 @@ export default function BookingUnitAssignments({ bookingId }: { bookingId: strin
       if (!response.ok) throw new Error(data.error || "Failed to assign unit");
       setSelectedUnitId("");
       await load();
+      setNotice("Physical unit assigned.");
     } catch (assignError) {
       setError(assignError instanceof Error ? assignError.message : "Failed to assign unit");
     } finally {
@@ -62,6 +85,7 @@ export default function BookingUnitAssignments({ bookingId }: { bookingId: strin
   const transition = async (assignmentId: string, action: "hand_over" | "return" | "release") => {
     setBusy(true);
     setError("");
+    setNotice("");
     try {
       const response = await fetch(`/api/admin/bookings/${bookingId}/inventory-units`, {
         method: "PATCH",
@@ -71,6 +95,12 @@ export default function BookingUnitAssignments({ bookingId }: { bookingId: strin
       const data = await response.json();
       if (!response.ok) throw new Error(data.error || "Failed to update unit");
       await load();
+      await onChanged?.();
+      setNotice(
+        data.statusChanged
+          ? `Unit updated. Booking advanced from ${data.previousBookingStatus} to ${data.bookingStatus}${data.emailSent ? " and the customer was notified" : ""}.`
+          : "Physical unit updated.",
+      );
     } catch (transitionError) {
       setError(transitionError instanceof Error ? transitionError.message : "Failed to update unit");
     } finally {
@@ -82,9 +112,24 @@ export default function BookingUnitAssignments({ bookingId }: { bookingId: strin
     <div className="mb-4 border-t border-neutral-800 pt-4">
       <div className="mb-3 flex flex-wrap items-end gap-2">
         <div className="min-w-56 flex-1">
-          <p className="mb-2 text-xs text-neutral-500">Physical Inventory</p>
-          <select value={selectedUnitId} onChange={(event) => setSelectedUnitId(event.target.value)} disabled={busy || availableUnits.length === 0} className="w-full rounded-lg border border-neutral-700 bg-neutral-950 px-3 py-2 text-sm text-neutral-200">
-            <option value="">{availableUnits.length ? "Select an available unit" : "No available units registered"}</option>
+          <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
+            <p className="text-xs text-neutral-500">
+              Physical Inventory · {activeAssignments.length}/{requiredQuantity} assigned
+            </p>
+            <Link href="/admin/inventory" className="text-xs font-medium text-teal-400 hover:text-teal-300">
+              Review inventory
+            </Link>
+          </div>
+          <select value={selectedUnitId} onChange={(event) => setSelectedUnitId(event.target.value)} disabled={busy || availableUnits.length === 0 || activeAssignments.length >= requiredQuantity} className="w-full rounded-lg border border-neutral-700 bg-neutral-950 px-3 py-2 text-sm text-neutral-200">
+            <option value="">
+              {activeAssignments.length >= requiredQuantity
+                ? "Required units already assigned"
+                : availableUnits.length
+                  ? "Select an available unit"
+                  : units.length
+                    ? "No registered units are currently available"
+                    : "No physical units registered for this product"}
+            </option>
             {availableUnits.map((unit) => (
               <option key={unit.id} value={unit.id}>{unit.asset_code} · {unit.condition}{unit.location ? ` · ${unit.location}` : ""}</option>
             ))}
@@ -94,6 +139,12 @@ export default function BookingUnitAssignments({ bookingId }: { bookingId: strin
       </div>
 
       {error && <p className="mb-3 rounded-lg border border-red-500/20 bg-red-500/10 p-2 text-xs text-red-300">{error}</p>}
+      {notice && <p className="mb-3 rounded-lg border border-teal-500/20 bg-teal-500/10 p-2 text-xs text-teal-200">{notice}</p>}
+      {units.length === 0 && (
+        <p className="mb-3 text-xs text-amber-300">
+          {productName} has no registered physical units. Add or reconcile them on the Inventory page before assignment.
+        </p>
+      )}
 
       {assignments.length > 0 ? (
         <div className="space-y-2">

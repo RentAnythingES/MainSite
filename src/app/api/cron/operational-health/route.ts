@@ -25,7 +25,7 @@ export async function GET(request: NextRequest) {
       .select("id,booking_ops_tasks(id)")
       .in("status", ["paid", "delivering", "active", "returning"]),
     supabase.from("booking_status_events").select("id", { count: "exact", head: true }),
-    supabase.from("inventory_units").select("id", { count: "exact", head: true }),
+    supabase.from("inventory_units").select("product_id,status"),
   ]);
   if (incidents.error) issues.push("System incident monitoring query failed");
   else if (incidents.count) issues.push(`${incidents.count} unresolved operational incident${incidents.count === 1 ? "" : "s"}`);
@@ -59,8 +59,27 @@ export async function GET(request: NextRequest) {
   if (checklistCoverage.error) issues.push("Booking checklist coverage query failed");
   else if (missingChecklists) issues.push(`${missingChecklists} active booking${missingChecklists === 1 ? "" : "s"} lack a complete operations checklist`);
   if (statusEvents.error || !statusEvents.count) issues.push("Booking status audit events are unavailable");
+  const physicalByProduct = new Map<string, { physical: number; operational: number }>();
+  for (const unit of inventoryUnits.data || []) {
+    if (unit.status === "retired") continue;
+    const current = physicalByProduct.get(unit.product_id) || { physical: 0, operational: 0 };
+    current.physical += 1;
+    if (["available", "reserved", "rented"].includes(unit.status)) current.operational += 1;
+    physicalByProduct.set(unit.product_id, current);
+  }
+  const inventoryCountMismatches = (stock.data || []).filter(
+    (product) => (physicalByProduct.get(product.id)?.physical || 0) !== product.stock_total,
+  ).length;
+  const onlineCapacityRisks = (stock.data || []).filter((product) => {
+    const physical = physicalByProduct.get(product.id);
+    return Boolean(physical && product.stock_available > physical.operational);
+  }).length;
   if (inventoryUnits.error) issues.push("Physical inventory monitoring query failed");
-  else if (!inventoryUnits.count) issues.push("No physical inventory units are registered");
+  else if (!inventoryUnits.data?.length) issues.push("No physical inventory units are registered");
+  else {
+    if (inventoryCountMismatches) issues.push(`${inventoryCountMismatches} active products have declared/physical stock mismatches`);
+    if (onlineCapacityRisks) issues.push(`${onlineCapacityRisks} active products expose more online capacity than operational physical units`);
+  }
   const metrics = {
     unresolvedIncidents: incidents.count || 0,
     expiredDraftsCleaned: cleanup.expiredDraftCount,
@@ -70,7 +89,9 @@ export async function GET(request: NextRequest) {
     awaitingReturn,
     missingChecklists,
     bookingStatusEvents: statusEvents.count || 0,
-    physicalInventoryUnits: inventoryUnits.count || 0,
+    physicalInventoryUnits: (inventoryUnits.data || []).filter((unit) => unit.status !== "retired").length,
+    inventoryCountMismatches,
+    onlineCapacityRisks,
   };
   const fingerprint = createHash("sha256").update(JSON.stringify([...issues].sort())).digest("hex");
   const since = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();

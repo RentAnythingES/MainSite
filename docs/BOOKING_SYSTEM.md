@@ -15,17 +15,25 @@ legacy `booking` date rows. Normal date unblocking continues to affect manual an
 maintenance calendar blocks without changing product stock.
 
 Item-level inventory is additive: `inventory_units` records physical assets and
-`inventory_unit_events` preserves operational history. Live availability continues
-to use aggregate product stock until all physical units for a product have been
-onboarded and reconciled; this prevents a partial registry from changing sellable stock.
+`inventory_unit_events` preserves operational history. `stock_total` is the declared
+owned quantity and `stock_available` is the concurrent online capacity. Checkout
+uses the lower effective capacity and overlapping holds, while the admin inventory
+page compares both values with registered and operational physical units. Partial
+physical onboarding therefore remains visible without silently changing checkout.
 
 Bookings can now be linked to specific physical assets through
 `booking_inventory_unit_assignments`. Admins assign an available unit, mark it handed
-over, and mark it returned. These transitions atomically keep the unit status and event
-history synchronized. Cancelling or refunding a booking automatically releases units
-that have not been handed over, while a booking cannot be completed until every handed-
-over unit has been returned. This operational assignment layer does not yet replace the
-aggregate availability calculation.
+over, and mark it returned. Assignment is capped at booking quantity. Once every
+required unit is handed over the booking becomes active; the final physical return
+completes the booking, records lifecycle events, and releases aggregate holds.
+Cancelling or refunding automatically releases units not handed over. Manual unit
+editing cannot fabricate reserved/rented states or override an active assignment.
+
+`/admin/inventory` is the reconciliation workspace. Operators can edit owned stock
+and online capacity side by side, review count/capacity warnings, register missing
+asset-coded units only after explicit confirmation, and maintain condition,
+location, inspection, and operational status. Aggregate changes are audited in
+`inventory_stock_events`.
 
 Initial Booking System v2 code is now in place:
 

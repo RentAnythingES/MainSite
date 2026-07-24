@@ -114,12 +114,15 @@ physical handoff or return occurred.
 
 ### Register and reconcile physical inventory
 
-Production has zero physical units, events, and assignments. The empty assignment
-dropdown is accurate: the feature is deployed but unconfigured.
-
-Aggregate stock controls online availability while physical units are an additive
-operational layer, so the two models can diverge. Onboard asset-coded units and
-reconcile them with stock, or hide assignment controls until onboarding is complete.
+Status: onboarding controls deployed on 2026-07-24; operator reconciliation remains
+an explicit business-data task. `/admin/inventory` now shows declared owned stock,
+online capacity, registered physical units, operational units, and mismatches for
+every product. Operators can safely edit both aggregate values or explicitly
+generate missing asset-coded records from reviewed owned stock. Assignment is
+capped by booking quantity, reserved/rented states cannot be fabricated manually,
+and physical handover/return drives the audited booking lifecycle. Monitoring
+reports remaining count and capacity mismatches. No physical units were fabricated
+during deployment.
 
 ### Remove legacy multi-year blocks
 
