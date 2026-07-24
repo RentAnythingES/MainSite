@@ -23,6 +23,7 @@ async function main() {
         (select count(*)::int from public.products where is_active) as active_products,
         (select count(*)::int from public.bookings) as bookings,
         (select count(*)::int from public.booking_ops_tasks) as ops_tasks,
+        (select count(*)::int from public.booking_status_events) as booking_status_events,
         (select count(*)::int from public.booking_reviews) as booking_reviews,
         (select count(*)::int from public.booking_fulfillment_amendments) as fulfillment_amendments,
         (select count(*)::int from public.bundle_requests) as bundle_requests,
@@ -51,6 +52,22 @@ async function main() {
         and column_name = 'delivery_type'
     `);
     checks.bookingDraftDeliveryTypePresent = deliveryTypeColumn.rows[0].count === 1;
+
+    const lifecycleCoverage = await client.query(`
+      select
+        count(*) filter (where task_count <> 5)::int as bookings_without_five_tasks,
+        count(*) filter (where event_count < 1)::int as bookings_without_status_event
+      from (
+        select
+          booking.id,
+          (select count(*) from public.booking_ops_tasks task where task.booking_id = booking.id) as task_count,
+          (select count(*) from public.booking_status_events event where event.booking_id = booking.id) as event_count
+        from public.bookings booking
+      ) coverage
+    `);
+    checks.bookingLifecycleCoverage =
+      lifecycleCoverage.rows[0].bookings_without_five_tasks === 0 &&
+      lifecycleCoverage.rows[0].bookings_without_status_event === 0;
 
     await client.query("begin");
     await client.query("set local statement_timeout = '10s'");
@@ -167,6 +184,62 @@ async function main() {
         rateLimitAttempts[0]?.allowed === true &&
         rateLimitAttempts[1]?.allowed === true &&
         rateLimitAttempts[2]?.allowed === false;
+
+      const lifecycleBooking = await client.query(`
+        select id
+        from public.bookings
+        where status = 'paid'
+        order by created_at desc
+        limit 1
+      `);
+      if (lifecycleBooking.rows.length > 0) {
+        const bookingId = lifecycleBooking.rows[0].id;
+        const futureGuard = await client.query(
+          "select public.update_booking_ops_task($1, 'return_inspected', true, null, null) as result",
+          [bookingId],
+        );
+        checks.futureLifecycleGuard =
+          futureGuard.rows[0].result?.booking_status === "paid";
+        await client.query(
+          "select public.update_booking_ops_task($1, 'return_inspected', false, null, null)",
+          [bookingId],
+        );
+        await client.query(
+          "update public.bookings set rental_start_at = now() - interval '2 days', rental_end_at = now() - interval '1 day' where id = $1",
+          [bookingId],
+        );
+        const lifecycleResults = [];
+        for (const taskKey of [
+          "equipment_prepared",
+          "handoff_confirmed",
+          "return_scheduled",
+          "return_inspected",
+        ]) {
+          const lifecycle = await client.query(
+            "select public.update_booking_ops_task($1, $2, true, null, null) as result",
+            [bookingId, taskKey],
+          );
+          lifecycleResults.push(lifecycle.rows[0].result);
+        }
+        const audit = await client.query(
+          "select source, to_status from public.booking_status_events where booking_id = $1 order by created_at desc limit 4",
+          [bookingId],
+        );
+        const remainingBlocks = await client.query(
+          "select count(*)::int as count from public.booking_inventory_blocks where booking_id = $1",
+          [bookingId],
+        );
+        checks.bookingLifecycleTransactionalWrite =
+          lifecycleResults[0]?.booking_status === "delivering" &&
+          lifecycleResults[1]?.booking_status === "active" &&
+          lifecycleResults[2]?.booking_status === "returning" &&
+          lifecycleResults[3]?.booking_status === "completed" &&
+          audit.rows.length === 4 &&
+          audit.rows.every((event) => event.source.startsWith("ops_checklist:")) &&
+          remainingBlocks.rows[0].count === 0;
+      } else {
+        checks.bookingLifecycleTransactionalWrite = "skipped_no_paid_booking";
+      }
 
       const ledgerBooking = await client.query(
         "select id from public.bookings order by created_at limit 1",

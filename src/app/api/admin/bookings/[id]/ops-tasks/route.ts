@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase-admin";
 import { unauthorizedResponse, verifyAdmin } from "@/lib/admin-auth";
-import { DEFAULT_OPS_TASKS, ensureBookingOpsTasks, isMissingBookingOpsTasksTable } from "@/lib/booking-ops";
+import { DEFAULT_OPS_TASKS, isMissingBookingOpsTasksTable } from "@/lib/booking-ops";
+import { sendBookingLifecycleNotification } from "@/lib/booking-status-notifications";
 
 type OpsTaskPatchBody = {
   taskKey?: string;
@@ -37,7 +38,7 @@ export async function PATCH(
 
     const { data: booking, error: bookingError } = await supabase
       .from("bookings")
-      .select("id")
+      .select("*, product:products(name)")
       .eq("id", id)
       .single();
 
@@ -45,27 +46,40 @@ export async function PATCH(
       return NextResponse.json({ error: "Booking not found" }, { status: 404 });
     }
 
-    await ensureBookingOpsTasks(supabase, id);
-
     const isDone = Boolean(body.isDone);
-    const updates = {
-      is_done: isDone,
-      completed_at: isDone ? new Date().toISOString() : null,
-      completed_by: isDone ? user.id : null,
-      note: body.note === undefined ? undefined : body.note,
-    };
-
     const { data, error } = await supabase
-      .from("booking_ops_tasks")
-      .update(updates)
-      .eq("booking_id", id)
-      .eq("task_key", taskDefinition.task_key)
-      .select("*")
+      .rpc("update_booking_ops_task", {
+        p_booking_id: id,
+        p_task_key: taskDefinition.task_key,
+        p_is_done: isDone,
+        p_note: body.note ?? null,
+        p_actor_user_id: user.id,
+      })
       .single();
 
     if (error) throw error;
 
-    return NextResponse.json({ task: data });
+    const result = data as {
+      task: Record<string, unknown>;
+      booking_status: string;
+      previous_booking_status: string;
+      status_changed: boolean;
+    };
+    const emailSent = result.status_changed
+      ? await sendBookingLifecycleNotification(
+          supabase,
+          booking as Record<string, unknown>,
+          result.booking_status,
+        )
+      : false;
+
+    return NextResponse.json({
+      task: result.task,
+      bookingStatus: result.booking_status,
+      previousBookingStatus: result.previous_booking_status,
+      statusChanged: result.status_changed,
+      emailSent,
+    });
   } catch (err) {
     console.error("[admin/bookings/ops-tasks] PATCH error:", err);
     if (isMissingBookingOpsTasksTable(err)) {

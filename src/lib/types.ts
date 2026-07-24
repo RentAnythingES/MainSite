@@ -127,6 +127,17 @@ interface BookingRow {
   stripe_checkout_session_id?: string | null;
 }
 
+interface BookingStatusEventRow {
+  id: string;
+  booking_id: string;
+  from_status: BookingStatus | null;
+  to_status: BookingStatus;
+  source: string;
+  actor_user_id: string | null;
+  metadata: Record<string, unknown>;
+  created_at: string;
+}
+
 interface BlockedDateRow {
   id: string;
   product_id: string;
@@ -322,6 +333,11 @@ export interface Database {
         Insert: Omit<BookingRow, "id" | "booking_ref" | "created_at" | "updated_at">;
         Update: Partial<Omit<BookingRow, "id" | "booking_ref" | "created_at" | "updated_at">>;
       };
+      booking_status_events: {
+        Row: BookingStatusEventRow;
+        Insert: Omit<BookingStatusEventRow, "id" | "created_at">;
+        Update: Partial<Omit<BookingStatusEventRow, "id" | "created_at">>;
+      };
       blocked_dates: {
         Row: BlockedDateRow;
         Insert: Omit<BlockedDateRow, "id" | "created_at">;
@@ -371,6 +387,7 @@ export type Category = CategoryRow;
 export type Product = ProductRow;
 export type PricingTier = PricingTierRow;
 export type Booking = BookingRow;
+export type BookingStatusEvent = BookingStatusEventRow;
 export type BlockedDate = BlockedDateRow;
 export type PickupLocation = PickupLocationRow;
 export type ServiceZone = ServiceZoneRow;

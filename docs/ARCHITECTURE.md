@@ -66,6 +66,7 @@ Supabase (CRUD products, pricing, bookings)
 | `invoice_settings` | Issuer identity, invoice series, VAT policy, and compliance status | Admin/API only |
 | `booking_document_counters` | Yearly sequential counters for booking document numbers | Admin/API only |
 | `booking_ops_tasks` | Internal per-booking operations checklist tasks | Admin/API only |
+| `booking_status_events` | Immutable booking lifecycle transition audit trail | Server/admin only |
 | `booking_reviews` | Tokenized post-rental feedback, publication consent, and moderation state | Server/admin only |
 | `bundle_requests` | Private kit configurations captured before WhatsApp handoff | Server/admin only |
 | `newsletter_subscribers` | Newsletter signup consent records | Admin/API only |

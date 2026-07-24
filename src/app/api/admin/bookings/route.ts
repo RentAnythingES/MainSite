@@ -57,6 +57,7 @@ export async function GET(request: NextRequest) {
       paymentEventsResult,
       bookingDocumentsResult,
       opsTasksResult,
+      statusEventsResult,
       fulfillmentAmendmentsResult,
     ] = await Promise.all([
       fetchPickupLocationsById(supabase, pickupLocationIds),
@@ -76,6 +77,13 @@ export async function GET(request: NextRequest) {
             .in("booking_id", bookingIds)
             .order("sort_order", { ascending: true })
         : Promise.resolve({ data: [], error: null }),
+      bookingIds.length > 0
+        ? supabase
+            .from("booking_status_events")
+            .select("*")
+            .in("booking_id", bookingIds)
+            .order("created_at", { ascending: true })
+        : Promise.resolve({ data: [], error: null }),
       fetchFulfillmentAmendmentsByBookingIds(supabase, bookingIds),
     ]);
 
@@ -85,6 +93,7 @@ export async function GET(request: NextRequest) {
     if (opsTasksResult.error && !isMissingBookingOpsTasksTable(opsTasksResult.error)) {
       throw opsTasksResult.error;
     }
+    if (statusEventsResult.error) throw statusEventsResult.error;
     const bookingOpsTasksAvailable = !opsTasksResult.error;
     if (
       fulfillmentAmendmentsResult.error &&
@@ -104,6 +113,7 @@ export async function GET(request: NextRequest) {
     const paymentEventsByBookingId = new Map<string, unknown[]>();
     const bookingDocumentsByBookingId = new Map<string, unknown[]>();
     const opsTasksByBookingId = new Map<string, unknown[]>();
+    const statusEventsByBookingId = new Map<string, unknown[]>();
     const fulfillmentAmendmentsByBookingId = new Map<string, unknown[]>();
 
     for (const block of inventoryBlocksResult.data || []) {
@@ -138,6 +148,14 @@ export async function GET(request: NextRequest) {
       opsTasksByBookingId.set(bookingId, existing);
     }
 
+    for (const event of statusEventsResult.data || []) {
+      const bookingId = (event as { booking_id?: string | null }).booking_id;
+      if (!bookingId) continue;
+      const existing = statusEventsByBookingId.get(bookingId) || [];
+      existing.push(event);
+      statusEventsByBookingId.set(bookingId, existing);
+    }
+
     for (const amendment of fulfillmentAmendmentsResult.data || []) {
       const bookingId = amendment.booking_id;
       const existing = fulfillmentAmendmentsByBookingId.get(bookingId) || [];
@@ -170,6 +188,7 @@ export async function GET(request: NextRequest) {
           completed_at: null,
           note: null,
         })),
+      status_events: statusEventsByBookingId.get(booking.id as string) || [],
       fulfillment_amendments: fulfillmentAmendmentsByBookingId.get(booking.id as string) || [],
     }));
 

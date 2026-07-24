@@ -384,12 +384,15 @@ explicitly opted in. Reviews remain tied to completed bookings internally withou
 exposing customer contact details publicly.
 
 Migration `supabase/migrations/20260711_booking_ops_tasks.sql` adds internal
-per-booking ops checklist tasks. The admin booking detail can track whether the
-customer was contacted, equipment prepared, handoff confirmed, return scheduled,
-and return inspected without overloading the customer-facing booking status.
-Checklist completion currently does not advance booking status, and new bookings do
-not receive task rows until the checklist endpoint is first used. This is an
-operational gap, not a display problem. See `docs/BACKEND_AUDIT_2026-07-23.md`.
+per-booking ops checklist tasks. Migrations
+`20260724_booking_lifecycle_automation.sql` and
+`20260724_booking_lifecycle_reconciliation.sql` seed those tasks for every booking,
+record every status change in `booking_status_events`, and atomically reconcile
+evidence-backed milestones. Equipment preparation advances a started paid booking
+to delivery, confirmed handoff advances it to active, and return scheduling or
+inspection advances past-due rentals through return and completion. Future rentals
+never advance solely because tasks were checked early, and unchecking a task never
+reverses a status.
 Until that additive migration is applied, the bookings list remains available and
 shows the default checklist in a disabled state with a migration warning; booking
 status, payments, documents, inventory, and customer-email actions remain usable.
@@ -401,9 +404,9 @@ an admin-wide warning when any required schema capability is unavailable, so an
 operator sees database drift before opening a feature that depends on it.
 
 Expanded admin booking rows also show payment totals, Stripe checkout/payment IDs,
-active/released inventory block status, and a lightweight status timeline so support
-can quickly confirm whether a booking is paid, refunded, released, or still holding
-inventory.
+active/released inventory block status, and the database-backed status-event history
+so support can confirm what changed, when, and whether the source was a manual action
+or an operations milestone.
 
 Expanded rows also show a finance ledger with payment/refund events once
 `booking_payment_events` exists in Supabase. This is the first step toward invoice,

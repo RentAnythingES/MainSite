@@ -24,6 +24,7 @@
     "audit:discover-locales": "node scripts/discover-locale-audit.cjs",
     "smoke:booking": "node scripts/booking-api-smoke.cjs",
     "db:audit": "node scripts/audit-live-schema.cjs",
+    "db:audit:lifecycle": "node scripts/audit-booking-lifecycle.cjs",
     "db:migrate": "node scripts/apply-db-migrations.cjs",
     "db:verify": "node scripts/verify-live-backend.cjs"
   },

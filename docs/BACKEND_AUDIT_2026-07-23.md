@@ -102,13 +102,15 @@ emails, and verified-review invitations consequently never run.
 New bookings also receive no checklist rows until someone first interacts with the
 checklist endpoint.
 
-Required action:
-
-- Define authoritative transition rules and operator overrides.
-- Create task rows automatically for every new booking.
-- Advance or prompt for lifecycle changes as milestones complete.
-- Reconcile overdue statuses on a schedule.
-- Preserve audit events for automatic and manual transitions.
+Status: remediated on 2026-07-24. Every booking now receives its checklist at
+creation. Checklist milestones and manual controls use the same guarded,
+transactional status function; completion releases inventory atomically. Status
+changes are preserved in `booking_status_events`, customer lifecycle emails and
+review invitations run for checklist-driven transitions, and the admin shows the
+event history. Historical completed checklists were reconciled only when their
+rental dates had passed. Scheduled monitoring now warns about overdue handoffs,
+returns, incomplete checklists, and missing audit coverage without guessing that a
+physical handoff or return occurred.
 
 ### Register and reconcile physical inventory
 

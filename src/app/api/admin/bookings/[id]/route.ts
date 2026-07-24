@@ -163,29 +163,15 @@ export async function PUT(
       }
     }
 
-    // Build update
-    const updates: Record<string, unknown> = { status };
-    if (status === "cancelled") updates.cancelled_at = new Date().toISOString();
-    if (status === "completed") updates.completed_at = new Date().toISOString();
-    if (status === "paid") updates.paid_at = new Date().toISOString();
-
-    const releasesInventory =
-      status === "cancelled" || status === "refunded" || status === "completed";
-    const transitionResult = releasesInventory
-      ? await supabase
-          .rpc("transition_booking_terminal_status", {
-            p_booking_id: id,
-            p_expected_status: currentStatus,
-            p_new_status: status,
-          })
-          .single()
-      : await supabase
-          .from("bookings")
-          .update(updates)
-          .eq("id", id)
-          .eq("status", currentStatus)
-          .select()
-          .single();
+    const transitionResult = await supabase
+      .rpc("transition_booking_status", {
+        p_booking_id: id,
+        p_expected_status: currentStatus,
+        p_new_status: status,
+        p_source: "admin_status_transition",
+        p_actor_user_id: user.id,
+      })
+      .single();
     const { data, error } = transitionResult;
 
     if (error) throw error;
@@ -226,7 +212,6 @@ export async function PUT(
       }
     }
 
-    // Send status update email to customer (fire-and-forget)
     const b = booking as Record<string, unknown>;
     const product = b.product as { name: string } | null;
     const pickupLocationId = b.pickup_location_id as string | null;
@@ -237,7 +222,10 @@ export async function PUT(
         ? fetchPickupLocationsById(supabase, [pickupLocationId])
         : Promise.resolve({ data: [], error: null }),
       deliveryZoneId || collectionZoneId
-        ? fetchServiceZonesById(supabase, [deliveryZoneId, collectionZoneId].filter(Boolean) as string[])
+        ? fetchServiceZonesById(
+            supabase,
+            [deliveryZoneId, collectionZoneId].filter(Boolean) as string[],
+          )
         : Promise.resolve({ data: [], error: null }),
     ]);
     const pickupLocation = (pickupLocationsResult.data || [])[0] as {

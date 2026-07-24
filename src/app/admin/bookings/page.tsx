@@ -70,6 +70,14 @@ interface BookingOpsTask {
   note?: string | null;
 }
 
+interface BookingStatusEvent {
+  id: string;
+  from_status: string | null;
+  to_status: string;
+  source: string;
+  created_at: string;
+}
+
 interface FulfillmentAmendment {
   id: string;
   status: string;
@@ -122,6 +130,7 @@ interface Booking {
   payment_events?: PaymentEvent[];
   documents?: BookingDocument[];
   ops_tasks?: BookingOpsTask[];
+  status_events?: BookingStatusEvent[];
   fulfillment_amendments?: FulfillmentAmendment[];
   status: string;
   created_at: string;
@@ -195,7 +204,10 @@ export default function AdminBookingsPage() {
   }, [filter]);
 
   useEffect(() => {
-    fetchBookings();
+    const timeoutId = window.setTimeout(() => {
+      void fetchBookings();
+    }, 0);
+    return () => window.clearTimeout(timeoutId);
   }, [fetchBookings]);
 
   const updateStatus = async (bookingId: string, newStatus: string) => {
@@ -258,6 +270,11 @@ export default function AdminBookingsPage() {
       if (!res.ok) {
         throw new Error(data.error || "Failed to update checklist");
       }
+      setNotice(
+        data.statusChanged
+          ? `Checklist saved. Booking advanced from ${data.previousBookingStatus} to ${data.bookingStatus}${data.emailSent ? " and the customer was notified" : ""}.`
+          : "Checklist saved.",
+      );
       await fetchBookings();
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to update checklist");
@@ -605,6 +622,20 @@ export default function AdminBookingsPage() {
                         </div>
                       ))}
                     </div>
+                    {booking.status_events && booking.status_events.length > 0 && (
+                      <div className="mt-3 flex flex-wrap gap-2">
+                        {booking.status_events.map((event) => (
+                          <span
+                            key={event.id}
+                            className="rounded-full border border-neutral-800 bg-neutral-950 px-2.5 py-1 text-[11px] text-neutral-400"
+                            title={`${event.source} · ${formatDateTime(event.created_at)}`}
+                          >
+                            {event.from_status ? `${event.from_status} → ` : ""}
+                            <span className="text-neutral-200">{event.to_status}</span>
+                          </span>
+                        ))}
+                      </div>
+                    )}
                   </div>
 
                   <div className="mb-4 pt-4 border-t border-neutral-800">
