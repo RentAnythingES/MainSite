@@ -388,66 +388,63 @@ export const blogPosts: BlogPost[] = [
     slug: "valencia-summer-survival-guide",
     title: "Valencia Summer Survival Guide (2026)",
     h1: "How to survive (and enjoy) a Valencia summer",
-    description: "Practical tips for beating the heat in Valencia — from siesta schedules and beach strategies to cooling your apartment and what gear to rent.",
+    description: "Plan for Valencia's summer heat with local timing, beach advice and a practical comparison of fans, portable AC and air filtration.",
     category: "seasonal",
-    keywords: ["Valencia summer tips", "Valencia heat", "summer in Valencia Spain", "Valencia beach guide", "staying cool Valencia"],
+    keywords: ["Valencia summer tips", "Valencia heat", "portable air conditioner Valencia", "fan rental Valencia", "staying cool Valencia"],
     date: "2026-06-10",
-    readTime: "6 min read",
-    excerpt: "Practical tips for beating the heat in Valencia — from adopting the siesta schedule to cooling your apartment and making the most of the beaches.",
+    readTime: "8 min read",
+    excerpt: "Plan around Valencia's hottest hours, cool your accommodation effectively and choose between a fan, portable AC or air purifier.",
     tags: ["summer", "Valencia", "travel tips", "seasonal", "beach"],
     sections: [
       {
         heading: "The Reality of Valencia in Summer",
         paragraphs: [
-          "Let's be honest: Valencia in July and August is hot. Temperatures regularly hit 35-40 degrees Celsius, humidity can be high, and the sun is intense. If you're coming from Northern Europe or the US, it will feel like stepping into an oven the first time you walk outside at 2pm.",
-          "But here's the thing — millions of people live here year-round, and they don't just suffer through it. They've developed a lifestyle that works with the heat rather than against it. Adopt the local rhythms and Valencia in summer is genuinely wonderful — long beach evenings, outdoor dining at 10pm, and a city that feels alive when the sun goes down.",
-          "This guide gives you the practical strategies that locals use, plus specific advice for visitors who aren't used to Mediterranean summers."
+          "Valencia is hot and often humid in July and August, but 35-40°C is not the everyday baseline. <a href=\"https://www.aemet.es/en/serviciosclimaticos/datosclimatologicos?k=undefined&l=8414A\" rel=\"noopener noreferrer\">AEMET's Valencia Airport climate normals</a> put the average July daily maximum at 30.6°C; individual heat episodes can be considerably hotter.",
+          "The most useful response is to plan around the conditions rather than keeping a cool-climate schedule. Early mornings suit the Turia Gardens, Central Market and the beach; the central hours are better for lunch or an indoor visit; evenings bring the city back to life.",
+          "Check AEMET's forecast and heat alerts for your actual dates, especially when travelling with babies, older people or anyone whose health may be affected by high temperatures."
         ]
       },
       {
-        heading: "The Siesta Schedule: Your Secret Weapon",
+        heading: "Plan the Day Around the Heat",
         paragraphs: [
-          "The Spanish siesta exists for a reason — and that reason is 38-degree afternoons. Embrace the local rhythm and your summer immediately gets better:",
-          "<strong>Morning (7am-1pm):</strong> This is your active time. Hit the beach early (before 11am is ideal), explore the Turia Gardens, visit the Mercado Central, or get your sightseeing done. The light is beautiful and the temperature is manageable.",
-          "<strong>Midday (2pm-5pm):</strong> Retreat indoors. This is when many shops close and locals eat lunch (a big, long, leisurely meal). Take a nap, read, work, or visit air-conditioned spaces like the Science Museum or a shopping centre. Do not walk around the old town at 3pm — you will regret it.",
-          "<strong>Evening (6pm onwards):</strong> The city comes back to life. The beach is perfect from 6-8pm (the water is warm, the sun is low). Dinner rarely starts before 9pm, and outdoor terraces are packed until midnight. This is when Valencia is at its absolute best."
+          "<strong>Morning (7am-1pm):</strong> Use the cooler part of the day for the beach, the Turia Gardens, Central Market or walking through the historic centre.",
+          "<strong>Midday (2pm-5pm):</strong> Reduce strenuous outdoor activity and choose a shaded or air-conditioned stop. The Science Museum, a long lunch or time at the accommodation all work better than an exposed cross-city walk.",
+          "<strong>Evening (from 6pm):</strong> Reassess the temperature rather than relying only on the clock. On many days the beach and outdoor terraces become more comfortable as direct sun weakens."
         ]
       },
       {
         heading: "Cooling Your Apartment",
         paragraphs: [
-          "Many holiday rentals in Valencia don't have air conditioning — or have a single underpowered unit in the bedroom. If your accommodation is hot, here's what actually works:",
-          "<strong>Shutters are everything:</strong> Spanish buildings have external shutters (persianas) for a reason. Keep them closed from about 11am to 7pm. This single habit makes more difference than any fan. Open windows wide at night for cross-ventilation when the temperature drops.",
-          "<strong>Portable AC (pinguino):</strong> If your apartment doesn't have AC and you're staying more than a few days in peak summer, a <a href=\"/product/mobile-airconditioner-delonghi-pinguino-compact-classic\">portable air conditioning unit</a> is genuinely worth renting. They're most effective in bedrooms — a cool room for sleeping transforms your entire summer experience. Locals call them <em>pinguinos</em> (penguins).",
-          "<strong>Air purifier bonus:</strong> If you're sensitive to air quality, an <a href=\"/product/air-purifier\">air purifier</a> with a fan function serves double duty. Valencia occasionally gets Saharan dust (calima) in summer, and having filtered air makes a noticeable difference on those days.",
-          "<strong>Avoid cooking heat:</strong> Use your oven as little as possible. Embrace gazpacho, salads, and the menu del dia at local restaurants. Spanish summer cooking is designed to avoid heating up the kitchen."
+          "Ask your host which rooms are air-conditioned before arrival. Some apartments have no fixed cooling; others have one unit that does not reach the bedroom.",
+          "<strong>Block solar heat first:</strong> Close external shutters or curtains before direct sun reaches the room. Ventilate when the air outside is cooler, usually overnight or early in the morning, and create cross-flow where the window layout allows it.",
+          "<strong>Choose a fan for airflow:</strong> A <a href=\"/product/bladeless-fan-ventilator\">portable fan</a> can make an occupied room feel more comfortable and support night ventilation, but it does not lower the room's air temperature. It is the simpler choice when the accommodation is already reasonably cool.",
+          "<strong>Choose portable AC for active cooling:</strong> A <a href=\"/product/mobile-airconditioner-delonghi-pinguino-compact-classic\">portable air conditioner</a> is the stronger option for a closed bedroom or living space. Confirm the room size and window first: the hot-air hose needs a suitable outlet, as explained in <a href=\"https://www.delonghi.com/es-es/faqs/%C2%BFLas-unidades-de-aire-acondicionado-port%C3%A1tiles-funcionan-sin-tubo/a/4889\" rel=\"noopener noreferrer\">De'Longhi's installation guidance</a>.",
+          "<strong>Use filtration for air quality, not cooling:</strong> A room air purifier may reduce some airborne particles when correctly sized and maintained. It does not cool the room or replace source control and ventilation with clean outdoor air."
         ]
       },
       {
         heading: "Beach Strategy",
         paragraphs: [
-          "Valencia's beaches are the best thing about summer here. But approach them strategically:",
-          "<strong>Go early or go late:</strong> The beach from 7-11am is paradise — empty, cool, beautiful light. From 11am-4pm it's brutally hot with no shade. From 5-8pm is the sweet spot — still warm enough to swim, crowds thinning, and the sunset over the city skyline is spectacular.",
-          "<strong>Shade is essential:</strong> There's virtually no natural shade on Valencia's urban beaches. Sunbed and umbrella rental costs about €9-10 each at the chiringuitos (beach bars), but they sell out on busy days. Having your own <a href=\"/product/beach-umbrella-set\">beach umbrella set</a> means you're never stuck in the sun with a sleeping baby or elderly family member.",
-          "<strong>Water and snacks:</strong> Bring plenty of water. The beach bars sell drinks but at tourist prices. Frozen grapes and watermelon are the Spanish beach snack of choice — pick them up at any Mercadona.",
-          "<strong>Beach shoes:</strong> The sand gets scorching hot by midday. Bring water shoes or flip-flops you can walk on the sand in."
+          "Valencia's urban beaches have little natural shade, so timing and preparation matter more than trying to stay all day.",
+          "<strong>Go early or late:</strong> Before 11am or later in the afternoon is often more comfortable than the central hours. Check the day's UV level, temperature and any local warnings rather than treating a fixed time as safe in every condition.",
+          "<strong>Bring reliable shade and water:</strong> A beach umbrella or UV-rated shelter reduces direct exposure but does not replace sunscreen, hydration or breaks indoors. Browse the <a href=\"/rental/travel-outdoors\">Beach & Outdoor collection</a> for the shade and carrying options currently offered.",
+          "<strong>Protect your feet:</strong> Dry sand can become uncomfortable in direct sun. Keep suitable footwear available, particularly for children and anyone with reduced sensation or mobility."
         ]
       },
       {
-        heading: "What to Rent for Summer",
+        heading: "Choose the Right Summer Setup",
         paragraphs: [
-          "Summer-specific gear that makes a genuine difference:",
-          "<strong>Portable AC unit:</strong> The single biggest quality-of-life upgrade if your accommodation lacks air conditioning. Rental is a fraction of the cost of buying one, and you don't have to store or dispose of it when you leave.",
-          "<strong>Beach umbrella and chairs:</strong> Independence from the chiringuito rental means you can set up anywhere on the beach, arrive whenever you want, and aren't limited to the roped-off rental areas.",
-          "<strong>Air purifier:</strong> Useful during calima (Saharan dust) days and for anyone with allergies or respiratory sensitivities. Summer pollen + dust + heat is a challenging combination for sensitive visitors.",
-          "Everything can be <a href=\"/contact\">delivered to your door</a> before you arrive — one less thing to worry about when you step off the plane into 37 degrees."
+          "Start with the accommodation, not the equipment list. Confirm the room size, window type, existing cooling and any building restrictions before choosing a unit.",
+          "<strong>Choose a fan</strong> when you mainly need air movement, the room cools overnight and you can ventilate safely. <strong>Choose portable AC</strong> when you need to reduce the temperature of a closed room and can vent the exhaust correctly.",
+          "<strong>Add an air purifier</strong> only for a separate air-quality need. The <a href=\"https://www.epa.gov/indoor-air-quality-iaq/guide-air-cleaners-home\" rel=\"noopener noreferrer\">US EPA guide</a> recommends sizing a portable cleaner for the room and treating filtration as a supplement rather than a complete solution.",
+          "Use the <a href=\"/rental/home-living\">Apartment Comfort collection</a> to compare the equipment currently offered. Enter your dates on the relevant product page to check live availability and the fulfillment options available for your address."
         ]
       }
     ],
     faqs: [
       {
         question: "How hot does Valencia get in summer?",
-        answer: "Temperatures regularly reach 35-40 degrees Celsius in July and August, with high humidity. The heat is most intense between 2pm and 5pm. Mornings and evenings are much more comfortable, typically 22-28 degrees."
+        answer: "AEMET's Valencia Airport climate normals show an average July daily maximum of 30.6°C, while individual heat episodes can be hotter. Check the official forecast and alerts for your dates rather than planning around an average."
       },
       {
         question: "Do Valencia apartments have air conditioning?",
@@ -455,15 +452,19 @@ export const blogPosts: BlogPost[] = [
       },
       {
         question: "When is the best time to go to the beach in Valencia?",
-        answer: "Early morning (7-11am) for quiet, pleasant conditions, or late afternoon (5-8pm) for warm water and beautiful sunsets. Avoid midday (12-4pm) when there is no shade and the sand is scorching hot."
+        answer: "Early morning or later in the afternoon is often more comfortable than the central hours. Conditions vary, so check the day's temperature, UV level and local warnings, and bring reliable shade and water."
       },
       {
         question: "Can I rent a portable air conditioner in Valencia?",
-        answer: "Yes — portable AC units are available for short-term rental with delivery to your accommodation. They are most effective in bedrooms and can transform your summer sleeping quality. Much cheaper than buying a unit you will only use for a week or two."
+        answer: "Yes, subject to live availability and room compatibility. A portable unit needs a suitable outlet for its hot-air hose; enter your dates on the product page and review the available pickup or delivery option before payment."
       },
       {
-        question: "What is calima and does it affect Valencia?",
-        answer: "Calima is a weather phenomenon that brings Saharan dust across the Mediterranean to Spain. It can reduce air quality and visibility for a few days at a time. An air purifier helps significantly on calima days, especially for visitors with respiratory sensitivities."
+        question: "Should I choose a portable air conditioner or a fan?",
+        answer: "Choose a fan for air movement when the room is already reasonably cool and can be ventilated. Choose portable AC when you need active cooling in a closed room and have a suitable window or outlet for the exhaust hose."
+      },
+      {
+        question: "Does an air purifier cool a room?",
+        answer: "No. An air purifier filters some airborne particles when correctly sized and maintained, but it is not an air conditioner. Use it for a separate air-quality need, not as a substitute for cooling or official health guidance."
       }
     ],
     crossLinks: [
@@ -478,19 +479,19 @@ export const blogPosts: BlogPost[] = [
         description: "Build a practical cooling and comfort setup around your accommodation"
       },
       {
-        title: "Portable Air Conditioner",
+        title: "Portable Air Conditioner Rental",
         href: "/product/mobile-airconditioner-delonghi-pinguino-compact-classic",
-        description: "Cool your apartment — delivered and ready to use"
+        description: "Check room compatibility, live availability and fulfillment options"
       },
       {
-        title: "Beach Umbrella Set",
-        href: "/product/beach-umbrella-set",
-        description: "UV-protected shade for the whole family"
+        title: "Bladeless Fan Rental",
+        href: "/product/bladeless-fan-ventilator",
+        description: "A portable airflow option for apartments that cool overnight"
       },
       {
-        title: "Air Purifier",
-        href: "/product/air-purifier",
-        description: "Clean air for calima days and allergy season"
+        title: "Best Valencia Beaches for Families",
+        href: "/blog/best-beaches-valencia-families",
+        description: "Compare beach access, facilities, shade and family logistics"
       }
     ]
   },

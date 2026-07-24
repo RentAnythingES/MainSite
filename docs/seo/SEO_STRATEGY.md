@@ -68,7 +68,7 @@ the visible answers feed the existing FAQPage schema in both locales.
 | Baby & Toddler | 7 / 7 | Category, Baby Arrival and Toddler City kits, 3 family/baby articles | Strong; add narrow decision content only where query ownership is distinct |
 | Mobility & Accessibility | 5 / 5 | Category, 2 accessibility kits, accessibility guide, accessible local guides | Expand commercial comparisons and verified accessibility planning |
 | Remote Work | 3 / 3 | Category, Remote Work kit, nomad guide, home-office tutorial | Coherent cluster; deepen exact workstation and temporary-stay decisions |
-| Apartment Comfort | 5 / 5 | Category, Summer and Long-Stay kits, summer guide | Commercially relevant but editorially thin; prioritize cooling and long-stay problems |
+| Apartment Comfort | 5 / 5 | Category, Summer and Long-Stay kits, bilingual summer cooling decision guide | Cooling choice is now covered; deepen only from measured long-stay demand |
 | Kids & Family | 1 / 1 | Category, 2 shared kits, 2 family articles | Bilingual product support is live; expand only with verified inventory and distinct demand |
 | Sports & Wellness | 1 / 1 | Category, Turia Gardens guide and product-level pathways | Newly opened cluster; expand only as approved sports inventory becomes available |
 

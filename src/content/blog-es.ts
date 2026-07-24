@@ -133,17 +133,18 @@ export const spanishBlogPosts: BlogPost[] = [
     title: "Cómo disfrutar del verano en Valencia (Guía 2026)",
     h1: "Cómo disfrutar del verano en Valencia sin sufrir el calor",
     description:
-      "Consejos prácticos para el verano en Valencia: horarios, playa, ventilación, aire acondicionado portátil y equipamiento útil para tu alojamiento.",
+      "Planifica el verano en Valencia con horarios locales, consejos de playa y una comparación práctica entre ventilador, aire portátil y filtración.",
     category: "seasonal",
     keywords: [
       "verano en Valencia consejos",
       "calor Valencia verano",
       "aire acondicionado portátil Valencia",
+      "alquiler ventilador Valencia",
       "playa Valencia verano",
       "cómo dormir con calor Valencia",
     ],
     date: "2026-06-10",
-    readTime: "7 min de lectura",
+    readTime: "8 min de lectura",
     excerpt:
       "Adapta tus horarios, protege el alojamiento del sol y aprovecha la playa cuando baja el calor: una guía práctica para el verano valenciano.",
     tags: ["verano", "Valencia", "calor", "apartamento", "playa"],
@@ -151,7 +152,7 @@ export const spanishBlogPosts: BlogPost[] = [
       {
         heading: "Qué esperar del verano en Valencia",
         paragraphs: [
-          "Julio y agosto pueden traer temperaturas muy altas, humedad y muchas horas de sol directo. El tramo más incómodo suele concentrarse por la tarde, mientras que las mañanas tempranas y las noches permiten disfrutar mucho más de la ciudad.",
+          "Julio y agosto pueden traer temperaturas muy altas, humedad y muchas horas de sol directo. Como referencia, los <a href=\"https://www.aemet.es/es/serviciosclimaticos/datosclimatologicos/valoresclimatologicos?l=8414A\" rel=\"noopener noreferrer\">valores normales de AEMET para el Aeropuerto de Valencia</a> sitúan la máxima diaria media de julio en 30,6 °C, aunque los episodios de calor pueden superar ampliamente esa cifra.",
           "La clave no es intentar mantener el mismo horario que en un clima más fresco. Valencia funciona mejor en verano cuando concentras la actividad por la mañana, descansas durante las horas centrales y vuelves a salir al final de la tarde.",
           "Las condiciones cambian de un día a otro. Consulta siempre la previsión de AEMET, presta atención a los avisos por calor y ajusta los planes si viajas con bebés, personas mayores o alguien con problemas respiratorios.",
         ],
@@ -170,7 +171,8 @@ export const spanishBlogPosts: BlogPost[] = [
           "Cierra persianas y cortinas antes de que el sol caliente las habitaciones. En muchos pisos valencianos, mantener las persianas bajadas entre el final de la mañana y la tarde marca más diferencia que dejar un ventilador funcionando todo el día.",
           "Ventila cuando la temperatura exterior baje, normalmente por la noche y a primera hora. Si puedes crear corriente entre dos fachadas o ventanas opuestas, el aire acumulado sale con más rapidez.",
           "Confirma con el alojamiento qué sistema de climatización existe y en qué habitaciones. Una unidad pequeña en el salón no garantiza una temperatura cómoda en el dormitorio.",
-          "Si no hay aire acondicionado, puedes comprobar la disponibilidad de un <a href=\"/es/product/mobile-airconditioner-delonghi-pinguino-compact-classic\">aire acondicionado portátil</a>. Funciona mejor en una habitación cerrada y requiere una salida adecuada para el tubo de aire caliente.",
+          "Elige un <a href=\"/es/product/bladeless-fan-ventilator\">ventilador portátil</a> si buscas movimiento de aire y la vivienda ya se enfría durante la noche. Mejora la sensación de confort, pero no reduce la temperatura del aire de la habitación.",
+          "Elige un <a href=\"/es/product/mobile-airconditioner-delonghi-pinguino-compact-classic\">aire acondicionado portátil</a> si necesitas enfriar activamente una estancia cerrada. Confirma el tamaño de la habitación y el tipo de ventana: el tubo de aire caliente necesita una salida adecuada, como explica la <a href=\"https://www.delonghi.com/es-es/faqs/%C2%BFLas-unidades-de-aire-acondicionado-port%C3%A1tiles-funcionan-sin-tubo/a/4889\" rel=\"noopener noreferrer\">guía de instalación de De'Longhi</a>.",
         ],
       },
       {
@@ -178,23 +180,24 @@ export const spanishBlogPosts: BlogPost[] = [
         paragraphs: [
           "Las playas urbanas tienen muy poca sombra natural. Entre las 11:00 y las 17:00 la arena puede alcanzar temperaturas incómodas y la radiación ultravioleta es intensa, incluso con brisa marina.",
           "Ir antes de las 11:00 o regresar a partir de las 17:00 reduce la exposición y suele ofrecer una experiencia más tranquila. Lleva más agua de la que crees necesaria y no dependas únicamente de los chiringuitos.",
-          "Una <a href=\"/es/product/beach-umbrella-set\">sombrilla</a> o un refugio con protección UV es especialmente importante para niños pequeños y personas mayores. La sombra reduce la exposición, pero no sustituye el protector solar ni la hidratación.",
+          "Una sombrilla o un refugio con protección UV es especialmente importante para niños pequeños y personas mayores. La sombra reduce la exposición, pero no sustituye el protector solar ni la hidratación. Consulta la colección de <a href=\"/es/rental/travel-outdoors\">Playa y Aire Libre</a> para ver las opciones disponibles.",
         ],
       },
       {
         heading: "Calima, humedad y calidad del aire",
         paragraphs: [
           "Algunos episodios de verano traen polvo sahariano, conocido como calima. Puede empeorar la visibilidad y causar molestias a personas con alergias, asma u otras sensibilidades respiratorias.",
-          "Durante esos días, mantén las ventanas cerradas cuando la calidad del aire sea peor y consulta fuentes oficiales. Un <a href=\"/es/product/air-purifier\">purificador con filtro adecuado</a> puede ayudar dentro de una habitación, pero no reemplaza las recomendaciones sanitarias.",
+          "Durante esos días, mantén las ventanas cerradas cuando la calidad del aire sea peor y consulta fuentes oficiales. Un purificador correctamente dimensionado puede filtrar algunas partículas dentro de una habitación, pero no enfría el aire ni reemplaza las recomendaciones sanitarias, el control de las fuentes o la ventilación con aire limpio.",
           "La humedad también dificulta el descanso aunque la temperatura no parezca extrema. Priorizar un dormitorio fresco suele mejorar más la estancia que intentar enfriar todo el apartamento.",
         ],
       },
       {
-        heading: "Equipamiento útil para una estancia de verano",
+        heading: "Elige la climatización adecuada",
         paragraphs: [
           "El equipamiento adecuado depende del alojamiento. Antes de alquilar nada, confirma el tamaño de la habitación, el tipo de ventanas, las normas del edificio y si ya existe climatización.",
-          "Para estancias sin aire acondicionado, una unidad portátil puede mejorar el dormitorio. Para la playa, la sombra propia evita depender de concesiones que pueden estar completas. Si hay calima o alergias, un purificador puede ser un complemento útil.",
-          "Consulta nuestro <a href=\"/es/rental/home-living\">equipamiento para el confort del apartamento</a> y comprueba disponibilidad para tus fechas. Si la instalación no encaja con tu alojamiento, te indicaremos alternativas antes de confirmar.",
+          "El ventilador es la opción más sencilla cuando basta con mover el aire y puedes ventilar de forma segura. El aire acondicionado portátil es más adecuado cuando necesitas reducir la temperatura de una estancia cerrada y puedes instalar correctamente el tubo de salida.",
+          "Añade un purificador solo para una necesidad independiente de calidad del aire. La <a href=\"https://www.epa.gov/indoor-air-quality-iaq/guide-air-cleaners-home\" rel=\"noopener noreferrer\">guía de la EPA</a> recomienda dimensionarlo para la habitación y tratar la filtración como un complemento, no como una solución completa.",
+          "Consulta nuestro <a href=\"/es/rental/home-living\">equipamiento para el confort del apartamento</a>, introduce tus fechas en la ficha correspondiente y revisa las opciones de recogida o entrega disponibles antes del pago.",
         ],
       },
     ],
@@ -202,7 +205,7 @@ export const spanishBlogPosts: BlogPost[] = [
       {
         question: "¿Cuánto calor hace en Valencia en verano?",
         answer:
-          "Julio y agosto pueden registrar máximas muy elevadas, especialmente durante episodios de calor. La humedad aumenta la sensación térmica. Consulta AEMET para las condiciones y avisos de tus fechas concretas.",
+          "Los valores normales de AEMET para el Aeropuerto de Valencia sitúan la máxima diaria media de julio en 30,6 °C, aunque los episodios de calor pueden ser más intensos. Consulta la previsión y los avisos oficiales para tus fechas.",
       },
       {
         question: "¿Todos los apartamentos de Valencia tienen aire acondicionado?",
@@ -217,7 +220,12 @@ export const spanishBlogPosts: BlogPost[] = [
       {
         question: "¿Se puede alquilar aire acondicionado portátil en Valencia?",
         answer:
-          "Sí, sujeto a disponibilidad y a que la habitación tenga una salida adecuada para el tubo. Debes confirmar el tipo de ventana y el tamaño del espacio antes de la instalación.",
+          "Sí, sujeto a disponibilidad y a que la habitación tenga una salida adecuada para el tubo. Confirma el tipo de ventana y el tamaño del espacio, introduce tus fechas y revisa la opción de recogida o entrega antes del pago.",
+      },
+      {
+        question: "¿Me conviene un aire acondicionado portátil o un ventilador?",
+        answer:
+          "Elige un ventilador para mover el aire cuando la estancia ya es razonablemente fresca y puedes ventilar. Elige aire acondicionado portátil cuando necesitas enfriar activamente una habitación cerrada y dispones de una salida adecuada para el tubo.",
       },
       {
         question: "¿Qué es la calima?",
@@ -232,19 +240,29 @@ export const spanishBlogPosts: BlogPost[] = [
         description: "Climatización portátil y calidad del aire para estancias en Valencia",
       },
       {
-        title: "Aire acondicionado portátil",
+        title: "Kit de verano para el apartamento",
+        href: "/es/valencia/kits/summer-apartment-survival-kit",
+        description: "Configura una combinación práctica según tu alojamiento",
+      },
+      {
+        title: "Alquiler de aire acondicionado portátil",
         href: "/es/product/mobile-airconditioner-delonghi-pinguino-compact-classic",
         description: "Comprueba compatibilidad y disponibilidad para tus fechas",
       },
       {
-        title: "Purificador de aire",
-        href: "/es/product/air-purifier",
-        description: "Filtración para alojamientos y episodios de peor calidad del aire",
+        title: "Alquiler de ventilador sin aspas",
+        href: "/es/product/bladeless-fan-ventilator",
+        description: "Una opción portátil para mover el aire en el alojamiento",
       },
       {
         title: "Sombrilla de playa",
         href: "/es/product/beach-umbrella-set",
         description: "Sombra portátil para días de playa en familia",
+      },
+      {
+        title: "Las mejores playas de Valencia para familias",
+        href: "/es/blog/best-beaches-valencia-families",
+        description: "Compara acceso, servicios, sombra y logística familiar",
       },
     ],
   },

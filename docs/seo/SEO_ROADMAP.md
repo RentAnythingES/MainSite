@@ -5,6 +5,11 @@
 
 ## ✅ Completed
 
+- [x] Bilingual summer cooling decision refresh: retained the established summer
+  guide URLs, corrected the AEMET temperature baseline, removed unsupported
+  savings/delivery/health claims, and added portable-AC-versus-fan guidance with
+  Apartment Comfort, kit, product, and related-guide pathways (24 July 2026).
+
 - [x] Kids & Family category FAQ parity: added four customer-decision questions
   in English and Spanish covering current catalogue scope, child fit, fulfillment,
   and individual-item versus kit selection. Both category routes now use the
