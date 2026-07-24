@@ -149,6 +149,41 @@ async function main() {
         rateLimitAttempts[0]?.allowed === true &&
         rateLimitAttempts[1]?.allowed === true &&
         rateLimitAttempts[2]?.allowed === false;
+
+      const ledgerBooking = await client.query(
+        "select id from public.bookings order by created_at limit 1",
+      );
+      if (ledgerBooking.rows.length > 0) {
+        const providerEventId = `schema-check-${Date.now()}`;
+        const ledgerRows = [];
+        for (const amountCents of [1, 2]) {
+          const ledgerEvent = await client.query(
+            `
+              insert into public.booking_payment_events (
+                booking_id,
+                event_type,
+                status,
+                provider,
+                currency,
+                amount_cents,
+                provider_event_id,
+                description
+              )
+              values ($1, 'manual_adjustment', 'succeeded', 'schema_verification', 'eur', $2, $3, 'Rollback-only verification')
+              on conflict (provider, provider_event_id)
+              do update set amount_cents = excluded.amount_cents
+              returning id, amount_cents
+            `,
+            [ledgerBooking.rows[0].id, amountCents, providerEventId],
+          );
+          ledgerRows.push(ledgerEvent.rows[0]);
+        }
+        checks.paymentLedgerIdempotentWrite =
+          ledgerRows[0]?.id === ledgerRows[1]?.id &&
+          ledgerRows[1]?.amount_cents === 2;
+      } else {
+        checks.paymentLedgerIdempotentWrite = "skipped_no_booking";
+      }
     } finally {
       await client.query("rollback");
     }

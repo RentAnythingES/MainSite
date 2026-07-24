@@ -49,11 +49,7 @@ interface RecordBookingPaymentEventInput {
 }
 
 interface DynamicQueryBuilder {
-  upsert: (row: Record<string, unknown>, options?: { onConflict?: string }) => Promise<{ error: unknown }>;
   select: (columns: string) => {
-    eq: (column: string, value: string) => {
-      maybeSingle: () => Promise<{ data: unknown | null; error: unknown }>;
-    };
     in: (column: string, values: string[]) => {
       order: (column: string, options?: { ascending?: boolean }) => Promise<{ data: unknown[] | null; error: unknown }>;
     };
@@ -90,27 +86,14 @@ export async function recordBookingPaymentEvent(
     occurred_at: input.occurredAt || new Date().toISOString(),
   };
 
-  const query = asDynamicSupabase(supabase)
+  const { data, error } = await supabase
     .from("booking_payment_events")
-    .upsert(row, providerEventId ? { onConflict: "provider,provider_event_id" } : undefined);
-
-  const { error } = await query;
+    .upsert(row, providerEventId ? { onConflict: "provider,provider_event_id" } : undefined)
+    .select("*")
+    .single();
 
   if (error) {
     console.error("[payment-ledger] Failed to record payment event:", error);
-    return null;
-  }
-
-  if (!providerEventId) return null;
-
-  const { data, error: fetchError } = await asDynamicSupabase(supabase)
-    .from("booking_payment_events")
-    .select("*")
-    .eq("provider_event_id", providerEventId)
-    .maybeSingle();
-
-  if (fetchError) {
-    console.error("[payment-ledger] Failed to fetch saved payment event:", fetchError);
     return null;
   }
 

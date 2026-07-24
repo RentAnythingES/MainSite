@@ -52,12 +52,15 @@ the database only has a partial unique index for those columns. PostgreSQL rejec
 the conflict target with `42P10`; the helper logs and returns `null`, document
 creation is skipped, and the webhook still reports success.
 
-Required action:
+Status: the idempotency index and write helper were repaired on 2026-07-24. A
+rollback-only production test confirmed that duplicate provider events resolve to
+one ledger row. New payment and refund events can now be recorded correctly.
 
-1. Add a matching constraint or change the idempotent insert strategy.
-2. Make finance-write failures visible to monitoring.
-3. Backfill events and documents from verified booking and Stripe records.
-4. Reconcile numbering and tax treatment before issuing documents.
+Remaining action:
+
+1. Make finance-write failures visible to monitoring.
+2. Backfill events and documents from verified booking and Stripe records.
+3. Reconcile numbering and tax treatment before issuing documents.
 
 ### Make refunds financially safe
 

@@ -319,6 +319,9 @@ Payment ledger foundation:
 
 - Migration `supabase/migrations/20260710_booking_payment_events.sql` adds
   `booking_payment_events` for durable finance events.
+- Migration `supabase/migrations/20260724_fix_payment_event_idempotency.sql`
+  makes provider event IDs a valid atomic upsert target. Future payment/refund
+  ledger writes are verified; historical events still require reconciliation.
 - Migration `supabase/migrations/20260710_booking_documents.sql` adds
   `booking_documents` and yearly sequential document counters.
 - Stripe `checkout.session.completed` records a `payment` event after the booking is
