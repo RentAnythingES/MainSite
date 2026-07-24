@@ -77,6 +77,7 @@ Supabase (CRUD products, pricing, bookings)
 | `inventory_unit_events` | Append-only unit creation, inspection, and status history | Admin only |
 | `booking_inventory_unit_assignments` | Physical-unit reservation, handover, return, and release history per booking | Admin/API only |
 | `monitoring_runs` | Scheduled production health results and alert deduplication | Server/admin only |
+| `api_rate_limits` | HMAC-keyed distributed counters for public mutation endpoints | Server only |
 
 Unexpected booking-draft creation failures and Stripe Checkout session-state
 persistence failures are written to `system_incidents`. Expected customer conflicts,
@@ -94,6 +95,11 @@ The function is `SECURITY DEFINER` only because it performs that atomic lock and
 write; execution is restricted to the `service_role` used by the server-side
 booking draft API. Product images use a public Storage bucket for CDN delivery,
 without a public `storage.objects` listing policy.
+
+Public booking-draft creation uses the atomic `consume_api_rate_limit(...)` database
+function before pricing or inventory reservation. Counters are shared across Vercel
+instances and keyed by HMAC hashes of IP, IP/product, and email identifiers; raw IP
+and email values are not stored in the rate-limit table.
 
 Fulfillment configuration stores both public instructions and internal operations
 notes. The additive migration `20260709_fulfillment_instruction_config.sql` adds

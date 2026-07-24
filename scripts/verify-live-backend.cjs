@@ -136,6 +136,19 @@ async function main() {
         ) returning id
       `);
       checks.bundleRequestTransactionalWrite = bundleRequest.rows.length === 1;
+
+      const rateLimitAttempts = [];
+      for (let attempt = 0; attempt < 3; attempt += 1) {
+        const rateLimit = await client.query(
+          "select * from public.consume_api_rate_limit($1, $2, $3, $4)",
+          ["schema-verification", "a".repeat(64), 2, 60],
+        );
+        rateLimitAttempts.push(rateLimit.rows[0]);
+      }
+      checks.rateLimitTransactionalWrite =
+        rateLimitAttempts[0]?.allowed === true &&
+        rateLimitAttempts[1]?.allowed === true &&
+        rateLimitAttempts[2]?.allowed === false;
     } finally {
       await client.query("rollback");
     }

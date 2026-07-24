@@ -13,6 +13,7 @@ import {
   toDateOnly,
 } from "@/lib/booking-v2";
 import type { FulfillmentMode } from "@/lib/types";
+import { consumeRateLimits, getClientIp } from "@/lib/rate-limit";
 
 interface DraftRequestBody {
   draftId?: string;
@@ -58,6 +59,39 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Quantity must be a positive integer" }, { status: 400 });
     }
 
+    const supabase = createServiceClient();
+    const clientIp = getClientIp(request);
+    const rateLimit = await consumeRateLimits(supabase, [
+      {
+        scope: "booking-drafts:ip",
+        identifier: clientIp,
+        limit: 20,
+        windowSeconds: 15 * 60,
+      },
+      {
+        scope: "booking-drafts:ip-product",
+        identifier: `${clientIp}:${body.productSlug}`,
+        limit: 8,
+        windowSeconds: 15 * 60,
+      },
+      {
+        scope: "booking-drafts:email",
+        identifier: body.customerEmail,
+        limit: 6,
+        windowSeconds: 60 * 60,
+      },
+    ]);
+
+    if (!rateLimit.allowed) {
+      return NextResponse.json(
+        { error: "Too many booking attempts. Please wait a little before trying again." },
+        {
+          status: 429,
+          headers: { "Retry-After": String(rateLimit.retryAfterSeconds) },
+        },
+      );
+    }
+
     assertFulfillmentFields(
       {
         mode: fulfillmentMode,
@@ -71,7 +105,6 @@ export async function POST(request: NextRequest) {
 
     const startAt = parseRentalDate(body.startAt, "startAt");
     const endAt = parseRentalDate(body.endAt, "endAt");
-    const supabase = createServiceClient();
     await cleanupExpiredBookingDrafts(supabase);
 
     const { product, tiers, quantityDiscounts } = await getProductWithPricing(supabase, body.productSlug);

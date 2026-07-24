@@ -32,6 +32,8 @@ Initial Booking System v2 code is now in place:
 - `/api/availability` accepts date-only legacy checks and datetime `startAt`/`endAt`.
 - `/api/booking-options` returns active pickup locations and service zones for the booking widget.
 - `/api/booking-drafts` creates server-priced booking drafts and temporary inventory holds.
+- Booking-draft creation is rate-limited across Vercel instances by IP,
+  IP/product, and email before an inventory hold can be created.
 - `/api/checkout` can create Stripe Checkout from a `draftId`.
 - `/api/checkout/status` joins Stripe session, booking draft, booking, and inventory state for the success page.
 - `/api/webhooks/stripe` can fulfill `checkout.session.completed` from a booking draft.
@@ -240,6 +242,8 @@ Webhook must be idempotent by:
 Migration:
 
 - `supabase/migrations/20260707_booking_system_v2.sql`
+- `supabase/migrations/20260724_api_rate_limits.sql`
+- `supabase/migrations/20260724_fix_api_rate_limit_clock.sql`
 
 ### Phase 2 — Availability API
 

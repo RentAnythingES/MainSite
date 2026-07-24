@@ -37,8 +37,10 @@ Public draft creation has no application rate limit or bot challenge. Repeated f
 drafts can temporarily reserve single-unit inventory. Contact, newsletter, and
 bundle-request endpoints can also generate unwanted writes or email.
 
-Required action: add IP/email/product rate limits, strict input limits, bot controls,
-and monitoring of rejected requests.
+Status: booking-draft creation received durable IP, IP/product, and email rate limits
+on 2026-07-24. The counters are atomic across Vercel instances and store only HMAC
+hashes. Contact, newsletter, bundle-request, strict input-limit, and bot-control work
+remains open.
 
 ## P1 — revenue and accounting correctness
 
