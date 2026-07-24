@@ -73,9 +73,10 @@ Text on photo backgrounds always gets `style={{ textShadow: '0 2px 8px rgba(0,0,
 
 ## Product Widget Strips (Discover pages)
 Compact, category-based horizontal scrolling strips that appear between content sections:
-- Pull ALL products from a `categorySlug` automatically
+- Pull up to four product previews from a `categorySlug` automatically
 - 144px square thumbnails with hover scale
 - Thematic heading + "View all →" link
+- The category link names the full result count so the complete catalogue remains discoverable
 - Placed contextually: mobility after accessibility, baby gear after food, remote work after "staying here"
 - **Never stack two strips back-to-back** — always separated by content
 

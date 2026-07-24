@@ -86,6 +86,8 @@ const modeEmojis: Record<string, string> = {
   train: "🚆",
 };
 
+const PRODUCT_WIDGET_PREVIEW_LIMIT = 4;
+
 export default async function DiscoverPage({ params }: Props) {
   const { slug } = await params;
   const dest = getDestinationBySlug(slug);
@@ -113,6 +115,7 @@ export default async function DiscoverPage({ params }: Props) {
         {matching.map((w, idx) => {
           const products = productsByCategory.get(w.categorySlug) || [];
           if (products.length === 0) return null;
+          const previewProducts = products.slice(0, PRODUCT_WIDGET_PREVIEW_LIMIT);
           return (
             <div key={idx} className="border-y border-border bg-neutral-50/60 py-5">
               <div className="container-site">
@@ -124,11 +127,11 @@ export default async function DiscoverPage({ params }: Props) {
                     eventParams={{ locale: "en", source_guide: dest.slug, target_type: "category", target_slug: w.categorySlug }}
                     className="text-xs font-medium text-brand hover:underline"
                   >
-                    View all →
+                    View all {products.length} →
                   </TrackedLink>
                 </div>
                 <div className="flex gap-3 overflow-x-auto pb-2 -mx-1 px-1 snap-x scrollbar-hide">
-                  {products.map((product) => (
+                  {previewProducts.map((product) => (
                     <TrackedLink
                       key={product.slug}
                       href={`/product/${product.slug}`}

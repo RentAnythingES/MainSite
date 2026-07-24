@@ -43,6 +43,12 @@ Dreame fan, Thule bike trailer, and PUKY toddler bike are indexable in both loca
 The Dreame image still has an internal `unknown` rights status and requires separate
 documentation.
 
+Discover category widgets are bounded previews rather than full catalogue dumps.
+The 24 July performance pass reduced the Malvarrosa guide artifact from 181,413
+to 122,143 bytes while retaining product previews and a labelled route to the
+complete category. See
+[DISCOVER_PERFORMANCE_AUDIT_20260724.md](./DISCOVER_PERFORMANCE_AUDIT_20260724.md).
+
 ### Commercial cluster depth
 
 | Cluster | EN / ES indexable products | Main supporting layers | Expansion posture |

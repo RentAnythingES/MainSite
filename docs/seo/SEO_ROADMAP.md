@@ -5,6 +5,11 @@
 
 ## ✅ Completed
 
+- [x] Discover guide HTML budget: category widgets now render four-item previews
+  with a full-count category link. The Malvarrosa build artifact fell from
+  181,413 to 122,143 bytes while preserving the commercial category pathway
+  (24 July 2026).
+
 - [x] Evergreen trust-page hardening: `/faq`, `/how-it-works`, and `/refunds`
   now match the live booking, fulfillment, payment, and deposit behavior. FAQPage and
   HowTo structured data are generated from visible copy and protected by rendered

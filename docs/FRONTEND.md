@@ -126,7 +126,10 @@ interface ProductWidget {
 }
 ```
 The `[slug]/page.tsx` template resolves widgets through the cached Supabase
-product service and renders active catalogue items in compact horizontal strips.
+product service and renders up to four active catalogue previews in compact
+horizontal strips, followed by a labelled category link to the complete result
+set. The preview limit prevents a growing category from inflating every guide's
+HTML while keeping the commercial pathway visible.
 The rendered page depends on the shared public-product cache tag, so admin
 catalogue changes invalidate stale guide widgets.
 
