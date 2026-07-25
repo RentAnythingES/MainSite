@@ -45,6 +45,8 @@ export interface BookingEmailData {
   stripePaymentIntentId?: string | null;
   documentLinks?: DocumentEmailLink[];
   reviewUrl?: string | null;
+  customQuoteLines?: Array<{ description: string; amountCents: number }>;
+  customTerms?: string | null;
 }
 
 export interface ContactEmailData {
@@ -198,6 +200,24 @@ function documentsBox(data: BookingEmailData): string {
   );
 }
 
+function customQuoteBox(data: BookingEmailData): string {
+  const lines = data.customQuoteLines || [];
+  if (lines.length === 0 && !data.customTerms) return "";
+  const priceLines = lines.length
+    ? `<table style="width:100%;border-collapse:collapse;margin-top:10px;">${lines.map((line) =>
+        `<tr><td style="padding:5px 10px 5px 0;font-size:14px;color:#78350f;">${escapeHtml(line.description)}</td><td style="padding:5px 0;text-align:right;font-size:14px;color:#78350f;white-space:nowrap;">${formatEuros(line.amountCents)}</td></tr>`
+      ).join("")}</table>`
+    : "";
+  const terms = data.customTerms
+    ? `<p style="font-size:14px;color:#78350f;line-height:1.6;margin:12px 0 0;white-space:pre-line;"><strong>Agreed conditions:</strong><br />${escapeHtml(data.customTerms)}</p>`
+    : "";
+  return infoBox(
+    `<p style="font-size:14px;color:#78350f;margin:0;"><strong>Your custom arrangement</strong></p>${priceLines}${terms}`,
+    "#fffbeb",
+    "#fde68a",
+  );
+}
+
 function internalOpsBox(data: BookingEmailData): string {
   const lines = [
     data.internalNotes ? `Internal notes: ${data.internalNotes}` : null,
@@ -244,6 +264,7 @@ export async function sendBookingConfirmation(data: BookingEmailData): Promise<b
         <p style="font-size:15px;color:#374151;line-height:1.6;margin-top:0;">Hi ${escapeHtml(data.customerName)},</p>
         <p style="font-size:15px;color:#374151;line-height:1.6;">Great news — your rental booking is confirmed. Here are the details:</p>
         ${bookingDetailsTable(data)}
+        ${customQuoteBox(data)}
         ${infoBox(`<p style="font-size:14px;color:#0f766e;line-height:1.6;margin:0;"><strong>Next step:</strong> ${nextStepCopy(data)}</p>`)}
         ${fulfillmentInstructionsBox(data)}
         ${documentsBox(data)}
@@ -260,6 +281,7 @@ export async function sendBookingConfirmation(data: BookingEmailData): Promise<b
       html: emailWrapper("New booking received", `
         <p style="font-size:15px;color:#374151;line-height:1.6;margin-top:0;">A new booking has been placed and needs operational review:</p>
         ${bookingDetailsTable(data)}
+        ${customQuoteBox(data)}
         <table style="width:100%;border-collapse:collapse;margin:16px 0;">
           <tr><td style="padding:8px 0;color:#6b7280;font-size:14px;width:120px;">Customer</td><td style="padding:8px 0;font-size:14px;">${escapeHtml(data.customerName)}</td></tr>
           <tr><td style="padding:8px 0;color:#6b7280;font-size:14px;">Email</td><td style="padding:8px 0;font-size:14px;"><a href="mailto:${escapeHtml(data.customerEmail)}" style="color:#0e7c73;">${escapeHtml(data.customerEmail)}</a></td></tr>
@@ -347,6 +369,7 @@ export async function sendBookingStatusUpdate(data: BookingEmailData, newStatus:
         <p style="font-size:15px;color:#374151;line-height:1.6;margin-top:0;">Hi ${escapeHtml(data.customerName)},</p>
         <p style="font-size:15px;color:#374151;line-height:1.6;">${template.message}</p>
         ${bookingDetailsTable(data)}
+        ${customQuoteBox(data)}
         ${fulfillmentInstructionsBox(data)}
         ${documentsBox(data)}
         ${data.reviewUrl ? `<div style="margin:24px 0;padding:18px;border-radius:12px;background:#f0fdfa;border:1px solid #99f6e4;"><p style="font-size:14px;color:#115e59;line-height:1.6;margin:0 0 14px;">How did the rental go? Your private feedback link is tied to this completed booking. We only publish feedback if you explicitly allow it.</p>${button(data.reviewUrl, "Share your feedback")}</div>` : ""}

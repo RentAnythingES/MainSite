@@ -420,7 +420,21 @@ async function handleDraftCheckoutCompleted(
     total_cents: number;
     deposit_cents: number;
     pricing_snapshot: Record<string, unknown>;
+    custom_quote_id: string | null;
+    custom_line_items: Array<{ description: string; amountCents: number }>;
+    custom_terms: string | null;
+    custom_internal_notes: string | null;
   };
+
+  if (session.payment_status !== "paid" || session.amount_total !== bookingDraft.total_cents) {
+    console.error("[webhook] Draft Checkout payment does not match the server-priced draft", {
+      bookingDraftId,
+      paymentStatus: session.payment_status,
+      expectedTotal: bookingDraft.total_cents,
+      receivedTotal: session.amount_total,
+    });
+    return false;
+  }
 
   const { data: product } = await supabase
     .from("products")
@@ -528,6 +542,10 @@ async function handleDraftCheckoutCompleted(
       collection_notes: bookingDraft.collection_notes,
       collection_fee_cents: bookingDraft.collection_fee_cents,
       pricing_snapshot: bookingDraft.pricing_snapshot,
+      custom_quote_id: bookingDraft.custom_quote_id,
+      custom_line_items: bookingDraft.custom_line_items,
+      custom_terms: bookingDraft.custom_terms,
+      custom_internal_notes: bookingDraft.custom_internal_notes,
       stripe_checkout_session_id: session.id,
     })
     .select()
@@ -577,6 +595,22 @@ async function handleDraftCheckoutCompleted(
     })
     .eq("id", bookingDraft.id);
 
+  if (bookingDraft.custom_quote_id) {
+    const { error: customQuoteUpdateError } = await supabase
+      .from("booking_custom_quotes")
+      .update({
+        status: "paid",
+        booking_id: bookingId,
+        booking_draft_id: bookingDraft.id,
+        paid_at: new Date().toISOString(),
+      })
+      .eq("id", bookingDraft.custom_quote_id)
+      .neq("status", "paid");
+    if (customQuoteUpdateError) {
+      console.error("[webhook] Failed to mark custom quote paid:", customQuoteUpdateError);
+    }
+  }
+
   await sendBookingConfirmation({
     bookingRef: (booking as { booking_ref: string }).booking_ref,
     customerName: bookingDraft.customer_name || session.customer_details?.name || "Customer",
@@ -593,12 +627,14 @@ async function handleDraftCheckoutCompleted(
     fulfillmentMode: bookingDraft.fulfillment_mode,
     fulfillmentLabel: fulfillmentDisplayLabel,
     customerInstructions,
-    internalNotes,
+    internalNotes: [internalNotes, bookingDraft.custom_internal_notes].filter(Boolean).join("\n") || null,
     deliveryWindow: deliveryZone?.delivery_window || null,
     collectionWindow: collectionZone?.collection_window || null,
     leadTimeHours: pickupLocation?.lead_time_hours || deliveryZone?.lead_time_hours || collectionZone?.lead_time_hours || null,
     stripeCheckoutSessionId: session.id,
     stripePaymentIntentId: paymentIntentId || null,
+    customQuoteLines: bookingDraft.custom_line_items,
+    customTerms: bookingDraft.custom_terms,
     documentLinks: invoiceUrl
       ? [{ label: "Download invoice", url: invoiceUrl, documentNumber: invoiceDocument?.document_number }]
       : undefined,

@@ -53,7 +53,9 @@ route handling while excluding APIs and static assets.
 | `/admin/inventory` | Client | Side-by-side owned stock, online capacity, physical-unit reconciliation, and asset maintenance |
 | `/admin/bookings` | Client | Booking lifecycle management, checklist-driven stages, status audit history, finance ledger, documents, and email controls |
 | `/admin/kit-requests` | Client | Saved kit configurations, customer follow-up, quote and conversion statuses |
+| `/admin/custom-quotes` | Client | Flexible fixed-price pre-booking quote creation, link sharing, status, and cancellation |
 | `/booking/fulfillment/[token]` | Client | Private, noindex transport-quote review and Stripe payment handoff |
+| `/booking/quote/[token]` | Client | Private, noindex custom quote review, customer detail confirmation, inventory hold, and Stripe handoff |
 | `/admin/reviews` | Client | Consent-aware moderation of verified-booking feedback |
 
 ## Component Patterns
@@ -208,6 +210,21 @@ custom quote, add delivery and collection addresses, set an expiry, copy the pri
 customer URL, send it by email, or cancel it before payment. The customer page displays
 the quoted service and fee, opens Stripe Checkout, then polls for signed webhook
 confirmation before showing the updated state.
+
+### Pre-booking custom quotes
+
+Staff create one-off fixed-price arrangements at `/admin/custom-quotes`. A quote
+selects one primary catalogue product for inventory purposes, but its customer-visible
+price lines, conditions, and internal preparation notes are free-form snapshots.
+Those lines do not create catalogue products, add-ons, SKUs, or kit definitions.
+
+The private `/booking/quote/[token]` page displays the agreed dates, fulfillment,
+lines, total, and customer conditions. The customer confirms contact and address
+details, then `/api/custom-quotes/[token]/accept` rechecks the primary product and
+atomically creates a normal 30-minute booking draft and inventory hold. `/api/checkout`
+uses the snapshot lines for Stripe, while the standard signed webhook creates the
+paid booking, invoice, confirmation email, and permanent inventory block. Quote
+creation itself does not hold stock.
 
 Falls back to WhatsApp deep-link if checkout cannot be created.
 

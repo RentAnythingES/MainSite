@@ -91,6 +91,9 @@ export function buildBookingDocumentPdf(document: BookingDocument, booking: Book
   const endAt = toAscii(bookingSnapshot.rental_end_at) || booking.rental_end_at || booking.end_date;
   const fulfillmentMode = toAscii(bookingSnapshot.fulfillment_mode) || booking.fulfillment_mode;
   const quantity = Number(bookingSnapshot.quantity || booking.quantity || 1);
+  const customLineItems = Array.isArray(bookingSnapshot.custom_line_items)
+    ? bookingSnapshot.custom_line_items as Array<{ description?: string; amountCents?: number }>
+    : [];
   const isRefund = document.document_type === "refund_receipt";
   const taxBaseCents = document.tax_base_cents ?? Math.max(0, document.total_cents - document.tax_cents);
   const taxRate = document.tax_rate_bps ? `${(document.tax_rate_bps / 100).toFixed(2)}% IVA` : "IVA";
@@ -138,6 +141,19 @@ export function buildBookingDocumentPdf(document: BookingDocument, booking: Book
   if (isRefund) {
     content += pdfText("Refund / rectification", 58, y, 9, "F1");
     content += pdfText(formatMoney(document.total_cents, document.currency), 484, y, 9, "F1");
+  } else if (customLineItems.length > 0) {
+    const visibleLines = customLineItems.slice(0, 3);
+    for (const line of visibleLines) {
+      content += pdfText(line.description || "Custom quote line", 58, y, 8, "F1");
+      content += pdfText(formatMoney(Number(line.amountCents) || 0, document.currency), 484, y, 8, "F1");
+      y -= 20;
+    }
+    if (customLineItems.length > visibleLines.length) {
+      content += pdfText(`Plus ${customLineItems.length - visibleLines.length} additional agreed quote line(s)`, 58, y, 8, "F1");
+      y -= 20;
+    }
+    content += pdfText(`${taxRate} included`, 58, y, 8, "F1");
+    content += pdfText(formatMoney(document.tax_cents, document.currency), 484, y, 8, "F1");
   } else {
     content += pdfText(`Rental - ${productName} x ${quantity}`, 58, y, 9, "F1");
     content += pdfText(formatMoney(taxBaseCents, document.currency), 484, y, 9, "F1");

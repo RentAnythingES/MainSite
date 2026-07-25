@@ -60,6 +60,7 @@ Supabase (CRUD products, pricing, bookings)
 | `service_zones` | Valencia delivery/collection zones and fees | Public read active |
 | `booking_drafts` | Pre-payment booking drafts and Stripe Checkout source of truth | Admin/API only |
 | `booking_fulfillment_amendments` | Tokenized, paid post-booking changes from customer pickup to delivery services | Server/admin only |
+| `booking_custom_quotes` | Tokenized staff-authored pre-booking quotes with free-form price and condition snapshots | Server/admin only |
 | `booking_inventory_blocks` | Datetime inventory holds and paid booking blocks | Admin/API only |
 | `booking_payment_events` | Durable payment/refund/deposit ledger for bookings | Admin/API only |
 | `booking_documents` | Invoice, refund receipt, and rental agreement document records | Admin/API only |
@@ -217,6 +218,8 @@ POST /api/webhooks/stripe
 | `/api/webhooks/stripe` | POST | Verify Stripe events, create paid bookings, block dates |
 | `/api/fulfillment-amendments/[token]` | GET | Read a private transport amendment quote |
 | `/api/fulfillment-amendments/[token]/checkout` | POST | Create or resume Stripe Checkout for the quoted transport fee |
+| `/api/custom-quotes/[token]` | GET | Read a private, expiring pre-booking custom quote |
+| `/api/custom-quotes/[token]/accept` | POST | Confirm customer/address details and atomically create an inventory-held booking draft |
 | `/api/contact` | POST | Send contact email via Resend |
 | `/api/bundle-requests` | POST | Validate and persist a kit request before WhatsApp handoff |
 | `/api/bundle-availability` | POST | Check mapped kit inventory and estimate known-item rental charges |
@@ -269,6 +272,8 @@ Stripe Checkout
 | `/api/admin/bookings/[id]/fulfillment-amendments` | POST | Create a configured-zone or custom transport quote |
 | `/api/admin/bookings/[id]/fulfillment-amendments/[amendmentId]` | DELETE | Cancel an unpaid transport quote |
 | `/api/admin/bookings/[id]/fulfillment-amendments/[amendmentId]/email` | POST | Email the private quote link to the customer |
+| `/api/admin/custom-quotes` | GET, POST | List staff quotes and create a private fixed-price pre-booking quote |
+| `/api/admin/custom-quotes/[id]` | PATCH | Cancel an unpaid custom quote and close any active Stripe session |
 | `/api/admin/bookings/[id]/inventory-units` | GET, POST, PATCH | List, assign, hand over, return, or release physical units |
 | `/api/admin/bookings/[id]/ops-tasks` | PATCH | Toggle internal booking operations checklist tasks |
 | `/api/admin/reviews` | GET | List review invitations and submissions for moderation |
@@ -295,6 +300,7 @@ Protected by Supabase Auth. Server-side cookie check in `admin/layout.tsx` — r
 | `/admin/availability` | Calendar availability manager with selected-date actions plus selected/all-product range blocking |
 | `/admin/inventory` | Online-capacity/owned-stock reconciliation plus physical asset registry, condition, location, notes, and inspections |
 | `/admin/bookings` | Expandable booking cards, status filters, physical-unit assignment, ops checklist, lifecycle controls |
+| `/admin/custom-quotes` | Create, preview, copy, track, and cancel flexible pre-booking quote links |
 | `/admin/reviews` | Verified-booking feedback queue with consent-aware approve/reject controls |
 | `/admin/kit-requests` | Kit enquiry queue with contact, selection, quote and conversion status |
 | `/admin/login` | Supabase Auth email/password login |

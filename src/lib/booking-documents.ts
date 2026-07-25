@@ -260,6 +260,8 @@ export async function createBookingDocumentForPaymentEvent(
       rental_end_at: booking.rental_end_at || booking.end_date || null,
       rental_days: booking.rental_days || null,
       fulfillment_mode: booking.fulfillment_mode || null,
+      custom_line_items: booking.custom_line_items || [],
+      custom_terms: booking.custom_terms || null,
       rectifies_document_number: originalInvoice?.document_number || null,
     },
     payment_snapshot: {

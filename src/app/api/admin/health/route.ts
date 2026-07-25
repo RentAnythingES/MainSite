@@ -50,6 +50,7 @@ export async function GET(request: NextRequest) {
     reviewsReady,
     fulfillmentAmendmentsReady,
     bundleRequestsReady,
+    customQuotesReady,
   ] = await Promise.all([
     supabase
       .from("booking_drafts")
@@ -90,6 +91,7 @@ export async function GET(request: NextRequest) {
     isAvailable(supabase.from("booking_reviews").select("id", { head: true })),
     isAvailable(supabase.from("booking_fulfillment_amendments").select("id", { head: true })),
     isAvailable(supabase.from("bundle_requests").select("id", { head: true })),
+    isAvailable(supabase.from("booking_custom_quotes").select("id", { head: true })),
   ]);
 
   return NextResponse.json({
@@ -142,6 +144,7 @@ export async function GET(request: NextRequest) {
       reviewsReady,
       fulfillmentAmendmentsReady,
       bundleRequestsReady,
+      customQuotesReady,
     },
   });
 }

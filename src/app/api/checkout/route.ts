@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { stripe, isStripeConfigured } from "@/lib/stripe";
 import { createServiceClient } from "@/lib/supabase";
 import { cleanupExpiredBookingDrafts } from "@/lib/booking-v2";
-import type { BookingDraft } from "@/lib/types";
+import type { BookingDraft, CustomQuoteLineItem } from "@/lib/types";
 import { getIncidentErrorMessage, recordSystemIncident } from "@/lib/system-incidents";
 import type Stripe from "stripe";
 
@@ -92,6 +92,32 @@ export async function POST(request: NextRequest) {
       }
 
       const resolvedProduct = product as { slug: string; name: string };
+      let customQuoteToken: string | null = null;
+      const customLines = Array.isArray(bookingDraft.custom_line_items)
+        ? bookingDraft.custom_line_items as CustomQuoteLineItem[]
+        : [];
+
+      if (bookingDraft.custom_quote_id) {
+        const { data: customQuote, error: customQuoteError } = await supabase
+          .from("booking_custom_quotes")
+          .select("public_token, status, expires_at, total_cents")
+          .eq("id", bookingDraft.custom_quote_id)
+          .single();
+        if (
+          customQuoteError
+          || !customQuote
+          || !["open", "checkout_created"].includes(customQuote.status)
+          || new Date(customQuote.expires_at).getTime() <= Date.now()
+          || customQuote.total_cents !== bookingDraft.total_cents
+        ) {
+          return NextResponse.json({ error: "This custom quote is no longer payable" }, { status: 409 });
+        }
+        const customTotal = customLines.reduce((total, line) => total + line.amountCents, 0);
+        if (customLines.length === 0 || customTotal !== bookingDraft.total_cents) {
+          return NextResponse.json({ error: "This custom quote has an invalid price snapshot" }, { status: 409 });
+        }
+        customQuoteToken = customQuote.public_token;
+      }
 
       const formattedStart = new Date(bookingDraft.rental_start_at).toLocaleString("en-GB", {
         dateStyle: "medium",
@@ -110,12 +136,20 @@ export async function POST(request: NextRequest) {
         slug: resolvedProduct.slug,
         locale: locale === "es" ? "es" : "en",
       });
-      const session = await stripe.checkout.sessions.create(
-        {
-          mode: "payment",
-          expires_at: checkoutExpiresAt,
-          customer_email: bookingDraft.customer_email || undefined,
-          line_items: [
+      if (customQuoteToken) cancelParams.set("quote_token", customQuoteToken);
+      const stripeLineItems: Stripe.Checkout.SessionCreateParams.LineItem[] = customQuoteToken
+        ? customLines.map((line, index) => ({
+            price_data: {
+              currency: bookingDraft.currency,
+              unit_amount: line.amountCents,
+              product_data: {
+                name: line.description,
+                description: index === 0 ? `${formattedStart} to ${formattedEnd}` : undefined,
+              },
+            },
+            quantity: 1,
+          }))
+        : [
             {
               price_data: {
                 currency: bookingDraft.currency,
@@ -128,20 +162,22 @@ export async function POST(request: NextRequest) {
               quantity: bookingDraft.quantity,
             },
             ...(bookingDraft.delivery_fee_cents + bookingDraft.collection_fee_cents > 0
-              ? [
-                  {
-                    price_data: {
-                      currency: bookingDraft.currency,
-                      unit_amount: bookingDraft.delivery_fee_cents + bookingDraft.collection_fee_cents,
-                      product_data: {
-                        name: "Delivery and collection",
-                      },
-                    },
-                    quantity: 1,
+              ? [{
+                  price_data: {
+                    currency: bookingDraft.currency,
+                    unit_amount: bookingDraft.delivery_fee_cents + bookingDraft.collection_fee_cents,
+                    product_data: { name: "Delivery and collection" },
                   },
-                ]
+                  quantity: 1,
+                }]
               : []),
-          ],
+          ];
+      const session = await stripe.checkout.sessions.create(
+        {
+          mode: "payment",
+          expires_at: checkoutExpiresAt,
+          customer_email: bookingDraft.customer_email || undefined,
+          line_items: stripeLineItems,
           metadata: {
             booking_draft_id: bookingDraft.id,
             product_id: bookingDraft.product_id,
@@ -186,6 +222,26 @@ export async function POST(request: NextRequest) {
           { error: "Payment could not be started. Your dates have been released." },
           { status: 500 },
         );
+      }
+
+      if (bookingDraft.custom_quote_id) {
+        const { error: quoteStateError } = await supabase
+          .from("booking_custom_quotes")
+          .update({
+            status: "checkout_created",
+            checkout_created_at: new Date().toISOString(),
+          })
+          .eq("id", bookingDraft.custom_quote_id)
+          .in("status", ["open", "checkout_created"]);
+        if (quoteStateError) {
+          await recordSystemIncident({
+            source: "checkout",
+            eventType: "custom_quote_checkout_state_persistence_failed",
+            severity: "warning",
+            message: quoteStateError.message,
+            context: { draftId: bookingDraft.id, customQuoteId: bookingDraft.custom_quote_id },
+          });
+        }
       }
 
       return NextResponse.json({

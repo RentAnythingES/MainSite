@@ -132,6 +132,10 @@ interface Booking {
   ops_tasks?: BookingOpsTask[];
   status_events?: BookingStatusEvent[];
   fulfillment_amendments?: FulfillmentAmendment[];
+  custom_quote_id?: string | null;
+  custom_line_items?: Array<{ description: string; amountCents: number }>;
+  custom_terms?: string | null;
+  custom_internal_notes?: string | null;
   status: string;
   created_at: string;
 }
@@ -547,6 +551,35 @@ export default function AdminBookingsPage() {
                       <p className="text-sm text-neutral-300">{formatDate(booking.created_at)}</p>
                     </div>
                   </div>
+
+                  {booking.custom_quote_id && (
+                    <div className="mb-4 rounded-xl border border-amber-500/20 bg-amber-500/10 p-4">
+                      <div className="flex flex-wrap items-center justify-between gap-2">
+                        <p className="text-sm font-semibold text-amber-200">Custom booking arrangement</p>
+                        <span className="text-xs font-mono text-amber-300/70">{shortId(booking.custom_quote_id)}</span>
+                      </div>
+                      {(booking.custom_line_items || []).length > 0 && (
+                        <ul className="mt-3 space-y-1.5 text-sm text-amber-50">
+                          {(booking.custom_line_items || []).map((line, index) => (
+                            <li key={index} className="flex justify-between gap-4">
+                              <span>{line.description}</span>
+                              <span className="whitespace-nowrap">{formatMoney(line.amountCents)}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                      {booking.custom_terms && (
+                        <p className="mt-3 whitespace-pre-wrap border-t border-amber-500/20 pt-3 text-sm leading-6 text-amber-100">
+                          Customer conditions: {booking.custom_terms}
+                        </p>
+                      )}
+                      {booking.custom_internal_notes && (
+                        <p className="mt-3 whitespace-pre-wrap rounded-lg bg-neutral-950/50 p-3 text-sm leading-6 text-amber-200">
+                          Staff preparation: {booking.custom_internal_notes}
+                        </p>
+                      )}
+                    </div>
+                  )}
 
                   <div className="grid lg:grid-cols-3 gap-4 mb-4 pt-4 border-t border-neutral-800">
                     <div>

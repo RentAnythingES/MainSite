@@ -231,6 +231,30 @@ only `customer_pickup` bookings in `confirmed` or `paid` status before handover 
 
 Migration: `supabase/migrations/20260719_fulfillment_amendments.sql`.
 
+## Pre-booking custom quotes
+
+Staff can prepare a private, expiring fixed-price booking link before a customer has
+booked. This is separate from fulfillment amendments: it creates a new rental booking
+rather than changing an existing one.
+
+Each quote links exactly one primary catalogue product and quantity to automatic
+inventory. The quote's price lines, customer-visible conditions, delivery details,
+and staff preparation notes are stored as one-off JSON/text snapshots. They never
+create reusable products, add-ons, SKUs, or kit definitions.
+
+Creating a quote checks current availability but does not reserve stock for the full
+quote validity period. When the customer accepts, `accept_custom_booking_quote(...)`
+locks the quote, rechecks calendar blocks, creates a standard 30-minute booking draft,
+and calls the existing atomic inventory reservation function. Checkout displays the
+stored custom lines and must total exactly the server-owned quote. The signed webhook
+verifies the paid Stripe total, creates the booking, copies both customer and internal
+snapshots, converts the hold, issues the invoice, and marks the quote paid.
+
+Cancelling an unpaid quote expires its open Stripe session before releasing inventory.
+An expired or cancelled quote cannot be accepted. Quote pages are private and noindex.
+
+Migration: `supabase/migrations/20260725_custom_booking_quotes.sql`.
+
 Webhook event required before reopening:
 
 - `checkout.session.completed`

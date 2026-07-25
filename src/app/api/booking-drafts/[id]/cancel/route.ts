@@ -17,7 +17,7 @@ export async function POST(
   const supabase = createServiceClient();
   const { data: draft, error: draftError } = await supabase
     .from("booking_drafts")
-    .select("id,status,stripe_checkout_session_id")
+    .select("id,status,stripe_checkout_session_id,custom_quote_id")
     .eq("id", id)
     .maybeSingle();
 
@@ -75,6 +75,18 @@ export async function POST(
       context: { draftId: id },
     });
     return NextResponse.json({ error: "Could not release booking attempt" }, { status: 500 });
+  }
+
+  if (draft.custom_quote_id) {
+    await supabase
+      .from("booking_custom_quotes")
+      .update({
+        status: "open",
+        booking_draft_id: null,
+        checkout_created_at: null,
+      })
+      .eq("id", draft.custom_quote_id)
+      .in("status", ["open", "checkout_created"]);
   }
 
   return NextResponse.json({ released: true });

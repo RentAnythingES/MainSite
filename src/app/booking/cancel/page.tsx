@@ -15,7 +15,11 @@ function BookingCancelContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const draftId = searchParams.get("draft_id");
-  const returnPath = safeProductPath(searchParams.get("slug"), searchParams.get("locale"));
+  const quoteToken = searchParams.get("quote_token");
+  const safeQuoteToken = quoteToken && /^[0-9a-f-]{36}$/i.test(quoteToken) ? quoteToken : null;
+  const returnPath = safeQuoteToken
+    ? `/booking/quote/${safeQuoteToken}`
+    : safeProductPath(searchParams.get("slug"), searchParams.get("locale"));
   const [error, setError] = useState(
     draftId ? "" : "This booking attempt could not be identified.",
   );

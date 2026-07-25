@@ -25,6 +25,12 @@ export type BookingPaymentEventType =
 export type BookingPaymentEventStatus = "pending" | "succeeded" | "failed" | "cancelled";
 export type BookingDocumentType = "invoice" | "refund_receipt" | "rental_agreement";
 export type BookingDocumentStatus = "draft" | "issued" | "void";
+export type CustomBookingQuoteStatus = "open" | "checkout_created" | "paid" | "cancelled" | "expired";
+
+export interface CustomQuoteLineItem {
+  description: string;
+  amountCents: number;
+}
 
 // Flattened Insert types to avoid circular references with Database interface
 
@@ -125,6 +131,10 @@ interface BookingRow {
   collection_fee_cents?: number;
   pricing_snapshot?: Record<string, unknown>;
   stripe_checkout_session_id?: string | null;
+  custom_quote_id?: string | null;
+  custom_line_items?: CustomQuoteLineItem[];
+  custom_terms?: string | null;
+  custom_internal_notes?: string | null;
 }
 
 interface BookingStatusEventRow {
@@ -177,6 +187,40 @@ interface PickupLocationRow {
   opening_hours: Record<string, unknown>;
   is_active: boolean;
   sort_order: number;
+  created_at: string;
+  updated_at: string;
+}
+
+interface CustomBookingQuoteRow {
+  id: string;
+  public_token: string;
+  status: CustomBookingQuoteStatus;
+  product_id: string;
+  quantity: number;
+  customer_name: string | null;
+  customer_email: string | null;
+  customer_phone: string | null;
+  rental_start_at: string;
+  rental_end_at: string;
+  timezone: string;
+  fulfillment_mode: FulfillmentMode;
+  pickup_location_id: string | null;
+  delivery_address: string | null;
+  collection_address: string | null;
+  delivery_notes: string | null;
+  collection_notes: string | null;
+  currency: string;
+  line_items: CustomQuoteLineItem[];
+  total_cents: number;
+  customer_terms: string | null;
+  internal_notes: string | null;
+  booking_draft_id: string | null;
+  booking_id: string | null;
+  expires_at: string;
+  checkout_created_at: string | null;
+  paid_at: string | null;
+  cancelled_at: string | null;
+  created_by: string | null;
   created_at: string;
   updated_at: string;
 }
@@ -246,6 +290,10 @@ interface BookingDraftRow {
   expires_at: string;
   created_at: string;
   updated_at: string;
+  custom_quote_id: string | null;
+  custom_line_items: CustomQuoteLineItem[];
+  custom_terms: string | null;
+  custom_internal_notes: string | null;
 }
 
 interface BookingInventoryBlockRow {
@@ -372,8 +420,25 @@ export interface Database {
       };
       booking_drafts: {
         Row: BookingDraftRow;
-        Insert: Omit<BookingDraftRow, "id" | "created_at" | "updated_at"> & { id?: string };
+        Insert: Omit<
+          BookingDraftRow,
+          "id" | "created_at" | "updated_at" | "custom_quote_id" | "custom_line_items" | "custom_terms" | "custom_internal_notes"
+        > & {
+          id?: string;
+          custom_quote_id?: string | null;
+          custom_line_items?: CustomQuoteLineItem[];
+          custom_terms?: string | null;
+          custom_internal_notes?: string | null;
+        };
         Update: Partial<Omit<BookingDraftRow, "id" | "created_at" | "updated_at">>;
+      };
+      booking_custom_quotes: {
+        Row: CustomBookingQuoteRow;
+        Insert: Omit<CustomBookingQuoteRow, "id" | "public_token" | "created_at" | "updated_at"> & {
+          id?: string;
+          public_token?: string;
+        };
+        Update: Partial<Omit<CustomBookingQuoteRow, "id" | "public_token" | "created_at" | "updated_at">>;
       };
       booking_inventory_blocks: {
         Row: BookingInventoryBlockRow;
@@ -410,6 +475,7 @@ export type BlockedDate = BlockedDateRow;
 export type PickupLocation = PickupLocationRow;
 export type ServiceZone = ServiceZoneRow;
 export type BookingDraft = BookingDraftRow;
+export type CustomBookingQuote = CustomBookingQuoteRow;
 export type BookingInventoryBlock = BookingInventoryBlockRow;
 export type BookingPaymentEvent = BookingPaymentEventRow;
 export type BookingDocument = BookingDocumentRow;
