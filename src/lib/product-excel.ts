@@ -1,6 +1,5 @@
 import * as XLSX from "xlsx";
 import {
-  PRODUCT_CSV_HEADERS,
   PRODUCT_CSV_TEMPLATE,
   type ExportProduct,
   type ProductLocale,
@@ -8,7 +7,36 @@ import {
   LOCALIZATION_FIELDS,
 } from "./product-csv";
 
-export const EXCEL_HEADERS = PRODUCT_CSV_HEADERS;
+export const EXCEL_HEADERS = [
+  "id",
+  "slug",
+  "name",
+  "brand",
+  "category_slug",
+  "subcategory",
+  "subcategory_slug",
+  "description",
+  "emoji",
+  "city",
+  "stock_total",
+  "stock_available",
+  "is_active",
+  "content_status",
+  "image_url",
+  "meta_title",
+  "meta_description",
+  "features",
+  "specs",
+  "price_1_day",
+  "price_3_days",
+  "price_7_days",
+  "price_14_days",
+  ...LOCALIZATION_FIELDS.map((field) => `en_${field}`),
+  ...LOCALIZATION_FIELDS.map((field) => `es_${field}`),
+  "image_alt_text",
+  "image_source_url",
+  "image_rights_status",
+] as string[];
 
 export type ExcelProduct = ExportProduct;
 
@@ -145,7 +173,8 @@ export function productsToExcel(products: ExcelProduct[]): Buffer {
 export function exportRowsToExcel(rows: Record<string, unknown>[], fileName = "rentanything-import-export.xlsx") {
   if (typeof window === "undefined") return;
   const workbook = XLSX.utils.book_new();
-  const data = [EXCEL_HEADERS, ...rows.map((row) => buildExportRow(row, EXCEL_HEADERS))].map((row) => row.map(csvCell));
+  const headers = [...EXCEL_HEADERS];
+  const data = [headers, ...rows.map((row) => buildExportRow(row, headers))].map((row) => row.map(csvCell));
   const worksheet = XLSX.utils.aoa_to_sheet(data);
   worksheet["!cols"] = [
     { wch: 36 }, // id
