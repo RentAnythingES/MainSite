@@ -7,6 +7,7 @@ import WhatsAppButton from "@/components/WhatsAppButton";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
 import CookieConsent from "@/components/CookieConsent";
 import WebVitalsReporter from "@/components/WebVitalsReporter";
+import { Analytics } from "@vercel/analytics/next";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -100,6 +101,7 @@ export default function RootLayout({
         <main className="flex-1">{children}</main>
         <Footer />
         <WhatsAppButton />
+        <Analytics />
       </body>
     </html>
   );
