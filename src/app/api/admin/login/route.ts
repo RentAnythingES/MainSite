@@ -2,6 +2,40 @@ import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
 import { isAdminUser } from "@/lib/admin-auth";
 
+async function ensureBootstrapAdmin(email: string, password: string) {
+  const bootstrapEmail = process.env.ADMIN_EMAIL?.trim().toLowerCase();
+  const bootstrapPassword = process.env.ADMIN_PASSWORD?.trim();
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+
+  if (!bootstrapEmail || !bootstrapPassword || !url || !serviceRoleKey) {
+    return;
+  }
+
+  if (email.trim().toLowerCase() !== bootstrapEmail || password !== bootstrapPassword) {
+    return;
+  }
+
+  const adminClient = createClient(url, serviceRoleKey, {
+    auth: { persistSession: false, autoRefreshToken: false },
+  });
+
+  try {
+    await adminClient.auth.admin.createUser({
+      email,
+      password,
+      email_confirm: true,
+      app_metadata: { role: "admin" },
+      user_metadata: { email_verified: true },
+    });
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    if (!message.includes("already") && !message.includes("exists")) {
+      console.warn("[admin/login] bootstrap admin setup failed:", message);
+    }
+  }
+}
+
 export async function POST(request: NextRequest) {
   try {
     const { email, password } = await request.json();
@@ -15,6 +49,8 @@ export async function POST(request: NextRequest) {
     if (!url || !anonKey) {
       return NextResponse.json({ error: "Server not configured" }, { status: 500 });
     }
+
+    await ensureBootstrapAdmin(email, password);
 
     const supabase = createClient(url, anonKey, {
       auth: { persistSession: false },

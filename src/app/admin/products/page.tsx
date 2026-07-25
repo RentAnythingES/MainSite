@@ -3,6 +3,8 @@
 import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import { getProductReadinessIssues } from "@/lib/product-validation";
+import { downloadProductCsvTemplate } from "@/lib/product-csv";
+import { downloadProductExcelTemplate } from "@/lib/product-excel";
 
 interface PricingTier {
   id: string;
@@ -75,6 +77,8 @@ export default function AdminProductsPage() {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
   const [statusChangeId, setStatusChangeId] = useState<string | null>(null);
+  const [deleteConfirmId, setDeleteConfirmId] = useState<string | null>(null);
+  const [deleting, setDeleting] = useState(false);
   const [uploadingImage, setUploadingImage] = useState(false);
   const [editForm, setEditForm] = useState<Partial<Product>>({});
   const [editFeatures, setEditFeatures] = useState<string[]>([]);
@@ -216,6 +220,28 @@ export default function AdminProductsPage() {
     }
   };
 
+  const deleteProduct = async (id: string) => {
+    setDeleting(true);
+    try {
+      setError("");
+      setNotice("");
+      const res = await fetch(`/api/admin/products/${id}?force=true`, {
+        method: "DELETE",
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.error || "Delete failed");
+      }
+      await fetchProducts();
+      setNotice("Product permanently deleted.");
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to delete product");
+    } finally {
+      setDeleting(false);
+      setDeleteConfirmId(null);
+    }
+  };
+
   const updatePricingTier = (index: number, field: "min_days" | "per_day_cents", value: number) => {
     const tiers = [...(editForm.pricing_tiers || [])];
     tiers[index] = { ...tiers[index], [field]: value };
@@ -303,10 +329,40 @@ export default function AdminProductsPage() {
             {products.length} products · {products.filter((product) => product.is_active).length} active · {products.filter((product) => product.seo?.indexableEn).length} EN indexed · {products.filter((product) => product.seo?.indexableEs).length} ES indexed
           </p>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2">
+          <button
+            type="button"
+            onClick={downloadProductCsvTemplate}
+            className="px-4 py-2 rounded-lg border border-neutral-700 text-neutral-200 text-sm font-semibold transition-colors hover:bg-neutral-800"
+          >
+            CSV template
+          </button>
+          <a
+            href={`/api/admin/products/export?status=${statusFilter}`}
+            className="px-4 py-2 rounded-lg border border-neutral-700 text-neutral-200 text-sm font-semibold transition-colors hover:bg-neutral-800"
+          >
+            Export CSV
+          </a>
+          <button
+            type="button"
+            onClick={downloadProductExcelTemplate}
+            className="px-4 py-2 rounded-lg border border-neutral-700 text-neutral-200 text-sm font-semibold transition-colors hover:bg-neutral-800"
+          >
+            Excel template
+          </button>
+          <a
+            href={`/api/admin/products/export-excel?status=${statusFilter}`}
+            className="px-4 py-2 rounded-lg bg-teal-700 hover:bg-teal-600 text-white text-sm font-semibold transition-colors"
+          >
+            Export Excel
+          </a>
           <Link href="/admin/products/import"
             className="px-4 py-2 rounded-lg border border-neutral-700 text-neutral-200 text-sm font-semibold transition-colors hover:bg-neutral-800">
             Import CSV
+          </Link>
+          <Link href="/admin/products/import"
+            className="px-4 py-2 rounded-lg bg-teal-700 hover:bg-teal-600 text-white text-sm font-semibold transition-colors">
+            Import Excel
           </Link>
           <Link href="/admin/products/new"
             className="px-4 py-2 rounded-lg bg-teal-600 hover:bg-teal-500 text-white text-sm font-semibold transition-colors">
@@ -455,6 +511,15 @@ export default function AdminProductsPage() {
                           {statusChangeId === product.id ? "Activating..." : "Activate"}
                         </button>
                       )}
+                      <button
+                        type="button"
+                        onClick={() => setDeleteConfirmId(product.id)}
+                        className="rounded-lg px-2.5 py-1.5 text-xs text-red-300 transition-colors hover:bg-red-600/20 hover:text-red-200"
+                        aria-label={`Delete ${product.name}`}
+                        title="Permanently delete product"
+                      >
+                        🗑
+                      </button>
                     </div>
                   </td>
                 </tr>
@@ -468,6 +533,26 @@ export default function AdminProductsPage() {
           </div>
         )}
       </div>
+
+      {deleteConfirmId && (() => {
+        const product = products.find((item) => item.id === deleteConfirmId);
+        return (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm" role="dialog" aria-modal="true" aria-labelledby="delete-product-title">
+            <div className="w-full max-w-md rounded-2xl border border-neutral-800 bg-neutral-900 p-6 shadow-2xl">
+              <h2 id="delete-product-title" className="text-lg font-bold text-white">Delete product?</h2>
+              <p className="mt-3 text-sm leading-relaxed text-neutral-300">
+                Are you sure you want to permanently delete <span className="font-semibold text-white">{product?.name || "this product"}</span>? This action cannot be undone.
+              </p>
+              <div className="mt-6 flex justify-end gap-3">
+                <button type="button" onClick={() => setDeleteConfirmId(null)} disabled={deleting} className="rounded-lg px-4 py-2 text-sm text-neutral-300 transition-colors hover:bg-neutral-800 disabled:opacity-50">Cancel</button>
+                <button type="button" onClick={() => void deleteProduct(deleteConfirmId)} disabled={deleting} className="rounded-lg bg-red-600 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-red-500 disabled:cursor-wait disabled:opacity-50">
+                  {deleting ? "Deleting..." : "Delete permanently"}
+                </button>
+              </div>
+            </div>
+          </div>
+        );
+      })()}
 
       {/* Edit Modal */}
       {editingId && (

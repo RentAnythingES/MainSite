@@ -261,6 +261,7 @@ Stripe Checkout
 | `/api/admin/products/[id]` | PUT, DELETE | Update product / soft-deactivate |
 | `/api/admin/products/upload-image` | POST | Upload a product image to Supabase Storage |
 | `/api/admin/products/import` | POST | Preview or import a validated CSV catalogue as inactive drafts |
+| `/api/admin/products/export` | GET | Download products as CSV (`?status=active|archived|all`) |
 | `/api/admin/products/[id]/content` | GET, PUT | Product copy, FAQs, image-rights record, and readiness status |
 | `/api/admin/availability` | GET, POST, DELETE | View, block, and unblock product availability dates |
 | `/api/admin/bookings` | GET | List bookings (optional status filter) |
@@ -287,7 +288,7 @@ Protected by Supabase Auth. Server-side cookie check in `admin/layout.tsx` — r
 | Page | Features |
 |------|----------|
 | `/admin` | Stats overview, quick actions, and migration readiness checks |
-| `/admin/products` | Product table, catalogue-quality status, active/archived filters, archive/restore, edit modal (core details, category, image upload/preview, features, specs, stock, pricing tiers) |
+| `/admin/products` | Product table, catalogue-quality status, active/archived filters, CSV template/export, archive/restore, edit modal (core details, category, image upload/preview, features, specs, stock, pricing tiers) |
 | `/admin/products/new` | Full creation form: auto-slug, category dropdown, image upload, dynamic features, key-value specs, pricing tiers |
 | `/admin/products/import` | CSV template, row preview/validation, draft-only bulk import |
 | `/admin/products/[id]/content` | Locale content editor, product FAQs, image-use record, and readiness checklist |
