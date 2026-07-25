@@ -56,6 +56,17 @@ interface EditableSpec {
   value: string;
 }
 
+async function readJsonResponse<T>(response: Response): Promise<T | null> {
+  const text = await response.text();
+  if (!text) return null;
+
+  try {
+    return JSON.parse(text) as T;
+  } catch {
+    return null;
+  }
+}
+
 function isValidStoredImageUrl(value: string | null | undefined) {
   const imageUrl = String(value || "").trim();
   return !imageUrl || (imageUrl.startsWith("/") && !imageUrl.startsWith("//")) || /^https?:\/\//i.test(imageUrl);
@@ -88,8 +99,8 @@ export default function AdminProductsPage() {
     try {
       const res = await fetch("/api/admin/products");
       if (!res.ok) throw new Error("Failed to fetch");
-      const data = await res.json();
-      setProducts(data.products || []);
+      const data = await readJsonResponse<{ products?: Product[]; error?: string }>(res);
+      setProducts(data?.products || []);
     } catch {
       setError("Failed to load products. Check Supabase connection.");
     } finally {
@@ -101,8 +112,8 @@ export default function AdminProductsPage() {
     try {
       const res = await fetch("/api/admin/categories");
       if (!res.ok) throw new Error("Failed to fetch categories");
-      const data = await res.json();
-      setCategories(data.categories || []);
+      const data = await readJsonResponse<{ categories?: Category[]; error?: string }>(res);
+      setCategories(data?.categories || []);
     } catch {
       setError("Failed to load categories. Check Supabase connection.");
     }
@@ -167,8 +178,8 @@ export default function AdminProductsPage() {
         body: JSON.stringify(payload),
       });
       if (!res.ok) {
-        const data = await res.json();
-        throw new Error(data.error || "Save failed");
+        const data = await readJsonResponse<{ error?: string }>(res);
+        throw new Error(data?.error || "Save failed");
       }
       setEditingId(null);
       await fetchProducts();
@@ -190,8 +201,8 @@ export default function AdminProductsPage() {
         body: JSON.stringify({ is_active: !currentlyActive }),
       });
       if (!res.ok) {
-        const data = await res.json();
-        throw new Error(data.error || "Toggle failed");
+        const data = await readJsonResponse<{ error?: string }>(res);
+        throw new Error(data?.error || "Toggle failed");
       }
       await fetchProducts();
       setNotice(currentlyActive ? "Product archived and hidden from public pages." : "Product activated and visible on public pages.");
@@ -209,9 +220,9 @@ export default function AdminProductsPage() {
       const res = await fetch(`/api/admin/products/${id}`, {
         method: "DELETE",
       });
-      const data = await res.json();
+      const data = await readJsonResponse<{ error?: string }>(res);
       if (!res.ok) {
-        throw new Error(data.error || "Archive failed");
+        throw new Error(data?.error || "Archive failed");
       }
       await fetchProducts();
       setNotice("Product archived and hidden from public pages.");
@@ -228,9 +239,9 @@ export default function AdminProductsPage() {
       const res = await fetch(`/api/admin/products/${id}?force=true`, {
         method: "DELETE",
       });
-      const data = await res.json();
+      const data = await readJsonResponse<{ error?: string }>(res);
       if (!res.ok) {
-        throw new Error(data.error || "Delete failed");
+        throw new Error(data?.error || "Delete failed");
       }
       await fetchProducts();
       setNotice("Product permanently deleted.");
@@ -407,10 +418,10 @@ export default function AdminProductsPage() {
             <thead>
               <tr className="border-b border-neutral-800">
                 <th className="text-left p-4 text-xs font-medium text-neutral-500 uppercase tracking-wider">Product</th>
+                <th className="text-left p-4 text-xs font-medium text-neutral-500 uppercase tracking-wider">Index</th>
                 <th className="text-left p-4 text-xs font-medium text-neutral-500 uppercase tracking-wider">Category</th>
                 <th className="text-left p-4 text-xs font-medium text-neutral-500 uppercase tracking-wider">Price Range</th>
-                <th className="text-left p-4 text-xs font-medium text-neutral-500 uppercase tracking-wider">Stock</th>
-                <th className="text-left p-4 text-xs font-medium text-neutral-500 uppercase tracking-wider">Quality</th>
+                <th className="text-left p-4 text-xs font-medium text-neutral-500 uppercase tracking-wider">Availability</th>
                 <th className="text-left p-4 text-xs font-medium text-neutral-500 uppercase tracking-wider">Search</th>
                 <th className="text-left p-4 text-xs font-medium text-neutral-500 uppercase tracking-wider">Status</th>
                 <th className="text-right p-4 text-xs font-medium text-neutral-500 uppercase tracking-wider">Actions</th>
