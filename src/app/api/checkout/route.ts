@@ -172,6 +172,7 @@ export async function POST(request: NextRequest) {
                 }]
               : []),
           ];
+      const requestFingerprint = `${bookingDraft.id}:${bookingDraft.total_cents}:${bookingDraft.quantity}:${checkoutExpiresAt}:${stripeLineItems.length}:${stripeLineItems.map((item) => `${item.price_data?.currency}:${item.price_data?.unit_amount ?? item.price_data?.unit_amount_decimal ?? 0}`).join('|')}`;
       const session = await stripe.checkout.sessions.create(
         {
           mode: "payment",
@@ -186,7 +187,7 @@ export async function POST(request: NextRequest) {
           success_url: `${baseUrl}/booking/success?session_id={CHECKOUT_SESSION_ID}`,
           cancel_url: `${baseUrl}/booking/cancel?${cancelParams.toString()}`,
         },
-        { idempotencyKey: `booking-draft-${bookingDraft.id}` }
+        { idempotencyKey: `booking-draft-${bookingDraft.id}-${requestFingerprint}` }
       );
 
       const { error: checkoutStateError } = await supabase
