@@ -6,6 +6,7 @@ import { fetchPickupLocationsById, fetchServiceZonesById } from "@/lib/fulfillme
 import { recordBookingPaymentEvent } from "@/lib/payment-ledger";
 import { createBookingDocumentForPaymentEvent, getCustomerDocumentUrl } from "@/lib/booking-documents";
 import { getIncidentErrorMessage, recordSystemIncident } from "@/lib/system-incidents";
+import { buildGoogleCalendarUrl, buildGoogleMapsUrl } from "@/lib/calendar-links";
 import Stripe from "stripe";
 
 /**
@@ -216,6 +217,15 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session): Promis
   }
 
   // Send confirmation email (customer + admin)
+  const bookingCalendarLink = buildGoogleCalendarUrl({
+    title: `${meta.product_name || "Rental equipment"} booking`,
+    description: `Booking ${booking.booking_ref}\nCustomer: ${meta.customer_name}\nDelivery address: ${meta.delivery_address || ""}`,
+    startDateTime: new Date(meta.start_date).toISOString(),
+    endDateTime: new Date(meta.end_date).toISOString(),
+    location: meta.delivery_address || "Valencia, Spain",
+  });
+  const bookingMapsLink = buildGoogleMapsUrl(meta.delivery_address || "Valencia, Spain");
+
   await sendBookingConfirmation({
     bookingRef: (booking as { booking_ref: string }).booking_ref,
     customerName: meta.customer_name,
@@ -232,6 +242,8 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session): Promis
     documentLinks: invoiceUrl
       ? [{ label: "Download invoice", url: invoiceUrl, documentNumber: invoiceDocument?.document_number }]
       : undefined,
+    customQuoteLines: [],
+    customTerms: `Google Calendar: ${bookingCalendarLink}\nGoogle Maps: ${bookingMapsLink}`,
   });
 
   return true;

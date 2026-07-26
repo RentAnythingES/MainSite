@@ -1,8 +1,9 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import BookingUnitAssignments from "@/components/admin/BookingUnitAssignments";
 import BookingFulfillmentAmendments from "@/components/admin/BookingFulfillmentAmendments";
+import { requestBrowserNotificationPermission, showBookingPushNotification } from "@/lib/push-notifications";
 
 interface BookingProduct {
   id: string;
@@ -191,21 +192,47 @@ export default function AdminBookingsPage() {
   const [updatingOpsTask, setUpdatingOpsTask] = useState<string | null>(null);
   const [bookingOpsTasksAvailable, setBookingOpsTasksAvailable] = useState(true);
   const [fulfillmentAmendmentsAvailable, setFulfillmentAmendmentsAvailable] = useState(true);
+  const notifiedBookingIdsRef = useRef<Set<string>>(new Set());
+  const initialBookingLoadRef = useRef(false);
 
   const fetchBookings = useCallback(async () => {
     try {
       const res = await fetch(`/api/admin/bookings?status=${filter}`);
       if (!res.ok) throw new Error("Failed to fetch");
       const data = await res.json();
-      setBookings(data.bookings || []);
+      const nextBookings = data.bookings || [];
+      setBookings(nextBookings);
       setBookingOpsTasksAvailable(data.capabilities?.bookingOpsTasks !== false);
       setFulfillmentAmendmentsAvailable(data.capabilities?.fulfillmentAmendments !== false);
+
+      if (!initialBookingLoadRef.current) {
+        initialBookingLoadRef.current = true;
+        notifiedBookingIdsRef.current = new Set(nextBookings.map((booking: Booking) => booking.id));
+      } else {
+        const newlySeen = nextBookings.filter((booking: Booking) => {
+          const shouldNotify = ["pending", "confirmed", "paid"].includes(booking.status);
+          return shouldNotify && !notifiedBookingIdsRef.current.has(booking.id);
+        });
+
+        newlySeen.forEach((booking: Booking) => {
+          notifiedBookingIdsRef.current.add(booking.id);
+          showBookingPushNotification({
+            title: "New booking activity",
+            body: `${booking.customer_name || "A customer"} booked ${booking.product?.name || "an item"}`,
+            url: "/admin/bookings",
+          });
+        });
+      }
     } catch {
       setError("Failed to load bookings. Check Supabase connection.");
     } finally {
       setLoading(false);
     }
   }, [filter]);
+
+  useEffect(() => {
+    void requestBrowserNotificationPermission();
+  }, []);
 
   useEffect(() => {
     const timeoutId = window.setTimeout(() => {

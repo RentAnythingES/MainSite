@@ -3,6 +3,9 @@
 import { useState, useMemo, useEffect } from "react";
 import type { Product } from "@/data/products";
 import { trackBookingEvent } from "@/lib/analytics";
+import GooglePlacesAddressInput from "@/components/GooglePlacesAddressInput";
+import { buildGoogleCalendarUrl, buildGoogleMapsUrl } from "@/lib/calendar-links";
+import { requestBrowserNotificationPermission, showBookingPushNotification } from "@/lib/push-notifications";
 import {
   type ActiveCheckout,
   clearActiveCheckout,
@@ -263,6 +266,8 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
   const [billingAddress, setBillingAddress] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [activeCheckout, setActiveCheckout] = useState<ActiveCheckout | null>(null);
+  const [calendarLink, setCalendarLink] = useState<string | null>(null);
+  const [mapsLink, setMapsLink] = useState<string | null>(null);
   const [cancellingCheckout, setCancellingCheckout] = useState(false);
   const [bookingRef] = useState("");
   const selectedPickupLocation = pickupLocations.find((location) => location.id === pickupLocationId);
@@ -334,6 +339,10 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
     });
     return () => window.cancelAnimationFrame(frameId);
   }, [product.slug]);
+
+  useEffect(() => {
+    void requestBrowserNotificationPermission();
+  }, []);
 
   useEffect(() => {
     let active = true;
@@ -644,6 +653,16 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
           </p>
         )}
         <p className="text-sm text-neutral-500 mb-4">{t.successMsg}</p>
+        {calendarLink && mapsLink && (
+          <div className="flex flex-wrap justify-center gap-2 mb-4">
+            <a href={calendarLink} target="_blank" rel="noreferrer" className="rounded-lg border border-teal-200 bg-teal-50 px-3 py-2 text-sm font-medium text-teal-800">
+              Add to Google Calendar
+            </a>
+            <a href={mapsLink} target="_blank" rel="noreferrer" className="rounded-lg border border-teal-200 bg-teal-50 px-3 py-2 text-sm font-medium text-teal-800">
+              Open in Google Maps
+            </a>
+          </div>
+        )}
         <button
           onClick={() => { setStep("dates"); setAvailabilityStatus("idle"); }}
           className="text-sm text-brand hover:underline"
@@ -685,17 +704,24 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
           {fulfillmentMode !== "customer_pickup" && (
           <div>
             <label className="text-xs font-medium text-neutral-500 mb-1 block">{t.deliveryAddress}</label>
-            <input type="text" required value={address} onChange={(e) => setAddress(e.target.value)}
+            <GooglePlacesAddressInput
+              value={address}
+              onChange={setAddress}
+              placeholder="Start typing an address or place"
               className="w-full px-3 py-2.5 rounded-lg border border-border text-sm focus:outline-none focus:ring-2 focus:ring-brand/30 focus:border-brand"
-              placeholder="Calle de Colón 42, Valencia" />
+              required
+            />
           </div>
           )}
           {fulfillmentMode === "delivery_and_collection" && (
             <div>
               <label className="text-xs font-medium text-neutral-500 mb-1 block">{t.collectionAddress}</label>
-              <input type="text" value={collectionAddress} onChange={(e) => setCollectionAddress(e.target.value)}
+              <GooglePlacesAddressInput
+                value={collectionAddress}
+                onChange={setCollectionAddress}
+                placeholder={address || "Start typing a collection address"}
                 className="w-full px-3 py-2.5 rounded-lg border border-border text-sm focus:outline-none focus:ring-2 focus:ring-brand/30 focus:border-brand"
-                placeholder={address || "Same as delivery address"} />
+              />
             </div>
           )}
           <div>

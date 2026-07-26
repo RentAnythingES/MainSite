@@ -13,6 +13,9 @@ interface BookingInfo {
   endDate: string;
   totalCents: number;
   customerEmail: string;
+  deliveryAddress?: string | null;
+  calendarUrl?: string | null;
+  mapsUrl?: string | null;
 }
 
 type CheckoutStatus =
@@ -113,6 +116,24 @@ function BookingSuccessContent() {
                 <span className="text-neutral-500">Total paid</span>
                 <span className="font-bold text-lg">€{(booking.totalCents / 100).toFixed(2)}</span>
               </div>
+              {booking.deliveryAddress && (
+                <div className="space-y-2 rounded-xl border border-neutral-200 bg-white p-3">
+                  <div className="text-sm text-neutral-500">Location</div>
+                  <div className="text-sm font-medium text-neutral-900">{booking.deliveryAddress}</div>
+                  <div className="flex flex-wrap gap-2 pt-1">
+                    {booking.calendarUrl && (
+                      <a href={booking.calendarUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-lg border border-teal-200 bg-teal-50 px-3 py-2 text-sm font-medium text-teal-800">
+                        📅 Add to Google Calendar
+                      </a>
+                    )}
+                    {booking.mapsUrl && (
+                      <a href={booking.mapsUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-lg border border-teal-200 bg-teal-50 px-3 py-2 text-sm font-medium text-teal-800">
+                        🧭 Open in Google Maps
+                      </a>
+                    )}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         )}

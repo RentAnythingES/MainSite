@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { stripe, isStripeConfigured } from "@/lib/stripe";
 import { createServiceClient } from "@/lib/supabase";
+import { buildGoogleCalendarUrl, buildGoogleMapsUrl } from "@/lib/calendar-links";
 
 function formatDateTime(value?: string | null): string {
   if (!value) return "";
@@ -66,6 +67,19 @@ export async function GET(request: NextRequest) {
     const product = bookingRecord?.product as { name?: string; slug?: string } | undefined;
     const paymentPaid = session.payment_status === "paid";
     const bookingCreated = Boolean(bookingRecord);
+    const bookingStart = (bookingRecord?.rental_start_at as string | null) || (bookingRecord?.start_date as string | null);
+    const bookingEnd = (bookingRecord?.rental_end_at as string | null) || (bookingRecord?.end_date as string | null);
+    const bookingLocation = String((bookingRecord?.delivery_address as string | null) || "Valencia, Spain");
+    const bookingCalendarUrl = bookingCreated && bookingStart && bookingEnd
+      ? buildGoogleCalendarUrl({
+          title: `${product?.name || "Rental booking"}`,
+          description: `Booking ${bookingRecord?.booking_ref || ""}`,
+          startDateTime: bookingStart,
+          endDateTime: bookingEnd,
+          location: bookingLocation,
+        })
+      : null;
+    const bookingMapsUrl = bookingLocation ? buildGoogleMapsUrl(bookingLocation) : null;
 
     let fulfillmentStatus: "booking_confirmed" | "payment_pending" | "fulfillment_pending" | "payment_incomplete";
 
@@ -107,6 +121,9 @@ export async function GET(request: NextRequest) {
             endDate: formatDateTime((bookingRecord.rental_end_at as string | null) || bookingRecord.end_date as string),
             totalCents: bookingRecord.total_cents,
             customerEmail: bookingRecord.customer_email,
+            deliveryAddress: bookingRecord.delivery_address || null,
+            calendarUrl: bookingCalendarUrl,
+            mapsUrl: bookingMapsUrl,
           }
         : null,
     });
