@@ -91,9 +91,7 @@ export default function GooglePlacesAddressInput({
     });
 
     return () => {
-      if (listener) {
-        // Leave cleanup to the browser runtime; this avoids strict typing issues with the Google Maps API types.
-      }
+      // Leave cleanup to the browser runtime; this avoids strict typing issues with the Google Maps API types.
     };
   }, [loaded, onChange]);
 
