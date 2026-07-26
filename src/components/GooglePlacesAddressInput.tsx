@@ -92,7 +92,7 @@ export default function GooglePlacesAddressInput({
 
     return () => {
       if (listener) {
-        // The Places Autocomplete listener is scoped to this component instance, so we simply release it by letting the instance go out of scope.
+        window.google?.maps?.event.clearInstanceListeners(autocomplete as unknown as unknown);
       }
     };
   }, [loaded, onChange]);
