@@ -92,7 +92,7 @@ export default function GooglePlacesAddressInput({
 
     return () => {
       if (listener) {
-        window.google?.maps?.event.clearInstanceListeners(autocomplete as unknown as unknown);
+        // Leave cleanup to the browser runtime; this avoids strict typing issues with the Google Maps API types.
       }
     };
   }, [loaded, onChange]);
