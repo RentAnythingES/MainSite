@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { FormEvent, useEffect, useState } from "react";
+import GooglePlacesAddressInput from "@/components/GooglePlacesAddressInput";
 
 type QuoteLine = { description: string; amountCents: number };
 type QuoteView = {
@@ -233,13 +234,24 @@ export default function CustomBookingQuotePage({ token }: { token: string }) {
                   {quote.fulfillment_mode !== "customer_pickup" && (
                     <label className="text-sm font-medium text-neutral-700 sm:col-span-2">
                       Delivery address
-                      <input className={fieldClass} value={deliveryAddress} onChange={(event) => setDeliveryAddress(event.target.value)} maxLength={500} autoComplete="street-address" required />
+                      <GooglePlacesAddressInput
+                        value={deliveryAddress}
+                        onChange={setDeliveryAddress}
+                        placeholder="Start typing an address or place"
+                        className={fieldClass}
+                        required
+                      />
                     </label>
                   )}
                   {quote.fulfillment_mode === "delivery_and_collection" && (
                     <label className="text-sm font-medium text-neutral-700 sm:col-span-2">
                       Collection address
-                      <input className={fieldClass} value={collectionAddress} onChange={(event) => setCollectionAddress(event.target.value)} maxLength={500} required />
+                      <GooglePlacesAddressInput
+                        value={collectionAddress}
+                        onChange={setCollectionAddress}
+                        placeholder="Start typing a collection address"
+                        className={fieldClass}
+                      />
                     </label>
                   )}
                 </div>
