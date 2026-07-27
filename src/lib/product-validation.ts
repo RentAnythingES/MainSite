@@ -31,7 +31,6 @@ export function getProductReadinessIssues(product: ProductReadinessInput) {
   const issues: string[] = [];
   const requiredTextFields: Array<[keyof ProductReadinessInput, string]> = [
     ["name", "Product name is missing"],
-    ["brand", "Brand is missing"],
     ["description", "Description is missing"],
     ["category_id", "Category is missing"],
     ["subcategory", "Subcategory is missing"],

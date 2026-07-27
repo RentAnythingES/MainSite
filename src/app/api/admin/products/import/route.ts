@@ -154,7 +154,6 @@ function prepareRows(
     const issues: string[] = [];
 
     if (!name) issues.push("Product name is required");
-    if (!brand) issues.push("Brand is required");
     if (!description) issues.push("Description is required");
     if (!categoryBySlug.has(categorySlug)) issues.push("Category slug does not match an existing category");
     if (!subcategory) issues.push("Subcategory is required");

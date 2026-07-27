@@ -157,7 +157,11 @@ export default function CustomBookingQuotePage({ token }: { token: string }) {
             <div className="grid gap-5 sm:grid-cols-2">
               <div>
                 <p className="text-xs font-semibold uppercase tracking-wider text-neutral-400">Primary rental</p>
-                <p className="mt-1 font-semibold">{quote.quantity > 1 ? `${quote.quantity} × ` : ""}{quote.product.brand} {quote.product.name}</p>
+                <p className="mt-1 font-semibold">
+                  {quote.quantity > 1 ? `${quote.quantity} × ` : ""}
+                  {quote.product.brand.trim() ? `${quote.product.brand.trim()} ` : ""}
+                  {quote.product.name}
+                </p>
                 <p className="mt-1 text-sm text-neutral-500">{dateTime(quote.rental_start_at)} → {dateTime(quote.rental_end_at)}</p>
               </div>
               <div>

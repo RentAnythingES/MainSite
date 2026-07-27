@@ -299,7 +299,7 @@ export default function AdminAvailabilityPage() {
         >
           {products.map((p) => (
             <option key={p.id} value={p.id}>
-              {p.emoji} {p.name} — {p.brand}
+              {p.emoji} {p.name}{p.brand.trim() ? ` — ${p.brand.trim()}` : ""}
             </option>
           ))}
         </select>

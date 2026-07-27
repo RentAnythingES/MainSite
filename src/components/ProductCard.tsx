@@ -31,7 +31,9 @@ export default function ProductCard({ product, id, basePath = "/product" }: Prod
         <h3 className="font-bold text-neutral-800 mb-0.5 group-hover:text-brand transition-colors">
           {product.name}
         </h3>
-        <p className="text-xs text-neutral-400 mb-2">{product.brand}</p>
+        {product.brand.trim() && (
+          <p className="text-xs text-neutral-400 mb-2">{product.brand.trim()}</p>
+        )}
         <div className="flex items-baseline gap-1">
           <span className="text-lg font-bold text-brand">
             €{product.pricing[product.pricing.length - 1].perDay}

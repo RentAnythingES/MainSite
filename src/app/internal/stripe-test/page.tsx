@@ -79,7 +79,9 @@ export default function StripeTestPage() {
                 <div>
                   <div className="mb-3 flex items-center gap-2">
                     <span className="badge badge-brand">{testProduct.subcategory}</span>
-                    <span className="text-xs text-neutral-400">{testProduct.brand}</span>
+                    {testProduct.brand.trim() && (
+                      <span className="text-xs text-neutral-400">{testProduct.brand.trim()}</span>
+                    )}
                   </div>
 
                   <h1 className="mb-4 text-3xl font-extrabold tracking-tight">

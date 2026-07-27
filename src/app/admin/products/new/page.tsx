@@ -144,7 +144,7 @@ export default function AddProductPage() {
         body: JSON.stringify({
           slug,
           name,
-          brand,
+          brand: brand.trim(),
           description,
           category_id: categoryId,
           subcategory,
@@ -204,8 +204,8 @@ export default function AddProductPage() {
                 className={inputClass} placeholder="Compact Folding Stroller" />
             </div>
             <div>
-              <label className={labelClass}>Brand *</label>
-              <input type="text" required value={brand} onChange={(e) => setBrand(e.target.value)}
+              <label className={labelClass}>Brand <span className="text-neutral-600">(optional)</span></label>
+              <input type="text" value={brand} onChange={(e) => setBrand(e.target.value)}
                 className={inputClass} placeholder="Kinderkraft" />
             </div>
           </div>
