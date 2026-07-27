@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import BookingUnitAssignments from "@/components/admin/BookingUnitAssignments";
 import BookingFulfillmentAmendments from "@/components/admin/BookingFulfillmentAmendments";
+import { buildGoogleCalendarUrl, buildGoogleMapsUrl } from "@/lib/calendar-links";
 import { requestBrowserNotificationPermission, showBookingPushNotification } from "@/lib/push-notifications";
 
 interface BookingProduct {
@@ -355,6 +356,41 @@ export default function AdminBookingsPage() {
     return `${value.slice(0, 10)}…${value.slice(-6)}`;
   };
 
+  const getBookingCalendarUrl = (booking: Booking) => {
+    const start = booking.rental_start_at || booking.start_date;
+    const end = booking.rental_end_at || booking.end_date;
+    if (!start || !end) return null;
+
+    const title = `${booking.product?.name || "Rental booking"} · ${booking.booking_ref}`;
+    const description = [
+      `Customer: ${booking.customer_name}`,
+      `Booking ref: ${booking.booking_ref}`,
+      `Delivery window: ${formatDateTime(start) || formatDate(start)}`,
+      `Pickup window: ${formatDateTime(end) || formatDate(end)}`,
+      "Reminders: 1 day before, 1 hour before",
+      booking.delivery_address ? `Delivery address: ${booking.delivery_address}` : null,
+      booking.collection_address ? `Collection address: ${booking.collection_address}` : null,
+    ].filter(Boolean).join("\n");
+
+    return buildGoogleCalendarUrl({
+      title,
+      description,
+      startDateTime: start,
+      endDateTime: end,
+      location: booking.delivery_address || booking.collection_address || booking.pickup_location?.address || "Valencia, Spain",
+    });
+  };
+
+  const getBookingMapsUrl = (booking: Booking) => {
+    const query = booking.delivery_address || booking.collection_address || booking.pickup_location?.address || booking.delivery_zone?.name || "Valencia Spain";
+    return buildGoogleMapsUrl(query);
+  };
+
+  const getBookingMapEmbedUrl = (booking: Booking) => {
+    const query = booking.delivery_address || booking.collection_address || booking.pickup_location?.address || booking.delivery_zone?.name || "Valencia Spain";
+    return `https://www.google.com/maps?q=${encodeURIComponent(query)}&output=embed`;
+  };
+
   const buildTimeline = (booking: Booking) => [
     { label: "Created", value: booking.created_at },
     { label: "Paid", value: booking.paid_at },
@@ -562,6 +598,35 @@ export default function AdminBookingsPage() {
                         {booking.delivery_notes && (
                           <p className="text-xs text-neutral-400 mt-1">Note: {booking.delivery_notes}</p>
                         )}
+                        <div className="mt-3 flex flex-wrap gap-2">
+                          {getBookingCalendarUrl(booking) && (
+                            <a
+                              href={getBookingCalendarUrl(booking)!}
+                              target="_blank"
+                              rel="noreferrer"
+                              className="inline-flex items-center gap-1.5 rounded-lg border border-teal-500/20 bg-teal-500/10 px-2.5 py-1.5 text-[11px] font-semibold text-teal-300"
+                            >
+                              📅 Add to Google Calendar
+                            </a>
+                          )}
+                          <a
+                            href={getBookingMapsUrl(booking)}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="inline-flex items-center gap-1.5 rounded-lg border border-neutral-700 bg-neutral-950 px-2.5 py-1.5 text-[11px] font-semibold text-neutral-200"
+                          >
+                            🧭 Open in Google Maps
+                          </a>
+                        </div>
+                        <div className="mt-3 overflow-hidden rounded-xl border border-neutral-800">
+                          <iframe
+                            title={`Map for ${booking.booking_ref}`}
+                            src={getBookingMapEmbedUrl(booking)}
+                            className="h-40 w-full"
+                            loading="lazy"
+                            referrerPolicy="no-referrer-when-downgrade"
+                          />
+                        </div>
                       </div>
                     )}
                     {booking.fulfillment_mode === "delivery_and_collection" && (
@@ -571,6 +636,35 @@ export default function AdminBookingsPage() {
                         {booking.collection_notes && (
                           <p className="text-xs text-neutral-400 mt-1">Note: {booking.collection_notes}</p>
                         )}
+                        <div className="mt-3 flex flex-wrap gap-2">
+                          {getBookingCalendarUrl(booking) && (
+                            <a
+                              href={getBookingCalendarUrl(booking)!}
+                              target="_blank"
+                              rel="noreferrer"
+                              className="inline-flex items-center gap-1.5 rounded-lg border border-teal-500/20 bg-teal-500/10 px-2.5 py-1.5 text-[11px] font-semibold text-teal-300"
+                            >
+                              📅 Add to Google Calendar
+                            </a>
+                          )}
+                          <a
+                            href={getBookingMapsUrl(booking)}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="inline-flex items-center gap-1.5 rounded-lg border border-neutral-700 bg-neutral-950 px-2.5 py-1.5 text-[11px] font-semibold text-neutral-200"
+                          >
+                            🧭 Open in Google Maps
+                          </a>
+                        </div>
+                        <div className="mt-3 overflow-hidden rounded-xl border border-neutral-800">
+                          <iframe
+                            title={`Map for ${booking.booking_ref}`}
+                            src={getBookingMapEmbedUrl(booking)}
+                            className="h-40 w-full"
+                            loading="lazy"
+                            referrerPolicy="no-referrer-when-downgrade"
+                          />
+                        </div>
                       </div>
                     )}
                     <div>
