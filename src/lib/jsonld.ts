@@ -110,10 +110,14 @@ export function getProductJsonLd(
       "@type": "WebPage",
       "@id": productUrl,
     },
-    brand: {
-      "@type": "Brand",
-      name: product.brand,
-    },
+    ...(product.brand.trim()
+      ? {
+          brand: {
+            "@type": "Brand",
+            name: product.brand.trim(),
+          },
+        }
+      : {}),
     category: product.category,
     seller: { "@id": BUSINESS_SCHEMA_ID },
     ...(lowestPrice !== undefined && highestPrice !== undefined

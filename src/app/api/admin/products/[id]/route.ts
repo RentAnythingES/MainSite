@@ -38,7 +38,10 @@ export async function PUT(
     if (typeof body.name === "string" && body.name.trim()) {
       updates.name = body.name.trim();
     }
-    if (typeof body.brand === "string" && body.brand.trim()) {
+    if (body.brand !== undefined) {
+      if (typeof body.brand !== "string") {
+        return NextResponse.json({ error: "Brand must be text" }, { status: 400 });
+      }
       updates.brand = body.brand.trim();
     }
     if (typeof body.description === "string" && body.description.trim()) {

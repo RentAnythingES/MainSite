@@ -228,7 +228,7 @@ function mapToProduct(row: Record<string, unknown>): Product {
     id: row.id as string,
     slug: row.slug as string,
     name: row.name as string,
-    brand: row.brand as string,
+    brand: typeof row.brand === "string" ? row.brand.trim() : "",
     category: category?.name || "",
     subcategory: row.subcategory as string,
     categorySlug: category?.slug || "",

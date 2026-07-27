@@ -92,6 +92,7 @@ export default function AdminProductsPage() {
   const [deleting, setDeleting] = useState(false);
   const [selectedProductIds, setSelectedProductIds] = useState<string[]>([]);
   const [uploadingImage, setUploadingImage] = useState(false);
+  const [editError, setEditError] = useState("");
   const [editForm, setEditForm] = useState<Partial<Product>>({});
   const [editFeatures, setEditFeatures] = useState<string[]>([]);
   const [editSpecs, setEditSpecs] = useState<EditableSpec[]>([]);
@@ -125,6 +126,7 @@ export default function AdminProductsPage() {
   }, [fetchProducts, fetchCategories]);
 
   const startEdit = (product: Product) => {
+    setEditError("");
     setEditingId(product.id);
     setEditForm({
       name: product.name,
@@ -149,6 +151,7 @@ export default function AdminProductsPage() {
   };
 
   const cancelEdit = () => {
+    setEditError("");
     setEditingId(null);
     setEditForm({});
     setEditFeatures([]);
@@ -156,6 +159,8 @@ export default function AdminProductsPage() {
   };
 
   const saveEdit = async (id: string) => {
+    setEditError("");
+    setNotice("");
     setSaving(true);
     try {
       if (!isValidStoredImageUrl(editForm.image_url)) {
@@ -169,6 +174,7 @@ export default function AdminProductsPage() {
 
       const payload = {
         ...editForm,
+        brand: editForm.brand?.trim() || "",
         features: editFeatures.filter((feature) => feature.trim()),
         specs,
       };
@@ -184,8 +190,9 @@ export default function AdminProductsPage() {
       }
       setEditingId(null);
       await fetchProducts();
+      setNotice("Product saved.");
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to save changes");
+      setEditError(err instanceof Error ? err.message : "Failed to save changes");
     } finally {
       setSaving(false);
     }
@@ -504,7 +511,9 @@ export default function AdminProductsPage() {
                   <td className="p-4">
                     <div>
                       <p className="font-medium text-white">{product.name}</p>
-                      <p className="text-xs text-neutral-500">{product.brand} · {product.slug}</p>
+                      <p className="text-xs text-neutral-500">
+                        {product.brand.trim() ? `${product.brand.trim()} · ` : ""}{product.slug}
+                      </p>
                     </div>
                   </td>
                   <td className="p-4">
@@ -655,6 +664,12 @@ export default function AdminProductsPage() {
               <button onClick={cancelEdit} className="text-neutral-500 hover:text-white text-xl">✕</button>
             </div>
 
+            {editError && (
+              <div role="alert" className="mx-6 mt-6 rounded-lg border border-red-500/20 bg-red-500/10 p-3 text-sm text-red-300">
+                {editError}
+              </div>
+            )}
+
             <div className="p-6 space-y-4">
               <div className="grid grid-cols-2 gap-4">
                 <div>
@@ -667,7 +682,9 @@ export default function AdminProductsPage() {
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-medium text-neutral-400 mb-1.5">Brand</label>
+                  <label className="block text-xs font-medium text-neutral-400 mb-1.5">
+                    Brand <span className="text-neutral-600">(optional)</span>
+                  </label>
                   <input
                     type="text"
                     value={editForm.brand || ""}

@@ -179,7 +179,9 @@ export default async function ProductPage({ params }: Props) {
                 <div>
                   <div className="flex items-center gap-2 mb-3">
                     <span className="badge badge-brand">{product.subcategory}</span>
-                    <span className="text-xs text-neutral-400">{product.brand}</span>
+                    {product.brand.trim() && (
+                      <span className="text-xs text-neutral-400">{product.brand.trim()}</span>
+                    )}
                   </div>
 
                   <h1 className="text-3xl font-extrabold tracking-tight mb-4">

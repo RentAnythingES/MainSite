@@ -91,10 +91,13 @@ function getErrorMessage(err: unknown) {
 }
 
 function validateProductPayload(body: ProductPayload) {
+  if (body.brand !== undefined && typeof body.brand !== "string") {
+    return "Brand must be text";
+  }
+
   const requiredFields: Array<keyof ProductPayload> = [
     "slug",
     "name",
-    "brand",
     "description",
     "category_id",
     "subcategory",
@@ -173,7 +176,7 @@ export async function POST(request: NextRequest) {
       .insert({
         slug: body.slug!.trim(),
         name: body.name!.trim(),
-        brand: body.brand!.trim(),
+        brand: body.brand?.trim() || "",
         description: body.description!.trim(),
         emoji: body.emoji || "📦",
         image_url: body.image_url || null,

@@ -107,6 +107,13 @@ import. Imported and manually created products are always inactive drafts.
 Staff must upload an image, complete content review, and mark the product
 `content_ready` before the admin can activate it.
 
+Product brand is optional for manual creation, editing, CSV or Excel import, and
+activation readiness. Admin APIs trim the value and store an omitted brand as an
+empty string because the database column remains non-null. Public cards, product
+pages, quotes, admin selectors, and Product structured data omit the brand and its
+surrounding spacing when it is blank. Product-edit save failures are shown inside
+the open modal so validation and backend errors remain visible.
+
 `/admin/products/[id]/content` is the editorial workflow for product content.
 It stores English and Spanish page copy, FAQs, SEO snippets, and the primary
 image's alt text/source/rights status. It requires

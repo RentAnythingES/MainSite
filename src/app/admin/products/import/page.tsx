@@ -245,7 +245,7 @@ export default function ImportProductsPage() {
           <div>
             <h2 className="font-semibold text-white">1. Prepare your file</h2>
             <p className="mt-1 max-w-2xl text-sm leading-relaxed text-neutral-400">
-              Exported rows update the matching product by ID. Leave the ID blank only for genuinely new products; the database will assign their IDs automatically. Images are deliberately not imported from computer paths; upload each image through the product editor before activating the item.
+              Exported rows update the matching product by ID. Leave the ID blank only for genuinely new products; the database will assign their IDs automatically. The brand column may be left blank. Images are deliberately not imported from computer paths; upload each image through the product editor before activating the item.
               Choose CSV or Excel format — both use the same column structure.
             </p>
           </div>

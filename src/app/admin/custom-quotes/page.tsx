@@ -190,7 +190,7 @@ export default function AdminCustomQuotesPage() {
             <select className={inputClass} value={productId} onChange={(event) => setProductId(event.target.value)} required>
               {products.map((product) => (
                 <option key={product.id} value={product.id}>
-                  {product.brand} {product.name} ({Math.min(product.stock_total, product.stock_available)} online)
+                  {product.brand.trim() ? `${product.brand.trim()} ` : ""}{product.name} ({Math.min(product.stock_total, product.stock_available)} online)
                 </option>
               ))}
             </select>
@@ -343,7 +343,11 @@ export default function AdminCustomQuotesPage() {
                 <div className="flex flex-wrap items-start justify-between gap-4">
                   <div>
                     <div className="flex flex-wrap items-center gap-2">
-                      <h3 className="font-semibold text-white">{quote.quantity > 1 ? `${quote.quantity} × ` : ""}{quote.product.brand} {quote.product.name}</h3>
+                      <h3 className="font-semibold text-white">
+                        {quote.quantity > 1 ? `${quote.quantity} × ` : ""}
+                        {quote.product.brand.trim() ? `${quote.product.brand.trim()} ` : ""}
+                        {quote.product.name}
+                      </h3>
                       <span className="rounded-full bg-neutral-800 px-2.5 py-1 text-xs font-medium uppercase text-neutral-300">{quote.status.replace("_", " ")}</span>
                     </div>
                     <p className="mt-1 text-sm text-neutral-400">{dateTime(quote.rental_start_at)} → {dateTime(quote.rental_end_at)}</p>
