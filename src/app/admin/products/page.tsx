@@ -88,8 +88,9 @@ export default function AdminProductsPage() {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
   const [statusChangeId, setStatusChangeId] = useState<string | null>(null);
-  const [deleteConfirmId, setDeleteConfirmId] = useState<string | null>(null);
+  const [deleteConfirmIds, setDeleteConfirmIds] = useState<string[]>([]);
   const [deleting, setDeleting] = useState(false);
+  const [selectedProductIds, setSelectedProductIds] = useState<string[]>([]);
   const [uploadingImage, setUploadingImage] = useState(false);
   const [editForm, setEditForm] = useState<Partial<Product>>({});
   const [editFeatures, setEditFeatures] = useState<string[]>([]);
@@ -231,25 +232,30 @@ export default function AdminProductsPage() {
     }
   };
 
-  const deleteProduct = async (id: string) => {
+  const deleteProducts = async (ids: string[]) => {
+    if (!ids.length) return;
+
     setDeleting(true);
     try {
       setError("");
       setNotice("");
-      const res = await fetch(`/api/admin/products/${id}?force=true`, {
-        method: "DELETE",
+      const res = await fetch("/api/admin/products/bulk-delete", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ids }),
       });
-      const data = await readJsonResponse<{ error?: string }>(res);
+      const data = await readJsonResponse<{ error?: string; deletedCount?: number }>(res);
       if (!res.ok) {
         throw new Error(data?.error || "Delete failed");
       }
       await fetchProducts();
-      setNotice("Product permanently deleted.");
+      setSelectedProductIds([]);
+      setNotice(ids.length > 1 ? `${data?.deletedCount || ids.length} products permanently deleted.` : "Product permanently deleted.");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to delete product");
     } finally {
       setDeleting(false);
-      setDeleteConfirmId(null);
+      setDeleteConfirmIds([]);
     }
   };
 
@@ -320,8 +326,30 @@ export default function AdminProductsPage() {
     if (statusFilter === "archived") return !product.is_active;
     return true;
   });
+
+  const toggleProductSelection = (productId: string) => {
+    setSelectedProductIds((current) =>
+      current.includes(productId) ? current.filter((id) => id !== productId) : [...current, productId]
+    );
+  };
+
+  const toggleSelectVisibleProducts = () => {
+    const visibleIds = visibleProducts.map((product) => product.id);
+    const allVisibleSelected = visibleIds.length > 0 && visibleIds.every((id) => selectedProductIds.includes(id));
+
+    setSelectedProductIds((current) => {
+      if (allVisibleSelected) {
+        return current.filter((id) => !visibleIds.includes(id));
+      }
+
+      return Array.from(new Set([...current, ...visibleIds]));
+    });
+  };
+
+  const clearSelectedProducts = () => setSelectedProductIds([]);
   const editImageUrl = isValidStoredImageUrl(editForm.image_url) ? editForm.image_url || "" : "";
   const hasInvalidEditImageUrl = Boolean(editForm.image_url && !isValidStoredImageUrl(editForm.image_url));
+  const allVisibleSelected = visibleProducts.length > 0 && visibleProducts.every((product) => selectedProductIds.includes(product.id));
 
   if (loading) {
     return (
@@ -412,11 +440,45 @@ export default function AdminProductsPage() {
         ))}
       </div>
 
+      {selectedProductIds.length > 0 && (
+        <div className="mb-4 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-teal-500/20 bg-teal-500/10 p-3">
+          <div>
+            <p className="text-sm font-semibold text-white">{selectedProductIds.length} product{selectedProductIds.length > 1 ? "s" : ""} selected</p>
+            <p className="text-xs text-teal-200">Choose the selected products to remove them permanently.</p>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            <button
+              type="button"
+              onClick={() => setDeleteConfirmIds(selectedProductIds)}
+              className="rounded-lg bg-red-600 px-3 py-1.5 text-sm font-semibold text-white transition-colors hover:bg-red-500"
+            >
+              Delete selected
+            </button>
+            <button
+              type="button"
+              onClick={clearSelectedProducts}
+              className="rounded-lg border border-neutral-700 px-3 py-1.5 text-sm font-semibold text-neutral-200 transition-colors hover:bg-neutral-800"
+            >
+              Clear selection
+            </button>
+          </div>
+        </div>
+      )}
+
       <div className="bg-neutral-900 border border-neutral-800 rounded-xl overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b border-neutral-800">
+                <th className="p-4 text-left">
+                  <input
+                    type="checkbox"
+                    checked={allVisibleSelected}
+                    onChange={toggleSelectVisibleProducts}
+                    className="h-4 w-4 rounded border-neutral-700 bg-neutral-800 text-teal-500 focus:ring-teal-500"
+                    aria-label="Select visible products"
+                  />
+                </th>
                 <th className="text-left p-4 text-xs font-medium text-neutral-500 uppercase tracking-wider">Product</th>
                 <th className="text-left p-4 text-xs font-medium text-neutral-500 uppercase tracking-wider">Index</th>
                 <th className="text-left p-4 text-xs font-medium text-neutral-500 uppercase tracking-wider">Category</th>
@@ -430,6 +492,15 @@ export default function AdminProductsPage() {
             <tbody className="divide-y divide-neutral-800">
               {visibleProducts.map((product) => (
                 <tr key={product.id} className="hover:bg-neutral-800/50 transition-colors">
+                  <td className="p-4">
+                    <input
+                      type="checkbox"
+                      checked={selectedProductIds.includes(product.id)}
+                      onChange={() => toggleProductSelection(product.id)}
+                      className="h-4 w-4 rounded border-neutral-700 bg-neutral-800 text-teal-500 focus:ring-teal-500"
+                      aria-label={`Select ${product.name}`}
+                    />
+                  </td>
                   <td className="p-4">
                     <div>
                       <p className="font-medium text-white">{product.name}</p>
@@ -524,7 +595,7 @@ export default function AdminProductsPage() {
                       )}
                       <button
                         type="button"
-                        onClick={() => setDeleteConfirmId(product.id)}
+                        onClick={() => setDeleteConfirmIds([product.id])}
                         className="rounded-lg px-2.5 py-1.5 text-xs text-red-300 transition-colors hover:bg-red-600/20 hover:text-red-200"
                         aria-label={`Delete ${product.name}`}
                         title="Permanently delete product"
@@ -545,19 +616,29 @@ export default function AdminProductsPage() {
         )}
       </div>
 
-      {deleteConfirmId && (() => {
-        const product = products.find((item) => item.id === deleteConfirmId);
+      {deleteConfirmIds.length > 0 && (() => {
+        const confirmProducts = products.filter((item) => deleteConfirmIds.includes(item.id));
+        const isBulk = deleteConfirmIds.length > 1;
         return (
           <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm" role="dialog" aria-modal="true" aria-labelledby="delete-product-title">
             <div className="w-full max-w-md rounded-2xl border border-neutral-800 bg-neutral-900 p-6 shadow-2xl">
-              <h2 id="delete-product-title" className="text-lg font-bold text-white">Delete product?</h2>
+              <h2 id="delete-product-title" className="text-lg font-bold text-white">{isBulk ? "Delete selected products?" : "Delete product?"}</h2>
               <p className="mt-3 text-sm leading-relaxed text-neutral-300">
-                Are you sure you want to permanently delete <span className="font-semibold text-white">{product?.name || "this product"}</span>? This action cannot be undone.
+                {isBulk
+                  ? `You are about to permanently delete ${deleteConfirmIds.length} products. This action cannot be undone.`
+                  : `Are you sure you want to permanently delete ${confirmProducts[0]?.name || "this product"}? This action cannot be undone.`}
               </p>
+              {isBulk && confirmProducts.length > 0 && (
+                <ul className="mt-3 max-h-36 space-y-1 overflow-y-auto rounded-lg border border-neutral-800 bg-neutral-950/70 p-3 text-sm text-neutral-300">
+                  {confirmProducts.map((product) => (
+                    <li key={product.id} className="truncate">• {product.name}</li>
+                  ))}
+                </ul>
+              )}
               <div className="mt-6 flex justify-end gap-3">
-                <button type="button" onClick={() => setDeleteConfirmId(null)} disabled={deleting} className="rounded-lg px-4 py-2 text-sm text-neutral-300 transition-colors hover:bg-neutral-800 disabled:opacity-50">Cancel</button>
-                <button type="button" onClick={() => void deleteProduct(deleteConfirmId)} disabled={deleting} className="rounded-lg bg-red-600 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-red-500 disabled:cursor-wait disabled:opacity-50">
-                  {deleting ? "Deleting..." : "Delete permanently"}
+                <button type="button" onClick={() => setDeleteConfirmIds([])} disabled={deleting} className="rounded-lg px-4 py-2 text-sm text-neutral-300 transition-colors hover:bg-neutral-800 disabled:opacity-50">Cancel</button>
+                <button type="button" onClick={() => void deleteProducts(deleteConfirmIds)} disabled={deleting} className="rounded-lg bg-red-600 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-red-500 disabled:cursor-wait disabled:opacity-50">
+                  {deleting ? "Deleting..." : isBulk ? "Delete selected" : "Delete permanently"}
                 </button>
               </div>
             </div>

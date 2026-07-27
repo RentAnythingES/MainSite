@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { verifyAdmin, unauthorizedResponse } from "@/lib/admin-auth";
 import { createAdminClient } from "@/lib/supabase-admin";
 import { invalidatePublicProductCache } from "@/lib/product-cache";
+import { deleteProductAndRelations } from "@/lib/admin-product-delete";
 
 function getErrorMessage(err: unknown) {
   if (err && typeof err === "object" && "message" in err) {
@@ -169,28 +170,10 @@ export async function DELETE(
     const supabase = createAdminClient();
 
     if (force) {
-      // Hard delete: remove product and all related data
-      // First get the slug for cache invalidation
-      const { data: product, error: fetchError } = await supabase
-        .from("products")
-        .select("slug")
-        .eq("id", id)
-        .single();
+      const slug = await deleteProductAndRelations(supabase, id);
 
-      if (fetchError && fetchError.code !== "PGRST116") throw fetchError;
-
-      // Delete in order to respect foreign key constraints
-      await supabase.from("pricing_tiers").delete().eq("product_id", id);
-      await supabase.from("product_quantity_discounts").delete().eq("product_id", id);
-      await supabase.from("product_localizations").delete().eq("product_id", id);
-      await supabase.from("product_images").delete().eq("product_id", id);
-      await supabase.from("product_availability").delete().eq("product_id", id);
-      await supabase.from("booking_items").delete().eq("product_id", id);
-      await supabase.from("reviews").delete().eq("product_id", id);
-      await supabase.from("products").delete().eq("id", id);
-
-      if (product?.slug) {
-        invalidatePublicProductCache([product.slug]);
+      if (slug) {
+        invalidatePublicProductCache([slug]);
       }
 
       return NextResponse.json({ success: true, message: "Product permanently deleted" });
