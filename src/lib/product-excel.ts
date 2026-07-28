@@ -50,6 +50,12 @@ function normalizeHeader(value: string) {
   return value.trim().toLowerCase();
 }
 
+function normalizeRowKeys(row: Record<string, unknown>) {
+  return Object.fromEntries(
+    Object.entries(row).map(([key, value]) => [normalizeHeader(key), value]),
+  ) as Record<string, unknown>;
+}
+
 function buildExportRow(row: Record<string, unknown>, headers: string[]) {
   const normalized = Object.fromEntries(Object.entries(row).map(([key, value]) => [normalizeHeader(key), value]));
   return headers.map((header) => csvCell(normalized[normalizeHeader(header)]));
@@ -258,8 +264,8 @@ export function parseExcelFile(file: File): Promise<Record<string, unknown>[]> {
         const workbook = XLSX.read(data, { type: "array" });
         const sheetName = workbook.SheetNames[0];
         const worksheet = workbook.Sheets[sheetName];
-        const json = XLSX.utils.sheet_to_json(worksheet, { defval: "" });
-        resolve(json as Record<string, unknown>[]);
+        const json = XLSX.utils.sheet_to_json(worksheet, { defval: "" }) as Record<string, unknown>[];
+        resolve(json.map(normalizeRowKeys));
       } catch (err) {
         reject(err);
       }
@@ -273,5 +279,6 @@ export function parseExcelBuffer(buffer: Buffer): Record<string, unknown>[] {
   const workbook = XLSX.read(buffer, { type: "buffer" });
   const sheetName = workbook.SheetNames[0];
   const worksheet = workbook.Sheets[sheetName];
-  return XLSX.utils.sheet_to_json(worksheet, { defval: "" });
+  const rows = XLSX.utils.sheet_to_json(worksheet, { defval: "" }) as Record<string, unknown>[];
+  return rows.map(normalizeRowKeys);
 }

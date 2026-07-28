@@ -147,9 +147,10 @@ function prepareRows(
     const categorySlug = slugify(text(row.category_slug));
     const subcategory = text(row.subcategory);
     const stockTotal = parseStock(row.stock_total);
-    const slug = slugify(text(row.slug) || name);
+    const importedSlug = slugify(text(row.slug) || name);
     const rowId = text(row.id);
-    const existing = resolveExistingProduct(row, slug, productsById);
+    const existing = resolveExistingProduct(row, importedSlug, productsById);
+    const slug = existing?.slug || importedSlug;
     const action: "create" | "update" = existing ? "update" : "create";
     const issues: string[] = [];
 
@@ -162,8 +163,6 @@ function prepareRows(
 
     if (rowId && !existing) {
       issues.push(`ID '${rowId}' does not exist. Clear the ID to create a new product.`);
-    } else if (rowId && existing && slug !== existing.slug) {
-      issues.push(`ID '${rowId}' does not match slug '${slug}'`);
     } else if (!rowId && productsBySlug.has(slug)) {
       issues.push(`Slug '${slug}' already exists. Use its exported ID to update that product.`);
     }
