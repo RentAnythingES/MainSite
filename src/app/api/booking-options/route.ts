@@ -1,13 +1,15 @@
 import { NextResponse } from "next/server";
 import { createServiceClient } from "@/lib/supabase";
 import { fetchActivePickupLocations, fetchActiveServiceZones } from "@/lib/fulfillment-options";
+import { resolveDefaultMarketContext } from "@/lib/market-context";
 
 export async function GET() {
   try {
     const supabase = createServiceClient();
+    const market = await resolveDefaultMarketContext(supabase);
     const [pickupLocationsResult, serviceZonesResult] = await Promise.all([
-      fetchActivePickupLocations(supabase),
-      fetchActiveServiceZones(supabase),
+      fetchActivePickupLocations(supabase, market.id),
+      fetchActiveServiceZones(supabase, market.id),
     ]);
 
     if (pickupLocationsResult.error) {

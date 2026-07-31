@@ -33,6 +33,41 @@ async function main() {
     `);
     checks.reads = counts.rows[0];
 
+    const marketIntegrity = await client.query(`
+      select
+        (select count(*)::int from public.markets where is_default) as default_markets,
+        (select count(*)::int from public.products) as products,
+        (
+          select count(*)::int
+          from public.product_offers offer
+          join public.markets market on market.id = offer.market_id
+          where market.is_default
+        ) as default_offers,
+        (select count(*)::int from public.pricing_tiers) as pricing_tiers,
+        (
+          select count(*)::int
+          from public.offer_pricing_tiers
+          where source_pricing_tier_id is not null
+        ) as mirrored_pricing_tiers,
+        (
+          select count(*)::int
+          from public.bookings
+          where market_id is null or product_offer_id is null
+        ) as bookings_missing_context,
+        (
+          select count(*)::int
+          from public.inventory_units
+          where market_id is null or product_offer_id is null or inventory_location_id is null
+        ) as units_missing_context
+    `);
+    checks.marketReads = marketIntegrity.rows[0];
+    checks.marketFoundationIntegrity =
+      marketIntegrity.rows[0].default_markets === 1 &&
+      marketIntegrity.rows[0].products === marketIntegrity.rows[0].default_offers &&
+      marketIntegrity.rows[0].pricing_tiers === marketIntegrity.rows[0].mirrored_pricing_tiers &&
+      marketIntegrity.rows[0].bookings_missing_context === 0 &&
+      marketIntegrity.rows[0].units_missing_context === 0;
+
     const invoiceSettings = await client.query("select count(*)::int as count from public.invoice_settings");
     checks.invoiceSettingsPresent = invoiceSettings.rows[0].count > 0;
 
@@ -73,6 +108,66 @@ async function main() {
     await client.query("begin");
     await client.query("set local statement_timeout = '10s'");
     try {
+      const compatibilityProduct = await client.query(`
+        select
+          product.id,
+          product.stock_total,
+          product.stock_available,
+          offer.id as offer_id
+        from public.products product
+        join public.product_offers offer on offer.product_id = product.id
+        join public.markets market on market.id = offer.market_id and market.is_default
+        order by product.created_at
+        limit 1
+      `);
+      if (compatibilityProduct.rows.length > 0) {
+        const product = compatibilityProduct.rows[0];
+        await client.query(
+          "update public.products set stock_total = stock_total, stock_available = stock_available where id = $1",
+          [product.id],
+        );
+        const offer = await client.query(
+          "select stock_total, online_capacity from public.product_offers where id = $1",
+          [product.offer_id],
+        );
+        checks.legacyMarketCompatibilityTransactionalWrite =
+          offer.rows[0]?.stock_total === product.stock_total &&
+          offer.rows[0]?.online_capacity === product.stock_available;
+      } else {
+        checks.legacyMarketCompatibilityTransactionalWrite = false;
+      }
+
+      const reservableDraft = await client.query(`
+        select draft.id as draft_id, draft.product_offer_id
+        from public.booking_drafts draft
+        join public.product_offers offer on offer.id = draft.product_offer_id
+        join public.markets market on market.id = offer.market_id
+        where offer.is_active
+          and offer.stock_total > 0
+          and offer.online_capacity > 0
+          and market.is_active
+          and market.is_booking_enabled
+        order by draft.created_at
+        limit 1
+      `);
+      if (reservableDraft.rows.length > 0) {
+        const candidate = reservableDraft.rows[0];
+        const reservation = await client.query(
+          `select public.reserve_product_offer_inventory(
+            $1,
+            $2,
+            '2099-02-01T09:00:00Z'::timestamptz,
+            '2099-02-02T09:00:00Z'::timestamptz,
+            1
+          ) as reserved`,
+          [candidate.product_offer_id, candidate.draft_id],
+        );
+        checks.offerScopedReservationTransactionalWrite =
+          reservation.rows[0]?.reserved === true;
+      } else {
+        checks.offerScopedReservationTransactionalWrite = "skipped_no_eligible_draft";
+      }
+
       const task = await client.query("select id, is_done from public.booking_ops_tasks order by created_at limit 1");
       if (task.rows.length > 0) {
         const nextValue = !task.rows[0].is_done;

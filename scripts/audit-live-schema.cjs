@@ -11,6 +11,7 @@ const expectedTables = [
   "blocked_dates",
   "booking_document_counters",
   "booking_documents",
+  "booking_custom_quotes",
   "booking_drafts",
   "booking_fulfillment_amendments",
   "booking_inventory_blocks",
@@ -26,11 +27,16 @@ const expectedTables = [
   "invoice_settings",
   "monitoring_runs",
   "newsletter_subscribers",
+  "markets",
+  "inventory_locations",
+  "offer_pricing_tiers",
+  "offer_quantity_discounts",
   "pickup_locations",
   "pricing_tiers",
   "product_faqs",
   "product_images",
   "product_localizations",
+  "product_offers",
   "product_quantity_discounts",
   "products",
   "service_zones",
@@ -40,30 +46,49 @@ const expectedTables = [
 const expectedFunctions = [
   "assign_booking_inventory_unit",
   "apply_paid_fulfillment_amendment",
+  "default_market_id",
   "next_booking_document_number",
+  "reserve_product_offer_inventory",
   "reserve_booking_inventory",
   "set_booking_document_number",
+  "set_default_market_context",
+  "set_fulfillment_amendment_market_context",
+  "set_inventory_location_context",
+  "set_product_offer_context",
   "sync_booking_inventory_units_on_status",
+  "sync_default_offer_pricing_tier",
+  "sync_default_offer_quantity_discount",
+  "sync_default_product_offer",
   "transition_booking_inventory_unit",
+  "validate_booking_draft_market",
+  "validate_inventory_assignment_market",
+  "validate_inventory_block_owner_market",
+  "validate_fulfillment_market_context",
 ];
 
 const expectedColumns = {
-  bookings: ["booking_draft_id", "quantity", "rental_start_at", "rental_end_at", "timezone", "fulfillment_mode", "pickup_location_id", "delivery_zone_id", "collection_zone_id", "collection_address", "collection_notes", "collection_fee_cents", "pricing_snapshot", "stripe_checkout_session_id", "billing_name", "billing_company_name", "billing_tax_id", "billing_address", "invoice_requested"],
-  booking_drafts: ["quantity"],
-  pickup_locations: ["customer_instructions", "internal_notes", "lead_time_hours", "handoff_contact", "confirmation_template"],
-  service_zones: ["customer_instructions", "internal_notes", "lead_time_hours", "same_day_cutoff", "delivery_window", "collection_window", "confirmation_template"],
+  bookings: ["booking_draft_id", "quantity", "rental_start_at", "rental_end_at", "timezone", "fulfillment_mode", "pickup_location_id", "delivery_zone_id", "collection_zone_id", "collection_address", "collection_notes", "collection_fee_cents", "pricing_snapshot", "stripe_checkout_session_id", "billing_name", "billing_company_name", "billing_tax_id", "billing_address", "invoice_requested", "market_id", "product_offer_id"],
+  booking_drafts: ["quantity", "market_id", "product_offer_id"],
+  booking_custom_quotes: ["market_id", "product_offer_id"],
+  pickup_locations: ["customer_instructions", "internal_notes", "lead_time_hours", "handoff_contact", "confirmation_template", "market_id"],
+  service_zones: ["customer_instructions", "internal_notes", "lead_time_hours", "same_day_cutoff", "delivery_window", "collection_window", "confirmation_template", "market_id"],
+  inventory_units: ["market_id", "product_offer_id", "inventory_location_id"],
+  booking_inventory_blocks: ["market_id", "product_offer_id"],
+  blocked_dates: ["market_id", "product_offer_id"],
+  inventory_stock_events: ["market_id", "product_offer_id"],
   booking_documents: ["customer_access_token", "customer_access_expires_at", "customer_access_last_sent_at", "invoice_format", "tax_rate_bps", "tax_inclusive", "tax_base_cents", "customer_tax_id", "customer_billing_address", "rectifies_document_id", "immutable_at"],
   booking_document_counters: ["series_prefix"],
   products: ["content_status"],
   booking_reviews: ["public_token", "rating", "review_body", "consent_to_publish", "status", "published_at"],
-  booking_fulfillment_amendments: ["public_token", "status", "fulfillment_mode", "delivery_fee_cents", "collection_fee_cents", "stripe_checkout_session_id", "paid_at", "applied_at"],
-  bundle_requests: ["request_ref", "bundle_slug", "customer_email", "selected_items", "selected_addons", "status", "consent_version"],
+  booking_fulfillment_amendments: ["public_token", "status", "fulfillment_mode", "delivery_fee_cents", "collection_fee_cents", "stripe_checkout_session_id", "paid_at", "applied_at", "market_id"],
+  bundle_requests: ["request_ref", "bundle_slug", "customer_email", "selected_items", "selected_addons", "status", "consent_version", "market_id"],
 };
 
 const expectedRlsTables = [
   "app_schema_migrations",
   "booking_document_counters",
   "booking_documents",
+  "booking_custom_quotes",
   "booking_drafts",
   "booking_fulfillment_amendments",
   "booking_inventory_blocks",
@@ -73,14 +98,19 @@ const expectedRlsTables = [
   "booking_reviews",
   "bundle_requests",
   "inventory_unit_events",
+  "inventory_locations",
   "inventory_units",
   "invoice_settings",
   "monitoring_runs",
+  "markets",
   "newsletter_subscribers",
+  "offer_pricing_tiers",
+  "offer_quantity_discounts",
   "pickup_locations",
   "product_faqs",
   "product_images",
   "product_localizations",
+  "product_offers",
   "product_quantity_discounts",
   "service_zones",
   "system_incidents",
@@ -88,13 +118,32 @@ const expectedRlsTables = [
 
 const expectedTriggers = [
   "booking_documents_set_number",
+  "booking_custom_quotes_10_offer_context",
+  "booking_custom_quotes_20_fulfillment_market",
+  "booking_inventory_blocks_10_offer_context",
+  "booking_inventory_blocks_20_owner_market",
   "booking_documents_updated_at",
   "booking_drafts_updated_at",
   "booking_fulfillment_amendments_updated_at",
+  "blocked_dates_offer_context",
+  "bookings_10_offer_context",
+  "bookings_15_draft_market",
+  "bookings_20_fulfillment_market",
   "booking_ops_tasks_updated_at",
   "invoice_settings_updated_at",
+  "inventory_units_10_offer_context",
+  "inventory_units_20_location_context",
+  "inventory_locations_updated_at",
+  "inventory_stock_events_offer_context",
+  "markets_updated_at",
   "newsletter_subscribers_updated_at",
+  "offer_pricing_tiers_updated_at",
+  "offer_quantity_discounts_updated_at",
   "pickup_locations_updated_at",
+  "pricing_tiers_sync_default_offer",
+  "product_offers_updated_at",
+  "product_quantity_discounts_sync_default_offer",
+  "products_sync_default_offer",
   "service_zones_updated_at",
   "sync_booking_inventory_units_on_status",
 ];
@@ -148,6 +197,43 @@ async function main() {
 
     const liveTables = tables.rows.map((row) => row.table_name);
     const liveFunctions = functions.rows.map((row) => row.routine_name);
+    let marketIntegrity = null;
+    if (["markets", "product_offers", "offer_pricing_tiers", "offer_quantity_discounts"].every((table) => liveTables.includes(table))) {
+      const integrity = await client.query(`
+        select
+          (select count(*)::int from public.markets where is_default) as default_markets,
+          (select count(*)::int from public.products) as products,
+          (
+            select count(*)::int
+            from public.product_offers offer
+            join public.markets market on market.id = offer.market_id
+            where market.is_default
+          ) as default_offers,
+          (select count(*)::int from public.pricing_tiers) as pricing_tiers,
+          (
+            select count(*)::int
+            from public.offer_pricing_tiers
+            where source_pricing_tier_id is not null
+          ) as mirrored_pricing_tiers,
+          (select count(*)::int from public.product_quantity_discounts) as quantity_discounts,
+          (
+            select count(*)::int
+            from public.offer_quantity_discounts
+            where source_quantity_discount_id is not null
+          ) as mirrored_quantity_discounts,
+          (
+            select count(*)::int
+            from public.bookings
+            where market_id is null or product_offer_id is null
+          ) as bookings_missing_context,
+          (
+            select count(*)::int
+            from public.inventory_units
+            where market_id is null or product_offer_id is null or inventory_location_id is null
+          ) as units_missing_context
+      `);
+      marketIntegrity = integrity.rows[0];
+    }
     const liveColumns = new Map();
     for (const row of columns.rows) {
       const tableColumns = liveColumns.get(row.table_name) || [];
@@ -172,9 +258,18 @@ async function main() {
       migrationHistory,
       appMigrationHistory,
       bookingOpsCoverage: bookingOpsCoverage.rows[0],
+      marketIntegrity,
     };
 
     console.log(JSON.stringify(result, null, 2));
+    const marketIntegrityFailed = marketIntegrity && (
+      marketIntegrity.default_markets !== 1 ||
+      marketIntegrity.products !== marketIntegrity.default_offers ||
+      marketIntegrity.pricing_tiers !== marketIntegrity.mirrored_pricing_tiers ||
+      marketIntegrity.quantity_discounts !== marketIntegrity.mirrored_quantity_discounts ||
+      marketIntegrity.bookings_missing_context !== 0 ||
+      marketIntegrity.units_missing_context !== 0
+    );
     if (
       result.missingTables.length ||
       result.missingFunctions.length ||
@@ -182,7 +277,8 @@ async function main() {
       result.rlsDisabled.length ||
       result.missingTriggers.length ||
       !result.productImagesBucketPresent ||
-      result.bookingOpsCoverage.bookings_without_complete_checklist > 0
+      result.bookingOpsCoverage.bookings_without_complete_checklist > 0 ||
+      marketIntegrityFailed
     ) process.exitCode = 2;
   } finally {
     await client.end();
