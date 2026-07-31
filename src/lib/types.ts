@@ -26,6 +26,8 @@ export type BookingPaymentEventStatus = "pending" | "succeeded" | "failed" | "ca
 export type BookingDocumentType = "invoice" | "refund_receipt" | "rental_agreement";
 export type BookingDocumentStatus = "draft" | "issued" | "void";
 export type CustomBookingQuoteStatus = "open" | "checkout_created" | "paid" | "cancelled" | "expired";
+export type MarketType = "city" | "region";
+export type InventoryLocationType = "depot" | "storage" | "pickup" | "partner";
 
 export interface CustomQuoteLineItem {
   description: string;
@@ -84,6 +86,73 @@ interface ProductQuantityDiscountRow {
   created_at: string;
 }
 
+interface MarketRow {
+  id: string;
+  slug: string;
+  name: string;
+  market_type: MarketType;
+  country_code: string;
+  timezone: string;
+  currency: string;
+  default_locale: string;
+  supported_locales: string[];
+  is_default: boolean;
+  is_active: boolean;
+  is_booking_enabled: boolean;
+  is_public: boolean;
+  is_indexable: boolean;
+  created_at: string;
+  updated_at: string;
+}
+
+interface ProductOfferRow {
+  id: string;
+  product_id: string;
+  market_id: string;
+  is_active: boolean;
+  stock_total: number;
+  online_capacity: number;
+  created_at: string;
+  updated_at: string;
+}
+
+interface OfferPricingTierRow {
+  id: string;
+  product_offer_id: string;
+  source_pricing_tier_id: string | null;
+  min_days: number;
+  per_day_cents: number;
+  created_at: string;
+  updated_at: string;
+}
+
+interface OfferQuantityDiscountRow {
+  id: string;
+  product_offer_id: string;
+  source_quantity_discount_id: string | null;
+  min_quantity: number;
+  discount_bps: number;
+  created_at: string;
+  updated_at: string;
+}
+
+interface InventoryLocationRow {
+  id: string;
+  market_id: string;
+  slug: string;
+  name: string;
+  location_type: InventoryLocationType;
+  address_line_1: string | null;
+  address_line_2: string | null;
+  locality: string | null;
+  postal_code: string | null;
+  country_code: string;
+  is_active: boolean;
+  is_public: boolean;
+  created_at: string;
+  updated_at: string;
+}
+
 interface BookingRow {
   id: string;
   booking_ref: string;
@@ -135,6 +204,8 @@ interface BookingRow {
   custom_line_items?: CustomQuoteLineItem[];
   custom_terms?: string | null;
   custom_internal_notes?: string | null;
+  market_id?: string;
+  product_offer_id?: string;
 }
 
 interface BookingStatusEventRow {
@@ -158,6 +229,8 @@ interface InventoryStockEventRow {
   source: string;
   actor_id: string | null;
   created_at: string;
+  market_id?: string;
+  product_offer_id?: string;
 }
 
 interface BlockedDateRow {
@@ -167,6 +240,8 @@ interface BlockedDateRow {
   reason: string | null;
   booking_id: string | null;
   created_at: string;
+  market_id?: string;
+  product_offer_id?: string;
 }
 
 interface PickupLocationRow {
@@ -189,6 +264,7 @@ interface PickupLocationRow {
   sort_order: number;
   created_at: string;
   updated_at: string;
+  market_id?: string;
 }
 
 interface CustomBookingQuoteRow {
@@ -223,6 +299,8 @@ interface CustomBookingQuoteRow {
   created_by: string | null;
   created_at: string;
   updated_at: string;
+  market_id?: string;
+  product_offer_id?: string;
 }
 
 interface ServiceZoneRow {
@@ -249,6 +327,7 @@ interface ServiceZoneRow {
   sort_order: number;
   created_at: string;
   updated_at: string;
+  market_id?: string;
 }
 
 interface BookingDraftRow {
@@ -294,6 +373,8 @@ interface BookingDraftRow {
   custom_line_items: CustomQuoteLineItem[];
   custom_terms: string | null;
   custom_internal_notes: string | null;
+  market_id?: string;
+  product_offer_id?: string;
 }
 
 interface BookingInventoryBlockRow {
@@ -306,6 +387,8 @@ interface BookingInventoryBlockRow {
   quantity: number;
   reason: string;
   created_at: string;
+  market_id?: string;
+  product_offer_id?: string;
 }
 
 interface BookingPaymentEventRow {
@@ -388,6 +471,31 @@ export interface Database {
         Insert: Omit<ProductQuantityDiscountRow, "id" | "created_at">;
         Update: Partial<Omit<ProductQuantityDiscountRow, "id" | "created_at">>;
       };
+      markets: {
+        Row: MarketRow;
+        Insert: Omit<MarketRow, "id" | "created_at" | "updated_at">;
+        Update: Partial<Omit<MarketRow, "id" | "created_at" | "updated_at">>;
+      };
+      product_offers: {
+        Row: ProductOfferRow;
+        Insert: Omit<ProductOfferRow, "id" | "created_at" | "updated_at">;
+        Update: Partial<Omit<ProductOfferRow, "id" | "created_at" | "updated_at">>;
+      };
+      offer_pricing_tiers: {
+        Row: OfferPricingTierRow;
+        Insert: Omit<OfferPricingTierRow, "id" | "created_at" | "updated_at">;
+        Update: Partial<Omit<OfferPricingTierRow, "id" | "created_at" | "updated_at">>;
+      };
+      offer_quantity_discounts: {
+        Row: OfferQuantityDiscountRow;
+        Insert: Omit<OfferQuantityDiscountRow, "id" | "created_at" | "updated_at">;
+        Update: Partial<Omit<OfferQuantityDiscountRow, "id" | "created_at" | "updated_at">>;
+      };
+      inventory_locations: {
+        Row: InventoryLocationRow;
+        Insert: Omit<InventoryLocationRow, "id" | "created_at" | "updated_at">;
+        Update: Partial<Omit<InventoryLocationRow, "id" | "created_at" | "updated_at">>;
+      };
       bookings: {
         Row: BookingRow;
         Insert: Omit<BookingRow, "id" | "booking_ref" | "created_at" | "updated_at">;
@@ -468,6 +576,11 @@ export interface Database {
 export type Category = CategoryRow;
 export type Product = ProductRow;
 export type PricingTier = PricingTierRow;
+export type Market = MarketRow;
+export type ProductOffer = ProductOfferRow;
+export type OfferPricingTier = OfferPricingTierRow;
+export type OfferQuantityDiscount = OfferQuantityDiscountRow;
+export type InventoryLocation = InventoryLocationRow;
 export type Booking = BookingRow;
 export type BookingStatusEvent = BookingStatusEventRow;
 export type InventoryStockEvent = InventoryStockEventRow;

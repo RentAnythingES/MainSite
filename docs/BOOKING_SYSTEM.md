@@ -1,5 +1,5 @@
 # Booking System
-> Last updated: 2026-07-24
+> Last updated: 2026-07-31
 
 ## Current Status
 
@@ -61,6 +61,22 @@ Initial Booking System v2 code is now in place:
 - `npm run smoke:booking` performs safe, read-only checks against booking options and availability.
 - `npm run audit:launch` checks required configuration, core tables, active-product readiness, and expired drafts.
 - Checkout and signed-webhook processing failures are written to `system_incidents` and surfaced in admin health after the incident migration is applied.
+
+## Multi-market compatibility foundation
+
+The applied `20260731_multi_market_foundation.sql` migration normalizes every
+existing operational row to the default Valencia market and a Valencia product
+offer. It does not change current routes or booking payloads.
+
+During compatibility, `products.stock_total`, `products.stock_available`,
+`pricing_tiers`, and `product_quantity_discounts` remain the Valencia write path
+and synchronize one-way into the default offer. The existing
+`reserve_booking_inventory(...)` RPC remains callable and delegates to the new
+offer-scoped `reserve_product_offer_inventory(...)` implementation.
+
+New market and offer constraints reject cross-market fulfillment, inventory-block,
+booking-draft, and physical-unit relationships. The complete design and remaining
+second-market launch gates are in `docs/MULTI_MARKET_ARCHITECTURE.md`.
 
 The v2 migrations have been applied and a controlled live-mode test confirmed draft
 creation, Stripe redirect, signed webhook fulfillment, success-page display, admin

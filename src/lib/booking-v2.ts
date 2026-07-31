@@ -212,18 +212,20 @@ export async function getProductWithPricing(
 
 export async function getServiceZone(
   supabase: SupabaseClient<Database>,
-  zoneId?: string | null
+  zoneId?: string | null,
+  marketId?: string | null,
 ): Promise<ServiceZoneFee | null> {
   if (!zoneId) {
     return null;
   }
 
-  const { data, error } = await supabase
+  let query = supabase
     .from("service_zones")
     .select("id, slug, name, delivery_fee_cents, collection_fee_cents, roundtrip_fee_cents, express_surcharge_cents, minimum_order_cents, automatic_checkout_enabled, lead_time_hours, same_day_cutoff")
     .eq("id", zoneId)
-    .eq("is_active", true)
-    .single();
+    .eq("is_active", true);
+  if (marketId) query = query.eq("market_id", marketId);
+  const { data, error } = await query.single();
 
   if (error || !data) {
     throw new BookingRuleError("Service zone not found");
@@ -239,15 +241,17 @@ export async function getServiceZone(
 export async function getPickupLocation(
   supabase: SupabaseClient<Database>,
   pickupLocationId?: string | null,
+  marketId?: string | null,
 ): Promise<PickupLocationRule | null> {
   if (!pickupLocationId) return null;
 
-  const { data, error } = await supabase
+  let query = supabase
     .from("pickup_locations")
     .select("id, name, lead_time_hours")
     .eq("id", pickupLocationId)
-    .eq("is_active", true)
-    .single();
+    .eq("is_active", true);
+  if (marketId) query = query.eq("market_id", marketId);
+  const { data, error } = await query.single();
 
   if (error || !data) {
     throw new BookingRuleError("Pickup location not found");
