@@ -22,7 +22,7 @@ export async function GET(request: NextRequest) {
   const [quotesResult, productsResult, pickupResult] = await Promise.all([
     supabase
       .from("booking_custom_quotes")
-      .select("*, product:products(id, name, slug, brand, image_url), pickup_location:pickup_locations(id, name, address)")
+      .select("*, product:products(id, name, slug, brand, image_url), pickup_location:pickup_locations!booking_custom_quotes_pickup_location_id_fkey(id, name, address)")
       .order("created_at", { ascending: false }),
     supabase
       .from("products")

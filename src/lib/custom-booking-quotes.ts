@@ -4,11 +4,14 @@ export const CUSTOM_QUOTE_TIMEZONE = "Europe/Madrid";
 export const MAX_CUSTOM_QUOTE_LINES = 12;
 
 export function isMissingCustomQuotesSchema(error: { code?: string | null; message?: string | null } | null | undefined) {
+  const message = (error?.message || "").toLowerCase();
   return error?.code === "42P01"
     || error?.code === "42703"
     || error?.code === "PGRST204"
     || error?.code === "PGRST205"
-    || /booking_custom_quotes|custom_quote_id|custom_line_items/i.test(error?.message || "");
+    || message.includes("relation \"booking_custom_quotes\" does not exist")
+    || message.includes("column \"custom_quote_id\" does not exist")
+    || message.includes("column \"custom_line_items\" does not exist");
 }
 
 export function cleanOptionalText(value: unknown, maxLength: number) {
