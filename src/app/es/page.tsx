@@ -5,6 +5,10 @@ import { getLocalBusinessJsonLd, getWebsiteJsonLd } from "@/lib/jsonld";
 import HeroCarousel from "@/components/HeroCarousel";
 import VerifiedReviews from "@/components/VerifiedReviews";
 import { getDictionary } from "@/i18n/getDictionary";
+import {
+  formatHomepageProductPrice,
+  getHomepageFeaturedProducts,
+} from "@/lib/homepage-products";
 
 export const revalidate = 300;
 
@@ -35,14 +39,23 @@ const howItWorks = [
   { step: "3", ...t.home.howItWorksSteps[2], icon: "✨" },
 ];
 
-const featuredProducts = [
-  { name: "Cochecito Compacto", category: t.categories.babyGear.name, price: "€5 – €14", unit: "/ día", href: "/es/product/compact-stroller", image: "/products/compact-stroller.webp" },
-  { name: "Silla de Transporte Ligera", category: t.categories.mobility.name, price: "€5 – €12", unit: "/ día", href: "/es/product/transport-wheelchair", image: "/products/transport-wheelchair.webp" },
-  { name: "Monitor 27\"", category: t.categories.remoteWork.name, price: "€7 – €21", unit: "/ día", href: "/es/product/monitor-27", image: "/products/monitor-27.webp" },
-  { name: "Scooter de Movilidad Todoterreno", category: t.categories.mobility.name, price: "€30 – €70", unit: "/ día", href: "/es/product/heavy-duty-mobility-scooter", image: "/products/heavy-duty-mobility-scooter.webp" },
-];
+const featuredProductNamesES: Record<string, string> = {
+  "stroller-travel-compact": "Cochecito de viaje compacto",
+  "compact-stroller": "Cochecito compacto",
+  "transport-wheelchair": "Silla de transporte ligera",
+  "monitor-27": "Monitor de 27 pulgadas",
+  "heavy-duty-mobility-scooter": "Scooter de movilidad XL",
+};
 
-export default function HomePageES() {
+const featuredCategoryNamesES: Record<string, string> = {
+  "baby-gear": t.categories.babyGear.name,
+  mobility: t.categories.mobility.name,
+  "remote-work": t.categories.remoteWork.name,
+};
+
+export default async function HomePageES() {
+  const featuredProducts = await getHomepageFeaturedProducts("es");
+
   return (
     <>
       <script
@@ -137,16 +150,16 @@ export default function HomePageES() {
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {featuredProducts.map((product) => (
-              <Link key={product.href} href={product.href} className="card group" id={`product-${product.href.split("/").pop()}`}>
+              <Link key={product.slug} href={`/es/product/${product.slug}`} className="card group" id={`product-${product.slug}`}>
                 <div className="aspect-square bg-gradient-to-br from-neutral-100 to-neutral-50 relative overflow-hidden">
-                  <Image src={product.image} alt={product.name} fill className="object-contain p-4 group-hover:scale-105 transition-transform duration-300" sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw" />
+                  <Image src={product.image} alt={featuredProductNamesES[product.slug] || product.name} fill className="object-contain p-4 group-hover:scale-105 transition-transform duration-300" sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw" />
                 </div>
                 <div className="p-4">
-                  <span className="badge badge-brand mb-2">{product.category}</span>
-                  <h3 className="font-bold text-neutral-800 mb-1 group-hover:text-brand transition-colors">{product.name}</h3>
+                  <span className="badge badge-brand mb-2">{featuredCategoryNamesES[product.categorySlug] || product.category}</span>
+                  <h3 className="font-bold text-neutral-800 mb-1 group-hover:text-brand transition-colors">{featuredProductNamesES[product.slug] || product.name}</h3>
                   <div className="flex items-baseline gap-1">
-                    <span className="text-lg font-bold text-brand">{product.price}</span>
-                    <span className="text-sm text-neutral-400">{product.unit}</span>
+                    <span className="text-lg font-bold text-brand">{formatHomepageProductPrice(product)}</span>
+                    <span className="text-sm text-neutral-400">/ día</span>
                   </div>
                 </div>
               </Link>

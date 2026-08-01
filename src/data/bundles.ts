@@ -63,12 +63,12 @@ export const rentalBundles: RentalBundle[] = [
       { name: "Waterproof pouch", note: "For phones, keys, and small valuables" },
     ],
     addons: [
-      { name: "Compact stroller", note: "Useful for tired toddlers after the beach", productSlug: "compact-stroller" },
+      { name: "Compact stroller", note: "Useful for tired toddlers after the beach", productSlug: "stroller-travel-compact" },
       { name: "Beach umbrella set", note: "Extra shade for larger families", productSlug: "beach-umbrella-set" },
       { name: "Portable fan", note: "For naps, terraces, and hot apartments" },
       { name: "Toddler toy pack", note: "For downtime back at the apartment" },
     ],
-    relatedProductSlugs: ["beach-umbrella-set", "compact-stroller"],
+    relatedProductSlugs: ["beach-umbrella-set", "stroller-travel-compact"],
     relatedGuideSlugs: ["best-beaches-valencia-families", "valencia-summer-survival-guide", "valencia-with-kids-complete-guide"],
     seo: {
       title: "Family Beach Kit Rental in Valencia",
@@ -103,7 +103,7 @@ export const rentalBundles: RentalBundle[] = [
     includedItems: [
       { name: "Travel cot", note: "With fitted sheet where available", productSlug: "travel-crib" },
       { name: "High chair", productSlug: "high-chair" },
-      { name: "Compact stroller", productSlug: "compact-stroller" },
+      { name: "Compact stroller", productSlug: "stroller-travel-compact" },
       { name: "Baby bath" },
       { name: "Play mat" },
       { name: "Baby monitor", note: "Subject to stock and apartment layout" },
@@ -114,7 +114,7 @@ export const rentalBundles: RentalBundle[] = [
       { name: "Blackout blind", note: "Helpful for naps in bright apartments" },
       { name: "Baby carrier", note: "Useful for old-town streets and short trips" },
     ],
-    relatedProductSlugs: ["travel-crib", "compact-stroller", "high-chair", "car-seat-infant"],
+    relatedProductSlugs: ["travel-crib", "stroller-travel-compact", "high-chair", "car-seat-infant"],
     relatedGuideSlugs: ["valencia-with-kids-complete-guide"],
     seo: {
       title: "Baby Arrival Kit Rental in Valencia",
@@ -147,7 +147,7 @@ export const rentalBundles: RentalBundle[] = [
     accent: "green",
     bestFor: ["Toddlers", "Turia Gardens days", "Long city walks", "Families staying near the centre or beach"],
     includedItems: [
-      { name: "Compact stroller", productSlug: "compact-stroller" },
+      { name: "Compact stroller", productSlug: "stroller-travel-compact" },
       { name: "Kids scooter or balance bike", note: "Subject to age and stock" },
       { name: "Helmet" },
       { name: "Snack tray or small travel accessory" },
@@ -159,7 +159,7 @@ export const rentalBundles: RentalBundle[] = [
       { name: "Travel cot", note: "If the trip also needs sleep gear", productSlug: "travel-crib" },
       { name: "Double stroller", note: "For siblings", productSlug: "double-stroller" },
     ],
-    relatedProductSlugs: ["compact-stroller", "double-stroller", "beach-umbrella-set"],
+    relatedProductSlugs: ["stroller-travel-compact", "double-stroller", "beach-umbrella-set"],
     relatedGuideSlugs: ["valencia-with-kids-complete-guide", "best-beaches-valencia-families"],
     seo: {
       title: "Toddler City Kit Rental in Valencia",
