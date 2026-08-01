@@ -208,6 +208,8 @@ speed invalidates the displayed server quote. A resumable Checkout is reused onl
 when all of those fields still match. Manual-quote zones are kept out of the public
 selector, while the server remains authoritative for express surcharge, minimum
 rental value, lead time, and same-day cutoff.
+Standard and express option cards independently preview the full selected fulfillment
+fee; express adds the configured surcharge to the same one-way or round-trip base.
 
 ### Post-booking delivery changes
 

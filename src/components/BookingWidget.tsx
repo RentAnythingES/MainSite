@@ -189,6 +189,7 @@ async function fetchWithTimeout(input: RequestInfo | URL, init: RequestInit) {
 
 type BookingStep = "dates" | "form" | "success";
 type FulfillmentMode = "customer_pickup" | "delivery_only" | "delivery_and_collection";
+type DeliveryOption = "standard" | "express";
 
 interface ServiceZoneOption {
   id: string;
@@ -229,6 +230,32 @@ interface ServerQuote {
   totalCents: number;
 }
 
+function calculateFulfillmentFeeCents(
+  fulfillmentMode: FulfillmentMode,
+  deliveryOption: DeliveryOption,
+  deliveryZone?: ServiceZoneOption,
+  collectionZone?: ServiceZoneOption,
+): number {
+  let feeCents = 0;
+
+  if (fulfillmentMode === "delivery_only") {
+    feeCents = deliveryZone?.delivery_fee_cents || 0;
+  } else if (fulfillmentMode === "delivery_and_collection") {
+    feeCents =
+      deliveryZone?.id === collectionZone?.id &&
+      (deliveryZone?.roundtrip_fee_cents || 0) > 0
+        ? deliveryZone?.roundtrip_fee_cents || 0
+        : (deliveryZone?.delivery_fee_cents || 0) +
+          (collectionZone?.collection_fee_cents || 0);
+  }
+
+  if (fulfillmentMode !== "customer_pickup" && deliveryOption === "express") {
+    feeCents += deliveryZone?.express_surcharge_cents || 0;
+  }
+
+  return feeCents;
+}
+
 export default function BookingWidget({ product, locale = "en" }: BookingWidgetProps) {
   const t = labels[locale];
   const tomorrow = addDays(new Date(), 1);
@@ -237,7 +264,7 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
   const [endDate, setEndDate] = useState(formatDate(addDays(tomorrow, 3)));
   const [endTime, setEndTime] = useState("09:00");
   const [quantity, setQuantity] = useState(1);
-  const [deliveryOption, setDeliveryOption] = useState<"standard" | "express">("standard");
+  const [deliveryOption, setDeliveryOption] = useState<DeliveryOption>("standard");
   const [fulfillmentMode, setFulfillmentMode] = useState<FulfillmentMode>("delivery_and_collection");
   const [step, setStep] = useState<BookingStep>("dates");
 
@@ -284,25 +311,37 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
       .find((t) => days >= t.days) || product.pricing[0];
 
     const subtotal = tier.perDay * days * quantity;
-    let deliveryFeeCents = 0;
-    if (fulfillmentMode === "delivery_only") {
-      deliveryFeeCents = selectedDeliveryZone?.delivery_fee_cents || 0;
-    } else if (fulfillmentMode === "delivery_and_collection") {
-      deliveryFeeCents =
-        selectedDeliveryZone?.id === selectedCollectionZone?.id &&
-        (selectedDeliveryZone?.roundtrip_fee_cents || 0) > 0
-          ? selectedDeliveryZone?.roundtrip_fee_cents || 0
-          : (selectedDeliveryZone?.delivery_fee_cents || 0) +
-            (selectedCollectionZone?.collection_fee_cents || 0);
-    }
-    if (fulfillmentMode !== "customer_pickup" && deliveryOption === "express") {
-      deliveryFeeCents += selectedDeliveryZone?.express_surcharge_cents || 0;
-    }
+    const deliveryFeeCents = calculateFulfillmentFeeCents(
+      fulfillmentMode,
+      deliveryOption,
+      selectedDeliveryZone,
+      selectedCollectionZone,
+    );
     const deliveryFee = deliveryFeeCents / 100;
     const total = subtotal + deliveryFee;
 
     return { days, perDay: tier.perDay, subtotal, subtotalBeforeDiscount: subtotal, deliveryFee, total, quantityDiscount: 0 };
   }, [startDate, endDate, deliveryOption, fulfillmentMode, product.pricing, quantity, selectedDeliveryZone, selectedCollectionZone]);
+
+  const deliveryOptionFees = useMemo(
+    () => ({
+      standard:
+        calculateFulfillmentFeeCents(
+          fulfillmentMode,
+          "standard",
+          selectedDeliveryZone,
+          selectedCollectionZone,
+        ) / 100,
+      express:
+        calculateFulfillmentFeeCents(
+          fulfillmentMode,
+          "express",
+          selectedDeliveryZone,
+          selectedCollectionZone,
+        ) / 100,
+    }),
+    [fulfillmentMode, selectedDeliveryZone, selectedCollectionZone],
+  );
 
   const displayPricing = useMemo(() => {
     if (!serverQuote) {
@@ -1019,7 +1058,7 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
           >
             <p className="font-semibold">{t.standard}</p>
             <p className="text-xs text-neutral-500">
-              {displayPricing.deliveryFee === 0 ? t.free : `€${displayPricing.deliveryFee}`} · {t.nextDay}
+              {deliveryOptionFees.standard === 0 ? t.free : `€${deliveryOptionFees.standard}`} · {t.nextDay}
             </p>
           </button>
           <button
@@ -1033,7 +1072,9 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
             id="delivery-express"
           >
             <p className="font-semibold">{t.express}</p>
-            <p className="text-xs text-neutral-500">€15 · {t.sameDay}</p>
+            <p className="text-xs text-neutral-500">
+              {deliveryOptionFees.express === 0 ? t.free : `€${deliveryOptionFees.express}`} · {t.sameDay}
+            </p>
           </button>
         </div>
       </div>
@@ -1054,7 +1095,9 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
           </div>
         )}
         <div className="flex justify-between text-sm">
-          <span className="text-neutral-500">{t.delivery}</span>
+          <span className="text-neutral-500">
+            {fulfillmentMode === "delivery_and_collection" ? t.deliveryCollection : t.delivery}
+          </span>
           <span className="font-medium">
             {displayPricing.deliveryFee === 0 ? (
               <span className="text-green-600">{t.free}</span>
