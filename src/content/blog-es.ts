@@ -79,7 +79,7 @@ export const spanishBlogPosts: BlogPost[] = [
         paragraphs: [
           "Protector solar de factor alto, agua suficiente, algo de comida, ropa seca y una bolsa para bañadores mojados son la base. Entre junio y septiembre también merece la pena llevar una solución de sombra con protección UV.",
           "Si llegas en avión, transportar sombrillas, sillas, refugios y juguetes ocupa gran parte del equipaje. Puedes comparar nuestro <a href=\"/es/rental/travel-outdoors\">equipamiento de playa en Valencia</a> y comprobar disponibilidad para tus fechas.",
-          "Para paseos largos por Malvarrosa o Patacona, un <a href=\"/es/product/compact-stroller\">cochecito compacto</a> facilita el transporte, pero ningún cochecito funciona bien sobre arena blanda. Déjalo en el paseo o utiliza accesos con pasarela.",
+          "Para paseos largos por Malvarrosa o Patacona, un <a href=\"/es/product/stroller-travel-compact\">cochecito compacto</a> facilita el transporte, pero ningún cochecito funciona bien sobre arena blanda. Déjalo en el paseo o utiliza accesos con pasarela.",
         ],
       },
     ],
@@ -123,7 +123,7 @@ export const spanishBlogPosts: BlogPost[] = [
       },
       {
         title: "Cochecito compacto",
-        href: "/es/product/compact-stroller",
+        href: "/es/product/stroller-travel-compact",
         description: "Una opción ligera para paseos marítimos y transporte público",
       },
     ],
@@ -313,7 +313,7 @@ export const spanishBlogPosts: BlogPost[] = [
       {
         heading: "Moverse por Valencia con cochecito",
         paragraphs: [
-          "La ciudad es mayoritariamente llana, pero el tipo de superficie cambia. El Jardín del Turia, los barrios modernos y los paseos marítimos son cómodos; algunas calles de Ciutat Vella tienen adoquines, bordillos o pasos estrechos. Un <a href=\"/es/product/compact-stroller\">cochecito compacto</a> facilita los trayectos y ocupa menos espacio en restaurantes y transporte público.",
+          "La ciudad es mayoritariamente llana, pero el tipo de superficie cambia. El Jardín del Turia, los barrios modernos y los paseos marítimos son cómodos; algunas calles de Ciutat Vella tienen adoquines, bordillos o pasos estrechos. Un <a href=\"/es/product/stroller-travel-compact\">cochecito compacto</a> facilita los trayectos y ocupa menos espacio en restaurantes y transporte público.",
           "Metrovalencia dispone de recorridos adaptados mediante rampas y ascensores en estaciones y paradas, aunque conviene consultar avisos de servicio antes de viajar. Los autobuses urbanos suelen ser una alternativa útil para trayectos directos, especialmente cuando el metro obliga a hacer transbordos.",
           "Si vas a utilizar taxi o coche de alquiler, confirma la silla infantil al reservar: no des por hecho que estará disponible ni que será adecuada para la edad y talla del menor. Puedes traer tu propio sistema o comprobar un <a href=\"/es/product/car-seat-infant\">asiento infantil de alquiler</a> antes del viaje.",
         ],
@@ -375,7 +375,7 @@ export const spanishBlogPosts: BlogPost[] = [
       },
       {
         title: "Cochecito compacto",
-        href: "/es/product/compact-stroller",
+        href: "/es/product/stroller-travel-compact",
         description: "Una opción ligera para paseos y transporte público",
       },
       {
@@ -688,7 +688,7 @@ export const spanishBlogPosts: BlogPost[] = [
         heading: "Planificación práctica para familias y movilidad",
         paragraphs: [
           "Consulta transporte de ida y vuelta, previsión meteorológica, horarios oficiales y reservas la víspera. Lleva agua, batería externa, protección solar y calzado adecuado. En castillos y cascos históricos, el desnivel importa más que la distancia indicada en el mapa.",
-          "Un <a href=\"/es/product/compact-stroller\">cochecito compacto</a> ayuda en estaciones y zonas llanas, pero Xàtiva Turismo prohíbe el acceso con cochecito al castillo. Para familias, puede ser mejor utilizar una mochila portabebés adecuada y repartir el itinerario. Consulta también nuestra <a href=\"/es/blog/valencia-with-kids-complete-guide\">guía de Valencia con niños</a>.",
+          "Un <a href=\"/es/product/stroller-travel-compact\">cochecito compacto</a> ayuda en estaciones y zonas llanas, pero Xàtiva Turismo prohíbe el acceso con cochecito al castillo. Para familias, puede ser mejor utilizar una mochila portabebés adecuada y repartir el itinerario. Consulta también nuestra <a href=\"/es/blog/valencia-with-kids-complete-guide\">guía de Valencia con niños</a>.",
           "Si una persona necesita silla, scooter o andador, revisa estación, taxi, pavimento, pendiente y monumento por separado. Nuestro <a href=\"/es/rental/mobility\">equipamiento de movilidad</a> puede facilitar determinados trayectos, pero no elimina barreras físicas ni convierte un castillo en accesible.",
         ],
       },

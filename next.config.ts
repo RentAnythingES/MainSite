@@ -4,6 +4,16 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       {
+        source: "/product/compact-stroller",
+        destination: "/product/stroller-travel-compact",
+        permanent: true,
+      },
+      {
+        source: "/es/product/compact-stroller",
+        destination: "/es/product/stroller-travel-compact",
+        permanent: true,
+      },
+      {
         source: "/product/portable-ac",
         destination: "/product/mobile-airconditioner-delonghi-pinguino-compact-classic",
         permanent: true,

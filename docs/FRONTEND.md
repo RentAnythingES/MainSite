@@ -11,7 +11,7 @@ route handling while excluding APIs and static assets.
 ### Public (English)
 | Route | Type | Source | Hero |
 |-------|------|--------|------|
-| `/` | Static | `page.tsx` | Photo carousel (3 images) |
+| `/` | Cached | `product-service.ts` + `page.tsx` | Photo carousel (3 images) |
 | `/valencia` | Static | `page.tsx` | Beach photo background |
 | `/valencia/kits` | Static | `bundles.ts` data | Photo-backed kit cards |
 | `/valencia/kits/[slug]` | SSG | `bundles.ts` data | Kit hero image |
@@ -26,7 +26,7 @@ route handling while excluding APIs and static assets.
 ### Public (Spanish — `/es/` prefix)
 | Route | Type | Source |
 |-------|------|--------|
-| `/es` | Static | `es/page.tsx` + `i18n/dictionaries/es.ts` |
+| `/es` | Cached | `product-service.ts` + `es/page.tsx` + `i18n/dictionaries/es.ts` |
 | `/es/valencia` | Static | `es/valencia/page.tsx` |
 | `/es/valencia/kits` | Static | Fully localized `bundles-es.ts` kit hub |
 | `/es/valencia/kits/[slug]` | SSG | Eight localized kit details + shared configurator |
@@ -83,6 +83,7 @@ route handling while excluding APIs and static assets.
 | `src/data/bundles.ts` | Static kit/bundle data + helpers (`getBundleBySlug`, `getBundleProducts`) |
 | `src/data/bundles-es.ts` | Spanish kit copy mapped to canonical bundle/item identifiers |
 | `src/lib/product-service.ts` | Supabase-first product fetching with static fallback |
+| `src/lib/homepage-products.ts` | Active EN/ES featured-product selection with legacy static fallback candidates |
 | `src/content/destinations.ts` | Discover guide data + `ProductWidget` interface |
 | `src/content/destinations-es.ts` | Complete, reviewed Spanish Discover adaptations |
 | `src/content/blog.ts` | Blog post data |
