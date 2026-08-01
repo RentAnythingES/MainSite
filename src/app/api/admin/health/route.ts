@@ -4,6 +4,8 @@ import { isStripeConfigured } from "@/lib/stripe";
 import { sendEmailHealthCheck } from "@/lib/email";
 import { createServiceClient } from "@/lib/supabase";
 import { cleanupExpiredBookingDrafts } from "@/lib/booking-v2";
+import { getWhatsAppNotificationMode, isWhatsAppBookingNotificationConfigured } from "@/lib/whatsapp";
+import { isTelegramBookingNotificationConfigured } from "@/lib/telegram";
 
 function maskEmail(value: string | undefined): string | null {
   if (!value) return null;
@@ -13,6 +15,20 @@ function maskEmail(value: string | undefined): string | null {
 
   if (!local || !domain) return value;
   return `${local.slice(0, 2)}***@${domain}`;
+}
+
+function maskPhone(value: string | undefined): string | null {
+  const digits = String(value || "").replace(/\D/g, "");
+  if (!digits) return null;
+  if (digits.length <= 4) return `${"*".repeat(Math.max(0, digits.length - 1))}${digits.slice(-1)}`;
+  return `${digits.slice(0, 2)}***${digits.slice(-2)}`;
+}
+
+function maskChatId(value: string | undefined): string | null {
+  const raw = String(value || "").trim();
+  if (!raw) return null;
+  if (raw.length <= 4) return `${"*".repeat(Math.max(0, raw.length - 1))}${raw.slice(-1)}`;
+  return `${raw.slice(0, 2)}***${raw.slice(-2)}`;
 }
 
 async function isAvailable(query: unknown) {
@@ -104,6 +120,19 @@ export async function GET(request: NextRequest) {
       configured: Boolean(process.env.RESEND_API_KEY),
       fromEmail: maskEmail(process.env.FROM_EMAIL || "RentAnything <noreply@rentanything.es>"),
       contactEmail: maskEmail(process.env.CONTACT_EMAIL || "hello@rentanything.es"),
+    },
+    whatsapp: {
+      configured: isWhatsAppBookingNotificationConfigured(),
+      mode: getWhatsAppNotificationMode(),
+      webhookConfigured: Boolean(process.env.WHATSAPP_NOTIFY_WEBHOOK_URL),
+      recipientMasked: maskPhone(process.env.WHATSAPP_NOTIFY_TO),
+      metaTemplateConfigured: Boolean(process.env.WHATSAPP_BOOKING_TEMPLATE_NAME),
+    },
+    telegram: {
+      configured: isTelegramBookingNotificationConfigured(),
+      chatIdMasked: maskChatId(process.env.TELEGRAM_NOTIFY_CHAT_ID),
+      threadConfigured: Boolean(process.env.TELEGRAM_NOTIFY_THREAD_ID),
+      apiBaseConfigured: Boolean(process.env.TELEGRAM_API_BASE),
     },
     supabase: {
       urlConfigured: Boolean(process.env.NEXT_PUBLIC_SUPABASE_URL),

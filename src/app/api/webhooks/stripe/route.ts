@@ -7,6 +7,8 @@ import { recordBookingPaymentEvent } from "@/lib/payment-ledger";
 import { createBookingDocumentForPaymentEvent, getCustomerDocumentUrl } from "@/lib/booking-documents";
 import { getIncidentErrorMessage, recordSystemIncident } from "@/lib/system-incidents";
 import { buildGoogleCalendarUrl, buildGoogleMapsUrl } from "@/lib/calendar-links";
+import { sendBookingPaidWhatsAppNotification } from "@/lib/whatsapp";
+import { sendBookingPaidTelegramNotification } from "@/lib/telegram";
 import Stripe from "stripe";
 
 /**
@@ -244,6 +246,34 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session): Promis
       : undefined,
     customQuoteLines: [],
     customTerms: `Google Calendar: ${bookingCalendarLink}\nGoogle Maps: ${bookingMapsLink}`,
+  });
+
+  await sendBookingPaidWhatsAppNotification({
+    bookingId: (booking as { id: string }).id,
+    bookingRef: (booking as { booking_ref: string }).booking_ref,
+    customerName: meta.customer_name,
+    customerPhone: meta.customer_phone || null,
+    productName: meta.product_name || "Rental equipment",
+    quantity: parseInt(meta.quantity || "1"),
+    startDate: meta.start_date,
+    endDate: meta.end_date,
+    totalCents: parseInt(meta.total_cents || "0"),
+    fulfillmentLabel: meta.delivery_type || "standard",
+    deliveryAddress: meta.delivery_address || null,
+  });
+
+  await sendBookingPaidTelegramNotification({
+    bookingId: (booking as { id: string }).id,
+    bookingRef: (booking as { booking_ref: string }).booking_ref,
+    customerName: meta.customer_name,
+    customerPhone: meta.customer_phone || null,
+    productName: meta.product_name || "Rental equipment",
+    quantity: parseInt(meta.quantity || "1"),
+    startDate: meta.start_date,
+    endDate: meta.end_date,
+    totalCents: parseInt(meta.total_cents || "0"),
+    fulfillmentLabel: meta.delivery_type || "standard",
+    deliveryAddress: meta.delivery_address || null,
   });
 
   return true;
@@ -650,6 +680,34 @@ async function handleDraftCheckoutCompleted(
     documentLinks: invoiceUrl
       ? [{ label: "Download invoice", url: invoiceUrl, documentNumber: invoiceDocument?.document_number }]
       : undefined,
+  });
+
+  await sendBookingPaidWhatsAppNotification({
+    bookingId,
+    bookingRef: (booking as { booking_ref: string }).booking_ref,
+    customerName: bookingDraft.customer_name || session.customer_details?.name || "Customer",
+    customerPhone: bookingDraft.customer_phone,
+    productName: (product as { name?: string } | null)?.name || "Rental equipment",
+    quantity: bookingDraft.quantity,
+    startDate,
+    endDate,
+    totalCents: bookingDraft.total_cents,
+    fulfillmentLabel: fulfillmentDisplayLabel || bookingDraft.fulfillment_mode,
+    deliveryAddress: bookingDraft.delivery_address || bookingDraft.collection_address || "Customer pickup",
+  });
+
+  await sendBookingPaidTelegramNotification({
+    bookingId,
+    bookingRef: (booking as { booking_ref: string }).booking_ref,
+    customerName: bookingDraft.customer_name || session.customer_details?.name || "Customer",
+    customerPhone: bookingDraft.customer_phone,
+    productName: (product as { name?: string } | null)?.name || "Rental equipment",
+    quantity: bookingDraft.quantity,
+    startDate,
+    endDate,
+    totalCents: bookingDraft.total_cents,
+    fulfillmentLabel: fulfillmentDisplayLabel || bookingDraft.fulfillment_mode,
+    deliveryAddress: bookingDraft.delivery_address || bookingDraft.collection_address || "Customer pickup",
   });
 
   return true;

@@ -51,6 +51,7 @@ Initial Booking System v2 code is now in place:
 - `/api/checkout/status` joins Stripe session, booking draft, booking, and inventory state for the success page.
 - `/api/webhooks/stripe` can fulfill `checkout.session.completed` from a booking draft.
 - `/api/admin/health` exposes authenticated, non-secret configuration status for Stripe, Resend, Supabase, and booking health.
+- Paid booking fulfillment can optionally fan out an internal WhatsApp alert via either a configured outbound webhook or a WhatsApp Cloud template.
 - `/api/admin/bookings/[id]/inventory-units` manages physical-unit assignment and lifecycle transitions.
 - Expired draft cleanup now runs before availability checks, draft creation, checkout creation, and admin health checks.
 - Checkout cancellation expires the open Stripe session and releases the unpaid inventory hold immediately.
@@ -217,6 +218,80 @@ health status.
 ## Stripe Contract
 
 Stripe metadata should contain only stable server-generated identifiers:
+
+## Optional WhatsApp Admin Alerts
+
+Paid bookings can trigger an internal WhatsApp notification from the Stripe webhook.
+Two delivery modes are supported:
+
+- `WHATSAPP_NOTIFY_WEBHOOK_URL`: send a JSON payload to your own automation endpoint (for example Make, Zapier, or a small worker that posts to WhatsApp).
+- Direct WhatsApp Cloud template: set `WHATSAPP_ACCESS_TOKEN`, `WHATSAPP_PHONE_NUMBER_ID`, `WHATSAPP_NOTIFY_TO`, `WHATSAPP_BOOKING_TEMPLATE_NAME`, and optionally `WHATSAPP_BOOKING_TEMPLATE_LANG`.
+
+The webhook payload/event is `booking.paid`. The direct WhatsApp Cloud mode sends a template body with these parameters, in order:
+
+1. Booking reference
+2. Customer name
+3. Product and quantity
+4. Rental date window
+5. Total amount
+6. Fulfillment summary
+7. Admin booking URL
+
+Recommended WhatsApp Cloud template:
+
+- Category: `Utility`
+- Name: choose the exact value you will place in `WHATSAPP_BOOKING_TEMPLATE_NAME`
+- Language: match `WHATSAPP_BOOKING_TEMPLATE_LANG` (default `en`)
+- Body:
+
+```text
+New paid booking
+Ref: {{1}}
+Customer: {{2}}
+Item: {{3}}
+Dates: {{4}}
+Total: {{5}}
+Fulfillment: {{6}}
+Admin: {{7}}
+```
+
+Suggested setup flow for the direct Meta version:
+
+1. In Meta Business Manager, create or reuse a WhatsApp Business sender.
+2. Create and get approval for the utility template above.
+3. Add these environment variables in Vercel: `WHATSAPP_ACCESS_TOKEN`, `WHATSAPP_PHONE_NUMBER_ID`, `WHATSAPP_NOTIFY_TO`, `WHATSAPP_BOOKING_TEMPLATE_NAME`, and optionally `WHATSAPP_BOOKING_TEMPLATE_LANG`.
+4. Redeploy.
+5. Check `/api/admin/health` while logged in as admin to confirm WhatsApp is configured.
+6. POST to `/api/admin/health/whatsapp-test` while logged in as admin to send a sample message.
+
+`/api/admin/health` exposes whether WhatsApp alerting is configured, which mode is active, whether the template name is present, and a masked target number.
+
+## Optional Telegram Admin Alerts
+
+Paid bookings can also trigger an internal Telegram notification through the Telegram Bot API.
+
+Required environment variables:
+
+- `TELEGRAM_BOT_TOKEN`
+- `TELEGRAM_NOTIFY_CHAT_ID`
+
+Optional environment variables:
+
+- `TELEGRAM_NOTIFY_THREAD_ID` for a Telegram forum topic/thread
+- `TELEGRAM_API_BASE` if you need a non-default Bot API base URL
+
+Suggested setup flow:
+
+1. Create a Telegram bot with BotFather and copy the bot token.
+2. Add the bot to the target group or channel, or start a direct chat with it.
+3. Send at least one message in that chat after the bot is present.
+4. Use the authenticated admin helper `GET /api/admin/health/telegram-chats` to inspect recent Telegram updates and extract the correct `chat_id` and optional `message_thread_id`.
+5. Add the environment variables in Vercel.
+6. Redeploy.
+7. Check `/api/admin/health` while logged in as admin to confirm Telegram is configured.
+8. POST to `/api/admin/health/telegram-test` while logged in as admin to send a sample message.
+
+The Telegram alert includes booking reference, customer, phone, item and quantity, rental dates, total, fulfillment summary, delivery address, and the admin booking URL.
 
 - `booking_draft_id`
 - `product_id`
