@@ -19,12 +19,18 @@ export async function GET(
       collection_address, delivery_notes, collection_notes, currency, line_items,
       total_cents, customer_terms, expires_at,
       product:products(id, name, slug, brand, image_url),
-      pickup_location:pickup_locations(id, name, address, customer_instructions, pickup_instructions)
+      pickup_location:pickup_locations!booking_custom_quotes_pickup_location_id_fkey(id, name, address, customer_instructions, pickup_instructions)
     `)
     .eq("public_token", token)
     .single();
 
-  if (error || !data) return NextResponse.json({ error: "Quote not found" }, { status: 404 });
+  if (error) {
+    const missing = error.code === "PGRST116" || /no rows|not found/i.test(error.message || "");
+    if (missing) return NextResponse.json({ error: "Quote not found" }, { status: 404 });
+    console.error("[api/custom-quotes/[token]] GET failed", error);
+    return NextResponse.json({ error: "Could not load this quote" }, { status: 500 });
+  }
+  if (!data) return NextResponse.json({ error: "Quote not found" }, { status: 404 });
 
   const expired = new Date(data.expires_at).getTime() <= Date.now();
   if (expired && data.status !== "paid" && data.status !== "cancelled") {
