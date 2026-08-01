@@ -4,6 +4,10 @@ import type { Metadata } from "next";
 import { getLocalBusinessJsonLd, getWebsiteJsonLd } from "@/lib/jsonld";
 import HeroCarousel from "@/components/HeroCarousel";
 import VerifiedReviews from "@/components/VerifiedReviews";
+import {
+  formatHomepageProductPrice,
+  getHomepageFeaturedProducts,
+} from "@/lib/homepage-products";
 
 export const revalidate = 300;
 
@@ -97,42 +101,9 @@ const howItWorks = [
   },
 ];
 
-const featuredProducts = [
-  {
-    name: "Compact Stroller",
-    category: "Baby & Toddler",
-    price: "€5 – €14",
-    unit: "/ day",
-    href: "/product/compact-stroller",
-    image: "/products/compact-stroller.webp",
-  },
-  {
-    name: "Lightweight Transport Wheelchair",
-    category: "Mobility & Accessibility",
-    price: "€5 – €12",
-    unit: "/ day",
-    href: "/product/transport-wheelchair",
-    image: "/products/transport-wheelchair.webp",
-  },
-  {
-    name: '27" Monitor',
-    category: "Remote Work",
-    price: "€7 – €21",
-    unit: "/ day",
-    href: "/product/monitor-27",
-    image: "/products/monitor-27.webp",
-  },
-  {
-    name: "Heavy-Duty Mobility Scooter",
-    category: "Mobility & Accessibility",
-    price: "€30 – €70",
-    unit: "/ day",
-    href: "/product/heavy-duty-mobility-scooter",
-    image: "/products/heavy-duty-mobility-scooter.webp",
-  },
-];
+export default async function HomePage() {
+  const featuredProducts = await getHomepageFeaturedProducts("en");
 
-export default function HomePage() {
   return (
     <>
       {/* JSON-LD Structured Data */}
@@ -267,10 +238,10 @@ export default function HomePage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {featuredProducts.map((product) => (
               <Link
-                key={product.href}
-                href={product.href}
+                key={product.slug}
+                href={`/product/${product.slug}`}
                 className="card group"
-                id={`product-${product.href.split("/").pop()}`}
+                id={`product-${product.slug}`}
               >
                 <div className="aspect-square bg-gradient-to-br from-neutral-100 to-neutral-50 relative overflow-hidden">
                   <Image
@@ -283,17 +254,17 @@ export default function HomePage() {
                 </div>
                 <div className="p-4">
                   <span className="badge badge-brand mb-2">
-                    {product.category}
+                    {product.subcategory}
                   </span>
                   <h3 className="font-bold text-neutral-800 mb-1 group-hover:text-brand transition-colors">
                     {product.name}
                   </h3>
                   <div className="flex items-baseline gap-1">
                     <span className="text-lg font-bold text-brand">
-                      {product.price}
+                      {formatHomepageProductPrice(product)}
                     </span>
                     <span className="text-sm text-neutral-400">
-                      {product.unit}
+                      / day
                     </span>
                   </div>
                 </div>

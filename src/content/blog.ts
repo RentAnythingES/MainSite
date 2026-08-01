@@ -165,7 +165,7 @@ export const blogPosts: BlogPost[] = [
       },
       {
         title: "Compact Stroller",
-        href: "/product/compact-stroller",
+        href: "/product/stroller-travel-compact",
         description: "Lightweight fold stroller perfect for Valencia's old town"
       },
       {
@@ -661,7 +661,7 @@ export const blogPosts: BlogPost[] = [
           "A great beach day with kids requires surprisingly specific gear. Here's what we've learned after dozens of family beach days in Valencia:",
           "<strong>Must-bring:</strong> High-factor sun cream (reapply every 2 hours), water bottles (freezable ones are genius), snacks, change of clothes for the journey home, and a wet bag for sandy swimwear.",
           "<strong>Nice to have:</strong> A UV beach tent or pop-up shade (the Valencia sun is no joke, especially June-September), sand toys, and a waterproof phone pouch.",
-          "<strong>Worth renting:</strong> If you're flying in, lugging beach umbrellas, chairs, and a week's worth of gear is impractical. A <a href=\"/rental/travel-outdoors\">beach equipment set</a> makes life easier — and you don't have to find space in your suitcase. Similarly, a <a href=\"/product/compact-stroller\">lightweight stroller</a> handles the promenade perfectly without the weight of your travel system."
+          "<strong>Worth renting:</strong> If you're flying in, lugging beach umbrellas, chairs, and a week's worth of gear is impractical. A <a href=\"/rental/travel-outdoors\">beach equipment set</a> makes life easier — and you don't have to find space in your suitcase. Similarly, a <a href=\"/product/stroller-travel-compact\">lightweight stroller</a> handles the promenade perfectly without the weight of your travel system."
         ]
       }
     ],
@@ -689,7 +689,7 @@ export const blogPosts: BlogPost[] = [
       },
       {
         title: "Compact strollers",
-        href: "/product/compact-stroller",
+        href: "/product/stroller-travel-compact",
         description: "Lightweight strollers for beach promenades"
       }
     ]

@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { createServiceClient } from "@/lib/supabase";
 import { BookingRuleError, assertFulfillmentTiming, calculateRentalDays, cleanupExpiredBookingDrafts, getPickupLocation, getProductWithPricing, getServiceZone, parseRentalDate, quoteBooking } from "@/lib/booking-v2";
 import { fetchActivePickupLocations, fetchActiveServiceZones } from "@/lib/fulfillment-options";
+import { resolveDefaultMarketContext } from "@/lib/market-context";
 import type { DeliveryType, FulfillmentMode } from "@/lib/types";
 
 export const dynamic = "force-dynamic";
@@ -49,6 +50,7 @@ export async function GET(request: NextRequest) {
 
   try {
     const supabase = createServiceClient();
+    const market = await resolveDefaultMarketContext(supabase);
     await cleanupExpiredBookingDrafts(supabase);
 
     const startAt = parseRentalDate(startAtParam || `${start}T09:00:00+02:00`, "start");
@@ -134,9 +136,9 @@ export async function GET(request: NextRequest) {
     }
 
     const [pickupLocation, deliveryZone, collectionZone] = await Promise.all([
-      getPickupLocation(supabase, pickupLocationId),
-      getServiceZone(supabase, deliveryZoneId),
-      getServiceZone(supabase, collectionZoneId),
+      getPickupLocation(supabase, pickupLocationId, market.id),
+      getServiceZone(supabase, deliveryZoneId, market.id),
+      getServiceZone(supabase, collectionZoneId, market.id),
     ]);
     assertFulfillmentTiming(startAt, deliveryType, pickupLocation, deliveryZone, collectionZone);
     const quote = quoteBooking(
@@ -152,8 +154,8 @@ export async function GET(request: NextRequest) {
     );
 
     const [pickupLocationsResult, serviceZonesResult] = await Promise.all([
-      fetchActivePickupLocations(supabase),
-      fetchActiveServiceZones(supabase),
+      fetchActivePickupLocations(supabase, market.id),
+      fetchActiveServiceZones(supabase, market.id),
     ]);
 
     const maxAvailableQuantity = blockedDates.length > 0

@@ -20,20 +20,25 @@ function shouldFallback(error: unknown): boolean {
   return code === "42703" || code === "PGRST204" || code === "PGRST200";
 }
 
-export async function fetchActivePickupLocations(supabase: SupabaseClient<Database>) {
-  const result = await supabase
+export async function fetchActivePickupLocations(
+  supabase: SupabaseClient<Database>,
+  marketId?: string | null,
+) {
+  let query = supabase
     .from("pickup_locations")
     .select(PUBLIC_PICKUP_LOCATION_SELECT)
-    .eq("is_active", true)
-    .order("sort_order", { ascending: true });
+    .eq("is_active", true);
+  if (marketId) query = query.eq("market_id", marketId);
+  const result = await query.order("sort_order", { ascending: true });
 
   if (!result.error || !shouldFallback(result.error)) return result;
 
-  return supabase
+  let fallbackQuery = supabase
     .from("pickup_locations")
     .select(PICKUP_LOCATION_FALLBACK_SELECT)
-    .eq("is_active", true)
-    .order("sort_order", { ascending: true });
+    .eq("is_active", true);
+  if (marketId) fallbackQuery = fallbackQuery.eq("market_id", marketId);
+  return fallbackQuery.order("sort_order", { ascending: true });
 }
 
 export async function fetchAllPickupLocations(supabase: SupabaseClient<Database>) {
@@ -50,21 +55,26 @@ export async function fetchAllPickupLocations(supabase: SupabaseClient<Database>
     .order("sort_order", { ascending: true });
 }
 
-export async function fetchActiveServiceZones(supabase: SupabaseClient<Database>) {
-  const result = await supabase
+export async function fetchActiveServiceZones(
+  supabase: SupabaseClient<Database>,
+  marketId?: string | null,
+) {
+  let query = supabase
     .from("service_zones")
     .select(PUBLIC_SERVICE_ZONE_SELECT)
     .eq("is_active", true)
-    .eq("automatic_checkout_enabled", true)
-    .order("sort_order", { ascending: true });
+    .eq("automatic_checkout_enabled", true);
+  if (marketId) query = query.eq("market_id", marketId);
+  const result = await query.order("sort_order", { ascending: true });
 
   if (!result.error || !shouldFallback(result.error)) return result;
 
-  return supabase
+  let fallbackQuery = supabase
     .from("service_zones")
     .select(SERVICE_ZONE_FALLBACK_SELECT)
-    .eq("is_active", true)
-    .order("sort_order", { ascending: true });
+    .eq("is_active", true);
+  if (marketId) fallbackQuery = fallbackQuery.eq("market_id", marketId);
+  return fallbackQuery.order("sort_order", { ascending: true });
 }
 
 export async function fetchAllServiceZones(supabase: SupabaseClient<Database>) {

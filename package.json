@@ -27,6 +27,7 @@
     "db:audit:lifecycle": "node scripts/audit-booking-lifecycle.cjs",
     "db:audit:inventory": "node scripts/audit-inventory-reconciliation.cjs",
     "db:migrate": "node scripts/apply-db-migrations.cjs",
+    "db:preview:markets": "node scripts/preview-multi-market-migration.cjs",
     "db:verify": "node scripts/verify-live-backend.cjs"
   },
   "dependencies": {

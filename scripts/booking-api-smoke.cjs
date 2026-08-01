@@ -1,5 +1,5 @@
 const baseUrl = (process.env.SMOKE_BASE_URL || "https://www.rentanything.es").replace(/\/$/, "");
-const productSlug = process.env.SMOKE_PRODUCT_SLUG || "compact-stroller";
+const configuredProductSlug = process.env.SMOKE_PRODUCT_SLUG?.trim() || null;
 const quantity = Number(process.env.SMOKE_QUANTITY || "1");
 
 async function readJson(url) {
@@ -9,7 +9,29 @@ async function readJson(url) {
   return body;
 }
 
+async function resolveProductSlug() {
+  if (configuredProductSlug) return configuredProductSlug;
+
+  const response = await fetch(`${baseUrl}/sitemap.xml`, {
+    headers: { "user-agent": "RentAnything launch smoke test" },
+    signal: AbortSignal.timeout(15000),
+  });
+  if (!response.ok) {
+    throw new Error(`${baseUrl}/sitemap.xml returned ${response.status}`);
+  }
+
+  const sitemap = await response.text();
+  for (const match of sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)) {
+    const url = new URL(match[1]);
+    const productMatch = url.pathname.match(/^\/product\/([^/]+)$/);
+    if (productMatch) return decodeURIComponent(productMatch[1]);
+  }
+
+  throw new Error("No active product route was found in the sitemap");
+}
+
 async function main() {
+  const productSlug = await resolveProductSlug();
   const start = new Date(Date.now() + 35 * 24 * 60 * 60 * 1000);
   start.setUTCHours(9, 0, 0, 0);
   const end = new Date(start.getTime() + 24 * 60 * 60 * 1000);

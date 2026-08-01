@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from "next/server";
 import { createServiceClient } from "@/lib/supabase";
 import { getIncidentErrorMessage, recordSystemIncident } from "@/lib/system-incidents";
 import {
-  BOOKING_TIMEZONE,
   BookingRuleError,
   DEFAULT_DRAFT_TTL_MINUTES,
   assertFulfillmentFields,
@@ -17,6 +16,7 @@ import {
 } from "@/lib/booking-v2";
 import type { DeliveryType, FulfillmentMode } from "@/lib/types";
 import { consumeRateLimits, getClientIp } from "@/lib/rate-limit";
+import { resolveDefaultMarketContext } from "@/lib/market-context";
 
 interface DraftRequestBody {
   draftId?: string;
@@ -72,6 +72,7 @@ export async function POST(request: NextRequest) {
       fulfillmentMode === "customer_pickup" ? "standard" : requestedDeliveryType;
 
     const supabase = createServiceClient();
+    const market = await resolveDefaultMarketContext(supabase);
     const clientIp = getClientIp(request);
     const rateLimit = await consumeRateLimits(supabase, [
       {
@@ -126,9 +127,9 @@ export async function POST(request: NextRequest) {
     }
 
     const [pickupLocation, deliveryZone, collectionZone] = await Promise.all([
-      getPickupLocation(supabase, body.pickupLocationId),
-      getServiceZone(supabase, body.deliveryZoneId),
-      getServiceZone(supabase, body.collectionZoneId),
+      getPickupLocation(supabase, body.pickupLocationId, market.id),
+      getServiceZone(supabase, body.deliveryZoneId, market.id),
+      getServiceZone(supabase, body.collectionZoneId, market.id),
     ]);
     assertFulfillmentTiming(startAt, deliveryType, pickupLocation, deliveryZone, collectionZone);
     const quote = quoteBooking(
@@ -176,9 +177,10 @@ export async function POST(request: NextRequest) {
         customer_name: body.customerName,
         customer_email: body.customerEmail,
         customer_phone: body.customerPhone || null,
+        ...(market.id ? { market_id: market.id } : {}),
         rental_start_at: startAt.toISOString(),
         rental_end_at: endAt.toISOString(),
-        timezone: BOOKING_TIMEZONE,
+        timezone: market.timezone,
         rental_days: quote.rentalDays,
         fulfillment_mode: fulfillmentMode,
         delivery_type: deliveryType,
@@ -194,7 +196,7 @@ export async function POST(request: NextRequest) {
         billing_tax_id: body.billingTaxId || null,
         billing_address: body.billingAddress || {},
         invoice_requested: Boolean(body.invoiceRequested),
-        currency: "eur",
+        currency: market.currency,
         per_day_cents: quote.perDayCents,
         rental_subtotal_cents: quote.rentalSubtotalCents,
         delivery_fee_cents: quote.deliveryFeeCents,

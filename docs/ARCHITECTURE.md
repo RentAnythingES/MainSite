@@ -51,9 +51,14 @@ Supabase (CRUD products, pricing, bookings)
 | Table | Purpose | RLS |
 |-------|---------|-----|
 | `categories` | Customer-facing categories plus inactive draft-only import categories | Public read |
-| `products` | 16 products with specs, features, stock | Public read (active only) |
+| `products` | Global product catalogue identity, specifications, imagery, and legacy Valencia stock compatibility | Public read (active only) |
 | `pricing_tiers` | Per-product tiered daily rates (in cents) | Public read |
 | `product_quantity_discounts` | Per-product volume discount thresholds in basis points | Admin/API only |
+| `markets` | City/region operating contexts, locale/currency/timezone, and independent publication/booking gates | Public read active/public |
+| `product_offers` | Per-market product publication, stock, and online capacity | Public read active/public |
+| `offer_pricing_tiers` | Per-market product-offer rental pricing | Public read active/public |
+| `offer_quantity_discounts` | Per-market product-offer volume discounts | Admin/API only |
+| `inventory_locations` | Structured depots/storage locations within a market | Admin/API only |
 | `bookings` | Customer bookings with lifecycle status | Admin only |
 | `blocked_dates` | Date-level inventory blocking | Admin only |
 | `pickup_locations` | Customer pickup options | Public read active |
@@ -94,6 +99,9 @@ than operational incidents. The admin system-health panel exposes unresolved inc
 
 Inventory holds are reserved via the `reserve_booking_inventory(...)` database
 function so overlapping draft creation is checked while the product row is locked.
+After the multi-market foundation migration, this legacy Valencia function delegates
+to `reserve_product_offer_inventory(...)`, which locks and counts capacity per market
+offer. Existing API contracts remain unchanged during the compatibility period.
 The function is `SECURITY DEFINER` only because it performs that atomic lock and
 write; execution is restricted to the `service_role` used by the server-side
 booking draft API. Product images use a public Storage bucket for CDN delivery,
@@ -137,6 +145,9 @@ Seed data: `supabase/seed_1_categories.sql` → `seed_2_products.sql` → `seed_
 - Store the production session-pooler connection string only in local `.env.local`
   as `SUPABASE_DB_URL`; never add it to Vercel or expose it to browser code.
 - Run `npm run db:audit` before deploying code that depends on schema changes.
+- For the multi-market foundation, run `npm run db:preview:markets` first. It applies
+  the custom-quote dependency and market migration inside a transaction, validates
+  Valencia parity and cross-market guards, and always rolls back.
 - Apply reviewed additive migrations with
   `npm run db:migrate -- <migration-file.sql>`.
 - The migration runner uses a PostgreSQL advisory lock, one transaction per file,
@@ -145,6 +156,9 @@ Seed data: `supabase/seed_1_categories.sql` → `seed_2_products.sql` → `seed_
   treated as the audited production baseline rather than fabricated history.
 - Run `npm run db:verify` after migration work. Its write checks run inside a
   transaction that is always rolled back.
+
+Multi-market decisions, compatibility boundaries, and second-market launch gates
+are documented in `docs/MULTI_MARKET_ARCHITECTURE.md`.
 
 ### Bundle Routes
 ```
