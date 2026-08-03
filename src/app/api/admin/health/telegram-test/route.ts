@@ -18,11 +18,11 @@ export async function POST(request: NextRequest) {
     }, { status: 400 });
   }
 
-  const ok = await sendTestBookingPaidTelegramNotification();
-  if (!ok) {
+  const result = await sendTestBookingPaidTelegramNotification();
+  if (!result.ok) {
     return NextResponse.json({
       ok: false,
-      error: "Telegram test notification failed",
+      error: result.error || "Telegram test notification failed",
       issues: getTelegramBookingConfigurationIssues(),
     }, { status: 502 });
   }

@@ -102,7 +102,7 @@ export async function sendBookingPaidTelegramNotification(data: BookingPaidTeleg
   const threadId = process.env.TELEGRAM_NOTIFY_THREAD_ID;
   const apiBase = process.env.TELEGRAM_API_BASE || "https://api.telegram.org";
 
-  if (!botToken || !chatId) return false;
+  if (!botToken || !chatId) return { ok: false, error: "Telegram bot token or chat id is not configured" };
 
   try {
     const response = await fetch(`${apiBase}/bot${botToken}/sendMessage`, {
@@ -122,10 +122,11 @@ export async function sendBookingPaidTelegramNotification(data: BookingPaidTeleg
       throw new Error(`Telegram Bot API returned ${response.status}: ${body}`);
     }
 
-    return true;
+    return { ok: true };
   } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
     console.error("[telegram] Failed to send booking-paid notification", error);
-    return false;
+    return { ok: false, error: message };
   }
 }
 
