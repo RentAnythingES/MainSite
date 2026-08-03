@@ -8,6 +8,8 @@ interface Product {
   name: string;
   brand: string;
   emoji: string;
+  category?: { name?: string | null; slug?: string | null } | null;
+  subcategory?: string | null;
 }
 
 interface BlockedDate {
@@ -50,7 +52,10 @@ function todayDateString() {
 
 export default function AdminAvailabilityPage() {
   const [products, setProducts] = useState<Product[]>([]);
-  const [selectedProductId, setSelectedProductId] = useState("");
+  const [selectedProductIds, setSelectedProductIds] = useState<string[]>([]);
+  const [query, setQuery] = useState("");
+  const [categoryFilter, setCategoryFilter] = useState("all");
+  const [subcategoryFilter, setSubcategoryFilter] = useState("all");
   const [blockedDates, setBlockedDates] = useState<BlockedDate[]>([]);
   const [bookings, setBookings] = useState<Record<string, BookingInfo>>({});
   const [loading, setLoading] = useState(true);
@@ -79,7 +84,9 @@ export default function AdminAvailabilityPage() {
       .then((data) => {
         const prods = data.products || [];
         setProducts(prods);
-        if (prods.length > 0) setSelectedProductId(prods[0].id);
+        if (prods.length > 0) {
+          setSelectedProductIds([prods[0].id]);
+        }
       })
       .catch(() => setError("Failed to load products"))
       .finally(() => setLoading(false));
@@ -87,12 +94,11 @@ export default function AdminAvailabilityPage() {
 
   // Fetch blocked dates when product or month changes
   const fetchAvailability = useCallback(async () => {
-    if (!selectedProductId) return;
+    if (selectedProductIds.length === 0) return;
     try {
       const month = formatMonth(viewYear, viewMonth);
-      const res = await fetch(
-        `/api/admin/availability?product_id=${selectedProductId}&month=${month}`
-      );
+      const primaryProductId = selectedProductIds[0];
+      const res = await fetch(`/api/admin/availability?product_id=${primaryProductId}&month=${month}`);
       const data = await res.json();
       setBlockedDates(data.blockedDates || []);
       setBookings(data.bookings || {});
@@ -101,7 +107,7 @@ export default function AdminAvailabilityPage() {
     } catch {
       setError("Failed to load availability");
     }
-  }, [selectedProductId, viewYear, viewMonth]);
+  }, [selectedProductIds, viewYear, viewMonth]);
 
   useEffect(() => {
     const timeout = window.setTimeout(() => {
@@ -157,7 +163,7 @@ export default function AdminAvailabilityPage() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          productId: selectedProductId,
+          productId: selectedProductIds[0],
           dates: Array.from(selectedDates),
           reason: blockReason,
         }),
@@ -185,7 +191,7 @@ export default function AdminAvailabilityPage() {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          productId: selectedProductId,
+          productId: selectedProductIds[0],
           dates: Array.from(selectedDates),
         }),
       });
@@ -211,7 +217,7 @@ export default function AdminAvailabilityPage() {
         method: action === "block" ? "POST" : "DELETE",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          productId: rangeScope === "all" ? "all" : selectedProductId,
+          productId: rangeScope === "all" ? "all" : selectedProductIds[0],
           startDate: rangeStartDate,
           endDate: rangeEndDate,
           reason: blockReason,
@@ -234,7 +240,7 @@ export default function AdminAvailabilityPage() {
   const restoreOnlineAvailability = async () => {
     if (!confirm("Restore this product for online booking? This clears its legacy booking blocks only after checking there are no active bookings or holds.")) return;
     setSaving(true); setError(""); setSuccess("");
-    try { const response = await fetch("/api/admin/availability", { method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ action: "restore_online_availability", productId: selectedProductId }) }); const data = await response.json(); if (!response.ok) throw new Error(data.error || "Could not restore availability"); setSuccess(`Online availability restored. Removed ${data.deletedLegacyDates} legacy date blocks.`); await fetchAvailability(); }
+    try { const response = await fetch("/api/admin/availability", { method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ action: "restore_online_availability", productId: selectedProductIds[0] }) }); const data = await response.json(); if (!response.ok) throw new Error(data.error || "Could not restore availability"); setSuccess(`Online availability restored. Removed ${data.deletedLegacyDates} legacy date blocks.`); await fetchAvailability(); }
     catch (err) { setError(err instanceof Error ? err.message : "Could not restore availability"); }
     finally { setSaving(false); }
   };
@@ -253,6 +259,26 @@ export default function AdminAvailabilityPage() {
     month: "long",
     year: "numeric",
   });
+
+  const filteredProducts = products.filter((product) => {
+    const haystack = `${product.name} ${product.brand} ${product.category?.name || ""} ${product.subcategory || ""}`.toLowerCase();
+    const matchesQuery = haystack.includes(query.toLowerCase());
+    const matchesCategory = categoryFilter === "all" || product.category?.slug === categoryFilter;
+    const matchesSubcategory = subcategoryFilter === "all" || product.subcategory === subcategoryFilter;
+    return matchesQuery && matchesCategory && matchesSubcategory;
+  });
+
+  const categoryOptions = Array.from(new Set(products.map((product) => product.category?.slug).filter(Boolean))) as string[];
+  const subcategoryOptions = Array.from(new Set(products.map((product) => product.subcategory).filter(Boolean))) as string[];
+
+  const toggleProductSelection = (productId: string) => {
+    setSelectedProductIds((current) => {
+      if (current.includes(productId)) {
+        return current.filter((id) => id !== productId);
+      }
+      return [...current, productId];
+    });
+  };
 
   const today = formatDate(new Date());
 
@@ -289,20 +315,45 @@ export default function AdminAvailabilityPage() {
 
       {/* Product selector */}
       <div className="bg-neutral-900 border border-neutral-800 rounded-xl p-4 mb-4">
-        <label className="text-xs font-medium text-neutral-400 block mb-2">
-          Select Product
-        </label>
-        <select
-          value={selectedProductId}
-          onChange={(e) => setSelectedProductId(e.target.value)}
-          className="w-full px-3 py-2.5 rounded-lg bg-neutral-800 border border-neutral-700 text-white text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/30"
-        >
-          {products.map((p) => (
-            <option key={p.id} value={p.id}>
-              {p.emoji} {p.name}{p.brand.trim() ? ` — ${p.brand.trim()}` : ""}
-            </option>
-          ))}
-        </select>
+        <div className="mb-3 grid gap-3 md:grid-cols-3">
+          <div>
+            <label className="text-xs font-medium text-neutral-400 block mb-2">Search items</label>
+            <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Type name, brand or category" className="w-full px-3 py-2.5 rounded-lg bg-neutral-800 border border-neutral-700 text-white text-sm" />
+          </div>
+          <div>
+            <label className="text-xs font-medium text-neutral-400 block mb-2">Category</label>
+            <select value={categoryFilter} onChange={(event) => setCategoryFilter(event.target.value)} className="w-full px-3 py-2.5 rounded-lg bg-neutral-800 border border-neutral-700 text-white text-sm">
+              <option value="all">All categories</option>
+              {categoryOptions.map((slug) => (<option key={slug} value={slug}>{slug}</option>))}
+            </select>
+          </div>
+          <div>
+            <label className="text-xs font-medium text-neutral-400 block mb-2">Subcategory</label>
+            <select value={subcategoryFilter} onChange={(event) => setSubcategoryFilter(event.target.value)} className="w-full px-3 py-2.5 rounded-lg bg-neutral-800 border border-neutral-700 text-white text-sm">
+              <option value="all">All subcategories</option>
+              {subcategoryOptions.map((value) => (<option key={value} value={value}>{value}</option>))}
+            </select>
+          </div>
+        </div>
+        {categoryFilter === "all" ? (
+          <div className="mb-3 rounded-lg border border-dashed border-neutral-800 bg-neutral-950/60 p-3 text-sm text-neutral-500">Select a category to reveal the product shortlist and focus the availability view.</div>
+        ) : (
+          <div className="mb-3 flex flex-wrap gap-2">
+            {filteredProducts.map((product) => {
+              const active = selectedProductIds.includes(product.id);
+              return (
+                <button key={product.id} type="button" onClick={() => toggleProductSelection(product.id)} className={`rounded-full border px-3 py-1.5 text-sm ${active ? 'border-teal-500/40 bg-teal-500/10 text-teal-300' : 'border-neutral-700 bg-neutral-800 text-neutral-300'}`}>
+                  {product.emoji} {product.name}
+                </button>
+              );
+            })}
+          </div>
+        )}
+        {selectedProductIds.length > 0 && (
+          <div className="rounded-lg border border-neutral-800 bg-neutral-950 p-3 text-sm text-neutral-300">
+            Active selection: {selectedProductIds.map((id) => products.find((product) => product.id === id)?.name || id).join(", ")}
+          </div>
+        )}
         {productState && <div className="mt-4 flex flex-col gap-3 rounded-lg border border-neutral-800 bg-neutral-950 p-3 sm:flex-row sm:items-center sm:justify-between"><div><p className="text-sm font-medium text-white">Online stock: {productState.stock_available}/{productState.stock_total}</p><p className="text-xs text-neutral-500">{futureLegacyBookingDates} future legacy booking blocks</p></div>{(productState.stock_available === 0 || futureLegacyBookingDates > 0) && <button type="button" disabled={saving} onClick={restoreOnlineAvailability} className="rounded-lg bg-emerald-600 px-4 py-2 text-xs font-semibold text-white disabled:opacity-50">Restore online availability</button>}</div>}
       </div>
 

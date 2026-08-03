@@ -179,15 +179,20 @@ const TRANSITIONS: Record<string, { label: string; next: string; color: string }
   ],
 };
 
-const STATUSES = ["all", "pending", "confirmed", "paid", "delivering", "active", "returning", "completed", "cancelled", "refunded"];
+const STATUSES = ["active", "all", "pending", "confirmed", "paid", "delivering", "returning", "completed", "cancelled", "refunded"];
 
 export default function AdminBookingsPage() {
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [notice, setNotice] = useState("");
-  const [filter, setFilter] = useState("all");
+  const [filter, setFilter] = useState("active");
+  const [calendarView, setCalendarView] = useState<"list" | "calendar">("calendar");
   const [expandedId, setExpandedId] = useState<string | null>(null);
+  const [calendarMonth, setCalendarMonth] = useState(() => new Date());
+  const [calendarSearch, setCalendarSearch] = useState("");
+  const [selectedCalendarBookingId, setSelectedCalendarBookingId] = useState<string | null>(null);
+  const [calendarDetailExpanded, setCalendarDetailExpanded] = useState(true);
   const [sendingDocumentId, setSendingDocumentId] = useState<string | null>(null);
   const [updatingStatus, setUpdatingStatus] = useState<string | null>(null);
   const [updatingOpsTask, setUpdatingOpsTask] = useState<string | null>(null);
@@ -241,6 +246,10 @@ export default function AdminBookingsPage() {
     }, 0);
     return () => window.clearTimeout(timeoutId);
   }, [fetchBookings]);
+
+  useEffect(() => {
+    setCalendarDetailExpanded(true);
+  }, [selectedCalendarBookingId]);
 
   const updateStatus = async (bookingId: string, newStatus: string) => {
     try {
@@ -424,6 +433,83 @@ export default function AdminBookingsPage() {
     });
   };
 
+  interface CalendarDay {
+    date: Date;
+    inMonth: boolean;
+  }
+
+  const calendarWeeks: CalendarDay[][] = (() => {
+    const monthStart = new Date(calendarMonth.getFullYear(), calendarMonth.getMonth(), 1);
+    const monthEnd = new Date(calendarMonth.getFullYear(), calendarMonth.getMonth() + 1, 0);
+    const leadingOffset = (monthStart.getDay() + 6) % 7;
+    const gridStart = new Date(monthStart);
+    gridStart.setDate(gridStart.getDate() - leadingOffset);
+    const totalCells = Math.ceil((leadingOffset + monthEnd.getDate()) / 7) * 7;
+    const days: CalendarDay[] = [];
+    for (let i = 0; i < totalCells; i += 1) {
+      const date = new Date(gridStart.getFullYear(), gridStart.getMonth(), gridStart.getDate() + i);
+      days.push({ date, inMonth: date.getMonth() === calendarMonth.getMonth() });
+    }
+    const weeks: CalendarDay[][] = [];
+    for (let i = 0; i < days.length; i += 7) weeks.push(days.slice(i, i + 7));
+    return weeks;
+  })();
+
+  const filteredBookings = bookings.filter((booking) => {
+    const haystack = `${booking.booking_ref} ${booking.customer_name} ${booking.product?.name || ""}`.toLowerCase();
+    return haystack.includes(calendarSearch.toLowerCase());
+  });
+
+  const monthLabel = calendarMonth.toLocaleDateString("en-GB", { month: "long", year: "numeric" });
+
+  const getBookingAccent = (booking: Booking) => {
+    const palette = ["#22d3ee", "#818cf8", "#f472b6", "#fb923c", "#34d399", "#facc15"];
+    let hash = 0;
+    for (const char of booking.id) {
+      hash = (hash * 31 + char.charCodeAt(0)) % palette.length;
+    }
+    return palette[hash];
+  };
+
+  const getWeekLanes = (week: CalendarDay[]) => {
+    const weekStart = week[0].date;
+    const weekEnd = week[6].date;
+    const overlapping = filteredBookings
+      .map((booking) => {
+        const startKey = booking.rental_start_at ? booking.rental_start_at.slice(0, 10) : booking.start_date?.slice(0, 10);
+        const endKey = booking.rental_end_at ? booking.rental_end_at.slice(0, 10) : booking.end_date?.slice(0, 10);
+        if (!startKey || !endKey) return null;
+        const bookingStart = new Date(`${startKey}T00:00:00`);
+        const bookingEnd = new Date(`${endKey}T00:00:00`);
+        if (bookingEnd < weekStart || bookingStart > weekEnd) return null;
+        const segmentStart = bookingStart < weekStart ? weekStart : bookingStart;
+        const segmentEnd = bookingEnd > weekEnd ? weekEnd : bookingEnd;
+        const startCol = Math.round((segmentStart.getTime() - weekStart.getTime()) / 86400000);
+        const endCol = Math.round((segmentEnd.getTime() - weekStart.getTime()) / 86400000);
+        return {
+          booking,
+          startCol,
+          endCol,
+          continuesBefore: bookingStart < weekStart,
+          continuesAfter: bookingEnd > weekEnd,
+        };
+      })
+      .filter((item): item is NonNullable<typeof item> => item !== null)
+      .sort((a, b) => a.startCol - b.startCol || a.endCol - b.endCol);
+
+    const laneEnds: number[] = [];
+    return overlapping.map((item) => {
+      let lane = laneEnds.findIndex((endCol) => endCol < item.startCol);
+      if (lane === -1) {
+        lane = laneEnds.length;
+        laneEnds.push(item.endCol);
+      } else {
+        laneEnds[lane] = item.endCol;
+      }
+      return { ...item, lane };
+    });
+  };
+
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
@@ -459,6 +545,24 @@ export default function AdminBookingsPage() {
         </div>
       )}
 
+      <div className="mb-6 flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-neutral-800 bg-neutral-900/70 p-4">
+        <div>
+          <p className="text-sm font-semibold text-white">Booking calendar</p>
+          <p className="text-xs text-neutral-500">Past and future bookings, with quick drill-down details.</p>
+        </div>
+        <div className="flex flex-wrap items-center gap-2">
+          <input
+            value={calendarSearch}
+            onChange={(event) => setCalendarSearch(event.target.value)}
+            placeholder="Search customer or item"
+            className="rounded-lg border border-neutral-800 bg-neutral-950 px-3 py-2 text-sm text-white placeholder:text-neutral-600"
+          />
+          <button onClick={() => setCalendarView(calendarView === "list" ? "calendar" : "list")} className="rounded-lg border border-neutral-700 bg-neutral-800 px-3 py-2 text-sm text-neutral-200">
+            {calendarView === "list" ? "Show calendar" : "Show list"}
+          </button>
+        </div>
+      </div>
+
       {/* Status filter tabs */}
       <div className="flex flex-wrap gap-1 mb-6">
         {STATUSES.map((s) => (
@@ -475,6 +579,240 @@ export default function AdminBookingsPage() {
           </button>
         ))}
       </div>
+
+      {calendarView === "calendar" ? (
+        <div className="mb-6 space-y-4 rounded-2xl border border-neutral-800 bg-neutral-900 p-4">
+          <div className="mb-4 flex items-center justify-between">
+            <div>
+              <p className="text-lg font-semibold text-white">{monthLabel}</p>
+              <p className="text-xs text-neutral-500">Each booking receives its own color and can be opened for full details.</p>
+            </div>
+            <div className="flex items-center gap-2">
+              <button onClick={() => setCalendarMonth(new Date(calendarMonth.getFullYear(), calendarMonth.getMonth() - 1, 1))} className="rounded-lg border border-neutral-700 px-3 py-2 text-sm text-neutral-300">←</button>
+              <button onClick={() => setCalendarMonth(new Date())} className="rounded-lg border border-neutral-700 px-3 py-2 text-sm text-neutral-300">Today</button>
+              <button onClick={() => setCalendarMonth(new Date(calendarMonth.getFullYear(), calendarMonth.getMonth() + 1, 1))} className="rounded-lg border border-neutral-700 px-3 py-2 text-sm text-neutral-300">→</button>
+            </div>
+          </div>
+          <div className="grid grid-cols-7 gap-1">
+            {['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].map((label) => (
+              <div key={label} className="px-2 py-1 text-center text-[11px] font-semibold uppercase tracking-wide text-neutral-500">{label}</div>
+            ))}
+          </div>
+          <div className="space-y-1">
+            {calendarWeeks.map((week, weekIndex) => {
+              const lanes = getWeekLanes(week);
+              const laneCount = Math.max(1, lanes.length);
+              const todayKey = new Date().toISOString().slice(0, 10);
+              return (
+                <div key={weekIndex} className="relative overflow-hidden rounded-xl border border-neutral-800 bg-neutral-950/70">
+                  <div className="grid grid-cols-7">
+                    {week.map(({ date, inMonth }) => {
+                      const dayKey = date.toISOString().slice(0, 10);
+                      const isToday = dayKey === todayKey;
+                      return (
+                        <div key={dayKey} className={`border-r border-neutral-800/60 px-2 pt-1.5 text-[11px] font-semibold last:border-r-0 ${isToday ? "text-sky-300" : inMonth ? "text-white" : "text-neutral-700"}`}>
+                          {isToday ? <span className="rounded-full bg-sky-500/10 px-1.5 py-0.5">{date.getDate()}</span> : date.getDate()}
+                        </div>
+                      );
+                    })}
+                  </div>
+                  <div className="relative px-0.5 pb-1.5" style={{ minHeight: `${laneCount * 24 + 6}px` }}>
+                    {lanes.map(({ booking, startCol, endCol, continuesBefore, continuesAfter, lane }) => {
+                      const accent = getBookingAccent(booking);
+                      const leftPercent = (startCol / 7) * 100;
+                      const widthPercent = ((endCol - startCol + 1) / 7) * 100;
+                      const leftRadius = continuesBefore ? "0px" : "9999px";
+                      const rightRadius = continuesAfter ? "0px" : "9999px";
+                      const selected = selectedCalendarBookingId === booking.id;
+                      return (
+                        <button
+                          key={`${booking.id}-${weekIndex}`}
+                          type="button"
+                          onClick={() => setSelectedCalendarBookingId(selected ? null : booking.id)}
+                          title={`${booking.product?.name || "Unknown item"} · ${booking.customer_name}`}
+                          className={`absolute flex items-center truncate px-2 text-[11px] font-medium text-white shadow-sm transition-all hover:brightness-110 ${selected ? "ring-2 ring-white/80" : ""}`}
+                          style={{
+                            left: `calc(${leftPercent}% + 2px)`,
+                            width: `calc(${widthPercent}% - 4px)`,
+                            top: `${6 + lane * 24}px`,
+                            height: "20px",
+                            backgroundColor: accent,
+                            borderRadius: `${leftRadius} ${rightRadius} ${rightRadius} ${leftRadius}`,
+                          }}
+                        >
+                          {booking.product?.name || "Unknown item"} · {booking.customer_name}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          {(() => {
+            const selectedBooking = filteredBookings.find((booking) => booking.id === selectedCalendarBookingId);
+            if (!selectedBooking) return null;
+            const accent = getBookingAccent(selectedBooking);
+            const showDeliverySection = selectedBooking.fulfillment_mode !== "customer_pickup";
+            const showCollectionSection = selectedBooking.fulfillment_mode === "delivery_and_collection";
+            return (
+              <div className="rounded-xl border border-neutral-800 bg-neutral-950/70 text-sm text-neutral-300">
+                <button
+                  type="button"
+                  onClick={() => setCalendarDetailExpanded((value) => !value)}
+                  className="flex w-full flex-wrap items-center justify-between gap-2 p-3 text-left"
+                >
+                  <div className="flex items-center gap-2">
+                    <span className="h-2.5 w-2.5 shrink-0 rounded-full" style={{ backgroundColor: accent }} />
+                    <div>
+                      <p className="font-semibold text-white">{selectedBooking.product?.name || "Unknown item"} · {selectedBooking.customer_name}</p>
+                      <p className="text-xs text-neutral-500">{selectedBooking.booking_ref} · {selectedBooking.customer_email}</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <div className="text-right text-xs text-neutral-400">
+                      <div className="font-semibold text-white">{formatMoney(selectedBooking.total_cents)}</div>
+                      <div>{selectedBooking.quantity} × item</div>
+                    </div>
+                    <span className="text-neutral-600 text-sm">{calendarDetailExpanded ? "▲" : "▼"}</span>
+                  </div>
+                </button>
+
+                {calendarDetailExpanded && (
+                  <div className="border-t border-neutral-800 p-3">
+                    <div className="grid gap-3 sm:grid-cols-2">
+                      <div>
+                        <p className="text-xs text-neutral-500 mb-1">Customer</p>
+                        <p className="text-sm text-white">{selectedBooking.customer_name}</p>
+                        <p className="text-xs text-neutral-400">{selectedBooking.customer_email}</p>
+                        {selectedBooking.customer_phone && (
+                          <p className="text-xs text-neutral-400">{selectedBooking.customer_phone}</p>
+                        )}
+                      </div>
+                      <div>
+                        <p className="text-xs text-neutral-500 mb-1">Rental window</p>
+                        <p className="text-sm text-white mb-1">Quantity: {selectedBooking.quantity || 1}</p>
+                        <p className="text-sm text-neutral-300">{formatDateTime(selectedBooking.rental_start_at) || formatDate(selectedBooking.start_date)}</p>
+                        <p className="text-sm text-neutral-300">→ {formatDateTime(selectedBooking.rental_end_at) || formatDate(selectedBooking.end_date)}</p>
+                      </div>
+                      <div>
+                        <p className="text-xs text-neutral-500 mb-1">Status</p>
+                        <p className="text-sm font-semibold text-sky-300 capitalize">{selectedBooking.status}</p>
+                        <p className="text-sm text-neutral-400">{selectedBooking.paid_at ? `Paid ${formatDate(selectedBooking.paid_at)}` : "Not marked paid yet"}</p>
+                      </div>
+                      <div>
+                        <p className="text-xs text-neutral-500 mb-1">Fulfillment</p>
+                        <p className="text-sm text-white">{formatFulfillmentMode(selectedBooking.fulfillment_mode)}</p>
+                        {selectedBooking.fulfillment_mode === "customer_pickup" ? (
+                          <>
+                            <p className="text-sm text-neutral-300">{selectedBooking.pickup_location?.name || "Pickup location not set"}</p>
+                            {selectedBooking.pickup_location?.address && (
+                              <p className="text-xs text-neutral-400">{selectedBooking.pickup_location.address}</p>
+                            )}
+                            {(selectedBooking.pickup_location?.customer_instructions || selectedBooking.pickup_location?.pickup_instructions) && (
+                              <p className="text-xs text-neutral-400 mt-1">
+                                Customer: {selectedBooking.pickup_location.customer_instructions || selectedBooking.pickup_location.pickup_instructions}
+                              </p>
+                            )}
+                          </>
+                        ) : (
+                          <>
+                            <p className="text-xs text-neutral-400 mt-1">Delivery zone: {selectedBooking.delivery_zone?.name || "Not set"}</p>
+                            {selectedBooking.delivery_zone?.delivery_window && (
+                              <p className="text-xs text-neutral-400">Delivery window: {selectedBooking.delivery_zone.delivery_window}</p>
+                            )}
+                            {showCollectionSection && (
+                              <>
+                                <p className="text-xs text-neutral-400">Collection zone: {selectedBooking.collection_zone?.name || "Not set"}</p>
+                                {selectedBooking.collection_zone?.collection_window && (
+                                  <p className="text-xs text-neutral-400">Collection window: {selectedBooking.collection_zone.collection_window}</p>
+                                )}
+                              </>
+                            )}
+                          </>
+                        )}
+                      </div>
+                    </div>
+
+                    {showDeliverySection && (
+                      <div className="mt-3 border-t border-neutral-800 pt-3">
+                        <p className="text-xs text-neutral-500 mb-1">Delivery address</p>
+                        <p className="text-sm text-neutral-300">{selectedBooking.delivery_address}</p>
+                        {selectedBooking.delivery_notes && (
+                          <p className="text-xs text-neutral-400 mt-1">Note: {selectedBooking.delivery_notes}</p>
+                        )}
+                        <div className="mt-3 flex flex-wrap gap-2">
+                          {getBookingCalendarUrl(selectedBooking) && (
+                            <a href={getBookingCalendarUrl(selectedBooking)!} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 rounded-lg border border-teal-500/20 bg-teal-500/10 px-2.5 py-1.5 text-[11px] font-semibold text-teal-300">
+                              📅 Add to Google Calendar
+                            </a>
+                          )}
+                          <a href={getBookingMapsUrl(selectedBooking)} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 rounded-lg border border-neutral-700 bg-neutral-950 px-2.5 py-1.5 text-[11px] font-semibold text-neutral-200">
+                            🧭 Open in Google Maps
+                          </a>
+                        </div>
+                        <div className="mt-3 overflow-hidden rounded-xl border border-neutral-800">
+                          <iframe title={`Map for ${selectedBooking.booking_ref}`} src={getBookingMapEmbedUrl(selectedBooking)} className="h-40 w-full" loading="lazy" referrerPolicy="no-referrer-when-downgrade" />
+                        </div>
+                      </div>
+                    )}
+
+                    {showCollectionSection && (
+                      <div className="mt-3 border-t border-neutral-800 pt-3">
+                        <p className="text-xs text-neutral-500 mb-1">Collection address</p>
+                        <p className="text-sm text-neutral-300">{selectedBooking.collection_address || selectedBooking.delivery_address}</p>
+                        {selectedBooking.collection_notes && (
+                          <p className="text-xs text-neutral-400 mt-1">Note: {selectedBooking.collection_notes}</p>
+                        )}
+                        <div className="mt-3 flex flex-wrap gap-2">
+                          <a href={getBookingMapsUrl(selectedBooking)} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 rounded-lg border border-neutral-700 bg-neutral-950 px-2.5 py-1.5 text-[11px] font-semibold text-neutral-200">
+                            🧭 Open in Google Maps
+                          </a>
+                        </div>
+                      </div>
+                    )}
+
+                    {selectedBooking.fulfillment_mode === "customer_pickup" && selectedBooking.pickup_location?.address && (
+                      <div className="mt-3 border-t border-neutral-800 pt-3">
+                        <p className="text-xs text-neutral-500 mb-1">Pickup address</p>
+                        <p className="text-sm text-neutral-300">{selectedBooking.pickup_location.address}</p>
+                        <div className="mt-3 flex flex-wrap gap-2">
+                          <a href={getBookingMapsUrl(selectedBooking)} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 rounded-lg border border-neutral-700 bg-neutral-950 px-2.5 py-1.5 text-[11px] font-semibold text-neutral-200">
+                            🧭 Open in Google Maps
+                          </a>
+                        </div>
+                        <div className="mt-3 overflow-hidden rounded-xl border border-neutral-800">
+                          <iframe title={`Map for ${selectedBooking.booking_ref}`} src={getBookingMapEmbedUrl(selectedBooking)} className="h-40 w-full" loading="lazy" referrerPolicy="no-referrer-when-downgrade" />
+                        </div>
+                      </div>
+                    )}
+
+                    <div className="mt-3 border-t border-neutral-800 pt-3">
+                      <p className="text-xs text-neutral-500 mb-2">Payment</p>
+                      <div className="space-y-1 text-xs max-w-xs">
+                        <div className="flex justify-between gap-3">
+                          <span className="text-neutral-500">Subtotal</span>
+                          <span className="text-neutral-300">{formatMoney(selectedBooking.subtotal_cents)}</span>
+                        </div>
+                        <div className="flex justify-between gap-3">
+                          <span className="text-neutral-500">Delivery</span>
+                          <span className="text-neutral-300">{formatMoney(selectedBooking.delivery_fee_cents)}</span>
+                        </div>
+                        <div className="flex justify-between gap-3 font-semibold">
+                          <span className="text-neutral-400">Amount paid</span>
+                          <span className="text-white">{formatMoney(selectedBooking.total_cents)}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+            );
+          })()}
+        </div>
+      ) : null}
+
 
       {bookings.length === 0 ? (
         <div className="bg-neutral-900 border border-neutral-800 rounded-xl p-12 text-center">
