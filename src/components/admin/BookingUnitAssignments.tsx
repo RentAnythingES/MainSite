@@ -28,6 +28,7 @@ export default function BookingUnitAssignments({
   const [assignments, setAssignments] = useState<Assignment[]>([]);
   const [units, setUnits] = useState<InventoryUnit[]>([]);
   const [selectedUnitId, setSelectedUnitId] = useState("");
+  const [pendingUnitId, setPendingUnitId] = useState("");
   const [requiredQuantity, setRequiredQuantity] = useState(1);
   const [productName, setProductName] = useState("this product");
   const [busy, setBusy] = useState(false);
@@ -72,6 +73,7 @@ export default function BookingUnitAssignments({
       const data = await response.json();
       if (!response.ok) throw new Error(data.error || "Failed to assign unit");
       setSelectedUnitId("");
+      setPendingUnitId("");
       await load();
       setNotice("Physical unit assigned.");
     } catch (assignError) {
@@ -82,19 +84,19 @@ export default function BookingUnitAssignments({
   };
 
   const handleSelectUnit = (unitId: string) => {
-    if (!unitId) {
-      setSelectedUnitId("");
-      return;
-    }
-    const unit = availableUnits.find((candidate) => candidate.id === unitId);
-    const label = unit ? `${unit.asset_code}${unit.condition ? ` · ${unit.condition}` : ""}` : "this unit";
-    if (window.confirm(`Assign ${label} to this booking?`)) {
-      setSelectedUnitId(unitId);
-      void assign(unitId);
-    } else {
-      setSelectedUnitId("");
-    }
+    setSelectedUnitId(unitId);
+    setPendingUnitId(unitId);
   };
+
+  const cancelPendingAssignment = () => {
+    setPendingUnitId("");
+    setSelectedUnitId("");
+  };
+
+  const pendingUnit = useMemo(
+    () => availableUnits.find((unit) => unit.id === pendingUnitId) || null,
+    [availableUnits, pendingUnitId],
+  );
 
   const transition = async (assignmentId: string, action: "hand_over" | "return" | "release") => {
     setBusy(true);
@@ -150,6 +152,18 @@ export default function BookingUnitAssignments({
           </select>
         </div>
       </div>
+
+      {pendingUnit && (
+        <div className="mb-3 flex flex-wrap items-center justify-between gap-2 rounded-lg border border-amber-500/30 bg-amber-500/10 p-3">
+          <p className="text-xs text-amber-200">
+            Assign <span className="font-semibold">{pendingUnit.asset_code}</span>{pendingUnit.condition ? ` · ${pendingUnit.condition}` : ""} to this booking?
+          </p>
+          <div className="flex gap-2">
+            <button type="button" disabled={busy} onClick={() => assign(pendingUnit.id)} className="rounded-lg bg-teal-600 px-3 py-1.5 text-xs font-medium text-white hover:bg-teal-500 disabled:cursor-not-allowed disabled:opacity-50">Confirm assignment</button>
+            <button type="button" disabled={busy} onClick={cancelPendingAssignment} className="rounded-lg border border-neutral-700 px-3 py-1.5 text-xs text-neutral-300 hover:bg-neutral-800 disabled:opacity-50">Cancel</button>
+          </div>
+        </div>
+      )}
 
       {error && <p className="mb-3 rounded-lg border border-red-500/20 bg-red-500/10 p-2 text-xs text-red-300">{error}</p>}
       {notice && <p className="mb-3 rounded-lg border border-teal-500/20 bg-teal-500/10 p-2 text-xs text-teal-200">{notice}</p>}
