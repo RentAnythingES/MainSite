@@ -29,6 +29,8 @@ export default function BookingUnitAssignments({
   const [units, setUnits] = useState<InventoryUnit[]>([]);
   const [selectedUnitId, setSelectedUnitId] = useState("");
   const [pendingUnitId, setPendingUnitId] = useState("");
+  const [reassignUnitId, setReassignUnitId] = useState("");
+  const [showReassignControls, setShowReassignControls] = useState(false);
   const [requiredQuantity, setRequiredQuantity] = useState(1);
   const [productName, setProductName] = useState("this product");
   const [busy, setBusy] = useState(false);
@@ -55,12 +57,13 @@ export default function BookingUnitAssignments({
   }, [load]);
 
   const availableUnits = useMemo(() => units.filter((unit) => unit.status === "available"), [units]);
+  const reassignableUnits = useMemo(() => units.filter((unit) => unit.status === "reserved"), [units]);
   const activeAssignments = useMemo(
     () => assignments.filter((assignment) => ["assigned", "handed_over"].includes(assignment.status)),
     [assignments],
   );
 
-  const assign = async (unitId: string) => {
+  const assign = async (unitId: string, allowReassign = false) => {
     setBusy(true);
     setError("");
     setNotice("");
@@ -68,14 +71,21 @@ export default function BookingUnitAssignments({
       const response = await fetch(`/api/admin/bookings/${bookingId}/inventory-units`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ unitId }),
+        body: JSON.stringify({ unitId, allowReassign }),
       });
       const data = await response.json();
       if (!response.ok) throw new Error(data.error || "Failed to assign unit");
       setSelectedUnitId("");
       setPendingUnitId("");
+      setReassignUnitId("");
+      setShowReassignControls(false);
       await load();
-      setNotice("Physical unit assigned.");
+      if (data.reassigned) {
+        const from = data.releasedFromBookingRef ? ` from ${data.releasedFromBookingRef}` : "";
+        setNotice(`Physical unit reassigned${from} and assigned to this booking.`);
+      } else {
+        setNotice("Physical unit assigned.");
+      }
     } catch (assignError) {
       setError(assignError instanceof Error ? assignError.message : "Failed to assign unit");
     } finally {
@@ -92,6 +102,8 @@ export default function BookingUnitAssignments({
     setPendingUnitId("");
     setSelectedUnitId("");
   };
+
+  const hasCapacity = activeAssignments.length < requiredQuantity;
 
   const pendingUnit = useMemo(
     () => availableUnits.find((unit) => unit.id === pendingUnitId) || null,
@@ -136,9 +148,9 @@ export default function BookingUnitAssignments({
               Review inventory
             </Link>
           </div>
-          <select value={selectedUnitId} onChange={(event) => handleSelectUnit(event.target.value)} disabled={busy || availableUnits.length === 0 || activeAssignments.length >= requiredQuantity} className="w-full rounded-lg border border-neutral-700 bg-neutral-950 px-3 py-2 text-sm text-neutral-200">
+          <select value={selectedUnitId} onChange={(event) => handleSelectUnit(event.target.value)} disabled={busy || availableUnits.length === 0 || !hasCapacity} className="w-full rounded-lg border border-neutral-700 bg-neutral-950 px-3 py-2 text-sm text-neutral-200">
             <option value="">
-              {activeAssignments.length >= requiredQuantity
+              {!hasCapacity
                 ? "Required units already assigned"
                 : availableUnits.length
                   ? "Select an available unit"
@@ -150,8 +162,48 @@ export default function BookingUnitAssignments({
               <option key={unit.id} value={unit.id}>{unit.asset_code} · {unit.condition}{unit.location ? ` · ${unit.location}` : ""}</option>
             ))}
           </select>
+          {hasCapacity && availableUnits.length === 0 && reassignableUnits.length > 0 && (
+            <button
+              type="button"
+              onClick={() => setShowReassignControls((current) => !current)}
+              className="mt-2 inline-flex items-center gap-2 rounded-lg border border-amber-500/40 bg-amber-500/10 px-3 py-1.5 text-xs font-medium text-amber-200 hover:bg-amber-500/20"
+            >
+              Reassign reserved unit
+            </button>
+          )}
         </div>
       </div>
+
+      {showReassignControls && hasCapacity && reassignableUnits.length > 0 && (
+        <div className="mb-3 rounded-lg border border-amber-500/30 bg-amber-500/10 p-3">
+          <p className="mb-2 text-xs text-amber-200">
+            No units are currently available. You can reassign a reserved unit from another booking.
+          </p>
+          <div className="flex flex-wrap items-center gap-2">
+            <select
+              value={reassignUnitId}
+              onChange={(event) => setReassignUnitId(event.target.value)}
+              disabled={busy}
+              className="min-w-56 flex-1 rounded-lg border border-neutral-700 bg-neutral-950 px-3 py-2 text-sm text-neutral-200"
+            >
+              <option value="">Select reserved unit</option>
+              {reassignableUnits.map((unit) => (
+                <option key={unit.id} value={unit.id}>
+                  {unit.asset_code} · {unit.condition}{unit.location ? ` · ${unit.location}` : ""}
+                </option>
+              ))}
+            </select>
+            <button
+              type="button"
+              disabled={busy || !reassignUnitId}
+              onClick={() => void assign(reassignUnitId, true)}
+              className="rounded-lg bg-amber-600 px-3 py-2 text-xs font-medium text-white hover:bg-amber-500 disabled:cursor-not-allowed disabled:opacity-50"
+            >
+              Reassign here
+            </button>
+          </div>
+        </div>
+      )}
 
       {pendingUnit && (
         <div className="mb-3 flex flex-wrap items-center justify-between gap-2 rounded-lg border border-amber-500/30 bg-amber-500/10 p-3">

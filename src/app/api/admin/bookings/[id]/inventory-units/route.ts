@@ -30,16 +30,68 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
   const user = await verifyAdmin(request); if (!user) return unauthorizedResponse();
   const { id } = await params; const body = await request.json(); const supabase = createAdminClient();
   if (!body.unitId) return NextResponse.json({ error: "Inventory unit is required" }, { status: 400 });
-  const { data: assignmentId, error } = await supabase.rpc("assign_booking_inventory_unit", {
-    p_booking_id: id,
-    p_inventory_unit_id: body.unitId,
-    p_actor_id: user.id,
-    p_notes: body.notes || null,
-  });
+  const assignUnit = async () =>
+    supabase.rpc("assign_booking_inventory_unit", {
+      p_booking_id: id,
+      p_inventory_unit_id: body.unitId,
+      p_actor_id: user.id,
+      p_notes: body.notes || null,
+    });
+
+  let { data: assignmentId, error } = await assignUnit();
+
+  if (error && body.allowReassign) {
+    const { data: activeAssignment } = await supabase
+      .from("booking_inventory_unit_assignments")
+      .select("id,booking_id,status,bookings(booking_ref)")
+      .eq("inventory_unit_id", body.unitId)
+      .in("status", ["assigned", "handed_over"])
+      .maybeSingle();
+
+    if (!activeAssignment) {
+      return NextResponse.json({ error: error.message }, { status: 409 });
+    }
+
+    if (activeAssignment.booking_id === id) {
+      return NextResponse.json({ error: "This unit is already assigned to this booking" }, { status: 409 });
+    }
+
+    if (activeAssignment.status !== "assigned") {
+      return NextResponse.json({ error: "This unit is currently handed over and cannot be reassigned" }, { status: 409 });
+    }
+
+    const { error: releaseError } = await supabase.rpc("transition_booking_inventory_unit", {
+      p_booking_id: activeAssignment.booking_id,
+      p_assignment_id: activeAssignment.id,
+      p_action: "release",
+      p_actor_id: user.id,
+    });
+
+    if (releaseError) {
+      return NextResponse.json({ error: releaseError.message }, { status: 409 });
+    }
+
+    const reassignedResult = await assignUnit();
+    assignmentId = reassignedResult.data;
+    error = reassignedResult.error;
+
+    if (error) {
+      return NextResponse.json({ error: error.message }, { status: 409 });
+    }
+
+    const { data, error: fetchError } = await supabase.from("booking_inventory_unit_assignments").select("*,inventory_units(id,asset_code,status,condition,location)").eq("id", assignmentId).single();
+    if (fetchError) return NextResponse.json({ error: fetchError.message }, { status: 500 });
+
+    const releasedFromBookingRef =
+      ((activeAssignment.bookings as { booking_ref?: string } | null)?.booking_ref as string | undefined) || null;
+
+    return NextResponse.json({ assignment: data, reassigned: true, releasedFromBookingRef }, { status: 201 });
+  }
+
   if (error) return NextResponse.json({ error: error.message }, { status: 409 });
   const { data, error: fetchError } = await supabase.from("booking_inventory_unit_assignments").select("*,inventory_units(id,asset_code,status,condition,location)").eq("id", assignmentId).single();
   if (fetchError) return NextResponse.json({ error: fetchError.message }, { status: 500 });
-  return NextResponse.json({ assignment: data }, { status: 201 });
+  return NextResponse.json({ assignment: data, reassigned: false }, { status: 201 });
 }
 
 export async function PATCH(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
