@@ -59,8 +59,7 @@ export default function BookingUnitAssignments({
     [assignments],
   );
 
-  const assign = async () => {
-    if (!selectedUnitId) return;
+  const assign = async (unitId: string) => {
     setBusy(true);
     setError("");
     setNotice("");
@@ -68,7 +67,7 @@ export default function BookingUnitAssignments({
       const response = await fetch(`/api/admin/bookings/${bookingId}/inventory-units`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ unitId: selectedUnitId }),
+        body: JSON.stringify({ unitId }),
       });
       const data = await response.json();
       if (!response.ok) throw new Error(data.error || "Failed to assign unit");
@@ -79,6 +78,21 @@ export default function BookingUnitAssignments({
       setError(assignError instanceof Error ? assignError.message : "Failed to assign unit");
     } finally {
       setBusy(false);
+    }
+  };
+
+  const handleSelectUnit = (unitId: string) => {
+    if (!unitId) {
+      setSelectedUnitId("");
+      return;
+    }
+    const unit = availableUnits.find((candidate) => candidate.id === unitId);
+    const label = unit ? `${unit.asset_code}${unit.condition ? ` · ${unit.condition}` : ""}` : "this unit";
+    if (window.confirm(`Assign ${label} to this booking?`)) {
+      setSelectedUnitId(unitId);
+      void assign(unitId);
+    } else {
+      setSelectedUnitId("");
     }
   };
 
@@ -120,7 +134,7 @@ export default function BookingUnitAssignments({
               Review inventory
             </Link>
           </div>
-          <select value={selectedUnitId} onChange={(event) => setSelectedUnitId(event.target.value)} disabled={busy || availableUnits.length === 0 || activeAssignments.length >= requiredQuantity} className="w-full rounded-lg border border-neutral-700 bg-neutral-950 px-3 py-2 text-sm text-neutral-200">
+          <select value={selectedUnitId} onChange={(event) => handleSelectUnit(event.target.value)} disabled={busy || availableUnits.length === 0 || activeAssignments.length >= requiredQuantity} className="w-full rounded-lg border border-neutral-700 bg-neutral-950 px-3 py-2 text-sm text-neutral-200">
             <option value="">
               {activeAssignments.length >= requiredQuantity
                 ? "Required units already assigned"
@@ -135,7 +149,6 @@ export default function BookingUnitAssignments({
             ))}
           </select>
         </div>
-        <button type="button" onClick={assign} disabled={busy || !selectedUnitId} className="rounded-lg bg-teal-600 px-3 py-2 text-sm font-medium text-white hover:bg-teal-500 disabled:cursor-not-allowed disabled:opacity-50">Assign unit</button>
       </div>
 
       {error && <p className="mb-3 rounded-lg border border-red-500/20 bg-red-500/10 p-2 text-xs text-red-300">{error}</p>}

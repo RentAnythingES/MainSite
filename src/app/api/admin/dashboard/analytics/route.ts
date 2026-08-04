@@ -108,7 +108,7 @@ export async function GET(request: NextRequest) {
 
   const filteredRows = rows.filter((row) => {
     const createdAt = new Date(row.created_at);
-    return createdAt >= start && createdAt <= end;
+    return createdAt >= start && createdAt <= end && !["cancelled", "refunded"].includes(row.status);
   });
 
   const paidRows = filteredRows.filter((row) => Boolean(row.paid_at) || ["paid", "active", "delivering", "returning", "completed"].includes(row.status));

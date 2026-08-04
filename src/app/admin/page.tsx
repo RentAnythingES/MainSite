@@ -9,7 +9,7 @@ async function getStats() {
     const [productsRes, bookingsRes, activeBookingsRes, revenueRes] = await Promise.all([
       supabase.from("products").select("id", { count: "exact", head: true }).eq("is_active", true),
       supabase.from("bookings").select("id", { count: "exact", head: true }),
-      supabase.from("bookings").select("id", { count: "exact", head: true }).in("status", ["pending", "confirmed", "paid", "active"]),
+      supabase.from("bookings").select("id", { count: "exact", head: true }).eq("status", "active"),
       supabase.from("bookings").select("total_cents").in("status", ["paid", "active", "delivering", "returning", "completed"]),
     ]);
 
