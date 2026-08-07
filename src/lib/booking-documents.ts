@@ -68,7 +68,7 @@ interface DynamicSupabaseClient {
 
 const asDynamicSupabase = (supabase: SupabaseClient) => supabase as unknown as DynamicSupabaseClient;
 
-const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || "https://www.rentanything.es").replace(/\/$/, "");
+const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || "https://rentandroll.com").replace(/\/$/, "");
 
 type InvoiceSettings = {
   legal_name: string;

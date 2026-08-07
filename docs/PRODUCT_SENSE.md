@@ -1,4 +1,4 @@
-# RentAnything.es — Product Sense
+# Rent&Roll — Product Sense
 > Last updated: 2026-07-08
 
 ## Mission
@@ -20,7 +20,7 @@ Become **the first destination** when anyone searches for equipment rental in Sp
 ### Platform Positioning
 Babonbo, BabyQuip, Cloud of Goods are NOT pure competitors — they're platforms where we can list. But we always prefer direct bookings (0% commission vs 20%). Our SEO strategy should make direct discovery the primary channel.
 
-RentAnything.es should not become a generic rental catalogue. The brand promise is:
+Rent&Roll should not become a generic rental catalogue. The brand promise is:
 
 > **Travel light. Feel at home.**
 

@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Política de Cookies | RentAnything.es",
-  description: "Qué almacenamiento y cookies de terceros utiliza RentAnything.es, cuándo se carga Google Analytics y cómo cambiar tu consentimiento.",
+  title: "Política de Cookies | Rent&Roll",
+  description: "Qué almacenamiento y cookies de terceros utiliza Rent&Roll, cuándo se carga Google Analytics y cómo cambiar tu consentimiento.",
   alternates: {
-    canonical: "https://rentanything.es/es/cookies",
+    canonical: "https://rentandroll.com/es/cookies",
     languages: {
-      en: "https://rentanything.es/cookies",
-      es: "https://rentanything.es/es/cookies",
-      "x-default": "https://rentanything.es/cookies",
+      en: "https://rentandroll.com/cookies",
+      es: "https://rentandroll.com/es/cookies",
+      "x-default": "https://rentandroll.com/cookies",
     },
   },
 };
@@ -23,7 +23,7 @@ export default function SpanishCookiesPage() {
         <div className="space-y-8 text-[15px] leading-relaxed">
           <div>
             <h2 className="text-xl font-bold mb-3">1. Cookies y almacenamiento del navegador</h2>
-            <p className="text-neutral-600">Las cookies son pequeños archivos que una web o sus proveedores pueden guardar en el navegador. RentAnything.es también utiliza almacenamiento local para recordar tu decisión sobre analítica. No es una cookie, pero lo explicamos aquí porque cumple una función similar de preferencia.</p>
+            <p className="text-neutral-600">Las cookies son pequeños archivos que una web o sus proveedores pueden guardar en el navegador. Rent&Roll también utiliza almacenamiento local para recordar tu decisión sobre analítica. No es una cookie, pero lo explicamos aquí porque cumple una función similar de preferencia.</p>
           </div>
 
           <div>

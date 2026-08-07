@@ -10,11 +10,11 @@ export const metadata: Metadata = {
   description:
     "Choose rental kits for your Valencia stay: baby arrival, family beach days, remote work, summer apartment comfort, and accessibility support.",
   alternates: {
-    canonical: "https://rentanything.es/valencia/kits",
+    canonical: "https://rentandroll.com/valencia/kits",
     languages: {
-      en: "https://rentanything.es/valencia/kits",
-      es: "https://rentanything.es/es/valencia/kits",
-      "x-default": "https://rentanything.es/valencia/kits",
+      en: "https://rentandroll.com/valencia/kits",
+      es: "https://rentandroll.com/es/valencia/kits",
+      "x-default": "https://rentandroll.com/valencia/kits",
     },
   },
 };
@@ -28,11 +28,11 @@ export default function ValenciaKitsPage() {
           __html: JSON.stringify(getHubCollectionJsonLd({
             name: "Valencia Rental Kits & Bundles",
             description: "Configurable rental-kit starting points for family, beach, accessibility, remote-work and apartment stays in Valencia.",
-            url: "https://rentanything.es/valencia/kits",
+            url: "https://rentandroll.com/valencia/kits",
             locale: "en",
             items: rentalBundles.map((bundle) => ({
               name: bundle.name,
-              url: `https://rentanything.es/valencia/kits/${bundle.slug}`,
+              url: `https://rentandroll.com/valencia/kits/${bundle.slug}`,
             })),
           })),
         }}

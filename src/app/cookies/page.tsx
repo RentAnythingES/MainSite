@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Cookie Policy | RentAnything.es",
-  description: "Which browser storage and third-party cookies RentAnything.es uses, when Google Analytics loads, and how to change your consent choice.",
+  title: "Cookie Policy | Rent&Roll",
+  description: "Which browser storage and third-party cookies Rent&Roll uses, when Google Analytics loads, and how to change your consent choice.",
   alternates: {
-    canonical: "https://rentanything.es/cookies",
+    canonical: "https://rentandroll.com/cookies",
     languages: {
-      en: "https://rentanything.es/cookies",
-      es: "https://rentanything.es/es/cookies",
-      "x-default": "https://rentanything.es/cookies",
+      en: "https://rentandroll.com/cookies",
+      es: "https://rentandroll.com/es/cookies",
+      "x-default": "https://rentandroll.com/cookies",
     },
   },
 };
@@ -24,7 +24,7 @@ export default function CookiesPage() {
           <div>
             <h2 className="text-xl font-bold mb-3">1. Cookies and browser storage</h2>
             <p className="text-neutral-600">
-              Cookies are small files that websites and service providers may store in your browser. RentAnything.es also uses local storage to remember your analytics choice. Local storage is not a cookie, but we explain it here because it serves a similar preference-storage function.
+              Cookies are small files that websites and service providers may store in your browser. Rent&Roll also uses local storage to remember your analytics choice. Local storage is not a cookie, but we explain it here because it serves a similar preference-storage function.
             </p>
           </div>
 

@@ -4,7 +4,7 @@ import type { Metadata } from "next";
 import { getSpanishDestinationsByHub } from "@/content/destinations-es";
 import { getBreadcrumbJsonLd, getFaqJsonLd, getHubCollectionJsonLd } from "@/lib/jsonld";
 
-const url = "https://rentanything.es/es/discover/events";
+const url = "https://rentandroll.com/es/discover/events";
 const description = "Guías de fiestas y eventos de Valencia con fechas, programas oficiales, transporte, accesibilidad y consejos para familias.";
 const faqs = [
   { question: "¿Las fechas de las fiestas de Valencia cambian cada año?", answer: "Algunas fechas dependen del calendario y los programas, recorridos y horarios se actualizan cada año. Confirma siempre la edición vigente en la fuente oficial enlazada desde cada guía." },
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   description,
   alternates: {
     canonical: url,
-    languages: { en: "https://rentanything.es/discover/events", es: url, "x-default": "https://rentanything.es/discover/events" },
+    languages: { en: "https://rentandroll.com/discover/events", es: url, "x-default": "https://rentandroll.com/discover/events" },
   },
 };
 
@@ -26,8 +26,8 @@ export default function SpanishEventsHub() {
 
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(getHubCollectionJsonLd({ name: "Fiestas y eventos de Valencia", description, url, locale: "es", items: guides.map((guide) => ({ name: guide.name, url: `https://rentanything.es/es/discover/${guide.slug}` })) })) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(getBreadcrumbJsonLd([{ name: "Inicio", url: "https://rentanything.es/es" }, { name: "Descubre Valencia", url: "https://rentanything.es/es/discover" }, { name: "Eventos", url }])) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(getHubCollectionJsonLd({ name: "Fiestas y eventos de Valencia", description, url, locale: "es", items: guides.map((guide) => ({ name: guide.name, url: `https://rentandroll.com/es/discover/${guide.slug}` })) })) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(getBreadcrumbJsonLd([{ name: "Inicio", url: "https://rentandroll.com/es" }, { name: "Descubre Valencia", url: "https://rentandroll.com/es/discover" }, { name: "Eventos", url }])) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(getFaqJsonLd(faqs.map((faq) => ({ q: faq.question, a: faq.answer })))) }} />
 
       <nav className="bg-neutral-50 border-b border-border py-3">

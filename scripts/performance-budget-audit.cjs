@@ -2,7 +2,7 @@
 const fs = require("fs");
 const zlib = require("zlib");
 
-const baseUrl = (process.env.PERFORMANCE_BASE_URL || "https://www.rentanything.es").replace(/\/$/, "");
+const baseUrl = (process.env.PERFORMANCE_BASE_URL || "https://rentandroll.com").replace(/\/$/, "");
 const outputPath = process.env.PERFORMANCE_AUDIT_OUTPUT;
 const routes = (process.env.PERFORMANCE_ROUTES || [
   "/",
@@ -61,7 +61,7 @@ async function fetchResource(url) {
     redirect: "follow",
     headers: {
       "accept-encoding": "identity",
-      "user-agent": "RentAnythingPerformanceBudgetAudit/1.0",
+      "user-agent": "Rent&RollPerformanceBudgetAudit/1.0",
     },
     signal: AbortSignal.timeout(30_000),
   });

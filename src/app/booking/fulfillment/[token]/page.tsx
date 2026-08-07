@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import FulfillmentAmendmentPage from "@/components/FulfillmentAmendmentPage";
 
 export const metadata: Metadata = {
-  title: "Transport Quote | RentAnything.es",
+  title: "Transport Quote | Rent&Roll",
   robots: { index: false, follow: false, noarchive: true },
 };
 

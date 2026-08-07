@@ -2,14 +2,14 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Política de Privacidad | RentAnything.es",
-  description: "Cómo Escalera Labs S.L. recoge, utiliza, conserva y protege los datos personales de consultas, reservas y analítica de RentAnything.es.",
+  title: "Política de Privacidad | Rent&Roll",
+  description: "Cómo Escalera Labs S.L. recoge, utiliza, conserva y protege los datos personales de consultas, reservas y analítica de Rent&Roll.",
   alternates: {
-    canonical: "https://rentanything.es/es/privacy",
+    canonical: "https://rentandroll.com/es/privacy",
     languages: {
-      en: "https://rentanything.es/privacy",
-      es: "https://rentanything.es/es/privacy",
-      "x-default": "https://rentanything.es/privacy",
+      en: "https://rentandroll.com/privacy",
+      es: "https://rentandroll.com/es/privacy",
+      "x-default": "https://rentandroll.com/privacy",
     },
   },
 };
@@ -25,9 +25,9 @@ export default function SpanishPrivacyPage() {
           <div>
             <h2 className="text-xl font-bold mb-3">1. Responsable del tratamiento</h2>
             <p className="text-neutral-600">
-              RentAnything.es está gestionado por <strong>Escalera Labs S.L.</strong> (CIF ESB22961221), Calle Obispo Muñoz 73, 46100 Burjassot, Valencia, España. Escalera Labs S.L. es responsable de los datos personales recogidos mediante este servicio.
+              Rent&Roll está gestionado por <strong>Escalera Labs S.L.</strong> (CIF ESB22961221), Calle Obispo Muñoz 73, 46100 Burjassot, Valencia, España. Escalera Labs S.L. es responsable de los datos personales recogidos mediante este servicio.
             </p>
-            <p className="text-neutral-600 mt-2">Consultas sobre privacidad: <a href="mailto:hello@rentanything.es" className="text-brand hover:underline">hello@rentanything.es</a></p>
+            <p className="text-neutral-600 mt-2">Consultas sobre privacidad: <a href="mailto:hello@rentandroll.com" className="text-brand hover:underline">hello@rentandroll.com</a></p>
           </div>
 
           <div>
@@ -55,7 +55,7 @@ export default function SpanishPrivacyPage() {
           <div>
             <h2 className="text-xl font-bold mb-3">4. Proveedores y destinatarios</h2>
             <p className="text-neutral-600">
-              No vendemos datos personales. Utilizamos proveedores cuando son necesarios para operar RentAnything.es: Stripe para pagos, Supabase para datos y almacenamiento, Vercel para alojamiento, Resend para correo transaccional y Google Analytics únicamente después de recibir consentimiento. Los datos de entrega podrán compartirse con un proveedor autorizado cuando sea necesario para completar la reserva.
+              No vendemos datos personales. Utilizamos proveedores cuando son necesarios para operar Rent&Roll: Stripe para pagos, Supabase para datos y almacenamiento, Vercel para alojamiento, Resend para correo transaccional y Google Analytics únicamente después de recibir consentimiento. Los datos de entrega podrán compartirse con un proveedor autorizado cuando sea necesario para completar la reserva.
             </p>
           </div>
 
@@ -70,7 +70,7 @@ export default function SpanishPrivacyPage() {
             <h2 className="text-xl font-bold mb-3">6. Tus derechos</h2>
             <p className="text-neutral-600">Cuando corresponda, puedes solicitar acceso, rectificación, supresión, limitación, oposición y portabilidad, así como retirar tu consentimiento sin afectar al tratamiento legítimo realizado anteriormente.</p>
             <p className="text-neutral-600 mt-2">
-              Envía tu solicitud a <a href="mailto:hello@rentanything.es" className="text-brand hover:underline">hello@rentanything.es</a>. También puedes presentar una reclamación ante la <a href="https://www.aepd.es/" target="_blank" rel="noopener noreferrer" className="text-brand hover:underline">Agencia Española de Protección de Datos (AEPD)</a>.
+              Envía tu solicitud a <a href="mailto:hello@rentandroll.com" className="text-brand hover:underline">hello@rentandroll.com</a>. También puedes presentar una reclamación ante la <a href="https://www.aepd.es/" target="_blank" rel="noopener noreferrer" className="text-brand hover:underline">Agencia Española de Protección de Datos (AEPD)</a>.
             </p>
           </div>
 

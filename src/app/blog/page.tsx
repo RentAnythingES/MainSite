@@ -6,15 +6,15 @@ import { getPublishedPosts } from "@/content/blog";
 import { getHubCollectionJsonLd } from "@/lib/jsonld";
 
 export const metadata: Metadata = {
-  title: "Blog — Travel Tips, Guides & Rental Advice | RentAnything.es",
+  title: "Blog — Travel Tips, Guides & Rental Advice | Rent&Roll",
   description:
-    "Practical tips for travelling to Valencia. Guides for families, mobility needs, digital nomads & more. From the RentAnything.es team.",
+    "Practical tips for travelling to Valencia. Guides for families, mobility needs, digital nomads & more. From the Rent&Roll team.",
   alternates: {
-    canonical: "https://rentanything.es/blog",
+    canonical: "https://rentandroll.com/blog",
     languages: {
-      en: "https://rentanything.es/blog",
-      es: "https://rentanything.es/es/blog",
-      "x-default": "https://rentanything.es/blog",
+      en: "https://rentandroll.com/blog",
+      es: "https://rentandroll.com/es/blog",
+      "x-default": "https://rentandroll.com/blog",
     },
   },
 };
@@ -38,11 +38,11 @@ export default function BlogPage() {
           __html: JSON.stringify(getHubCollectionJsonLd({
             name: "Valencia Travel Tips & Guides",
             description: "Practical Valencia guides for families, accessibility needs, remote workers and seasonal stays.",
-            url: "https://rentanything.es/blog",
+            url: "https://rentandroll.com/blog",
             locale: "en",
             items: posts.map((post) => ({
               name: post.title,
-              url: `https://rentanything.es/blog/${post.slug}`,
+              url: `https://rentandroll.com/blog/${post.slug}`,
             })),
           })),
         }}

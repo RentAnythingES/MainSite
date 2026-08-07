@@ -1,7 +1,7 @@
-# RentAnything.es — SEO Strategy & Audit
+# Rent&Roll — SEO Strategy & Audit
 > **Last updated**: 2026-07-24 · **Build**: ✅ Clean · **Indexability-ready pages after sitemap refresh**: 212
 
-This is the **living SEO strategy document** for rentanything.es. Updated after every SEO-related change. For prioritized fixes, see [SEO_ROADMAP.md](./SEO_ROADMAP.md).
+This is the **living SEO strategy document** for rentandroll.com. Updated after every SEO-related change. For prioritized fixes, see [SEO_ROADMAP.md](./SEO_ROADMAP.md).
 
 ---
 
@@ -78,7 +78,7 @@ the visible answers feed the existing FAQPage schema in both locales.
 
 The SEO system should support the brand promise: **Travel light. Feel at home.**
 
-RentAnything.es should not behave like a generic rental catalogue. The core funnel should become:
+Rent&Roll should not behave like a generic rental catalogue. The core funnel should become:
 
 `Valencia guide section -> practical friction point -> relevant kit/bundle -> configurable add-ons -> availability / WhatsApp support -> individual products as needed`
 
@@ -114,7 +114,7 @@ Priority structural changes:
 ## Site Architecture
 
 ```
-rentanything.es/
+rentandroll.com/
 ├── /                               Homepage (photo carousel hero, photo categories)
 │
 ├── /product/                       Product pages (37 EN + 37 ES indexable)
@@ -217,7 +217,7 @@ Admin Dashboard:
 | Item | Status | Notes |
 |------|--------|-------|
 | Sitemap | ✅ Dynamic | `src/app/sitemap.ts` — all products + categories |
-| Title tags | ✅ All ≤60 | Using `| RentAnything.es` suffix |
+| Title tags | ✅ All ≤60 | Using `| Rent&Roll` suffix |
 | Canonical tags | ✅ | Set in `generateMetadata()` |
 | JSON-LD (Product) | ✅ | Product pages have structured data |
 | JSON-LD (Article) | ✅ | Blog posts have Article + FAQ JSON-LD |
@@ -268,7 +268,7 @@ Admin Dashboard:
 
 ## Competitor Gap Analysis
 
-| Metric | RentAnything | Babonbo | Amigo 24 | Motion4rent |
+| Metric | Rent&Roll | Babonbo | Amigo 24 | Motion4rent |
 |--------|-------------|---------|----------|-------------|
 | Categories covered | 5 (all-in-one) | 1 (baby) | 1 (mobility) | 1 (mobility) |
 | Total product pages | 16 | ~20 (Valencia) | ~10 | ~8 |

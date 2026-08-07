@@ -4,7 +4,7 @@ import { getDestinationsByHub } from "@/content/destinations";
 import { getBreadcrumbJsonLd, getHubCollectionJsonLd } from "@/lib/jsonld";
 import DiscoverHubEditorial from "@/components/DiscoverHubEditorial";
 
-const hubUrl = "https://rentanything.es/discover/attractions";
+const hubUrl = "https://rentandroll.com/discover/attractions";
 const hubName = "Valencia Sights & Attractions";
 const hubDescription =
   "Practical guides to Valencia sights and attractions, including Oceanogràfic, the City of Arts and Sciences, Central Market, La Lonja and Turia Gardens.";
@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   description: hubDescription,
   alternates: {
     canonical: hubUrl,
-    languages: { en: hubUrl, es: "https://rentanything.es/es/discover/attractions", "x-default": hubUrl },
+    languages: { en: hubUrl, es: "https://rentandroll.com/es/discover/attractions", "x-default": hubUrl },
   },
 };
 
@@ -67,7 +67,7 @@ export default function AttractionsHub() {
               locale: "en",
               items: destinations.map((destination) => ({
                 name: destination.name,
-                url: `https://rentanything.es/discover/${destination.slug}`,
+                url: `https://rentandroll.com/discover/${destination.slug}`,
               })),
             })
           ),
@@ -78,8 +78,8 @@ export default function AttractionsHub() {
         dangerouslySetInnerHTML={{
           __html: JSON.stringify(
             getBreadcrumbJsonLd([
-              { name: "Home", url: "https://rentanything.es" },
-              { name: "Discover Valencia", url: "https://rentanything.es/discover" },
+              { name: "Home", url: "https://rentandroll.com" },
+              { name: "Discover Valencia", url: "https://rentandroll.com/discover" },
               { name: hubName, url: hubUrl },
             ])
           ),

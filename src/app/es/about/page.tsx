@@ -2,15 +2,15 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Sobre RentAnything.es | Alquiler en Valencia",
+  title: "Sobre Rent&Roll | Alquiler en Valencia",
   description:
-    "Conoce por qué RentAnything.es ayuda a viajar más ligero con alquiler de equipamiento, recogida local y opciones de entrega en Valencia.",
+    "Conoce por qué Rent&Roll ayuda a viajar más ligero con alquiler de equipamiento, recogida local y opciones de entrega en Valencia.",
   alternates: {
-    canonical: "https://rentanything.es/es/about",
+    canonical: "https://rentandroll.com/es/about",
     languages: {
-      en: "https://rentanything.es/about",
-      es: "https://rentanything.es/es/about",
-      "x-default": "https://rentanything.es/about",
+      en: "https://rentandroll.com/about",
+      es: "https://rentandroll.com/es/about",
+      "x-default": "https://rentandroll.com/about",
     },
   },
 };
@@ -43,19 +43,19 @@ const structuredData = {
   "@graph": [
     {
       "@type": "AboutPage",
-      "@id": "https://rentanything.es/es/about#page",
-      url: "https://rentanything.es/es/about",
-      name: "Sobre RentAnything.es",
+      "@id": "https://rentandroll.com/es/about#page",
+      url: "https://rentandroll.com/es/about",
+      name: "Sobre Rent&Roll",
       inLanguage: "es",
-      about: { "@id": "https://rentanything.es/#organization" },
+      about: { "@id": "https://rentandroll.com/#organization" },
     },
     {
       "@type": "Organization",
-      "@id": "https://rentanything.es/#organization",
-      name: "RentAnything.es",
+      "@id": "https://rentandroll.com/#organization",
+      name: "Rent&Roll",
       legalName: "Escalera Labs S.L.",
-      url: "https://rentanything.es",
-      email: "hello@rentanything.es",
+      url: "https://rentandroll.com",
+      email: "hello@rentandroll.com",
       address: {
         "@type": "PostalAddress",
         addressLocality: "Burjassot",
@@ -79,7 +79,7 @@ export default function SpanishAboutPage() {
               Viaja ligero. <span className="text-brand">Siéntete como en casa.</span>
             </h1>
             <p className="text-lg text-neutral-600 leading-relaxed">
-              RentAnything.es ayuda a quienes visitan Valencia a evitar cargar, comprar y guardar equipamiento voluminoso. Elige lo que necesitas y selecciona una opción disponible de recogida o entrega.
+              Rent&Roll ayuda a quienes visitan Valencia a evitar cargar, comprar y guardar equipamiento voluminoso. Elige lo que necesitas y selecciona una opción disponible de recogida o entrega.
             </p>
           </div>
         </div>
@@ -89,7 +89,7 @@ export default function SpanishAboutPage() {
         <div className="container-site">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
-              <h2 className="text-3xl font-bold mb-6">Por qué creamos RentAnything.es</h2>
+              <h2 className="text-3xl font-bold mb-6">Por qué creamos Rent&Roll</h2>
               <div className="space-y-4 text-neutral-600 leading-relaxed">
                 <p>
                   Las familias, quienes teletrabajan y las personas con necesidades de accesibilidad suelen necesitar determinados artículos solo durante una parte de su estancia. Traerlos de casa supone más equipaje y comprarlos genera gasto y residuos.
@@ -136,7 +136,7 @@ export default function SpanishAboutPage() {
             <p className="text-sm text-neutral-500 mb-4">CIF ESB22961221 · Sociedad registrada en España</p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-6 text-sm text-neutral-600">
               <span>📍 Burjassot, Valencia</span>
-              <span>📧 hello@rentanything.es</span>
+              <span>📧 hello@rentandroll.com</span>
               <span>💬 Atención por WhatsApp</span>
             </div>
           </div>

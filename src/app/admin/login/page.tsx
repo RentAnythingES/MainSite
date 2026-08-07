@@ -68,7 +68,7 @@ export default function AdminLoginPage() {
               required
               autoFocus
               className="w-full px-3 py-2.5 rounded-lg bg-neutral-800 border border-neutral-700 text-white text-sm placeholder:text-neutral-600 focus:outline-none focus:ring-2 focus:ring-teal-500/30 focus:border-teal-500"
-              placeholder="admin@rentanything.es"
+              placeholder="admin@rentandroll.com"
             />
           </div>
 

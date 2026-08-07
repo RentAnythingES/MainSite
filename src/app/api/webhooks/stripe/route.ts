@@ -23,7 +23,7 @@ import Stripe from "stripe";
  *
  * Setup:
  *   1. In Stripe Dashboard → Developers → Webhooks
- *   2. Add endpoint: https://rentanything.es/api/webhooks/stripe
+ *   2. Add endpoint: https://rentandroll.com/api/webhooks/stripe
  *   3. Select event: checkout.session.completed
  *   4. Copy signing secret → set as STRIPE_WEBHOOK_SECRET in env
  */
@@ -388,7 +388,7 @@ async function handleFulfillmentAmendmentCheckoutCompleted(
       deliveryAddress: amendment.delivery_address,
       collectionAddress: amendment.collection_address,
       totalCents: expectedTotal,
-      customerUrl: `https://rentanything.es/booking/fulfillment/${amendment.public_token}`,
+      customerUrl: `https://rentandroll.com/booking/fulfillment/${amendment.public_token}`,
       documentUrl: getCustomerDocumentUrl(invoiceDocument),
     });
   }

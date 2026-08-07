@@ -6,11 +6,11 @@ export const metadata: Metadata = {
   description:
     "Equipamiento para huéspedes de alojamientos en Valencia: bebé, movilidad, confort, teletrabajo y playa, sujeto a fechas e inventario.",
   alternates: {
-    canonical: "https://rentanything.es/es/valencia/servicios-anfitriones",
+    canonical: "https://rentandroll.com/es/valencia/servicios-anfitriones",
     languages: {
-      en: "https://rentanything.es/valencia/host-services",
-      es: "https://rentanything.es/es/valencia/servicios-anfitriones",
-      "x-default": "https://rentanything.es/valencia/host-services",
+      en: "https://rentandroll.com/valencia/host-services",
+      es: "https://rentandroll.com/es/valencia/servicios-anfitriones",
+      "x-default": "https://rentandroll.com/valencia/host-services",
     },
   },
 };

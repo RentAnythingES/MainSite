@@ -22,7 +22,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const post = getBlogPostBySlug(slug);
   if (!post) return { title: "Post Not Found" };
 
-  const canonical = `https://rentanything.es/blog/${post.slug}`;
+  const canonical = `https://rentandroll.com/blog/${post.slug}`;
   const spanishPost = getSpanishBlogPostBySlug(slug);
 
   return {
@@ -44,7 +44,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       ...(spanishPost && {
         languages: {
           en: canonical,
-          es: `https://rentanything.es/es/blog/${post.slug}`,
+          es: `https://rentandroll.com/es/blog/${post.slug}`,
           "x-default": canonical,
         },
       }),
@@ -117,7 +117,7 @@ export default async function BlogPostPage({ params }: Props) {
       post={post}
       locale="en"
       blogHref="/blog"
-      pageUrl={`https://rentanything.es/blog/${post.slug}`}
+      pageUrl={`https://rentandroll.com/blog/${post.slug}`}
       cta={getClusterCta(post)}
       labels={{
         home: "Home",

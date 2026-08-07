@@ -12,15 +12,15 @@ import {
 export const revalidate = 300;
 
 export const metadata: Metadata = {
-  title: "Rent Equipment in Valencia | RentAnything.es",
+  title: "Rent Equipment in Valencia | Rent&Roll",
   description:
     "Short-term rental of strollers, cribs, wheelchairs, mobility scooters, remote work gear and more in Valencia. Check availability for your dates.",
   alternates: {
-    canonical: "https://rentanything.es",
+    canonical: "https://rentandroll.com",
     languages: {
-      en: "https://rentanything.es",
-      es: "https://rentanything.es/es",
-      "x-default": "https://rentanything.es",
+      en: "https://rentandroll.com",
+      es: "https://rentandroll.com/es",
+      "x-default": "https://rentandroll.com",
     },
   },
 };

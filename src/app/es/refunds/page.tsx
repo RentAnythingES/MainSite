@@ -6,11 +6,11 @@ export const metadata: Metadata = {
   description:
     "Política de reembolsos y cancelaciones para alquileres en Valencia: reembolso completo con 48 horas o más de antelación.",
   alternates: {
-    canonical: "https://rentanything.es/es/refunds",
+    canonical: "https://rentandroll.com/es/refunds",
     languages: {
-      en: "https://rentanything.es/refunds",
-      es: "https://rentanything.es/es/refunds",
-      "x-default": "https://rentanything.es/refunds",
+      en: "https://rentandroll.com/refunds",
+      es: "https://rentandroll.com/es/refunds",
+      "x-default": "https://rentandroll.com/refunds",
     },
   },
 };
@@ -66,7 +66,7 @@ export default function SpanishRefundsPage() {
             <p className="text-neutral-600 mb-3">Puedes solicitar la cancelación mediante:</p>
             <ul className="list-disc pl-5 space-y-1 text-neutral-600">
               <li>WhatsApp, normalmente la vía más rápida</li>
-              <li>Correo electrónico a <a href="mailto:hello@rentanything.es" className="text-brand hover:underline">hello@rentanything.es</a></li>
+              <li>Correo electrónico a <a href="mailto:hello@rentandroll.com" className="text-brand hover:underline">hello@rentandroll.com</a></li>
               <li>El formulario de nuestra <Link href="/contact" className="text-brand hover:underline">página de contacto</Link></li>
             </ul>
           </div>

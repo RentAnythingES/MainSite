@@ -1,4 +1,4 @@
-# RentAnything.es — SEO Roadmap
+# Rent&Roll — SEO Roadmap
 > **Last updated**: 2026-07-21 · Prioritized by estimated traffic impact × effort
 
 ---

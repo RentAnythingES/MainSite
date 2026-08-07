@@ -4,7 +4,7 @@ export type BundleRequestStatus = (typeof BUNDLE_REQUEST_STATUSES)[number];
 
 export const BUNDLE_REQUEST_CONSENT_VERSION = "kit-request-2026-07-21";
 export const BUNDLE_REQUEST_CONSENT_TEXT =
-  "I agree that RentAnything.es may use these details to answer and manage my kit request.";
+  "I agree that Rent&Roll may use these details to answer and manage my kit request.";
 
 export function isMissingBundleRequestsTable(error: unknown): boolean {
   if (!error || typeof error !== "object") return false;

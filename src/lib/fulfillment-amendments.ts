@@ -42,7 +42,7 @@ export function isMissingFulfillmentAmendmentsTable(error: unknown): boolean {
 }
 
 export function getFulfillmentAmendmentUrl(token: string): string {
-  return `https://rentanything.es/booking/fulfillment/${token}`;
+  return `https://rentandroll.com/booking/fulfillment/${token}`;
 }
 
 export function getFulfillmentAmendmentTotal(amendment: Pick<FulfillmentAmendment, "delivery_fee_cents" | "collection_fee_cents">) {

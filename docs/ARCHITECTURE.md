@@ -1,4 +1,4 @@
-# RentAnything.es — Architecture
+# Rent&Roll — Architecture
 > **Last updated**: 2026-07-24
 
 ## Tech Stack
@@ -8,7 +8,7 @@
 - **Auth**: Supabase Auth (admin dashboard)
 - **Email**: Resend
 - **Hosting**: Vercel
-- **Domain**: rentanything.es
+- **Domain**: rentandroll.com
 - **i18n**: Custom dictionary system (`src/i18n/`)
 
 `src/proxy.ts` applies the route locale response header and forwards the current
@@ -252,7 +252,7 @@ Stripe Checkout
   → block rental dates
   → send booking confirmation email
 ```
-- Stripe should send live webhooks to `https://www.rentanything.es/api/webhooks/stripe`; the apex domain redirects and should not be used for webhook delivery.
+- Stripe should send live webhooks directly to `https://rentandroll.com/api/webhooks/stripe`.
 - Webhook signature verification depends on `STRIPE_WEBHOOK_SECRET`; Checkout creation depends on `STRIPE_SECRET_KEY`.
 - Booking fulfillment is idempotent by `stripe_payment_intent_id`.
 - Email delivery is a follow-up side effect and should not cause duplicate bookings.

@@ -11,11 +11,11 @@ const t = getDictionary("es");
 export const revalidate = 60;
 
 export const metadata: Metadata = {
-  title: "Alquiler de Equipos en Valencia | RentAnything.es",
+  title: "Alquiler de Equipos en Valencia | Rent&Roll",
   description: "Alquila artículos de bebé, movilidad, teletrabajo y confort en Valencia, con recogida o entrega en hoteles, apartamentos y alojamientos.",
   alternates: {
-    canonical: "https://rentanything.es/es/valencia",
-    languages: { en: "https://rentanything.es/valencia", es: "https://rentanything.es/es/valencia", "x-default": "https://rentanything.es/valencia" },
+    canonical: "https://rentandroll.com/es/valencia",
+    languages: { en: "https://rentandroll.com/valencia", es: "https://rentandroll.com/es/valencia", "x-default": "https://rentandroll.com/valencia" },
   },
 };
 
@@ -40,11 +40,11 @@ export default async function ValenciaPageES() {
           __html: JSON.stringify(getHubCollectionJsonLd({
             name: "Alquiler de Equipamiento en Valencia",
             description: "Consulta equipamiento de alquiler activo para estancias en Valencia, con opciones de recogida, entrega y devolución.",
-            url: "https://rentanything.es/es/valencia",
+            url: "https://rentandroll.com/es/valencia",
             locale: "es",
             items: products.map((product) => ({
               name: product.name,
-              url: `https://rentanything.es/es/product/${product.slug}`,
+              url: `https://rentandroll.com/es/product/${product.slug}`,
             })),
           })),
         }}

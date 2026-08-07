@@ -1,4 +1,4 @@
-const ADMIN_BOOKINGS_URL = "https://rentanything.es/admin/bookings";
+const ADMIN_BOOKINGS_URL = "https://rentandroll.com/admin/bookings";
 
 export interface BookingPaidWhatsAppData {
   bookingId?: string | null;

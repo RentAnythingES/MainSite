@@ -9,11 +9,11 @@ export const metadata: Metadata = {
   title: "Discover Valencia — Neighbourhood, Beach & Event Guides",
   description: "Your complete travel guide to Valencia. Explore neighbourhoods, day trips, beaches, attractions, and local events — with honest advice from locals.",
   alternates: {
-    canonical: "https://rentanything.es/discover",
+    canonical: "https://rentandroll.com/discover",
     languages: {
-      en: "https://rentanything.es/discover",
-      es: "https://rentanything.es/es/discover",
-      "x-default": "https://rentanything.es/discover",
+      en: "https://rentandroll.com/discover",
+      es: "https://rentandroll.com/es/discover",
+      "x-default": "https://rentandroll.com/discover",
     },
   },
 };
@@ -77,11 +77,11 @@ export default function DiscoverHub() {
           __html: JSON.stringify(getHubCollectionJsonLd({
             name: "Discover Valencia",
             description: "Local guides to Valencia neighbourhoods, beaches, attractions, events and day trips.",
-            url: "https://rentanything.es/discover",
+            url: "https://rentandroll.com/discover",
             locale: "en",
             items: allDestinations.map((destination) => ({
               name: destination.name,
-              url: `https://rentanything.es/discover/${destination.slug}`,
+              url: `https://rentandroll.com/discover/${destination.slug}`,
             })),
           })),
         }}

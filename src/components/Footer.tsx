@@ -1,8 +1,10 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { seoCategoryClusters } from "@/data/seo-clusters";
+import { SITE_IDENTITY } from "@/config/site";
 
 export default function Footer() {
   const pathname = usePathname();
@@ -51,8 +53,8 @@ export default function Footer() {
   ];
 
   const tagline = isSpanish
-    ? "Viaja ligero, disfruta de todo. Equipos de alquiler de primera calidad entregados en tu alojamiento en Valencia."
-    : "Travel light. Feel at home. Practical rental kits and individual items delivered in Valencia.";
+    ? `${SITE_IDENTITY.taglineEs} Equipamiento práctico entregado en Valencia.`
+    : `${SITE_IDENTITY.tagline} Practical rental kits and individual items delivered in Valencia.`;
 
   const soonLabel = isSpanish ? "Pronto" : "Soon";
 
@@ -63,11 +65,13 @@ export default function Footer() {
           {/* Brand Column */}
           <div className="lg:col-span-1">
             <Link href={isSpanish ? "/es" : "/"} className="inline-block mb-4">
-              <span className="text-2xl font-bold font-[var(--font-outfit)]">
-                <span className="text-brand-light">Rent</span>
-                <span className="text-white">Anything</span>
-                <span className="text-accent">.es</span>
-              </span>
+              <Image
+                src={SITE_IDENTITY.lightWordmarkPath}
+                alt={SITE_IDENTITY.brandName}
+                width={244}
+                height={60}
+                className="h-14 w-auto"
+              />
             </Link>
             <p className="text-sm text-neutral-400 leading-relaxed mb-6">
               {tagline}
@@ -147,7 +151,7 @@ export default function Footer() {
         <div className="border-t border-neutral-800 py-6">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
             <p className="text-xs text-neutral-500">
-              © {new Date().getFullYear()} RentAnything.es — Escalera Labs S.L.
+              © {new Date().getFullYear()} {SITE_IDENTITY.brandName} — {SITE_IDENTITY.legalName}
             </p>
             <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1">
               {legalLinks.map((link) => (

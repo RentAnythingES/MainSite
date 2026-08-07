@@ -7,6 +7,7 @@ import WhatsAppButton from "@/components/WhatsAppButton";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
 import CookieConsent from "@/components/CookieConsent";
 import WebVitalsReporter from "@/components/WebVitalsReporter";
+import { SITE_IDENTITY, SITE_URL } from "@/config/site";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -23,7 +24,7 @@ const outfit = Outfit({
 
 export const metadata: Metadata = {
   title: {
-    default: "Rent Equipment in Valencia | RentAnything.es",
+    default: `Rent Equipment in Valencia | ${SITE_IDENTITY.brandName}`,
     template: "%s",
   },
   description:
@@ -36,28 +37,32 @@ export const metadata: Metadata = {
     "mobility scooter rental Valencia",
     "remote work equipment Valencia",
   ],
-  metadataBase: new URL("https://rentanything.es"),
+  metadataBase: new URL(SITE_URL),
   openGraph: {
     type: "website",
     locale: "en_US",
     alternateLocale: "es_ES",
-    siteName: "RentAnything.es",
-    title: "Rent Equipment in Valencia | RentAnything.es",
+    siteName: SITE_IDENTITY.brandName,
+    title: `Rent Equipment in Valencia | ${SITE_IDENTITY.brandName}`,
     description:
       "Short-term rental of strollers, cribs, wheelchairs, mobility scooters, remote work gear & more. Delivered to your accommodation in Valencia.",
     images: [
       {
-        url: "/hero/valencia-1.webp",
-        alt: "RentAnything.es equipment rental delivery in Valencia",
+        url: SITE_IDENTITY.socialImagePath,
+        width: 1200,
+        height: 630,
+        alt: `${SITE_IDENTITY.brandName} equipment rental in Valencia`,
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
+    images: [SITE_IDENTITY.socialImagePath],
   },
   icons: {
     icon: [
       { url: "/favicon.ico", sizes: "any" },
+      { url: "/favicon.png", type: "image/png", sizes: "64x64" },
       { url: "/icon.png", type: "image/png", sizes: "512x512" },
     ],
     apple: [{ url: "/apple-icon.png", sizes: "180x180" }],

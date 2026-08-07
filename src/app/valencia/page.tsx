@@ -14,11 +14,11 @@ export const metadata: Metadata = {
   description:
     "Browse our full range of rental equipment in Valencia. Strollers, wheelchairs, mobility scooters, remote work setups & more. Delivered to your door.",
   alternates: {
-    canonical: "https://rentanything.es/valencia",
+    canonical: "https://rentandroll.com/valencia",
     languages: {
-      en: "https://rentanything.es/valencia",
-      es: "https://rentanything.es/es/valencia",
-      "x-default": "https://rentanything.es/valencia",
+      en: "https://rentandroll.com/valencia",
+      es: "https://rentandroll.com/es/valencia",
+      "x-default": "https://rentandroll.com/valencia",
     },
   },
 };
@@ -44,11 +44,11 @@ export default async function ValenciaPage() {
           __html: JSON.stringify(getHubCollectionJsonLd({
             name: "Equipment Rental in Valencia",
             description: "Browse active rental equipment for Valencia stays, with pickup, delivery and collection options.",
-            url: "https://rentanything.es/valencia",
+            url: "https://rentandroll.com/valencia",
             locale: "en",
             items: products.map((product) => ({
               name: product.name,
-              url: `https://rentanything.es/product/${product.slug}`,
+              url: `https://rentandroll.com/product/${product.slug}`,
             })),
           })),
         }}

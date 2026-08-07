@@ -4,7 +4,7 @@ import { getDestinationsByHub } from "@/content/destinations";
 import { getBreadcrumbJsonLd, getHubCollectionJsonLd } from "@/lib/jsonld";
 import DiscoverHubEditorial from "@/components/DiscoverHubEditorial";
 
-const hubUrl = "https://rentanything.es/discover/events";
+const hubUrl = "https://rentandroll.com/discover/events";
 const hubName = "Valencia Events";
 const hubDescription =
   "Plan a Valencia trip around published festival and seasonal guides, with practical dates, local context and booking advice.";
@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   description: hubDescription,
   alternates: {
     canonical: hubUrl,
-    languages: { en: hubUrl, es: "https://rentanything.es/es/discover/events", "x-default": hubUrl },
+    languages: { en: hubUrl, es: "https://rentandroll.com/es/discover/events", "x-default": hubUrl },
   },
 };
 
@@ -79,7 +79,7 @@ export default function EventsHub() {
               locale: "en",
               items: destinations.map((destination) => ({
                 name: destination.name,
-                url: `https://rentanything.es/discover/${destination.slug}`,
+                url: `https://rentandroll.com/discover/${destination.slug}`,
               })),
             })
           ),
@@ -90,8 +90,8 @@ export default function EventsHub() {
         dangerouslySetInnerHTML={{
           __html: JSON.stringify(
             getBreadcrumbJsonLd([
-              { name: "Home", url: "https://rentanything.es" },
-              { name: "Discover Valencia", url: "https://rentanything.es/discover" },
+              { name: "Home", url: "https://rentandroll.com" },
+              { name: "Discover Valencia", url: "https://rentandroll.com/discover" },
               { name: hubName, url: hubUrl },
             ])
           ),

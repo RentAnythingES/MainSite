@@ -4,7 +4,7 @@ import { getSpanishDestinationsByHub } from "@/content/destinations-es";
 import { getBreadcrumbJsonLd, getHubCollectionJsonLd } from "@/lib/jsonld";
 import DiscoverHubEditorial from "@/components/DiscoverHubEditorial";
 
-const url = "https://rentanything.es/es/discover/neighbourhoods";
+const url = "https://rentandroll.com/es/discover/neighbourhoods";
 const description = "Compara barrios de Valencia para alojarte: ambiente, ruido, transporte, playa, vida diaria, accesibilidad y servicios para elegir una base práctica.";
 
 export const metadata: Metadata = {
@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   description,
   alternates: {
     canonical: url,
-    languages: { en: "https://rentanything.es/discover/neighbourhoods", es: url, "x-default": "https://rentanything.es/discover/neighbourhoods" },
+    languages: { en: "https://rentandroll.com/discover/neighbourhoods", es: url, "x-default": "https://rentandroll.com/discover/neighbourhoods" },
   },
 };
 
@@ -53,8 +53,8 @@ export default function SpanishNeighbourhoodsHub() {
   const guides = getSpanishDestinationsByHub("neighbourhoods");
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(getHubCollectionJsonLd({ name: "Barrios de Valencia", description, url, locale: "es", items: guides.map((guide) => ({ name: guide.name, url: `https://rentanything.es/es/discover/${guide.slug}` })) })) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(getBreadcrumbJsonLd([{ name: "Inicio", url: "https://rentanything.es/es" }, { name: "Descubre Valencia", url: "https://rentanything.es/es/discover" }, { name: "Barrios", url }])) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(getHubCollectionJsonLd({ name: "Barrios de Valencia", description, url, locale: "es", items: guides.map((guide) => ({ name: guide.name, url: `https://rentandroll.com/es/discover/${guide.slug}` })) })) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(getBreadcrumbJsonLd([{ name: "Inicio", url: "https://rentandroll.com/es" }, { name: "Descubre Valencia", url: "https://rentandroll.com/es/discover" }, { name: "Barrios", url }])) }} />
       <nav className="bg-neutral-50 border-b border-border py-3"><div className="container-site text-sm text-neutral-500"><Link href="/es" className="hover:text-brand">Inicio</Link> / <Link href="/es/discover" className="hover:text-brand">Descubre Valencia</Link> / <span className="font-medium text-neutral-800">Barrios</span></div></nav>
       <header className="bg-gradient-to-br from-teal-50/40 to-amber-50/20 py-14 md:py-20">
         <div className="container-site"><span className="text-5xl block mb-4">🏘️</span><h1 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-3">Barrios de Valencia</h1><p className="text-lg text-neutral-600 max-w-2xl">Compara cinco zonas con personalidades distintas para encontrar una base que encaje con tu estancia.</p></div>

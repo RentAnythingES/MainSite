@@ -18,16 +18,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const guide = getSpanishDestinationBySlug(slug);
   if (!guide) return { title: "Guía no encontrada" };
-  const canonical = `https://rentanything.es/es/discover/${guide.slug}`;
+  const canonical = `https://rentandroll.com/es/discover/${guide.slug}`;
   return {
     title: guide.title,
     description: guide.description,
     alternates: {
       canonical,
       languages: {
-        en: `https://rentanything.es/discover/${guide.slug}`,
+        en: `https://rentandroll.com/discover/${guide.slug}`,
         es: canonical,
-        "x-default": `https://rentanything.es/discover/${guide.slug}`,
+        "x-default": `https://rentandroll.com/discover/${guide.slug}`,
       },
     },
     openGraph: {

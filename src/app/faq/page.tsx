@@ -6,11 +6,11 @@ export const metadata: Metadata = {
   description:
     "Everything you need to know about renting baby gear, mobility aids & tech in Valencia. Delivery areas, cancellations & more.",
   alternates: {
-    canonical: "https://rentanything.es/faq",
+    canonical: "https://rentandroll.com/faq",
     languages: {
-      en: "https://rentanything.es/faq",
-      es: "https://rentanything.es/es/faq",
-      "x-default": "https://rentanything.es/faq",
+      en: "https://rentandroll.com/faq",
+      es: "https://rentandroll.com/es/faq",
+      "x-default": "https://rentandroll.com/faq",
     },
   },
 };
@@ -95,7 +95,7 @@ const faqSections = [
     title: "About Our Service",
     items: [
       {
-        q: "Who runs RentAnything.es?",
+        q: "Who runs Rent&Roll?",
         a: "We're operated by Escalera Labs S.L., a company registered in Spain. Our team is based in Valencia and we know the city inside out.",
       },
       {

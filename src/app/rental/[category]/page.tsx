@@ -417,17 +417,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: meta.title,
     description: meta.description,
     alternates: {
-      canonical: `https://rentanything.es/rental/${category}`,
+      canonical: `https://rentandroll.com/rental/${category}`,
       languages: {
-        en: `https://rentanything.es/rental/${category}`,
-        es: `https://rentanything.es/es/rental/${category}`,
-        "x-default": `https://rentanything.es/rental/${category}`,
+        en: `https://rentandroll.com/rental/${category}`,
+        es: `https://rentandroll.com/es/rental/${category}`,
+        "x-default": `https://rentandroll.com/rental/${category}`,
       },
     },
     openGraph: {
       title: meta.title,
       description: meta.description,
-      url: `https://rentanything.es/rental/${category}`,
+      url: `https://rentandroll.com/rental/${category}`,
       images: [{ url: meta.image ?? `/categories/${category}.webp`, alt: meta.title }],
     },
   };
@@ -459,7 +459,7 @@ export default async function CategoryPage({ params }: Props) {
             getCategoryCollectionJsonLd({
               name: meta.title,
               description: meta.description,
-              url: `https://rentanything.es/rental/${category}`,
+              url: `https://rentandroll.com/rental/${category}`,
               locale: "en",
               products: categoryProducts,
             })
@@ -471,9 +471,9 @@ export default async function CategoryPage({ params }: Props) {
         dangerouslySetInnerHTML={{
           __html: JSON.stringify(
             getBreadcrumbJsonLd([
-              { name: "Home", url: "https://rentanything.es" },
-              { name: "Valencia", url: "https://rentanything.es/valencia" },
-              { name: meta.title, url: `https://rentanything.es/rental/${category}` },
+              { name: "Home", url: "https://rentandroll.com" },
+              { name: "Valencia", url: "https://rentandroll.com/valencia" },
+              { name: meta.title, url: `https://rentandroll.com/rental/${category}` },
             ])
           ),
         }}

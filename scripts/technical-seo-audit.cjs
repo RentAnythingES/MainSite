@@ -1,4 +1,4 @@
-const baseUrl = (process.env.SEO_BASE_URL || "https://www.rentanything.es").replace(/\/$/, "");
+const baseUrl = (process.env.SEO_BASE_URL || "https://rentandroll.com").replace(/\/$/, "");
 const outputPath = process.env.SEO_AUDIT_OUTPUT;
 const concurrency = Number(process.env.SEO_AUDIT_CONCURRENCY || 5);
 
@@ -194,7 +194,7 @@ function inspectPage(url, html, responseLanguage = "") {
 async function fetchText(url) {
   const response = await fetch(url, {
     redirect: "follow",
-    headers: { "user-agent": "RentAnythingTechnicalSeoAudit/1.0" },
+    headers: { "user-agent": "Rent&RollTechnicalSeoAudit/1.0" },
     signal: AbortSignal.timeout(20000),
   });
   return { response, text: await response.text() };
@@ -224,7 +224,7 @@ async function main() {
   const sitemapUrls = [...sitemap.matchAll(/<loc>(.*?)<\/loc>/g)].map((match) => decodeEntities(match[1]));
   const pages = await mapWithConcurrency(sitemapUrls, async (url) => {
     try {
-      const { response, text } = await fetchText(url.replace("https://rentanything.es", baseUrl).replace("https://www.rentanything.es", baseUrl));
+      const { response, text } = await fetchText(url.replace("https://rentandroll.com", baseUrl));
       if (!response.ok) {
         return { url, status: response.status, errors: [`http_status:${response.status}`], warnings: [], internalLinks: [], internalImages: [] };
       }
@@ -325,7 +325,7 @@ async function main() {
     try {
       const response = await fetch(url, {
         redirect: "follow",
-        headers: { "user-agent": "RentAnythingTechnicalSeoAudit/1.0" },
+        headers: { "user-agent": "Rent&RollTechnicalSeoAudit/1.0" },
         signal: AbortSignal.timeout(20000),
       });
       return { url, status: response.status, contentType: response.headers.get("content-type") || "" };

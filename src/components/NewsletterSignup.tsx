@@ -15,7 +15,7 @@ export default function NewsletterSignup({ source, locale = "en", dark = false }
         email: "Correo electrónico",
         submitting: "Suscribiendo...",
         submit: "Suscribirme",
-        consent: "Acepto recibir correos de RentAnything.es con consejos para estancias en Valencia, novedades de productos, nuevos kits y ofertas ocasionales. Puedo darme de baja en cualquier momento.",
+        consent: "Acepto recibir correos de Rent&Roll con consejos para estancias en Valencia, novedades de productos, nuevos kits y ofertas ocasionales. Puedo darme de baja en cualquier momento.",
         success: "Ya estás suscrito. Revisa tu correo para ver el mensaje de bienvenida.",
         error: "No hemos podido completar la suscripción.",
       }
@@ -23,7 +23,7 @@ export default function NewsletterSignup({ source, locale = "en", dark = false }
         email: "Email address",
         submitting: "Subscribing...",
         submit: "Subscribe",
-        consent: "I agree to receive RentAnything.es emails with Valencia stay tips, product updates, kit launches, and occasional offers. I can unsubscribe at any time.",
+        consent: "I agree to receive Rent&Roll emails with Valencia stay tips, product updates, kit launches, and occasional offers. I can unsubscribe at any time.",
         success: "You're subscribed — please check your inbox for the welcome email.",
         error: "Could not subscribe",
       };

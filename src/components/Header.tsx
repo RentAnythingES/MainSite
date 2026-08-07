@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { seoCategoryClusters } from "@/data/seo-clusters";
+import { SITE_IDENTITY } from "@/config/site";
 
 const localizedRoutePairs = [
   {
@@ -82,28 +83,28 @@ export default function Header() {
   const browseLabel = isSpanish ? "Explorar ▾" : "Browse ▾";
 
   return (
-    <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-border">
+    <header className="sticky top-0 z-50 bg-white border-b border-border">
       <div className="container-site">
-        <div className="flex items-center justify-between h-16 lg:h-18">
+        <div className="flex items-center justify-between h-20 lg:h-[88px]">
           {/* Logo */}
-          <Link href={isSpanish ? "/es" : "/"} className="flex items-end gap-2.5 group" id="header-logo">
+          <Link
+            href={isSpanish ? "/es" : "/"}
+            className="flex items-center"
+            id="header-logo"
+            aria-label={`${SITE_IDENTITY.brandName} home`}
+          >
             <Image
-              src="/brand/rentanything-icon.png"
-              alt="RentAnything.es"
-              width={36}
-              height={36}
+              src={SITE_IDENTITY.headerLogoPath}
+              alt={SITE_IDENTITY.brandName}
+              width={1265}
+              height={330}
               priority
-              className="h-8 w-8 md:h-9 md:w-9 object-contain"
+              className="h-auto w-[220px] sm:w-[260px] lg:w-[300px]"
             />
-            <span className="text-[1.55rem] md:text-2xl leading-none font-bold font-[var(--font-outfit)] tracking-tight">
-              <span className="text-brand">Rent</span>
-              <span className="text-foreground">Anything</span>
-              <span className="text-accent">.es</span>
-            </span>
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center gap-1" id="desktop-nav">
+          <nav className="hidden xl:flex items-center gap-1" id="desktop-nav">
             <div
               className="relative"
               onMouseEnter={() => setBrowseOpen(true)}
@@ -147,7 +148,7 @@ export default function Header() {
           </nav>
 
           {/* Right side: Language + CTA */}
-          <div className="hidden lg:flex items-center gap-3">
+          <div className="hidden xl:flex items-center gap-3">
             <Link
               href={switchLocaleHref}
               className="px-2.5 py-1.5 text-xs font-semibold text-neutral-500 hover:text-brand border border-border rounded-md hover:border-brand transition-all"
@@ -166,7 +167,7 @@ export default function Header() {
 
           {/* Mobile menu button */}
           <button
-            className="lg:hidden p-2 rounded-lg hover:bg-surface-muted transition-colors"
+            className="xl:hidden p-2 rounded-lg hover:bg-surface-muted transition-colors"
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-label="Toggle menu"
             id="mobile-menu-toggle"
@@ -189,7 +190,7 @@ export default function Header() {
 
         {/* Mobile Navigation */}
         {mobileOpen && (
-          <div className="lg:hidden border-t border-border py-4 animate-in slide-in-from-top-2 duration-200" id="mobile-nav">
+          <div className="xl:hidden border-t border-border py-4 animate-in slide-in-from-top-2 duration-200" id="mobile-nav">
             <div className="space-y-1 mb-4">
               {navLinks.map((link) => (
                 <Link

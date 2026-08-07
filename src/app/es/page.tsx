@@ -15,11 +15,11 @@ export const revalidate = 300;
 const t = getDictionary("es");
 
 export const metadata: Metadata = {
-  title: "Alquiler de Equipamiento en Valencia | RentAnything.es",
+  title: "Alquiler de Equipamiento en Valencia | Rent&Roll",
   description: t.home.subheadline,
   alternates: {
-    canonical: "https://rentanything.es/es",
-    languages: { en: "https://rentanything.es", es: "https://rentanything.es/es", "x-default": "https://rentanything.es" },
+    canonical: "https://rentandroll.com/es",
+    languages: { en: "https://rentandroll.com", es: "https://rentandroll.com/es", "x-default": "https://rentandroll.com" },
   },
 };
 

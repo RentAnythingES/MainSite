@@ -41,7 +41,7 @@ function buildReadiness(product: Record<string, unknown>) {
   if (!english?.seo_title?.trim() || !english?.seo_description?.trim()) missing.push("English SEO title and description");
   if (faqs.filter((faq) => faq.locale === "en" && faq.question?.trim() && faq.answer?.trim()).length < 3) missing.push("Three English FAQs");
   if (!primaryImage?.alt_text?.trim()) missing.push("Primary image alt text");
-  if (!primaryImage?.rights_status || primaryImage.rights_status === "unknown") missing.push("Confirm why RentAnything is allowed to use the primary image");
+  if (!primaryImage?.rights_status || primaryImage.rights_status === "unknown") missing.push("Confirm why Rent&Roll is allowed to use the primary image");
 
   return { ready: missing.length === 0, missing };
 }
