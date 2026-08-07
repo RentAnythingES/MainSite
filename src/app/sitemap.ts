@@ -7,8 +7,7 @@ import { getPublishedDestinations } from "@/content/destinations";
 import { getPublishedSpanishDestinations } from "@/content/destinations-es";
 import { getIndexableProductsForSeo } from "@/lib/product-service";
 import { seoCategorySlugs } from "@/data/seo-clusters";
-
-const BASE_URL = "https://rentanything.es";
+import { SITE_URL as BASE_URL } from "@/config/site";
 
 // Keep sitemap publication close to the product cache window so newly approved
 // products and retired slugs reach crawlers promptly.

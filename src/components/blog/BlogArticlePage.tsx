@@ -51,7 +51,7 @@ export default function BlogArticlePage({
     isPartOf: { "@id": WEBSITE_SCHEMA_ID },
     author: { "@id": BUSINESS_SCHEMA_ID },
     publisher: { "@id": BUSINESS_SCHEMA_ID },
-    ...(post.heroImage && { image: `https://rentanything.es${post.heroImage}` }),
+    ...(post.heroImage && { image: `https://rentandroll.com${post.heroImage}` }),
   };
   const faqSchema = getFaqJsonLd(
     post.faqs.map((faq) => ({ q: faq.question, a: faq.answer }))
@@ -68,8 +68,8 @@ export default function BlogArticlePage({
         dangerouslySetInnerHTML={{
           __html: JSON.stringify(
             getBreadcrumbJsonLd([
-              { name: labels.home, url: `https://rentanything.es${locale === "es" ? "/es" : ""}` },
-              { name: labels.blog, url: `https://rentanything.es${blogHref}` },
+              { name: labels.home, url: `https://rentandroll.com${locale === "es" ? "/es" : ""}` },
+              { name: labels.blog, url: `https://rentandroll.com${blogHref}` },
               { name: post.title, url: pageUrl },
             ])
           ),

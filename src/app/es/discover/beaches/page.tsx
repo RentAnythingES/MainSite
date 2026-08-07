@@ -4,7 +4,7 @@ import type { Metadata } from "next";
 import { getSpanishDestinationsByHub } from "@/content/destinations-es";
 import { getBreadcrumbJsonLd, getFaqJsonLd, getHubCollectionJsonLd } from "@/lib/jsonld";
 
-const url = "https://rentanything.es/es/discover/beaches";
+const url = "https://rentandroll.com/es/discover/beaches";
 const description = "Compara las playas de Valencia para familias, accesibilidad, transporte y naturaleza, con guías prácticas de Malvarrosa, Patacona, Pinedo y El Saler.";
 const faqs = [
   { question: "¿Qué playa de Valencia está mejor conectada con el centro?", answer: "La Malvarrosa y Las Arenas suelen ser las opciones urbanas más directas. Comprueba EMT y Metrovalencia desde tu alojamiento porque las rutas y frecuencias pueden cambiar." },
@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   description,
   alternates: {
     canonical: url,
-    languages: { en: "https://rentanything.es/discover/beaches", es: url, "x-default": "https://rentanything.es/discover/beaches" },
+    languages: { en: "https://rentandroll.com/discover/beaches", es: url, "x-default": "https://rentandroll.com/discover/beaches" },
   },
 };
 
@@ -26,8 +26,8 @@ export default function SpanishBeachesHub() {
   const guides = getSpanishDestinationsByHub("beaches");
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(getHubCollectionJsonLd({ name: "Guía de playas de Valencia", description, url, locale: "es", items: guides.map((guide) => ({ name: guide.name, url: `https://rentanything.es/es/discover/${guide.slug}` })) })) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(getBreadcrumbJsonLd([{ name: "Inicio", url: "https://rentanything.es/es" }, { name: "Descubre Valencia", url: "https://rentanything.es/es/discover" }, { name: "Playas", url }])) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(getHubCollectionJsonLd({ name: "Guía de playas de Valencia", description, url, locale: "es", items: guides.map((guide) => ({ name: guide.name, url: `https://rentandroll.com/es/discover/${guide.slug}` })) })) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(getBreadcrumbJsonLd([{ name: "Inicio", url: "https://rentandroll.com/es" }, { name: "Descubre Valencia", url: "https://rentandroll.com/es/discover" }, { name: "Playas", url }])) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(getFaqJsonLd(faqs.map((faq) => ({ q: faq.question, a: faq.answer })))) }} />
 
       <nav className="bg-neutral-50 border-b border-border py-3">

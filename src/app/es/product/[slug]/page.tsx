@@ -49,8 +49,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     return { title: "Producto No Encontrado", robots: { index: false, follow: false } };
   }
 
-  const englishUrl = `https://rentanything.es/product/${slug}`;
-  const spanishUrl = `https://rentanything.es/es/product/${slug}`;
+  const englishUrl = `https://rentandroll.com/product/${slug}`;
+  const spanishUrl = `https://rentandroll.com/es/product/${slug}`;
   const indexable = seoState?.indexableEs === true;
   const canonical = indexable ? spanishUrl : englishUrl;
   const lowestPrice = product.pricing.at(-1)?.perDay;
@@ -109,10 +109,10 @@ export default async function ProductPageES({ params }: Props) {
         dangerouslySetInnerHTML={{
           __html: JSON.stringify(
             getBreadcrumbJsonLd([
-              { name: "Inicio", url: "https://rentanything.es/es" },
-              { name: "Valencia", url: "https://rentanything.es/es/valencia" },
-              { name: catNameES, url: `https://rentanything.es/es/rental/${product.categorySlug}` },
-              { name: product.name, url: `https://rentanything.es/es/product/${product.slug}` },
+              { name: "Inicio", url: "https://rentandroll.com/es" },
+              { name: "Valencia", url: "https://rentandroll.com/es/valencia" },
+              { name: catNameES, url: `https://rentandroll.com/es/rental/${product.categorySlug}` },
+              { name: product.name, url: `https://rentandroll.com/es/product/${product.slug}` },
             ])
           ),
         }}

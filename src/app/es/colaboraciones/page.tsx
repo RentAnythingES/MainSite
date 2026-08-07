@@ -4,13 +4,13 @@ import PartnershipsPage from "@/components/PartnershipsPage";
 export const metadata: Metadata = {
   title: "Colaboraciones de Alquiler en Valencia",
   description:
-    "Colabora con RentAnything.es en recomendaciones a huéspedes, apoyo a alojamientos o pilotos de producto concretos en Valencia.",
+    "Colabora con Rent&Roll en recomendaciones a huéspedes, apoyo a alojamientos o pilotos de producto concretos en Valencia.",
   alternates: {
-    canonical: "https://rentanything.es/es/colaboraciones",
+    canonical: "https://rentandroll.com/es/colaboraciones",
     languages: {
-      en: "https://rentanything.es/partners",
-      es: "https://rentanything.es/es/colaboraciones",
-      "x-default": "https://rentanything.es/partners",
+      en: "https://rentandroll.com/partners",
+      es: "https://rentandroll.com/es/colaboraciones",
+      "x-default": "https://rentandroll.com/partners",
     },
   },
 };

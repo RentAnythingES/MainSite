@@ -5,11 +5,11 @@ export const metadata: Metadata = {
   title: "Refunds & Cancellations",
   description: "Our refund and cancellation policy for rental bookings in Valencia. Free cancellation up to 48 hours before delivery.",
   alternates: {
-    canonical: "https://rentanything.es/refunds",
+    canonical: "https://rentandroll.com/refunds",
     languages: {
-      en: "https://rentanything.es/refunds",
-      es: "https://rentanything.es/es/refunds",
-      "x-default": "https://rentanything.es/refunds",
+      en: "https://rentandroll.com/refunds",
+      es: "https://rentandroll.com/es/refunds",
+      "x-default": "https://rentandroll.com/refunds",
     },
   },
 };
@@ -65,7 +65,7 @@ export default function RefundsPage() {
             <p className="text-neutral-600 mb-3">You can cancel your booking via:</p>
             <ul className="list-disc pl-5 space-y-1 text-neutral-600">
               <li>WhatsApp — fastest response</li>
-              <li>Email to <a href="mailto:hello@rentanything.es" className="text-brand hover:underline">hello@rentanything.es</a></li>
+              <li>Email to <a href="mailto:hello@rentandroll.com" className="text-brand hover:underline">hello@rentandroll.com</a></li>
               <li>The contact form on our <Link href="/contact" className="text-brand hover:underline">Contact page</Link></li>
             </ul>
           </div>

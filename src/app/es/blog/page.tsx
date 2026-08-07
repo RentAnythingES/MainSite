@@ -10,11 +10,11 @@ export const metadata: Metadata = {
   description:
     "Consejos prácticos para visitar Valencia: playas con niños, calor, alojamiento y equipamiento útil para disfrutar de una estancia más cómoda.",
   alternates: {
-    canonical: "https://rentanything.es/es/blog",
+    canonical: "https://rentandroll.com/es/blog",
     languages: {
-      en: "https://rentanything.es/blog",
-      es: "https://rentanything.es/es/blog",
-      "x-default": "https://rentanything.es/blog",
+      en: "https://rentandroll.com/blog",
+      es: "https://rentandroll.com/es/blog",
+      "x-default": "https://rentandroll.com/blog",
     },
   },
 };
@@ -39,11 +39,11 @@ export default function SpanishBlogPage() {
             getHubCollectionJsonLd({
               name: "Consejos y guías para visitar Valencia",
               description: "Guías prácticas en español para familias y estancias de verano en Valencia.",
-              url: "https://rentanything.es/es/blog",
+              url: "https://rentandroll.com/es/blog",
               locale: "es",
               items: posts.map((post) => ({
                 name: post.title,
-                url: `https://rentanything.es/es/blog/${post.slug}`,
+                url: `https://rentandroll.com/es/blog/${post.slug}`,
               })),
             })
           ),

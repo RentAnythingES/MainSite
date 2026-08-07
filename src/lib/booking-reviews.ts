@@ -1,6 +1,6 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 
-const REVIEW_BASE_URL = "https://rentanything.es/review";
+const REVIEW_BASE_URL = "https://rentandroll.com/review";
 
 export function isMissingBookingReviewsTable(error: unknown): boolean {
   if (!error || typeof error !== "object") return false;

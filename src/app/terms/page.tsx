@@ -2,14 +2,14 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Rental Terms and Conditions | RentAnything.es",
-  description: "Terms for RentAnything.es equipment bookings in Valencia, including payment, fulfilment, cancellation, extensions, care and customer responsibilities.",
+  title: "Rental Terms and Conditions | Rent&Roll",
+  description: "Terms for Rent&Roll equipment bookings in Valencia, including payment, fulfilment, cancellation, extensions, care and customer responsibilities.",
   alternates: {
-    canonical: "https://rentanything.es/terms",
+    canonical: "https://rentandroll.com/terms",
     languages: {
-      en: "https://rentanything.es/terms",
-      es: "https://rentanything.es/es/terms",
-      "x-default": "https://rentanything.es/terms",
+      en: "https://rentandroll.com/terms",
+      es: "https://rentandroll.com/es/terms",
+      "x-default": "https://rentandroll.com/terms",
     },
   },
 };
@@ -25,7 +25,7 @@ export default function TermsPage() {
           <div>
             <h2 className="text-xl font-bold mb-3">1. Operator and scope</h2>
             <p className="text-neutral-600">
-              RentAnything.es is operated by <strong>Escalera Labs S.L.</strong> (CIF ESB22961221), Calle Obispo Muñoz 73, 46100 Burjassot, Valencia, Spain. These terms apply to equipment rentals and related fulfilment services booked through RentAnything.es.
+              Rent&Roll is operated by <strong>Escalera Labs S.L.</strong> (CIF ESB22961221), Calle Obispo Muñoz 73, 46100 Burjassot, Valencia, Spain. These terms apply to equipment rentals and related fulfilment services booked through Rent&Roll.
             </p>
           </div>
 
@@ -84,7 +84,7 @@ export default function TermsPage() {
           <div>
             <h2 className="text-xl font-bold mb-3">9. Consumer rights and complaints</h2>
             <p className="text-neutral-600">
-              Nothing in these terms affects mandatory consumer rights under Spanish or EU law. To raise a complaint, contact <a href="mailto:hello@rentanything.es" className="text-brand hover:underline">hello@rentanything.es</a>. Official consumer complaint forms are available through the applicable Spanish consumer authorities.
+              Nothing in these terms affects mandatory consumer rights under Spanish or EU law. To raise a complaint, contact <a href="mailto:hello@rentandroll.com" className="text-brand hover:underline">hello@rentandroll.com</a>. Official consumer complaint forms are available through the applicable Spanish consumer authorities.
             </p>
           </div>
 
@@ -97,7 +97,7 @@ export default function TermsPage() {
 
           <div className="bg-neutral-50 rounded-xl p-6 border border-border">
             <p className="text-sm text-neutral-500">
-              Questions about these terms? <Link href="/contact" className="text-brand hover:underline">Contact us</Link> or email <a href="mailto:hello@rentanything.es" className="text-brand hover:underline">hello@rentanything.es</a>.
+              Questions about these terms? <Link href="/contact" className="text-brand hover:underline">Contact us</Link> or email <a href="mailto:hello@rentandroll.com" className="text-brand hover:underline">hello@rentandroll.com</a>.
             </p>
           </div>
         </div>

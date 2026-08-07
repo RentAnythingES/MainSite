@@ -2,15 +2,15 @@ import type { Metadata } from "next";
 import ContactForm from "@/components/ContactForm";
 
 export const metadata: Metadata = {
-  title: "Contact RentAnything.es in Valencia",
+  title: "Contact Rent&Roll in Valencia",
   description:
-    "Contact RentAnything.es about Valencia equipment rentals, existing bookings, custom requests or local partnerships by WhatsApp, email or form.",
+    "Contact Rent&Roll about Valencia equipment rentals, existing bookings, custom requests or local partnerships by WhatsApp, email or form.",
   alternates: {
-    canonical: "https://rentanything.es/contact",
+    canonical: "https://rentandroll.com/contact",
     languages: {
-      en: "https://rentanything.es/contact",
-      es: "https://rentanything.es/es/contact",
-      "x-default": "https://rentanything.es/contact",
+      en: "https://rentandroll.com/contact",
+      es: "https://rentandroll.com/es/contact",
+      "x-default": "https://rentandroll.com/contact",
     },
   },
 };
@@ -18,11 +18,11 @@ export const metadata: Metadata = {
 const structuredData = {
   "@context": "https://schema.org",
   "@type": "ContactPage",
-  "@id": "https://rentanything.es/contact#page",
-  url: "https://rentanything.es/contact",
-  name: "Contact RentAnything.es",
+  "@id": "https://rentandroll.com/contact#page",
+  url: "https://rentandroll.com/contact",
+  name: "Contact Rent&Roll",
   inLanguage: "en",
-  about: { "@id": "https://rentanything.es/#organization" },
+  about: { "@id": "https://rentandroll.com/#organization" },
 };
 
 export default function ContactPage() {
@@ -32,7 +32,7 @@ export default function ContactPage() {
       <section className="bg-gradient-to-br from-neutral-50 to-teal-50/20 py-16 md:py-24">
         <div className="container-site">
           <div className="max-w-3xl mx-auto text-center">
-            <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-4">Contact RentAnything.es</h1>
+            <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-4">Contact Rent&Roll</h1>
             <p className="text-lg text-neutral-600">
               Ask about an item, an existing booking, a custom rental or a local partnership in Valencia.
             </p>
@@ -56,11 +56,11 @@ export default function ContactPage() {
               <span className="text-sm font-semibold text-[#25D366]">Open WhatsApp →</span>
             </a>
 
-            <a href="mailto:hello@rentanything.es" className="card p-8 text-center hover:border-brand/30 group" id="contact-email">
+            <a href="mailto:hello@rentandroll.com" className="card p-8 text-center hover:border-brand/30 group" id="contact-email">
               <span className="text-4xl block mb-4">📧</span>
               <h2 className="font-bold text-lg mb-2 group-hover:text-brand transition-colors">Email</h2>
               <p className="text-sm text-neutral-500 mb-3">Useful for detailed requests and partnerships</p>
-              <span className="text-sm font-semibold text-brand">hello@rentanything.es</span>
+              <span className="text-sm font-semibold text-brand">hello@rentandroll.com</span>
             </a>
 
             <div className="card p-8 text-center" id="contact-location">

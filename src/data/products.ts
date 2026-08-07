@@ -351,7 +351,7 @@ export const products: Product[] = [
   {
     slug: "beach-umbrella-set",
     name: "Beach Umbrella & Chair Set",
-    brand: "RentAnything",
+    brand: "Rent&Roll",
     category: "Beach & Outdoor",
     subcategory: "Beach Gear",
     categorySlug: "travel-outdoors",

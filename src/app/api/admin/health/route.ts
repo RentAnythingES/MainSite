@@ -118,8 +118,8 @@ export async function GET(request: NextRequest) {
     },
     resend: {
       configured: Boolean(process.env.RESEND_API_KEY),
-      fromEmail: maskEmail(process.env.FROM_EMAIL || "RentAnything <noreply@rentanything.es>"),
-      contactEmail: maskEmail(process.env.CONTACT_EMAIL || "hello@rentanything.es"),
+      fromEmail: maskEmail(process.env.FROM_EMAIL || "Rent&Roll <bookings@rentandroll.com>"),
+      contactEmail: maskEmail(process.env.CONTACT_EMAIL || "hello@rentandroll.com"),
     },
     whatsapp: {
       configured: isWhatsAppBookingNotificationConfigured(),

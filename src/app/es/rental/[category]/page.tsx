@@ -400,17 +400,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: meta.title,
     description: meta.description,
     alternates: {
-      canonical: `https://rentanything.es/es/rental/${category}`,
+      canonical: `https://rentandroll.com/es/rental/${category}`,
       languages: {
-        en: `https://rentanything.es/rental/${category}`,
-        es: `https://rentanything.es/es/rental/${category}`,
-        "x-default": `https://rentanything.es/rental/${category}`,
+        en: `https://rentandroll.com/rental/${category}`,
+        es: `https://rentandroll.com/es/rental/${category}`,
+        "x-default": `https://rentandroll.com/rental/${category}`,
       },
     },
     openGraph: {
       title: meta.title,
       description: meta.description,
-      url: `https://rentanything.es/es/rental/${category}`,
+      url: `https://rentandroll.com/es/rental/${category}`,
       locale: "es_ES",
       images: [{ url: meta.image ?? `/categories/${category}.webp`, alt: meta.title }],
     },
@@ -437,7 +437,7 @@ export default async function CategoryPageES({ params }: Props) {
             getCategoryCollectionJsonLd({
               name: meta.title,
               description: meta.description,
-              url: `https://rentanything.es/es/rental/${category}`,
+              url: `https://rentandroll.com/es/rental/${category}`,
               locale: "es",
               products: categoryProducts,
             })
@@ -449,9 +449,9 @@ export default async function CategoryPageES({ params }: Props) {
         dangerouslySetInnerHTML={{
           __html: JSON.stringify(
             getBreadcrumbJsonLd([
-              { name: "Inicio", url: "https://rentanything.es/es" },
-              { name: "Valencia", url: "https://rentanything.es/es/valencia" },
-              { name: meta.title, url: `https://rentanything.es/es/rental/${category}` },
+              { name: "Inicio", url: "https://rentandroll.com/es" },
+              { name: "Valencia", url: "https://rentandroll.com/es/valencia" },
+              { name: meta.title, url: `https://rentandroll.com/es/rental/${category}` },
             ])
           ),
         }}

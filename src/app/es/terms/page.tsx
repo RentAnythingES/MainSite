@@ -2,14 +2,14 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Condiciones de Alquiler | RentAnything.es",
+  title: "Condiciones de Alquiler | Rent&Roll",
   description: "Condiciones para reservas de equipamiento en Valencia: pago, entrega o recogida, cancelación, ampliaciones, cuidado y responsabilidades.",
   alternates: {
-    canonical: "https://rentanything.es/es/terms",
+    canonical: "https://rentandroll.com/es/terms",
     languages: {
-      en: "https://rentanything.es/terms",
-      es: "https://rentanything.es/es/terms",
-      "x-default": "https://rentanything.es/terms",
+      en: "https://rentandroll.com/terms",
+      es: "https://rentandroll.com/es/terms",
+      "x-default": "https://rentandroll.com/terms",
     },
   },
 };
@@ -24,7 +24,7 @@ export default function SpanishTermsPage() {
         <div className="space-y-8 text-[15px] leading-relaxed">
           <div>
             <h2 className="text-xl font-bold mb-3">1. Operador y ámbito</h2>
-            <p className="text-neutral-600">RentAnything.es está gestionado por <strong>Escalera Labs S.L.</strong> (CIF ESB22961221), Calle Obispo Muñoz 73, 46100 Burjassot, Valencia, España. Estas condiciones se aplican al alquiler de equipamiento y a los servicios relacionados contratados mediante RentAnything.es.</p>
+            <p className="text-neutral-600">Rent&Roll está gestionado por <strong>Escalera Labs S.L.</strong> (CIF ESB22961221), Calle Obispo Muñoz 73, 46100 Burjassot, Valencia, España. Estas condiciones se aplican al alquiler de equipamiento y a los servicios relacionados contratados mediante Rent&Roll.</p>
           </div>
 
           <div>
@@ -69,7 +69,7 @@ export default function SpanishTermsPage() {
 
           <div>
             <h2 className="text-xl font-bold mb-3">9. Derechos y reclamaciones</h2>
-            <p className="text-neutral-600">Estas condiciones no afectan a los derechos imperativos de las personas consumidoras conforme a la normativa española o europea. Para presentar una reclamación, escribe a <a href="mailto:hello@rentanything.es" className="text-brand hover:underline">hello@rentanything.es</a>. Las hojas oficiales de reclamaciones están disponibles mediante las autoridades de consumo competentes.</p>
+            <p className="text-neutral-600">Estas condiciones no afectan a los derechos imperativos de las personas consumidoras conforme a la normativa española o europea. Para presentar una reclamación, escribe a <a href="mailto:hello@rentandroll.com" className="text-brand hover:underline">hello@rentandroll.com</a>. Las hojas oficiales de reclamaciones están disponibles mediante las autoridades de consumo competentes.</p>
           </div>
 
           <div>
@@ -78,7 +78,7 @@ export default function SpanishTermsPage() {
           </div>
 
           <div className="bg-neutral-50 rounded-xl p-6 border border-border">
-            <p className="text-sm text-neutral-500">¿Tienes alguna pregunta? <Link href="/es/contact" className="text-brand hover:underline">Contacta con nosotros</Link> o escribe a <a href="mailto:hello@rentanything.es" className="text-brand hover:underline">hello@rentanything.es</a>.</p>
+            <p className="text-sm text-neutral-500">¿Tienes alguna pregunta? <Link href="/es/contact" className="text-brand hover:underline">Contacta con nosotros</Link> o escribe a <a href="mailto:hello@rentandroll.com" className="text-brand hover:underline">hello@rentandroll.com</a>.</p>
           </div>
         </div>
       </div>

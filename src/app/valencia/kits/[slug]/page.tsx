@@ -27,11 +27,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     description: bundle.seo.description,
     keywords: bundle.seo.keywords,
     alternates: {
-      canonical: `https://rentanything.es/valencia/kits/${bundle.slug}`,
+      canonical: `https://rentandroll.com/valencia/kits/${bundle.slug}`,
       languages: {
-        en: `https://rentanything.es/valencia/kits/${bundle.slug}`,
-        es: `https://rentanything.es/es/valencia/kits/${bundle.slug}`,
-        "x-default": `https://rentanything.es/valencia/kits/${bundle.slug}`,
+        en: `https://rentandroll.com/valencia/kits/${bundle.slug}`,
+        es: `https://rentandroll.com/es/valencia/kits/${bundle.slug}`,
+        "x-default": `https://rentandroll.com/valencia/kits/${bundle.slug}`,
       },
     },
     openGraph: {
@@ -59,19 +59,19 @@ export default async function BundlePage({ params }: Props) {
     .map((guideSlug) => getBlogPostBySlug(guideSlug))
     .filter((guide): guide is NonNullable<typeof guide> => Boolean(guide));
   const otherBundles = rentalBundles.filter((item) => item.slug !== bundle.slug).slice(0, 3);
-  const bundleUrl = `https://rentanything.es/valencia/kits/${bundle.slug}`;
+  const bundleUrl = `https://rentandroll.com/valencia/kits/${bundle.slug}`;
 
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Product",
     name: bundle.name,
     description: bundle.seo.description,
-    image: `https://rentanything.es${bundle.image}`,
+    image: `https://rentandroll.com${bundle.image}`,
     url: bundleUrl,
     mainEntityOfPage: { "@type": "WebPage", "@id": bundleUrl },
     brand: {
       "@type": "Brand",
-      name: "RentAnything.es",
+      name: "Rent&Roll",
     },
     areaServed: {
       "@type": "City",
@@ -100,10 +100,10 @@ export default async function BundlePage({ params }: Props) {
         dangerouslySetInnerHTML={{
           __html: JSON.stringify(
             getBreadcrumbJsonLd([
-              { name: "Home", url: "https://rentanything.es" },
-              { name: "Valencia", url: "https://rentanything.es/valencia" },
-              { name: "Kits", url: "https://rentanything.es/valencia/kits" },
-              { name: bundle.shortName, url: `https://rentanything.es/valencia/kits/${bundle.slug}` },
+              { name: "Home", url: "https://rentandroll.com" },
+              { name: "Valencia", url: "https://rentandroll.com/valencia" },
+              { name: "Kits", url: "https://rentandroll.com/valencia/kits" },
+              { name: bundle.shortName, url: `https://rentandroll.com/valencia/kits/${bundle.slug}` },
             ]),
           ),
         }}

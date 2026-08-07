@@ -40,7 +40,7 @@ export default async function AdminDashboard() {
     <>
       <div className="mb-8">
         <h1 className="text-2xl font-bold text-white">Dashboard</h1>
-        <p className="text-neutral-500 text-sm mt-1">RentAnything.es — Admin Overview</p>
+        <p className="text-neutral-500 text-sm mt-1">Rent&Roll — Admin Overview</p>
       </div>
 
       <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
@@ -112,7 +112,7 @@ export default async function AdminDashboard() {
             <span className="text-xl">🌐</span>
             <div>
               <p className="text-sm font-medium text-white">View Live Site</p>
-              <p className="text-xs text-neutral-500">rentanything.es</p>
+              <p className="text-xs text-neutral-500">rentandroll.com</p>
             </div>
           </a>
         </div>

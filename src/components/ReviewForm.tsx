@@ -117,7 +117,7 @@ export default function ReviewForm({ token }: { token: string }) {
 
       <label className="flex items-start gap-3 rounded-xl border border-neutral-200 bg-neutral-50 p-4 text-sm leading-relaxed text-neutral-700">
         <input type="checkbox" name="consentToPublish" className="mt-1 h-4 w-4 accent-teal-700" />
-        <span>I allow RentAnything.es to publish this feedback and my chosen display name. Submitting feedback without checking this box keeps it internal.</span>
+        <span>I allow Rent&Roll to publish this feedback and my chosen display name. Submitting feedback without checking this box keeps it internal.</span>
       </label>
 
       {error && <p className="rounded-lg bg-red-50 px-4 py-3 text-sm text-red-700">{error}</p>}

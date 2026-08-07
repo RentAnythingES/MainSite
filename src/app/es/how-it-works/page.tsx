@@ -7,11 +7,11 @@ export const metadata: Metadata = {
   description:
     "Elige el artículo y las fechas, selecciona recogida o entrega, paga de forma segura y devuelve el equipo según la modalidad acordada.",
   alternates: {
-    canonical: "https://rentanything.es/es/how-it-works",
+    canonical: "https://rentandroll.com/es/how-it-works",
     languages: {
-      en: "https://rentanything.es/how-it-works",
-      es: "https://rentanything.es/es/how-it-works",
-      "x-default": "https://rentanything.es/how-it-works",
+      en: "https://rentandroll.com/how-it-works",
+      es: "https://rentandroll.com/es/how-it-works",
+      "x-default": "https://rentandroll.com/how-it-works",
     },
   },
 };
@@ -127,7 +127,7 @@ const howToSchema = {
   "@context": "https://schema.org",
   "@type": "HowTo",
   inLanguage: "es-ES",
-  name: "Cómo alquilar equipamiento en Valencia con RentAnything.es",
+  name: "Cómo alquilar equipamiento en Valencia con Rent&Roll",
   description:
     "Elige el equipo y las fechas, paga de forma segura, recibe o recoge el artículo y devuélvelo mediante la modalidad acordada.",
   step: steps.map((step, index) => ({
@@ -135,7 +135,7 @@ const howToSchema = {
     position: index + 1,
     name: step.title,
     text: step.description,
-    url: `https://rentanything.es/es/how-it-works#step-${index + 1}`,
+    url: `https://rentandroll.com/es/how-it-works#step-${index + 1}`,
   })),
 };
 

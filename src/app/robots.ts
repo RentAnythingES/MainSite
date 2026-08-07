@@ -15,6 +15,6 @@ export default function robots(): MetadataRoute.Robots {
         ],
       },
     ],
-    sitemap: "https://rentanything.es/sitemap.xml",
+    sitemap: "https://rentandroll.com/sitemap.xml",
   };
 }

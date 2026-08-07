@@ -4,7 +4,7 @@ import type { Metadata } from "next";
 import { getSpanishDestinationsByHub } from "@/content/destinations-es";
 import { getBreadcrumbJsonLd, getFaqJsonLd, getHubCollectionJsonLd } from "@/lib/jsonld";
 
-const url = "https://rentanything.es/es/discover/day-trips";
+const url = "https://rentandroll.com/es/discover/day-trips";
 const description = "Compara excursiones desde Valencia con transporte, tiempos realistas, accesibilidad y rutas prácticas para organizar el día.";
 const faqs = [
   { question: "¿Qué excursión desde Valencia es más sencilla sin coche?", answer: "Depende del horario y del traslado final. Buñol conecta con Cercanías, mientras que Cullera requiere planificar además el tramo entre la estación, el castillo y la playa. Comprueba siempre el último regreso." },
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   description,
   alternates: {
     canonical: url,
-    languages: { en: "https://rentanything.es/discover/day-trips", es: url, "x-default": "https://rentanything.es/discover/day-trips" },
+    languages: { en: "https://rentandroll.com/discover/day-trips", es: url, "x-default": "https://rentandroll.com/discover/day-trips" },
   },
 };
 
@@ -26,8 +26,8 @@ export default function SpanishDayTripsHub() {
 
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(getHubCollectionJsonLd({ name: "Excursiones desde Valencia", description, url, locale: "es", items: guides.map((guide) => ({ name: guide.name, url: `https://rentanything.es/es/discover/${guide.slug}` })) })) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(getBreadcrumbJsonLd([{ name: "Inicio", url: "https://rentanything.es/es" }, { name: "Descubre Valencia", url: "https://rentanything.es/es/discover" }, { name: "Excursiones", url }])) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(getHubCollectionJsonLd({ name: "Excursiones desde Valencia", description, url, locale: "es", items: guides.map((guide) => ({ name: guide.name, url: `https://rentandroll.com/es/discover/${guide.slug}` })) })) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(getBreadcrumbJsonLd([{ name: "Inicio", url: "https://rentandroll.com/es" }, { name: "Descubre Valencia", url: "https://rentandroll.com/es/discover" }, { name: "Excursiones", url }])) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(getFaqJsonLd(faqs.map((faq) => ({ q: faq.question, a: faq.answer })))) }} />
 
       <nav className="bg-neutral-50 border-b border-border py-3">

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import CustomBookingQuotePage from "@/components/CustomBookingQuotePage";
 
 export const metadata: Metadata = {
-  title: "Your Custom Rental Quote | RentAnything.es",
+  title: "Your Custom Rental Quote | Rent&Roll",
   robots: { index: false, follow: false, noarchive: true },
 };
 

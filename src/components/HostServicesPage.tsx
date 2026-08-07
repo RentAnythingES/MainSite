@@ -9,9 +9,9 @@ type Locale = "en" | "es";
 
 const copy = {
   en: {
-    pageUrl: "https://rentanything.es/valencia/host-services",
-    homeUrl: "https://rentanything.es",
-    valenciaUrl: "https://rentanything.es/valencia",
+    pageUrl: "https://rentandroll.com/valencia/host-services",
+    homeUrl: "https://rentandroll.com",
+    valenciaUrl: "https://rentandroll.com/valencia",
     valenciaHref: "/valencia",
     contactHref: "/contact",
     kitsHref: "/valencia/kits",
@@ -66,10 +66,10 @@ const copy = {
     ],
     boundaryTitle: "What this service does not include",
     boundaryText:
-      "RentAnything.es is an equipment-rental service. We do not manage listings, keys, housekeeping, maintenance, licensing, or accommodation compliance. This page does not imply an Airbnb endorsement or partnership.",
+      "Rent&Roll is an equipment-rental service. We do not manage listings, keys, housekeeping, maintenance, licensing, or accommodation compliance. This page does not imply an Airbnb endorsement or partnership.",
     faqTitle: "Host service questions",
     faqs: [
-      { q: "Can my guest book directly?", a: "Yes. You can share a relevant RentAnything.es page and the guest can use the normal availability and booking flow. A booking is only confirmed after the checkout process succeeds." },
+      { q: "Can my guest book directly?", a: "Yes. You can share a relevant Rent&Roll page and the guest can use the normal availability and booking flow. A booking is only confirmed after the checkout process succeeds." },
       { q: "Do I need to keep equipment at the property?", a: "No. The purpose of the service is to help with occasional or recurring guest requests without requiring every property to store every item permanently." },
       { q: "Can you guarantee equipment for every stay?", a: "No. Availability depends on the requested dates, inventory, and fulfillment capacity. We confirm each request before it is presented as booked." },
       { q: "Do you offer portfolio or recurring pricing?", a: "We can review recurring needs with hosts and property managers. Any workflow or pricing is agreed individually after the request pattern and operational requirements are clear." },
@@ -82,9 +82,9 @@ const copy = {
     emailCta: "Use the contact form",
   },
   es: {
-    pageUrl: "https://rentanything.es/es/valencia/servicios-anfitriones",
-    homeUrl: "https://rentanything.es/es",
-    valenciaUrl: "https://rentanything.es/es/valencia",
+    pageUrl: "https://rentandroll.com/es/valencia/servicios-anfitriones",
+    homeUrl: "https://rentandroll.com/es",
+    valenciaUrl: "https://rentandroll.com/es/valencia",
     valenciaHref: "/es/valencia",
     contactHref: "/es/contact",
     kitsHref: "/es/valencia/kits",
@@ -139,10 +139,10 @@ const copy = {
     ],
     boundaryTitle: "Qué no incluye este servicio",
     boundaryText:
-      "RentAnything.es es un servicio de alquiler de equipamiento. No gestionamos anuncios, llaves, limpieza, mantenimiento, licencias ni cumplimiento normativo del alojamiento. Esta página no implica colaboración ni respaldo de Airbnb.",
+      "Rent&Roll es un servicio de alquiler de equipamiento. No gestionamos anuncios, llaves, limpieza, mantenimiento, licencias ni cumplimiento normativo del alojamiento. Esta página no implica colaboración ni respaldo de Airbnb.",
     faqTitle: "Preguntas de anfitriones",
     faqs: [
-      { q: "¿Puede reservar directamente mi huésped?", a: "Sí. Puedes compartir una página relevante de RentAnything.es y el huésped utilizará el proceso normal de disponibilidad y reserva. La reserva solo queda confirmada cuando el pago finaliza correctamente." },
+      { q: "¿Puede reservar directamente mi huésped?", a: "Sí. Puedes compartir una página relevante de Rent&Roll y el huésped utilizará el proceso normal de disponibilidad y reserva. La reserva solo queda confirmada cuando el pago finaliza correctamente." },
       { q: "¿Tengo que guardar el equipamiento en la propiedad?", a: "No. El objetivo es atender solicitudes ocasionales o recurrentes sin obligar a cada propiedad a almacenar permanentemente todos los artículos." },
       { q: "¿Podéis garantizar equipamiento para cada estancia?", a: "No. La disponibilidad depende de las fechas solicitadas, el inventario y la capacidad de servicio. Confirmamos cada solicitud antes de considerarla reservada." },
       { q: "¿Ofrecéis precios para carteras o solicitudes recurrentes?", a: "Podemos revisar necesidades recurrentes con anfitriones y gestores. Cualquier proceso o precio se acuerda individualmente cuando estén claros el patrón de solicitudes y los requisitos operativos." },

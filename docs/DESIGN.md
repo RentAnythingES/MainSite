@@ -1,4 +1,4 @@
-# RentAnything.es — Design System
+# Rent&Roll — Design System
 > **Last updated**: 2026-06-18
 
 ## Colors
@@ -14,11 +14,13 @@
 
 
 ## Brand Assets
-- Source concept sheet: `docs/Home.png`
-- Transparent icon: `public/brand/rentanything-icon.png`
-- Rounded app icon: `public/brand/rentanything-app-icon.png`
+- Source logo: `docs/Rent&Roll.png`
+- Header logo: `public/brand/rentnroll-header.png`
+- Transparent icon: `public/brand/rentnroll-icon.png`
+- Rounded app icon: `public/brand/rentnroll-app-icon.png`
+- Social preview: `public/brand/rentnroll-og.png`
 - Next app icons: `src/app/icon.png`, `src/app/apple-icon.png`, `src/app/favicon.ico`
-- Header uses the transparent suitcase-house icon alongside the wordmark text.
+- Header uses the supplied Rent&Roll logo artwork.
 
 ## Typography
 - **Headings**: Outfit (Google Fonts) — inherits color from context (no hardcoded color)

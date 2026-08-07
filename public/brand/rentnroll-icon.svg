@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 224" role="img" aria-labelledby="title desc">
+  <title id="title">Rent&amp;Roll icon</title>
+  <desc id="desc">A rolling teal suitcase shaped like a house with amber motion lines.</desc>
+  <defs>
+    <linearGradient id="case" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#34A59A"/>
+      <stop offset="1" stop-color="#0E7C73"/>
+    </linearGradient>
+  </defs>
+  <ellipse cx="106" cy="207" rx="66" ry="8" fill="#0E7C73" opacity=".14"/>
+  <path d="M82 51l3-24c1-8 7-13 15-13h38c9 0 14 6 13 15l-3 23" fill="none" stroke="#0F1F33" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M105 52l1-12h24l-1 13" fill="none" stroke="#0F1F33" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M16 89h31M7 119h42M20 149h27" fill="none" stroke="#0E7C73" stroke-width="10" stroke-linecap="round"/>
+  <path d="M4 119h22" fill="none" stroke="#FF9E0B" stroke-width="10" stroke-linecap="round"/>
+  <g transform="rotate(3 110 120)">
+    <rect x="53" y="48" width="112" height="145" rx="24" fill="url(#case)"/>
+    <path d="M73 112l39-36a10 10 0 0113 0l31 29-8 9v55H78v-55z" fill="#FFF4E5"/>
+    <path d="M70 112l42-39a10 10 0 0113 0l36 34a7 7 0 01-10 10l-33-31-39 36a7 7 0 01-9-10z" fill="#FFF4E5"/>
+    <rect x="103" y="119" width="17" height="18" rx="3" fill="#0F1F33"/>
+    <rect x="125" y="119" width="17" height="18" rx="3" fill="#0F1F33"/>
+    <rect x="103" y="142" width="17" height="18" rx="3" fill="#0F1F33"/>
+    <rect x="125" y="142" width="17" height="18" rx="3" fill="#0F1F33"/>
+    <circle cx="75" cy="188" r="22" fill="#0F1F33"/>
+    <circle cx="75" cy="188" r="12" fill="#FFF4E5"/>
+    <circle cx="75" cy="188" r="5" fill="#0F1F33"/>
+    <circle cx="146" cy="188" r="22" fill="#0F1F33"/>
+    <circle cx="146" cy="188" r="12" fill="#FFF4E5"/>
+    <circle cx="146" cy="188" r="5" fill="#0F1F33"/>
+  </g>
+</svg>

@@ -1,4 +1,4 @@
-# RentAnything.es — Frontend Guide
+# Rent&Roll — Frontend Guide
 > **Last updated**: 2026-07-21
 
 ## Routing
@@ -177,9 +177,9 @@ each selection exposes the destination's stored transport summary and links to t
 full guide. Keep it dependency-free and label it as non-navigational so a visual
 overview never replaces current route or accessibility checks.
 
-Public products and kits reference `https://rentanything.es/#business` as their
+Public products and kits reference `https://rentandroll.com/#business` as their
 seller. Editorial pages use the same entity for author and publisher and reference
-`https://rentanything.es/#website`. Do not create anonymous organization objects
+`https://rentandroll.com/#website`. Do not create anonymous organization objects
 or publish `Event` schema for an evergreen event guide without occurrence dates.
 
 Spanish Discover guides derive their owning hub, page badge, breadcrumbs,

@@ -25,11 +25,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const dest = getDestinationBySlug(slug);
   if (!dest) return { title: "Not Found" };
-  const canonical = `https://rentanything.es/discover/${dest.slug}`;
+  const canonical = `https://rentandroll.com/discover/${dest.slug}`;
   const languages = hasSpanishDestination(dest.slug)
     ? {
         en: canonical,
-        es: `https://rentanything.es/es/discover/${dest.slug}`,
+        es: `https://rentandroll.com/es/discover/${dest.slug}`,
         "x-default": canonical,
       }
     : undefined;
@@ -171,7 +171,7 @@ export default async function DiscoverPage({ params }: Props) {
     .filter(Boolean);
 
   // JSON-LD
-  const destinationUrl = `https://rentanything.es/discover/${dest.slug}`;
+  const destinationUrl = `https://rentandroll.com/discover/${dest.slug}`;
   const jsonLd = dest.type === "event"
     ? {
         "@context": "https://schema.org",
@@ -185,7 +185,7 @@ export default async function DiscoverPage({ params }: Props) {
         isPartOf: { "@id": WEBSITE_SCHEMA_ID },
         author: { "@id": BUSINESS_SCHEMA_ID },
         publisher: { "@id": BUSINESS_SCHEMA_ID },
-        ...(dest.heroImage && { image: `https://rentanything.es${dest.heroImage}` }),
+        ...(dest.heroImage && { image: `https://rentandroll.com${dest.heroImage}` }),
       }
     : {
         "@context": "https://schema.org",
@@ -217,10 +217,10 @@ export default async function DiscoverPage({ params }: Props) {
         dangerouslySetInnerHTML={{
           __html: JSON.stringify(
             getBreadcrumbJsonLd([
-              { name: "Home", url: "https://rentanything.es" },
-              { name: "Discover", url: "https://rentanything.es/discover" },
-              { name: primaryHubLabel, url: `https://rentanything.es/discover/${primaryHub}` },
-              { name: dest.name, url: `https://rentanything.es/discover/${dest.slug}` },
+              { name: "Home", url: "https://rentandroll.com" },
+              { name: "Discover", url: "https://rentandroll.com/discover" },
+              { name: primaryHubLabel, url: `https://rentandroll.com/discover/${primaryHub}` },
+              { name: dest.name, url: `https://rentandroll.com/discover/${dest.slug}` },
             ]),
           ),
         }}

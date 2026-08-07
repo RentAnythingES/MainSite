@@ -6,7 +6,7 @@ import type { Product } from "@/data/products";
 const testProduct: Product = {
   slug: "stripe-test-rental",
   name: "Stripe Test Rental",
-  brand: "RentAnything",
+  brand: "Rent&Roll",
   category: "Internal Testing",
   subcategory: "Payment Flow",
   categorySlug: "internal",
@@ -37,8 +37,8 @@ const testProduct: Product = {
 };
 
 export const metadata: Metadata = {
-  title: "Stripe Test Checkout | RentAnything.es",
-  description: "Private noindex checkout test page for RentAnything.es.",
+  title: "Stripe Test Checkout | Rent&Roll",
+  description: "Private noindex checkout test page for Rent&Roll.",
   robots: {
     index: false,
     follow: false,

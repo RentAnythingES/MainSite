@@ -48,7 +48,7 @@ export async function POST(request: NextRequest) {
 
     const supabase = createServiceClient();
     await cleanupExpiredBookingDrafts(supabase);
-    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || request.headers.get("origin") || "https://rentanything.es";
+    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || request.headers.get("origin") || "https://rentandroll.com";
 
     if (draftId) {
       const { data: draft, error: draftError } = await supabase

@@ -38,7 +38,7 @@ CATEGORY_MAP = {
     "Travel & Outdoors": ("travel-outdoors", "Travel and Outdoors"),
 }
 DRAFT_CATEGORY = ("catalogue-review", "Catalogue Review")
-USER_AGENT = "RentAnythingCatalogueReview/1.0 (+https://www.rentanything.es)"
+USER_AGENT = "Rent&RollCatalogueReview/1.0 (+https://rentandroll.com)"
 ALLOWED_IMAGE_TYPES = {"image/jpeg", "image/png", "image/webp", "image/gif"}
 
 

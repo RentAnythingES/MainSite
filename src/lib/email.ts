@@ -1,9 +1,13 @@
 ﻿import { Resend } from "resend";
 
-const TO_ADMIN = process.env.CONTACT_EMAIL || "hello@rentanything.es";
-const FROM = process.env.FROM_EMAIL || "RentAnything <noreply@rentanything.es>";
+import { SITE_IDENTITY, SITE_URL } from "@/config/site";
+
+const TO_ADMIN = process.env.CONTACT_EMAIL || SITE_IDENTITY.contactEmail;
+const FROM =
+  process.env.FROM_EMAIL ||
+  `${SITE_IDENTITY.brandName} <bookings@rentandroll.com>`;
 const WHATSAPP_URL = "https://wa.me/34684708013";
-const ADMIN_BOOKINGS_URL = "https://rentanything.es/admin/bookings";
+const ADMIN_BOOKINGS_URL = `${SITE_URL}/admin/bookings`;
 
 export interface DocumentEmailLink {
   label: string;
@@ -135,15 +139,15 @@ function emailWrapper(title: string, body: string, preheader?: string): string {
     <div style="display:none;max-height:0;overflow:hidden;opacity:0;color:transparent;">${escapeHtml(preheader || title)}</div>
     <div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;max-width:620px;margin:0 auto;color:#1f2937;">
       <div style="background:linear-gradient(135deg,#0e7c73,#30a596);padding:28px 32px;border-radius:18px 18px 0 0;">
-        <p style="color:#ccfbf1;margin:0 0 8px;font-size:13px;font-weight:700;letter-spacing:.03em;">RentAnything.es</p>
+        <p style="color:#ccfbf1;margin:0 0 8px;font-size:13px;font-weight:700;letter-spacing:.03em;">${escapeHtml(SITE_IDENTITY.brandName)}</p>
         <h1 style="color:white;margin:0;font-size:24px;line-height:1.2;">${escapeHtml(title)}</h1>
       </div>
       <div style="background:#f9fafb;padding:32px;border:1px solid #e5e7eb;border-top:none;border-radius:0 0 18px 18px;">
         ${body}
         <hr style="border:none;border-top:1px solid #e5e7eb;margin:24px 0;" />
         <p style="font-size:12px;color:#9ca3af;margin:0;line-height:1.5;">
-          RentAnything.es · Escalera Labs S.L. · Valencia, Spain<br />
-          Travel light. Feel at home.
+          ${escapeHtml(SITE_IDENTITY.brandName)} · ${escapeHtml(SITE_IDENTITY.legalName)} · Valencia, Spain<br />
+          ${escapeHtml(SITE_IDENTITY.tagline)}
         </p>
       </div>
     </div>
@@ -478,10 +482,10 @@ export async function sendContactNotification(data: ContactEmailData): Promise<b
   if (!resend) return false;
 
   const emailSubject = data.productName
-    ? `[RentAnything] Enquiry: ${data.productName}`
+    ? `[Rent&Roll] Enquiry: ${data.productName}`
     : data.subject
-      ? `[RentAnything] ${data.subject}`
-      : "[RentAnything] New contact form submission";
+      ? `[Rent&Roll] ${data.subject}`
+      : "[Rent&Roll] New contact form submission";
 
   try {
     const result = await resend.emails.send({
@@ -518,7 +522,7 @@ export async function sendContactAutoReply(data: ContactEmailData): Promise<bool
     const result = await resend.emails.send({
       from: FROM,
       to: data.email,
-      subject: isSpanish ? "Hemos recibido tu mensaje — RentAnything.es" : "We received your message — RentAnything.es",
+      subject: isSpanish ? "Hemos recibido tu mensaje — Rent&Roll" : "We received your message — Rent&Roll",
       html: emailWrapper(isSpanish ? "Gracias por escribirnos" : "Thanks for reaching out", `
         <p style="font-size:15px;color:#374151;line-height:1.6;margin-top:0;">${isSpanish ? "Hola" : "Hi"} ${escapeHtml(data.name)},</p>
         <p style="font-size:15px;color:#374151;line-height:1.6;">${isSpanish
@@ -526,7 +530,7 @@ export async function sendContactAutoReply(data: ContactEmailData): Promise<bool
           : "We've received your message and will get back to you as soon as we can. If it is related to an upcoming arrival, WhatsApp is usually the most direct way to reach us."}</p>
         ${data.productName ? infoBox(`<p style="font-size:14px;color:#0f766e;line-height:1.6;margin:0;"><strong>${isSpanish ? "Sobre" : "About"}:</strong> ${escapeHtml(data.productName)}</p>`) : ""}
         ${button(WHATSAPP_URL, isSpanish ? "Escribir por WhatsApp" : "Message us on WhatsApp", "#25d366")}
-      `, isSpanish ? "Hemos recibido tu mensaje para RentAnything.es." : "We received your RentAnything.es message."),
+      `, isSpanish ? "Hemos recibido tu mensaje para Rent&Roll." : "We received your Rent&Roll message."),
     });
 
     return !result.error;
@@ -546,15 +550,15 @@ export async function sendSignupWelcome(data: SignupWelcomeEmailData): Promise<b
     const result = await resend.emails.send({
       from: FROM,
       to: data.email,
-      subject: "Welcome to RentAnything.es",
-      html: emailWrapper("Welcome to RentAnything.es", `
+      subject: "Welcome to Rent&Roll",
+      html: emailWrapper("Welcome to Rent&Roll", `
         <p style="font-size:15px;color:#374151;line-height:1.6;margin-top:0;">Hi ${escapeHtml(name)},</p>
         <p style="font-size:15px;color:#374151;line-height:1.6;">Thanks for signing up. We'll send useful Valencia stay tips, new kit launches, and practical updates when new inventory becomes available.</p>
         ${data.interest ? infoBox(`<p style="font-size:14px;color:#0f766e;line-height:1.6;margin:0;"><strong>Your interest:</strong> ${escapeHtml(data.interest)}</p>`) : ""}
         <p style="font-size:15px;color:#374151;line-height:1.6;">In the meantime, if you need something specific for a Valencia stay, just message us.</p>
         ${button(WHATSAPP_URL, "Ask us on WhatsApp", "#25d366")}
-        <p style="font-size:12px;color:#6b7280;line-height:1.5;margin-top:24px;">You received this because you subscribed to RentAnything.es updates. <a href="${escapeHtml(data.unsubscribeUrl)}" style="color:#0e7c73;">Unsubscribe</a>.</p>
-      `, "Thanks for signing up for RentAnything.es."),
+        <p style="font-size:12px;color:#6b7280;line-height:1.5;margin-top:24px;">You received this because you subscribed to Rent&Roll updates. <a href="${escapeHtml(data.unsubscribeUrl)}" style="color:#0e7c73;">Unsubscribe</a>.</p>
+      `, "Thanks for signing up for Rent&Roll."),
     });
 
     return !result.error;
@@ -574,9 +578,9 @@ export async function sendEmailHealthCheck(): Promise<{ ok: boolean; id?: string
     const result = await resend.emails.send({
       from: FROM,
       to: TO_ADMIN,
-      subject: "RentAnything email health check",
+      subject: "Rent&Roll email health check",
       html: emailWrapper("Email health check", `
-        <p style="font-size:15px;color:#374151;line-height:1.6;margin-top:0;">This is a test email from RentAnything.es.</p>
+        <p style="font-size:15px;color:#374151;line-height:1.6;margin-top:0;">This is a test email from Rent&Roll.</p>
         <p style="font-size:14px;color:#6b7280;line-height:1.6;">If you received this, Resend accepted the message from the current environment.</p>
       `),
     });
@@ -598,13 +602,13 @@ export async function sendOperationalAlert(issues: string[], metrics: Record<str
     const result = await resend.emails.send({
       from: FROM,
       to: TO_ADMIN,
-      subject: `RentAnything operational alert — ${issues.length} issue${issues.length === 1 ? "" : "s"}`,
+      subject: `Rent&Roll operational alert — ${issues.length} issue${issues.length === 1 ? "" : "s"}`,
       html: emailWrapper("Operational attention required", `
         <p style="font-size:15px;color:#374151;line-height:1.6;margin-top:0;">The scheduled production monitor found the following:</p>
         <ul style="font-size:14px;color:#374151;line-height:1.8;">${issues.map((issue) => `<li>${escapeHtml(issue)}</li>`).join("")}</ul>
         ${infoBox(`<p style="font-size:13px;color:#0f766e;margin:0;">Unresolved incidents: ${metrics.unresolvedIncidents || 0} · Expired drafts cleaned: ${metrics.expiredDraftsCleaned || 0} · Invalid stock rows: ${metrics.invalidStockRows || 0}</p>`)}
-        <p style="font-size:13px;color:#6b7280;line-height:1.6;">Open the RentAnything admin dashboard and review System readiness before accepting affected bookings.</p>
-      `, "Scheduled RentAnything production monitoring alert."),
+        <p style="font-size:13px;color:#6b7280;line-height:1.6;">Open the Rent&Roll admin dashboard and review System readiness before accepting affected bookings.</p>
+      `, "Scheduled Rent&Roll production monitoring alert."),
     });
     return !result.error;
   } catch (error) {

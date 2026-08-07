@@ -5,11 +5,11 @@ type Locale = "en" | "es";
 
 const content = {
   en: {
-    pageUrl: "https://rentanything.es/partners",
-    homeUrl: "https://rentanything.es",
+    pageUrl: "https://rentandroll.com/partners",
+    homeUrl: "https://rentandroll.com",
     home: "Home",
     breadcrumb: "Partnerships",
-    eyebrow: "Work with RentAnything.es",
+    eyebrow: "Work with Rent&Roll",
     title: "Practical partnerships for better Valencia stays",
     intro: "We work with accommodation teams, local travel services, and product companies when the collaboration gives visitors a genuinely easier stay. Start with a focused referral arrangement or a small, measurable Valencia pilot.",
     primaryCta: "Discuss a partnership",
@@ -59,11 +59,11 @@ const content = {
     formIntro: "A short, specific proposal is enough. We will reply with a practical next step—or say clearly if the fit is not there yet.",
   },
   es: {
-    pageUrl: "https://rentanything.es/es/colaboraciones",
-    homeUrl: "https://rentanything.es/es",
+    pageUrl: "https://rentandroll.com/es/colaboraciones",
+    homeUrl: "https://rentandroll.com/es",
     home: "Inicio",
     breadcrumb: "Colaboraciones",
-    eyebrow: "Colabora con RentAnything.es",
+    eyebrow: "Colabora con Rent&Roll",
     title: "Colaboraciones prácticas para mejores estancias en Valencia",
     intro: "Colaboramos con alojamientos, servicios locales de viaje y empresas de producto cuando la propuesta facilita de verdad la estancia del visitante. Empezamos con una recomendación concreta o un piloto pequeño y medible en Valencia.",
     primaryCta: "Proponer una colaboración",

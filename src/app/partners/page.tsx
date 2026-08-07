@@ -2,15 +2,15 @@ import type { Metadata } from "next";
 import PartnershipsPage from "@/components/PartnershipsPage";
 
 export const metadata: Metadata = {
-  title: "Valencia Rental Partnerships | RentAnything.es",
+  title: "Valencia Rental Partnerships | Rent&Roll",
   description:
-    "Partner with RentAnything.es on guest referrals, accommodation support, or focused product pilots that make Valencia stays easier.",
+    "Partner with Rent&Roll on guest referrals, accommodation support, or focused product pilots that make Valencia stays easier.",
   alternates: {
-    canonical: "https://rentanything.es/partners",
+    canonical: "https://rentandroll.com/partners",
     languages: {
-      en: "https://rentanything.es/partners",
-      es: "https://rentanything.es/es/colaboraciones",
-      "x-default": "https://rentanything.es/partners",
+      en: "https://rentandroll.com/partners",
+      es: "https://rentandroll.com/es/colaboraciones",
+      "x-default": "https://rentandroll.com/partners",
     },
   },
 };

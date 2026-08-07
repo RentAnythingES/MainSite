@@ -127,7 +127,7 @@ template.
 ### Proposed source of truth
 
 - **Stripe Checkout** processes card payment and returns payment evidence.
-- **RentAnything invoice ledger** issues the legal customer invoice and rectifying
+- **Rent&Roll invoice ledger** issues the legal customer invoice and rectifying
   refund document, preserves the immutable issued snapshot, and owns the
   sequential series/numbering.
 - **Stripe Invoicing** is not used for normal rental Checkout payments. If used for

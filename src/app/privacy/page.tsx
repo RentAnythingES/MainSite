@@ -2,14 +2,14 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Privacy Policy | RentAnything.es",
-  description: "How Escalera Labs S.L. collects, uses, stores and protects personal data for RentAnything.es enquiries, bookings and website analytics.",
+  title: "Privacy Policy | Rent&Roll",
+  description: "How Escalera Labs S.L. collects, uses, stores and protects personal data for Rent&Roll enquiries, bookings and website analytics.",
   alternates: {
-    canonical: "https://rentanything.es/privacy",
+    canonical: "https://rentandroll.com/privacy",
     languages: {
-      en: "https://rentanything.es/privacy",
-      es: "https://rentanything.es/es/privacy",
-      "x-default": "https://rentanything.es/privacy",
+      en: "https://rentandroll.com/privacy",
+      es: "https://rentandroll.com/es/privacy",
+      "x-default": "https://rentandroll.com/privacy",
     },
   },
 };
@@ -25,10 +25,10 @@ export default function PrivacyPage() {
           <div>
             <h2 className="text-xl font-bold mb-3">1. Data controller</h2>
             <p className="text-neutral-600">
-              RentAnything.es is operated by <strong>Escalera Labs S.L.</strong> (CIF ESB22961221), Calle Obispo Muñoz 73, 46100 Burjassot, Valencia, Spain. Escalera Labs S.L. is responsible for personal data collected through this service.
+              Rent&Roll is operated by <strong>Escalera Labs S.L.</strong> (CIF ESB22961221), Calle Obispo Muñoz 73, 46100 Burjassot, Valencia, Spain. Escalera Labs S.L. is responsible for personal data collected through this service.
             </p>
             <p className="text-neutral-600 mt-2">
-              Privacy enquiries: <a href="mailto:hello@rentanything.es" className="text-brand hover:underline">hello@rentanything.es</a>
+              Privacy enquiries: <a href="mailto:hello@rentandroll.com" className="text-brand hover:underline">hello@rentandroll.com</a>
             </p>
           </div>
 
@@ -57,7 +57,7 @@ export default function PrivacyPage() {
           <div>
             <h2 className="text-xl font-bold mb-3">4. Service providers and recipients</h2>
             <p className="text-neutral-600">
-              We do not sell personal data. We use service providers only where needed to operate RentAnything.es, including Stripe for payments, Supabase for application data and storage, Vercel for hosting, Resend for transactional email, and Google Analytics only after analytics consent. Fulfilment details may be shared with an authorised delivery provider when required to complete your booking.
+              We do not sell personal data. We use service providers only where needed to operate Rent&Roll, including Stripe for payments, Supabase for application data and storage, Vercel for hosting, Resend for transactional email, and Google Analytics only after analytics consent. Fulfilment details may be shared with an authorised delivery provider when required to complete your booking.
             </p>
           </div>
 
@@ -72,7 +72,7 @@ export default function PrivacyPage() {
             <h2 className="text-xl font-bold mb-3">6. Your rights</h2>
             <p className="text-neutral-600">Where applicable, you may request access, rectification, deletion, restriction, objection and portability of your personal data, and withdraw consent without affecting earlier lawful processing.</p>
             <p className="text-neutral-600 mt-2">
-              Send your request to <a href="mailto:hello@rentanything.es" className="text-brand hover:underline">hello@rentanything.es</a>. You may also lodge a complaint with the <a href="https://www.aepd.es/" target="_blank" rel="noopener noreferrer" className="text-brand hover:underline">Spanish Data Protection Agency (AEPD)</a>.
+              Send your request to <a href="mailto:hello@rentandroll.com" className="text-brand hover:underline">hello@rentandroll.com</a>. You may also lodge a complaint with the <a href="https://www.aepd.es/" target="_blank" rel="noopener noreferrer" className="text-brand hover:underline">Spanish Data Protection Agency (AEPD)</a>.
             </p>
           </div>
 

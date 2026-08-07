@@ -4,14 +4,14 @@ import type { Metadata } from "next";
 import { getPublishedSpanishDestinations, getSpanishDestinationsByHub } from "@/content/destinations-es";
 import { getHubCollectionJsonLd } from "@/lib/jsonld";
 
-const url = "https://rentanything.es/es/discover";
+const url = "https://rentandroll.com/es/discover";
 
 export const metadata: Metadata = {
   title: "Descubre Valencia: playas y guías locales",
   description: "Guías prácticas en español para conocer Valencia, empezando por sus playas urbanas, accesos, servicios y planificación local.",
   alternates: {
     canonical: url,
-    languages: { en: "https://rentanything.es/discover", es: url, "x-default": "https://rentanything.es/discover" },
+    languages: { en: "https://rentandroll.com/discover", es: url, "x-default": "https://rentandroll.com/discover" },
   },
 };
 

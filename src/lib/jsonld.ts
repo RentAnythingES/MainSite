@@ -1,23 +1,30 @@
 import { Product } from "@/data/products";
+import {
+  absoluteUrl,
+  BUSINESS_SCHEMA_ID,
+  SITE_IDENTITY,
+  SITE_URL,
+  WEBSITE_SCHEMA_ID,
+} from "@/config/site";
 
-export const BUSINESS_SCHEMA_ID = "https://rentanything.es/#business";
-export const WEBSITE_SCHEMA_ID = "https://rentanything.es/#website";
+export { BUSINESS_SCHEMA_ID, WEBSITE_SCHEMA_ID } from "@/config/site";
 
 export function getLocalBusinessJsonLd() {
   return {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
     "@id": BUSINESS_SCHEMA_ID,
-    name: "RentAnything.es",
-    legalName: "Escalera Labs S.L.",
-    taxID: "ESB22961221",
+    name: SITE_IDENTITY.brandName,
+    alternateName: [SITE_IDENTITY.descriptiveName, SITE_IDENTITY.formerName],
+    legalName: SITE_IDENTITY.legalName,
+    taxID: SITE_IDENTITY.taxId,
     description:
       "Short-term rental of baby gear, mobility aids, remote work equipment & more in Valencia, Spain. Delivered to your accommodation.",
-    url: "https://rentanything.es",
-    logo: "https://rentanything.es/icon.png",
-    image: "https://rentanything.es/hero/valencia-1.webp",
-    telephone: "+34684708013",
-    email: "hello@rentanything.es",
+    url: SITE_URL,
+    logo: absoluteUrl(SITE_IDENTITY.appIconPath),
+    image: absoluteUrl(SITE_IDENTITY.socialImagePath),
+    telephone: SITE_IDENTITY.telephone,
+    email: SITE_IDENTITY.contactEmail,
     address: {
       "@type": "PostalAddress",
       streetAddress: "Calle Obispo Muñoz 73",
@@ -42,9 +49,9 @@ export function getWebsiteJsonLd(locale: "en" | "es" = "en") {
     "@context": "https://schema.org",
     "@type": "WebSite",
     "@id": WEBSITE_SCHEMA_ID,
-    name: "RentAnything.es",
-    alternateName: "Rent Anything Valencia",
-    url: "https://rentanything.es",
+    name: SITE_IDENTITY.brandName,
+    alternateName: [SITE_IDENTITY.descriptiveName, SITE_IDENTITY.formerName],
+    url: SITE_URL,
     inLanguage: locale,
     publisher: { "@id": BUSINESS_SCHEMA_ID },
   };
@@ -97,7 +104,9 @@ export function getProductJsonLd(
   const availability = options.availability || "LimitedAvailability";
   const lowestPrice = product.pricing.at(-1)?.perDay;
   const highestPrice = product.pricing[0]?.perDay;
-  const productUrl = `https://rentanything.es${locale === "es" ? "/es" : ""}/product/${product.slug}`;
+  const productUrl = absoluteUrl(
+    `${locale === "es" ? "/es" : ""}/product/${product.slug}`,
+  );
 
   return {
     "@context": "https://schema.org",
@@ -197,7 +206,9 @@ export function getCategoryCollectionJsonLd({
         "@type": "ListItem",
         position: index + 1,
         name: product.name,
-        url: `https://rentanything.es${locale === "es" ? "/es" : ""}/product/${product.slug}`,
+        url: absoluteUrl(
+          `${locale === "es" ? "/es" : ""}/product/${product.slug}`,
+        ),
       })),
     },
   };

@@ -1,4 +1,4 @@
-const baseUrl = (process.env.SEO_BASE_URL || "https://www.rentanything.es").replace(/\/$/, "");
+const baseUrl = (process.env.SEO_BASE_URL || "https://rentandroll.com").replace(/\/$/, "");
 const productSlug = process.env.SEO_PRODUCT_SLUG || "beach-umbrella-set";
 const configuredNoindexProductSlug = process.env.SEO_NOINDEX_PRODUCT_SLUG || null;
 const productCategory = process.env.SEO_PRODUCT_CATEGORY || "travel-outdoors";
@@ -182,7 +182,7 @@ async function main() {
     )),
   ];
   const noindexProductSlug = configuredNoindexProductSlug || linkedProductSlugs.find((slug) =>
-    !sitemap.includes(`https://rentanything.es/product/${slug}`)
+    !sitemap.includes(`https://rentandroll.com/product/${slug}`)
   ) || null;
 
   const [home, product, productEs, noindexProduct, robots, discoverHierarchyPages, kitsPage, kitsPageEs, kitPage, kitPageEs, blogPage, blogPageEs, tutorialPage, tutorialPageEs, hostServices, hostServicesEs, partners, partnersEs, faqPage, faqPageEs, howItWorks, howItWorksEs, refundsPage, refundsPageEs, aboutPage, aboutPageEs, contactPage, contactPageEs, privacyPage, privacyPageEs, termsPage, termsPageEs, cookiesPage, cookiesPageEs] = await Promise.all([
@@ -233,10 +233,10 @@ async function main() {
     )
   );
 
-  assert(canonical(home) === "https://rentanything.es", "Homepage canonical is incorrect");
+  assert(canonical(home) === "https://rentandroll.com", "Homepage canonical is incorrect");
   for (const categoryPage of categoryPages) {
-    const englishUrl = `https://rentanything.es/rental/${categoryPage.slug}`;
-    const spanishUrl = `https://rentanything.es/es/rental/${categoryPage.slug}`;
+    const englishUrl = `https://rentandroll.com/rental/${categoryPage.slug}`;
+    const spanishUrl = `https://rentandroll.com/es/rental/${categoryPage.slug}`;
     assert(canonical(categoryPage.en) === englishUrl, `${categoryPage.slug} English canonical is incorrect`);
     assert(canonical(categoryPage.es) === spanishUrl, `${categoryPage.slug} Spanish canonical is incorrect`);
     assert(alternate(categoryPage.en, "en") === englishUrl, `${categoryPage.slug} English hreflang is incorrect`);
@@ -279,21 +279,21 @@ async function main() {
     );
   }
   assert(
-    canonical(product) === `https://rentanything.es/product/${productSlug}`,
+    canonical(product) === `https://rentandroll.com/product/${productSlug}`,
     "Product canonical is incorrect"
   );
   assert(!robotsMeta(product).includes("noindex"), "Reference product is unexpectedly noindex");
   assert(
-    canonical(productEs) === `https://rentanything.es/es/product/${productSlug}`,
+    canonical(productEs) === `https://rentandroll.com/es/product/${productSlug}`,
     "Spanish reference product canonical is incorrect"
   );
   assert(!robotsMeta(productEs).includes("noindex"), "Spanish reference product is unexpectedly noindex");
   assert(
-    alternate(productEs, "en") === `https://rentanything.es/product/${productSlug}`,
+    alternate(productEs, "en") === `https://rentandroll.com/product/${productSlug}`,
     "Spanish reference product lacks English hreflang"
   );
   assert(
-    alternate(productEs, "es") === `https://rentanything.es/es/product/${productSlug}`,
+    alternate(productEs, "es") === `https://rentandroll.com/es/product/${productSlug}`,
     "Spanish reference product lacks Spanish hreflang"
   );
   assertPathway(product, `/rental/${productCategory}`, "Reference product");
@@ -313,38 +313,38 @@ async function main() {
   assert(!robots.includes("Disallow: /_next/"), "Next.js rendering assets are blocked");
   assert(robots.includes("Disallow: /admin/"), "Admin routes are not blocked in robots.txt");
   assert(
-    sitemap.includes(`https://rentanything.es/product/${productSlug}`),
+    sitemap.includes(`https://rentandroll.com/product/${productSlug}`),
     "Reference product is missing from the sitemap"
   );
   assert(
-    sitemap.includes(`https://rentanything.es/es/product/${productSlug}`),
+    sitemap.includes(`https://rentandroll.com/es/product/${productSlug}`),
     "Spanish reference product is missing from the sitemap"
   );
   assert(!sitemap.includes("/admin/"), "Admin URL leaked into the sitemap");
   assert(!sitemap.includes("/booking/success"), "Booking success URL leaked into the sitemap");
   if (noindexProductSlug) {
     assert(
-      !sitemap.includes(`https://rentanything.es/product/${noindexProductSlug}`),
+      !sitemap.includes(`https://rentandroll.com/product/${noindexProductSlug}`),
       "Incomplete reference product leaked into the sitemap"
     );
   }
-  assert(canonical(kitsPage) === "https://rentanything.es/valencia/kits", "Kits canonical is incorrect");
-  assert(canonical(kitsPageEs) === "https://rentanything.es/es/valencia/kits", "Spanish kits canonical is incorrect");
-  assert(alternate(kitsPage, "es") === "https://rentanything.es/es/valencia/kits", "Kits hub lacks Spanish hreflang");
-  assert(alternate(kitsPageEs, "en") === "https://rentanything.es/valencia/kits", "Spanish kits hub lacks English hreflang");
-  assert(canonical(kitPage) === `https://rentanything.es/valencia/kits/${referenceKitSlug}`, "Kit canonical is incorrect");
-  assert(canonical(kitPageEs) === `https://rentanything.es/es/valencia/kits/${referenceKitSlug}`, "Spanish kit canonical is incorrect");
-  assert(alternate(kitPage, "es") === `https://rentanything.es/es/valencia/kits/${referenceKitSlug}`, "Kit lacks Spanish hreflang");
-  assert(alternate(kitPageEs, "en") === `https://rentanything.es/valencia/kits/${referenceKitSlug}`, "Spanish kit lacks English hreflang");
+  assert(canonical(kitsPage) === "https://rentandroll.com/valencia/kits", "Kits canonical is incorrect");
+  assert(canonical(kitsPageEs) === "https://rentandroll.com/es/valencia/kits", "Spanish kits canonical is incorrect");
+  assert(alternate(kitsPage, "es") === "https://rentandroll.com/es/valencia/kits", "Kits hub lacks Spanish hreflang");
+  assert(alternate(kitsPageEs, "en") === "https://rentandroll.com/valencia/kits", "Spanish kits hub lacks English hreflang");
+  assert(canonical(kitPage) === `https://rentandroll.com/valencia/kits/${referenceKitSlug}`, "Kit canonical is incorrect");
+  assert(canonical(kitPageEs) === `https://rentandroll.com/es/valencia/kits/${referenceKitSlug}`, "Spanish kit canonical is incorrect");
+  assert(alternate(kitPage, "es") === `https://rentandroll.com/es/valencia/kits/${referenceKitSlug}`, "Kit lacks Spanish hreflang");
+  assert(alternate(kitPageEs, "en") === `https://rentandroll.com/valencia/kits/${referenceKitSlug}`, "Spanish kit lacks English hreflang");
   assertPageEnhancements(kitPage, [], ["Product", "BreadcrumbList", "FAQPage"], "English reference kit");
   assertPageEnhancements(kitPageEs, ["Configura este kit"], ["Product", "BreadcrumbList", "FAQPage"], "Spanish reference kit");
   assertPathway(kitsPageEs, `/es/valencia/kits/${referenceKitSlug}`, "Spanish kits hub");
   for (const kitSlug of kitSlugs) {
-    assert(sitemap.includes(`https://rentanything.es/valencia/kits/${kitSlug}`), `${kitSlug} is missing from the English sitemap`);
-    assert(sitemap.includes(`https://rentanything.es/es/valencia/kits/${kitSlug}`), `${kitSlug} is missing from the Spanish sitemap`);
+    assert(sitemap.includes(`https://rentandroll.com/valencia/kits/${kitSlug}`), `${kitSlug} is missing from the English sitemap`);
+    assert(sitemap.includes(`https://rentandroll.com/es/valencia/kits/${kitSlug}`), `${kitSlug} is missing from the Spanish sitemap`);
   }
-  const blogUrl = `https://rentanything.es/blog/${referenceBlogSlug}`;
-  const blogUrlEs = `https://rentanything.es/es/blog/${referenceBlogSlug}`;
+  const blogUrl = `https://rentandroll.com/blog/${referenceBlogSlug}`;
+  const blogUrlEs = `https://rentandroll.com/es/blog/${referenceBlogSlug}`;
   assert(canonical(blogPage) === blogUrl, "Reference blog canonical is incorrect");
   assert(canonical(blogPageEs) === blogUrlEs, "Spanish reference blog canonical is incorrect");
   assert(alternate(blogPage, "es") === blogUrlEs, "Reference blog lacks Spanish hreflang");
@@ -363,8 +363,8 @@ async function main() {
   );
   assert(sitemap.includes(blogUrl), "Reference blog is missing from the sitemap");
   assert(sitemap.includes(blogUrlEs), "Spanish reference blog is missing from the sitemap");
-  const tutorialUrl = `https://rentanything.es/blog/${referenceTutorialSlug}`;
-  const tutorialUrlEs = `https://rentanything.es/es/blog/${referenceTutorialSlug}`;
+  const tutorialUrl = `https://rentandroll.com/blog/${referenceTutorialSlug}`;
+  const tutorialUrlEs = `https://rentandroll.com/es/blog/${referenceTutorialSlug}`;
   assert(canonical(tutorialPage) === tutorialUrl, "Reference tutorial canonical is incorrect");
   assert(canonical(tutorialPageEs) === tutorialUrlEs, "Spanish reference tutorial canonical is incorrect");
   assert(alternate(tutorialPage, "es") === tutorialUrlEs, "Reference tutorial lacks Spanish hreflang");
@@ -374,19 +374,19 @@ async function main() {
   assert(sitemap.includes(tutorialUrl), "Reference tutorial is missing from the sitemap");
   assert(sitemap.includes(tutorialUrlEs), "Spanish reference tutorial is missing from the sitemap");
   assert(
-    canonical(hostServices) === "https://rentanything.es/valencia/host-services",
+    canonical(hostServices) === "https://rentandroll.com/valencia/host-services",
     "Host services canonical is incorrect"
   );
   assert(
-    canonical(hostServicesEs) === "https://rentanything.es/es/valencia/servicios-anfitriones",
+    canonical(hostServicesEs) === "https://rentandroll.com/es/valencia/servicios-anfitriones",
     "Spanish host services canonical is incorrect"
   );
   assert(
-    alternate(hostServices, "es") === "https://rentanything.es/es/valencia/servicios-anfitriones",
+    alternate(hostServices, "es") === "https://rentandroll.com/es/valencia/servicios-anfitriones",
     "Host services lacks Spanish hreflang"
   );
   assert(
-    alternate(hostServicesEs, "en") === "https://rentanything.es/valencia/host-services",
+    alternate(hostServicesEs, "en") === "https://rentandroll.com/valencia/host-services",
     "Spanish host services lacks English hreflang"
   );
   assertPageEnhancements(
@@ -412,24 +412,24 @@ async function main() {
     "Spanish host services locale switch"
   );
   assert(
-    sitemap.includes("https://rentanything.es/valencia/host-services"),
+    sitemap.includes("https://rentandroll.com/valencia/host-services"),
     "Host services is missing from the sitemap"
   );
   assert(
-    sitemap.includes("https://rentanything.es/es/valencia/servicios-anfitriones"),
+    sitemap.includes("https://rentandroll.com/es/valencia/servicios-anfitriones"),
     "Spanish host services is missing from the sitemap"
   );
-  assert(canonical(partners) === "https://rentanything.es/partners", "Partnerships canonical is incorrect");
+  assert(canonical(partners) === "https://rentandroll.com/partners", "Partnerships canonical is incorrect");
   assert(
-    canonical(partnersEs) === "https://rentanything.es/es/colaboraciones",
+    canonical(partnersEs) === "https://rentandroll.com/es/colaboraciones",
     "Spanish partnerships canonical is incorrect"
   );
   assert(
-    alternate(partners, "es") === "https://rentanything.es/es/colaboraciones",
+    alternate(partners, "es") === "https://rentandroll.com/es/colaboraciones",
     "Partnerships lacks Spanish hreflang"
   );
   assert(
-    alternate(partnersEs, "en") === "https://rentanything.es/partners",
+    alternate(partnersEs, "en") === "https://rentandroll.com/partners",
     "Spanish partnerships lacks English hreflang"
   );
   assertPathway(partners, "/valencia/host-services", "Partnerships host-services pathway");
@@ -450,15 +450,15 @@ async function main() {
     ["BreadcrumbList"],
     "Spanish partnerships page"
   );
-  assert(sitemap.includes("https://rentanything.es/partners"), "Partnerships is missing from the sitemap");
+  assert(sitemap.includes("https://rentandroll.com/partners"), "Partnerships is missing from the sitemap");
   assert(
-    sitemap.includes("https://rentanything.es/es/colaboraciones"),
+    sitemap.includes("https://rentandroll.com/es/colaboraciones"),
     "Spanish partnerships is missing from the sitemap"
   );
-  assert(canonical(faqPage) === "https://rentanything.es/faq", "FAQ canonical is incorrect");
-  assert(canonical(faqPageEs) === "https://rentanything.es/es/faq", "Spanish FAQ canonical is incorrect");
-  assert(alternate(faqPage, "es") === "https://rentanything.es/es/faq", "FAQ lacks Spanish hreflang");
-  assert(alternate(faqPageEs, "en") === "https://rentanything.es/faq", "Spanish FAQ lacks English hreflang");
+  assert(canonical(faqPage) === "https://rentandroll.com/faq", "FAQ canonical is incorrect");
+  assert(canonical(faqPageEs) === "https://rentandroll.com/es/faq", "Spanish FAQ canonical is incorrect");
+  assert(alternate(faqPage, "es") === "https://rentandroll.com/es/faq", "FAQ lacks Spanish hreflang");
+  assert(alternate(faqPageEs, "en") === "https://rentandroll.com/faq", "Spanish FAQ lacks English hreflang");
   assertPageEnhancements(
     faqPage,
     ["Our current online checkout does not automatically add a security deposit."],
@@ -471,10 +471,10 @@ async function main() {
     ["FAQPage"],
     "Spanish FAQ page"
   );
-  assert(canonical(howItWorks) === "https://rentanything.es/how-it-works", "How It Works canonical is incorrect");
-  assert(canonical(howItWorksEs) === "https://rentanything.es/es/how-it-works", "Spanish How It Works canonical is incorrect");
-  assert(alternate(howItWorks, "es") === "https://rentanything.es/es/how-it-works", "How It Works lacks Spanish hreflang");
-  assert(alternate(howItWorksEs, "en") === "https://rentanything.es/how-it-works", "Spanish How It Works lacks English hreflang");
+  assert(canonical(howItWorks) === "https://rentandroll.com/how-it-works", "How It Works canonical is incorrect");
+  assert(canonical(howItWorksEs) === "https://rentandroll.com/es/how-it-works", "Spanish How It Works canonical is incorrect");
+  assert(alternate(howItWorks, "es") === "https://rentandroll.com/es/how-it-works", "How It Works lacks Spanish hreflang");
+  assert(alternate(howItWorksEs, "en") === "https://rentandroll.com/how-it-works", "Spanish How It Works lacks English hreflang");
   assertPageEnhancements(
     howItWorks,
     ["Extensions depend on the item&#x27;s next booking", "Choose pickup, delivery, or collection", "You pay only the added transport fee through Stripe"],
@@ -487,14 +487,14 @@ async function main() {
     ["HowTo", "FAQPage"],
     "Spanish How It Works page"
   );
-  assert(canonical(refundsPage) === "https://rentanything.es/refunds", "Refunds canonical is incorrect");
-  assert(canonical(refundsPageEs) === "https://rentanything.es/es/refunds", "Spanish refunds canonical is incorrect");
-  assert(alternate(refundsPage, "es") === "https://rentanything.es/es/refunds", "Refunds lacks Spanish hreflang");
-  assert(alternate(refundsPageEs, "en") === "https://rentanything.es/refunds", "Spanish refunds lacks English hreflang");
-  assert(canonical(aboutPage) === "https://rentanything.es/about", "About canonical is incorrect");
-  assert(canonical(aboutPageEs) === "https://rentanything.es/es/about", "Spanish About canonical is incorrect");
-  assert(alternate(aboutPage, "es") === "https://rentanything.es/es/about", "About lacks Spanish hreflang");
-  assert(alternate(aboutPageEs, "en") === "https://rentanything.es/about", "Spanish About lacks English hreflang");
+  assert(canonical(refundsPage) === "https://rentandroll.com/refunds", "Refunds canonical is incorrect");
+  assert(canonical(refundsPageEs) === "https://rentandroll.com/es/refunds", "Spanish refunds canonical is incorrect");
+  assert(alternate(refundsPage, "es") === "https://rentandroll.com/es/refunds", "Refunds lacks Spanish hreflang");
+  assert(alternate(refundsPageEs, "en") === "https://rentandroll.com/refunds", "Spanish refunds lacks English hreflang");
+  assert(canonical(aboutPage) === "https://rentandroll.com/about", "About canonical is incorrect");
+  assert(canonical(aboutPageEs) === "https://rentandroll.com/es/about", "Spanish About canonical is incorrect");
+  assert(alternate(aboutPage, "es") === "https://rentandroll.com/es/about", "About lacks Spanish hreflang");
+  assert(alternate(aboutPageEs, "en") === "https://rentandroll.com/about", "Spanish About lacks English hreflang");
   assertPageEnhancements(
     aboutPage,
     ["Travel light.", "Feel at home.", "Cleaned and checked"],
@@ -503,14 +503,14 @@ async function main() {
   );
   assertPageEnhancements(
     aboutPageEs,
-    ["Viaja ligero.", "RentAnything.es ayuda", "Nuestra primera zona de servicio"],
+    ["Viaja ligero.", "Rent&Roll ayuda", "Nuestra primera zona de servicio"],
     ["AboutPage", "Organization"],
     "Spanish About page"
   );
-  assert(canonical(contactPage) === "https://rentanything.es/contact", "Contact canonical is incorrect");
-  assert(canonical(contactPageEs) === "https://rentanything.es/es/contact", "Spanish Contact canonical is incorrect");
-  assert(alternate(contactPage, "es") === "https://rentanything.es/es/contact", "Contact lacks Spanish hreflang");
-  assert(alternate(contactPageEs, "en") === "https://rentanything.es/contact", "Spanish Contact lacks English hreflang");
+  assert(canonical(contactPage) === "https://rentandroll.com/contact", "Contact canonical is incorrect");
+  assert(canonical(contactPageEs) === "https://rentandroll.com/es/contact", "Spanish Contact canonical is incorrect");
+  assert(alternate(contactPage, "es") === "https://rentandroll.com/es/contact", "Contact lacks Spanish hreflang");
+  assert(alternate(contactPageEs, "en") === "https://rentandroll.com/contact", "Spanish Contact lacks English hreflang");
   assertPageEnhancements(contactPage, ["Available pickup options appear during booking"], ["ContactPage"], "Contact page");
   assertPageEnhancements(contactPageEs, ["Las opciones de recogida disponibles aparecen al reservar"], ["ContactPage"], "Spanish Contact page");
   const legalPairs = [
@@ -519,8 +519,8 @@ async function main() {
     { name: "Cookies", en: cookiesPage, es: cookiesPageEs, enPath: "/cookies", esPath: "/es/cookies" },
   ];
   for (const legalPair of legalPairs) {
-    const englishUrl = `https://rentanything.es${legalPair.enPath}`;
-    const spanishUrl = `https://rentanything.es${legalPair.esPath}`;
+    const englishUrl = `https://rentandroll.com${legalPair.enPath}`;
+    const spanishUrl = `https://rentandroll.com${legalPair.esPath}`;
     assert(canonical(legalPair.en) === englishUrl, `${legalPair.name} canonical is incorrect`);
     assert(canonical(legalPair.es) === spanishUrl, `Spanish ${legalPair.name} canonical is incorrect`);
     assert(alternate(legalPair.en, "es") === spanishUrl, `${legalPair.name} lacks Spanish hreflang`);
@@ -533,7 +533,7 @@ async function main() {
   assertPageEnhancements(cookiesPage, ["rentanything_analytics_consent", "does not load unless you select"], [], "Cookies page");
   assertPageEnhancements(cookiesPageEs, ["rentanything_analytics_consent", "no se carga salvo que selecciones"], [], "Spanish Cookies page");
   for (const path of ["/es/faq", "/es/how-it-works", "/es/refunds", "/es/about", "/es/contact", "/es/privacy", "/es/terms", "/es/cookies"]) {
-    assert(sitemap.includes(`https://rentanything.es${path}`), `${path} is missing from the sitemap`);
+    assert(sitemap.includes(`https://rentandroll.com${path}`), `${path} is missing from the sitemap`);
   }
 
   console.log(JSON.stringify({

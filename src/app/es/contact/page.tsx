@@ -2,15 +2,15 @@ import type { Metadata } from "next";
 import ContactForm from "@/components/ContactForm";
 
 export const metadata: Metadata = {
-  title: "Contactar con RentAnything.es en Valencia",
+  title: "Contactar con Rent&Roll en Valencia",
   description:
-    "Contacta con RentAnything.es sobre alquileres en Valencia, reservas, solicitudes especiales o colaboraciones por WhatsApp, correo o formulario.",
+    "Contacta con Rent&Roll sobre alquileres en Valencia, reservas, solicitudes especiales o colaboraciones por WhatsApp, correo o formulario.",
   alternates: {
-    canonical: "https://rentanything.es/es/contact",
+    canonical: "https://rentandroll.com/es/contact",
     languages: {
-      en: "https://rentanything.es/contact",
-      es: "https://rentanything.es/es/contact",
-      "x-default": "https://rentanything.es/contact",
+      en: "https://rentandroll.com/contact",
+      es: "https://rentandroll.com/es/contact",
+      "x-default": "https://rentandroll.com/contact",
     },
   },
 };
@@ -18,11 +18,11 @@ export const metadata: Metadata = {
 const structuredData = {
   "@context": "https://schema.org",
   "@type": "ContactPage",
-  "@id": "https://rentanything.es/es/contact#page",
-  url: "https://rentanything.es/es/contact",
-  name: "Contactar con RentAnything.es",
+  "@id": "https://rentandroll.com/es/contact#page",
+  url: "https://rentandroll.com/es/contact",
+  name: "Contactar con Rent&Roll",
   inLanguage: "es",
-  about: { "@id": "https://rentanything.es/#organization" },
+  about: { "@id": "https://rentandroll.com/#organization" },
 };
 
 export default function SpanishContactPage() {
@@ -32,7 +32,7 @@ export default function SpanishContactPage() {
       <section className="bg-gradient-to-br from-neutral-50 to-teal-50/20 py-16 md:py-24">
         <div className="container-site">
           <div className="max-w-3xl mx-auto text-center">
-            <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-4">Contacta con RentAnything.es</h1>
+            <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-4">Contacta con Rent&Roll</h1>
             <p className="text-lg text-neutral-600">
               Pregúntanos sobre un artículo, una reserva, una solicitud especial o una colaboración local en Valencia.
             </p>
@@ -56,11 +56,11 @@ export default function SpanishContactPage() {
               <span className="text-sm font-semibold text-[#25D366]">Abrir WhatsApp →</span>
             </a>
 
-            <a href="mailto:hello@rentanything.es" className="card p-8 text-center hover:border-brand/30 group" id="contact-email">
+            <a href="mailto:hello@rentandroll.com" className="card p-8 text-center hover:border-brand/30 group" id="contact-email">
               <span className="text-4xl block mb-4">📧</span>
               <h2 className="font-bold text-lg mb-2 group-hover:text-brand transition-colors">Correo electrónico</h2>
               <p className="text-sm text-neutral-500 mb-3">Para solicitudes detalladas y colaboraciones</p>
-              <span className="text-sm font-semibold text-brand">hello@rentanything.es</span>
+              <span className="text-sm font-semibold text-brand">hello@rentandroll.com</span>
             </a>
 
             <div className="card p-8 text-center" id="contact-location">

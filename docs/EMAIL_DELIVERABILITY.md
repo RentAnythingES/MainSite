@@ -1,5 +1,5 @@
 # Email Deliverability
-> Last updated: 2026-07-08
+> Last updated: 2026-08-07
 
 ## Current Sending Setup
 
@@ -8,8 +8,8 @@ Transactional email is sent through Resend.
 Environment variables:
 
 - `RESEND_API_KEY`
-- `FROM_EMAIL` — defaults to `RentAnything <noreply@rentanything.es>`
-- `CONTACT_EMAIL` — defaults to `hello@rentanything.es`
+- `FROM_EMAIL` — defaults to `Rent&Roll <bookings@rentandroll.com>`
+- `CONTACT_EMAIL` — defaults to `hello@rentandroll.com`
 
 Code paths:
 
@@ -23,29 +23,33 @@ full rental datetime window, fulfillment-specific wording, customer-facing
 pickup/delivery instructions, and any customer-safe invoice/refund links created
 for the booking.
 
-## DNS Observed From Local Lookup
+## Current Domain Setup
 
-Observed on 2026-07-08:
+Confirmed during the Rent&Roll migration on 2026-08-07:
 
-- MX records point to Google Workspace (`aspmx.l.google.com`, `alt*.aspmx.l.google.com`).
-- Root TXT contains Google site verification.
-- `resend._domainkey.rentanything.es` has a DKIM public key.
-- `_dmarc.rentanything.es` did not resolve.
+- Resend shows the root sending domain `rentandroll.com` as verified.
+- Transactional mail uses `Rent&Roll <bookings@rentandroll.com>`; no sending
+  subdomain is required for the current startup setup.
+- Cloudflare Email Routing is enabled for `rentandroll.com`.
+- A catch-all forwards incoming `@rentandroll.com` mail to the existing
+  `hello@rentanything.es` inbox.
+- Receiving and transactional sending are separate: Cloudflare handles inbound
+  forwarding, while Resend handles application-generated outbound mail.
 
 ## Before Reopening Payments
 
-- Confirm Resend dashboard shows `rentanything.es` as verified.
-- Add/confirm SPF record that includes Resend if Resend requires it for the configured sending domain.
-- Add a DMARC record, starting conservative if needed:
-  - `_dmarc.rentanything.es`
-  - `v=DMARC1; p=none; rua=mailto:hello@rentanything.es`
+- Confirm the deployed production environment uses the verified
+  `bookings@rentandroll.com` sender.
 - Trigger `POST /api/admin/health` from an authenticated admin session and confirm the test email arrives.
 - Confirm booking confirmation and admin notification emails arrive during the controlled test booking.
+
+DMARC monitoring and policy hardening are recommended follow-up deliverability
+work, but they do not block the domain cutover or the controlled booking test.
 
 
 ## Transactional Email Templates
 
-All main transactional emails are centralized in `src/lib/email.ts` and use the same branded wrapper: teal RentAnything header, neutral body card, clear CTA, WhatsApp fallback, and `Travel light. Feel at home.` footer.
+All main transactional emails are centralized in `src/lib/email.ts` and use the same branded wrapper: teal Rent&Roll header, neutral body card, clear CTA, WhatsApp fallback, and the shared brand footer.
 
 | Email | Helper | Trigger / Status | Current wiring |
 |-------|--------|------------------|----------------|

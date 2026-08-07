@@ -4,7 +4,7 @@ import type { Metadata } from "next";
 import { getDestinationsByHub } from "@/content/destinations";
 import { getBreadcrumbJsonLd, getFaqJsonLd, getHubCollectionJsonLd } from "@/lib/jsonld";
 
-const hubUrl = "https://rentanything.es/discover/beaches";
+const hubUrl = "https://rentandroll.com/discover/beaches";
 const hubName = "Valencia Beaches Guide";
 const hubDescription =
   "Compare Valencia beaches for families, swimming, accessibility and quieter days, with practical transport advice and local beach guides.";
@@ -66,7 +66,7 @@ export const metadata: Metadata = {
     canonical: hubUrl,
     languages: {
       en: hubUrl,
-      es: "https://rentanything.es/es/discover/beaches",
+      es: "https://rentandroll.com/es/discover/beaches",
       "x-default": hubUrl,
     },
   },
@@ -94,7 +94,7 @@ export default function BeachesHub() {
               locale: "en",
               items: destinations.map((destination) => ({
                 name: destination.name,
-                url: `https://rentanything.es/discover/${destination.slug}`,
+                url: `https://rentandroll.com/discover/${destination.slug}`,
               })),
             }),
           ),
@@ -105,8 +105,8 @@ export default function BeachesHub() {
         dangerouslySetInnerHTML={{
           __html: JSON.stringify(
             getBreadcrumbJsonLd([
-              { name: "Home", url: "https://rentanything.es" },
-              { name: "Discover Valencia", url: "https://rentanything.es/discover" },
+              { name: "Home", url: "https://rentandroll.com" },
+              { name: "Discover Valencia", url: "https://rentandroll.com/discover" },
               { name: hubName, url: hubUrl },
             ]),
           ),

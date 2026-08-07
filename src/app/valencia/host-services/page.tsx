@@ -6,11 +6,11 @@ export const metadata: Metadata = {
   description:
     "Equipment support for Valencia hosts and property managers. Help guests arrange baby, mobility, comfort, work, and beach rentals for their stay.",
   alternates: {
-    canonical: "https://rentanything.es/valencia/host-services",
+    canonical: "https://rentandroll.com/valencia/host-services",
     languages: {
-      en: "https://rentanything.es/valencia/host-services",
-      es: "https://rentanything.es/es/valencia/servicios-anfitriones",
-      "x-default": "https://rentanything.es/valencia/host-services",
+      en: "https://rentandroll.com/valencia/host-services",
+      es: "https://rentandroll.com/es/valencia/servicios-anfitriones",
+      "x-default": "https://rentandroll.com/valencia/host-services",
     },
   },
 };

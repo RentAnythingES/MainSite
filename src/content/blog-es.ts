@@ -102,7 +102,7 @@ export const spanishBlogPosts: BlogPost[] = [
       {
         question: "¿Se puede alquilar equipamiento de playa en Valencia?",
         answer:
-          "Sí. Algunas concesiones ofrecen hamacas y sombrillas, y RentAnything.es permite comprobar la disponibilidad de sombra y equipamiento familiar para fechas concretas con opciones de recogida o entrega.",
+          "Sí. Algunas concesiones ofrecen hamacas y sombrillas, y Rent&Roll permite comprobar la disponibilidad de sombra y equipamiento familiar para fechas concretas con opciones de recogida o entrega.",
       },
     ],
     crossLinks: [

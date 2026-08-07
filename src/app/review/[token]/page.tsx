@@ -3,7 +3,7 @@ import ReviewForm from "@/components/ReviewForm";
 
 export const metadata: Metadata = {
   title: "Share Rental Feedback",
-  description: "Private post-rental feedback form for a completed RentAnything.es booking.",
+  description: "Private post-rental feedback form for a completed Rent&Roll booking.",
   robots: { index: false, follow: false, nocache: true },
 };
 

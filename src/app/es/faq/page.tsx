@@ -4,13 +4,13 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Preguntas Frecuentes sobre Alquileres en Valencia",
   description:
-    "Respuestas sobre reservas, pagos, recogida, entrega, higiene y cambios al alquilar equipamiento con RentAnything.es en Valencia.",
+    "Respuestas sobre reservas, pagos, recogida, entrega, higiene y cambios al alquilar equipamiento con Rent&Roll en Valencia.",
   alternates: {
-    canonical: "https://rentanything.es/es/faq",
+    canonical: "https://rentandroll.com/es/faq",
     languages: {
-      en: "https://rentanything.es/faq",
-      es: "https://rentanything.es/es/faq",
-      "x-default": "https://rentanything.es/faq",
+      en: "https://rentandroll.com/faq",
+      es: "https://rentandroll.com/es/faq",
+      "x-default": "https://rentandroll.com/faq",
     },
   },
 };
@@ -95,8 +95,8 @@ const faqSections = [
     title: "Sobre el servicio",
     items: [
       {
-        q: "¿Quién gestiona RentAnything.es?",
-        a: "RentAnything.es está operado por Escalera Labs S.L., una empresa registrada en España y con base en Valencia.",
+        q: "¿Quién gestiona Rent&Roll?",
+        a: "Rent&Roll está operado por Escalera Labs S.L., una empresa registrada en España y con base en Valencia.",
       },
       {
         q: "¿Trabajáis en otras ciudades?",

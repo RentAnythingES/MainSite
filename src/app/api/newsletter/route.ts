@@ -4,7 +4,7 @@ import { createAdminClient } from "@/lib/supabase-admin";
 
 const CONSENT_VERSION = "2026-07-08";
 const CONSENT_TEXT =
-  "I agree to receive RentAnything.es emails with Valencia stay tips, product updates, kit launches, and occasional offers. I can unsubscribe at any time.";
+  "I agree to receive Rent&Roll emails with Valencia stay tips, product updates, kit launches, and occasional offers. I can unsubscribe at any time.";
 
 function isValidEmail(email: string): boolean {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -66,7 +66,7 @@ export async function POST(request: NextRequest) {
       name: name || undefined,
       email,
       interest: interest || undefined,
-      unsubscribeUrl: `${(process.env.NEXT_PUBLIC_SITE_URL || "https://www.rentanything.es").replace(/\/$/, "")}/newsletter/unsubscribe?token=${subscriber.unsubscribe_token}`,
+      unsubscribeUrl: `${(process.env.NEXT_PUBLIC_SITE_URL || "https://rentandroll.com").replace(/\/$/, "")}/newsletter/unsubscribe?token=${subscriber.unsubscribe_token}`,
     }).catch((err) => console.error("[newsletter] Welcome email error:", err));
 
     return NextResponse.json({ success: true });

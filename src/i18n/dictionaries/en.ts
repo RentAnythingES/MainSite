@@ -2,7 +2,7 @@ import type { Dictionary } from "@/i18n/types";
 
 const en: Dictionary = {
   locale: "en",
-  siteName: "RentAnything.es",
+  siteName: "Rent&Roll",
 
   nav: {
     browse: "Browse",

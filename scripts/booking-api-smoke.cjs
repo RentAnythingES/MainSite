@@ -1,9 +1,9 @@
-const baseUrl = (process.env.SMOKE_BASE_URL || "https://www.rentanything.es").replace(/\/$/, "");
+const baseUrl = (process.env.SMOKE_BASE_URL || "https://rentandroll.com").replace(/\/$/, "");
 const configuredProductSlug = process.env.SMOKE_PRODUCT_SLUG?.trim() || null;
 const quantity = Number(process.env.SMOKE_QUANTITY || "1");
 
 async function readJson(url) {
-  const response = await fetch(url, { headers: { "user-agent": "RentAnything launch smoke test" }, signal: AbortSignal.timeout(15000) });
+  const response = await fetch(url, { headers: { "user-agent": "Rent&Roll launch smoke test" }, signal: AbortSignal.timeout(15000) });
   const body = await response.json().catch(() => null);
   if (!response.ok) throw new Error(`${url} returned ${response.status}: ${JSON.stringify(body)}`);
   return body;
@@ -13,7 +13,7 @@ async function resolveProductSlug() {
   if (configuredProductSlug) return configuredProductSlug;
 
   const response = await fetch(`${baseUrl}/sitemap.xml`, {
-    headers: { "user-agent": "RentAnything launch smoke test" },
+    headers: { "user-agent": "Rent&Roll launch smoke test" },
     signal: AbortSignal.timeout(15000),
   });
   if (!response.ok) {

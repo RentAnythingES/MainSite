@@ -100,7 +100,7 @@ export function buildBookingDocumentPdf(document: BookingDocument, booking: Book
 
   let content = "";
   content += pdfRect(0, PAGE_HEIGHT - 92, PAGE_WIDTH, 92, 0.055, 0.486, 0.451);
-  content += pdfText("RentAnything.es", 48, 738, 22, "F2");
+  content += pdfText("Rent&Roll", 48, 738, 22, "F2");
   content += pdfText("Travel light. Feel at home.", 48, 718, 10, "F1");
   content += pdfText(documentTitle, 420, 738, 22, "F2");
   content += pdfText(document.document_number || "Number pending", 420, 718, 10, "F1");
@@ -114,7 +114,7 @@ export function buildBookingDocumentPdf(document: BookingDocument, booking: Book
   }
 
   content += pdfText("From", 330, 660, 13, "F2");
-  content += pdfText(companySnapshot.brand || "RentAnything.es", 330, 638, 10, "F2");
+  content += pdfText(companySnapshot.brand || "Rent&Roll", 330, 638, 10, "F2");
   content += pdfText(companySnapshot.name || "Escalera Labs S.L.", 330, 622, 9, "F1");
   content += pdfText(companySnapshot.domestic_tax_id || "Tax ID pending", 330, 606, 9, "F1");
   content += pdfText(`${companySnapshot.address_line_1 || "Valencia"}, ${companySnapshot.postal_code || ""} ${companySnapshot.city || "Spain"}`, 330, 590, 8, "F1");
@@ -173,8 +173,8 @@ export function buildBookingDocumentPdf(document: BookingDocument, booking: Book
   content += drawKeyValue("Refund ID", paymentSnapshot.stripe_refund_id || "Not applicable", 48, 110, 500);
 
   content += pdfLine(48, 72, 564, 72, 0.85);
-  content += pdfText(companySnapshot.footer || "Issued from RentAnything.es booking and payment records.", 48, 52, 8, "F1");
-  content += pdfText("Questions? Contact RentAnything.es support.", 48, 38, 8, "F1");
+  content += pdfText(companySnapshot.footer || "Issued from Rent&Roll booking and payment records.", 48, 52, 8, "F1");
+  content += pdfText("Questions? Contact Rent&Roll support.", 48, 38, 8, "F1");
 
   const objects = [
     "<< /Type /Catalog /Pages 2 0 R >>",

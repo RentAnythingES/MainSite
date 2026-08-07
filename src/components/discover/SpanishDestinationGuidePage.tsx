@@ -24,7 +24,7 @@ const commercialContent: Record<string, { heading: string; description: string; 
 };
 
 export default function SpanishDestinationGuidePage({ guide }: { guide: SpanishDiscoverGuide }) {
-  const url = `https://rentanything.es/es/discover/${guide.slug}`;
+  const url = `https://rentandroll.com/es/discover/${guide.slug}`;
   const sources = getSpanishDestinationSources(guide.slug);
   const englishGuide = getDestinationBySlug(guide.slug);
   const imageProvenance = englishGuide?.heroImageProvenance;
@@ -44,7 +44,7 @@ export default function SpanishDestinationGuidePage({ guide }: { guide: SpanishD
         datePublished: englishGuide.date,
         dateModified: guide.lastUpdated,
         inLanguage: "es",
-        image: `https://rentanything.es${guide.heroImage}`,
+        image: `https://rentandroll.com${guide.heroImage}`,
         mainEntityOfPage: { "@type": "WebPage", "@id": url },
         isPartOf: { "@id": WEBSITE_SCHEMA_ID },
         author: { "@id": BUSINESS_SCHEMA_ID },
@@ -57,7 +57,7 @@ export default function SpanishDestinationGuidePage({ guide }: { guide: SpanishD
         description: guide.description,
         url,
         inLanguage: "es",
-        image: `https://rentanything.es${guide.heroImage}`,
+        image: `https://rentandroll.com${guide.heroImage}`,
         mainEntityOfPage: { "@type": "WebPage", "@id": url },
         isPartOf: { "@id": WEBSITE_SCHEMA_ID },
         provider: { "@id": BUSINESS_SCHEMA_ID },
@@ -71,9 +71,9 @@ export default function SpanishDestinationGuidePage({ guide }: { guide: SpanishD
         dangerouslySetInnerHTML={{
           __html: JSON.stringify(
             getBreadcrumbJsonLd([
-              { name: "Inicio", url: "https://rentanything.es/es" },
-              { name: "Descubre Valencia", url: "https://rentanything.es/es/discover" },
-              { name: hub.label, url: `https://rentanything.es/es/discover/${primaryHub}` },
+              { name: "Inicio", url: "https://rentandroll.com/es" },
+              { name: "Descubre Valencia", url: "https://rentandroll.com/es/discover" },
+              { name: hub.label, url: `https://rentandroll.com/es/discover/${primaryHub}` },
               { name: guide.name, url },
             ]),
           ),

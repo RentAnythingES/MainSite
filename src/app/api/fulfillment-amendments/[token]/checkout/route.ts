@@ -69,7 +69,7 @@ export async function POST(
   const totalCents = getFulfillmentAmendmentTotal(amendment);
   const configuredSiteUrl = process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "");
   const requestOrigin = new URL(request.url).origin;
-  const baseUrl = configuredSiteUrl || (process.env.NODE_ENV === "production" ? "https://rentanything.es" : requestOrigin);
+  const baseUrl = configuredSiteUrl || (process.env.NODE_ENV === "production" ? "https://rentandroll.com" : requestOrigin);
   const productName = booking.product?.name || "Rental equipment";
   const serviceLabel = amendment.fulfillment_mode === "delivery_and_collection"
     ? "Delivery and collection service"
