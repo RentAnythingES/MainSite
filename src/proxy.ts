@@ -1,15 +1,9 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import {
-  EXPECTED_PRODUCTION_SITE_URL,
-  LEGACY_SITE_URL,
-} from "@/config/site";
+import { EXPECTED_PRODUCTION_SITE_URL } from "@/config/site";
 
 const canonicalHost = new URL(EXPECTED_PRODUCTION_SITE_URL).hostname;
-const legacyHost = new URL(LEGACY_SITE_URL).hostname;
 const redirectHosts = new Set([
-  legacyHost,
-  `www.${legacyHost}`,
   `www.${canonicalHost}`,
 ]);
 
