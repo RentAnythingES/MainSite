@@ -9,6 +9,8 @@ import CookieConsent from "@/components/CookieConsent";
 import WebVitalsReporter from "@/components/WebVitalsReporter";
 import { SITE_IDENTITY, SITE_URL } from "@/config/site";
 
+const isProductionDeployment = process.env.VERCEL_ENV === "production";
+
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
@@ -67,17 +69,23 @@ export const metadata: Metadata = {
     ],
     apple: [{ url: "/apple-icon.png", sizes: "180x180" }],
   },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      "max-video-preview": -1,
-      "max-image-preview": "large",
-      "max-snippet": -1,
-    },
-  },
+  robots: isProductionDeployment
+    ? {
+        index: true,
+        follow: true,
+        googleBot: {
+          index: true,
+          follow: true,
+          "max-video-preview": -1,
+          "max-image-preview": "large",
+          "max-snippet": -1,
+        },
+      }
+    : {
+        index: false,
+        follow: false,
+        nocache: true,
+      },
 };
 
 export default function RootLayout({
