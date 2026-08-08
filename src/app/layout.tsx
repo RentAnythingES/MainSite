@@ -69,6 +69,11 @@ export const metadata: Metadata = {
     ],
     apple: [{ url: "/apple-icon.png", sizes: "180x180" }],
   },
+  verification: {
+    other: {
+      "msvalidate.01": "BF9662771CE177F766EEC1DED91F77A3",
+    },
+  },
   robots: isProductionDeployment
     ? {
         index: true,
