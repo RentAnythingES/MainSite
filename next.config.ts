@@ -1,8 +1,27 @@
 import type { NextConfig } from "next";
 
+const productSlugReplacements = [
+  ["Camping%20Kitchen", "outsunny-folding-camping-kitchen-a20-381v00gy"],
+  ["electric-cooler-47L", "electric-cooler-47l"],
+  ["Lifejacket-25-40kg", "lifejacket-25-40kg"],
+  ["baby-bottle-steriliser-UV", "baby-bottle-steriliser-uv"],
+] as const;
+
 const nextConfig: NextConfig = {
   async redirects() {
     return [
+      ...productSlugReplacements.flatMap(([sourceSlug, destinationSlug]) => [
+        {
+          source: `/product/${sourceSlug}`,
+          destination: `/product/${destinationSlug}`,
+          permanent: true,
+        },
+        {
+          source: `/es/product/${sourceSlug}`,
+          destination: `/es/product/${destinationSlug}`,
+          permanent: true,
+        },
+      ]),
       {
         source: "/product/compact-stroller",
         destination: "/product/stroller-travel-compact",

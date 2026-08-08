@@ -171,7 +171,7 @@ export const spanishBlogPosts: BlogPost[] = [
           "Cierra persianas y cortinas antes de que el sol caliente las habitaciones. En muchos pisos valencianos, mantener las persianas bajadas entre el final de la mañana y la tarde marca más diferencia que dejar un ventilador funcionando todo el día.",
           "Ventila cuando la temperatura exterior baje, normalmente por la noche y a primera hora. Si puedes crear corriente entre dos fachadas o ventanas opuestas, el aire acumulado sale con más rapidez.",
           "Confirma con el alojamiento qué sistema de climatización existe y en qué habitaciones. Una unidad pequeña en el salón no garantiza una temperatura cómoda en el dormitorio.",
-          "Elige un <a href=\"/es/product/bladeless-fan-ventilator\">ventilador portátil</a> si buscas movimiento de aire y la vivienda ya se enfría durante la noche. Mejora la sensación de confort, pero no reduce la temperatura del aire de la habitación.",
+          "Elige un ventilador portátil si buscas movimiento de aire y la vivienda ya se enfría durante la noche. Mejora la sensación de confort, pero no reduce la temperatura del aire de la habitación.",
           "Elige un <a href=\"/es/product/mobile-airconditioner-delonghi-pinguino-compact-classic\">aire acondicionado portátil</a> si necesitas enfriar activamente una estancia cerrada. Confirma el tamaño de la habitación y el tipo de ventana: el tubo de aire caliente necesita una salida adecuada, como explica la <a href=\"https://www.delonghi.com/es-es/faqs/%C2%BFLas-unidades-de-aire-acondicionado-port%C3%A1tiles-funcionan-sin-tubo/a/4889\" rel=\"noopener noreferrer\">guía de instalación de De'Longhi</a>.",
         ],
       },
@@ -248,11 +248,6 @@ export const spanishBlogPosts: BlogPost[] = [
         title: "Alquiler de aire acondicionado portátil",
         href: "/es/product/mobile-airconditioner-delonghi-pinguino-compact-classic",
         description: "Comprueba compatibilidad y disponibilidad para tus fechas",
-      },
-      {
-        title: "Alquiler de ventilador sin aspas",
-        href: "/es/product/bladeless-fan-ventilator",
-        description: "Una opción portátil para mover el aire en el alojamiento",
       },
       {
         title: "Sombrilla de playa",

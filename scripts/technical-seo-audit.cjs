@@ -68,6 +68,7 @@ function extractInternalLinks(html) {
   for (const match of html.matchAll(/<a\b[^>]*href=["']([^"']+)["']/gi)) {
     const href = decodeEntities(match[1]);
     if (!href || href.startsWith("#") || href.startsWith("mailto:") || href.startsWith("tel:") || href.startsWith("javascript:")) continue;
+    if (/^\/cdn-cgi\/l\/email-protection(?:[?#]|$)/i.test(href)) continue;
     const normalized = normalizeUrl(href);
     if (normalized.startsWith(normalizeUrl(baseUrl))) links.add(normalized);
   }

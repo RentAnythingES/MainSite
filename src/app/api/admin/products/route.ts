@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase-admin";
 import { verifyAdmin, unauthorizedResponse } from "@/lib/admin-auth";
-import { getProductReadinessIssues } from "@/lib/product-validation";
+import { getProductReadinessIssues, isValidProductSlug } from "@/lib/product-validation";
 import { products as legacyProducts } from "@/data/products";
 import { seoCategorySlugs } from "@/data/seo-clusters";
 import { invalidatePublicProductCache } from "@/lib/product-cache";
@@ -57,6 +57,7 @@ function getSeoReadiness(row: ProductSeoListRow) {
   const spanish = row.product_localizations.find((localization) => localization.locale === "es");
   const blockersEn: string[] = [];
 
+  if (!isValidProductSlug(row.slug)) blockersEn.push("Product slug must use lowercase letters, numbers, and hyphens only");
   if (!row.is_active) blockersEn.push("Product is inactive");
   if (!category?.slug || !publicCategorySlugs.has(category.slug)) blockersEn.push("Category is not an approved SEO cluster");
   if (!hasText(row.name) || !hasText(row.description)) blockersEn.push("Core product copy is incomplete");

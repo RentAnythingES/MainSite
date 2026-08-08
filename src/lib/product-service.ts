@@ -4,6 +4,7 @@ import { products as staticProducts, getProductBySlug as staticGetBySlug, getPro
 import { seoCategorySlugs } from "@/data/seo-clusters";
 import { unstable_cache } from "next/cache";
 import { PUBLIC_PRODUCT_CACHE_TAG } from "@/lib/product-cache";
+import { isValidProductSlug } from "@/lib/product-validation";
 
 /**
  * Product Service — Supabase-first with static fallback
@@ -124,7 +125,11 @@ function mapProductSeoState(row: ProductSeoRow): ProductSeoState {
   );
 
   const indexableEn =
-    row.is_active && hasPublicCategory && hasCoreEnglishContent && hasEditorialApproval;
+    isValidProductSlug(row.slug) &&
+    row.is_active &&
+    hasPublicCategory &&
+    hasCoreEnglishContent &&
+    hasEditorialApproval;
   const indexableEs = Boolean(
     indexableEn &&
     (isLegacyProduct || row.content_status === "content_ready") &&

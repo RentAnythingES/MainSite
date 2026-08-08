@@ -109,7 +109,7 @@ export const rentalBundles: RentalBundle[] = [
       { name: "Baby monitor", note: "Subject to stock and apartment layout" },
     ],
     addons: [
-      { name: "Double stroller", note: "For twins or siblings", productSlug: "double-stroller" },
+      { name: "Double stroller", note: "For twins or siblings", productSlug: "stroller-double" },
       { name: "Infant car seat", note: "High-trust item; requires careful confirmation", productSlug: "car-seat-infant" },
       { name: "Blackout blind", note: "Helpful for naps in bright apartments" },
       { name: "Baby carrier", note: "Useful for old-town streets and short trips" },
@@ -157,9 +157,9 @@ export const rentalBundles: RentalBundle[] = [
     addons: [
       { name: "Beach umbrella set", note: "For beach days", productSlug: "beach-umbrella-set" },
       { name: "Travel cot", note: "If the trip also needs sleep gear", productSlug: "travel-crib" },
-      { name: "Double stroller", note: "For siblings", productSlug: "double-stroller" },
+      { name: "Double stroller", note: "For siblings", productSlug: "stroller-double" },
     ],
-    relatedProductSlugs: ["stroller-travel-compact", "double-stroller", "beach-umbrella-set"],
+    relatedProductSlugs: ["stroller-travel-compact", "stroller-double", "beach-umbrella-set"],
     relatedGuideSlugs: ["valencia-with-kids-complete-guide", "best-beaches-valencia-families"],
     seo: {
       title: "Toddler City Kit Rental in Valencia",

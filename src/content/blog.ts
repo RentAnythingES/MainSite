@@ -417,7 +417,7 @@ export const blogPosts: BlogPost[] = [
         paragraphs: [
           "Ask your host which rooms are air-conditioned before arrival. Some apartments have no fixed cooling; others have one unit that does not reach the bedroom.",
           "<strong>Block solar heat first:</strong> Close external shutters or curtains before direct sun reaches the room. Ventilate when the air outside is cooler, usually overnight or early in the morning, and create cross-flow where the window layout allows it.",
-          "<strong>Choose a fan for airflow:</strong> A <a href=\"/product/bladeless-fan-ventilator\">portable fan</a> can make an occupied room feel more comfortable and support night ventilation, but it does not lower the room's air temperature. It is the simpler choice when the accommodation is already reasonably cool.",
+          "<strong>Choose a fan for airflow:</strong> A portable fan can make an occupied room feel more comfortable and support night ventilation, but it does not lower the room's air temperature. It is the simpler choice when the accommodation is already reasonably cool.",
           "<strong>Choose portable AC for active cooling:</strong> A <a href=\"/product/mobile-airconditioner-delonghi-pinguino-compact-classic\">portable air conditioner</a> is the stronger option for a closed bedroom or living space. Confirm the room size and window first: the hot-air hose needs a suitable outlet, as explained in <a href=\"https://www.delonghi.com/es-es/faqs/%C2%BFLas-unidades-de-aire-acondicionado-port%C3%A1tiles-funcionan-sin-tubo/a/4889\" rel=\"noopener noreferrer\">De'Longhi's installation guidance</a>.",
           "<strong>Use filtration for air quality, not cooling:</strong> A room air purifier may reduce some airborne particles when correctly sized and maintained. It does not cool the room or replace source control and ventilation with clean outdoor air."
         ]
@@ -482,11 +482,6 @@ export const blogPosts: BlogPost[] = [
         title: "Portable Air Conditioner Rental",
         href: "/product/mobile-airconditioner-delonghi-pinguino-compact-classic",
         description: "Check room compatibility, live availability and fulfillment options"
-      },
-      {
-        title: "Bladeless Fan Rental",
-        href: "/product/bladeless-fan-ventilator",
-        description: "A portable airflow option for apartments that cool overnight"
       },
       {
         title: "Best Valencia Beaches for Families",
