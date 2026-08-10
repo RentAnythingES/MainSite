@@ -60,7 +60,29 @@ export async function GET(request: NextRequest) {
     const { data, error } = await query;
     if (error) throw error;
 
-    const csv = productsToCsv((data || []) as ExportProduct[]);
+    const products = (data || []) as unknown as ExportProduct[];
+    if (products.length > 0) {
+      const { data: memberships, error: membershipError } = await supabase
+        .from("product_category_memberships")
+        .select("product_id, category:categories(slug)")
+        .eq("is_primary", false)
+        .in("product_id", products.map((product) => product.id));
+      if (membershipError) throw membershipError;
+
+      const slugsByProduct = new Map<string, string[]>();
+      for (const membership of memberships || []) {
+        const category = Array.isArray(membership.category) ? membership.category[0] : membership.category;
+        if (!category?.slug) continue;
+        const slugs = slugsByProduct.get(String(membership.product_id)) || [];
+        slugs.push(String(category.slug));
+        slugsByProduct.set(String(membership.product_id), slugs);
+      }
+      for (const product of products) {
+        product.secondary_category_slugs = (slugsByProduct.get(product.id) || []).sort();
+      }
+    }
+
+    const csv = productsToCsv(products);
     const filename = `rentanything-products${status === "all" ? "" : `-${status}`}-${new Date().toISOString().slice(0, 10)}.csv`;
 
     return new NextResponse(csv, {

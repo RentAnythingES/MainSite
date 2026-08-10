@@ -52,6 +52,7 @@ Supabase (CRUD products, pricing, bookings)
 |-------|---------|-----|
 | `categories` | Customer-facing categories plus inactive draft-only import categories | Public read |
 | `products` | Global product catalogue identity, specifications, imagery, and legacy Valencia stock compatibility | Public read (active only) |
+| `product_category_memberships` | One primary category plus optional governed secondary discovery categories per product | Public read |
 | `pricing_tiers` | Per-product tiered daily rates (in cents) | Public read |
 | `product_quantity_discounts` | Per-product volume discount thresholds in basis points | Admin/API only |
 | `markets` | City/region operating contexts, locale/currency/timezone, and independent publication/booking gates | Public read active/public |
@@ -148,6 +149,9 @@ Seed data: `supabase/seed_1_categories.sql` → `seed_2_products.sql` → `seed_
 - For the multi-market foundation, run `npm run db:preview:markets` first. It applies
   the custom-quote dependency and market migration inside a transaction, validates
   Valencia parity and cross-market guards, and always rolls back.
+- For multi-category catalogue discovery, run `npm run db:preview:categories`
+  before applying `20260810_product_category_memberships.sql` and
+  `20260810_repair_mobility_category_ownership.sql`.
 - Apply reviewed additive migrations with
   `npm run db:migrate -- <migration-file.sql>`.
 - The migration runner uses a PostgreSQL advisory lock, one transaction per file,

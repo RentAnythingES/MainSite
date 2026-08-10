@@ -40,6 +40,7 @@ type PreparedRow = {
   sourceRow?: ImportRow;
   product?: Record<string, unknown>;
   pricingTiers?: { min_days: number; per_day_cents: number }[];
+  secondaryCategoryIds?: string[];
   localizations?: Array<Record<string, unknown>>;
   primaryImage?: {
     alt_text: string | null;
@@ -145,6 +146,13 @@ function prepareRows(
     const brand = text(row.brand);
     const description = text(row.description);
     const categorySlug = slugify(text(row.category_slug));
+    const hasSecondaryCategoryColumn = Object.prototype.hasOwnProperty.call(row, "secondary_category_slugs");
+    const secondaryCategorySlugs = hasSecondaryCategoryColumn
+      ? text(row.secondary_category_slugs)
+        .split("|")
+        .map((value) => slugify(value))
+        .filter(Boolean)
+      : undefined;
     const subcategory = text(row.subcategory);
     const stockTotal = parseStock(row.stock_total);
     const importedSlug = slugify(text(row.slug) || name);
@@ -157,6 +165,17 @@ function prepareRows(
     if (!name) issues.push("Product name is required");
     if (!description) issues.push("Description is required");
     if (!categoryBySlug.has(categorySlug)) issues.push("Category slug does not match an existing category");
+    if (secondaryCategorySlugs && new Set(secondaryCategorySlugs).size !== secondaryCategorySlugs.length) {
+      issues.push("Secondary category slugs must be unique");
+    }
+    if (secondaryCategorySlugs?.includes(categorySlug)) {
+      issues.push("Primary category cannot also be a secondary category");
+    }
+    for (const secondarySlug of secondaryCategorySlugs || []) {
+      if (!categoryBySlug.has(secondarySlug)) {
+        issues.push(`Secondary category slug '${secondarySlug}' does not match an existing category`);
+      }
+    }
     if (!subcategory) issues.push("Subcategory is required");
     if (!stockTotal) issues.push("Stock total must be a whole number of at least 1");
     if (!slug) issues.push("A valid slug could not be created");
@@ -259,6 +278,8 @@ function prepareRows(
       sourceRow: row,
       product: issues.length === 0 && category && stockTotal ? productPayload : undefined,
       pricingTiers,
+      secondaryCategoryIds: secondaryCategorySlugs?.map((secondarySlug) => categoryBySlug.get(secondarySlug)?.id)
+        .filter((categoryId): categoryId is string => Boolean(categoryId)),
       localizations: localizations.length > 0 ? localizations : undefined,
       primaryImage,
     };
@@ -277,6 +298,18 @@ async function replacePricingTiers(
     tiers.map((tier) => ({ product_id: productId, ...tier })),
   );
   if (insertError) throw insertError;
+}
+
+async function replaceSecondaryCategories(
+  supabase: ReturnType<typeof createAdminClient>,
+  productId: string,
+  categoryIds: string[],
+) {
+  const { error } = await supabase.rpc("replace_product_secondary_categories", {
+    p_product_id: productId,
+    p_category_ids: categoryIds,
+  });
+  if (error) throw error;
 }
 
 async function upsertLocalizations(
@@ -335,7 +368,15 @@ async function processImport(rows: ImportRow[], mode: "preview" | "commit") {
 
   if (mode !== "commit") {
     return {
-      rows: prepared.map(({ product, pricingTiers, localizations, primaryImage, ...previewRow }) => previewRow),
+      rows: prepared.map((preparedRow) => {
+        const previewRow = { ...preparedRow };
+        delete previewRow.product;
+        delete previewRow.pricingTiers;
+        delete previewRow.secondaryCategoryIds;
+        delete previewRow.localizations;
+        delete previewRow.primaryImage;
+        return previewRow;
+      }),
       valid: invalidRows.length === 0,
       creates: prepared.filter((row) => row.action === "create").length,
       updates: prepared.filter((row) => row.action === "update").length,
@@ -364,6 +405,9 @@ async function processImport(rows: ImportRow[], mode: "preview" | "commit") {
       if (updateError) throw updateError;
 
       await replacePricingTiers(supabase, existingProduct.id, row.pricingTiers!);
+      if (row.secondaryCategoryIds !== undefined) {
+        await replaceSecondaryCategories(supabase, existingProduct.id, row.secondaryCategoryIds);
+      }
       if (row.localizations?.length) {
         await upsertLocalizations(supabase, existingProduct.id, row.localizations);
       }
@@ -387,6 +431,7 @@ async function processImport(rows: ImportRow[], mode: "preview" | "commit") {
     if (insertError || !createdProduct) throw insertError || new Error("Product import did not return created product");
 
     await replacePricingTiers(supabase, createdProduct.id, row.pricingTiers!);
+    await replaceSecondaryCategories(supabase, createdProduct.id, row.secondaryCategoryIds || []);
     if (row.localizations?.length) {
       await upsertLocalizations(supabase, createdProduct.id, row.localizations);
     }

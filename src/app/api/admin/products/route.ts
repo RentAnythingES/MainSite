@@ -5,6 +5,7 @@ import { getProductReadinessIssues, isValidProductSlug } from "@/lib/product-val
 import { products as legacyProducts } from "@/data/products";
 import { seoCategorySlugs } from "@/data/seo-clusters";
 import { invalidatePublicProductCache } from "@/lib/product-cache";
+import { isCategoryMembershipMigrationMissing, normalizeSecondaryCategoryIds } from "@/lib/product-category-memberships";
 
 type ProductPayload = {
   slug?: string;
@@ -12,12 +13,14 @@ type ProductPayload = {
   brand?: string;
   description?: string;
   category_id?: string;
+  secondary_category_ids?: string[];
   subcategory?: string;
   subcategory_slug?: string;
   pricing_tiers?: { min_days: number; per_day_cents: number }[];
 };
 
 type ProductSeoListRow = {
+  id: string;
   slug: string;
   name: string;
   description: string;
@@ -142,11 +145,30 @@ export async function GET(request: NextRequest) {
 
     if (error) throw error;
 
+    const membershipResult = await supabase
+      .from("product_category_memberships")
+      .select("product_id, category_id")
+      .eq("is_primary", false);
+    if (membershipResult.error && !isCategoryMembershipMigrationMissing(membershipResult.error)) {
+      throw membershipResult.error;
+    }
+
+    const secondaryCategories = new Map<string, string[]>();
+    for (const membership of membershipResult.data || []) {
+      const current = secondaryCategories.get(String(membership.product_id)) || [];
+      current.push(String(membership.category_id));
+      secondaryCategories.set(String(membership.product_id), current);
+    }
+
     const products = ((data || []) as unknown as ProductSeoListRow[]).map((row) => {
       const product: Partial<ProductSeoListRow> = { ...row };
       delete product.product_localizations;
       delete product.product_images;
-      return { ...product, seo: getSeoReadiness(row) };
+      return {
+        ...product,
+        secondary_category_ids: secondaryCategories.get(row.id) || [],
+        seo: getSeoReadiness(row),
+      };
     });
 
     return NextResponse.json({ products });
@@ -171,6 +193,12 @@ export async function POST(request: NextRequest) {
     }
 
     const supabase = createAdminClient();
+    let secondaryCategoryIds: string[] | undefined;
+    try {
+      secondaryCategoryIds = normalizeSecondaryCategoryIds(body.secondary_category_ids, body.category_id!.trim());
+    } catch (error) {
+      return NextResponse.json({ error: getErrorMessage(error) }, { status: 400 });
+    }
 
     const { data, error } = await supabase
       .from("products")
@@ -215,6 +243,22 @@ export async function POST(request: NextRequest) {
         { error: `Product pricing failed: ${getErrorMessage(pricingError)}` },
         { status: 400 }
       );
+    }
+
+    if (secondaryCategoryIds?.length) {
+      const { error: membershipError } = await supabase.rpc("replace_product_secondary_categories", {
+        p_product_id: (data as { id: string }).id,
+        p_category_ids: secondaryCategoryIds,
+      });
+      if (membershipError) {
+        await supabase.from("products").delete().eq("id", (data as { id: string }).id);
+        return NextResponse.json(
+          { error: isCategoryMembershipMigrationMissing(membershipError)
+            ? "Apply the product-category membership migration before assigning secondary categories."
+            : `Category membership failed: ${getErrorMessage(membershipError)}` },
+          { status: 400 },
+        );
+      }
     }
 
     invalidatePublicProductCache();
