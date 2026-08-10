@@ -32,7 +32,7 @@ async function main() {
   );
   const { data, error } = await supabase
     .from("products")
-    .select("slug,name,is_active,content_status,stock_total,stock_available,category:categories(slug,name)")
+    .select("slug,name,is_active,content_status,stock_total,stock_available,category:categories!products_category_id_fkey(slug,name)")
     .order("name");
 
   if (error) throw error;

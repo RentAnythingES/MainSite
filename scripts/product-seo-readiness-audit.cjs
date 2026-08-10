@@ -105,7 +105,7 @@ async function main() {
       image_url,
       is_active,
       content_status,
-      category:categories (slug),
+      category:categories!products_category_id_fkey (slug),
       pricing_tiers (min_days),
       product_localizations (locale, short_description, seo_title, seo_description),
       product_faqs (locale),

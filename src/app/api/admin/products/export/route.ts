@@ -33,7 +33,7 @@ export async function GET(request: NextRequest) {
         features,
         specs,
         pricing_tiers (min_days, per_day_cents),
-        category:categories (slug),
+        category:categories!products_category_id_fkey (slug),
         product_localizations (
           locale,
           short_description,
@@ -64,7 +64,7 @@ export async function GET(request: NextRequest) {
     if (products.length > 0) {
       const { data: memberships, error: membershipError } = await supabase
         .from("product_category_memberships")
-        .select("product_id, category:categories(slug)")
+        .select("product_id, category:categories!product_category_memberships_category_id_fkey(slug)")
         .eq("is_primary", false)
         .in("product_id", products.map((product) => product.id));
       if (membershipError) throw membershipError;

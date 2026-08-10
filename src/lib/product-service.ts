@@ -173,7 +173,7 @@ async function fetchProductSeoRows(slug?: string): Promise<ProductSeoRow[]> {
       is_active,
       content_status,
       updated_at,
-      category:categories (slug),
+      category:categories!products_category_id_fkey (slug),
       pricing_tiers (min_days),
       product_localizations (locale, short_description, seo_title, seo_description),
       product_images (is_primary, rights_status)
@@ -285,7 +285,7 @@ async function fetchProductsFromDB(city: string, locale: ProductLocale): Promise
       .select(`
         *,
         pricing_tiers (*),
-        category:categories (*),
+        category:categories!products_category_id_fkey (*),
         product_localizations (*),
         product_faqs (*),
         product_images (*)
@@ -330,7 +330,7 @@ async function fetchProductBySlugFromDB(slug: string, locale: ProductLocale): Pr
       .select(`
         *,
         pricing_tiers (*),
-        category:categories (*),
+        category:categories!products_category_id_fkey (*),
         product_localizations (*),
         product_faqs (*),
         product_images (*)
@@ -401,7 +401,7 @@ async function fetchProductsByCategoryFromDB(categorySlug: string, locale: Produ
       .select(`
         *,
         pricing_tiers (*),
-        category:categories (*),
+        category:categories!products_category_id_fkey (*),
         product_localizations (*),
         product_faqs (*),
         product_images (*)

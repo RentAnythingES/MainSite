@@ -38,7 +38,7 @@ async function main() {
 
   const { data: activeProducts, error: productError } = await supabase
     .from("products")
-    .select("id,slug,name,stock_total,stock_available,content_status,image_url,pricing_tiers(id),category:categories(slug),product_images(is_primary,rights_status)")
+    .select("id,slug,name,stock_total,stock_available,content_status,image_url,pricing_tiers(id),category:categories!products_category_id_fkey(slug),product_images(is_primary,rights_status)")
     .eq("is_active", true);
   if (productError) report.critical.push(`Could not audit active products: ${productError.message}`);
   else {
