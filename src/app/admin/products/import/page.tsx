@@ -248,6 +248,9 @@ export default function ImportProductsPage() {
               Exported rows update the matching product by ID. Leave the ID blank only for genuinely new products; the database will assign their IDs automatically. The brand column may be left blank. Images are deliberately not imported from computer paths; upload each image through the product editor before activating the item.
               Choose CSV or Excel format — both use the same column structure.
             </p>
+            <p className="mt-2 max-w-2xl text-sm leading-relaxed text-neutral-400">
+              Use <span className="font-mono text-neutral-300">category_slug</span> for the primary owner. Optional secondary categories are pipe-separated in <span className="font-mono text-neutral-300">secondary_category_slugs</span>.
+            </p>
           </div>
           <div className="flex gap-2">
             <button onClick={downloadCsvTemplate} className="rounded-lg border border-neutral-700 px-3 py-2 text-sm font-medium text-neutral-200 hover:bg-neutral-800">Download CSV template</button>

@@ -32,6 +32,7 @@ interface Product {
   description: string;
   image_url: string | null;
   category_id: string;
+  secondary_category_ids: string[];
   is_active: boolean;
   stock_total: number;
   stock_available: number;
@@ -135,6 +136,7 @@ export default function AdminProductsPage() {
       description: product.description,
       image_url: product.image_url,
       category_id: product.category_id,
+      secondary_category_ids: [...(product.secondary_category_ids || [])],
       subcategory: product.subcategory,
       subcategory_slug: product.subcategory_slug,
       stock_total: product.stock_total,
@@ -156,6 +158,16 @@ export default function AdminProductsPage() {
     setEditForm({});
     setEditFeatures([]);
     setEditSpecs([]);
+  };
+
+  const toggleSecondaryCategory = (categoryId: string) => {
+    const selected = editForm.secondary_category_ids || [];
+    setEditForm({
+      ...editForm,
+      secondary_category_ids: selected.includes(categoryId)
+        ? selected.filter((id) => id !== categoryId)
+        : [...selected, categoryId],
+    });
   };
 
   const saveEdit = async (id: string) => {
@@ -705,10 +717,14 @@ export default function AdminProductsPage() {
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-medium text-neutral-400 mb-1.5">Category</label>
+                  <label className="block text-xs font-medium text-neutral-400 mb-1.5">Primary category</label>
                   <select
                     value={editForm.category_id || ""}
-                    onChange={(e) => setEditForm({ ...editForm, category_id: e.target.value })}
+                    onChange={(e) => setEditForm({
+                      ...editForm,
+                      category_id: e.target.value,
+                      secondary_category_ids: (editForm.secondary_category_ids || []).filter((id) => id !== e.target.value),
+                    })}
                     className="w-full px-3 py-2.5 rounded-lg bg-neutral-800 border border-neutral-700 text-white text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/30 focus:border-teal-500"
                   >
                     <option value="">Select category...</option>
@@ -718,6 +734,28 @@ export default function AdminProductsPage() {
                   </select>
                 </div>
               </div>
+
+              <fieldset>
+                <legend className="block text-xs font-medium text-neutral-400 mb-1.5">
+                  Secondary categories <span className="text-neutral-600">(optional)</span>
+                </legend>
+                <p className="mb-2 text-xs text-neutral-500">
+                  Adds this product to other category pages without changing its primary owner or product URL.
+                </p>
+                <div className="grid grid-cols-2 gap-2 rounded-lg border border-neutral-800 bg-neutral-950 p-3">
+                  {categories.filter((category) => category.id !== editForm.category_id).map((category) => (
+                    <label key={category.id} className="flex items-center gap-2 text-sm text-neutral-300">
+                      <input
+                        type="checkbox"
+                        checked={(editForm.secondary_category_ids || []).includes(category.id)}
+                        onChange={() => toggleSecondaryCategory(category.id)}
+                        className="h-4 w-4 rounded border-neutral-600 bg-neutral-800 text-teal-600 focus:ring-teal-500"
+                      />
+                      {category.name}
+                    </label>
+                  ))}
+                </div>
+              </fieldset>
 
               <div className="grid grid-cols-2 gap-4">
                 <div>

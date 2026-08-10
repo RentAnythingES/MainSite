@@ -51,16 +51,37 @@ export async function getProductsByCategory(categorySlug: string): Promise<Produ
 
   if (!cat) return [];
 
-  const { data, error } = await supabase
+  const categoryId = (cat as { id: string }).id;
+  const membershipResult = await supabase
+    .from("product_category_memberships")
+    .select("product_id")
+    .eq("category_id", categoryId);
+
+  const missingMembershipTable = membershipResult.error &&
+    ["42P01", "PGRST205"].includes(membershipResult.error.code || "");
+  if (membershipResult.error && !missingMembershipTable) {
+    throw new Error(`Failed to fetch category memberships: ${membershipResult.error.message}`);
+  }
+
+  const membershipProductIds = missingMembershipTable
+    ? null
+    : Array.from(new Set((membershipResult.data || []).map((row) => String(row.product_id))));
+
+  if (membershipProductIds && membershipProductIds.length === 0) return [];
+
+  const createProductQuery = () => supabase
     .from("products")
     .select(`
       *,
       pricing_tiers (*),
       category:categories (*)
     `)
-    .eq("category_id", (cat as { id: string }).id)
     .eq("is_active", true)
     .order("name");
+
+  const { data, error } = membershipProductIds
+    ? await createProductQuery().in("id", membershipProductIds)
+    : await createProductQuery().eq("category_id", categoryId);
 
   if (error) throw new Error(`Failed to fetch category products: ${error.message}`);
   return (data as ProductWithPricing[]) ?? [];

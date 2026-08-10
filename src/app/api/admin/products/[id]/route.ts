@@ -3,6 +3,7 @@ import { verifyAdmin, unauthorizedResponse } from "@/lib/admin-auth";
 import { createAdminClient } from "@/lib/supabase-admin";
 import { invalidatePublicProductCache } from "@/lib/product-cache";
 import { deleteProductAndRelations } from "@/lib/admin-product-delete";
+import { normalizeSecondaryCategoryIds } from "@/lib/product-category-memberships";
 
 function getErrorMessage(err: unknown) {
   if (err && typeof err === "object" && "message" in err) {
@@ -84,6 +85,26 @@ export async function PUT(
       updates.specs = body.specs as Record<string, string>;
     }
 
+    let secondaryCategoryIds: string[] | undefined;
+    if (body.secondary_category_ids !== undefined) {
+      const { data: currentProduct, error: currentProductError } = await supabase
+        .from("products")
+        .select("category_id")
+        .eq("id", id)
+        .single();
+      if (currentProductError || !currentProduct) {
+        return NextResponse.json({ error: "Product not found" }, { status: 404 });
+      }
+      try {
+        secondaryCategoryIds = normalizeSecondaryCategoryIds(
+          body.secondary_category_ids,
+          String(updates.category_id || currentProduct.category_id),
+        );
+      } catch (error) {
+        return NextResponse.json({ error: getErrorMessage(error) }, { status: 400 });
+      }
+    }
+
     if (Object.keys(updates).length > 0) {
       const { data: product, error } = await supabase
         .from("products")
@@ -132,8 +153,24 @@ export async function PUT(
         }
       }
 
+      if (secondaryCategoryIds !== undefined) {
+        const { error: membershipError } = await supabase.rpc("replace_product_secondary_categories", {
+          p_product_id: id,
+          p_category_ids: secondaryCategoryIds,
+        });
+        if (membershipError) throw membershipError;
+      }
+
       invalidatePublicProductCache(product?.slug ? [product.slug] : []);
       return NextResponse.json({ product });
+    }
+
+    if (secondaryCategoryIds !== undefined) {
+      const { error: membershipError } = await supabase.rpc("replace_product_secondary_categories", {
+        p_product_id: id,
+        p_category_ids: secondaryCategoryIds,
+      });
+      if (membershipError) throw membershipError;
     }
 
     const { data: product, error } = await supabase

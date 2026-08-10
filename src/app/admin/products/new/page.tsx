@@ -47,6 +47,7 @@ export default function AddProductPage() {
   const [brand, setBrand] = useState("");
   const [description, setDescription] = useState("");
   const [categoryId, setCategoryId] = useState("");
+  const [secondaryCategoryIds, setSecondaryCategoryIds] = useState<string[]>([]);
   const [subcategory, setSubcategory] = useState("");
   const [subcategorySlug, setSubcategorySlug] = useState("");
   const [imageUrl, setImageUrl] = useState("");
@@ -147,6 +148,7 @@ export default function AddProductPage() {
           brand: brand.trim(),
           description,
           category_id: categoryId,
+          secondary_category_ids: secondaryCategoryIds,
           subcategory,
           subcategory_slug: subcategorySlug || slugify(subcategory),
           image_url: imageUrl || null,
@@ -236,8 +238,11 @@ export default function AddProductPage() {
           <h2 className="text-sm font-semibold text-neutral-300 uppercase tracking-wider mb-4">Category</h2>
           <div className="grid sm:grid-cols-3 gap-4">
             <div>
-              <label className={labelClass}>Category *</label>
-              <select required value={categoryId} onChange={(e) => setCategoryId(e.target.value)}
+              <label className={labelClass}>Primary category *</label>
+              <select required value={categoryId} onChange={(e) => {
+                setCategoryId(e.target.value);
+                setSecondaryCategoryIds((selected) => selected.filter((id) => id !== e.target.value));
+              }}
                 className={inputClass}>
                 <option value="">Select category...</option>
                 {categories.map((cat) => (
@@ -256,6 +261,31 @@ export default function AddProductPage() {
                 className={inputClass} placeholder="strollers (auto)" />
             </div>
           </div>
+          <fieldset className="mt-4">
+            <legend className={labelClass}>
+              Secondary categories <span className="text-neutral-600">(optional)</span>
+            </legend>
+            <p className="mb-2 text-xs text-neutral-500">
+              Adds this product to other category pages without changing its primary owner or product URL.
+            </p>
+            <div className="grid sm:grid-cols-2 gap-2 rounded-lg border border-neutral-800 bg-neutral-950 p-3">
+              {categories.filter((category) => category.id !== categoryId).map((category) => (
+                <label key={category.id} className="flex items-center gap-2 text-sm text-neutral-300">
+                  <input
+                    type="checkbox"
+                    checked={secondaryCategoryIds.includes(category.id)}
+                    onChange={() => setSecondaryCategoryIds((selected) =>
+                      selected.includes(category.id)
+                        ? selected.filter((id) => id !== category.id)
+                        : [...selected, category.id]
+                    )}
+                    className="h-4 w-4 rounded border-neutral-600 bg-neutral-800 text-teal-600 focus:ring-teal-500"
+                  />
+                  {category.name}
+                </label>
+              ))}
+            </div>
+          </fieldset>
         </div>
 
         {/* Image & Stock */}

@@ -28,6 +28,8 @@
     "db:audit:inventory": "node scripts/audit-inventory-reconciliation.cjs",
     "db:migrate": "node scripts/apply-db-migrations.cjs",
     "db:preview:markets": "node scripts/preview-multi-market-migration.cjs",
+    "db:preview:categories": "node scripts/preview-product-category-memberships.cjs",
+    "db:verify:categories": "node scripts/verify-product-category-memberships.cjs",
     "db:verify": "node scripts/verify-live-backend.cjs"
   },
   "dependencies": {

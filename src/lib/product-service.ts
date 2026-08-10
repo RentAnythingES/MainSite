@@ -373,22 +373,48 @@ export async function getProductBySlugFromDB(slug: string, locale: ProductLocale
  * Fetch products by category slug from Supabase, fall back to static
  */
 async function fetchProductsByCategoryFromDB(categorySlug: string, locale: ProductLocale): Promise<Product[]> {
-    const { data, error } = await supabase
+    const categoryResult = await supabase
+      .from("categories")
+      .select("id")
+      .eq("slug", categorySlug)
+      .single();
+
+    if (categoryResult.error) throw categoryResult.error;
+    const categoryId = (categoryResult.data as { id: string }).id;
+    const membershipResult = await supabase
+      .from("product_category_memberships")
+      .select("product_id")
+      .eq("category_id", categoryId);
+
+    const missingMembershipTable = membershipResult.error &&
+      ["42P01", "PGRST205"].includes(membershipResult.error.code || "");
+    if (membershipResult.error && !missingMembershipTable) throw membershipResult.error;
+
+    const membershipProductIds = missingMembershipTable
+      ? null
+      : Array.from(new Set((membershipResult.data || []).map((row) => String(row.product_id))));
+
+    if (membershipProductIds && membershipProductIds.length === 0) return [];
+
+    const createProductQuery = () => supabase
       .from("products")
       .select(`
         *,
         pricing_tiers (*),
-        category:categories!inner (*),
+        category:categories (*),
         product_localizations (*),
         product_faqs (*),
         product_images (*)
       `)
-      .eq("category.slug", categorySlug)
       .eq("is_active", true)
       .eq("product_localizations.locale", locale)
       .eq("product_faqs.locale", locale)
       .eq("product_images.is_primary", true)
       .order("name");
+
+    const { data, error } = membershipProductIds
+      ? await createProductQuery().in("id", membershipProductIds)
+      : await createProductQuery().eq("category_id", categoryId);
 
     if (error) throw error;
     if (!data) return [];

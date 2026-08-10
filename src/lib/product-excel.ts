@@ -13,6 +13,7 @@ export const EXCEL_HEADERS = [
   "name",
   "brand",
   "category_slug",
+  "secondary_category_slugs",
   "subcategory",
   "subcategory_slug",
   "description",
@@ -107,6 +108,7 @@ function productToExcelRow(product: ExcelProduct) {
     product.name,
     product.brand,
     getCategorySlug(product),
+    (product.secondary_category_slugs || []).join("|"),
     product.subcategory,
     product.subcategory_slug,
     product.description,
@@ -146,6 +148,7 @@ export function productsToExcel(products: ExcelProduct[]): Buffer {
     { wch: 30 }, // name
     { wch: 20 }, // brand
     { wch: 15 }, // category_slug
+    { wch: 30 }, // secondary_category_slugs
     { wch: 20 }, // subcategory
     { wch: 20 }, // subcategory_slug
     { wch: 50 }, // description
@@ -188,6 +191,7 @@ export function exportRowsToExcel(rows: Record<string, unknown>[], fileName = "r
     { wch: 30 }, // name
     { wch: 20 }, // brand
     { wch: 15 }, // category_slug
+    { wch: 30 }, // secondary_category_slugs
     { wch: 20 }, // subcategory
     { wch: 20 }, // subcategory_slug
     { wch: 50 }, // description
@@ -227,6 +231,7 @@ export function downloadProductExcelTemplate() {
     { wch: 30 }, // name
     { wch: 20 }, // brand
     { wch: 15 }, // category_slug
+    { wch: 30 }, // secondary_category_slugs
     { wch: 20 }, // subcategory
     { wch: 20 }, // subcategory_slug
     { wch: 50 }, // description

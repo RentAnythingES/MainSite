@@ -52,17 +52,22 @@ Kids & Family currently has no active assigned products. Its EN/ES routes remain
 available for a future reviewed membership set but emit `noindex, follow` and are
 absent from the sitemap and primary commercial navigation.
 
+Each product has one primary category owner and may have governed secondary
+discovery memberships. Secondary placement exposes the same product in another
+useful category grid; it does not create another product URL, canonical, inventory
+record, or keyword owner.
+
 ### Commercial cluster depth
 
 | Cluster | EN / ES indexable products | Main supporting layers | Expansion posture |
 |---------|----------------------------|------------------------|-------------------|
-| Beach & Outdoor | 44 / 44 | Category, Family Beach kit, beach/summer blogs, 4 beach guides | Strongest cluster; bounded rendering preserves every product link without oversized cards |
+| Beach & Outdoor | 49 / 49 | Category, Family Beach kit, beach/summer blogs, 4 beach guides | Strongest cluster; bounded rendering preserves every product link without oversized cards |
 | Baby & Toddler | 33 / 33 | Category, Baby Arrival and Toddler City kits, family/baby articles | Strong; add narrow decision content only where ownership is distinct |
-| Mobility & Accessibility | 11 / 11 | Category, 2 accessibility kits, accessibility guide, local guides | Expand verified accessibility decisions |
+| Mobility & Accessibility | 6 / 6 | Category, 2 accessibility kits, accessibility guide, local guides | Coherent assistance-only set; expand verified accessibility decisions |
 | Remote Work | 6 / 6 | Category, Remote Work kit, nomad guide, home-office tutorial | Deepen exact workstation and temporary-stay decisions |
 | Apartment Comfort | 8 / 8 | Category, Summer and Long-Stay kits, cooling guide | Deepen only from measured long-stay demand |
 | Kids & Family | 0 / 0 | Temporarily noindex routes; kits and family articles remain live | Restore only after reviewed product membership creates a useful selection |
-| Sports & Wellness | 12 / 12 | Category, Turia Gardens guide and product pathways | Expand only with approved inventory and distinct demand |
+| Sports & Wellness | 15 / 15 | Category, Turia Gardens guide and product pathways | Includes three secondary bike-carrier discovery listings; expand only with approved inventory and distinct demand |
 
 ---
 
