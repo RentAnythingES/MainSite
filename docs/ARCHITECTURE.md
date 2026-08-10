@@ -152,6 +152,9 @@ Seed data: `supabase/seed_1_categories.sql` → `seed_2_products.sql` → `seed_
 - For multi-category catalogue discovery, run `npm run db:preview:categories`
   before applying `20260810_product_category_memberships.sql` and
   `20260810_repair_mobility_category_ownership.sql`.
+- Product queries that embed the primary category must use the explicit Supabase
+  relationship hint `categories!products_category_id_fkey`. The membership table
+  creates a second products-to-categories path, so an unqualified embed is ambiguous.
 - Apply reviewed additive migrations with
   `npm run db:migrate -- <migration-file.sql>`.
 - The migration runner uses a PostgreSQL advisory lock, one transaction per file,

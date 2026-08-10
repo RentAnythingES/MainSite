@@ -10,7 +10,7 @@ export async function getProducts(city = "valencia"): Promise<ProductWithPricing
     .select(`
       *,
       pricing_tiers (*),
-      category:categories (*)
+      category:categories!products_category_id_fkey (*)
     `)
     .eq("city", city)
     .eq("is_active", true)
@@ -29,7 +29,7 @@ export async function getProductBySlug(slug: string): Promise<ProductWithPricing
     .select(`
       *,
       pricing_tiers (*),
-      category:categories (*)
+      category:categories!products_category_id_fkey (*)
     `)
     .eq("slug", slug)
     .eq("is_active", true)
@@ -74,7 +74,7 @@ export async function getProductsByCategory(categorySlug: string): Promise<Produ
     .select(`
       *,
       pricing_tiers (*),
-      category:categories (*)
+      category:categories!products_category_id_fkey (*)
     `)
     .eq("is_active", true)
     .order("name");

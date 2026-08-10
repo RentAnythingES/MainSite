@@ -79,7 +79,7 @@ export async function GET(request: NextRequest) {
       total_cents,
       created_at,
       paid_at,
-      product:products(id, name, subcategory, category:categories(id, name, slug))
+      product:products(id, name, subcategory, category:categories!products_category_id_fkey(id, name, slug))
     `)
     .gte("created_at", startIso)
     .lte("created_at", new Date().toISOString())
