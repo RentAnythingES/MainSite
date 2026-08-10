@@ -181,10 +181,9 @@ async function main() {
   }, null, 2));
 
   if (activeFaqGaps.length > 0) {
-    console.error(
-      `[product-seo-readiness] ${activeFaqGaps.length} active content-ready products lack three FAQs in both locales`
+    console.warn(
+      `[product-seo-readiness] informational: ${activeFaqGaps.length} active content-ready products have fewer than three FAQs in one or both locales`
     );
-    process.exitCode = 1;
   }
 }
 

@@ -56,7 +56,6 @@ const copy = {
       { name: "Apartment Comfort", slug: "home-living", text: "Cooling, air quality, kitchen, and long-stay upgrades" },
       { name: "Beach & Outdoor", slug: "travel-outdoors", text: "Shade, coolers, chairs, wagons, and family beach gear" },
       { name: "Remote Work", slug: "remote-work", text: "Monitors, ergonomic seating, desks, and accessories" },
-      { name: "Kids & Family", slug: "kids-family", text: "Bikes, games, toys, and family activity equipment" },
     ],
     processTitle: "How to start",
     process: [
@@ -129,7 +128,6 @@ const copy = {
       { name: "Confort del apartamento", slug: "home-living", text: "Climatización, aire, cocina y mejoras para estancias largas" },
       { name: "Playa y exterior", slug: "travel-outdoors", text: "Sombra, neveras, sillas, carros y material familiar de playa" },
       { name: "Teletrabajo", slug: "remote-work", text: "Monitores, sillas ergonómicas, escritorios y accesorios" },
-      { name: "Niños y familia", slug: "kids-family", text: "Bicicletas, juegos, juguetes y actividades familiares" },
     ],
     processTitle: "Cómo empezar",
     process: [

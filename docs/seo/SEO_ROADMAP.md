@@ -1,5 +1,27 @@
 # Rent&Roll — SEO Roadmap
-> **Last updated**: 2026-07-21 · Prioritized by estimated traffic impact × effort
+> **Last updated**: 2026-08-10 · Prioritized by estimated traffic impact × effort
+
+---
+
+## Current SEO audit priorities — 10 August 2026
+
+- [x] Restore Spanish SEO eligibility for the six active English owners previously
+  excluded in ES: `bed-rail-for-kids`, `convertible-car-seat`, `seat-booster`,
+  `transportation-trailer`, `travel-cot`, and `video-baby-monitor`.
+- [x] Reduce the oversized `/rental/travel-outdoors` response while preserving a
+  crawlable link to every eligible product. Large categories now use two visual
+  cards plus compact links; verified raw HTML is 148,049 bytes.
+- [x] Correct `audit:seo` to compare decoded visible text so encoded HTML entities
+  cannot create false copy failures.
+- [x] Align `audit:product-seo` with the evidence-led FAQ policy. FAQ coverage is
+  informational rather than a universal indexability gate.
+- [x] Temporarily remove the empty Kids & Family cluster from search discovery.
+  Both locale routes emit `noindex, follow` and are excluded from the sitemap and
+  primary commercial navigation until reviewed multi-category membership supplies
+  a useful catalogue. The product capability is tracked in
+  `docs/PRODUCT_ROADMAP.md`.
+- [x] Revalidate the production build and SEO regression suite against the
+  364-URL release-candidate sitemap.
 
 ---
 

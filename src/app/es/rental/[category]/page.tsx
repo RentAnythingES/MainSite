@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { getProductsByCategoryFromDB } from "@/lib/product-service";
 import ProductCard from "@/components/ProductCard";
+import CompactProductLink from "@/components/CompactProductLink";
 import { getBreadcrumbJsonLd, getCategoryCollectionJsonLd, getFaqJsonLd } from "@/lib/jsonld";
 
 interface CategoryContent {
@@ -399,6 +400,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: meta.title,
     description: meta.description,
+    robots: category === "kids-family" ? { index: false, follow: true } : undefined,
     alternates: {
       canonical: `https://rentandroll.com/es/rental/${category}`,
       languages: {
@@ -423,6 +425,9 @@ export default async function CategoryPageES({ params }: Props) {
   if (!meta) notFound();
 
   const categoryProducts = await getProductsByCategoryFromDB(category, "es");
+  const visualProductLimit = categoryProducts.length > 36 ? 2 : 12;
+  const visualProducts = categoryProducts.slice(0, visualProductLimit);
+  const compactProducts = categoryProducts.slice(visualProductLimit);
 
   const subcategories = Array.from(
     new Map(categoryProducts.map((p) => [p.subcategorySlug, { name: p.subcategory, slug: p.subcategorySlug }])).values()
@@ -507,10 +512,23 @@ export default async function CategoryPageES({ params }: Props) {
         <div className="container-site">
           <p className="text-sm text-neutral-500 mb-6">{categoryProducts.length} productos disponibles en Valencia</p>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {categoryProducts.map((product) => (
+            {visualProducts.map((product) => (
               <ProductCard key={product.slug} product={product} id={`cat-product-${product.slug}`} basePath="/es/product" />
             ))}
           </div>
+          {compactProducts.length > 0 && (
+            <div className="mt-12">
+              <h2 className="text-2xl font-bold mb-3">Más equipamiento disponible</h2>
+              <p className="text-neutral-600 mb-6 max-w-3xl">
+                Explora el resto de esta colección en Valencia. Cada ficha incluye los detalles actuales del alquiler y la disponibilidad por fechas.
+              </p>
+              <div className="grid md:grid-cols-2 gap-3">
+                {compactProducts.map((product) => (
+                  <CompactProductLink key={product.slug} product={product} basePath="/es/product" locale="es" />
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </section>
 

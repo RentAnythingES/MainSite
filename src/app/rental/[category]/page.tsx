@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { getProductsByCategoryFromDB } from "@/lib/product-service";
 import { getPublishedPosts } from "@/content/blog";
 import ProductCard from "@/components/ProductCard";
+import CompactProductLink from "@/components/CompactProductLink";
 import { getBreadcrumbJsonLd, getCategoryCollectionJsonLd, getFaqJsonLd } from "@/lib/jsonld";
 
 interface CategoryContent {
@@ -416,6 +417,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: meta.title,
     description: meta.description,
+    robots: category === "kids-family" ? { index: false, follow: true } : undefined,
     alternates: {
       canonical: `https://rentandroll.com/rental/${category}`,
       languages: {
@@ -439,6 +441,9 @@ export default async function CategoryPage({ params }: Props) {
   if (!meta) notFound();
 
   const categoryProducts = await getProductsByCategoryFromDB(category);
+  const visualProductLimit = categoryProducts.length > 36 ? 2 : 12;
+  const visualProducts = categoryProducts.slice(0, visualProductLimit);
+  const compactProducts = categoryProducts.slice(visualProductLimit);
 
   // Get unique subcategories
   const subcategories = Array.from(
@@ -539,7 +544,7 @@ export default async function CategoryPage({ params }: Props) {
         <div className="container-site">
           <p className="text-sm text-neutral-500 mb-6">{categoryProducts.length} products available in Valencia</p>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {categoryProducts.map((product) => (
+            {visualProducts.map((product) => (
               <ProductCard
                 key={product.slug}
                 product={product}
@@ -547,6 +552,19 @@ export default async function CategoryPage({ params }: Props) {
               />
             ))}
           </div>
+          {compactProducts.length > 0 && (
+            <div className="mt-12">
+              <h2 className="text-2xl font-bold mb-3">More Available Equipment</h2>
+              <p className="text-neutral-600 mb-6 max-w-3xl">
+                Browse the rest of this Valencia collection. Each listing includes current rental details and date-based availability.
+              </p>
+              <div className="grid md:grid-cols-2 gap-3">
+                {compactProducts.map((product) => (
+                  <CompactProductLink key={product.slug} product={product} />
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </section>
 

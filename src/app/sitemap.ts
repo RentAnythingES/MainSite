@@ -6,7 +6,7 @@ import { getPublishedSpanishPosts } from "@/content/blog-es";
 import { getPublishedDestinations } from "@/content/destinations";
 import { getPublishedSpanishDestinations } from "@/content/destinations-es";
 import { getIndexableProductsForSeo } from "@/lib/product-service";
-import { seoCategorySlugs } from "@/data/seo-clusters";
+import { indexableSeoCategorySlugs } from "@/data/seo-clusters";
 import { SITE_URL as BASE_URL } from "@/config/site";
 
 // Keep sitemap publication close to the product cache window so newly approved
@@ -35,7 +35,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   ];
 
   // Category pages
-  const categories = seoCategorySlugs;
+  const categories = indexableSeoCategorySlugs;
   const categoryPages: MetadataRoute.Sitemap = categories.map((cat) => ({
     url: `${BASE_URL}/rental/${cat}`,
     changeFrequency: "weekly" as const,

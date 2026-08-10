@@ -60,3 +60,13 @@ export const seoCategoryClusters = [
 export type SeoCategorySlug = (typeof seoCategoryClusters)[number]["slug"];
 
 export const seoCategorySlugs = seoCategoryClusters.map((cluster) => cluster.slug);
+
+// Kids & Family remains a valid catalogue classification, but it currently has no
+// active products. Keep the route available as noindex while excluding it from
+// crawlable commercial discovery until a reviewed membership set exists.
+export const indexableSeoCategoryClusters = seoCategoryClusters.filter(
+  (cluster) => cluster.slug !== "kids-family",
+);
+export const indexableSeoCategorySlugs = indexableSeoCategoryClusters.map(
+  (cluster) => cluster.slug,
+);
