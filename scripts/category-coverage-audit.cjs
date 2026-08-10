@@ -13,13 +13,16 @@ const publicCategories = new Set([
   "fitness-wellness",
 ]);
 
-for (const line of fs.readFileSync(path.join(process.cwd(), ".env.local"), "utf8").split(/\r?\n/)) {
-  const separator = line.indexOf("=");
-  if (separator < 1) continue;
-  process.env[line.slice(0, separator).trim()] = line
-    .slice(separator + 1)
-    .trim()
-    .replace(/^['"]|['"]$/g, "");
+const envPath = path.join(process.cwd(), ".env.local");
+if (fs.existsSync(envPath)) {
+  for (const line of fs.readFileSync(envPath, "utf8").split(/\r?\n/)) {
+    const separator = line.indexOf("=");
+    if (separator < 1) continue;
+    process.env[line.slice(0, separator).trim()] = line
+      .slice(separator + 1)
+      .trim()
+      .replace(/^['"]|['"]$/g, "");
+  }
 }
 
 async function main() {

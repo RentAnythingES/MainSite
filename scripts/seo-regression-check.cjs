@@ -47,6 +47,7 @@ const categoryChecks = [
   },
   {
     slug: "kids-family",
+    indexable: false,
     pathways: ["/valencia/kits/toddler-city-kit", "/valencia/kits/family-beach-kit"],
     englishPathways: ["/blog/valencia-with-kids-complete-guide"],
     spanishPathways: ["/es/blog/valencia-with-kids-complete-guide"],
@@ -149,13 +150,28 @@ function robotsMeta(html) {
   return html.match(/<meta[^>]+name="robots"[^>]+content="([^"]+)"[^>]*>/i)?.[1] || "";
 }
 
+function decodeHtmlEntities(value) {
+  return String(value || "")
+    .replace(/&#x([0-9a-f]+);/gi, (_, code) => String.fromCodePoint(Number.parseInt(code, 16)))
+    .replace(/&#(\d+);/g, (_, code) => String.fromCodePoint(Number.parseInt(code, 10)))
+    .replace(/&amp;/gi, "&")
+    .replace(/&quot;/gi, '"')
+    .replace(/&#39;|&apos;/gi, "'")
+    .replace(/&lt;/gi, "<")
+    .replace(/&gt;/gi, ">");
+}
+
 function assertPathway(html, pathway, context) {
   assert(html.includes(`href="${pathway}"`), `${context} is missing pathway ${pathway}`);
 }
 
 function assertPageEnhancements(html, expectedText = [], schemaTypes = [], context) {
+  const decodedHtml = decodeHtmlEntities(html);
   for (const text of expectedText) {
-    assert(html.includes(text), `${context} is missing required copy: ${text}`);
+    assert(
+      html.includes(text) || decodedHtml.includes(decodeHtmlEntities(text)),
+      `${context} is missing required copy: ${text}`
+    );
   }
   for (const schemaType of schemaTypes) {
     assert(
@@ -244,6 +260,19 @@ async function main() {
     assert(alternate(categoryPage.es, "en") === englishUrl, `${categoryPage.slug} Spanish page lacks English hreflang`);
     assert(alternate(categoryPage.es, "es") === spanishUrl, `${categoryPage.slug} Spanish page lacks Spanish hreflang`);
 
+    if (categoryPage.indexable === false) {
+      assert(robotsMeta(categoryPage.en).includes("noindex"), `${categoryPage.slug} English category should be noindex`);
+      assert(robotsMeta(categoryPage.es).includes("noindex"), `${categoryPage.slug} Spanish category should be noindex`);
+      assert(!sitemap.includes(englishUrl), `${categoryPage.slug} English category leaked into the sitemap`);
+      assert(!sitemap.includes(spanishUrl), `${categoryPage.slug} Spanish category leaked into the sitemap`);
+      continue;
+    }
+
+    assert(!robotsMeta(categoryPage.en).includes("noindex"), `${categoryPage.slug} English category is unexpectedly noindex`);
+    assert(!robotsMeta(categoryPage.es).includes("noindex"), `${categoryPage.slug} Spanish category is unexpectedly noindex`);
+    assert(sitemap.includes(englishUrl), `${categoryPage.slug} English category is missing from the sitemap`);
+    assert(sitemap.includes(spanishUrl), `${categoryPage.slug} Spanish category is missing from the sitemap`);
+
     for (const pathway of categoryPage.pathways) {
       assertPathway(categoryPage.en, pathway, `${categoryPage.slug} English category`);
       assertPathway(categoryPage.es, `/es${pathway}`, `${categoryPage.slug} Spanish category`);
@@ -311,7 +340,11 @@ async function main() {
     );
   }
   assert(!robots.includes("Disallow: /_next/"), "Next.js rendering assets are blocked");
-  assert(robots.includes("Disallow: /admin/"), "Admin routes are not blocked in robots.txt");
+  const blocksAllCrawling = /^Disallow:\s*\/\s*$/m.test(robots);
+  assert(
+    blocksAllCrawling || robots.includes("Disallow: /admin/"),
+    "Admin routes are not blocked in robots.txt"
+  );
   assert(
     sitemap.includes(`https://rentandroll.com/product/${productSlug}`),
     "Reference product is missing from the sitemap"
@@ -497,7 +530,7 @@ async function main() {
   assert(alternate(aboutPageEs, "en") === "https://rentandroll.com/about", "Spanish About lacks English hreflang");
   assertPageEnhancements(
     aboutPage,
-    ["Travel light.", "Feel at home.", "Cleaned and checked"],
+    ["Travel light.", "Rent what you need.", "Cleaned and checked"],
     ["AboutPage", "Organization"],
     "About page"
   );

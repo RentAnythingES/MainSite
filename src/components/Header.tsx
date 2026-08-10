@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { seoCategoryClusters } from "@/data/seo-clusters";
+import { indexableSeoCategoryClusters } from "@/data/seo-clusters";
 import { SITE_IDENTITY } from "@/config/site";
 
 const localizedRoutePairs = [
@@ -61,7 +61,7 @@ export default function Header() {
         : "/es";
   const switchLocaleLabel = isSpanish ? "EN 🇬🇧" : "ES 🇪🇸";
 
-  const categories = seoCategoryClusters.map((category) => ({
+  const categories = indexableSeoCategoryClusters.map((category) => ({
     name: isSpanish ? category.nameEs : category.nameEn,
     href: `${prefix}/rental/${category.slug}`,
     emoji: category.emoji,

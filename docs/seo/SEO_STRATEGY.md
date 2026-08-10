@@ -1,5 +1,5 @@
 # Rent&Roll — SEO Strategy & Audit
-> **Last updated**: 2026-07-24 · **Build**: ✅ Clean · **Indexability-ready pages after sitemap refresh**: 212
+> **Last updated**: 2026-08-10 · **Canonical migration**: deployed · **Prepared sitemap URLs**: 364
 
 This is the **living SEO strategy document** for rentandroll.com. Updated after every SEO-related change. For prioritized fixes, see [SEO_ROADMAP.md](./SEO_ROADMAP.md).
 
@@ -16,32 +16,27 @@ This is the **living SEO strategy document** for rentandroll.com. Updated after 
 
 ---
 
-## Current Portfolio Baseline — 24 July 2026
+## Current Portfolio Baseline — 10 August 2026
 
-The live sitemap and database readiness audit are the authoritative inventory sources.
-Several older counts farther down this document are retained as historical milestones.
+`https://rentandroll.com` is the deployed canonical origin. The latest deployed
+full crawl receipt covers 360 sitemap URLs with zero errors, warnings, broken
+links, broken images, or orphans. The verified release candidate contains 364
+URLs: six Spanish product owners were restored and both empty Kids & Family
+category URLs were removed. Search Console and Keyword Planner research are
+complete; GA remains a separate user-owned analytics task.
 
 | Layer | English | Spanish | Current role |
 |-------|---------|---------|--------------|
-| Commercial category hubs | 7 | 7 | Broad transactional query owners |
-| Indexable product pages | 37 | 37 | Exact-item and model-level demand |
+| Commercial category hubs | 6 | 6 | Broad transactional owners; empty Kids & Family routes are temporarily noindex |
+| Indexable product pages | 114 | 114 | Exact-item and model demand with EN/ES eligibility parity |
 | Blog articles | 8 | 8 | Planning, comparison, seasonal and tutorial intent |
 | Discover sub-hubs | 5 | 5 | Beaches, neighbourhoods, attractions, day trips and events |
 | Discover guides | 26 | 26 | Valencia destination and situational planning |
 | Kit detail pages | 8 | 8 | Multi-item use cases and bundle discovery |
 
-The post-fix local production crawl contains 200 sitemap URLs and reports zero page
-errors, warnings, orphan pages, pages beyond three clicks, indexable internal URLs
-missing from the sitemap, or broken internal images. The four retired product URLs
-are gone and the 12 newly indexable product URLs are present. Sitemap revalidation
-now matches the five-minute public product cache instead of retaining product-state
-changes for up to one hour. One stale Spanish blog link found by the crawl was also
-updated to the current compact beach shelter slug.
-After subsequent catalogue approvals and the 24 July localization pass, the next
-sitemap render contains 212 URLs: 37 English and 37 Spanish product pages. The
-Dreame fan, Thule bike trailer, and PUKY toddler bike are indexable in both locales.
-The Dreame image still has an internal `unknown` rights status and requires separate
-documentation.
+Older counts farther down this document are historical milestones. Use the current
+database readiness audit, generated sitemap, and regression suite as the release
+inventory authorities.
 
 Discover category widgets are bounded previews rather than full catalogue dumps.
 The 24 July performance pass reduced the Malvarrosa guide artifact from 181,413
@@ -49,34 +44,31 @@ to 122,143 bytes while retaining product previews and a labelled route to the
 complete category. See
 [DISCOVER_PERFORMANCE_AUDIT_20260724.md](./DISCOVER_PERFORMANCE_AUDIT_20260724.md).
 
-All active, non-legacy `content_ready` products now have at least three reviewed
-FAQs in both English and Spanish. The readiness audit enforces that parity so a
-future editorial publication cannot silently omit decision-support content or
-FAQPage structured data in one locale.
+FAQ coverage is an informational quality measure, not a universal publication or
+indexability gate. Add product FAQs only where they answer a genuine customer
+decision and emit FAQ structured data only for visible answers.
 
-The 24 July category review found one remaining bilingual structured-content gap:
-the Kids & Family hub had strong editorial copy and internal pathways but no
-customer-decision FAQ section. Four English and Spanish questions now cover
-catalogue scope, child suitability, fulfillment, and when to use a family kit;
-the visible answers feed the existing FAQPage schema in both locales.
+Kids & Family currently has no active assigned products. Its EN/ES routes remain
+available for a future reviewed membership set but emit `noindex, follow` and are
+absent from the sitemap and primary commercial navigation.
 
 ### Commercial cluster depth
 
 | Cluster | EN / ES indexable products | Main supporting layers | Expansion posture |
 |---------|----------------------------|------------------------|-------------------|
-| Beach & Outdoor | 15 / 15 | Category, Family Beach kit, beach/summer blogs, 4 beach guides | Strongest current cluster; optimize measured winners before adding more broad pages |
-| Baby & Toddler | 7 / 7 | Category, Baby Arrival and Toddler City kits, 3 family/baby articles | Strong; add narrow decision content only where query ownership is distinct |
-| Mobility & Accessibility | 5 / 5 | Category, 2 accessibility kits, accessibility guide, accessible local guides | Expand commercial comparisons and verified accessibility planning |
-| Remote Work | 3 / 3 | Category, Remote Work kit, nomad guide, home-office tutorial | Coherent cluster; deepen exact workstation and temporary-stay decisions |
-| Apartment Comfort | 5 / 5 | Category, Summer and Long-Stay kits, bilingual summer cooling decision guide | Cooling choice is now covered; deepen only from measured long-stay demand |
-| Kids & Family | 1 / 1 | Category, 2 shared kits, 2 family articles | Bilingual product support is live; expand only with verified inventory and distinct demand |
-| Sports & Wellness | 1 / 1 | Category, Turia Gardens guide and product-level pathways | Newly opened cluster; expand only as approved sports inventory becomes available |
+| Beach & Outdoor | 44 / 44 | Category, Family Beach kit, beach/summer blogs, 4 beach guides | Strongest cluster; bounded rendering preserves every product link without oversized cards |
+| Baby & Toddler | 33 / 33 | Category, Baby Arrival and Toddler City kits, family/baby articles | Strong; add narrow decision content only where ownership is distinct |
+| Mobility & Accessibility | 11 / 11 | Category, 2 accessibility kits, accessibility guide, local guides | Expand verified accessibility decisions |
+| Remote Work | 6 / 6 | Category, Remote Work kit, nomad guide, home-office tutorial | Deepen exact workstation and temporary-stay decisions |
+| Apartment Comfort | 8 / 8 | Category, Summer and Long-Stay kits, cooling guide | Deepen only from measured long-stay demand |
+| Kids & Family | 0 / 0 | Temporarily noindex routes; kits and family articles remain live | Restore only after reviewed product membership creates a useful selection |
+| Sports & Wellness | 12 / 12 | Category, Turia Gardens guide and product pathways | Expand only with approved inventory and distinct demand |
 
 ---
 
 ## Strategic Direction
 
-The SEO system should support the brand promise: **Travel light. Feel at home.**
+The SEO system should support the brand promise: **Travel light. Rent what you need.**
 
 Rent&Roll should not behave like a generic rental catalogue. The core funnel should become:
 

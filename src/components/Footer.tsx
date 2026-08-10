@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { seoCategoryClusters } from "@/data/seo-clusters";
+import { indexableSeoCategoryClusters } from "@/data/seo-clusters";
 import { SITE_IDENTITY } from "@/config/site";
 
 export default function Footer() {
@@ -32,7 +32,7 @@ export default function Footer() {
     ],
     [isSpanish ? "Categorías" : "Categories"]: [
       { name: "Kits", href: `${prefix}/valencia/kits` },
-      ...seoCategoryClusters.map((category) => ({
+      ...indexableSeoCategoryClusters.map((category) => ({
         name: isSpanish ? category.nameEs : category.nameEn,
         href: `${prefix}/rental/${category.slug}`,
       })),

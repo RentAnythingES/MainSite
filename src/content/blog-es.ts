@@ -326,7 +326,7 @@ export const spanishBlogPosts: BlogPost[] = [
         paragraphs: [
           "Trae de casa la medicación, los objetos de apego, la documentación y cualquier producto específico que el niño necesite. Pañales, alimentación básica y productos de higiene se encuentran con facilidad en supermercados y farmacias, aunque una marca concreta puede no estar disponible.",
           "El equipamiento voluminoso merece otra valoración. Un cochecito, una <a href=\"/es/product/travel-crib\">cuna de viaje</a>, una trona o una silla de coche ocupan espacio y pueden sufrir daños durante el vuelo. Alquilarlos localmente puede simplificar el aeropuerto y permite recibirlos directamente en el alojamiento.",
-          "Compara el <a href=\"/es/rental/baby-gear\">equipamiento para bebés</a> y la selección de <a href=\"/es/rental/kids-family\">artículos para niños y familias</a>. Antes de confirmar, revisamos las fechas, la entrega y la compatibilidad del producto con la edad, talla o espacio disponible.",
+          "Compara el <a href=\"/es/rental/baby-gear\">equipamiento para bebés</a> o configura un <a href=\"/es/valencia/kits/toddler-city-kit\">kit urbano para peques</a>. Antes de confirmar, revisamos las fechas, la entrega y la compatibilidad del producto con la edad, talla o espacio disponible.",
         ],
       },
     ],
@@ -364,9 +364,9 @@ export const spanishBlogPosts: BlogPost[] = [
         description: "Cochecitos, cunas, tronas y sillas infantiles para tu estancia",
       },
       {
-        title: "Artículos para niños y familias",
-        href: "/es/rental/kids-family",
-        description: "Equipamiento práctico para vacaciones familiares en Valencia",
+        title: "Kit urbano para peques",
+        href: "/es/valencia/kits/toddler-city-kit",
+        description: "Configura una selección práctica para recorrer Valencia con niños pequeños",
       },
       {
         title: "Cochecito compacto",

@@ -21,7 +21,6 @@ export const metadata: Metadata = {
 
 const categoryCards = [
   { ...t.categories.babyGear, slug: "baby-gear", image: "/categories/baby-gear.webp" },
-  { name: "Niños y Familia", desc: "Bicicletas, juegos, juguetes y actividades familiares", slug: "kids-family", image: "/discover/turia-gardens-hero.webp" },
   { ...t.categories.mobility, slug: "mobility", image: "/categories/mobility.webp" },
   { ...t.categories.remoteWork, slug: "remote-work", image: "/categories/remote-work.webp" },
   { ...t.categories.homeLiving, slug: "home-living", image: "/categories/home-living.webp" },
