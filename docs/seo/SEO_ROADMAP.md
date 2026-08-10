@@ -5,10 +5,10 @@
 
 ## Current SEO audit priorities — 10 August 2026
 
-- [ ] Complete deployment verification for governed multi-category membership:
-  confirm unique EN/ES grids, 6 Mobility products, 49 Travel & Outdoors products,
-  15 Sports & Wellness products, stable product canonicals/breadcrumbs, and the
-  existing Beach entry cards.
+- [x] Deployed and verified governed multi-category membership in EN and ES:
+  6 unique Mobility products, 49 unique Travel & Outdoors products, and 15 unique
+  Sports & Wellness products; stable product canonicals, no duplicate product
+  links, and the existing Beach entry cards remain first in Travel & Outdoors.
 
 - [x] Restore Spanish SEO eligibility for the six active English owners previously
   excluded in ES: `bed-rail-for-kids`, `convertible-car-seat`, `seat-booster`,

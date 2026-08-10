@@ -3,12 +3,11 @@
 > Last updated: 2026-08-10. Purpose: track product capabilities separately from SEO content, search demand
 > validation and technical SEO work.
 
-## In implementation
+## Completed
 
 ### Multi-category product membership
 
-- **Status:** Production schema and first guarded taxonomy repair applied;
-  application deployment and live rendering verification in progress.
+- **Status:** Deployed and live-verified on 2026-08-10.
 - **Priority:** P1 product architecture.
 - **Problem:** Products can currently have only one `category_id`, although a
   customer may reasonably expect the same item under several need-based
@@ -40,6 +39,10 @@
   category reads, create/edit controls, CSV and Excel import/export support, and a
   guarded repair moving five transport products from Mobility to Travel & Outdoors.
   The three bike carriers also use Fitness & Wellness as secondary discovery.
+- **Live verification:** EN and ES render 6 unique Mobility products, 49 unique
+  Travel & Outdoors products, and 15 unique Sports & Wellness products. The five
+  moved products retain their existing product URLs and canonicals; no duplicate
+  product links were introduced.
 - **SEO relationship:** SEO Strategy defines how memberships affect discovery and
   ownership, but this capability remains a product-platform project. SEO audit
   work can continue independently.
