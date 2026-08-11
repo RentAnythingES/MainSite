@@ -2,6 +2,13 @@ import type { NextConfig } from "next";
 
 const productSlugReplacements = [
   ["Camping%20Kitchen", "outsunny-folding-camping-kitchen-a20-381v00gy"],
+  ["car-seat-infant", "maxi-cosi-pebble-360-pro2-infant-car-seat"],
+  ["infant-car-seat-0-15-months", "maxi-cosi-pebble-360-pro2-infant-car-seat"],
+  ["car-seat-britax-i-size", "moni-serengeti-i-size-car-seat"],
+  ["child-car-seat-15-months", "moni-serengeti-i-size-car-seat"],
+  ["convertible-car-seat", "peg-perego-viaggio1-duo-fix-car-seat"],
+  ["kinderkraft-i-boost-2-booster-seat", "kinderkraft-i-spark-2-plus-i-size-car-seat"],
+  ["booster-car-seat-5-years", "kinderkraft-i-spark-2-plus-i-size-car-seat"],
 ] as const;
 
 const nextConfig: NextConfig = {

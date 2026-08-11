@@ -51,21 +51,22 @@
 
 No product-roadmap items are recorded as completed in this document yet.
 
-## Open catalogue verification
+## Catalogue corrections ready for release
 
-### Resolve two contradictory car-seat records
+### Replace the contradictory car-seat records
 
-- **Priority:** P1 safety and catalogue integrity.
-- **`car-seat-infant`:** The core record and Spanish page identify a rear-facing
-  infant seat for 45–87 cm / up to 13 kg, while the English localization describes
-  a different Unico Evo 40–150 cm rotating seat. Inspect the physical unit, approval
-  label, model number, manual and included installation parts before choosing which
-  identity is correct. Do not promote this record from the car-seat family owner
-  until the contradiction is resolved.
-- **`seat-booster`:** The record lacks a verified brand/model and mixes 1.2 kg and
-  under-1 kg product facts, while the English copy makes unsupported absolute-safety
-  claims. Inspect the physical label/manual and confirm its exact child range,
-  approval and installation before rewriting or promoting it.
-- **Guardrail:** Do not infer either identity from the current image or copy. Keep
-  both existing listings operational but outside the governed family comparison
-  until the physical evidence is recorded and reviewed.
+- **Priority:** P1 catalogue integrity and revenue protection.
+- **Confirmed catalogue:** four distinct named seats—Moni Serengeti i-Size,
+  Maxi-Cosi Pebble 360 Pro2 without base, Peg Perego Viaggio1 Duo-Fix Rouge and
+  Kinderkraft I-SPARK 2 PLUS i-Size—plus one generic backless-booster listing.
+- **Generic boosters:** the business owns three interchangeable units. They remain
+  one model-neutral customer listing with stock and online capacity set to three;
+  they must not be split into invented brand/model pages.
+- **Preservation rule:** keep the existing product UUIDs so prices, booking history
+  and operational references remain attached while false names, slugs, copy and
+  images are replaced.
+- **Release state:** the rollback preview, production build and rendered EN/ES
+  regression passed. The production database correction is applied; the matching
+  route redirects and five-product family configuration are included in this release.
+- **Evidence:** see
+  [`docs/seo/CAR_SEAT_CATALOGUE_CORRECTION_2026-08-11.md`](seo/CAR_SEAT_CATALOGUE_CORRECTION_2026-08-11.md).
