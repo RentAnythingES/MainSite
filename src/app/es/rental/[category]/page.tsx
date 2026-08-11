@@ -53,7 +53,7 @@ const categoryMetaES: Record<string, CategoryContent> = {
       "Los recorridos y los accesos de los alojamientos cambian según la zona de Valencia. Un ascensor amplio, un traslado en taxi, un paseo marítimo pavimentado y un edificio antiguo con escalones exigen soluciones distintas; revisa los trayectos y espacios concretos de tu estancia.",
     ],
     familyHeading: "¿Necesitas ayuda para comparar productos similares?",
-    familyDescription: "El catálogo completo aparece arriba. Estas guías específicas te ayudan a comparar cochecitos o sillas de coche cuando necesitas más detalle.",
+    familyDescription: "El catálogo completo aparece arriba. Estas páginas te ayudan a comparar cochecitos, sillas de coche o equipos de descanso cuando necesitas más detalle.",
     familyPathways: [
       {
         eyebrow: "Colección de cochecitos",
@@ -66,6 +66,12 @@ const categoryMetaES: Record<string, CategoryContent> = {
         title: "Compara sillas de coche de alquiler en Valencia",
         description: "Compara opciones para bebés, giratorias, orientadas hacia delante y elevadores en un solo lugar.",
         href: "/es/rental/baby-gear/car-seats",
+      },
+      {
+        eyebrow: "Colección de descanso",
+        title: "Compara cunas de viaje en Valencia",
+        description: "Consulta las opciones actuales y comprueba medidas, elementos incluidos, precios y fechas.",
+        href: "/es/rental/baby-gear/travel-cots-cribs",
       },
     ],
     featuredHeading: "Planifica una estancia más sencilla con un bebé",
@@ -166,13 +172,19 @@ const categoryMetaES: Record<string, CategoryContent> = {
       "Empieza por el tipo de apoyo que necesitas: scooter para recorridos pavimentados adecuados, silla de ruedas para movilidad sentada o andador para apoyo al caminar. Cada ficha explica los límites de ajuste, acceso, transporte y uso correspondientes.",
     ],
     familyHeading: "Compara los equipos de movilidad por tipo",
-    familyDescription: "El catálogo completo aparece arriba. Utiliza la guía de scooters si quieres ayuda para comparar modelos similares.",
+    familyDescription: "El catálogo completo aparece arriba. Utiliza las páginas de scooters o sillas de ruedas para comparar opciones similares.",
     familyPathways: [
       {
         eyebrow: "Scooters de movilidad",
         title: "Comparar scooters de movilidad en Valencia",
         description: "Compara transporte, espacio de giro, capacidad, almacenamiento y tipo de recorrido antes de elegir.",
         href: "/es/rental/mobility/mobility-scooters",
+      },
+      {
+        eyebrow: "Sillas de ruedas",
+        title: "Comparar sillas de ruedas en Valencia",
+        description: "Consulta las opciones actuales según la propulsión, el transporte, las medidas y los accesos.",
+        href: "/es/rental/mobility/wheelchairs",
       },
     ],
     featuredHeading: "Planifica un viaje accesible en Valencia",

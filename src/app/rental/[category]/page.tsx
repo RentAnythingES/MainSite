@@ -58,7 +58,7 @@ const categoryMeta: Record<string, CategoryContent> = {
     ],
     blogTags: ["family", "kids"],
     familyHeading: "Need help comparing similar products?",
-    familyDescription: "The complete catalogue is shown above. These focused guides can help you compare stroller or car-seat options when you want more detail.",
+    familyDescription: "The complete catalogue is shown above. These focused pages help with stroller, car-seat or sleep-equipment decisions when you want more detail.",
     familyPathways: [
       {
         eyebrow: "Stroller collection",
@@ -71,6 +71,12 @@ const categoryMeta: Record<string, CategoryContent> = {
         title: "Compare Car Seat Rentals in Valencia",
         description: "Compare infant, rotating, forward-facing and booster options in one place.",
         href: "/rental/baby-gear/car-seats",
+      },
+      {
+        eyebrow: "Sleep collection",
+        title: "Compare Travel Cots and Cribs in Valencia",
+        description: "Browse current sleep options and check dimensions, inclusions, prices and dates.",
+        href: "/rental/baby-gear/travel-cots-cribs",
       },
     ],
     featuredHeading: "Plan a Smoother Valencia Stay with a Baby",
@@ -175,13 +181,19 @@ const categoryMeta: Record<string, CategoryContent> = {
     ],
     blogTags: ["mobility", "accessibility"],
     familyHeading: "Compare mobility equipment by type",
-    familyDescription: "The complete catalogue is shown above. Use the focused scooter guide if you want help comparing similar models.",
+    familyDescription: "The complete catalogue is shown above. Use the focused scooter or wheelchair pages when you want help comparing similar options.",
     familyPathways: [
       {
         eyebrow: "Mobility scooters",
         title: "Compare mobility scooters for Valencia",
         description: "Compare transportability, turning space, user capacity, storage and route requirements before choosing.",
         href: "/rental/mobility/mobility-scooters",
+      },
+      {
+        eyebrow: "Wheelchairs",
+        title: "Compare wheelchair rentals in Valencia",
+        description: "Browse current wheelchair options by propulsion, transport, dimensions and access needs.",
+        href: "/rental/mobility/wheelchairs",
       },
     ],
     featuredHeading: "Plan Accessible Travel in Valencia",

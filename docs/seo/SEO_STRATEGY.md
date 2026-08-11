@@ -1,5 +1,5 @@
 # Rent&Roll — SEO Strategy & Audit
-> **Last updated**: 2026-08-11 · **Canonical migration**: deployed · **Production sitemap URLs**: 370
+> **Last updated**: 2026-08-11 · **Canonical migration**: deployed · **Release sitemap URLs**: 374
 
 This is the **living SEO strategy document** for rentandroll.com. Updated after every SEO-related change. For prioritized fixes, see [SEO_ROADMAP.md](./SEO_ROADMAP.md).
 
@@ -10,6 +10,7 @@ This is the **living SEO strategy document** for rentandroll.com. Updated after 
 | Document | Purpose |
 |----------|---------|
 | **This file** (`SEO_STRATEGY.md`) | Current site state, metrics, cluster health |
+| [CORE_KEYWORD_OWNERSHIP.md](./CORE_KEYWORD_OWNERSHIP.md) | Preferred generic owners, supporting product roles and anti-cannibalization rules |
 | [SEO_ROADMAP.md](./SEO_ROADMAP.md) | Prioritized action items and fixes |
 | [COMPETITOR_REFERENCE.md](./COMPETITOR_REFERENCE.md) | Crawl-verified competitor data |
 | [BLOG_CONTENT_STRATEGY.md](./BLOG_CONTENT_STRATEGY.md) | Blog quality standards and content pipeline |
@@ -19,20 +20,25 @@ This is the **living SEO strategy document** for rentandroll.com. Updated after 
 ## Current Portfolio Baseline — 11 August 2026
 
 `https://rentandroll.com` is the deployed canonical origin. The 11 August 2026
-production crawl covers all 370 sitemap URLs with zero page errors, warnings,
+production crawl covers all 370 pre-release sitemap URLs with zero page errors, warnings,
 orphans, broken links or broken images. Every sitemap page is within three clicks
 of the homepage and 183 EN/ES hreflang pairs validate. Six Spanish product owners
 were restored, both empty Kids & Family category URLs remain excluded, and governed
-bilingual product-family owners are live for mobility scooters, strollers and car seats.
+bilingual product-family owners are live for mobility scooters, strollers and car seats;
+wheelchair and travel-cot/crib owners are the current release candidates.
 Search Console
 and Keyword Planner research are complete; GA remains a separate user-owned
 analytics task. See
 [TECHNICAL_SEO_AUDIT_20260811.md](./TECHNICAL_SEO_AUDIT_20260811.md).
 
+The current release build adds four bilingual family-owner URLs and produces a
+374-URL sitemap. The full rendered regression passes locally against live catalogue
+data; production verification follows the batched deployment.
+
 | Layer | English | Spanish | Current role |
 |-------|---------|---------|--------------|
 | Commercial category hubs | 6 | 6 | Broad transactional owners; empty Kids & Family routes are temporarily noindex |
-| Product-family owners | 3 | 3 | Narrow transactional owners for mobility-scooter, stroller and car-seat selection intent |
+| Product-family owners | 5 | 5 | Narrow transactional owners for mobility scooters, wheelchairs, strollers, car seats and travel cots/cribs |
 | Indexable product pages | 114 | 114 | Exact-item and model demand with EN/ES eligibility parity |
 | Blog articles | 8 | 8 | Planning, comparison, seasonal and tutorial intent |
 | Discover sub-hubs | 5 | 5 | Beaches, neighbourhoods, attractions, day trips and events |
@@ -67,8 +73,8 @@ record, or keyword owner.
 | Cluster | EN / ES indexable products | Main supporting layers | Expansion posture |
 |---------|----------------------------|------------------------|-------------------|
 | Beach & Outdoor | 49 / 49 | Category, Family Beach kit, beach/summer blogs, 4 beach guides | Strongest cluster; the category visibly merchandises every active member as a full card |
-| Baby & Toddler | 33 / 33 | Category, stroller and car-seat family owners, Baby Arrival and Toddler City kits, family/baby articles | Governed families own unmodified selection intent; products retain exact-item intent |
-| Mobility & Accessibility | 6 / 6 | Category, mobility-scooter family owner, 2 accessibility kits, accessibility guide, local guides | First narrow family owner implemented; retain wheelchair intent at the broad category until its own reviewed owner is justified |
+| Baby & Toddler | 33 / 33 | Category, stroller, car-seat and cot/crib family owners, Baby Arrival and Toddler City kits, family/baby articles | Governed families own unmodified selection intent; products retain exact-item intent |
+| Mobility & Accessibility | 6 / 6 | Category, mobility-scooter and wheelchair family owners, 2 accessibility kits, accessibility guide, local guides | Family owners handle generic type-selection intent; exact products retain their modifiers |
 | Remote Work | 6 / 6 | Category, Remote Work kit, nomad guide, home-office tutorial | Deepen exact workstation and temporary-stay decisions |
 | Apartment Comfort | 8 / 8 | Category, Summer and Long-Stay kits, cooling guide | Deepen only from measured long-stay demand |
 | Kids & Family | 0 / 0 | Temporarily noindex routes; kits and family articles remain live | Restore only after reviewed product membership creates a useful selection |
@@ -83,15 +89,16 @@ category identity in the visible H1.
 
 | Owner | Live scope | Status |
 |-------|------------|--------|
-| Baby & Toddler | 33 products; stroller and car-seat families have separate narrow owners | Aligned: broad category owns the full baby-equipment shop; family pages own selection intent and follow the complete category catalogue |
+| Baby & Toddler | 33 products; stroller, car-seat and cot/crib families have separate narrow owners | Aligned: broad category owns the full baby-equipment shop; family pages own selection intent and follow the complete category catalogue |
 | Kids & Family | 0 products | Correctly held at `noindex, follow` and excluded from commercial discovery until useful reviewed membership exists |
-| Mobility & Accessibility | 6 products; three scooters have a separate family owner | Aligned: broad category retains wheelchair, walker and general mobility intent; scooter owner handles only scooter comparison intent |
+| Mobility & Accessibility | 6 products; scooters and wheelchairs have separate family owners | Aligned: broad category retains general mobility intent; family owners handle type selection and exact products retain their modifiers |
 | Remote Work | 6 products | Aligned: the broad workstation owner matches monitors, desk and chair inventory |
 | Apartment Comfort | 8 products spanning cooling, air quality, cleaning and practical home equipment | Visible H1, breadcrumb, schema name and intro corrected to the broad category. AC-only metadata remains an explicit review item because it conflicts with the approved broad owner |
 | Beach & Outdoor | 49 products spanning beach, camping, water, transport and outdoor equipment | Needs review: the current beach-only H1 and metadata are narrower than the catalogue. Do not change them without an approved ownership decision |
 | Sports & Wellness | 15 products spanning sport, fitness and recovery, plus three secondary bike-carrier memberships | Heading ownership is broad enough. Supporting body copy needs a later content review because it still over-emphasises the original tennis/padel launch inventory |
 
-The three published family owners—mobility scooters, strollers and car seats—show
+The five published family owners—mobility scooters, wheelchairs, strollers, car seats
+and travel cots/cribs—show
 their complete governed product sets before guidance and do not replace or hide the
 parent category catalogue. Product pages remain the sole exact-item/model owners;
 secondary category membership does not create duplicate product URLs.
@@ -151,7 +158,7 @@ rentandroll.com/
 │   ├── /rental/home-living
 │   ├── /rental/travel-outdoors
 │   ├── /rental/kids-family
-│   └── /rental/[category]/[family] Governed family owners (mobility scooters, strollers, car seats)
+│   └── /rental/[category]/[family] Governed family owners (scooters, wheelchairs, strollers, car seats, cots/cribs)
 │
 ├── /blog/                          Blog hub (8 posts live per locale)
 │   └── /blog/[slug]                Individual posts (Article + FAQ JSON-LD)

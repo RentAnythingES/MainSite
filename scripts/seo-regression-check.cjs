@@ -45,6 +45,26 @@ const allFamilyChecks = [
     requiredEnglishText: ["How to choose a car seat for your Valencia stay"],
     requiredSpanishText: ["Cómo elegir una silla de coche para tu estancia"],
   },
+  {
+    name: "Wheelchair",
+    path: "/rental/mobility/wheelchairs",
+    productSlug: "transport-wheelchair",
+    productSlugs: ["transport-wheelchair", "mobility-power-wheelchair"],
+    expectedEnglishH1: "Wheelchair rental in Valencia",
+    expectedSpanishH1: "Alquiler de sillas de ruedas en Valencia",
+    requiredEnglishText: ["How to choose a wheelchair for your stay"],
+    requiredSpanishText: ["Cómo elegir una silla de ruedas para la estancia"],
+  },
+  {
+    name: "Travel-cot",
+    path: "/rental/baby-gear/travel-cots-cribs",
+    productSlug: "travel-cot",
+    productSlugs: ["travel-cot", "travel-crib", "bedside-crib", "baby-bed-60x120"],
+    expectedEnglishH1: "Travel cot and crib rental in Valencia",
+    expectedSpanishH1: "Alquiler de cunas de viaje en Valencia",
+    requiredEnglishText: ["How to choose a cot or crib for your stay"],
+    requiredSpanishText: ["Cómo elegir una cuna para la estancia"],
+  },
 ];
 const familyChecks = configuredFamilyName
   ? allFamilyChecks.filter((familyCheck) => familyCheck.name === configuredFamilyName)
@@ -98,16 +118,19 @@ const categoryChecks = [
     comparisonPathways: [
       "/rental/baby-gear/strollers",
       "/rental/baby-gear/car-seats",
+      "/rental/baby-gear/travel-cots-cribs",
     ],
     englishPathways: [
       "/rental/baby-gear/strollers",
       "/rental/baby-gear/car-seats",
+      "/rental/baby-gear/travel-cots-cribs",
       "/blog/valencia-with-kids-complete-guide",
       "/blog/rent-vs-buy-baby-gear-valencia",
     ],
     spanishPathways: [
       "/es/rental/baby-gear/strollers",
       "/es/rental/baby-gear/car-seats",
+      "/es/rental/baby-gear/travel-cots-cribs",
       "/es/blog/valencia-with-kids-complete-guide",
       "/es/blog/rent-vs-buy-baby-gear-valencia",
     ],
@@ -129,9 +152,9 @@ const categoryChecks = [
     expectedEnglishH1: "Mobility Equipment Rental in Valencia",
     expectedSpanishH1: "Alquiler de Equipos de Movilidad en Valencia",
     pathways: ["/valencia/kits/accessible-valencia-kit"],
-    comparisonPathways: ["/rental/mobility/mobility-scooters"],
-    englishPathways: ["/blog/wheelchair-accessibility-valencia"],
-    spanishPathways: ["/es/blog/wheelchair-accessibility-valencia"],
+    comparisonPathways: ["/rental/mobility/mobility-scooters", "/rental/mobility/wheelchairs"],
+    englishPathways: ["/rental/mobility/wheelchairs", "/blog/wheelchair-accessibility-valencia"],
+    spanishPathways: ["/es/rental/mobility/wheelchairs", "/es/blog/wheelchair-accessibility-valencia"],
     requiredEnglishText: ["Mobility Equipment Rental in Valencia: FAQs"],
     requiredSpanishText: ["Preguntas sobre el alquiler de movilidad en Valencia"],
     requiredSchemaTypes: ["FAQPage"],
@@ -461,6 +484,10 @@ async function main() {
     assert(alternate(familyPage.es, "en") === englishUrl, `Spanish ${familyPage.name} family lacks English hreflang`);
     assert(!robotsMeta(familyPage.en).includes("noindex"), `${familyPage.name} family is unexpectedly noindex`);
     assert(!robotsMeta(familyPage.es).includes("noindex"), `Spanish ${familyPage.name} family is unexpectedly noindex`);
+    if (familyPage.expectedEnglishH1) {
+      assert(headingOne(familyPage.en) === familyPage.expectedEnglishH1, `${familyPage.name} English H1 is incorrect`);
+      assert(headingOne(familyPage.es) === familyPage.expectedSpanishH1, `${familyPage.name} Spanish H1 is incorrect`);
+    }
     assert(sitemap.includes(englishUrl), `${familyPage.name} family is missing from the sitemap`);
     assert(sitemap.includes(spanishUrl), `Spanish ${familyPage.name} family is missing from the sitemap`);
     assertPageEnhancements(familyPage.en, familyPage.requiredEnglishText, ["CollectionPage", "BreadcrumbList", "FAQPage"], `${familyPage.name} family`);

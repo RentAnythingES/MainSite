@@ -5,6 +5,12 @@
 
 ## Current SEO audit priorities — 11 August 2026
 
+- [x] Add governed bilingual wheelchair and travel-cot/crib family owners. Both
+  collections keep every exact product page indexable, show the current product
+  choices before durable selection guidance, link from the complete parent
+  catalogue, and preserve category-versus-family-versus-product intent boundaries.
+  Regression covers canonicals, hreflang, sitemap inclusion, schema, exact H1s,
+  product membership and return links from products.
 - [x] Correct the Apartment Comfort category presentation in EN/ES. The visible H1,
   breadcrumb, CollectionPage name and intro now represent the complete cooling,
   air-quality, cleaning and practical-home catalogue rather than labelling the broad
