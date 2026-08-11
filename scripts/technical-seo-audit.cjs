@@ -44,8 +44,8 @@ function extractHreflang(html) {
 function normalizeUrl(value) {
   try {
     const url = new URL(value, baseUrl);
-    if (url.hostname === "rentanything.es" || url.hostname === "www.rentanything.es") {
-      const auditOrigin = new URL(baseUrl);
+    const auditOrigin = new URL(baseUrl);
+    if (["rentanything.es", "www.rentanything.es", "rentandroll.com", "www.rentandroll.com"].includes(url.hostname)) {
       url.protocol = auditOrigin.protocol;
       url.hostname = auditOrigin.hostname;
       url.port = auditOrigin.port;

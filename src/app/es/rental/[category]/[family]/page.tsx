@@ -76,7 +76,7 @@ export default async function SpanishProductFamilyPage({ params }: Props) {
           __html: JSON.stringify(getBreadcrumbJsonLd([
             { name: "Inicio", url: "https://rentandroll.com/es" },
             { name: "Valencia", url: "https://rentandroll.com/es/valencia" },
-            { name: "Movilidad y accesibilidad", url: "https://rentandroll.com/es/rental/mobility" },
+            { name: content.categoryLabel, url: `https://rentandroll.com/es/rental/${category}` },
             { name: content.eyebrow, url: canonical },
           ])),
         }}

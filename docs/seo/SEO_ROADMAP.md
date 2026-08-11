@@ -5,6 +5,22 @@
 
 ## Current SEO audit priorities — 11 August 2026
 
+- [x] Prepare the second governed bilingual product-family owner for stroller
+  selection intent without changing the established portable-AC winner. The EN/ES
+  stroller collection compares durable trip requirements while current products,
+  prices and dates remain dynamic. The Baby & Toddler parent pages and the three
+  verified stroller products link to the owner; the Hamax bike trailer is explicitly
+  excluded because stroller conversion is not confirmed. Legacy compact and double
+  stroller URLs retain permanent redirects. The guarded data preview passed and
+  rolled back, while the production-mode release-candidate crawl covers 368 URLs
+  with zero errors, warnings, orphans, broken links or broken images, maximum click
+  depth three and 182 reciprocal hreflang pairs. Production deployment and post-release
+  crawl remain the final release step.
+- [x] Correct verified stroller metadata without changing pricing, stock,
+  availability or slugs: remove the unsupported jogging label, remove the implied
+  cabin-baggage guarantee, qualify double-stroller access, normalize the three real
+  strollers under one subcategory, and keep exact model/dimension facts on product
+  pages rather than the static family guidance.
 - [x] Implement the first governed product-family owner without changing the
   established portable-AC winner: EN/ES mobility-scooter collection pages now own
   scooter-selection intent, use stable decision content plus live product cards,

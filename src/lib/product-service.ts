@@ -104,7 +104,14 @@ export type ProductSeoState = {
   indexableEs: boolean;
 };
 
-const legacyStaticSlugs = new Set(staticProducts.map((product) => product.slug));
+const governedFallbackSlugs = new Set([
+  "stroller-travel-compact",
+  "stroller-all-terrain",
+  "stroller-double",
+]);
+const legacyStaticSlugs = new Set(
+  staticProducts.map((product) => product.slug).filter((slug) => !governedFallbackSlugs.has(slug)),
+);
 const publicSeoCategorySlugs = new Set<string>(seoCategorySlugs);
 function hasText(value: unknown): boolean {
   return typeof value === "string" && value.trim().length > 0;
