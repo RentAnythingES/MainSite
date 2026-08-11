@@ -57,6 +57,10 @@ Priority category direction:
 
 Future categories should be added only when they have either real demand, strong SEO logic, clear partner supply, or a bundle use case.
 
+### Category merchandising invariant
+
+A category page is a shopping surface, not a sample or an SEO link directory. Every active, sellable product assigned to that category must appear as a full product card. Product-type navigation may help visitors jump within a large catalogue, and comparison guides may help people choose between similar options, but neither may replace, demote, hide, or precede the category catalogue. Small bounded previews are reserved for contextual surfaces such as blog posts and destination guides that link to the complete category.
+
 ## Bundles / Kits Strategy
 
 Bundles are the intended commercial layer between useful Valencia guides and individual product pages. Individual items capture bottom-funnel search demand; bundles reduce decision load and raise order value.

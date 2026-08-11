@@ -67,9 +67,11 @@
 - [x] Restore Spanish SEO eligibility for the six active English owners previously
   excluded in ES: `bed-rail-for-kids`, `convertible-car-seat`, `seat-booster`,
   `transportation-trailer`, `travel-cot`, and `video-baby-monitor`.
-- [x] Reduce the oversized `/rental/travel-outdoors` response while preserving a
-  crawlable link to every eligible product. Large categories now use two visual
-  cards plus compact links; verified raw HTML is 148,049 bytes.
+- [x] Remove the invalid large-category card cap introduced during the earlier
+  response-size pass. Category pages now render every active category member as a
+  full product card in EN and ES, use product-type anchors only for navigation, and
+  place optional comparison guides after the catalogue. The previous two-card plus
+  compact-link policy harmed product discovery and is explicitly retired.
 - [x] Correct `audit:seo` to compare decoded visible text so encoded HTML entities
   cannot create false copy failures.
 - [x] Align `audit:product-seo` with the evidence-led FAQ policy. FAQ coverage is

@@ -49,6 +49,13 @@ Vercel's optimizer returned `OPTIMIZED_IMAGE_REQUEST_PAYMENT_REQUIRED` for new
 variants on 11 August 2026; direct delivery keeps these cards reliable until the
 optimizer quota or image pipeline is changed.
 
+Category routes use `CategoryProductCatalogue`. It groups the full active category
+membership into product-type sections and renders every member as a standard
+`ProductCard` in both locales. The product-type pills are anchor navigation, not
+filters or inventory gates. Optional comparison/family links render after the full
+catalogue. Do not introduce card-count caps or compact-link fallbacks on category
+routes; bounded previews belong only on contextual pages that link to a category.
+
 ### Admin (protected)
 | Route | Type | Purpose |
 |-------|------|---------|

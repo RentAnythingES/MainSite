@@ -10,6 +10,8 @@ interface ProductCardProps {
 }
 
 export default function ProductCard({ product, id, basePath = "/product", unoptimized = false }: ProductCardProps) {
+  const shouldBypassOptimization = unoptimized || product.image.includes(".supabase.co/storage/");
+
   return (
     <Link
       href={`${basePath}/${product.slug}`}
@@ -21,7 +23,7 @@ export default function ProductCard({ product, id, basePath = "/product", unopti
           src={product.image}
           alt={product.name}
           fill
-          unoptimized={unoptimized}
+          unoptimized={shouldBypassOptimization}
           className="object-contain p-4 group-hover:scale-105 transition-transform duration-300"
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
         />

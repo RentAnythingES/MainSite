@@ -2,8 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { getProductsByCategoryFromDB } from "@/lib/product-service";
-import ProductCard from "@/components/ProductCard";
-import CompactProductLink from "@/components/CompactProductLink";
+import CategoryProductCatalogue from "@/components/CategoryProductCatalogue";
 import { getBreadcrumbJsonLd, getCategoryCollectionJsonLd, getFaqJsonLd } from "@/lib/jsonld";
 
 interface CategoryContent {
@@ -51,19 +50,19 @@ const categoryMetaES: Record<string, CategoryContent> = {
       "Elige los productos que encajen con la estancia y revisa en la reserva las opciones de recogida o entrega ofrecidas para la dirección y las fechas. Si importan el acceso, el horario, el montaje o un accesorio concreto, confírmalo antes del pago en lugar de depender de una promesa general de la categoría.",
       "Los recorridos y los accesos de los alojamientos cambian según la zona de Valencia. Un ascensor amplio, un traslado en taxi, un paseo marítimo pavimentado y un edificio antiguo con escalones exigen soluciones distintas; revisa los trayectos y espacios concretos de tu estancia.",
     ],
-    familyHeading: "Elige el equipamiento adecuado para tu estancia",
-    familyDescription: "Utiliza las páginas de comparación para relacionar el equipamiento familiar con el niño, el transporte y el alojamiento antes de consultar productos y fechas.",
+    familyHeading: "¿Necesitas ayuda para comparar productos similares?",
+    familyDescription: "El catálogo completo aparece arriba. Estas guías específicas te ayudan a comparar cochecitos o sillas de coche cuando necesitas más detalle.",
     familyPathways: [
       {
         eyebrow: "Colección de cochecitos",
         title: "Compara sillas de paseo de alquiler en Valencia",
-        description: "Elige entre opciones compactas de viaje, todoterreno y dobles utilizando los datos que afectan a tu estancia.",
+        description: "Compara opciones compactas de viaje, todoterreno y dobles en un solo lugar.",
         href: "/es/rental/baby-gear/strollers",
       },
       {
         eyebrow: "Colección de sillas de coche",
         title: "Compara sillas de coche de alquiler en Valencia",
-        description: "Relaciona el niño, el vehículo y la instalación antes de consultar las opciones actuales.",
+        description: "Compara opciones para bebés, giratorias, orientadas hacia delante y elevadores en un solo lugar.",
         href: "/es/rental/baby-gear/car-seats",
       },
     ],
@@ -165,7 +164,7 @@ const categoryMetaES: Record<string, CategoryContent> = {
       "Empieza por el tipo de apoyo que necesitas: scooter para recorridos pavimentados adecuados, silla de ruedas para movilidad sentada o andador para apoyo al caminar. Cada ficha explica los límites de ajuste, acceso, transporte y uso correspondientes.",
     ],
     familyHeading: "Compara los equipos de movilidad por tipo",
-    familyDescription: "Utiliza una página de selección específica cuando varios productos resuelven la misma necesidad o consulta la colección completa más abajo.",
+    familyDescription: "El catálogo completo aparece arriba. Utiliza la guía de scooters si quieres ayuda para comparar modelos similares.",
     familyPathways: [
       {
         eyebrow: "Scooters de movilidad",
@@ -459,13 +458,6 @@ export default async function CategoryPageES({ params }: Props) {
   if (!meta) notFound();
 
   const categoryProducts = await getProductsByCategoryFromDB(category, "es");
-  const visualProductLimit = categoryProducts.length > 36 ? 2 : 12;
-  const visualProducts = categoryProducts.slice(0, visualProductLimit);
-  const compactProducts = categoryProducts.slice(visualProductLimit);
-
-  const subcategories = Array.from(
-    new Map(categoryProducts.map((p) => [p.subcategorySlug, { name: p.subcategory, slug: p.subcategorySlug }])).values()
-  );
 
   return (
     <>
@@ -524,8 +516,10 @@ export default async function CategoryPageES({ params }: Props) {
         </div>
       </section>
 
+      <CategoryProductCatalogue products={categoryProducts} locale="es" />
+
       {meta.familyPathways && meta.familyPathways.length > 0 && (
-        <section className="border-b border-border bg-white py-8">
+        <section className="border-y border-border bg-neutral-50 py-10">
           <div className="container-site">
             <div className="mb-5 max-w-3xl">
               <h2 className="text-2xl font-bold">{meta.familyHeading}</h2>
@@ -533,7 +527,7 @@ export default async function CategoryPageES({ params }: Props) {
             </div>
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
               {meta.familyPathways.map((pathway) => (
-                <Link key={pathway.href} href={pathway.href} className="card group bg-neutral-50 p-5 hover:shadow-md">
+                <Link key={pathway.href} href={pathway.href} className="card group bg-white p-5 hover:shadow-md">
                   <span className="text-xs font-semibold uppercase tracking-wide text-brand">{pathway.eyebrow}</span>
                   <h3 className="mt-2 text-lg font-bold group-hover:text-brand">{pathway.title}</h3>
                   <p className="mt-2 text-sm leading-relaxed text-neutral-600">{pathway.description}</p>
@@ -543,48 +537,6 @@ export default async function CategoryPageES({ params }: Props) {
           </div>
         </section>
       )}
-
-      {subcategories.length > 1 && !meta.familyPathways?.length && (
-        <section className="bg-white border-b border-border py-4">
-          <div className="container-site">
-            <div className="flex items-center gap-2 overflow-x-auto">
-              <span className="text-sm text-neutral-500 flex-shrink-0">Filtrar:</span>
-              <span className="px-3 py-1.5 rounded-full bg-brand text-white text-sm font-medium cursor-pointer">
-                Todos ({categoryProducts.length})
-              </span>
-              {subcategories.map((sub) => (
-                <span key={sub.slug} className="px-3 py-1.5 rounded-full bg-neutral-100 text-neutral-700 text-sm font-medium hover:bg-neutral-200 cursor-pointer transition-colors flex-shrink-0">
-                  {sub.name}
-                </span>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
-
-      <section className="section bg-white">
-        <div className="container-site">
-          <p className="text-sm text-neutral-500 mb-6">{categoryProducts.length} productos disponibles en Valencia</p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {visualProducts.map((product) => (
-              <ProductCard key={product.slug} product={product} id={`cat-product-${product.slug}`} basePath="/es/product" />
-            ))}
-          </div>
-          {compactProducts.length > 0 && (
-            <div className="mt-12">
-              <h2 className="text-2xl font-bold mb-3">Más equipamiento disponible</h2>
-              <p className="text-neutral-600 mb-6 max-w-3xl">
-                Explora el resto de esta colección en Valencia. Cada ficha incluye los detalles actuales del alquiler y la disponibilidad por fechas.
-              </p>
-              <div className="grid md:grid-cols-2 gap-3">
-                {compactProducts.map((product) => (
-                  <CompactProductLink key={product.slug} product={product} basePath="/es/product" locale="es" />
-                ))}
-              </div>
-            </div>
-          )}
-        </div>
-      </section>
 
       {meta.searchIntents && meta.searchIntents.length > 0 && (
         <section className="section bg-neutral-50">
