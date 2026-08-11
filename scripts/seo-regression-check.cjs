@@ -31,15 +31,15 @@ const allFamilyChecks = [
   {
     name: "Car-seat",
     path: "/rental/baby-gear/car-seats",
-    productSlug: "car-seat-britax-i-size",
+    productSlug: "moni-serengeti-i-size-car-seat",
     productSlugs: [
-      "car-seat-britax-i-size",
-      "convertible-car-seat",
-      "kinderkraft-i-boost-2-booster-seat",
+      "maxi-cosi-pebble-360-pro2-infant-car-seat",
+      "moni-serengeti-i-size-car-seat",
+      "peg-perego-viaggio1-duo-fix-car-seat",
+      "kinderkraft-i-spark-2-plus-i-size-car-seat",
+      "seat-booster",
     ],
     excludedProductSlugs: [
-      "car-seat-infant",
-      "seat-booster",
       "maxi-cosi-emerald-360-s-i-size-car-seat",
     ],
     requiredEnglishText: ["How to choose a car seat for your Valencia stay"],
@@ -62,6 +62,14 @@ const legacyProductRedirects = [
   ["/es/product/compact-stroller", "/es/product/stroller-travel-compact"],
   ["/product/double-stroller", "/product/stroller-double"],
   ["/es/product/double-stroller", "/es/product/stroller-double"],
+  ["/product/car-seat-infant", "/product/maxi-cosi-pebble-360-pro2-infant-car-seat"],
+  ["/es/product/car-seat-infant", "/es/product/maxi-cosi-pebble-360-pro2-infant-car-seat"],
+  ["/product/car-seat-britax-i-size", "/product/moni-serengeti-i-size-car-seat"],
+  ["/es/product/car-seat-britax-i-size", "/es/product/moni-serengeti-i-size-car-seat"],
+  ["/product/convertible-car-seat", "/product/peg-perego-viaggio1-duo-fix-car-seat"],
+  ["/es/product/convertible-car-seat", "/es/product/peg-perego-viaggio1-duo-fix-car-seat"],
+  ["/product/kinderkraft-i-boost-2-booster-seat", "/product/kinderkraft-i-spark-2-plus-i-size-car-seat"],
+  ["/es/product/kinderkraft-i-boost-2-booster-seat", "/es/product/kinderkraft-i-spark-2-plus-i-size-car-seat"],
 ];
 const kitSlugs = [
   "family-beach-kit",

@@ -5,13 +5,21 @@
 
 ## Current SEO audit priorities — 11 August 2026
 
+- [x] Release the corrected five-product car-seat catalogue without changing the
+  `/rental/baby-gear/car-seats` cluster owner. Four genuinely different named seats
+  receive exact-product pages; three interchangeable generic backless boosters
+  remain one model-neutral page with capacity three. Preserve product UUIDs and
+  redirect the false legacy slugs. The transactional preview, production build and
+  rendered EN/ES regression pass; the production database migration is applied and
+  the matching application changes are included in this release. See
+  [CAR_SEAT_CATALOGUE_CORRECTION_2026-08-11.md](./CAR_SEAT_CATALOGUE_CORRECTION_2026-08-11.md).
 - [x] Deploy and production-verify the third governed bilingual product-family
   owner for car-seat selection intent. The release candidate assigns broad EN/ES
   car-seat queries to `/rental/baby-gear/car-seats`, keeps the Baby & Toddler hub
   broad and exact products model- or restraint-specific, and uses current catalogue
-  data only in dynamic cards. Three coherent records are included; the contradictory
-  `car-seat-infant`, unidentified `seat-booster`, and inactive Maxi-Cosi draft are
-  explicitly excluded. The guarded database preview and offline production build
+  data only in dynamic cards. This initial release included three records and
+  excluded the contradictory infant and generic-booster records. Subsequent business
+  verification established the five-product correction now tracked above. The guarded database preview and offline production build
   pass, and the rendered family regression validates both routes, schema, product
   handoffs and exclusions. The migration and PR #20 are deployed. The full production
   regression passes, and the 370-URL crawl reports zero errors, warnings, orphans,
