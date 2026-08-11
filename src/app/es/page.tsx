@@ -25,6 +25,7 @@ export const metadata: Metadata = {
 
 const heroCategories = [
   { ...t.categories.babyGear, href: "/es/rental/baby-gear", image: "/categories/baby-gear.webp" },
+  { ...t.categories.kidsFamily, href: "/es/rental/kids-family", image: "/discover/turia-gardens-hero.webp" },
   { ...t.categories.mobility, href: "/es/rental/mobility", image: "/categories/mobility.webp" },
   { ...t.categories.remoteWork, href: "/es/rental/remote-work", image: "/categories/remote-work.webp" },
   { ...t.categories.homeLiving, href: "/es/rental/home-living", image: "/categories/home-living.webp" },

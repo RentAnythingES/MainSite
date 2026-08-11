@@ -44,7 +44,7 @@ the product keeps one URL, canonical, primary breadcrumb and inventory record.
 | Kayak rental | No dedicated family owner yet | `/rental/travel-outdoors` supports the subject; individual kayak pages own capacity/type intent | Do not create a thin generic page until query evidence and a useful selection brief justify it |
 | Remote-work equipment and qualified monitor rental | `/rental/remote-work` + ES peer | Monitor sizes, desk and chair product pages | No separate monitor family page currently warranted |
 | Sports and wellness equipment | `/rental/fitness-wellness` + ES peer | Exact sport, fitness and recovery products | Existing broad category owner |
-| Kids and family equipment | `/rental/kids-family` + ES peer | Future reviewed secondary memberships and exact products | Remains `noindex, follow` until a coherent membership set is approved; do not pad it automatically |
+| Kids and family equipment | `/rental/kids-family` + ES peer | 20 reviewed child/family secondary memberships and their exact product pages | Broad category owner is active; memberships add relevant discovery without changing product canonicals |
 
 ## Family-page creation gate
 

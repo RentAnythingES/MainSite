@@ -33,6 +33,12 @@ const heroCategories = [
     description: "Strollers, cribs, car seats & high chairs",
   },
   {
+    name: "Kids & Family",
+    href: "/rental/kids-family",
+    image: "/discover/turia-gardens-hero.webp",
+    description: "Children's activities, family outings & travel gear",
+  },
+  {
     name: "Mobility & Accessibility",
     href: "/rental/mobility",
     image: "/categories/mobility.webp",

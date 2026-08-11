@@ -93,6 +93,11 @@
   primary commercial navigation until reviewed multi-category membership supplies
   a useful catalogue. The product capability is tracked in
   `docs/PRODUCT_ROADMAP.md`.
+- [x] Restore Kids & Family after reviewing the live catalogue. Added 20 governed
+  secondary memberships across child mobility/play, family activities and outdoor
+  trips, older-child travel and one verified child swimming vest. Activated both
+  locale routes in navigation, homepage, Valencia hub and sitemap while preserving
+  every product's primary category and canonical URL (11 August 2026).
 - [x] Revalidate the production build and SEO regression suite against the
   364-URL release-candidate sitemap.
 

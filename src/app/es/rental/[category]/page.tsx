@@ -449,7 +449,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: meta.title,
     description: meta.description,
-    robots: category === "kids-family" ? { index: false, follow: true } : undefined,
     alternates: {
       canonical: `https://rentandroll.com/es/rental/${category}`,
       languages: {

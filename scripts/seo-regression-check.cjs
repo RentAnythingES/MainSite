@@ -142,10 +142,31 @@ const categoryChecks = [
     slug: "kids-family",
     expectedEnglishH1: "Kids & Family Equipment Rental in Valencia",
     expectedSpanishH1: "Alquiler de Equipamiento Infantil y Familiar en Valencia",
-    indexable: false,
     pathways: ["/valencia/kits/toddler-city-kit", "/valencia/kits/family-beach-kit"],
     englishPathways: ["/blog/valencia-with-kids-complete-guide"],
     spanishPathways: ["/es/blog/valencia-with-kids-complete-guide"],
+    requiredProductSlugs: [
+      "bed-rail-for-kids",
+      "thule-chariot-sport-1-bike-trailer",
+      "big-bobby-car-classic-ocean",
+      "stroller-and-bike-trailer-for-2",
+      "toddler-bike-lila",
+      "color-beach-crab-sand-toy-set",
+      "beach-tennis-set",
+      "kipsta-bv100-size-5-beach-volleyball",
+      "kipsta-bs100-beginner-beach-volleyball-net",
+      "talbot-torro-beachminton-set",
+      "family-roof-tent-4-person",
+      "family-tent-1",
+      "quechua-arpenaz-4-2-fresh-black-family-tent",
+      "family-tent-3",
+      "roof-tent-2adults-2kids",
+      "inflatable-family-kayak-2-3-people",
+      "swimming-vest-19-30kg",
+      "seat-booster",
+      "kinderkraft-i-spark-2-plus-i-size-car-seat",
+      "moni-serengeti-i-size-car-seat",
+    ],
   },
   {
     slug: "mobility",
@@ -400,6 +421,11 @@ async function main() {
     get("/cookies"),
     get("/es/cookies"),
   ]);
+  const [homeEs, valenciaPage, valenciaPageEs] = await Promise.all([
+    get("/es"),
+    get("/valencia"),
+    get("/es/valencia"),
+  ]);
 
   await Promise.all(
     legacyProductRedirects.map(([source, destination]) =>
@@ -408,6 +434,10 @@ async function main() {
   );
 
   assert(canonical(home) === "https://rentandroll.com", "Homepage canonical is incorrect");
+  assert(home.includes('id="cat-kids-family"'), "English homepage is missing the Kids & Family category card");
+  assert(homeEs.includes('id="cat-kids-family"'), "Spanish homepage is missing the Kids & Family category card");
+  assert(valenciaPage.includes('id="val-cat-kids-family"'), "English Valencia hub is missing the Kids & Family category card");
+  assert(valenciaPageEs.includes('id="val-cat-kids-family"'), "Spanish Valencia hub is missing the Kids & Family category card");
   for (const categoryPage of categoryPages) {
     const englishUrl = `https://rentandroll.com/rental/${categoryPage.slug}`;
     const spanishUrl = `https://rentandroll.com/es/rental/${categoryPage.slug}`;
@@ -434,6 +464,10 @@ async function main() {
     assert(sitemap.includes(spanishUrl), `${categoryPage.slug} Spanish category is missing from the sitemap`);
     assertFullCategoryCatalogue(categoryPage.en, "en", `${categoryPage.slug} English category`);
     assertFullCategoryCatalogue(categoryPage.es, "es", `${categoryPage.slug} Spanish category`);
+    for (const productSlug of categoryPage.requiredProductSlugs || []) {
+      assertPathway(categoryPage.en, `/product/${productSlug}`, `${categoryPage.slug} English category`);
+      assertPathway(categoryPage.es, `/es/product/${productSlug}`, `${categoryPage.slug} Spanish category`);
+    }
 
     for (const pathway of categoryPage.pathways) {
       assertPathway(categoryPage.en, pathway, `${categoryPage.slug} English category`);

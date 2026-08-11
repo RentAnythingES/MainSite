@@ -46,6 +46,11 @@
 - **SEO relationship:** SEO Strategy defines how memberships affect discovery and
   ownership, but this capability remains a product-platform project. SEO audit
   work can continue independently.
+- **Kids & Family activation:** A reviewed 20-product secondary membership set is
+  live in production for the bilingual Kids & Family category. It deliberately excludes
+  infant-only equipment, generic adult products and two child lifejacket records
+  with conflicting documented weight ranges; all included products retain their
+  existing primary category and canonical URL.
 
 ## Completed
 

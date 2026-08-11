@@ -44,6 +44,7 @@ export interface Dictionary {
   // Categories
   categories: {
     babyGear: { name: string; desc: string };
+    kidsFamily: { name: string; desc: string };
     mobility: { name: string; desc: string };
     remoteWork: { name: string; desc: string };
     homeLiving: { name: string; desc: string };

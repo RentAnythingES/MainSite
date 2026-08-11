@@ -49,6 +49,7 @@ const en: Dictionary = {
 
   categories: {
     babyGear: { name: "Baby & Toddler", desc: "Strollers, cribs, car seats & high chairs" },
+    kidsFamily: { name: "Kids & Family", desc: "Children's activities, family outings & travel gear" },
     mobility: { name: "Mobility & Accessibility", desc: "Wheelchairs, scooters & walkers" },
     remoteWork: { name: "Remote Work", desc: "Monitors, desks, chairs & accessories" },
     homeLiving: { name: "Apartment Comfort", desc: "Air purifiers, cooling & comfort" },

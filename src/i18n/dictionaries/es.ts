@@ -61,6 +61,7 @@ const es: Dictionary = {
 
   categories: {
     babyGear: { name: "Bebé y Niños", desc: "Cochecitos, cunas, sillas de coche y tronas" },
+    kidsFamily: { name: "Niños y Familia", desc: "Actividades infantiles, salidas en familia y viaje" },
     mobility: { name: "Movilidad", desc: "Sillas de ruedas, scooters y andadores" },
     remoteWork: { name: "Teletrabajo", desc: "Monitores, escritorios, sillas y accesorios" },
     homeLiving: { name: "Hogar y Confort", desc: "Purificadores de aire, calefactores y confort" },
