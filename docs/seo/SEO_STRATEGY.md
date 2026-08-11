@@ -291,7 +291,7 @@ Admin Dashboard:
 
 | Date | Change |
 |------|--------|
-| 2026-08-11 | Retired the invalid category-card cap: EN/ES category owners now show every active member as a full product card, product-type links navigate within the catalogue, and optional comparison owners follow rather than displace merchandise. Added rendered regression coverage for full-card parity. |
+| 2026-08-11 | Retired the invalid category-card cap and forced subgroup layout: EN/ES category owners now show every active member as a full product card in one continuous grid, with optional comparison owners following rather than displacing merchandise. Added rendered regression coverage for full-card parity and flat-grid preservation. |
 | 2026-08-11 | Corrected the car-seat catalogue while retaining the existing family owner: four false product identities are replaced with the confirmed named seats, and three interchangeable generic backless boosters remain one model-neutral product with capacity three. The transactional preview, build and rendered EN/ES regression passed. |
 | 2026-08-11 | Prepared governed EN/ES car-seat family owner with three verified choices; contradictory infant and unidentified booster records remain excluded pending physical catalogue verification |
 | 2026-06-18 | Homepage: photo carousel hero, photo-backed category cards |
