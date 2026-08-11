@@ -44,6 +44,11 @@ route handling while excluding APIs and static assets.
 | `/es/contact` | Static + Client | Localized contact form and confirmation flow |
 | `/es/privacy`, `/es/terms`, `/es/refunds`, `/es/cookies` | Static | Localized legal and consent information |
 
+Product-family cards serve the existing reviewed WebP source files directly.
+Vercel's optimizer returned `OPTIMIZED_IMAGE_REQUEST_PAYMENT_REQUIRED` for new
+variants on 11 August 2026; direct delivery keeps these cards reliable until the
+optimizer quota or image pipeline is changed.
+
 ### Admin (protected)
 | Route | Type | Purpose |
 |-------|------|---------|
