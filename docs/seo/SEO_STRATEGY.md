@@ -18,14 +18,15 @@ This is the **living SEO strategy document** for rentandroll.com. Updated after 
 
 ## Current Portfolio Baseline — 11 August 2026
 
-`https://rentandroll.com` is the deployed canonical origin. The latest deployed
-full crawl receipt covers 360 sitemap URLs with zero errors, warnings, broken
-links, broken images, or orphans. The verified release candidate contains 364
-URLs before the mobility-scooter owner release: six Spanish product owners were
-restored and both empty Kids & Family category URLs were removed. The current
-release candidate adds one bilingual family owner, bringing the prepared sitemap
-to 366 URLs. Search Console and Keyword Planner research are complete; GA remains
-a separate user-owned analytics task.
+`https://rentandroll.com` is the deployed canonical origin. The 11 August 2026
+production crawl covers all 366 sitemap URLs with zero page errors, warnings,
+orphans, broken links or broken images. Every sitemap page is within three clicks
+of the homepage and 181 EN/ES hreflang pairs validate. Six Spanish product owners
+were restored, both empty Kids & Family category URLs remain excluded, and the
+first bilingual product-family owner is live for mobility scooters. Search Console
+and Keyword Planner research are complete; GA remains a separate user-owned
+analytics task. See
+[TECHNICAL_SEO_AUDIT_20260811.md](./TECHNICAL_SEO_AUDIT_20260811.md).
 
 | Layer | English | Spanish | Current role |
 |-------|---------|---------|--------------|

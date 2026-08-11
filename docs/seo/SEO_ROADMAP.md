@@ -10,7 +10,9 @@
   scooter-selection intent, use stable decision content plus live product cards,
   and are linked from the parent mobility hubs and all three scooter products.
   Canonicals, hreflang, CollectionPage, ItemList, BreadcrumbList and visible FAQ
-  schema are included. The prepared sitemap grows from 364 to 366 URLs.
+  schema are included. The deployed sitemap grows from 364 to 366 URLs. The final
+  production crawl reports zero errors, warnings, orphans, broken links and broken
+  images; see [TECHNICAL_SEO_AUDIT_20260811.md](./TECHNICAL_SEO_AUDIT_20260811.md).
 - [x] Correct mobility-scooter ownership data: the standard scooter joins the
   shared scooter subcategory and the foldable scooter's English metadata no longer
   claims wheelchair, airport, cruise or same-day intent. The guarded migration

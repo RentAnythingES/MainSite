@@ -343,7 +343,7 @@ async function main() {
     baseUrl,
     sitemapUrlCount: sitemapUrls.length,
     robots: {
-      hasSitemap: /Sitemap:\s*https:\/\/rentanything\.es\/sitemap\.xml/i.test(robots),
+      hasSitemap: /Sitemap:\s*https:\/\/rentandroll\.com\/sitemap\.xml/i.test(robots),
       blocksAdmin: /Disallow:\s*\/admin\//i.test(robots),
       blocksApi: /Disallow:\s*\/api\//i.test(robots),
     },
