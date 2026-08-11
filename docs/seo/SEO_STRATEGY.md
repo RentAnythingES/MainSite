@@ -19,14 +19,11 @@ This is the **living SEO strategy document** for rentandroll.com. Updated after 
 ## Current Portfolio Baseline — 11 August 2026
 
 `https://rentandroll.com` is the deployed canonical origin. The 11 August 2026
-production crawl covers all 366 currently deployed sitemap URLs with zero page errors, warnings,
+production crawl covers all 368 sitemap URLs with zero page errors, warnings,
 orphans, broken links or broken images. Every sitemap page is within three clicks
-of the homepage and 181 EN/ES hreflang pairs validate. Six Spanish product owners
-were restored, both empty Kids & Family category URLs remain excluded, and the
-first bilingual product-family owner is live for mobility scooters. The next
-release adds a governed stroller owner in both languages; its 368-URL production-mode
-release-candidate crawl has zero errors, warnings, orphans, broken links or broken
-images, a maximum click depth of three and 182 validated hreflang pairs. Search Console
+of the homepage and 182 EN/ES hreflang pairs validate. Six Spanish product owners
+were restored, both empty Kids & Family category URLs remain excluded, and governed
+bilingual product-family owners are live for mobility scooters and strollers. Search Console
 and Keyword Planner research are complete; GA remains a separate user-owned
 analytics task. See
 [TECHNICAL_SEO_AUDIT_20260811.md](./TECHNICAL_SEO_AUDIT_20260811.md).
@@ -34,7 +31,7 @@ analytics task. See
 | Layer | English | Spanish | Current role |
 |-------|---------|---------|--------------|
 | Commercial category hubs | 6 | 6 | Broad transactional owners; empty Kids & Family routes are temporarily noindex |
-| Product-family owners | 2 | 2 | Narrow transactional owners for mobility-scooter and stroller selection intent; stroller owner prepared for deployment |
+| Product-family owners | 2 | 2 | Narrow transactional owners for mobility-scooter and stroller selection intent |
 | Indexable product pages | 114 | 114 | Exact-item and model demand with EN/ES eligibility parity |
 | Blog articles | 8 | 8 | Planning, comparison, seasonal and tutorial intent |
 | Discover sub-hubs | 5 | 5 | Beaches, neighbourhoods, attractions, day trips and events |

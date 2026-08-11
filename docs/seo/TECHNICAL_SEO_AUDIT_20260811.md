@@ -3,8 +3,8 @@
 ## Scope
 
 - Canonical origin: `https://rentandroll.com`
-- Sitemap URLs crawled: 366
-- Crawl completed: 11 August 2026 at 09:01 UTC
+- Sitemap URLs crawled: 368
+- Crawl completed: 11 August 2026 at 09:50 UTC
 - Regression command: `npm run audit:seo`
 - Full-crawl command: `npm run audit:technical-seo`
 
@@ -21,14 +21,16 @@
 | Unlisted internal links | 0 |
 | Broken internal links | 0 |
 | Indexable unlisted internal links | 0 |
-| Validated EN/ES hreflang pairs | 181 |
+| Validated EN/ES hreflang pairs | 182 |
 | Internal images checked | 204 |
 | Broken internal images | 0 |
 
 The SEO regression suite also passed against production, including the English
-and Spanish mobility-scooter family owners, their canonicals, hreflang links,
-sitemap entries, indexability, CollectionPage/BreadcrumbList/FAQPage structured
-data, visible decision content, and links from the scooter product pages.
+and Spanish mobility-scooter and stroller family owners, their canonicals,
+hreflang links, sitemap entries, indexability, CollectionPage/BreadcrumbList/FAQPage
+structured data, visible decision content, exact included-product links and links
+back from representative product pages. The Hamax bike trailer remains excluded
+from the stroller family, and all six legacy product redirects return permanent 308s.
 
 ## Issues found and resolved during release verification
 
@@ -42,9 +44,16 @@ data, visible decision content, and links from the scooter product pages.
 3. The technical audit's robots parser still expected the retired
    `rentanything.es` sitemap declaration. It now validates
    `https://rentandroll.com/sitemap.xml`.
+4. Local production-mode crawls initially treated canonical `rentandroll.com`
+   links as external to the local audit origin. URL normalization now maps both
+   the retired and current canonical hosts to the configured audit origin, so
+   orphan, click-depth, hreflang and internal-link metrics remain meaningful in
+   local release-candidate crawls.
 
 ## Release references
 
 - PR #14: governed bilingual mobility-scooter owner and data migration
 - PR #15: direct image delivery for product-family cards
 - PR #16: direct image delivery for EN/ES kit-related product cards
+- PR #18: governed bilingual stroller owner, verified product corrections and
+  scalable family-owner regression coverage
