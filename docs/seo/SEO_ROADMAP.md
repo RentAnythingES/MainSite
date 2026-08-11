@@ -12,10 +12,9 @@
   verified stroller products link to the owner; the Hamax bike trailer is explicitly
   excluded because stroller conversion is not confirmed. Legacy compact and double
   stroller URLs retain permanent redirects. The guarded data preview passed and
-  rolled back, while the production-mode release-candidate crawl covers 368 URLs
+  rolled back. The deployed production crawl covers 368 URLs
   with zero errors, warnings, orphans, broken links or broken images, maximum click
-  depth three and 182 reciprocal hreflang pairs. Production deployment and post-release
-  crawl remain the final release step.
+  depth three and 182 reciprocal hreflang pairs (PR #18).
 - [x] Correct verified stroller metadata without changing pricing, stock,
   availability or slugs: remove the unsupported jogging label, remove the implied
   cabin-baggage guarantee, qualify double-stroller access, normalize the three real
