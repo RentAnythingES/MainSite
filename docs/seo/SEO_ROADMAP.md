@@ -98,6 +98,12 @@
   trips, older-child travel and one verified child swimming vest. Activated both
   locale routes in navigation, homepage, Valencia hub and sitemap while preserving
   every product's primary category and canonical URL (11 August 2026).
+- [x] Replace category-wide alphabetical merchandising with short, explicit
+  evidence-backed leading sequences and stable alphabetical fallback. Proven AC,
+  monitor, baby and beach products now lead their relevant grids; Mobility follows
+  validated scooter demand; Kids leads with representative child/family products;
+  Sports remains unchanged pending evidence. All products remain visible in the
+  same continuous EN/ES grids (11 August 2026).
 - [x] Revalidate the production build and SEO regression suite against the
   364-URL release-candidate sitemap.
 

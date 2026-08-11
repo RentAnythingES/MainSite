@@ -104,6 +104,12 @@ their complete governed product sets before guidance and do not replace or hide 
 parent category catalogue. Product pages remain the sole exact-item/model owners;
 secondary category membership does not create duplicate product URLs.
 
+Category grids use explicit, evidence-backed leading sequences with a stable
+alphabetical fallback. This merchandising affects shopping order only: it does not
+hide products or alter keyword ownership. The supporting sales audit and current
+sequences are recorded in
+[CATEGORY_MERCHANDISING_AUDIT_20260811.md](./CATEGORY_MERCHANDISING_AUDIT_20260811.md).
+
 ---
 
 ## Strategic Direction

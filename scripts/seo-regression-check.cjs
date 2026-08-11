@@ -137,6 +137,12 @@ const categoryChecks = [
     requiredEnglishText: ["Baby Equipment Rental in Valencia: FAQs"],
     requiredSpanishText: ["Preguntas sobre el alquiler de material de bebé en Valencia"],
     requiredSchemaTypes: ["FAQPage"],
+    expectedLeadingProductSlugs: [
+      "peg-perego-viaggio1-duo-fix-car-seat",
+      "travel-cot",
+      "stroller-travel-compact",
+      "high-chair",
+    ],
   },
   {
     slug: "kids-family",
@@ -167,6 +173,16 @@ const categoryChecks = [
       "kinderkraft-i-spark-2-plus-i-size-car-seat",
       "moni-serengeti-i-size-car-seat",
     ],
+    expectedLeadingProductSlugs: [
+      "big-bobby-car-classic-ocean",
+      "toddler-bike-lila",
+      "color-beach-crab-sand-toy-set",
+      "thule-chariot-sport-1-bike-trailer",
+      "stroller-and-bike-trailer-for-2",
+      "beach-tennis-set",
+      "talbot-torro-beachminton-set",
+      "inflatable-family-kayak-2-3-people",
+    ],
   },
   {
     slug: "mobility",
@@ -179,6 +195,14 @@ const categoryChecks = [
     requiredEnglishText: ["Mobility Equipment Rental in Valencia: FAQs"],
     requiredSpanishText: ["Preguntas sobre el alquiler de movilidad en Valencia"],
     requiredSchemaTypes: ["FAQPage"],
+    expectedLeadingProductSlugs: [
+      "mobility-scooter-lightweight-foldable",
+      "mobility-scooter-standard",
+      "heavy-duty-mobility-scooter",
+      "transport-wheelchair",
+      "mobility-power-wheelchair",
+      "rollator-walker",
+    ],
   },
   {
     slug: "remote-work",
@@ -196,6 +220,14 @@ const categoryChecks = [
     requiredEnglishText: ["Remote Work Equipment Rental in Valencia: FAQs"],
     requiredSpanishText: ["Preguntas sobre el alquiler de equipos de teletrabajo"],
     requiredSchemaTypes: ["FAQPage"],
+    expectedLeadingProductSlugs: [
+      "monitor-27",
+      "24-inch-monitor-hdmi-cable",
+      "29-inch-monitor-hdmi-cable",
+      "27-inch-monitor-hdmi-cable",
+      "standing-desk",
+      "ergonomic-chair",
+    ],
   },
   {
     slug: "home-living",
@@ -208,6 +240,10 @@ const categoryChecks = [
     requiredEnglishText: ["Portable AC and Apartment Equipment Rental: FAQs"],
     requiredSpanishText: ["Preguntas sobre aire acondicionado portátil y confort"],
     requiredSchemaTypes: ["FAQPage"],
+    expectedLeadingProductSlugs: [
+      "koenic-kac-9022-w-portable-air-conditioner",
+      "mobile-airconditioner-delonghi-pinguino-compact-classic",
+    ],
   },
   {
     slug: "travel-outdoors",
@@ -222,6 +258,15 @@ const categoryChecks = [
       "Preguntas sobre el alquiler de material de playa en Valencia",
     ],
     requiredSchemaTypes: ["FAQPage"],
+    expectedLeadingProductSlugs: [
+      "beach-umbrella-set",
+      "beach-umbrella-with-table-cupholders",
+      "xl-microfibre-towel",
+      "beach-chair",
+      "color-beach-crab-sand-toy-set",
+      "compact-beach-shelter",
+      "beach-wagon-with-table",
+    ],
   },
   {
     slug: "fitness-wellness",
@@ -343,6 +388,7 @@ function assertFullCategoryCatalogue(html, locale, context) {
   assert(!decodedHtml.includes("More Available Equipment"), `${context} still demotes products into compact links`);
   assert(!decodedHtml.includes("Más equipamiento disponible"), `${context} still demotes products into compact links`);
   assert(!html.includes('id="subcategory-'), `${context} still forces products into separate vertical subcategory sections`);
+  return cardSlugs;
 }
 
 async function main() {
@@ -462,8 +508,12 @@ async function main() {
     assert(!robotsMeta(categoryPage.es).includes("noindex"), `${categoryPage.slug} Spanish category is unexpectedly noindex`);
     assert(sitemap.includes(englishUrl), `${categoryPage.slug} English category is missing from the sitemap`);
     assert(sitemap.includes(spanishUrl), `${categoryPage.slug} Spanish category is missing from the sitemap`);
-    assertFullCategoryCatalogue(categoryPage.en, "en", `${categoryPage.slug} English category`);
-    assertFullCategoryCatalogue(categoryPage.es, "es", `${categoryPage.slug} Spanish category`);
+    const englishCardSlugs = assertFullCategoryCatalogue(categoryPage.en, "en", `${categoryPage.slug} English category`);
+    const spanishCardSlugs = assertFullCategoryCatalogue(categoryPage.es, "es", `${categoryPage.slug} Spanish category`);
+    for (const [index, productSlug] of (categoryPage.expectedLeadingProductSlugs || []).entries()) {
+      assert(englishCardSlugs[index] === productSlug, `${categoryPage.slug} English product ${index + 1} is ${englishCardSlugs[index]} instead of ${productSlug}`);
+      assert(spanishCardSlugs[index] === productSlug, `${categoryPage.slug} Spanish product ${index + 1} is ${spanishCardSlugs[index]} instead of ${productSlug}`);
+    }
     for (const productSlug of categoryPage.requiredProductSlugs || []) {
       assertPathway(categoryPage.en, `/product/${productSlug}`, `${categoryPage.slug} English category`);
       assertPathway(categoryPage.es, `/es/product/${productSlug}`, `${categoryPage.slug} Spanish category`);

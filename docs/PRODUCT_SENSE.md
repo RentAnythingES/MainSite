@@ -61,6 +61,11 @@ Future categories should be added only when they have either real demand, strong
 
 A category page is a shopping surface, not a sample or an SEO link directory. Every active, sellable product assigned to that category must appear as a full product card in one continuous, space-efficient grid. Do not force small product types into separate vertical sections that create empty rows and push inventory down the page. Optional navigation and comparison guides may help people choose, but they may not replace, demote, hide, or precede the category catalogue. Small bounded previews are reserved for contextual surfaces such as blog posts and destination guides that link to the complete category.
 
+The first products may use a short, explicit category-specific merchandising order
+grounded in sales, validated demand and representative customer needs. All remaining
+products follow in a stable fallback order. Merchandising never removes products,
+changes canonical ownership or forces one global order across different categories.
+
 ## Bundles / Kits Strategy
 
 Bundles are the intended commercial layer between useful Valencia guides and individual product pages. Individual items capture bottom-funnel search demand; bundles reduce decision load and raise order value.

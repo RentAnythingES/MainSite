@@ -3,6 +3,7 @@ import type { Product, ProductFAQ } from "@/data/products";
 import { products as staticProducts, getProductBySlug as staticGetBySlug, getProductsByCategory as staticGetByCategory } from "@/data/products";
 import { seoCategorySlugs } from "@/data/seo-clusters";
 import { unstable_cache } from "next/cache";
+import { applyCategoryProductPriority } from "@/data/category-merchandising";
 import { PUBLIC_PRODUCT_CACHE_TAG } from "@/lib/product-cache";
 import { isValidProductSlug } from "@/lib/product-validation";
 
@@ -429,7 +430,10 @@ async function fetchProductsByCategoryFromDB(categorySlug: string, locale: Produ
     if (error) throw error;
     if (!data) return [];
 
-    return data.map((row) => mapEmbeddedProduct(row, locale));
+    return applyCategoryProductPriority(
+      categorySlug,
+      data.map((row) => mapEmbeddedProduct(row, locale)),
+    );
 }
 
 const getCachedProductsByCategory = unstable_cache(
@@ -440,14 +444,14 @@ const getCachedProductsByCategory = unstable_cache(
 
 export async function getProductsByCategoryFromDB(categorySlug: string, locale: ProductLocale = "en"): Promise<Product[]> {
   if (!isSupabaseConfigured()) {
-    return staticGetByCategory(categorySlug);
+    return applyCategoryProductPriority(categorySlug, staticGetByCategory(categorySlug));
   }
 
   try {
     return await getCachedProductsByCategory(categorySlug, locale);
   } catch (err) {
     console.warn("[product-service] Supabase category fetch failed:", categorySlug, err);
-    return staticGetByCategory(categorySlug);
+    return applyCategoryProductPriority(categorySlug, staticGetByCategory(categorySlug));
   }
 }
 
