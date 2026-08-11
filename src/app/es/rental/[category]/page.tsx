@@ -509,10 +509,10 @@ export default async function CategoryPageES({ params }: Props) {
         </div>
       </nav>
 
-      <section className="bg-gradient-to-br from-neutral-50 to-teal-50/20 py-12 md:py-16">
+      <section className="bg-gradient-to-br from-neutral-50 to-teal-50/20 py-7 md:py-8">
         <div className="container-site">
-          <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight mb-3">{meta.title}</h1>
-          <p className="text-neutral-600 max-w-2xl">{meta.description}</p>
+          <h1 className="text-3xl font-extrabold tracking-tight md:text-4xl">{meta.title}</h1>
+          <p className="mt-2 max-w-2xl text-neutral-600">{meta.description}</p>
         </div>
       </section>
 

@@ -270,8 +270,8 @@ function assertFullCategoryCatalogue(html, locale, context) {
   const decodedHtml = decodeHtmlEntities(html);
   const cardSlugs = [...html.matchAll(/id="cat-product-([^"]+)"/g)].map((match) => match[1]);
   const countPattern = locale === "es"
-    ? /(\d+) productos disponibles en Valencia\. Todos aparecen a continuación\./
-    : /(\d+) products available in Valencia\. Every item is shown below\./;
+    ? /Productos disponibles<\/h2><span[^>]*>(\d+) en Valencia<\/span>/
+    : /Available products<\/h2><span[^>]*>(\d+) in Valencia<\/span>/;
   const declaredCount = Number(decodedHtml.match(countPattern)?.[1]);
 
   assert(Number.isInteger(declaredCount), `${context} does not declare its complete catalogue count`);
@@ -279,6 +279,7 @@ function assertFullCategoryCatalogue(html, locale, context) {
   assert(new Set(cardSlugs).size === cardSlugs.length, `${context} renders duplicate full product cards`);
   assert(!decodedHtml.includes("More Available Equipment"), `${context} still demotes products into compact links`);
   assert(!decodedHtml.includes("Más equipamiento disponible"), `${context} still demotes products into compact links`);
+  assert(!html.includes('id="subcategory-'), `${context} still forces products into separate vertical subcategory sections`);
 }
 
 async function main() {

@@ -69,9 +69,9 @@
   `transportation-trailer`, `travel-cot`, and `video-baby-monitor`.
 - [x] Remove the invalid large-category card cap introduced during the earlier
   response-size pass. Category pages now render every active category member as a
-  full product card in EN and ES, use product-type anchors only for navigation, and
-  place optional comparison guides after the catalogue. The previous two-card plus
-  compact-link policy harmed product discovery and is explicitly retired.
+  full product card in EN and ES in one continuous grid and place optional comparison
+  guides after the catalogue. The previous two-card plus compact-link policy and the
+  subsequent forced product-type sections harmed discovery and are explicitly retired.
 - [x] Correct `audit:seo` to compare decoded visible text so encoded HTML entities
   cannot create false copy failures.
 - [x] Align `audit:product-seo` with the evidence-led FAQ policy. FAQ coverage is

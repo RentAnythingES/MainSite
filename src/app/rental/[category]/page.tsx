@@ -532,13 +532,15 @@ export default async function CategoryPage({ params }: Props) {
       </nav>
 
       {/* Hero */}
-      <section className="bg-gradient-to-br from-neutral-50 to-teal-50/20 py-12 md:py-16">
+      <section className="bg-gradient-to-br from-neutral-50 to-teal-50/20 py-7 md:py-8">
         <div className="container-site">
-          <span className="text-5xl block mb-4">{meta.emoji}</span>
-          <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight mb-3">
-            {meta.title}
-          </h1>
-          <p className="text-neutral-600 max-w-2xl">{meta.description}</p>
+          <div className="flex items-start gap-3">
+            <span className="mt-1 text-3xl" aria-hidden="true">{meta.emoji}</span>
+            <div>
+              <h1 className="text-3xl font-extrabold tracking-tight md:text-4xl">{meta.title}</h1>
+              <p className="mt-2 max-w-2xl text-neutral-600">{meta.description}</p>
+            </div>
+          </div>
         </div>
       </section>
 

@@ -59,7 +59,7 @@ Future categories should be added only when they have either real demand, strong
 
 ### Category merchandising invariant
 
-A category page is a shopping surface, not a sample or an SEO link directory. Every active, sellable product assigned to that category must appear as a full product card. Product-type navigation may help visitors jump within a large catalogue, and comparison guides may help people choose between similar options, but neither may replace, demote, hide, or precede the category catalogue. Small bounded previews are reserved for contextual surfaces such as blog posts and destination guides that link to the complete category.
+A category page is a shopping surface, not a sample or an SEO link directory. Every active, sellable product assigned to that category must appear as a full product card in one continuous, space-efficient grid. Do not force small product types into separate vertical sections that create empty rows and push inventory down the page. Optional navigation and comparison guides may help people choose, but they may not replace, demote, hide, or precede the category catalogue. Small bounded previews are reserved for contextual surfaces such as blog posts and destination guides that link to the complete category.
 
 ## Bundles / Kits Strategy
 
