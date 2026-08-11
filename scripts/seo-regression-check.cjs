@@ -6,6 +6,20 @@ const referenceKitSlug = "family-beach-kit";
 const referenceBlogSlug = "rent-vs-buy-baby-gear-valencia";
 const referenceTutorialSlug = "home-office-setup-valencia-apartment";
 const configuredFamilyName = process.env.SEO_FAMILY_NAME || null;
+const repairedProductChecks = [
+  {
+    slug: "talbot-torro-beachminton-set",
+    requiredEnglishText: "No court or net required",
+    requiredSpanishText: "No necesita pista ni red",
+    forbiddenText: ["physical pack contents", "before activation", "documented capacity"],
+  },
+  {
+    slug: "inflatable-family-kayak-2-3-people",
+    requiredEnglishText: "two paddles and a carry bag",
+    requiredSpanishText: "dos remos y bolsa de transporte",
+    forbiddenText: ["for and amazing", "source package includes"],
+  },
+];
 const allFamilyChecks = [
   {
     name: "Mobility-scooter",
@@ -17,6 +31,8 @@ const allFamilyChecks = [
       "heavy-duty-mobility-scooter",
     ],
     requiredEnglishText: ["How to choose a mobility scooter"],
+    productOwnerEnglishText: "Compare mobility scooter options",
+    productOwnerSpanishText: "Compara opciones de scooters de movilidad",
     requiredSpanishText: ["Cómo elegir un scooter de movilidad"],
   },
   {
@@ -26,6 +42,8 @@ const allFamilyChecks = [
     productSlugs: ["stroller-travel-compact", "stroller-all-terrain", "stroller-double"],
     excludedProductSlugs: ["stroller-and-bike-trailer-for-2"],
     requiredEnglishText: ["How to choose a stroller for Valencia"],
+    productOwnerEnglishText: "Compare stroller options",
+    productOwnerSpanishText: "Compara opciones de sillas de paseo",
     requiredSpanishText: ["Cómo elegir una silla de paseo para Valencia"],
   },
   {
@@ -43,6 +61,8 @@ const allFamilyChecks = [
       "maxi-cosi-emerald-360-s-i-size-car-seat",
     ],
     requiredEnglishText: ["How to choose a car seat for your Valencia stay"],
+    productOwnerEnglishText: "Compare car seat options",
+    productOwnerSpanishText: "Compara opciones de sillas de coche",
     requiredSpanishText: ["Cómo elegir una silla de coche para tu estancia"],
   },
   {
@@ -53,6 +73,8 @@ const allFamilyChecks = [
     expectedEnglishH1: "Wheelchair rental in Valencia",
     expectedSpanishH1: "Alquiler de sillas de ruedas en Valencia",
     requiredEnglishText: ["How to choose a wheelchair for your stay"],
+    productOwnerEnglishText: "Wheelchairs available to rent",
+    productOwnerSpanishText: "Sillas de ruedas disponibles para alquilar",
     requiredSpanishText: ["Cómo elegir una silla de ruedas para la estancia"],
   },
   {
@@ -63,6 +85,8 @@ const allFamilyChecks = [
     expectedEnglishH1: "Travel cot and crib rental in Valencia",
     expectedSpanishH1: "Alquiler de cunas de viaje en Valencia",
     requiredEnglishText: ["How to choose a cot or crib for your stay"],
+    productOwnerEnglishText: "Travel cots and cribs available to rent",
+    productOwnerSpanishText: "Cunas disponibles para alquilar",
     requiredSpanishText: ["Cómo elegir una cuna para la estancia"],
   },
 ];
@@ -427,6 +451,13 @@ async function main() {
       ),
     })),
   );
+  const repairedProductPages = await Promise.all(
+    repairedProductChecks.map(async (check) => ({
+      ...check,
+      en: await get(`/product/${check.slug}`),
+      es: await get(`/es/product/${check.slug}`),
+    })),
+  );
 
   const [home, product, productEs, noindexProduct, robots, discoverHierarchyPages, kitsPage, kitsPageEs, kitPage, kitPageEs, blogPage, blogPageEs, tutorialPage, tutorialPageEs, hostServices, hostServicesEs, partners, partnersEs, faqPage, faqPageEs, howItWorks, howItWorksEs, refundsPage, refundsPageEs, aboutPage, aboutPageEs, contactPage, contactPageEs, privacyPage, privacyPageEs, termsPage, termsPageEs, cookiesPage, cookiesPageEs] = await Promise.all([
     get("/"),
@@ -599,6 +630,32 @@ async function main() {
     }
     assertPathway(familyPage.productEn, familyPage.path, `${familyPage.name} product`);
     assertPathway(familyPage.productEs, `/es${familyPage.path}`, `Spanish ${familyPage.name} product`);
+    assert(
+      decodeHtmlEntities(familyPage.productEn).includes(familyPage.productOwnerEnglishText),
+      `${familyPage.name} product uses the wrong family-owner link copy`,
+    );
+    assert(
+      decodeHtmlEntities(familyPage.productEs).includes(familyPage.productOwnerSpanishText),
+      `Spanish ${familyPage.name} product uses the wrong family-owner link copy`,
+    );
+  }
+  for (const repairedProductPage of repairedProductPages) {
+    const englishUrl = `https://rentandroll.com/product/${repairedProductPage.slug}`;
+    const spanishUrl = `https://rentandroll.com/es/product/${repairedProductPage.slug}`;
+    const combinedHtml = decodeHtmlEntities(`${repairedProductPage.en}\n${repairedProductPage.es}`).toLowerCase();
+
+    assert(canonical(repairedProductPage.en) === englishUrl, `${repairedProductPage.slug} English canonical is incorrect`);
+    assert(canonical(repairedProductPage.es) === spanishUrl, `${repairedProductPage.slug} Spanish canonical is incorrect`);
+    assert(!robotsMeta(repairedProductPage.en).includes("noindex"), `${repairedProductPage.slug} is unexpectedly noindex`);
+    assert(!robotsMeta(repairedProductPage.es).includes("noindex"), `Spanish ${repairedProductPage.slug} is unexpectedly noindex`);
+    assert(decodeHtmlEntities(repairedProductPage.en).includes(repairedProductPage.requiredEnglishText), `${repairedProductPage.slug} English repair copy is missing`);
+    assert(decodeHtmlEntities(repairedProductPage.es).includes(repairedProductPage.requiredSpanishText), `${repairedProductPage.slug} Spanish repair copy is missing`);
+    for (const forbiddenText of repairedProductPage.forbiddenText) {
+      assert(!combinedHtml.includes(forbiddenText.toLowerCase()), `${repairedProductPage.slug} still contains retired copy: ${forbiddenText}`);
+    }
+    assert(sitemap.includes(englishUrl), `${repairedProductPage.slug} is missing from the sitemap`);
+    assert(sitemap.includes(spanishUrl), `Spanish ${repairedProductPage.slug} is missing from the sitemap`);
+    await assertPrimaryProductImageLoads(repairedProductPage.en, `/product/${repairedProductPage.slug}`);
   }
   if (configuredFamilyName) {
     console.log(JSON.stringify({

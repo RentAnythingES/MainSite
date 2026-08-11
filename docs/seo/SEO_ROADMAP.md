@@ -558,6 +558,14 @@ Priority pilot logic: start with one narrow bundle, collect usage evidence, then
    Apartment Comfort, Beach, Baby and Mobility owners plus their top products.
 2. **Beach cluster — ✅ Completed 18 July** — `/rental/travel-outdoors` owns broad rental and delivery intent; guides own beach-planning queries; product pages own exact-item searches. Consolidated comparison and FAQ coverage avoids overlapping thin landing pages.
 3. **Active catalogue** — complete EN/ES readiness for commercially available products
+   - Priority non-AC follow-up on 11 August corrected a shared product-page defect
+     that labelled every family-owner link as a scooter comparison. All five current
+     families now use their own EN/ES context, guarded by rendered regression.
+     Beachminton and family-kayak customer copy was also repaired from verified
+     facts. The remaining first-order catalogue risks are the conflicting child-vest
+     and 32-inch-monitor identities, followed by shared monitor imagery and the next
+     thin-copy group. See
+     [PRIORITY_PRODUCT_PAGE_AUDIT_20260811.md](./PRIORITY_PRODUCT_PAGE_AUDIT_20260811.md).
    - Mobility scooter content review completed 21 July 2026 for standard,
      lightweight, and heavy-duty listings. EN/ES copy and FAQs are complete and all
      three active listings remain in both sitemaps. Image-rights follow-up remains an

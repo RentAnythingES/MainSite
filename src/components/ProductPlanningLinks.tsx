@@ -17,6 +17,7 @@ export default function ProductPlanningLinks({
 }: ProductPlanningLinksProps) {
   const pathways = getProductSeoPathways(categorySlug, locale);
   const family = productSlug ? getProductFamilyForProduct(productSlug) : undefined;
+  const familyContent = family?.content[locale];
   const categoryHref = `${locale === "es" ? "/es" : ""}/rental/${categorySlug}`;
   const copy = locale === "es"
     ? {
@@ -43,12 +44,10 @@ export default function ProductPlanningLinks({
       description: copy.categoryDescription,
       href: categoryHref,
     },
-    ...(family ? [{
-      eyebrow: locale === "es" ? "Comparar scooters" : "Compare scooters",
-      title: locale === "es" ? "Elegir un scooter de movilidad" : "Choose a mobility scooter",
-      description: locale === "es"
-        ? "Compara transporte, accesos, almacenamiento y tipo de recorrido antes de elegir."
-        : "Compare transport, access, storage and route requirements before choosing.",
+    ...(family && familyContent ? [{
+      eyebrow: locale === "es" ? "Comparar opciones" : "Compare options",
+      title: familyContent.productHeading,
+      description: familyContent.productDescription,
       href: `${locale === "es" ? "/es" : ""}/rental/${family.categorySlug}/${family.slug}`,
     }] : []),
     ...pathways,
