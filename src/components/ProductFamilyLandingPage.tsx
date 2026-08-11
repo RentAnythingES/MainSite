@@ -28,6 +28,7 @@ function ProductOptionCard({
           src={product.image}
           alt={product.imageAlt || content.productLabels[product.slug] || product.name}
           fill
+          unoptimized
           className="object-contain p-5"
           sizes="(max-width: 768px) 100vw, 33vw"
         />
