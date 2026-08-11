@@ -51,14 +51,20 @@ const categoryMetaES: Record<string, CategoryContent> = {
       "Elige los productos que encajen con la estancia y revisa en la reserva las opciones de recogida o entrega ofrecidas para la dirección y las fechas. Si importan el acceso, el horario, el montaje o un accesorio concreto, confírmalo antes del pago en lugar de depender de una promesa general de la categoría.",
       "Los recorridos y los accesos de los alojamientos cambian según la zona de Valencia. Un ascensor amplio, un traslado en taxi, un paseo marítimo pavimentado y un edificio antiguo con escalones exigen soluciones distintas; revisa los trayectos y espacios concretos de tu estancia.",
     ],
-    familyHeading: "Elige la silla de paseo adecuada para tu estancia",
-    familyDescription: "Compara tipos de cochecito según los límites infantiles, el plegado, el transporte, los recorridos previstos y el acceso al alojamiento antes de consultar los productos disponibles.",
+    familyHeading: "Elige el equipamiento adecuado para tu estancia",
+    familyDescription: "Utiliza las páginas de comparación para relacionar el equipamiento familiar con el niño, el transporte y el alojamiento antes de consultar productos y fechas.",
     familyPathways: [
       {
         eyebrow: "Colección de cochecitos",
         title: "Compara sillas de paseo de alquiler en Valencia",
         description: "Elige entre opciones compactas de viaje, todoterreno y dobles utilizando los datos que afectan a tu estancia.",
         href: "/es/rental/baby-gear/strollers",
+      },
+      {
+        eyebrow: "Colección de sillas de coche",
+        title: "Compara sillas de coche de alquiler en Valencia",
+        description: "Relaciona el niño, el vehículo y la instalación antes de consultar las opciones actuales.",
+        href: "/es/rental/baby-gear/car-seats",
       },
     ],
     featuredHeading: "Planifica una estancia más sencilla con un bebé",

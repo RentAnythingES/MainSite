@@ -5,7 +5,8 @@ const productCategory = process.env.SEO_PRODUCT_CATEGORY || "travel-outdoors";
 const referenceKitSlug = "family-beach-kit";
 const referenceBlogSlug = "rent-vs-buy-baby-gear-valencia";
 const referenceTutorialSlug = "home-office-setup-valencia-apartment";
-const familyChecks = [
+const configuredFamilyName = process.env.SEO_FAMILY_NAME || null;
+const allFamilyChecks = [
   {
     name: "Mobility-scooter",
     path: "/rental/mobility/mobility-scooters",
@@ -27,7 +28,31 @@ const familyChecks = [
     requiredEnglishText: ["How to choose a stroller for Valencia"],
     requiredSpanishText: ["Cómo elegir una silla de paseo para Valencia"],
   },
+  {
+    name: "Car-seat",
+    path: "/rental/baby-gear/car-seats",
+    productSlug: "car-seat-britax-i-size",
+    productSlugs: [
+      "car-seat-britax-i-size",
+      "convertible-car-seat",
+      "kinderkraft-i-boost-2-booster-seat",
+    ],
+    excludedProductSlugs: [
+      "car-seat-infant",
+      "seat-booster",
+      "maxi-cosi-emerald-360-s-i-size-car-seat",
+    ],
+    requiredEnglishText: ["How to choose a car seat for your Valencia stay"],
+    requiredSpanishText: ["Cómo elegir una silla de coche para tu estancia"],
+  },
 ];
+const familyChecks = configuredFamilyName
+  ? allFamilyChecks.filter((familyCheck) => familyCheck.name === configuredFamilyName)
+  : allFamilyChecks;
+
+if (configuredFamilyName && familyChecks.length === 0) {
+  throw new Error(`Unknown SEO_FAMILY_NAME: ${configuredFamilyName}`);
+}
 const legacyProductRedirects = [
   ["/product/portable-ac", "/product/mobile-airconditioner-delonghi-pinguino-compact-classic"],
   ["/es/product/portable-ac", "/es/product/mobile-airconditioner-delonghi-pinguino-compact-classic"],
@@ -62,11 +87,13 @@ const categoryChecks = [
     pathways: ["/valencia/kits/baby-arrival-kit"],
     englishPathways: [
       "/rental/baby-gear/strollers",
+      "/rental/baby-gear/car-seats",
       "/blog/valencia-with-kids-complete-guide",
       "/blog/rent-vs-buy-baby-gear-valencia",
     ],
     spanishPathways: [
       "/es/rental/baby-gear/strollers",
+      "/es/rental/baby-gear/car-seats",
       "/es/blog/valencia-with-kids-complete-guide",
       "/es/blog/rent-vs-buy-baby-gear-valencia",
     ],
@@ -368,6 +395,21 @@ async function main() {
     }
     assertPathway(familyPage.productEn, familyPage.path, `${familyPage.name} product`);
     assertPathway(familyPage.productEs, `/es${familyPage.path}`, `Spanish ${familyPage.name} product`);
+  }
+  if (configuredFamilyName) {
+    console.log(JSON.stringify({
+      baseUrl,
+      scope: "family",
+      checkedFamilyOwners: familyPages.map((familyPage) => ({
+        name: familyPage.name,
+        englishCanonical: canonical(familyPage.en),
+        spanishCanonical: canonical(familyPage.es),
+        includedProducts: familyPage.productSlugs,
+        excludedProducts: familyPage.excludedProductSlugs || [],
+      })),
+      status: "passed",
+    }, null, 2));
+    return;
   }
   assert(
     canonical(product) === `https://rentandroll.com/product/${productSlug}`,

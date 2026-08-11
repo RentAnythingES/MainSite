@@ -56,14 +56,20 @@ const categoryMeta: Record<string, CategoryContent> = {
       "Routes and accommodation access vary across Valencia. A wide lift, a compact taxi transfer, a paved seafront route and an older building with steps create different equipment needs, so check the exact journeys and spaces that matter for your family.",
     ],
     blogTags: ["family", "kids"],
-    familyHeading: "Choose the right stroller for your stay",
-    familyDescription: "Compare stroller types by child limits, folded size, transport needs, planned routes and accommodation access before checking the available products.",
+    familyHeading: "Choose the right equipment for your stay",
+    familyDescription: "Use the dedicated comparison pages to match family travel equipment to the child, transport and accommodation before checking current products and dates.",
     familyPathways: [
       {
         eyebrow: "Stroller collection",
         title: "Compare Stroller Rentals in Valencia",
         description: "Choose between compact travel, all-terrain and double stroller options using the details that affect your trip.",
         href: "/rental/baby-gear/strollers",
+      },
+      {
+        eyebrow: "Car seat collection",
+        title: "Compare Car Seat Rentals in Valencia",
+        description: "Match the child, vehicle and installation requirements before checking the current car-seat options.",
+        href: "/rental/baby-gear/car-seats",
       },
     ],
     featuredHeading: "Plan a Smoother Valencia Stay with a Baby",
