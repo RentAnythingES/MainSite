@@ -1,5 +1,5 @@
 # Rent&Roll — SEO Strategy & Audit
-> **Last updated**: 2026-08-11 · **Canonical migration**: deployed · **Release-candidate sitemap URLs**: 370
+> **Last updated**: 2026-08-11 · **Canonical migration**: deployed · **Production sitemap URLs**: 370
 
 This is the **living SEO strategy document** for rentandroll.com. Updated after every SEO-related change. For prioritized fixes, see [SEO_ROADMAP.md](./SEO_ROADMAP.md).
 
@@ -19,13 +19,12 @@ This is the **living SEO strategy document** for rentandroll.com. Updated after 
 ## Current Portfolio Baseline — 11 August 2026
 
 `https://rentandroll.com` is the deployed canonical origin. The 11 August 2026
-production crawl covers all 368 sitemap URLs with zero page errors, warnings,
+production crawl covers all 370 sitemap URLs with zero page errors, warnings,
 orphans, broken links or broken images. Every sitemap page is within three clicks
-of the homepage and 182 EN/ES hreflang pairs validate. Six Spanish product owners
+of the homepage and 183 EN/ES hreflang pairs validate. Six Spanish product owners
 were restored, both empty Kids & Family category URLs remain excluded, and governed
-bilingual product-family owners are live for mobility scooters and strollers. The release
-candidate adds a governed car-seat owner in both locales, taking the prepared sitemap to
-370 URLs; production remains at 368 until deployment verification. Search Console
+bilingual product-family owners are live for mobility scooters, strollers and car seats.
+Search Console
 and Keyword Planner research are complete; GA remains a separate user-owned
 analytics task. See
 [TECHNICAL_SEO_AUDIT_20260811.md](./TECHNICAL_SEO_AUDIT_20260811.md).
@@ -33,7 +32,7 @@ analytics task. See
 | Layer | English | Spanish | Current role |
 |-------|---------|---------|--------------|
 | Commercial category hubs | 6 | 6 | Broad transactional owners; empty Kids & Family routes are temporarily noindex |
-| Product-family owners | 3 | 3 | Narrow transactional owners for mobility-scooter, stroller and car-seat selection intent; car seats pending deployment |
+| Product-family owners | 3 | 3 | Narrow transactional owners for mobility-scooter, stroller and car-seat selection intent |
 | Indexable product pages | 114 | 114 | Exact-item and model demand with EN/ES eligibility parity |
 | Blog articles | 8 | 8 | Planning, comparison, seasonal and tutorial intent |
 | Discover sub-hubs | 5 | 5 | Beaches, neighbourhoods, attractions, day trips and events |
@@ -68,7 +67,7 @@ record, or keyword owner.
 | Cluster | EN / ES indexable products | Main supporting layers | Expansion posture |
 |---------|----------------------------|------------------------|-------------------|
 | Beach & Outdoor | 49 / 49 | Category, Family Beach kit, beach/summer blogs, 4 beach guides | Strongest cluster; bounded rendering preserves every product link without oversized cards |
-| Baby & Toddler | 33 / 33 | Category, stroller and car-seat family owners, Baby Arrival and Toddler City kits, family/baby articles | Governed families own unmodified selection intent; products retain exact-item intent. Car-seat owner pending deployment |
+| Baby & Toddler | 33 / 33 | Category, stroller and car-seat family owners, Baby Arrival and Toddler City kits, family/baby articles | Governed families own unmodified selection intent; products retain exact-item intent |
 | Mobility & Accessibility | 6 / 6 | Category, mobility-scooter family owner, 2 accessibility kits, accessibility guide, local guides | First narrow family owner implemented; retain wheelchair intent at the broad category until its own reviewed owner is justified |
 | Remote Work | 6 / 6 | Category, Remote Work kit, nomad guide, home-office tutorial | Deepen exact workstation and temporary-stay decisions |
 | Apartment Comfort | 8 / 8 | Category, Summer and Long-Stay kits, cooling guide | Deepen only from measured long-stay demand |

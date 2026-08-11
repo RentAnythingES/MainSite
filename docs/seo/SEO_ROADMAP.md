@@ -5,7 +5,7 @@
 
 ## Current SEO audit priorities — 11 August 2026
 
-- [ ] Deploy and production-verify the third governed bilingual product-family
+- [x] Deploy and production-verify the third governed bilingual product-family
   owner for car-seat selection intent. The release candidate assigns broad EN/ES
   car-seat queries to `/rental/baby-gear/car-seats`, keeps the Baby & Toddler hub
   broad and exact products model- or restraint-specific, and uses current catalogue
@@ -13,8 +13,10 @@
   `car-seat-infant`, unidentified `seat-booster`, and inactive Maxi-Cosi draft are
   explicitly excluded. The guarded database preview and offline production build
   pass, and the rendered family regression validates both routes, schema, product
-  handoffs and exclusions. Remaining release work: apply the migration, deploy,
-  run the full production regression and crawl, then persist the receipt.
+  handoffs and exclusions. The migration and PR #20 are deployed. The full production
+  regression passes, and the 370-URL crawl reports zero errors, warnings, orphans,
+  broken links or broken images, maximum click depth three and 183 reciprocal
+  hreflang pairs.
 
 - [x] Prepare the second governed bilingual product-family owner for stroller
   selection intent without changing the established portable-AC winner. The EN/ES

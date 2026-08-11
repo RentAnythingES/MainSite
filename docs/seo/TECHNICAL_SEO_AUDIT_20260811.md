@@ -3,8 +3,8 @@
 ## Scope
 
 - Canonical origin: `https://rentandroll.com`
-- Sitemap URLs crawled: 368
-- Crawl completed: 11 August 2026 at 09:50 UTC
+- Sitemap URLs crawled: 370
+- Crawl completed: 11 August 2026 at 11:36 UTC
 - Regression command: `npm run audit:seo`
 - Full-crawl command: `npm run audit:technical-seo`
 
@@ -21,16 +21,19 @@
 | Unlisted internal links | 0 |
 | Broken internal links | 0 |
 | Indexable unlisted internal links | 0 |
-| Validated EN/ES hreflang pairs | 182 |
+| Validated EN/ES hreflang pairs | 183 |
 | Internal images checked | 204 |
 | Broken internal images | 0 |
 
 The SEO regression suite also passed against production, including the English
-and Spanish mobility-scooter and stroller family owners, their canonicals,
+and Spanish mobility-scooter, stroller and car-seat family owners, their canonicals,
 hreflang links, sitemap entries, indexability, CollectionPage/BreadcrumbList/FAQPage
 structured data, visible decision content, exact included-product links and links
-back from representative product pages. The Hamax bike trailer remains excluded
-from the stroller family, and all six legacy product redirects return permanent 308s.
+back from representative product pages. The car-seat owner contains the three
+coherent Britax, Peg Perego and Kinderkraft choices; the contradictory infant seat,
+unidentified second booster and inactive Maxi-Cosi draft remain excluded. The Hamax
+bike trailer remains excluded from the stroller family, and all six legacy product
+redirects return permanent 308s.
 
 ## Issues found and resolved during release verification
 
@@ -57,3 +60,5 @@ from the stroller family, and all six legacy product redirects return permanent 
 - PR #16: direct image delivery for EN/ES kit-related product cards
 - PR #18: governed bilingual stroller owner, verified product corrections and
   scalable family-owner regression coverage
+- PR #20: governed bilingual car-seat owner, three scoped product corrections,
+  explicit catalogue exclusions and family-scoped regression coverage
