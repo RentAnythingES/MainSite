@@ -21,6 +21,8 @@
 - Social preview: `public/brand/rentnroll-og.png`
 - Next app icons: `src/app/icon.png`, `src/app/apple-icon.png`, `src/app/favicon.ico`
 - Header uses the supplied Rent&Roll logo artwork.
+- Header logo widths are `195px` by default, `230px` from the small breakpoint,
+  and `264px` from the large breakpoint inside the unchanged responsive header.
 
 ## Typography
 - **Headings**: Outfit (Google Fonts) — inherits color from context (no hardcoded color)
