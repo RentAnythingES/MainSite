@@ -158,7 +158,7 @@ export default async function SpanishBundlePage({ params }: Props) {
       <BundleConfigurator bundle={bundle} locale="es" />
 
       {relatedProducts.length > 0 && (
-        <section className="section bg-neutral-50"><div className="container-site"><h2 className="text-3xl font-bold mb-6">Artículos relacionados</h2><div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">{relatedProducts.map((product) => <ProductCard key={product.slug} product={product} basePath="/es/product" id={`bundle-product-${product.slug}`} />)}</div></div></section>
+        <section className="section bg-neutral-50"><div className="container-site"><h2 className="text-3xl font-bold mb-6">Artículos relacionados</h2><div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">{relatedProducts.map((product) => <ProductCard key={product.slug} product={product} basePath="/es/product" id={`bundle-product-${product.slug}`} unoptimized />)}</div></div></section>
       )}
 
       {relatedGuides.length > 0 && (

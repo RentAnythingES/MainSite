@@ -6,9 +6,10 @@ interface ProductCardProps {
   product: Product;
   id?: string;
   basePath?: string;
+  unoptimized?: boolean;
 }
 
-export default function ProductCard({ product, id, basePath = "/product" }: ProductCardProps) {
+export default function ProductCard({ product, id, basePath = "/product", unoptimized = false }: ProductCardProps) {
   return (
     <Link
       href={`${basePath}/${product.slug}`}
@@ -20,6 +21,7 @@ export default function ProductCard({ product, id, basePath = "/product" }: Prod
           src={product.image}
           alt={product.name}
           fill
+          unoptimized={unoptimized}
           className="object-contain p-4 group-hover:scale-105 transition-transform duration-300"
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
         />
