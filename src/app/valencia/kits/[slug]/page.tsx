@@ -214,7 +214,7 @@ export default async function BundlePage({ params }: Props) {
             <h2 className="text-3xl font-bold mb-6">Related individual items</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {relatedProducts.map((product) => (
-                <ProductCard key={product.slug} product={product} id={`bundle-product-${product.slug}`} />
+                <ProductCard key={product.slug} product={product} id={`bundle-product-${product.slug}`} unoptimized />
               ))}
             </div>
           </div>
