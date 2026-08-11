@@ -30,6 +30,16 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       {
+        source: "/product/double-stroller",
+        destination: "/product/stroller-double",
+        permanent: true,
+      },
+      {
+        source: "/es/product/double-stroller",
+        destination: "/es/product/stroller-double",
+        permanent: true,
+      },
+      {
         source: "/product/portable-ac",
         destination: "/product/mobile-airconditioner-delonghi-pinguino-compact-classic",
         permanent: true,

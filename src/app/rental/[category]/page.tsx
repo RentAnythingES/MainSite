@@ -47,15 +47,25 @@ interface CategoryContent {
 const categoryMeta: Record<string, CategoryContent> = {
   "baby-gear": {
     title: "Baby & Toddler Gear Rental in Valencia",
-    description: "Rent travel cots, strollers, high chairs, baby baths & toddler gear in Valencia. Premium brands delivered to your accommodation.",
+    description: "Rent travel cots, strollers, high chairs, baby baths and toddler gear in Valencia, with pickup and delivery options shown for your booking.",
     emoji: "👶",
     editorialHeading: "Why Rent Baby Gear in Valencia?",
     editorialParagraphs: [
-      "Travelling with a baby or toddler means packing strategically. Strollers, car seats, and travel cribs are bulky, heavy, and expensive to check as airline luggage — plus there's always the risk of damage in transit.",
-      "Renting locally solves all of this. We deliver premium baby equipment directly to your hotel, Airbnb, or holiday apartment before you arrive. Everything is cleaned and inspected between rentals. When you're done, we collect it from your door. No queues, no luggage carousels, no stress.",
-      "Valencia is one of Europe's most family-friendly cities — flat streets for strollers, gentle beaches for toddlers, and a culture that genuinely welcomes children everywhere. The right gear makes it even better.",
+      "Travelling with a baby or toddler means deciding which familiar essentials must come from home and which bulky items can be arranged in Valencia before the trip. Product pages show the dimensions, age or weight guidance, included parts and current dates needed to make that decision.",
+      "Choose the products that fit the stay, then use the booking flow to review the pickup or delivery options offered for the address and dates. If access, timing, assembly or a specific accessory matters, confirm it before payment rather than relying on a general category promise.",
+      "Routes and accommodation access vary across Valencia. A wide lift, a compact taxi transfer, a paved seafront route and an older building with steps create different equipment needs, so check the exact journeys and spaces that matter for your family.",
     ],
     blogTags: ["family", "kids"],
+    familyHeading: "Choose the right stroller for your stay",
+    familyDescription: "Compare stroller types by child limits, folded size, transport needs, planned routes and accommodation access before checking the available products.",
+    familyPathways: [
+      {
+        eyebrow: "Stroller collection",
+        title: "Compare Stroller Rentals in Valencia",
+        description: "Choose between compact travel, all-terrain and double stroller options using the details that affect your trip.",
+        href: "/rental/baby-gear/strollers",
+      },
+    ],
     featuredHeading: "Plan a Smoother Valencia Stay with a Baby",
     featuredDescription: "Start with a complete arrival setup, choose a toddler-focused city kit, or use our family guide to plan around sleep, feeding and getting around.",
     featuredPathways: [

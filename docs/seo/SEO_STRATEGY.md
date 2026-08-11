@@ -1,5 +1,5 @@
 # Rent&Roll — SEO Strategy & Audit
-> **Last updated**: 2026-08-11 · **Canonical migration**: deployed · **Prepared sitemap URLs**: 366
+> **Last updated**: 2026-08-11 · **Canonical migration**: deployed · **Prepared sitemap URLs**: 368
 
 This is the **living SEO strategy document** for rentandroll.com. Updated after every SEO-related change. For prioritized fixes, see [SEO_ROADMAP.md](./SEO_ROADMAP.md).
 
@@ -19,11 +19,14 @@ This is the **living SEO strategy document** for rentandroll.com. Updated after 
 ## Current Portfolio Baseline — 11 August 2026
 
 `https://rentandroll.com` is the deployed canonical origin. The 11 August 2026
-production crawl covers all 366 sitemap URLs with zero page errors, warnings,
+production crawl covers all 366 currently deployed sitemap URLs with zero page errors, warnings,
 orphans, broken links or broken images. Every sitemap page is within three clicks
 of the homepage and 181 EN/ES hreflang pairs validate. Six Spanish product owners
 were restored, both empty Kids & Family category URLs remain excluded, and the
-first bilingual product-family owner is live for mobility scooters. Search Console
+first bilingual product-family owner is live for mobility scooters. The next
+release adds a governed stroller owner in both languages; its 368-URL production-mode
+release-candidate crawl has zero errors, warnings, orphans, broken links or broken
+images, a maximum click depth of three and 182 validated hreflang pairs. Search Console
 and Keyword Planner research are complete; GA remains a separate user-owned
 analytics task. See
 [TECHNICAL_SEO_AUDIT_20260811.md](./TECHNICAL_SEO_AUDIT_20260811.md).
@@ -31,7 +34,7 @@ analytics task. See
 | Layer | English | Spanish | Current role |
 |-------|---------|---------|--------------|
 | Commercial category hubs | 6 | 6 | Broad transactional owners; empty Kids & Family routes are temporarily noindex |
-| Product-family owners | 1 | 1 | Narrow transactional owner for mobility-scooter selection intent |
+| Product-family owners | 2 | 2 | Narrow transactional owners for mobility-scooter and stroller selection intent; stroller owner prepared for deployment |
 | Indexable product pages | 114 | 114 | Exact-item and model demand with EN/ES eligibility parity |
 | Blog articles | 8 | 8 | Planning, comparison, seasonal and tutorial intent |
 | Discover sub-hubs | 5 | 5 | Beaches, neighbourhoods, attractions, day trips and events |
@@ -66,7 +69,7 @@ record, or keyword owner.
 | Cluster | EN / ES indexable products | Main supporting layers | Expansion posture |
 |---------|----------------------------|------------------------|-------------------|
 | Beach & Outdoor | 49 / 49 | Category, Family Beach kit, beach/summer blogs, 4 beach guides | Strongest cluster; bounded rendering preserves every product link without oversized cards |
-| Baby & Toddler | 33 / 33 | Category, Baby Arrival and Toddler City kits, family/baby articles | Strong; add narrow decision content only where ownership is distinct |
+| Baby & Toddler | 33 / 33 | Category, stroller family owner, Baby Arrival and Toddler City kits, family/baby articles | Stroller collection now owns broad selection intent; products retain exact-item intent |
 | Mobility & Accessibility | 6 / 6 | Category, mobility-scooter family owner, 2 accessibility kits, accessibility guide, local guides | First narrow family owner implemented; retain wheelchair intent at the broad category until its own reviewed owner is justified |
 | Remote Work | 6 / 6 | Category, Remote Work kit, nomad guide, home-office tutorial | Deepen exact workstation and temporary-stay decisions |
 | Apartment Comfort | 8 / 8 | Category, Summer and Long-Stay kits, cooling guide | Deepen only from measured long-stay demand |
@@ -127,7 +130,8 @@ rentandroll.com/
 │   ├── /rental/remote-work
 │   ├── /rental/home-living
 │   ├── /rental/travel-outdoors
-│   └── /rental/kids-family
+│   ├── /rental/kids-family
+│   └── /rental/[category]/[family] Governed family owners (mobility scooters, strollers)
 │
 ├── /blog/                          Blog hub (8 posts live per locale)
 │   └── /blog/[slug]                Individual posts (Article + FAQ JSON-LD)
@@ -238,7 +242,7 @@ Admin Dashboard:
 
 | Keyword (EN) | Keyword (ES) | Target Page | Competition |
 |-------------|-------------|-------------|-------------|
-| stroller rental Valencia | alquiler cochecito Valencia | `/rental/baby-gear` | Medium |
+| stroller rental Valencia | alquiler cochecito Valencia | `/rental/baby-gear/strollers` + `/es/rental/baby-gear/strollers` | Medium |
 | wheelchair rental Valencia | alquiler silla de ruedas Valencia | `/rental/mobility` | Medium |
 | mobility scooter hire Valencia | alquiler scooter movilidad Valencia | `/rental/mobility/mobility-scooters` + `/es/rental/mobility/mobility-scooters` | Medium |
 | baby equipment rental Valencia | alquiler material bebé Valencia | `/rental/baby-gear` | Medium |

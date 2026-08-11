@@ -13,6 +13,7 @@ type FamilyLink = {
 };
 
 export type ProductFamilyContent = {
+  categoryLabel: string;
   title: string;
   description: string;
   eyebrow: string;
@@ -58,6 +59,7 @@ export const productFamilies: ProductFamilyDefinition[] = [
     published: true,
     content: {
       en: {
+        categoryLabel: "Mobility & Accessibility",
         title: "Mobility Scooter Rental in Valencia | Rent&Roll",
         description: "Compare foldable, standard and higher-capacity mobility scooters in Valencia. Check access, transport and dates before booking.",
         eyebrow: "Mobility scooter rental in Valencia",
@@ -134,6 +136,7 @@ export const productFamilies: ProductFamilyDefinition[] = [
         priceUnit: "/ day",
       },
       es: {
+        categoryLabel: "Movilidad y accesibilidad",
         title: "Alquiler de Scooters de Movilidad en Valencia | Rent&Roll",
         description: "Compara scooters de movilidad plegables, estándar y de mayor capacidad en Valencia. Revisa accesos, transporte y fechas antes de reservar.",
         eyebrow: "Alquiler de scooters de movilidad en Valencia",
@@ -206,6 +209,172 @@ export const productFamilies: ProductFamilyDefinition[] = [
           { question: "¿Puedo usar un scooter en las playas de Valencia?", answer: "Puede utilizar paseos marítimos pavimentados adecuados, pero no debe circular por la arena ni entrar en agua salada. Consulta por separado los servicios actuales de playa accesible si necesitas apoyo para llegar al agua." },
         ],
         productAction: "Ver scooter y comprobar fechas",
+        priceFrom: "Desde",
+        priceUnit: "/ día",
+      },
+    },
+  },
+  {
+    slug: "strollers",
+    categorySlug: "baby-gear",
+    productSlugs: [
+      "stroller-travel-compact",
+      "stroller-all-terrain",
+      "stroller-double",
+    ],
+    published: true,
+    content: {
+      en: {
+        categoryLabel: "Baby & Toddler",
+        title: "Stroller Rental in Valencia | Rent&Roll",
+        description: "Compare travel, all-terrain and double stroller options for a Valencia stay. Check child limits, folded size, access and dates before booking.",
+        eyebrow: "Stroller rental in Valencia",
+        intro: "Arrange a stroller before you arrive, then choose around your child's needs, the routes you expect to use, transport between places and access at your accommodation. Individual product pages show current prices, date availability, exact limits and included accessories.",
+        productHeading: "Compare stroller options",
+        productDescription: "Start with the type of journey you need to make, then check the exact product page for child limits, dimensions, included parts and dates.",
+        productLabels: {
+          "stroller-travel-compact": "Compact travel stroller",
+          "stroller-all-terrain": "All-terrain stroller",
+          "stroller-double": "Double stroller",
+        },
+        choiceHeading: "How to choose a stroller for Valencia",
+        choiceIntro: "The best choice depends less on a product label than on how the stroller must work during your stay.",
+        choices: [
+          {
+            title: "For taxis, trains and limited storage",
+            description: "Prioritise folded dimensions, product weight and a manageable folding method. Compact does not automatically mean airline cabin approved, so check the exact measurements with your carrier.",
+          },
+          {
+            title: "For longer walks and uneven paved routes",
+            description: "Look at wheel format, recline, handle position and the surfaces allowed by the manufacturer. All-terrain does not mean suitable for running, stairs, beach sand or every rough surface.",
+          },
+          {
+            title: "For twins or two young children",
+            description: "Compare the limit for each seat as well as the stroller's total width, folded size and turning space. Check lifts, entrance doors and storage at the accommodation before booking.",
+          },
+        ],
+        checklistHeading: "What to confirm before booking",
+        checklistIntro: "These details determine whether a stroller fits the child, the accommodation and the journeys planned for the stay.",
+        checklist: [
+          "Each child's age, weight and any product-specific seating guidance shown on the exact listing.",
+          "Whether newborn use is explicitly supported and which recline position or approved accessory it requires.",
+          "The narrowest door, lift, staircase or storage area at the accommodation.",
+          "Whether the stroller must fit into a taxi, car boot, train luggage area or airline baggage allowance.",
+          "The planned surfaces and distances, plus every accessory that must be included in the booking.",
+        ],
+        localHeading: "Using a stroller around Valencia",
+        localParagraphs: [
+          "Many routes through the Turia Gardens and along paved seafront promenades offer generous space, while parts of the historic centre can have narrow pavements, kerbs or uneven surfaces. Access still varies by route, building, transport service and venue, so plan the specific journeys that matter for your stay.",
+          "Use strollers only on surfaces allowed for the exact product. Paved promenades are different from beach sand, and an all-terrain description is not permission to use stairs, unsafe ground or a stroller for running. If access or transport is uncertain, share the details before payment.",
+        ],
+        linksHeading: "Plan the rest of your family stay",
+        linksIntro: "Return to the complete baby-equipment collection, combine several needs in one kit or use the family guide to plan before arrival.",
+        links: [
+          {
+            eyebrow: "Baby equipment",
+            title: "Browse all baby and toddler gear",
+            description: "Compare sleep, feeding, bathing, travel and mobility equipment for the same Valencia stay.",
+            href: "/rental/baby-gear",
+          },
+          {
+            eyebrow: "Toddler city kit",
+            title: "Configure a toddler city setup",
+            description: "Combine practical outing, mobility and play equipment around your child's routine.",
+            href: "/valencia/kits/toddler-city-kit",
+          },
+          {
+            eyebrow: "Valencia guide",
+            title: "Plan Valencia with babies and children",
+            description: "Review neighbourhood, transport, activity and packing considerations before travelling.",
+            href: "/blog/valencia-with-kids-complete-guide",
+          },
+        ],
+        faqHeading: "Stroller rental in Valencia: common questions",
+        faqs: [
+          { question: "Which stroller should I rent in Valencia?", answer: "Choose according to each child's limits, the routes planned, folded size, transport and accommodation access. A compact stroller prioritises storage and transfers, an all-terrain stroller supports suitable uneven paved routes, and a double stroller adds a second seat but needs more access and storage space." },
+          { question: "Can I reserve a stroller before arriving in Valencia?", answer: "Yes. Select the product and dates to see current availability and the pickup or delivery options offered for the booking. Share accommodation access details before payment when they affect the handover." },
+          { question: "Can a compact stroller travel as airline cabin baggage?", answer: "Do not assume so. Airline size and acceptance rules differ and can change. Compare the exact folded dimensions on the product page with the allowance confirmed directly by your airline." },
+          { question: "Which stroller is suitable for a newborn?", answer: "Only choose a product whose exact listing and manufacturer guidance explicitly support the child's age and required seating or recline position. Do not infer newborn suitability from the family page alone." },
+          { question: "Will a double stroller fit through my accommodation?", answer: "Measure the narrowest entrance, lift and storage area and compare them with the exact stroller width and folded dimensions. A general description cannot guarantee access to a particular building." },
+        ],
+        productAction: "View stroller and check dates",
+        priceFrom: "From",
+        priceUnit: "/ day",
+      },
+      es: {
+        categoryLabel: "Bebés y niños pequeños",
+        title: "Alquiler de Cochecitos en Valencia | Rent&Roll",
+        description: "Compara sillas de paseo compactas, todoterreno y dobles para tu estancia en Valencia. Revisa límites, plegado, accesos y fechas antes de reservar.",
+        eyebrow: "Alquiler de sillas de paseo y cochecitos en Valencia",
+        intro: "Puedes organizar el cochecito antes de llegar y elegir según las necesidades del niño, los recorridos previstos, los desplazamientos y el acceso al alojamiento. Cada ficha muestra el precio actual, la disponibilidad por fechas, los límites exactos y los accesorios incluidos.",
+        productHeading: "Compara opciones de sillas de paseo",
+        productDescription: "Empieza por el tipo de desplazamiento y consulta después la ficha exacta para revisar límites infantiles, medidas, piezas incluidas y fechas.",
+        productLabels: {
+          "stroller-travel-compact": "Silla de paseo compacta de viaje",
+          "stroller-all-terrain": "Silla de paseo todoterreno",
+          "stroller-double": "Silla de paseo doble",
+        },
+        choiceHeading: "Cómo elegir una silla de paseo para Valencia",
+        choiceIntro: "La elección depende menos de una etiqueta comercial que de cómo debe funcionar la silla durante la estancia.",
+        choices: [
+          {
+            title: "Para taxis, trenes y poco espacio",
+            description: "Prioriza las medidas plegada, el peso del producto y un sistema de plegado manejable. Que sea compacta no significa que la aerolínea la acepte en cabina; confirma las medidas exactas con la compañía.",
+          },
+          {
+            title: "Para paseos largos y firme pavimentado irregular",
+            description: "Revisa las ruedas, la reclinación, el manillar y los firmes permitidos por el fabricante. Todoterreno no significa apta para correr, subir escaleras, circular por arena ni pasar por cualquier superficie difícil.",
+          },
+          {
+            title: "Para gemelos o dos niños pequeños",
+            description: "Compara el límite de cada asiento, la anchura total, el tamaño plegada y el espacio de giro. Comprueba el ascensor, las puertas y el lugar donde se guardará en el alojamiento.",
+          },
+        ],
+        checklistHeading: "Qué conviene confirmar antes de reservar",
+        checklistIntro: "Estos datos determinan si la silla encaja con el niño, el alojamiento y los desplazamientos previstos.",
+        checklist: [
+          "La edad y el peso de cada niño, además de las indicaciones de asiento de la ficha exacta.",
+          "Si el uso con recién nacidos está expresamente permitido y qué reclinación o accesorio aprobado requiere.",
+          "La puerta, el ascensor, la escalera o el espacio de almacenamiento más ajustado del alojamiento.",
+          "Si debe caber en un taxi, maletero, zona de equipaje del tren o franquicia de equipaje aéreo.",
+          "Los firmes y distancias previstos, junto con todos los accesorios que deben figurar en la reserva.",
+        ],
+        localHeading: "Moverse por Valencia con una silla de paseo",
+        localParagraphs: [
+          "Muchos recorridos por el Jardín del Turia y los paseos marítimos pavimentados ofrecen bastante espacio, mientras que algunas zonas del centro histórico tienen aceras estrechas, bordillos o firme irregular. El acceso cambia según la ruta, el edificio, el transporte y el lugar visitado, por lo que conviene planificar los trayectos concretos.",
+          "Utiliza la silla únicamente sobre los firmes permitidos para el producto exacto. Un paseo marítimo pavimentado no es lo mismo que la arena, y la descripción todoterreno no permite usar escaleras, terreno inseguro ni correr con la silla. Si tienes dudas sobre el acceso o el transporte, comparte los detalles antes del pago.",
+        ],
+        linksHeading: "Planifica el resto de la estancia en familia",
+        linksIntro: "Vuelve a la colección completa, combina varias necesidades en un kit o utiliza la guía familiar para organizar el viaje antes de llegar.",
+        links: [
+          {
+            eyebrow: "Material de bebé",
+            title: "Consulta todo el equipamiento para bebés",
+            description: "Compara descanso, alimentación, baño, viaje y movilidad para la misma estancia en Valencia.",
+            href: "/es/rental/baby-gear",
+          },
+          {
+            eyebrow: "Kit infantil para la ciudad",
+            title: "Configura un conjunto para recorrer Valencia",
+            description: "Combina paseo, movilidad y juego según la rutina del niño.",
+            href: "/es/valencia/kits/toddler-city-kit",
+          },
+          {
+            eyebrow: "Guía de Valencia",
+            title: "Planifica Valencia con bebés y niños",
+            description: "Revisa barrios, transporte, actividades y equipaje antes de viajar.",
+            href: "/es/blog/valencia-with-kids-complete-guide",
+          },
+        ],
+        faqHeading: "Preguntas sobre el alquiler de cochecitos en Valencia",
+        faqs: [
+          { question: "¿Qué silla de paseo debería alquilar en Valencia?", answer: "Elige según los límites de cada niño, los recorridos, el tamaño plegada, el transporte y el acceso al alojamiento. Una silla compacta facilita el almacenamiento y los traslados, una todoterreno responde mejor en firmes pavimentados irregulares adecuados y una doble añade un segundo asiento, pero necesita más espacio." },
+          { question: "¿Puedo reservar un cochecito antes de llegar a Valencia?", answer: "Sí. Selecciona el producto y las fechas para consultar la disponibilidad actual y las opciones de recogida o entrega ofrecidas. Comparte los datos de acceso antes del pago si afectan a la entrega." },
+          { question: "¿Puedo llevar una silla compacta como equipaje de cabina?", answer: "No lo des por hecho. Las medidas y normas de aceptación dependen de la aerolínea y pueden cambiar. Compara las dimensiones plegada de la ficha con la franquicia confirmada directamente por tu compañía." },
+          { question: "¿Qué silla de paseo es adecuada para un recién nacido?", answer: "Elige únicamente un producto cuya ficha exacta y las instrucciones del fabricante admitan expresamente la edad del niño y la posición o reclinación necesaria. No deduzcas la idoneidad para recién nacidos a partir de esta página general." },
+          { question: "¿Cabrá una silla doble en mi alojamiento?", answer: "Mide la entrada, el ascensor y el espacio de almacenamiento más estrechos y compáralos con la anchura y las medidas plegada del producto exacto. Una descripción general no puede garantizar el acceso a un edificio concreto." },
+        ],
+        productAction: "Ver silla y comprobar fechas",
         priceFrom: "Desde",
         priceUnit: "/ día",
       },

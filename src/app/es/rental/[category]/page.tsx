@@ -44,12 +44,22 @@ interface CategoryContent {
 const categoryMetaES: Record<string, CategoryContent> = {
   "baby-gear": {
     title: "Alquiler de Artículos de Bebé y Niños en Valencia",
-    description: "Alquila cochecitos, cunas de viaje, sillas de coche, tronas y más en Valencia. Marcas de primera calidad entregadas en tu alojamiento.",
+    description: "Alquila cochecitos, cunas de viaje, sillas de coche, tronas y más en Valencia, con las opciones de recogida y entrega indicadas en la reserva.",
     editorialHeading: "¿Por qué alquilar artículos de bebé en Valencia?",
     editorialParagraphs: [
-      "Viajar con un bebé o un niño pequeño significa hacer maletas con estrategia. Cochecitos, sillas de coche y cunas de viaje son voluminosos, pesados y caros de facturar como equipaje — además del riesgo de daños durante el transporte.",
-      "Alquilar localmente resuelve todo esto. Entregamos equipos de bebé de primera calidad directamente en tu hotel, Airbnb o apartamento vacacional antes de que llegues. Todo está limpio e inspeccionado entre alquileres. Cuando termines, recogemos todo en tu puerta. Sin colas, sin cintas de equipaje, sin estrés.",
-      "Valencia es una de las ciudades más familiares de Europa — calles llanas para cochecitos, playas suaves para los más pequeños y una cultura que acoge a los niños en todas partes. El equipo adecuado lo hace aún mejor.",
+      "Viajar con un bebé o un niño pequeño implica decidir qué artículos familiares deben venir de casa y qué equipamiento voluminoso se puede organizar en Valencia antes del viaje. Cada ficha muestra medidas, orientación de edad o peso, piezas incluidas y fechas actuales para tomar esa decisión.",
+      "Elige los productos que encajen con la estancia y revisa en la reserva las opciones de recogida o entrega ofrecidas para la dirección y las fechas. Si importan el acceso, el horario, el montaje o un accesorio concreto, confírmalo antes del pago en lugar de depender de una promesa general de la categoría.",
+      "Los recorridos y los accesos de los alojamientos cambian según la zona de Valencia. Un ascensor amplio, un traslado en taxi, un paseo marítimo pavimentado y un edificio antiguo con escalones exigen soluciones distintas; revisa los trayectos y espacios concretos de tu estancia.",
+    ],
+    familyHeading: "Elige la silla de paseo adecuada para tu estancia",
+    familyDescription: "Compara tipos de cochecito según los límites infantiles, el plegado, el transporte, los recorridos previstos y el acceso al alojamiento antes de consultar los productos disponibles.",
+    familyPathways: [
+      {
+        eyebrow: "Colección de cochecitos",
+        title: "Compara sillas de paseo de alquiler en Valencia",
+        description: "Elige entre opciones compactas de viaje, todoterreno y dobles utilizando los datos que afectan a tu estancia.",
+        href: "/es/rental/baby-gear/strollers",
+      },
     ],
     featuredHeading: "Planifica una estancia más sencilla con un bebé",
     featuredDescription: "Empieza con un conjunto completo para la llegada, configura un kit para niños pequeños o consulta nuestra guía familiar para organizar sueño, alimentación y desplazamientos.",

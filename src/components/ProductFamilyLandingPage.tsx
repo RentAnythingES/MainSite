@@ -58,7 +58,7 @@ export default function ProductFamilyLandingPage({ family, locale, products }: P
   const homeHref = locale === "es" ? "/es" : "/";
   const valenciaHref = locale === "es" ? "/es/valencia" : "/valencia";
   const categoryHref = `${locale === "es" ? "/es" : ""}/rental/${family.categorySlug}`;
-  const categoryLabel = locale === "es" ? "Movilidad y accesibilidad" : "Mobility & Accessibility";
+  const categoryLabel = content.categoryLabel;
 
   return (
     <>

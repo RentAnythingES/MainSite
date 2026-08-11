@@ -75,7 +75,7 @@ export default async function ProductFamilyPage({ params }: Props) {
           __html: JSON.stringify(getBreadcrumbJsonLd([
             { name: "Home", url: "https://rentandroll.com" },
             { name: "Valencia", url: "https://rentandroll.com/valencia" },
-            { name: "Mobility & Accessibility", url: "https://rentandroll.com/rental/mobility" },
+            { name: content.categoryLabel, url: `https://rentandroll.com/rental/${category}` },
             { name: content.eyebrow, url: canonical },
           ])),
         }}
