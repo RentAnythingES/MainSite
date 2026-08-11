@@ -1,18 +1,22 @@
 import Link from "next/link";
 import { getProductSeoPathways } from "@/data/product-seo-pathways";
+import { getProductFamilyForProduct } from "@/data/product-families";
 
 interface ProductPlanningLinksProps {
   categoryName: string;
   categorySlug: string;
+  productSlug?: string;
   locale?: "en" | "es";
 }
 
 export default function ProductPlanningLinks({
   categoryName,
   categorySlug,
+  productSlug,
   locale = "en",
 }: ProductPlanningLinksProps) {
   const pathways = getProductSeoPathways(categorySlug, locale);
+  const family = productSlug ? getProductFamilyForProduct(productSlug) : undefined;
   const categoryHref = `${locale === "es" ? "/es" : ""}/rental/${categorySlug}`;
   const copy = locale === "es"
     ? {
@@ -39,8 +43,20 @@ export default function ProductPlanningLinks({
       description: copy.categoryDescription,
       href: categoryHref,
     },
+    ...(family ? [{
+      eyebrow: locale === "es" ? "Comparar scooters" : "Compare scooters",
+      title: locale === "es" ? "Elegir un scooter de movilidad" : "Choose a mobility scooter",
+      description: locale === "es"
+        ? "Compara transporte, accesos, almacenamiento y tipo de recorrido antes de elegir."
+        : "Compare transport, access, storage and route requirements before choosing.",
+      href: `${locale === "es" ? "/es" : ""}/rental/${family.categorySlug}/${family.slug}`,
+    }] : []),
     ...pathways,
   ];
+
+  const gridClassName = links.length > 3
+    ? "grid gap-5 md:grid-cols-2 xl:grid-cols-4"
+    : "grid gap-5 md:grid-cols-3";
 
   return (
     <section className="section bg-neutral-50">
@@ -49,7 +65,7 @@ export default function ProductPlanningLinks({
           <h2 className="text-2xl font-bold mb-2">{copy.heading}</h2>
           <p className="text-neutral-600">{copy.description}</p>
         </div>
-        <div className="grid md:grid-cols-3 gap-5">
+        <div className={gridClassName}>
           {links.map((pathway) => (
             <Link
               key={pathway.href}

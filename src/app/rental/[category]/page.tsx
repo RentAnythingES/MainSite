@@ -23,6 +23,14 @@ interface CategoryContent {
     description: string;
     href: string;
   }>;
+  familyHeading?: string;
+  familyDescription?: string;
+  familyPathways?: Array<{
+    eyebrow: string;
+    title: string;
+    description: string;
+    href: string;
+  }>;
   searchIntentHeading?: string;
   searchIntentDescription?: string;
   searchIntents?: Array<{
@@ -139,16 +147,26 @@ const categoryMeta: Record<string, CategoryContent> = {
     ],
   },
   "mobility": {
-    title: "Wheelchair & Mobility Scooter Rental in Valencia",
+    title: "Mobility Equipment Rental in Valencia",
     description: "Rent wheelchairs, mobility scooters, walkers and daily aids in Valencia, with delivery and collection for your hotel or apartment.",
     emoji: "♿",
     editorialHeading: "Exploring Valencia with Mobility Equipment",
     editorialParagraphs: [
-      "Valencia is one of Spain's most accessible cities. The flat terrain, fully accessible metro system, and wide promenades make it ideal for wheelchair users and visitors with reduced mobility.",
-      "Renting mobility equipment locally means you avoid the risk of airline damage to your own wheelchair or scooter. We deliver directly to your accommodation — whether that's a hotel in the old town, a beach apartment in Malvarrosa, or an Airbnb in Ruzafa.",
-      "Our lightweight mobility scooters are especially popular with visitors who want independence to explore the 9km Turia Gardens, the City of Arts and Sciences, and the accessible beaches with their assisted bathing services.",
+      "Valencia has many relatively level routes, broad promenades and step-free public spaces, but access still varies by street, building, transport stop and destination. Check the route that matters for your stay instead of assuming the whole city will work in the same way.",
+      "Renting locally can avoid taking bulky mobility equipment through an airport. Current pickup and delivery options are shown during booking, while steps, lifts, narrow doors and storage constraints can be checked before payment when they affect the handover.",
+      "Start with the type of support you need: a mobility scooter for suitable paved journeys, a wheelchair for seated mobility or a rollator for walking support. Each product page records the relevant fit, access, transport and use constraints.",
     ],
     blogTags: ["mobility", "accessibility"],
+    familyHeading: "Compare mobility equipment by type",
+    familyDescription: "Use a focused selection page when several products solve the same need, or browse the complete collection below.",
+    familyPathways: [
+      {
+        eyebrow: "Mobility scooters",
+        title: "Compare mobility scooters for Valencia",
+        description: "Compare transportability, turning space, user capacity, storage and route requirements before choosing.",
+        href: "/rental/mobility/mobility-scooters",
+      },
+    ],
     featuredHeading: "Plan Accessible Travel in Valencia",
     featuredDescription: "Choose a focused accessibility setup, prepare for a visit with older relatives, or use our local guide to understand routes and facilities.",
     featuredPathways: [
@@ -517,8 +535,28 @@ export default async function CategoryPage({ params }: Props) {
         </div>
       </section>
 
+      {meta.familyPathways && meta.familyPathways.length > 0 && (
+        <section className="border-b border-border bg-white py-8">
+          <div className="container-site">
+            <div className="mb-5 max-w-3xl">
+              <h2 className="text-2xl font-bold">{meta.familyHeading}</h2>
+              <p className="mt-2 text-neutral-600">{meta.familyDescription}</p>
+            </div>
+            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+              {meta.familyPathways.map((pathway) => (
+                <Link key={pathway.href} href={pathway.href} className="card group bg-neutral-50 p-5 hover:shadow-md">
+                  <span className="text-xs font-semibold uppercase tracking-wide text-brand">{pathway.eyebrow}</span>
+                  <h3 className="mt-2 text-lg font-bold group-hover:text-brand">{pathway.title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-neutral-600">{pathway.description}</p>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* Subcategory Filters */}
-      {subcategories.length > 1 && (
+      {subcategories.length > 1 && !meta.familyPathways?.length && (
         <section className="bg-white border-b border-border py-4">
           <div className="container-site">
             <div className="flex items-center gap-2 overflow-x-auto">

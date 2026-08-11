@@ -282,6 +282,7 @@ export default async function ProductPageES({ params }: Props) {
       <ProductPlanningLinks
         categoryName={catNameES}
         categorySlug={product.categorySlug}
+        productSlug={product.slug}
         locale="es"
       />
 

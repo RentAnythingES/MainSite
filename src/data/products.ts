@@ -180,7 +180,7 @@ export const products: Product[] = [
     ],
   },
   {
-    slug: "mobility-scooter-lightweight",
+    slug: "mobility-scooter-lightweight-foldable",
     name: "Lightweight Mobility Scooter",
     brand: "Model confirmed before booking",
     category: "Mobility & Accessibility",

@@ -1,9 +1,20 @@
 # Rent&Roll — SEO Roadmap
-> **Last updated**: 2026-08-10 · Prioritized by estimated traffic impact × effort
+> **Last updated**: 2026-08-11 · Prioritized by estimated traffic impact × effort
 
 ---
 
-## Current SEO audit priorities — 10 August 2026
+## Current SEO audit priorities — 11 August 2026
+
+- [x] Implement the first governed product-family owner without changing the
+  established portable-AC winner: EN/ES mobility-scooter collection pages now own
+  scooter-selection intent, use stable decision content plus live product cards,
+  and are linked from the parent mobility hubs and all three scooter products.
+  Canonicals, hreflang, CollectionPage, ItemList, BreadcrumbList and visible FAQ
+  schema are included. The prepared sitemap grows from 364 to 366 URLs.
+- [x] Correct mobility-scooter ownership data: the standard scooter joins the
+  shared scooter subcategory and the foldable scooter's English metadata no longer
+  claims wheelchair, airport, cruise or same-day intent. The guarded migration
+  preview passed against all three live records and rolled back cleanly.
 
 - [x] Deployed and verified governed multi-category membership in EN and ES:
   6 unique Mobility products, 49 unique Travel & Outdoors products, and 15 unique

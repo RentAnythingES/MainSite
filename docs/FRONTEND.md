@@ -1,5 +1,5 @@
 # Rent&Roll — Frontend Guide
-> **Last updated**: 2026-07-21
+> **Last updated**: 2026-08-11
 
 ## Routing
 App Router with static generation (`generateStaticParams`). Prefix-based i18n (`/es/` for Spanish).
@@ -17,6 +17,7 @@ route handling while excluding APIs and static assets.
 | `/valencia/kits/[slug]` | SSG | `bundles.ts` data | Kit hero image |
 | `/product/[slug]` | Dynamic | Supabase via `product-service.ts` | Product image |
 | `/rental/[category]` | Dynamic | Supabase via `product-service.ts` | Category photo |
+| `/rental/[category]/[family]` | SSG + ISR | `product-families.ts` + live localized products | Intent-specific family hero |
 | `/blog/[slug]` | SSG | `blog.ts` data | Blog hero image |
 | `/discover` | Static | `page.tsx` | Aerial Valencia photo |
 | `/discover/[slug]` | SSG | `destinations.ts` data | Destination hero photo |
@@ -32,6 +33,7 @@ route handling while excluding APIs and static assets.
 | `/es/valencia/kits/[slug]` | SSG | Eight localized kit details + shared configurator |
 | `/es/product/[slug]` | SSG | Same products, Spanish dictionary |
 | `/es/rental/[category]` | SSG | Same categories, Spanish dictionary |
+| `/es/rental/[category]/[family]` | SSG + ISR | Bilingual family definition + localized live products |
 | `/es/blog` | Static | Complete Spanish planning guides only |
 | `/es/blog/[slug]` | SSG | `content/blog-es.ts` + shared article renderer |
 | `/es/discover` | Static | Complete Spanish Discover coverage only |
