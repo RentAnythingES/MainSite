@@ -156,7 +156,7 @@ export default async function ProductPageES({ params }: Props) {
             <div className="lg:col-span-2">
               <div className="grid md:grid-cols-2 gap-8 mb-8">
                 <div className="bg-gradient-to-br from-neutral-100 to-neutral-50 rounded-2xl flex items-center justify-center aspect-square relative overflow-hidden">
-                  <Image src={product.image} alt={product.imageAlt || product.name} fill className="object-contain p-6" sizes="(max-width: 1024px) 100vw, 33vw" priority />
+                  <Image src={product.image} alt={product.imageAlt || product.name} fill unoptimized={product.image.includes(".supabase.co/storage/")} className="object-contain p-6" sizes="(max-width: 1024px) 100vw, 33vw" priority />
                 </div>
                 <div>
                   <div className="flex items-center gap-2 mb-3">
