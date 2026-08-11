@@ -76,6 +76,13 @@ few branded or one-impression queries.
 
 ## Implementation update — 22 July 2026
 
+> **Superseded 11 August 2026:** The recommendation below to make the broad
+> Apartment Comfort H1 portable-AC-specific no longer represents the category's
+> governed scope. The category now contains cooling, air-quality, cleaning and
+> practical-home products. Portable AC remains an important secondary query, but
+> the visible category identity must cover the complete catalogue. See the current
+> ownership review in `SEO_STRATEGY.md`.
+
 - The English Apartment Comfort owner now targets `Portable Air Conditioner
   Rental in Valencia` in its title and H1; the Spanish owner uses the equivalent
   `Alquiler de Aire Acondicionado Portátil en Valencia` wording.

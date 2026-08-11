@@ -5,6 +5,12 @@
 
 ## Current SEO audit priorities — 11 August 2026
 
+- [x] Correct the Apartment Comfort category presentation in EN/ES. The visible H1,
+  breadcrumb, CollectionPage name and intro now represent the complete cooling,
+  air-quality, cleaning and practical-home catalogue rather than labelling the broad
+  category as portable-air-conditioner rental. Existing metadata ownership remains
+  unchanged pending a separate SEO decision. Exact H1 regression now covers all
+  seven category routes in both languages.
 - [x] Correct product-detail image delivery after Vercel returned
   `402 OPTIMIZED_IMAGE_REQUEST_PAYMENT_REQUIRED` for newly uploaded, uncached
   Supabase product images. EN/ES product pages now load public Supabase objects

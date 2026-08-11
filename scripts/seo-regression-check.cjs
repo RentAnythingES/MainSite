@@ -92,6 +92,8 @@ const discoverHierarchyChecks = [
 const categoryChecks = [
   {
     slug: "baby-gear",
+    expectedEnglishH1: "Baby & Toddler Gear Rental in Valencia",
+    expectedSpanishH1: "Alquiler de Artículos de Bebé y Niños en Valencia",
     pathways: ["/valencia/kits/baby-arrival-kit"],
     comparisonPathways: [
       "/rental/baby-gear/strollers",
@@ -115,6 +117,8 @@ const categoryChecks = [
   },
   {
     slug: "kids-family",
+    expectedEnglishH1: "Kids & Family Equipment Rental in Valencia",
+    expectedSpanishH1: "Alquiler de Equipamiento Infantil y Familiar en Valencia",
     indexable: false,
     pathways: ["/valencia/kits/toddler-city-kit", "/valencia/kits/family-beach-kit"],
     englishPathways: ["/blog/valencia-with-kids-complete-guide"],
@@ -122,6 +126,8 @@ const categoryChecks = [
   },
   {
     slug: "mobility",
+    expectedEnglishH1: "Mobility Equipment Rental in Valencia",
+    expectedSpanishH1: "Alquiler de Equipos de Movilidad en Valencia",
     pathways: ["/valencia/kits/accessible-valencia-kit"],
     comparisonPathways: ["/rental/mobility/mobility-scooters"],
     englishPathways: ["/blog/wheelchair-accessibility-valencia"],
@@ -132,6 +138,8 @@ const categoryChecks = [
   },
   {
     slug: "remote-work",
+    expectedEnglishH1: "Remote Work Equipment Rental in Valencia",
+    expectedSpanishH1: "Alquiler de Equipos de Teletrabajo en Valencia",
     pathways: ["/valencia/kits/remote-work-apartment-kit"],
     englishPathways: [
       "/blog/digital-nomad-guide-valencia",
@@ -147,6 +155,8 @@ const categoryChecks = [
   },
   {
     slug: "home-living",
+    expectedEnglishH1: "Apartment Comfort Rentals in Valencia",
+    expectedSpanishH1: "Alquiler de Equipamiento para Apartamentos en Valencia",
     pathways: ["/valencia/kits/summer-apartment-survival-kit"],
     categoryOnlyPathways: ["/valencia/kits/long-stay-kitchen-upgrade-kit"],
     englishPathways: ["/blog/valencia-summer-survival-guide"],
@@ -157,6 +167,8 @@ const categoryChecks = [
   },
   {
     slug: "travel-outdoors",
+    expectedEnglishH1: "Beach Equipment Rental in Valencia",
+    expectedSpanishH1: "Alquiler de Equipamiento de Playa en Valencia",
     pathways: ["/valencia/kits/family-beach-kit"],
     englishPathways: ["/discover/malvarrosa-beach"],
     spanishPathways: ["/es/blog/best-beaches-valencia-families"],
@@ -169,6 +181,8 @@ const categoryChecks = [
   },
   {
     slug: "fitness-wellness",
+    expectedEnglishH1: "Sports Equipment Rental in Valencia",
+    expectedSpanishH1: "Alquiler de Material Deportivo en Valencia",
     pathways: ["/how-it-works", "/discover/turia-gardens"],
     requiredEnglishText: ["Sports Equipment Rental in Valencia: FAQs"],
     requiredSpanishText: ["Preguntas sobre el alquiler de material deportivo en Valencia"],
@@ -264,6 +278,11 @@ function assertPageEnhancements(html, expectedText = [], schemaTypes = [], conte
       `${context} is missing ${schemaType} structured data`
     );
   }
+}
+
+function headingOne(html) {
+  const content = html.match(/<h1[^>]*>([\s\S]*?)<\/h1>/i)?.[1] || "";
+  return decodeHtmlEntities(content.replace(/<[^>]+>/g, " ")).replace(/\s+/g, " ").trim();
 }
 
 function assertFullCategoryCatalogue(html, locale, context) {
@@ -375,6 +394,8 @@ async function main() {
     assert(alternate(categoryPage.en, "es") === spanishUrl, `${categoryPage.slug} Spanish hreflang is incorrect`);
     assert(alternate(categoryPage.es, "en") === englishUrl, `${categoryPage.slug} Spanish page lacks English hreflang`);
     assert(alternate(categoryPage.es, "es") === spanishUrl, `${categoryPage.slug} Spanish page lacks Spanish hreflang`);
+    assert(headingOne(categoryPage.en) === categoryPage.expectedEnglishH1, `${categoryPage.slug} English H1 is ${headingOne(categoryPage.en)} instead of ${categoryPage.expectedEnglishH1}`);
+    assert(headingOne(categoryPage.es) === categoryPage.expectedSpanishH1, `${categoryPage.slug} Spanish H1 is ${headingOne(categoryPage.es)} instead of ${categoryPage.expectedSpanishH1}`);
 
     if (categoryPage.indexable === false) {
       assert(robotsMeta(categoryPage.en).includes("noindex"), `${categoryPage.slug} English category should be noindex`);

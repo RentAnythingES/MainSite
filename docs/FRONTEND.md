@@ -57,6 +57,11 @@ page. Optional comparison/family links render after the full catalogue. Do not
 introduce card-count caps or compact-link fallbacks on category routes; bounded
 previews belong only on contextual pages that link to a category.
 
+Category metadata may use an approved search-focused title, but the visible category
+hero must describe the complete merchandise scope. `heading` and `introDescription`
+override only the visible H1, breadcrumb/schema name, and intro when that distinction
+is required; they must not be used to disguise a narrow catalogue as a broad one.
+
 ### Admin (protected)
 | Route | Type | Purpose |
 |-------|------|---------|

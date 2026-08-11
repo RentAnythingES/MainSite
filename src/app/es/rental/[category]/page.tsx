@@ -8,6 +8,8 @@ import { getBreadcrumbJsonLd, getCategoryCollectionJsonLd, getFaqJsonLd } from "
 interface CategoryContent {
   title: string;
   description: string;
+  heading?: string;
+  introDescription?: string;
   image?: string;
   editorialHeading: string;
   editorialParagraphs: string[];
@@ -245,6 +247,8 @@ const categoryMetaES: Record<string, CategoryContent> = {
   "home-living": {
     title: "Alquiler de Aire Acondicionado Portátil en Valencia",
     description: "Alquila aire acondicionado portátil, purificadores y equipamiento de confort en Valencia, con entrega y recogida para estancias cortas o largas.",
+    heading: "Alquiler de Equipamiento para Apartamentos en Valencia",
+    introDescription: "Alquila equipos de climatización, calidad del aire, limpieza y artículos prácticos para el hogar en Valencia, con entrega y recogida para estancias cortas o largas.",
     editorialHeading: "Adapta tu apartamento de Valencia a tu estancia",
     editorialParagraphs: [
       "Los apartamentos turísticos y alojamientos temporales no siempre incluyen todo lo necesario para una estancia cómoda. El alquiler de refrigeración portátil, equipos para la calidad del aire y otros complementos permite resolver una necesidad concreta sin comprar, guardar o desechar un aparato voluminoso al terminar el viaje.",
@@ -456,6 +460,8 @@ export default async function CategoryPageES({ params }: Props) {
   const { category } = await params;
   const meta = categoryMetaES[category];
   if (!meta) notFound();
+  const displayTitle = meta.heading ?? meta.title;
+  const displayDescription = meta.introDescription ?? meta.description;
 
   const categoryProducts = await getProductsByCategoryFromDB(category, "es");
 
@@ -466,8 +472,8 @@ export default async function CategoryPageES({ params }: Props) {
         dangerouslySetInnerHTML={{
           __html: JSON.stringify(
             getCategoryCollectionJsonLd({
-              name: meta.title,
-              description: meta.description,
+              name: displayTitle,
+              description: displayDescription,
               url: `https://rentandroll.com/es/rental/${category}`,
               locale: "es",
               products: categoryProducts,
@@ -482,7 +488,7 @@ export default async function CategoryPageES({ params }: Props) {
             getBreadcrumbJsonLd([
               { name: "Inicio", url: "https://rentandroll.com/es" },
               { name: "Valencia", url: "https://rentandroll.com/es/valencia" },
-              { name: meta.title, url: `https://rentandroll.com/es/rental/${category}` },
+              { name: displayTitle, url: `https://rentandroll.com/es/rental/${category}` },
             ])
           ),
         }}
@@ -504,15 +510,15 @@ export default async function CategoryPageES({ params }: Props) {
             <li>/</li>
             <li><Link href="/es/valencia" className="hover:text-brand transition-colors">Valencia</Link></li>
             <li>/</li>
-            <li className="text-neutral-800 font-medium">{meta.title.split(" en Valencia")[0]}</li>
+            <li className="text-neutral-800 font-medium">{displayTitle.split(" en Valencia")[0]}</li>
           </ol>
         </div>
       </nav>
 
       <section className="bg-gradient-to-br from-neutral-50 to-teal-50/20 py-7 md:py-8">
         <div className="container-site">
-          <h1 className="text-3xl font-extrabold tracking-tight md:text-4xl">{meta.title}</h1>
-          <p className="mt-2 max-w-2xl text-neutral-600">{meta.description}</p>
+          <h1 className="text-3xl font-extrabold tracking-tight md:text-4xl">{displayTitle}</h1>
+          <p className="mt-2 max-w-2xl text-neutral-600">{displayDescription}</p>
         </div>
       </section>
 

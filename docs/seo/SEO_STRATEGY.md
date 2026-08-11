@@ -74,6 +74,28 @@ record, or keyword owner.
 | Kids & Family | 0 / 0 | Temporarily noindex routes; kits and family articles remain live | Restore only after reviewed product membership creates a useful selection |
 | Sports & Wellness | 15 / 15 | Category, Turia Gardens guide and product pathways | Includes three secondary bike-carrier discovery listings; expand only with approved inventory and distinct demand |
 
+### Ownership sanity review — 11 August 2026
+
+This review compares each commercial owner with the live governed memberships,
+not merely with an earlier keyword recommendation. A category owner must describe
+the complete shop surface it controls; a strong secondary query cannot replace the
+category identity in the visible H1.
+
+| Owner | Live scope | Status |
+|-------|------------|--------|
+| Baby & Toddler | 33 products; stroller and car-seat families have separate narrow owners | Aligned: broad category owns the full baby-equipment shop; family pages own selection intent and follow the complete category catalogue |
+| Kids & Family | 0 products | Correctly held at `noindex, follow` and excluded from commercial discovery until useful reviewed membership exists |
+| Mobility & Accessibility | 6 products; three scooters have a separate family owner | Aligned: broad category retains wheelchair, walker and general mobility intent; scooter owner handles only scooter comparison intent |
+| Remote Work | 6 products | Aligned: the broad workstation owner matches monitors, desk and chair inventory |
+| Apartment Comfort | 8 products spanning cooling, air quality, cleaning and practical home equipment | Visible H1, breadcrumb, schema name and intro corrected to the broad category. AC-only metadata remains an explicit review item because it conflicts with the approved broad owner |
+| Beach & Outdoor | 49 products spanning beach, camping, water, transport and outdoor equipment | Needs review: the current beach-only H1 and metadata are narrower than the catalogue. Do not change them without an approved ownership decision |
+| Sports & Wellness | 15 products spanning sport, fitness and recovery, plus three secondary bike-carrier memberships | Heading ownership is broad enough. Supporting body copy needs a later content review because it still over-emphasises the original tennis/padel launch inventory |
+
+The three published family owners—mobility scooters, strollers and car seats—show
+their complete governed product sets before guidance and do not replace or hide the
+parent category catalogue. Product pages remain the sole exact-item/model owners;
+secondary category membership does not create duplicate product URLs.
+
 ---
 
 ## Strategic Direction
@@ -291,6 +313,7 @@ Admin Dashboard:
 
 | Date | Change |
 |------|--------|
+| 2026-08-11 | Corrected the visible EN/ES Apartment Comfort category scope: H1, breadcrumb, CollectionPage name and intro now represent the complete catalogue rather than presenting the category as a portable-AC-only page. Preserved existing metadata ownership for separate review and added exact bilingual H1 regression across all category routes. |
 | 2026-08-11 | Retired the invalid category-card cap and forced subgroup layout: EN/ES category owners now show every active member as a full product card in one continuous grid, with optional comparison owners following rather than displacing merchandise. Added rendered regression coverage for full-card parity and flat-grid preservation. |
 | 2026-08-11 | Corrected the car-seat catalogue while retaining the existing family owner: four false product identities are replaced with the confirmed named seats, and three interchangeable generic backless boosters remain one model-neutral product with capacity three. The transactional preview, build and rendered EN/ES regression passed. |
 | 2026-08-11 | Prepared governed EN/ES car-seat family owner with three verified choices; contradictory infant and unidentified booster records remain excluded pending physical catalogue verification |

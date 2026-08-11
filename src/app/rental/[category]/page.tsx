@@ -9,6 +9,8 @@ import { getBreadcrumbJsonLd, getCategoryCollectionJsonLd, getFaqJsonLd } from "
 interface CategoryContent {
   title: string;
   description: string;
+  heading?: string;
+  introDescription?: string;
   emoji: string;
   image?: string;
   editorialHeading: string;
@@ -256,6 +258,8 @@ const categoryMeta: Record<string, CategoryContent> = {
   "home-living": {
     title: "Portable Air Conditioner Rental in Valencia",
     description: "Rent portable air conditioners, air purifiers and apartment comfort equipment in Valencia, with delivery and collection for short and long stays.",
+    heading: "Apartment Comfort Rentals in Valencia",
+    introDescription: "Rent cooling, air-quality, cleaning and practical home equipment in Valencia, with delivery and collection for short and long stays.",
     emoji: "🏠",
     editorialHeading: "Make Your Valencia Apartment Work for Your Stay",
     editorialParagraphs: [
@@ -472,6 +476,8 @@ export default async function CategoryPage({ params }: Props) {
   const { category } = await params;
   const meta = categoryMeta[category];
   if (!meta) notFound();
+  const displayTitle = meta.heading ?? meta.title;
+  const displayDescription = meta.introDescription ?? meta.description;
 
   const categoryProducts = await getProductsByCategoryFromDB(category);
 
@@ -487,8 +493,8 @@ export default async function CategoryPage({ params }: Props) {
         dangerouslySetInnerHTML={{
           __html: JSON.stringify(
             getCategoryCollectionJsonLd({
-              name: meta.title,
-              description: meta.description,
+              name: displayTitle,
+              description: displayDescription,
               url: `https://rentandroll.com/rental/${category}`,
               locale: "en",
               products: categoryProducts,
@@ -503,7 +509,7 @@ export default async function CategoryPage({ params }: Props) {
             getBreadcrumbJsonLd([
               { name: "Home", url: "https://rentandroll.com" },
               { name: "Valencia", url: "https://rentandroll.com/valencia" },
-              { name: meta.title, url: `https://rentandroll.com/rental/${category}` },
+              { name: displayTitle, url: `https://rentandroll.com/rental/${category}` },
             ])
           ),
         }}
@@ -526,7 +532,7 @@ export default async function CategoryPage({ params }: Props) {
             <li>/</li>
             <li><Link href="/valencia" className="hover:text-brand transition-colors">Valencia</Link></li>
             <li>/</li>
-            <li className="text-neutral-800 font-medium">{meta.title.split(" Rental")[0]}</li>
+            <li className="text-neutral-800 font-medium">{displayTitle.split(" Rental")[0]}</li>
           </ol>
         </div>
       </nav>
@@ -537,8 +543,8 @@ export default async function CategoryPage({ params }: Props) {
           <div className="flex items-start gap-3">
             <span className="mt-1 text-3xl" aria-hidden="true">{meta.emoji}</span>
             <div>
-              <h1 className="text-3xl font-extrabold tracking-tight md:text-4xl">{meta.title}</h1>
-              <p className="mt-2 max-w-2xl text-neutral-600">{meta.description}</p>
+              <h1 className="text-3xl font-extrabold tracking-tight md:text-4xl">{displayTitle}</h1>
+              <p className="mt-2 max-w-2xl text-neutral-600">{displayDescription}</p>
             </div>
           </div>
         </div>
