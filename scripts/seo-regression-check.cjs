@@ -273,8 +273,10 @@ const categoryChecks = [
     expectedEnglishH1: "Sports Equipment Rental in Valencia",
     expectedSpanishH1: "Alquiler de Material Deportivo en Valencia",
     pathways: ["/how-it-works", "/discover/turia-gardens"],
-    requiredEnglishText: ["Sports Equipment Rental in Valencia: FAQs"],
-    requiredSpanishText: ["Preguntas sobre el alquiler de material deportivo en Valencia"],
+    requiredEnglishText: ["Choose What Fits Your Plans", "Sports Equipment Rental in Valencia: FAQs"],
+    requiredSpanishText: ["Elige lo que encaja con tus planes", "Preguntas sobre el alquiler de material deportivo en Valencia"],
+    forbiddenEnglishText: ["starts with tennis and padel training equipment"],
+    forbiddenSpanishText: ["empieza con material para entrenar tenis y pádel"],
     requiredSchemaTypes: ["FAQPage"],
   },
 ];
@@ -551,6 +553,14 @@ async function main() {
       categoryPage.requiredSchemaTypes,
       `${categoryPage.slug} Spanish category`
     );
+    const decodedEnglishCategory = decodeHtmlEntities(categoryPage.en);
+    const decodedSpanishCategory = decodeHtmlEntities(categoryPage.es);
+    for (const text of categoryPage.forbiddenEnglishText || []) {
+      assert(!decodedEnglishCategory.includes(text), `${categoryPage.slug} English category retains stale text: ${text}`);
+    }
+    for (const text of categoryPage.forbiddenSpanishText || []) {
+      assert(!decodedSpanishCategory.includes(text), `${categoryPage.slug} Spanish category retains stale text: ${text}`);
+    }
   }
   for (const hierarchyPage of discoverHierarchyPages) {
     assertPathway(

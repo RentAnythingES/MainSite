@@ -96,7 +96,7 @@ category identity in the visible H1.
 | Remote Work | 6 products | Aligned: the broad workstation owner matches monitors, desk and chair inventory |
 | Apartment Comfort | 8 products spanning cooling, air quality, cleaning and practical home equipment | Visible H1, breadcrumb, schema name and intro corrected to the broad category. AC-only metadata remains an explicit review item because it conflicts with the approved broad owner |
 | Beach & Outdoor | 49 products spanning beach, camping, water, transport and outdoor equipment | Needs review: the current beach-only H1 and metadata are narrower than the catalogue. Do not change them without an approved ownership decision |
-| Sports & Wellness | 15 products spanning sport, fitness and recovery, plus three secondary bike-carrier memberships | Heading ownership is broad enough. Supporting body copy needs a later content review because it still over-emphasises the original tennis/padel launch inventory |
+| Sports & Wellness | 15 products spanning sport, fitness and recovery, plus three secondary bike-carrier memberships | Aligned: metadata and visible guidance cover the broad category; stale tennis/padel and ball-machine emphasis has been replaced with practical activity, space, transport and venue decisions |
 
 The five published family owners—mobility scooters, wheelchairs, strollers, car seats
 and travel cots/cribs—show

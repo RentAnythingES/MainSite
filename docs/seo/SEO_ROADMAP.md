@@ -104,6 +104,11 @@
   validated scooter demand; Kids leads with representative child/family products;
   Sports remains unchanged pending evidence. All products remain visible in the
   same continuous EN/ES grids (11 August 2026).
+- [x] Align the Sports & Wellness owner with its full 15-product scope. Replaced
+  stale tennis/padel and ball-machine framing in EN/ES metadata, editorial guidance,
+  decision blocks and FAQs with durable customer guidance about activity, space,
+  transport, setup and venue rules. H1, URL, ownership, layout and catalogue remain
+  unchanged (11 August 2026).
 - [x] Revalidate the production build and SEO regression suite against the
   364-URL release-candidate sitemap.
 
