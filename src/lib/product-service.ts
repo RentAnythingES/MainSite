@@ -108,6 +108,9 @@ const governedFallbackSlugs = new Set([
   "stroller-travel-compact",
   "stroller-all-terrain",
   "stroller-double",
+  "car-seat-britax-i-size",
+  "convertible-car-seat",
+  "kinderkraft-i-boost-2-booster-seat",
 ]);
 const legacyStaticSlugs = new Set(
   staticProducts.map((product) => product.slug).filter((slug) => !governedFallbackSlugs.has(slug)),

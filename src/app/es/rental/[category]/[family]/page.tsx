@@ -41,7 +41,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description: content.description,
       url: canonical,
       locale: "es_ES",
-      images: [{ url: "/categories/mobility.webp", alt: content.eyebrow }],
+      images: [{ url: `/categories/${category}.webp`, alt: content.eyebrow }],
     },
   };
 }

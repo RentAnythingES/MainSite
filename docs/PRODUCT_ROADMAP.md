@@ -1,6 +1,6 @@
 # Rent&Roll — Product Roadmap
 
-> Last updated: 2026-08-10. Purpose: track product capabilities separately from SEO content, search demand
+> Last updated: 2026-08-11. Purpose: track product capabilities separately from SEO content, search demand
 > validation and technical SEO work.
 
 ## Completed
@@ -50,3 +50,22 @@
 ## Completed
 
 No product-roadmap items are recorded as completed in this document yet.
+
+## Open catalogue verification
+
+### Resolve two contradictory car-seat records
+
+- **Priority:** P1 safety and catalogue integrity.
+- **`car-seat-infant`:** The core record and Spanish page identify a rear-facing
+  infant seat for 45–87 cm / up to 13 kg, while the English localization describes
+  a different Unico Evo 40–150 cm rotating seat. Inspect the physical unit, approval
+  label, model number, manual and included installation parts before choosing which
+  identity is correct. Do not promote this record from the car-seat family owner
+  until the contradiction is resolved.
+- **`seat-booster`:** The record lacks a verified brand/model and mixes 1.2 kg and
+  under-1 kg product facts, while the English copy makes unsupported absolute-safety
+  claims. Inspect the physical label/manual and confirm its exact child range,
+  approval and installation before rewriting or promoting it.
+- **Guardrail:** Do not infer either identity from the current image or copy. Keep
+  both existing listings operational but outside the governed family comparison
+  until the physical evidence is recorded and reviewed.

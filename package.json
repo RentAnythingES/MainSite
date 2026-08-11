@@ -31,6 +31,7 @@
     "db:preview:categories": "node scripts/preview-product-category-memberships.cjs",
     "db:preview:scooter-owner": "node scripts/preview-mobility-scooter-owner.cjs",
     "db:preview:stroller-owner": "node scripts/preview-stroller-family-owner.cjs",
+    "db:preview:car-seat-owner": "node scripts/preview-car-seat-family-owner.cjs",
     "db:verify:categories": "node scripts/verify-product-category-memberships.cjs",
     "db:verify": "node scripts/verify-live-backend.cjs"
   },
