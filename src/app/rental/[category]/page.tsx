@@ -3,8 +3,7 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { getProductsByCategoryFromDB } from "@/lib/product-service";
 import { getPublishedPosts } from "@/content/blog";
-import ProductCard from "@/components/ProductCard";
-import CompactProductLink from "@/components/CompactProductLink";
+import CategoryProductCatalogue from "@/components/CategoryProductCatalogue";
 import { getBreadcrumbJsonLd, getCategoryCollectionJsonLd, getFaqJsonLd } from "@/lib/jsonld";
 
 interface CategoryContent {
@@ -56,19 +55,19 @@ const categoryMeta: Record<string, CategoryContent> = {
       "Routes and accommodation access vary across Valencia. A wide lift, a compact taxi transfer, a paved seafront route and an older building with steps create different equipment needs, so check the exact journeys and spaces that matter for your family.",
     ],
     blogTags: ["family", "kids"],
-    familyHeading: "Choose the right equipment for your stay",
-    familyDescription: "Use the dedicated comparison pages to match family travel equipment to the child, transport and accommodation before checking current products and dates.",
+    familyHeading: "Need help comparing similar products?",
+    familyDescription: "The complete catalogue is shown above. These focused guides can help you compare stroller or car-seat options when you want more detail.",
     familyPathways: [
       {
         eyebrow: "Stroller collection",
         title: "Compare Stroller Rentals in Valencia",
-        description: "Choose between compact travel, all-terrain and double stroller options using the details that affect your trip.",
+        description: "Compare compact travel, all-terrain and double stroller options in one place.",
         href: "/rental/baby-gear/strollers",
       },
       {
         eyebrow: "Car seat collection",
         title: "Compare Car Seat Rentals in Valencia",
-        description: "Match the child, vehicle and installation requirements before checking the current car-seat options.",
+        description: "Compare infant, rotating, forward-facing and booster options in one place.",
         href: "/rental/baby-gear/car-seats",
       },
     ],
@@ -174,7 +173,7 @@ const categoryMeta: Record<string, CategoryContent> = {
     ],
     blogTags: ["mobility", "accessibility"],
     familyHeading: "Compare mobility equipment by type",
-    familyDescription: "Use a focused selection page when several products solve the same need, or browse the complete collection below.",
+    familyDescription: "The complete catalogue is shown above. Use the focused scooter guide if you want help comparing similar models.",
     familyPathways: [
       {
         eyebrow: "Mobility scooters",
@@ -475,14 +474,6 @@ export default async function CategoryPage({ params }: Props) {
   if (!meta) notFound();
 
   const categoryProducts = await getProductsByCategoryFromDB(category);
-  const visualProductLimit = categoryProducts.length > 36 ? 2 : 12;
-  const visualProducts = categoryProducts.slice(0, visualProductLimit);
-  const compactProducts = categoryProducts.slice(visualProductLimit);
-
-  // Get unique subcategories
-  const subcategories = Array.from(
-    new Map(categoryProducts.map((p) => [p.subcategorySlug, { name: p.subcategory, slug: p.subcategorySlug }])).values()
-  );
 
   // Find related blog posts
   const relatedPosts = getPublishedPosts()
@@ -551,8 +542,10 @@ export default async function CategoryPage({ params }: Props) {
         </div>
       </section>
 
+      <CategoryProductCatalogue products={categoryProducts} />
+
       {meta.familyPathways && meta.familyPathways.length > 0 && (
-        <section className="border-b border-border bg-white py-8">
+        <section className="border-y border-border bg-neutral-50 py-10">
           <div className="container-site">
             <div className="mb-5 max-w-3xl">
               <h2 className="text-2xl font-bold">{meta.familyHeading}</h2>
@@ -560,7 +553,7 @@ export default async function CategoryPage({ params }: Props) {
             </div>
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
               {meta.familyPathways.map((pathway) => (
-                <Link key={pathway.href} href={pathway.href} className="card group bg-neutral-50 p-5 hover:shadow-md">
+                <Link key={pathway.href} href={pathway.href} className="card group bg-white p-5 hover:shadow-md">
                   <span className="text-xs font-semibold uppercase tracking-wide text-brand">{pathway.eyebrow}</span>
                   <h3 className="mt-2 text-lg font-bold group-hover:text-brand">{pathway.title}</h3>
                   <p className="mt-2 text-sm leading-relaxed text-neutral-600">{pathway.description}</p>
@@ -570,57 +563,6 @@ export default async function CategoryPage({ params }: Props) {
           </div>
         </section>
       )}
-
-      {/* Subcategory Filters */}
-      {subcategories.length > 1 && !meta.familyPathways?.length && (
-        <section className="bg-white border-b border-border py-4">
-          <div className="container-site">
-            <div className="flex items-center gap-2 overflow-x-auto">
-              <span className="text-sm text-neutral-500 flex-shrink-0">Filter:</span>
-              <span className="px-3 py-1.5 rounded-full bg-brand text-white text-sm font-medium cursor-pointer">
-                All ({categoryProducts.length})
-              </span>
-              {subcategories.map((sub) => (
-                <span
-                  key={sub.slug}
-                  className="px-3 py-1.5 rounded-full bg-neutral-100 text-neutral-700 text-sm font-medium hover:bg-neutral-200 cursor-pointer transition-colors flex-shrink-0"
-                >
-                  {sub.name}
-                </span>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* Products Grid */}
-      <section className="section bg-white">
-        <div className="container-site">
-          <p className="text-sm text-neutral-500 mb-6">{categoryProducts.length} products available in Valencia</p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {visualProducts.map((product) => (
-              <ProductCard
-                key={product.slug}
-                product={product}
-                id={`cat-product-${product.slug}`}
-              />
-            ))}
-          </div>
-          {compactProducts.length > 0 && (
-            <div className="mt-12">
-              <h2 className="text-2xl font-bold mb-3">More Available Equipment</h2>
-              <p className="text-neutral-600 mb-6 max-w-3xl">
-                Browse the rest of this Valencia collection. Each listing includes current rental details and date-based availability.
-              </p>
-              <div className="grid md:grid-cols-2 gap-3">
-                {compactProducts.map((product) => (
-                  <CompactProductLink key={product.slug} product={product} />
-                ))}
-              </div>
-            </div>
-          )}
-        </div>
-      </section>
 
       {meta.searchIntents && meta.searchIntents.length > 0 && (
         <section className="section bg-neutral-50">

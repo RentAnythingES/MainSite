@@ -93,6 +93,10 @@ const categoryChecks = [
   {
     slug: "baby-gear",
     pathways: ["/valencia/kits/baby-arrival-kit"],
+    comparisonPathways: [
+      "/rental/baby-gear/strollers",
+      "/rental/baby-gear/car-seats",
+    ],
     englishPathways: [
       "/rental/baby-gear/strollers",
       "/rental/baby-gear/car-seats",
@@ -119,6 +123,7 @@ const categoryChecks = [
   {
     slug: "mobility",
     pathways: ["/valencia/kits/accessible-valencia-kit"],
+    comparisonPathways: ["/rental/mobility/mobility-scooters"],
     englishPathways: ["/blog/wheelchair-accessibility-valencia"],
     spanishPathways: ["/es/blog/wheelchair-accessibility-valencia"],
     requiredEnglishText: ["Mobility Equipment Rental in Valencia: FAQs"],
@@ -261,6 +266,21 @@ function assertPageEnhancements(html, expectedText = [], schemaTypes = [], conte
   }
 }
 
+function assertFullCategoryCatalogue(html, locale, context) {
+  const decodedHtml = decodeHtmlEntities(html);
+  const cardSlugs = [...html.matchAll(/id="cat-product-([^"]+)"/g)].map((match) => match[1]);
+  const countPattern = locale === "es"
+    ? /(\d+) productos disponibles en Valencia\. Todos aparecen a continuación\./
+    : /(\d+) products available in Valencia\. Every item is shown below\./;
+  const declaredCount = Number(decodedHtml.match(countPattern)?.[1]);
+
+  assert(Number.isInteger(declaredCount), `${context} does not declare its complete catalogue count`);
+  assert(cardSlugs.length === declaredCount, `${context} renders ${cardSlugs.length} full product cards for ${declaredCount} category products`);
+  assert(new Set(cardSlugs).size === cardSlugs.length, `${context} renders duplicate full product cards`);
+  assert(!decodedHtml.includes("More Available Equipment"), `${context} still demotes products into compact links`);
+  assert(!decodedHtml.includes("Más equipamiento disponible"), `${context} still demotes products into compact links`);
+}
+
 async function main() {
   const [sitemap, categoryPages] = await Promise.all([
     get("/sitemap.xml"),
@@ -367,6 +387,8 @@ async function main() {
     assert(!robotsMeta(categoryPage.es).includes("noindex"), `${categoryPage.slug} Spanish category is unexpectedly noindex`);
     assert(sitemap.includes(englishUrl), `${categoryPage.slug} English category is missing from the sitemap`);
     assert(sitemap.includes(spanishUrl), `${categoryPage.slug} Spanish category is missing from the sitemap`);
+    assertFullCategoryCatalogue(categoryPage.en, "en", `${categoryPage.slug} English category`);
+    assertFullCategoryCatalogue(categoryPage.es, "es", `${categoryPage.slug} Spanish category`);
 
     for (const pathway of categoryPage.pathways) {
       assertPathway(categoryPage.en, pathway, `${categoryPage.slug} English category`);
@@ -381,6 +403,12 @@ async function main() {
     for (const pathway of categoryPage.categoryOnlyPathways || []) {
       assertPathway(categoryPage.en, pathway, `${categoryPage.slug} English category`);
       assertPathway(categoryPage.es, `/es${pathway}`, `${categoryPage.slug} Spanish category`);
+    }
+    const lastEnglishCardIndex = categoryPage.en.lastIndexOf('id="cat-product-');
+    const lastSpanishCardIndex = categoryPage.es.lastIndexOf('id="cat-product-');
+    for (const pathway of categoryPage.comparisonPathways || []) {
+      assert(categoryPage.en.indexOf(`href="${pathway}"`) > lastEnglishCardIndex, `${categoryPage.slug} English comparison pathway appears before the catalogue`);
+      assert(categoryPage.es.indexOf(`href="/es${pathway}"`) > lastSpanishCardIndex, `${categoryPage.slug} Spanish comparison pathway appears before the catalogue`);
     }
     assertPageEnhancements(
       categoryPage.en,

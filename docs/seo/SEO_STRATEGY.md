@@ -66,7 +66,7 @@ record, or keyword owner.
 
 | Cluster | EN / ES indexable products | Main supporting layers | Expansion posture |
 |---------|----------------------------|------------------------|-------------------|
-| Beach & Outdoor | 49 / 49 | Category, Family Beach kit, beach/summer blogs, 4 beach guides | Strongest cluster; bounded rendering preserves every product link without oversized cards |
+| Beach & Outdoor | 49 / 49 | Category, Family Beach kit, beach/summer blogs, 4 beach guides | Strongest cluster; the category visibly merchandises every active member as a full card |
 | Baby & Toddler | 33 / 33 | Category, stroller and car-seat family owners, Baby Arrival and Toddler City kits, family/baby articles | Governed families own unmodified selection intent; products retain exact-item intent |
 | Mobility & Accessibility | 6 / 6 | Category, mobility-scooter family owner, 2 accessibility kits, accessibility guide, local guides | First narrow family owner implemented; retain wheelchair intent at the broad category until its own reviewed owner is justified |
 | Remote Work | 6 / 6 | Category, Remote Work kit, nomad guide, home-office tutorial | Deepen exact workstation and temporary-stay decisions |
@@ -291,6 +291,7 @@ Admin Dashboard:
 
 | Date | Change |
 |------|--------|
+| 2026-08-11 | Retired the invalid category-card cap: EN/ES category owners now show every active member as a full product card, product-type links navigate within the catalogue, and optional comparison owners follow rather than displace merchandise. Added rendered regression coverage for full-card parity. |
 | 2026-08-11 | Corrected the car-seat catalogue while retaining the existing family owner: four false product identities are replaced with the confirmed named seats, and three interchangeable generic backless boosters remain one model-neutral product with capacity three. The transactional preview, build and rendered EN/ES regression passed. |
 | 2026-08-11 | Prepared governed EN/ES car-seat family owner with three verified choices; contradictory infant and unidentified booster records remain excluded pending physical catalogue verification |
 | 2026-06-18 | Homepage: photo carousel hero, photo-backed category cards |
