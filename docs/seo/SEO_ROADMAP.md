@@ -5,6 +5,11 @@
 
 ## Current SEO audit priorities — 11 August 2026
 
+- [x] Correct product-detail image delivery after Vercel returned
+  `402 OPTIMIZED_IMAGE_REQUEST_PAYMENT_REQUIRED` for newly uploaded, uncached
+  Supabase product images. EN/ES product pages now load public Supabase objects
+  directly while local assets retain Next.js optimization. The family regression
+  now requests every rendered product image and fails on HTTP or content-type errors.
 - [x] Release the corrected five-product car-seat catalogue without changing the
   `/rental/baby-gear/car-seats` cluster owner. Four genuinely different named seats
   receive exact-product pages; three interchangeable generic backless boosters

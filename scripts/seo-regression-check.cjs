@@ -200,6 +200,22 @@ async function assertPermanentRedirect(source, destination) {
   );
 }
 
+async function assertPrimaryProductImageLoads(html, path) {
+  const imageSources = [...html.matchAll(/<img[^>]+src="([^"]+)"/gi)]
+    .map((match) => match[1].replaceAll("&amp;", "&"));
+  const productImage = imageSources.find((source) =>
+    source.includes("product-images") || source.startsWith("/products/"),
+  );
+  assert(productImage, `${path} has no rendered product image`);
+  const imageUrl = new URL(productImage, baseUrl);
+  const response = await fetch(imageUrl, { redirect: "follow" });
+  assert(response.ok, `${path} product image returned ${response.status}`);
+  assert(
+    response.headers.get("content-type")?.startsWith("image/"),
+    `${path} product image returned a non-image content type`,
+  );
+}
+
 function canonical(html) {
   return html.match(/<link[^>]+rel="canonical"[^>]+href="([^"]+)"[^>]*>/i)?.[1] || null;
 }
@@ -271,6 +287,12 @@ async function main() {
       es: await get(`/es${familyCheck.path}`),
       productEn: await get(`/product/${familyCheck.productSlug}`),
       productEs: await get(`/es/product/${familyCheck.productSlug}`),
+      productPages: await Promise.all(
+        familyCheck.productSlugs.map(async (slug) => ({
+          slug,
+          html: await get(`/product/${slug}`),
+        })),
+      ),
     })),
   );
 
@@ -396,6 +418,9 @@ async function main() {
     for (const familyProductSlug of familyPage.productSlugs) {
       assertPathway(familyPage.en, `/product/${familyProductSlug}`, `${familyPage.name} family`);
       assertPathway(familyPage.es, `/es/product/${familyProductSlug}`, `Spanish ${familyPage.name} family`);
+    }
+    for (const productPage of familyPage.productPages) {
+      await assertPrimaryProductImageLoads(productPage.html, `/product/${productPage.slug}`);
     }
     for (const excludedProductSlug of familyPage.excludedProductSlugs || []) {
       assert(!familyPage.en.includes(`href="/product/${excludedProductSlug}"`), `${familyPage.name} family includes excluded product ${excludedProductSlug}`);

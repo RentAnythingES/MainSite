@@ -169,6 +169,7 @@ export default async function ProductPage({ params }: Props) {
                     src={product.image}
                     alt={product.imageAlt || product.name}
                     fill
+                    unoptimized={product.image.includes(".supabase.co/storage/")}
                     className="object-contain p-6"
                     sizes="(max-width: 1024px) 100vw, 33vw"
                     priority
