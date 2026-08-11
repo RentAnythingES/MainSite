@@ -7,6 +7,7 @@ import { getPublishedDestinations } from "@/content/destinations";
 import { getPublishedSpanishDestinations } from "@/content/destinations-es";
 import { getIndexableProductsForSeo } from "@/lib/product-service";
 import { indexableSeoCategorySlugs } from "@/data/seo-clusters";
+import { productFamilies } from "@/data/product-families";
 import { SITE_URL as BASE_URL } from "@/config/site";
 
 // Keep sitemap publication close to the product cache window so newly approved
@@ -41,6 +42,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     changeFrequency: "weekly" as const,
     priority: 0.8,
   }));
+
+  const familyPages: MetadataRoute.Sitemap = productFamilies
+    .filter((family) => family.published)
+    .map((family) => ({
+      url: `${BASE_URL}/rental/${family.categorySlug}/${family.slug}`,
+      changeFrequency: "weekly" as const,
+      priority: 0.8,
+    }));
 
   // Product pages
   const productPages: MetadataRoute.Sitemap = products.map((product) => ({
@@ -143,5 +152,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.7,
   }));
 
-  return [...staticPages, ...categoryPages, ...productPages, ...bundlePages, ...blogPages, ...discoverHubs, ...discoverPages, ...spanishStaticPages, ...spanishBundlePages, ...spanishBlogPages, ...spanishDiscoverPages, ...spanishProductPages, ...spanishCategoryPages];
+  const spanishFamilyPages: MetadataRoute.Sitemap = productFamilies
+    .filter((family) => family.published)
+    .map((family) => ({
+      url: `${BASE_URL}/es/rental/${family.categorySlug}/${family.slug}`,
+      changeFrequency: "weekly" as const,
+      priority: 0.7,
+    }));
+
+  return [...staticPages, ...categoryPages, ...familyPages, ...productPages, ...bundlePages, ...blogPages, ...discoverHubs, ...discoverPages, ...spanishStaticPages, ...spanishBundlePages, ...spanishBlogPages, ...spanishDiscoverPages, ...spanishProductPages, ...spanishCategoryPages, ...spanishFamilyPages];
 }

@@ -317,6 +317,7 @@ export default async function ProductPage({ params }: Props) {
       <ProductPlanningLinks
         categoryName={product.category}
         categorySlug={product.categorySlug}
+        productSlug={product.slug}
       />
 
       {/* Related Guides */}

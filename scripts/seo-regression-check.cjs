@@ -5,6 +5,8 @@ const productCategory = process.env.SEO_PRODUCT_CATEGORY || "travel-outdoors";
 const referenceKitSlug = "family-beach-kit";
 const referenceBlogSlug = "rent-vs-buy-baby-gear-valencia";
 const referenceTutorialSlug = "home-office-setup-valencia-apartment";
+const mobilityScooterFamilyPath = "/rental/mobility/mobility-scooters";
+const mobilityScooterProductSlug = "mobility-scooter-lightweight-foldable";
 const legacyProductRedirects = [
   ["/product/portable-ac", "/product/mobile-airconditioner-delonghi-pinguino-compact-classic"],
   ["/es/product/portable-ac", "/es/product/mobile-airconditioner-delonghi-pinguino-compact-classic"],
@@ -201,7 +203,7 @@ async function main() {
     !sitemap.includes(`https://rentandroll.com/product/${slug}`)
   ) || null;
 
-  const [home, product, productEs, noindexProduct, robots, discoverHierarchyPages, kitsPage, kitsPageEs, kitPage, kitPageEs, blogPage, blogPageEs, tutorialPage, tutorialPageEs, hostServices, hostServicesEs, partners, partnersEs, faqPage, faqPageEs, howItWorks, howItWorksEs, refundsPage, refundsPageEs, aboutPage, aboutPageEs, contactPage, contactPageEs, privacyPage, privacyPageEs, termsPage, termsPageEs, cookiesPage, cookiesPageEs] = await Promise.all([
+  const [home, product, productEs, noindexProduct, robots, discoverHierarchyPages, mobilityScooterFamily, mobilityScooterFamilyEs, mobilityScooterProduct, mobilityScooterProductEs, kitsPage, kitsPageEs, kitPage, kitPageEs, blogPage, blogPageEs, tutorialPage, tutorialPageEs, hostServices, hostServicesEs, partners, partnersEs, faqPage, faqPageEs, howItWorks, howItWorksEs, refundsPage, refundsPageEs, aboutPage, aboutPageEs, contactPage, contactPageEs, privacyPage, privacyPageEs, termsPage, termsPageEs, cookiesPage, cookiesPageEs] = await Promise.all([
     get("/"),
     get(`/product/${productSlug}`),
     get(`/es/product/${productSlug}`),
@@ -213,6 +215,10 @@ async function main() {
         html: await get(`/discover/${check.child}`),
       }))
     ),
+    get(mobilityScooterFamilyPath),
+    get(`/es${mobilityScooterFamilyPath}`),
+    get(`/product/${mobilityScooterProductSlug}`),
+    get(`/es/product/${mobilityScooterProductSlug}`),
     get("/valencia/kits"),
     get("/es/valencia/kits"),
     get(`/valencia/kits/${referenceKitSlug}`),
@@ -307,6 +313,20 @@ async function main() {
       `${hierarchyPage.child} Discover hierarchy`,
     );
   }
+  const mobilityScooterFamilyUrl = `https://rentandroll.com${mobilityScooterFamilyPath}`;
+  const mobilityScooterFamilyUrlEs = `https://rentandroll.com/es${mobilityScooterFamilyPath}`;
+  assert(canonical(mobilityScooterFamily) === mobilityScooterFamilyUrl, "Mobility-scooter family canonical is incorrect");
+  assert(canonical(mobilityScooterFamilyEs) === mobilityScooterFamilyUrlEs, "Spanish mobility-scooter family canonical is incorrect");
+  assert(alternate(mobilityScooterFamily, "es") === mobilityScooterFamilyUrlEs, "Mobility-scooter family lacks Spanish hreflang");
+  assert(alternate(mobilityScooterFamilyEs, "en") === mobilityScooterFamilyUrl, "Spanish mobility-scooter family lacks English hreflang");
+  assert(!robotsMeta(mobilityScooterFamily).includes("noindex"), "Mobility-scooter family is unexpectedly noindex");
+  assert(!robotsMeta(mobilityScooterFamilyEs).includes("noindex"), "Spanish mobility-scooter family is unexpectedly noindex");
+  assert(sitemap.includes(mobilityScooterFamilyUrl), "Mobility-scooter family is missing from the sitemap");
+  assert(sitemap.includes(mobilityScooterFamilyUrlEs), "Spanish mobility-scooter family is missing from the sitemap");
+  assertPageEnhancements(mobilityScooterFamily, ["How to choose a mobility scooter"], ["CollectionPage", "BreadcrumbList", "FAQPage"], "Mobility-scooter family");
+  assertPageEnhancements(mobilityScooterFamilyEs, ["Cómo elegir un scooter de movilidad"], ["CollectionPage", "BreadcrumbList", "FAQPage"], "Spanish mobility-scooter family");
+  assertPathway(mobilityScooterProduct, mobilityScooterFamilyPath, "Mobility-scooter product");
+  assertPathway(mobilityScooterProductEs, `/es${mobilityScooterFamilyPath}`, "Spanish mobility-scooter product");
   assert(
     canonical(product) === `https://rentandroll.com/product/${productSlug}`,
     "Product canonical is incorrect"
@@ -581,6 +601,8 @@ async function main() {
     spanishReferenceBlogCanonical: canonical(blogPageEs),
     referenceTutorialCanonical: canonical(tutorialPage),
     spanishReferenceTutorialCanonical: canonical(tutorialPageEs),
+    mobilityScooterFamilyCanonical: canonical(mobilityScooterFamily),
+    spanishMobilityScooterFamilyCanonical: canonical(mobilityScooterFamilyEs),
     checkedCategoryClusters: categoryPages.map((categoryPage) => categoryPage.slug),
     hostServicesCanonical: canonical(hostServices),
     spanishHostServicesCanonical: canonical(hostServicesEs),

@@ -331,8 +331,13 @@ Protected by Supabase Auth. Server-side cookie check in `admin/layout.tsx` — r
 ## i18n Architecture
 
 Prefix-based routing for SEO parity:
-- English: `/product/[slug]`, `/rental/[category]`, `/valencia`
-- Spanish: `/es/product/[slug]`, `/es/rental/[category]`, `/es/valencia`
+- English: `/product/[slug]`, `/rental/[category]`, `/rental/[category]/[family]`, `/valencia`
+- Spanish: `/es/product/[slug]`, `/es/rental/[category]`, `/es/rental/[category]/[family]`, `/es/valencia`
+- Product-family routes are a governed, code-defined SEO layer. A family owns one
+  distinct selection intent, lists only reviewed product slugs, and renders current
+  catalogue facts and prices dynamically. Stable guidance lives in
+  `src/data/product-families.ts`; inventory counts, named models and prices must not
+  be embedded in that static prose.
 - Product slug replacements require explicit permanent redirects in
   `next.config.ts` for both English and Spanish paths. Internal editorial and
   bundle references must move to the current slug; redirects preserve existing
@@ -353,6 +358,7 @@ Components (`Header`, `Footer`) detect locale via `usePathname()` and toggle lab
 | File | Purpose |
 |------|---------|
 | `src/data/products.ts` | Static product data (build-time fallback) |
+| `src/data/product-families.ts` | Governed bilingual family-owner definitions and reviewed product membership |
 | `src/data/bundles.ts` | Static kit/bundle definitions for scenario-led rental pages |
 | `src/lib/product-service.ts` | Supabase-first product fetching with static fallback |
 | `src/lib/product-cache.ts` | Tagged public catalogue cache and immediate admin-write invalidation |

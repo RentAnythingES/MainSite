@@ -1,9 +1,17 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
 const crypto = require("crypto");
 const fs = require("fs");
 const path = require("path");
 const { Client } = require("pg");
 
-for (const line of fs.readFileSync(path.join(process.cwd(), ".env.local"), "utf8").split(/\r?\n/)) {
+const envPath = [
+  path.join(process.cwd(), ".env.local"),
+  path.resolve(process.cwd(), "..", "..", ".env.local"),
+].find((candidate) => fs.existsSync(candidate));
+
+if (!envPath) throw new Error(".env.local was not found in the project or parent workspace");
+
+for (const line of fs.readFileSync(envPath, "utf8").split(/\r?\n/)) {
   const match = line.match(/^([^#=]+)=(.*)$/);
   if (match) process.env[match[1].trim()] = match[2].trim().replace(/^['"]|['"]$/g, "");
 }

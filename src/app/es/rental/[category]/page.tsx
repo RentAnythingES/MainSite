@@ -20,6 +20,14 @@ interface CategoryContent {
     description: string;
     href: string;
   }>;
+  familyHeading?: string;
+  familyDescription?: string;
+  familyPathways?: Array<{
+    eyebrow: string;
+    title: string;
+    description: string;
+    href: string;
+  }>;
   searchIntentHeading?: string;
   searchIntentDescription?: string;
   searchIntents?: Array<{
@@ -132,13 +140,23 @@ const categoryMetaES: Record<string, CategoryContent> = {
     ],
   },
   "mobility": {
-    title: "Alquiler de Sillas de Ruedas y Scooters en Valencia",
+    title: "Alquiler de Equipos de Movilidad en Valencia",
     description: "Alquila sillas de ruedas, scooters de movilidad, andadores y ayudas diarias en Valencia, con entrega y recogida en tu hotel o apartamento.",
     editorialHeading: "Explorar Valencia con equipos de movilidad",
     editorialParagraphs: [
-      "Valencia es una de las ciudades más accesibles de España. El terreno llano, el metro totalmente accesible y los amplios paseos marítimos la hacen ideal para usuarios de silla de ruedas y visitantes con movilidad reducida.",
-      "Alquilar equipos de movilidad localmente significa que evitas el riesgo de daños en tu propia silla de ruedas o scooter durante el vuelo. Entregamos directamente en tu alojamiento — ya sea un hotel en el centro histórico, un apartamento en la playa de la Malvarrosa o un Airbnb en Ruzafa.",
-      "Nuestros scooters de movilidad ligeros son especialmente populares entre los visitantes que quieren independencia para recorrer los 9 km de los Jardines del Turia, la Ciudad de las Artes y las Ciencias, y las playas accesibles con sus servicios de baño asistido.",
+      "Valencia tiene muchas rutas relativamente llanas, paseos amplios y espacios públicos sin escalones, pero el acceso cambia según la calle, el edificio, la parada de transporte y el destino. Conviene revisar la ruta concreta de la estancia en lugar de dar por accesible toda la ciudad.",
+      "Alquilar localmente evita llevar un equipo de movilidad voluminoso en el avión. La reserva muestra las opciones actuales de recogida y entrega; si afectan a la entrega, podemos comprobar escalones, ascensores, puertas estrechas y almacenamiento antes del pago.",
+      "Empieza por el tipo de apoyo que necesitas: scooter para recorridos pavimentados adecuados, silla de ruedas para movilidad sentada o andador para apoyo al caminar. Cada ficha explica los límites de ajuste, acceso, transporte y uso correspondientes.",
+    ],
+    familyHeading: "Compara los equipos de movilidad por tipo",
+    familyDescription: "Utiliza una página de selección específica cuando varios productos resuelven la misma necesidad o consulta la colección completa más abajo.",
+    familyPathways: [
+      {
+        eyebrow: "Scooters de movilidad",
+        title: "Comparar scooters de movilidad en Valencia",
+        description: "Compara transporte, espacio de giro, capacidad, almacenamiento y tipo de recorrido antes de elegir.",
+        href: "/es/rental/mobility/mobility-scooters",
+      },
     ],
     featuredHeading: "Planifica un viaje accesible en Valencia",
     featuredDescription: "Elige un conjunto de accesibilidad, prepara la visita de familiares mayores o consulta nuestra guía local para conocer rutas y servicios.",
@@ -490,7 +508,27 @@ export default async function CategoryPageES({ params }: Props) {
         </div>
       </section>
 
-      {subcategories.length > 1 && (
+      {meta.familyPathways && meta.familyPathways.length > 0 && (
+        <section className="border-b border-border bg-white py-8">
+          <div className="container-site">
+            <div className="mb-5 max-w-3xl">
+              <h2 className="text-2xl font-bold">{meta.familyHeading}</h2>
+              <p className="mt-2 text-neutral-600">{meta.familyDescription}</p>
+            </div>
+            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+              {meta.familyPathways.map((pathway) => (
+                <Link key={pathway.href} href={pathway.href} className="card group bg-neutral-50 p-5 hover:shadow-md">
+                  <span className="text-xs font-semibold uppercase tracking-wide text-brand">{pathway.eyebrow}</span>
+                  <h3 className="mt-2 text-lg font-bold group-hover:text-brand">{pathway.title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-neutral-600">{pathway.description}</p>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {subcategories.length > 1 && !meta.familyPathways?.length && (
         <section className="bg-white border-b border-border py-4">
           <div className="container-site">
             <div className="flex items-center gap-2 overflow-x-auto">

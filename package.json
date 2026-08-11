@@ -29,6 +29,7 @@
     "db:migrate": "node scripts/apply-db-migrations.cjs",
     "db:preview:markets": "node scripts/preview-multi-market-migration.cjs",
     "db:preview:categories": "node scripts/preview-product-category-memberships.cjs",
+    "db:preview:scooter-owner": "node scripts/preview-mobility-scooter-owner.cjs",
     "db:verify:categories": "node scripts/verify-product-category-memberships.cjs",
     "db:verify": "node scripts/verify-live-backend.cjs"
   },
