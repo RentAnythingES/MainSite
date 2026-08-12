@@ -573,6 +573,12 @@ Priority pilot logic: start with one narrow bundle, collect usage evidence, then
      first-order catalogue risks are shared monitor imagery and the next thin-copy
      group. See
      [PRIORITY_PRODUCT_PAGE_AUDIT_20260811.md](./PRIORITY_PRODUCT_PAGE_AUDIT_20260811.md).
+   - Mobility bilingual follow-up on 12 August completed Spanish FAQ coverage for
+     the powered wheelchair, rollator and transport wheelchair, repaired the
+     powered-wheelchair snippet, and corrected misleading FAQ wording. A permanent
+     size-identity audit also caught and removed the 24-inch monitor's stray
+     27-inch Spanish description. All 114 active products remain indexable in both
+     languages, with zero active size-identity conflicts.
    - Mobility scooter content review completed 21 July 2026 for standard,
      lightweight, and heavy-duty listings. EN/ES copy and FAQs are complete and all
      three active listings remain in both sitemaps. Image-rights follow-up remains an

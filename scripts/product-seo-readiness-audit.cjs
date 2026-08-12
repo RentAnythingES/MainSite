@@ -40,6 +40,42 @@ function hasUsableImage(value) {
   ) && imageUrl !== "/products/placeholder.png";
 }
 
+function normalizedMeasurementText(value) {
+  return String(value || "")
+    .toLowerCase()
+    .replaceAll("–", "-")
+    .replaceAll("—", "-")
+    .replace(/\s+/g, " ");
+}
+
+function extractInchSizes(value) {
+  return [...normalizedMeasurementText(value).matchAll(/(\d+(?:\.\d+)?)\s*(?:inch|inches|pulgadas)\b/g)]
+    .map((match) => match[1]);
+}
+
+function findIdentityIssues(product) {
+  const headlineSizes = extractInchSizes(product.name);
+  if (headlineSizes.length !== 1) return [];
+
+  const expected = headlineSizes[0];
+  const fields = [
+    ["slug", product.slug.replaceAll("-", " ")],
+    ["spec:Screen", product.specs?.Screen],
+    ...product.product_localizations.flatMap((localization) => [
+      [`${localization.locale}:short_description`, localization.short_description],
+      [`${localization.locale}:detail_description`, localization.detail_description],
+      [`${localization.locale}:seo_title`, localization.seo_title],
+      [`${localization.locale}:seo_description`, localization.seo_description],
+    ]),
+  ];
+
+  return fields.flatMap(([field, value]) => {
+    const actual = extractInchSizes(value);
+    if (actual.length === 0 || actual.includes(expected)) return [];
+    return [{ field, expected: `${expected} inch`, actual: actual.map((size) => `${size} inch`) }];
+  });
+}
+
 function evaluateProduct(product, legacySlugs) {
   const category = Array.isArray(product.category) ? product.category[0] : product.category;
   const categorySlug = category?.slug || "uncategorized";
@@ -48,6 +84,7 @@ function evaluateProduct(product, legacySlugs) {
   const spanish = product.product_localizations.find((localization) => localization.locale === "es");
   const faqCountEn = product.product_faqs.filter((faq) => faq.locale === "en").length;
   const faqCountEs = product.product_faqs.filter((faq) => faq.locale === "es").length;
+  const identityIssues = findIdentityIssues(product);
   const blockersEn = [];
 
   if (!product.is_active) blockersEn.push("inactive");
@@ -78,6 +115,7 @@ function evaluateProduct(product, legacySlugs) {
     faqCountEn,
     faqCountEs,
     faqCoverageRequired: !isLegacyProduct && product.content_status === "content_ready",
+    identityIssues,
   };
 }
 
@@ -103,11 +141,12 @@ async function main() {
       name,
       description,
       image_url,
+      specs,
       is_active,
       content_status,
       category:categories!products_category_id_fkey (slug),
       pricing_tiers (min_days),
-      product_localizations (locale, short_description, seo_title, seo_description),
+      product_localizations (locale, short_description, detail_description, seo_title, seo_description),
       product_faqs (locale),
       product_images (is_primary, rights_status)
     `)
@@ -164,6 +203,9 @@ async function main() {
       faqCountEn,
       faqCountEs,
     }));
+  const activeIdentityConflicts = products
+    .filter((product) => !product.blockersEn.includes("inactive") && product.identityIssues.length > 0)
+    .map(({ slug, category, identityIssues }) => ({ slug, category, identityIssues }));
 
   console.log(JSON.stringify({
     generatedAt: new Date().toISOString(),
@@ -177,6 +219,7 @@ async function main() {
     blockerTotals,
     activeProducts,
     activeFaqGaps,
+    activeIdentityConflicts,
     blockedActiveProducts,
   }, null, 2));
 
@@ -184,6 +227,9 @@ async function main() {
     console.warn(
       `[product-seo-readiness] informational: ${activeFaqGaps.length} active content-ready products have fewer than three FAQs in one or both locales`
     );
+  }
+  if (activeIdentityConflicts.length > 0) {
+    throw new Error(`${activeIdentityConflicts.length} active products have conflicting size identities`);
   }
 }
 

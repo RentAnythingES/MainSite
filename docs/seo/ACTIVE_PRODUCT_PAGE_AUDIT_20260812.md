@@ -86,8 +86,34 @@ in its headline. The contradictory Size 6, 10–20 kg, height, chest and interna
 review copy has been removed from its base record, bilingual content, metadata and
 FAQs. Pricing, stock, images and category memberships are unchanged.
 
+The 24-inch monitor's Spanish short description also incorrectly named a
+27-inch screen. It now states 24 inches, matching the product headline, canonical
+slug and `Screen` specification. The permanent product-readiness audit now checks
+monitor-size references across the headline, slug, screen specification and EN/ES
+localized fields; the production catalogue currently has zero active size-identity
+conflicts.
+
+## Mobility bilingual support completion
+
+The remaining priority mobility product gaps were completed without changing
+product identity or availability:
+
+- the powered-wheelchair English search description now describes only that
+  product rather than trailing into unrelated scooters, crutches and walkers;
+- powered-wheelchair FAQs now cover user weight, range and car transport in both
+  English and Spanish;
+- rollator FAQ wording now distinguishes the verified 56 cm seat height from seat
+  width and states the 135 kg user limit clearly;
+- transport-wheelchair FAQ grammar was corrected and Spanish coverage now includes
+  the verified 100 kg user limit.
+
+All three products now have at least three FAQs in each language. A production
+rerun still reports 114 active products and 114 indexable product pages per
+language.
+
 ## Remaining work
 
 1. Replace the shared generic monitor image with verified photos of each variant.
-2. Continue the same fact-bound review through lower-priority active products,
+2. Continue the same fact-bound review through the remaining 26 optional FAQ-gap
+   products and other lower-priority active products,
    correcting only evidenced defects rather than manufacturing copy volume.

@@ -55,6 +55,20 @@ description.
 
 ## Next actions
 
+### Production follow-up — 12 August 2026
+
+The current read-only production audit reports 155 catalogue records, 114 active
+products, and all 114 active products indexable in both English and Spanish. The
+audit now also treats conflicting monitor-size identities as a failure across the
+headline, URL slug, `Screen` specification and localized EN/ES fields. After
+correcting the 24-inch monitor's Spanish description, active identity conflicts are
+zero.
+
+Mobility FAQ completion removed the powered wheelchair, rollator and transport
+wheelchair from the bilingual FAQ-gap queue. Twenty-six active content-ready
+products still have fewer than three FAQs in one or both locales; this remains an
+informational editorial queue rather than an indexability blocker.
+
 The July 18 production rerun confirms the baseline remains 178 catalogue records,
 24 active products, and 20 indexable products in each language. Code-side SEO,
 image and rendered-page audits pass; the four blocked active products remain
