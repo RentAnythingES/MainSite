@@ -111,9 +111,46 @@ All three products now have at least three FAQs in each language. A production
 rerun still reports 114 active products and 114 indexable product pages per
 language.
 
+## Child-water customer-copy repair
+
+The remaining `lifejacket-15-40kg` and `swimming-vest-19-30kg` pages contained
+internal activation, physical-review and source-conflict prose. They now present
+the actual customer choice directly:
+
+- the child lifejacket offers 15–30 kg and 30–40 kg sizes within its 15–40 kg
+  overall range;
+- the orange swimming vest is for 19–30 kg and is clearly distinguished as a
+  swimming aid rather than a lifejacket;
+- English and Spanish descriptions, inclusions, constraints, handover notes,
+  metadata and FAQs use the same product identity;
+- internal workflow language was removed without changing URLs, pricing, stock,
+  images or category memberships.
+
+## Active-catalogue copy hygiene
+
+A production-wide field scan found internal import, activation, physical-review or
+source-dispute language on 34 active products. The cleanup preserved product facts
+while removing text written for an internal workflow rather than a customer:
+
+- 54 inclusion-FAQ answers across 27 products now state `The rental includes…` /
+  `El alquiler incluye…` and retain their exact included-item lists;
+- `Import review` specifications were removed from the baby playpen, child bed rail
+  and video baby monitor;
+- the steamer/blender, bottle washer and walking treadmill now use direct bilingual
+  descriptions and practical FAQs based on their stored capacities and functions;
+- the remaining size-dependent water product is now clearly identified as a 50N+
+  buoyancy aid with 25–40, 40–60, 60–80 and over-80 kg options;
+- the Koenic AC was not rewritten; only its internal `Pricing review` specification
+  key was removed.
+
+The permanent product-readiness audit now checks active descriptions,
+specifications, localizations and FAQs for the retired internal-copy patterns and
+fails if they return. The final production scan covers 114 active products and
+reports zero findings.
+
 ## Remaining work
 
 1. Replace the shared generic monitor image with verified photos of each variant.
-2. Continue the same fact-bound review through the remaining 26 optional FAQ-gap
+2. Continue the same fact-bound review through the remaining 24 optional FAQ-gap
    products and other lower-priority active products,
    correcting only evidenced defects rather than manufacturing copy volume.

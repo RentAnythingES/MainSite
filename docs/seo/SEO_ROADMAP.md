@@ -579,6 +579,16 @@ Priority pilot logic: start with one narrow bundle, collect usage evidence, then
      size-identity audit also caught and removed the 24-inch monitor's stray
      27-inch Spanish description. All 114 active products remain indexable in both
      languages, with zero active size-identity conflicts.
+   - The remaining 15–40 kg child-lifejacket and 19–30 kg swimming-vest pages were
+     also converted from internal activation/review prose to direct bilingual
+     customer copy. Their distinct weight ranges and product types remain explicit;
+     URLs, pricing, stock, images and category memberships were not changed.
+   - A complete active-field hygiene scan then removed internal activation,
+     import-review and source-dispute language from the remaining catalogue. This
+     included 54 inclusion FAQs, three import-only specifications, four targeted
+     product-copy sets and one internal Koenic pricing-review key. The AC listing's
+     commercial copy and pricing were not rewritten. A permanent audit now fails if
+     these patterns return; all 114 active products currently pass.
    - Mobility scooter content review completed 21 July 2026 for standard,
      lightweight, and heavy-duty listings. EN/ES copy and FAQs are complete and all
      three active listings remain in both sitemaps. Image-rights follow-up remains an

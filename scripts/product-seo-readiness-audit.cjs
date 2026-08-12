@@ -76,6 +76,42 @@ function findIdentityIssues(product) {
   });
 }
 
+const internalCopyPatterns = [
+  /before activation|antes de la activaci[oó]n/i,
+  /rentanything must|rentanything debe|rent&roll must|rent&roll debe/i,
+  /submitted url|url submitted|url proporcionada|url enviada/i,
+  /physical approval|physical verification|physically verified|verificaci[oó]n f[ií]sica|verificado f[ií]sicamente/i,
+  /import queue|activation queue|cola de importaci[oó]n|cola de activaci[oó]n/i,
+  /internal review|editorial review|revisi[oó]n interna|revisi[oó]n editorial/i,
+  /exact physical contents|contenido f[ií]sico exacto/i,
+  /not selected in|no seleccionado en/i,
+  /why did one description|por qu[eé] una descripci[oó]n/i,
+];
+
+function findInternalCopyIssues(product) {
+  const fields = [
+    ["description", product.description],
+    ["features", JSON.stringify(product.features)],
+    ["specs", JSON.stringify(product.specs)],
+    ...product.product_localizations.flatMap((localization) =>
+      Object.entries(localization)
+        .filter(([key]) => key !== "locale")
+        .map(([key, value]) => [`${localization.locale}:${key}`, value])
+    ),
+    ...product.product_faqs.flatMap((faq, index) => [
+      [`${faq.locale}:faq:${index}:question`, faq.question],
+      [`${faq.locale}:faq:${index}:answer`, faq.answer],
+    ]),
+  ];
+
+  return fields.flatMap(([field, value]) => {
+    const text = String(value || "");
+    return internalCopyPatterns
+      .filter((pattern) => pattern.test(text))
+      .map((pattern) => ({ field, pattern: pattern.source }));
+  });
+}
+
 function evaluateProduct(product, legacySlugs) {
   const category = Array.isArray(product.category) ? product.category[0] : product.category;
   const categorySlug = category?.slug || "uncategorized";
@@ -85,6 +121,7 @@ function evaluateProduct(product, legacySlugs) {
   const faqCountEn = product.product_faqs.filter((faq) => faq.locale === "en").length;
   const faqCountEs = product.product_faqs.filter((faq) => faq.locale === "es").length;
   const identityIssues = findIdentityIssues(product);
+  const internalCopyIssues = findInternalCopyIssues(product);
   const blockersEn = [];
 
   if (!product.is_active) blockersEn.push("inactive");
@@ -116,6 +153,7 @@ function evaluateProduct(product, legacySlugs) {
     faqCountEs,
     faqCoverageRequired: !isLegacyProduct && product.content_status === "content_ready",
     identityIssues,
+    internalCopyIssues,
   };
 }
 
@@ -140,14 +178,15 @@ async function main() {
       slug,
       name,
       description,
+      features,
       image_url,
       specs,
       is_active,
       content_status,
       category:categories!products_category_id_fkey (slug),
       pricing_tiers (min_days),
-      product_localizations (locale, short_description, detail_description, seo_title, seo_description),
-      product_faqs (locale),
+      product_localizations (locale, short_description, detail_description, includes_text, constraints_text, delivery_setup_note, care_note, seo_title, seo_description),
+      product_faqs (locale, question, answer),
       product_images (is_primary, rights_status)
     `)
     .order("slug");
@@ -206,6 +245,9 @@ async function main() {
   const activeIdentityConflicts = products
     .filter((product) => !product.blockersEn.includes("inactive") && product.identityIssues.length > 0)
     .map(({ slug, category, identityIssues }) => ({ slug, category, identityIssues }));
+  const activeInternalCopyConflicts = products
+    .filter((product) => !product.blockersEn.includes("inactive") && product.internalCopyIssues.length > 0)
+    .map(({ slug, category, internalCopyIssues }) => ({ slug, category, internalCopyIssues }));
 
   console.log(JSON.stringify({
     generatedAt: new Date().toISOString(),
@@ -220,6 +262,7 @@ async function main() {
     activeProducts,
     activeFaqGaps,
     activeIdentityConflicts,
+    activeInternalCopyConflicts,
     blockedActiveProducts,
   }, null, 2));
 
@@ -230,6 +273,9 @@ async function main() {
   }
   if (activeIdentityConflicts.length > 0) {
     throw new Error(`${activeIdentityConflicts.length} active products have conflicting size identities`);
+  }
+  if (activeInternalCopyConflicts.length > 0) {
+    throw new Error(`${activeInternalCopyConflicts.length} active products expose internal workflow copy`);
   }
 }
 

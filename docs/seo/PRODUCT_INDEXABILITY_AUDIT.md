@@ -65,9 +65,14 @@ correcting the 24-inch monitor's Spanish description, active identity conflicts 
 zero.
 
 Mobility FAQ completion removed the powered wheelchair, rollator and transport
-wheelchair from the bilingual FAQ-gap queue. Twenty-six active content-ready
+wheelchair from the bilingual FAQ-gap queue. Subsequent customer-copy repairs added
+complete bilingual FAQ sets to the steamer/blender and bottle washer. Twenty-four active content-ready
 products still have fewer than three FAQs in one or both locales; this remains an
 informational editorial queue rather than an indexability blocker.
+
+The same production audit now fails when active product fields expose the retired
+internal import, activation, physical-review or source-dispute phrases. After the
+12 August cleanup, all 114 active products pass this copy-hygiene gate.
 
 The July 18 production rerun confirms the baseline remains 178 catalogue records,
 24 active products, and 20 indexable products in each language. Code-side SEO,
