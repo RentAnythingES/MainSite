@@ -561,16 +561,17 @@ Priority pilot logic: start with one narrow bundle, collect usage evidence, then
    - Full image-delivery and priority-copy follow-up on 12 August passed all 114
      active products across 228 EN/ES pages. Six fact-complete baby/family products
      now have direct bilingual customer copy and localized FAQs; Spanish product
-     pages can no longer inherit English static FAQs. Physical confirmation remains
-     necessary for the conflicting child-vest and 32-inch-monitor identities. See
+     pages can no longer inherit English static FAQs. The 25–40 kg swimming-vest
+     record and 32-inch monitor URL are now internally consistent, with permanent
+     redirects from the incorrect monitor URL. See
      [ACTIVE_PRODUCT_PAGE_AUDIT_20260812.md](./ACTIVE_PRODUCT_PAGE_AUDIT_20260812.md).
    - Priority non-AC follow-up on 11 August corrected a shared product-page defect
      that labelled every family-owner link as a scooter comparison. All five current
      families now use their own EN/ES context, guarded by rendered regression.
      Beachminton and family-kayak customer copy was also repaired from verified
-     facts. The remaining first-order catalogue risks are the conflicting child-vest
-     and 32-inch-monitor identities, followed by shared monitor imagery and the next
-     thin-copy group. See
+     facts. The two identity conflicts were resolved on 12 August; the remaining
+     first-order catalogue risks are shared monitor imagery and the next thin-copy
+     group. See
      [PRIORITY_PRODUCT_PAGE_AUDIT_20260811.md](./PRIORITY_PRODUCT_PAGE_AUDIT_20260811.md).
    - Mobility scooter content review completed 21 July 2026 for standard,
      lightweight, and heavy-duty listings. EN/ES copy and FAQs are complete and all

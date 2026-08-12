@@ -122,6 +122,10 @@ the admin UI. Failed verification removes only the just-uploaded storage object.
 Next image optimisation explicitly allows public Supabase Storage URLs under
 `/storage/v1/object/public/`. Product and subcategory slugs are validated by
 the admin API to use lowercase letters, numbers, and hyphens only.
+When a published product slug changes, add permanent redirects for both `/product/`
+and `/es/product/`, move internal merchandising references to the replacement slug,
+and retain lookup compatibility through `product-slug-aliases.ts` so active booking
+sessions survive the deployment/database cutover.
 
 `/admin/products/import` provides a CSV template and previews every row before
 import. Imported and manually created products are always inactive drafts.

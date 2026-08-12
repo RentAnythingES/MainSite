@@ -361,6 +361,7 @@ Components (`Header`, `Footer`) detect locale via `usePathname()` and toggle lab
 | `src/data/product-families.ts` | Governed bilingual family-owner definitions and reviewed product membership |
 | `src/data/bundles.ts` | Static kit/bundle definitions for scenario-led rental pages |
 | `src/lib/product-service.ts` | Supabase-first product fetching with static fallback |
+| `src/lib/product-slug-aliases.ts` | Legacy-to-canonical product lookup during safe URL cutovers |
 | `src/lib/product-cache.ts` | Tagged public catalogue cache and immediate admin-write invalidation |
 | `src/lib/supabase.ts` | Public Supabase client (anon key, RLS) |
 | `src/lib/supabase-admin.ts` | Admin Supabase client (service role, bypasses RLS) |
@@ -380,6 +381,11 @@ tag immediately with `revalidateTag(..., { expire: 0 })`. Partial product or
 content mutations also invalidate before returning an error. Direct database
 changes outside the admin API become visible when the five-minute fallback TTL
 expires.
+
+Product URL replacements remain lookup-compatible in both public product reads and
+booking/pricing resolution. This lets an old browser session or a newly deployed
+redirect resolve the same product ID during the database-slug cutover; the canonical
+catalogue and sitemap publish only the replacement slug.
 
 English and Spanish category routes use five-minute static regeneration instead
 of request-time rendering. Their full-route cache depends on the tagged product

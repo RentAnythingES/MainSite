@@ -73,15 +73,21 @@ The all-terrain stroller exposed the defect in production and now has three prop
 Spanish FAQs. The other five repaired products also receive complete bilingual FAQ
 coverage.
 
+## Product identity corrections
+
+The 32-inch monitor had a correct public headline and 32-inch specification but
+an incorrect `27-inch-monitor-hdmi-cable` URL. Its canonical slug is now
+`32-inch-monitor-hdmi-cable`; permanent English and Spanish redirects preserve the
+old URLs. The separate `monitor-27` product remains distinct, and its erroneous
+24-inch `Screen` specification is corrected to 27 inches.
+
+The `lifejacket-25-40kg` page now consistently describes the 25–40 kg product named
+in its headline. The contradictory Size 6, 10–20 kg, height, chest and internal
+review copy has been removed from its base record, bilingual content, metadata and
+FAQs. Pricing, stock, images and category memberships are unchanged.
+
 ## Remaining work
 
-1. Confirm the physical label for `lifejacket-25-40kg`; the name and URL say
-   25–40 kg while every stored exact specification says 10–20 kg.
-2. Confirm which physical product the `27-inch-monitor-hdmi-cable` row represents;
-   its current name and specifications describe a 32-inch 4K monitor.
-3. Replace the shared generic monitor image with verified photos of each variant.
-4. Continue the same fact-bound review through lower-priority active products,
+1. Replace the shared generic monitor image with verified photos of each variant.
+2. Continue the same fact-bound review through lower-priority active products,
    correcting only evidenced defects rather than manufacturing copy volume.
-
-The first two items require physical inventory confirmation. They are not safe
-targets for automatic rewriting.

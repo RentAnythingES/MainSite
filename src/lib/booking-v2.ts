@@ -1,5 +1,6 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 import type { Database, DeliveryType, FulfillmentMode } from "@/lib/types";
+import { canonicalProductSlug, productSlugLookupCandidates } from "@/lib/product-slug-aliases";
 
 export const BOOKING_TIMEZONE = "Europe/Madrid";
 export const DEFAULT_DRAFT_TTL_MINUTES = 30;
@@ -166,12 +167,15 @@ export async function getProductWithPricing(
   supabase: SupabaseClient<Database>,
   productSlug: string
 ): Promise<{ product: BookingProduct; tiers: PricingTier[]; quantityDiscounts: QuantityDiscountTier[] }> {
-  const { data: product, error: productError } = await supabase
+  const canonicalSlug = canonicalProductSlug(productSlug);
+  const { data: products, error: productError } = await supabase
     .from("products")
     .select("id, slug, name, stock_total, stock_available")
-    .eq("slug", productSlug)
-    .eq("is_active", true)
-    .single();
+    .in("slug", productSlugLookupCandidates(productSlug))
+    .eq("is_active", true);
+
+  const productRows = (products || []) as unknown as BookingProduct[];
+  const product = productRows.find((candidate) => candidate.slug === canonicalSlug) || productRows[0];
 
   if (productError || !product) {
     throw new Error("Product not found");

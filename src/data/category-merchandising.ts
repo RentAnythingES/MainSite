@@ -30,7 +30,7 @@ export const categoryProductPriorities: Record<string, readonly string[]> = {
     "monitor-27",
     "24-inch-monitor-hdmi-cable",
     "29-inch-monitor-hdmi-cable",
-    "27-inch-monitor-hdmi-cable",
+    "32-inch-monitor-hdmi-cable",
     "standing-desk",
     "ergonomic-chair",
   ],

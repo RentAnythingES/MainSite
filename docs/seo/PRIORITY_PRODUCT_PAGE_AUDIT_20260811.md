@@ -67,19 +67,14 @@ memberships. Each has three direct customer FAQs in both languages.
 
 ## Remaining work, in practical order
 
-### 1. Resolve two genuine identity conflicts before editing their URLs
+### 1. Resolve two genuine identity conflicts — completed 12 August
 
-These are inventory questions, not writing questions:
-
-- `lifejacket-25-40kg` is named and slugged as 25–40 kg, while its stored model,
-  features, specifications and copy all describe a Size 6 vest for 10–20 kg.
-  Confirm the label on the owned unit, then correct the identity and add a redirect
-  if the public slug changes.
-- `27-inch-monitor-hdmi-cable` is named and specified as a 32-inch 4K monitor.
-  Confirm which physical monitor this stock row represents before deciding whether
-  to preserve the legacy URL or migrate it with a redirect.
-
-Neither product was hidden or rewritten in this batch.
+The public product headlines now determine the consistent records. The 32-inch
+monitor moved to `32-inch-monitor-hdmi-cable`, with permanent EN/ES redirects from
+the incorrect 27-inch URL. The separate `monitor-27` record now has a matching
+27-inch screen specification. The 25–40 kg swimming-vest headline, descriptions,
+features, specifications, metadata and FAQs now all describe the same weight range;
+the unrelated Size 6 / 10–20 kg variant data was removed.
 
 ### 2. Replace ambiguous shared monitor imagery
 
@@ -102,7 +97,7 @@ seven bilingual category owners and verifies each image response.
 
 ## Next action
 
-Start with the two physical identity decisions above, then add distinct verified
-monitor photos and continue the lower-priority fact-bound product review. Continue
+Add distinct verified monitor photos and continue the lower-priority fact-bound
+product review. Continue
 to protect the two AC listings from broad rewrites while other catalogue defects
 are being resolved.

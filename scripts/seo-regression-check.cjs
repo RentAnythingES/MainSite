@@ -56,6 +56,39 @@ const repairedProductChecks = [
     requiredSpanishText: "¿Funcionan ambas unidades con batería?",
     forbiddenText: ["works als unplugged", "[Reliable and safety]"],
   },
+  {
+    slug: "32-inch-monitor-hdmi-cable",
+    expectedEnglishH1: "Desktop Monitor - 32 inch",
+    expectedSpanishH1: "Desktop Monitor - 32 inch",
+    requiredEnglishText: "32 inch IPS",
+    requiredSpanishText: "32 inch IPS",
+    forbiddenText: ["27 inch IPS"],
+  },
+  {
+    slug: "monitor-27",
+    expectedEnglishH1: "Desktop Monitor - 27 inch",
+    expectedSpanishH1: "Desktop Monitor - 27 inch",
+    requiredEnglishText: "27 inch IPS",
+    requiredSpanishText: "27 inch IPS",
+    forbiddenText: ["24 inch IPS"],
+  },
+  {
+    slug: "lifejacket-25-40kg",
+    expectedEnglishH1: "Lifejacket / Swimming Vest - 25–40 kg",
+    expectedSpanishH1: "Lifejacket / Swimming Vest - 25–40 kg",
+    requiredEnglishText: "Who is this swimming vest suitable for?",
+    requiredSpanishText: "¿Para quién es adecuado este chaleco?",
+    forbiddenText: [
+      "10–20 kg",
+      "10-20 kg",
+      "100–120 cm",
+      "64–68 cm",
+      "Size 6",
+      "Talla 6",
+      "RentAnything must",
+      "RentAnything deberá",
+    ],
+  },
 ];
 const allFamilyChecks = [
   {
@@ -143,6 +176,8 @@ const legacyProductRedirects = [
   ["/es/product/compact-stroller", "/es/product/stroller-travel-compact"],
   ["/product/double-stroller", "/product/stroller-double"],
   ["/es/product/double-stroller", "/es/product/stroller-double"],
+  ["/product/27-inch-monitor-hdmi-cable", "/product/32-inch-monitor-hdmi-cable"],
+  ["/es/product/27-inch-monitor-hdmi-cable", "/es/product/32-inch-monitor-hdmi-cable"],
   ["/product/car-seat-infant", "/product/maxi-cosi-pebble-360-pro2-infant-car-seat"],
   ["/es/product/car-seat-infant", "/es/product/maxi-cosi-pebble-360-pro2-infant-car-seat"],
   ["/product/car-seat-britax-i-size", "/product/moni-serengeti-i-size-car-seat"],
@@ -285,7 +320,7 @@ const categoryChecks = [
       "monitor-27",
       "24-inch-monitor-hdmi-cable",
       "29-inch-monitor-hdmi-cable",
-      "27-inch-monitor-hdmi-cable",
+      "32-inch-monitor-hdmi-cable",
       "standing-desk",
       "ergonomic-chair",
     ],
@@ -685,6 +720,10 @@ async function main() {
     assert(canonical(repairedProductPage.es) === spanishUrl, `${repairedProductPage.slug} Spanish canonical is incorrect`);
     assert(!robotsMeta(repairedProductPage.en).includes("noindex"), `${repairedProductPage.slug} is unexpectedly noindex`);
     assert(!robotsMeta(repairedProductPage.es).includes("noindex"), `Spanish ${repairedProductPage.slug} is unexpectedly noindex`);
+    if (repairedProductPage.expectedEnglishH1) {
+      assert(headingOne(repairedProductPage.en) === repairedProductPage.expectedEnglishH1, `${repairedProductPage.slug} English H1 is incorrect`);
+      assert(headingOne(repairedProductPage.es) === repairedProductPage.expectedSpanishH1, `${repairedProductPage.slug} Spanish H1 is incorrect`);
+    }
     assert(decodeHtmlEntities(repairedProductPage.en).includes(repairedProductPage.requiredEnglishText), `${repairedProductPage.slug} English repair copy is missing`);
     assert(decodeHtmlEntities(repairedProductPage.es).includes(repairedProductPage.requiredSpanishText), `${repairedProductPage.slug} Spanish repair copy is missing`);
     for (const forbiddenText of repairedProductPage.forbiddenText) {

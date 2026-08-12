@@ -1,5 +1,5 @@
 # Rent&Roll — SEO Strategy & Audit
-> **Last updated**: 2026-08-11 · **Canonical migration**: deployed · **Release sitemap URLs**: 376
+> **Last updated**: 2026-08-12 · **Canonical migration**: deployed · **Release sitemap URLs**: 376
 
 This is the **living SEO strategy document** for rentandroll.com. Updated after every SEO-related change. For prioritized fixes, see [SEO_ROADMAP.md](./SEO_ROADMAP.md).
 
@@ -327,6 +327,7 @@ Admin Dashboard:
 
 | Date | Change |
 |------|--------|
+| 2026-08-12 | Corrected two catalogue identities without changing page count: the 32-inch monitor moved from the incorrect `27-inch-monitor-hdmi-cable` slug to `32-inch-monitor-hdmi-cable` with permanent EN/ES redirects, the separate 27-inch monitor specification now matches its headline, and the 25–40 kg swimming-vest record is consistent across EN/ES copy, metadata, specifications and FAQs. |
 | 2026-08-12 | Verified rendered image delivery across all 114 active products and all 228 EN/ES product pages, with zero failures, and added a permanent full-catalogue image audit. Repaired six fact-complete baby/family product pages in both languages, added three FAQs per locale, and prevented static English FAQs from leaking onto Spanish product pages. Identity, URLs, pricing, stock, images, categories and both AC listings remain unchanged. See `ACTIVE_PRODUCT_PAGE_AUDIT_20260812.md`. |
 | 2026-08-11 | Corrected product-to-owner link context across all five current family clusters: the shared EN/ES product component now uses each matched family’s existing heading and description instead of hard-coded scooter copy. Added regression assertions for all family owners. Repaired the fact-complete Beachminton and family-kayak EN/ES product copy without changing identity, stock, pricing, imagery, category membership or indexation. See `PRIORITY_PRODUCT_PAGE_AUDIT_20260811.md`. |
 | 2026-08-11 | Corrected the visible EN/ES Apartment Comfort category scope: H1, breadcrumb, CollectionPage name and intro now represent the complete catalogue rather than presenting the category as a portable-AC-only page. Preserved existing metadata ownership for separate review and added exact bilingual H1 regression across all category routes. |

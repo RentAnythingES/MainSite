@@ -9,6 +9,7 @@ const productSlugReplacements = [
   ["convertible-car-seat", "peg-perego-viaggio1-duo-fix-car-seat"],
   ["kinderkraft-i-boost-2-booster-seat", "kinderkraft-i-spark-2-plus-i-size-car-seat"],
   ["booster-car-seat-5-years", "kinderkraft-i-spark-2-plus-i-size-car-seat"],
+  ["27-inch-monitor-hdmi-cable", "32-inch-monitor-hdmi-cable"],
 ] as const;
 
 const nextConfig: NextConfig = {

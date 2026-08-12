@@ -6,6 +6,7 @@ import { unstable_cache } from "next/cache";
 import { applyCategoryProductPriority } from "@/data/category-merchandising";
 import { PUBLIC_PRODUCT_CACHE_TAG } from "@/lib/product-cache";
 import { isValidProductSlug } from "@/lib/product-validation";
+import { canonicalProductSlug, productSlugLookupCandidates } from "@/lib/product-slug-aliases";
 
 /**
  * Product Service — Supabase-first with static fallback
@@ -191,7 +192,7 @@ async function fetchProductSeoRows(slug?: string): Promise<ProductSeoRow[]> {
     `)
     .eq("is_active", true);
 
-  if (slug) query = query.eq("slug", slug);
+  if (slug) query = query.in("slug", productSlugLookupCandidates(slug));
 
   const { data, error } = await query.order("slug");
   if (error) throw error;
@@ -336,6 +337,7 @@ export async function getProductsFromDB(city = "valencia", locale: ProductLocale
  * Fetch a single product by slug from Supabase, fall back to static
  */
 async function fetchProductBySlugFromDB(slug: string, locale: ProductLocale): Promise<Product | null> {
+    const lookupSlugs = productSlugLookupCandidates(slug);
     const { data, error } = await supabase
       .from("products")
       .select(`
@@ -346,20 +348,18 @@ async function fetchProductBySlugFromDB(slug: string, locale: ProductLocale): Pr
         product_faqs (*),
         product_images (*)
       `)
-      .eq("slug", slug)
+      .in("slug", lookupSlugs)
       .eq("is_active", true)
       .eq("product_localizations.locale", locale)
       .eq("product_faqs.locale", locale)
-      .eq("product_images.is_primary", true)
-      .single();
+      .eq("product_images.is_primary", true);
 
-    if (error || !data) {
-      const code = (error as { code?: string } | null)?.code;
-      if (code === "PGRST116") return null;
-      throw error || new Error("Product not found");
-    }
+    if (error) throw error;
+    if (!data || data.length === 0) return null;
 
-    return mapEmbeddedProduct(data, locale);
+    const canonicalSlug = canonicalProductSlug(slug);
+    const row = data.find((product) => product.slug === canonicalSlug) || data[0];
+    return { ...mapEmbeddedProduct(row, locale), slug: canonicalSlug };
 }
 
 const getCachedProductBySlug = unstable_cache(fetchProductBySlugFromDB, ["public-product-detail"], {
