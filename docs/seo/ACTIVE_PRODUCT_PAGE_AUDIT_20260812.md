@@ -233,11 +233,43 @@ Those records now use direct EN/ES shopping copy and three useful FAQs per local
 
 The production audit remains at 114 indexable active products in each language,
 with zero identity or retired-copy conflicts. Seven optional FAQ-gap products
-remain.
+remained at this point.
+
+## Final bilingual FAQ and product-copy pass
+
+The final seven FAQ-gap products were reviewed individually before translation.
+Four already had useful English product copy and only needed equivalent Spanish
+FAQs: the Baby Brezza steam steriliser, extra-large play mat, EZVIZ BM1 baby
+monitor and Stokke Flexi Bath bundle.
+
+The other three required substantive repair:
+
+- the second PARVULI playpen exposed supplier disagreements and staff inspection
+  instructions. The [PARVULI product page](https://parvuli.com/products/parvuli-parque-infantil-bebe-cm-corralito-bebe-con-6-agarraderas-y-alfombra-de-juegos-acolchada-parque-bebes-para-casa-plegable-con-malla-transpirable-y-vayas-con-protecciones)
+  offers multiple sizes and confirms the stored 120 x 120 cm variant, padded mat,
+  mesh sides and six handles. The customer page now presents that selected variant
+  directly and no longer exposes the source dispute;
+- the adult padel-racket page was almost entirely handover language. The
+  [official Decathlon listing](https://www.decathlon.es/es/p/pala-de-padel-adulto-kuikma-pr-rental/347882/m8809329)
+  confirms the Kuikma PR Rental identity, 350 g weight, round shape, neutral
+  balance, fibreglass construction, soft EVA foam and integrated head protector.
+  Those decision-useful facts now drive the EN/ES page and FAQs;
+- the enclosed trailer had four different payload figures across its fields. The
+  [current Böckmann KT-EU2 specification](https://www.boeckmann.com/en/trailers/utility-trailers/p/van-trailers/tpv-box-trailers-low-bed-trailers-198/kt-eu2-schwarz-101928)
+  confirms the model family, 750 kg maximum authorised mass, lockable
+  splash-resistant lid, tie-downs and 13-pin connector. Because Böckmann's current
+  standard payload differs from the physical rental record, the public page uses
+  the stored 490 kg registered payload consistently rather than substituting a
+  current catalogue figure for the actual unit.
+
+All seven now have three decision-useful FAQs in English and Spanish. The governed
+bilingual FAQ queue for non-legacy `content_ready` products is zero; this did not
+change indexing rules, category membership, stock, prices or images. A small
+number of legacy listings remain outside that publication gate and may still have
+fewer than three localized FAQs.
 
 ## Remaining work
 
 1. Replace the shared generic monitor image with verified photos of each variant.
-2. Continue the same fact-bound review through the remaining 7 optional FAQ-gap
-   products and other lower-priority active products,
-   correcting only evidenced defects rather than manufacturing copy volume.
+2. Continue fact-bound review only when a measured search opportunity or a
+   specific customer-facing defect justifies it; do not manufacture copy volume.

@@ -607,6 +607,12 @@ Priority pilot logic: start with one narrow bundle, collect usage evidence, then
      Tommee Tippee warmer, Nuby UV steriliser and Venture playpen. Internal process
      gates and a raw supplier-description block were replaced with useful bilingual
      product copy and FAQs. The optional queue is now seven products.
+   - The final seven FAQ-gap pages were reviewed rather than translated blindly.
+     Four sound product pages received Spanish FAQ parity; the PARVULI playpen,
+     Kuikma PR Rental padel racket and Böckmann KT-EU2 trailer first received
+     evidence-backed EN/ES copy repairs. The governed non-legacy bilingual FAQ
+     queue is now zero, with all 114 active products still indexable in both
+     languages; legacy listings remain outside that publication gate.
    - Mobility scooter content review completed 21 July 2026 for standard,
      lightweight, and heavy-duty listings. EN/ES copy and FAQs are complete and all
      three active listings remain in both sitemaps. Image-rights follow-up remains an

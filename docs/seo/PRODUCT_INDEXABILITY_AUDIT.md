@@ -86,6 +86,14 @@ the IKEA ANTILOP high chair, ALMAR foldable bath, Tommee Tippee warmer, Nuby UV
 steriliser and Venture playpen. Internal availability/process prose and the
 playpen's raw supplier block were removed. The optional FAQ queue is now seven.
 
+The final seven records were then reviewed individually. Four received Spanish FAQ
+parity without unnecessary copy rewrites. The PARVULI playpen, Kuikma PR Rental
+padel racket and Böckmann KT-EU2 trailer received evidence-based customer-copy
+repairs before their bilingual FAQs were completed. The governed FAQ queue for
+non-legacy `content_ready` products is now zero while indexability remains 114
+English and 114 Spanish product pages. Legacy listings remain outside that
+publication gate and are not represented as newly complete by this result.
+
 The same production audit now fails when active product fields expose the retired
 internal import, activation, physical-review or source-dispute phrases. After the
 12 August cleanup, all 114 active products pass this copy-hygiene gate.
