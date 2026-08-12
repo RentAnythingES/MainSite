@@ -69,9 +69,22 @@ wheelchair from the bilingual FAQ-gap queue. Subsequent customer-copy repairs ad
 complete bilingual FAQ sets to the steamer/blender and bottle washer. The 24-, 29-
 and 32-inch monitor variants now have size-specific bilingual metadata and three
 FAQs per language, while the baby carrier and double stroller also reached
-bilingual FAQ parity. Nineteen active content-ready products still have fewer than
-three FAQs in one or both locales; this remains an informational editorial queue
-rather than an indexability blocker.
+bilingual FAQ parity. The Hamax two-seat trailer and CYBEX Coya were then rewritten
+from customer-first product evidence and completed in both languages. Seventeen
+active content-ready products still have fewer than three FAQs in one or both
+locales; this remains an informational editorial queue rather than an indexability
+blocker.
+
+The next support-product pass rewrote the Kärcher SE 3, Shark PowerPro, Kärcher K 3,
+Kärcher WD 3 and IKEA VIHALS pages from official product facts rather than
+translating their internal handover language. All five now have useful bilingual
+FAQs, reducing the optional queue from 17 to 12 while all 114 active products remain
+indexable in both languages.
+
+The subsequent baby-support pass completed bilingual, customer-facing content for
+the IKEA ANTILOP high chair, ALMAR foldable bath, Tommee Tippee warmer, Nuby UV
+steriliser and Venture playpen. Internal availability/process prose and the
+playpen's raw supplier block were removed. The optional FAQ queue is now seven.
 
 The same production audit now fails when active product fields expose the retired
 internal import, activation, physical-review or source-dispute phrases. After the

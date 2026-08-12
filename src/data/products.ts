@@ -43,9 +43,9 @@ export const products: Product[] = [
     subcategory: "Strollers",
     categorySlug: "baby-gear",
     subcategorySlug: "strollers",
-    description: "A compact travel stroller for family days around Valencia, with a quick fold for apartment storage, taxis, and train journeys.",
+    description: "A lightweight CYBEX Coya travel stroller with a one-hand fold and integrated carry strap for taxis, trains and family days around Valencia.",
     features: ["Compact one-hand fold with integrated carry strap", "Near-flat recline and integrated leg rest", "One-pull harness adjustment", "Travel-system ready with compatible CYBEX infant car seats"],
-    specs: { "Product weight": "6.6 kg", "Open dimensions": "79 × 44 × 105 cm", "Folded dimensions": "53.5 × 45 × 22 cm", "Manufacturer guidance": "Up to approximately 4 years" },
+    specs: { "Product weight": "6.6 kg", "Open dimensions": "79 × 44 × 105 cm", "Folded dimensions": "53.5 × 45 × 22 cm", "Age range": "From birth to approximately 4 years", "Maximum child weight": "22 kg" },
     pricing: [{ days: 1, perDay: 15 }, { days: 3, perDay: 11 }, { days: 7, perDay: 8 }],
     emoji: "🍼",
     image: "https://figuuqyofkvxvelqvqhm.supabase.co/storage/v1/object/public/product-images/cybex-coya-stroller-travel-compact/1783786922743-c125b6a2-dc98-4184-9aac-9cbebc96c488.jpg",
@@ -53,8 +53,9 @@ export const products: Product[] = [
     seoTitle: "Travel Stroller Rental in Valencia",
     seoDescription: "Rent a compact-fold travel stroller in Valencia for family days, taxis and apartment stays. Check exact folded dimensions and dates.",
     faqs: [
-      { question: "Can I take this stroller as airline cabin baggage?", answer: "Do not assume so. Airline size and acceptance rules differ and can change. Compare its 53.5 × 45 × 22 cm folded dimensions with the allowance confirmed directly by your airline." },
-      { question: "Is this stroller suitable for every Valencia route?", answer: "No stroller is suitable for every surface or access situation. Review the planned route, kerbs, stairs and accommodation access, and use the stroller according to the manufacturer's instructions." },
+      { question: "How small does the CYBEX Coya fold?", answer: "It folds to 53.5 × 45 × 22 cm and weighs 6.6 kg. Confirm cabin-baggage dimensions directly with your airline." },
+      { question: "What age and weight is it suitable for?", answer: "CYBEX lists the Coya from birth to approximately four years, with a maximum child weight of 22 kg." },
+      { question: "Can it be used with an infant car seat?", answer: "Yes. It is compatible with CYBEX infant car seats using the correct Coya adapter. The infant car seat and adapter are separate items." },
     ],
   },
   {

@@ -592,8 +592,21 @@ Priority pilot logic: start with one narrow bundle, collect usage evidence, then
    - The 24-, 29- and 32-inch monitor pages now state their exact size and verified
      connections in both languages, with three factual FAQs per locale. The baby
      carrier and double stroller also reached bilingual FAQ parity. The optional
-     active-product FAQ queue is now 19 products; process-heavy source questions
-     will be rewritten for customers before translation rather than copied as-is.
+     active-product FAQ queue fell to 19 products rather than copying process-heavy
+     source questions as-is.
+   - The Hamax two-seat trailer and CYBEX Coya have now received that customer-first
+     rewrite. The unsupported Hamax `Pioneer` label was removed without guessing a
+     replacement model, the promised bike-trailer/stroller functions are explicit,
+     and both products now have decision-useful EN/ES FAQs. The optional FAQ queue
+     is now 17 products.
+   - Five Home & Living support products were rewritten from official Kärcher,
+     Shark and IKEA facts rather than translating internal inspection checklists.
+     The K 3 vehicle-use and WD 3 filter claims were corrected, each product now has
+     three useful FAQs per language, and the optional FAQ queue is down to 12.
+   - Five baby-support pages were then repaired: ANTILOP high chair, ALMAR bath,
+     Tommee Tippee warmer, Nuby UV steriliser and Venture playpen. Internal process
+     gates and a raw supplier-description block were replaced with useful bilingual
+     product copy and FAQs. The optional queue is now seven products.
    - Mobility scooter content review completed 21 July 2026 for standard,
      lightweight, and heavy-duty listings. EN/ES copy and FAQs are complete and all
      three active listings remain in both sitemaps. Image-rights follow-up remains an

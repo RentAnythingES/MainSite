@@ -165,9 +165,79 @@ Process-heavy FAQ text on the bike trailer and compact stroller was deliberately
 not copied into Spanish; those pages require a customer-first rewrite before locale
 parity is completed.
 
+## Stroller and bike-trailer customer-copy repair
+
+That rewrite is now complete. The production record called the Hamax trailer a
+`Pioneer`, but Hamax's current child-trailer range and support material do not
+identify a Pioneer model. Rather than assigning another model from its appearance,
+the public copy now uses the supported Hamax brand and two-seat product identity.
+[Hamax's official support guidance](https://hamax.com/en/support/customer-service/questions-answers?category=4272)
+confirms that its child trailers include a bicycle arm and stroller wheel, support
+both cycling and strolling, carry a maximum of 22 kg per child, and require bicycle
+compatibility at the rear axle or hitch. The rewritten EN/ES page now explains
+those useful decisions directly and no longer tells customers not to assume the
+stroller function promised by the product title.
+
+The CYBEX Coya page was checked against the
+[official CYBEX Coya product page](https://www.cybex-online.com/en/row/p/st-pl-coya.html).
+Its EN/ES descriptions and FAQs now state the stored 6.6 kg weight, folded size,
+from-birth to approximately four-year range, 22 kg maximum child weight and
+compatible CYBEX infant-car-seat system. Internal accessory-confirmation wording
+was replaced by the Coya's integrated components and customer decisions. The code
+fallback record was aligned with the database so it cannot reintroduce the retired
+copy.
+
+## Home & Living support-product repair
+
+Five Home & Living support products were then reviewed as actual shopping pages,
+not merely translated for FAQ parity. Four cleaning-machine pages contained long
+staff checklists and handover procedures in their descriptions. Their EN/ES copy
+now focuses on the task, capacity, standard tools and concise customer limitations:
+
+- the Kärcher SE 3 Compact now explains wet extraction for carpets, upholstery and
+  car seats, using [Kärcher's official specifications](https://www.kaercher.com/int/home-garden/spray-extraction-cleaners/se-3-compact-10815380.html);
+- the Shark PowerPro now explains floor detection, handheld use and its up-to-50
+  minute Eco runtime using [Shark's official IZ380EU page](https://www.sharkninja.es/aspiradora-sin-cable-shark-powerpro/IZ380EU.html);
+- the Kärcher K 3 now correctly lists patios, outdoor furniture, bicycles and small
+  vehicles instead of incorrectly prohibiting vehicle use, consistent with
+  [Kärcher's official K 3 applications](https://www.kaercher.com/int/home-garden/pressure-washers/k-3-16763500.html);
+- the Kärcher WD 3 now correctly explains that its one-piece cartridge filter
+  handles wet and dry dirt without a filter change, based on
+  [Kärcher's WD 3 specifications](https://www.kaercher.com/de/home-garden/nass-trockensauger/wd-3-s-v-17-4-20-16281350.html);
+- the IKEA VIHALS folding chair now presents its dimensions, folding use and 110 kg
+  tested limit from [IKEA Spain](https://www.ikea.com/es/es/p/vihals-silla-plegable-verde-00592752/),
+  without describing internal inspection steps.
+
+All five now have three useful FAQs in each language. The production readiness
+audit remains clean and the optional bilingual FAQ queue is down to 12 products.
+
+## Priority baby-support repair
+
+The next five baby-support pages were reviewed before translation. Only the IKEA
+ANTILOP high-chair copy was already customer-ready. The foldable bath, bottle
+warmer and UV steriliser were framed around internal cleaning or inspection
+processes, while the playpen exposed a raw supplier block directly on the page.
+Those records now use direct EN/ES shopping copy and three useful FAQs per locale:
+
+- ANTILOP facts are grounded in the
+  [official IKEA Spain listing](https://www.ikea.com/es/es/p/antilop-trona-con-bandeja-blanco-blanco-s79597515/);
+- the Tommee Tippee Easi-Warm describes its actual warming settings and timing
+  rather than an internal hygiene gate;
+- the Nuby 30113 states its supported three-minute UV cycle from the
+  [official Nuby listing](https://uk.nuby.com/products/3-minute-uv-steriliser/1000);
+- the foldable ALMAR bath explains the temperature indicator, newborn support and
+  adult-supervision requirement without discussing inspection records;
+- the Venture playpen now presents its 120 x 120 cm play area, mesh, padded mat and
+  included components in normal customer language, and clearly remains an awake,
+  supervised play space rather than a cot.
+
+The production audit remains at 114 indexable active products in each language,
+with zero identity or retired-copy conflicts. Seven optional FAQ-gap products
+remain.
+
 ## Remaining work
 
 1. Replace the shared generic monitor image with verified photos of each variant.
-2. Continue the same fact-bound review through the remaining 19 optional FAQ-gap
+2. Continue the same fact-bound review through the remaining 7 optional FAQ-gap
    products and other lower-priority active products,
    correcting only evidenced defects rather than manufacturing copy volume.
