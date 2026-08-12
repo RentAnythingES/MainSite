@@ -589,6 +589,11 @@ Priority pilot logic: start with one narrow bundle, collect usage evidence, then
      product-copy sets and one internal Koenic pricing-review key. The AC listing's
      commercial copy and pricing were not rewritten. A permanent audit now fails if
      these patterns return; all 114 active products currently pass.
+   - The 24-, 29- and 32-inch monitor pages now state their exact size and verified
+     connections in both languages, with three factual FAQs per locale. The baby
+     carrier and double stroller also reached bilingual FAQ parity. The optional
+     active-product FAQ queue is now 19 products; process-heavy source questions
+     will be rewritten for customers before translation rather than copied as-is.
    - Mobility scooter content review completed 21 July 2026 for standard,
      lightweight, and heavy-duty listings. EN/ES copy and FAQs are complete and all
      three active listings remain in both sitemaps. Image-rights follow-up remains an

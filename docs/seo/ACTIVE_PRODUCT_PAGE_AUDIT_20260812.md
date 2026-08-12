@@ -93,6 +93,14 @@ monitor-size references across the headline, slug, screen specification and EN/E
 localized fields; the production catalogue currently has zero active size-identity
 conflicts.
 
+The 24-, 29- and 32-inch listings now also expose their actual variant differences
+in English and Spanish metadata and customer copy. All three are 4K IPS monitors;
+the 24-inch listing offers HDMI and DisplayPort, while the 29- and 32-inch listings
+also state their verified USB-C connection and charging up to 65 W. Each page now
+has three factual FAQs per language covering size, resolution and connections. The
+existing 27-inch listing was not changed, and no inventory or accessory claim was
+added.
+
 ## Mobility bilingual support completion
 
 The remaining priority mobility product gaps were completed without changing
@@ -148,9 +156,18 @@ specifications, localizations and FAQs for the retired internal-copy patterns an
 fails if they return. The final production scan covers 114 active products and
 reports zero findings.
 
+## Focused Spanish FAQ follow-up
+
+The baby carrier now has three Spanish FAQs matching its verified positions,
+outward-facing guidance and machine-washable construction. The double stroller's
+missing Spanish UV 50+ answer was added and its English question typo was fixed.
+Process-heavy FAQ text on the bike trailer and compact stroller was deliberately
+not copied into Spanish; those pages require a customer-first rewrite before locale
+parity is completed.
+
 ## Remaining work
 
 1. Replace the shared generic monitor image with verified photos of each variant.
-2. Continue the same fact-bound review through the remaining 24 optional FAQ-gap
+2. Continue the same fact-bound review through the remaining 19 optional FAQ-gap
    products and other lower-priority active products,
    correcting only evidenced defects rather than manufacturing copy volume.

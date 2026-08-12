@@ -66,9 +66,12 @@ zero.
 
 Mobility FAQ completion removed the powered wheelchair, rollator and transport
 wheelchair from the bilingual FAQ-gap queue. Subsequent customer-copy repairs added
-complete bilingual FAQ sets to the steamer/blender and bottle washer. Twenty-four active content-ready
-products still have fewer than three FAQs in one or both locales; this remains an
-informational editorial queue rather than an indexability blocker.
+complete bilingual FAQ sets to the steamer/blender and bottle washer. The 24-, 29-
+and 32-inch monitor variants now have size-specific bilingual metadata and three
+FAQs per language, while the baby carrier and double stroller also reached
+bilingual FAQ parity. Nineteen active content-ready products still have fewer than
+three FAQs in one or both locales; this remains an informational editorial queue
+rather than an indexability blocker.
 
 The same production audit now fails when active product fields expose the retired
 internal import, activation, physical-review or source-dispute phrases. After the
