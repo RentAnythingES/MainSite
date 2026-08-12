@@ -558,6 +558,12 @@ Priority pilot logic: start with one narrow bundle, collect usage evidence, then
    Apartment Comfort, Beach, Baby and Mobility owners plus their top products.
 2. **Beach cluster — ✅ Completed 18 July** — `/rental/travel-outdoors` owns broad rental and delivery intent; guides own beach-planning queries; product pages own exact-item searches. Consolidated comparison and FAQ coverage avoids overlapping thin landing pages.
 3. **Active catalogue** — complete EN/ES readiness for commercially available products
+   - Full image-delivery and priority-copy follow-up on 12 August passed all 114
+     active products across 228 EN/ES pages. Six fact-complete baby/family products
+     now have direct bilingual customer copy and localized FAQs; Spanish product
+     pages can no longer inherit English static FAQs. Physical confirmation remains
+     necessary for the conflicting child-vest and 32-inch-monitor identities. See
+     [ACTIVE_PRODUCT_PAGE_AUDIT_20260812.md](./ACTIVE_PRODUCT_PAGE_AUDIT_20260812.md).
    - Priority non-AC follow-up on 11 August corrected a shared product-page defect
      that labelled every family-owner link as a scooter comparison. All five current
      families now use their own EN/ES context, guarded by rendered regression.

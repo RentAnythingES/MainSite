@@ -19,6 +19,43 @@ const repairedProductChecks = [
     requiredSpanishText: "dos remos y bolsa de transporte",
     forbiddenText: ["for and amazing", "source package includes"],
   },
+  {
+    slug: "baby-bed-60x120",
+    requiredEnglishText: "Does the cot include a mattress and bedding?",
+    requiredSpanishText: "¿La cuna incluye colchón y ropa de cama?",
+    forbiddenText: ["RentAnything must", "retail product does not include"],
+  },
+  {
+    slug: "bedside-crib",
+    requiredEnglishText: "Who is the bedside crib suitable for?",
+    requiredSpanishText: "¿Para quién es adecuada la cuna colecho?",
+    forbiddenText: ["not available until", "physical-unit", "must verify the current manual"],
+  },
+  {
+    slug: "stroller-all-terrain",
+    requiredEnglishText: "Can I use this stroller for running or skating?",
+    requiredSpanishText: "¿Puedo usar esta silla para correr o patinar?",
+    forbiddenText: ["imported draft"],
+    forbiddenSpanishText: ["Can I use this stroller for running or skating?"],
+  },
+  {
+    slug: "travel-cot",
+    requiredEnglishText: "Does the travel cot include a mattress?",
+    requiredSpanishText: "¿La cuna de viaje incluye colchón?",
+    forbiddenText: ["#1 Platform", "transport.The mesh"],
+  },
+  {
+    slug: "bed-rail-for-kids",
+    requiredEnglishText: "Does one rental cover the full bed?",
+    requiredSpanishText: "¿Una unidad cubre toda la cama?",
+    forbiddenText: ["Mom can do her thing", "baby can bite"],
+  },
+  {
+    slug: "video-baby-monitor",
+    requiredEnglishText: "Do both units work on battery?",
+    requiredSpanishText: "¿Funcionan ambas unidades con batería?",
+    forbiddenText: ["works als unplugged", "[Reliable and safety]"],
+  },
 ];
 const allFamilyChecks = [
   {
@@ -653,9 +690,22 @@ async function main() {
     for (const forbiddenText of repairedProductPage.forbiddenText) {
       assert(!combinedHtml.includes(forbiddenText.toLowerCase()), `${repairedProductPage.slug} still contains retired copy: ${forbiddenText}`);
     }
+    for (const forbiddenText of repairedProductPage.forbiddenSpanishText || []) {
+      assert(
+        !decodeHtmlEntities(repairedProductPage.es).toLowerCase().includes(forbiddenText.toLowerCase()),
+        `Spanish ${repairedProductPage.slug} still contains wrong-locale copy: ${forbiddenText}`,
+      );
+    }
     assert(sitemap.includes(englishUrl), `${repairedProductPage.slug} is missing from the sitemap`);
     assert(sitemap.includes(spanishUrl), `Spanish ${repairedProductPage.slug} is missing from the sitemap`);
     await assertPrimaryProductImageLoads(repairedProductPage.en, `/product/${repairedProductPage.slug}`);
+  }
+  const compactStrollerFamily = familyPages.find((familyPage) => familyPage.name === "Stroller");
+  if (compactStrollerFamily) {
+    assert(
+      !decodeHtmlEntities(compactStrollerFamily.productEs).includes("Can I take this stroller as airline cabin baggage?"),
+      "Spanish compact-stroller page inherits English static FAQs",
+    );
   }
   if (configuredFamilyName) {
     console.log(JSON.stringify({

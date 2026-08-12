@@ -87,20 +87,22 @@ The 24-inch, 27-inch, 29-inch and current 32-inch monitor records all reference
 the same local image. Their product records remain available and indexable, but
 distinct photos would make the variants easier to understand and trust.
 
-### 3. Repair the next thin-copy group
+### 3. Repair the next thin-copy group — completed 12 August
 
-The strongest next candidates are the child bed rail, generic video baby monitor,
-older stroller/cot Spanish detail gaps and legacy monitor metadata. Changes should
-use known product facts only and should be grouped into another reviewable batch.
+The child bed rail, generic video baby monitor, baby bed, bedside crib,
+all-terrain stroller and Kinderkraft travel cot now have fact-bound EN/ES copy and
+three FAQs per locale. Internal activation/import language and wrong-locale FAQ
+fallback were removed. See `ACTIVE_PRODUCT_PAGE_AUDIT_20260812.md`.
 
-### 4. Continue image verification beyond the family-owner set
+### 4. Continue image verification beyond the family-owner set — completed 12 August
 
-Priority rows have primary image records, and the 17 family-owned products passed
-rendered image-load checks. Extend the same HTTP verification to all active catalogue
-products so stored image records and actual delivery failures cannot diverge.
+All 114 active products and all 228 EN/ES product pages passed rendered primary
+image delivery checks. A permanent audit script now derives the catalogue from the
+seven bilingual category owners and verifies each image response.
 
 ## Next action
 
-Start with the two physical identity decisions above, then repair the next
-fact-complete thin-copy group. Continue to protect the two AC listings from broad
-rewrites while other catalogue defects are being resolved.
+Start with the two physical identity decisions above, then add distinct verified
+monitor photos and continue the lower-priority fact-bound product review. Continue
+to protect the two AC listings from broad rewrites while other catalogue defects
+are being resolved.

@@ -143,6 +143,9 @@ Public product pages use those fields only when a product is explicitly marked
 `content_ready`; drafts and fact-review records never replace current live copy,
 metadata, FAQs, or image alt text. If the additive content tables are unavailable,
 the existing product data remains the safe fallback.
+Static legacy FAQs are an English-only fallback. Spanish product pages render
+Spanish database FAQs when present and otherwise omit the optional FAQ section;
+they must never inherit English static questions.
 The product list displays core rental setup separately from the editorial state:
 `Content draft`, `Facts verified`, or `Content ready`.
 

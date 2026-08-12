@@ -270,7 +270,7 @@ function mapToProduct(row: Record<string, unknown>): Product {
 function mapEmbeddedProduct(row: Record<string, unknown>, locale: ProductLocale): Product {
   const product = mapToProduct(row);
   const staticProduct = staticGetBySlug(product.slug);
-  if (staticProduct?.faqs) product.faqs = staticProduct.faqs;
+  if (locale === "en" && staticProduct?.faqs) product.faqs = staticProduct.faqs;
 
   const canUseLocalizedContent = legacyStaticSlugs.has(product.slug) || product.contentStatus === "content_ready";
   if (!canUseLocalizedContent) return product;
