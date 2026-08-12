@@ -613,6 +613,12 @@ Priority pilot logic: start with one narrow bundle, collect usage evidence, then
      evidence-backed EN/ES copy repairs. The governed non-legacy bilingual FAQ
      queue is now zero, with all 114 active products still indexable in both
      languages; legacy listings remain outside that publication gate.
+   - The legacy 27-inch monitor's EN/ES descriptions, metadata and FAQ set now
+     match its stored 27-inch 4K, HDMI and DisplayPort identity. The four monitor
+     sizes still share one generic render because neither the repository nor the
+     production image records contain verified variant photos. That remaining
+     issue is explicitly an inventory-photo handoff, not authorization to invent
+     model imagery.
    - Mobility scooter content review completed 21 July 2026 for standard,
      lightweight, and heavy-duty listings. EN/ES copy and FAQs are complete and all
      three active listings remain in both sitemaps. Image-rights follow-up remains an

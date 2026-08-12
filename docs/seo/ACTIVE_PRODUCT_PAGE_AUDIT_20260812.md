@@ -268,8 +268,25 @@ change indexing rules, category membership, stock, prices or images. A small
 number of legacy listings remain outside that publication gate and may still have
 fewer than three localized FAQs.
 
+## Legacy 27-inch monitor copy repair
+
+The separate `monitor-27` listing still had generic English copy, poor Spanish
+metadata, only two Spanish FAQs and a USB-C compatibility statement that did not
+match its stored HDMI and DisplayPort connections. Its EN/ES descriptions,
+metadata, included-cable wording and FAQs now consistently describe the stored
+27-inch 4K IPS product. No brand or model was inferred.
+
+The image issue remains deliberately unresolved. All four monitor records point to
+the same local generic render and no production image record contains a source URL
+or an alternative asset. Replacing it requires photos of the physical 24-, 27-,
+29- and 32-inch units. For each size, capture one clear front or three-quarter view
+against a neutral background and one ports/label photo sufficient to confirm that
+record's connections. Upload the matching primary image to its product record;
+do not reuse a manufacturer image until the exact model and usage rights are known.
+
 ## Remaining work
 
-1. Replace the shared generic monitor image with verified photos of each variant.
+1. Capture and upload the four verified monitor photos described above; this is an
+   inventory-photo handoff and cannot be completed honestly from the repository.
 2. Continue fact-bound review only when a measured search opportunity or a
    specific customer-facing defect justifies it; do not manufacture copy volume.

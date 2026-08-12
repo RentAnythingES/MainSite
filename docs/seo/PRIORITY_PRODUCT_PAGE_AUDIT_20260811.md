@@ -82,6 +82,14 @@ The 24-inch, 27-inch, 29-inch and current 32-inch monitor records all reference
 the same local image. Their product records remain available and indexable, but
 distinct photos would make the variants easier to understand and trust.
 
+Repository and production-image inspection on 12 August found no unused variant
+photos and no source URLs: the four records point to one generic local render.
+This is therefore an inventory-photo handoff, not a code or image-generation task.
+Capture one neutral front/three-quarter photo and one ports/label reference photo
+for each physical size, then upload the matching primary image to that product.
+The 27-inch record's adjacent copy and FAQ defects were repaired without changing
+the shared image or inferring a brand/model.
+
 ### 3. Repair the next thin-copy group — completed 12 August
 
 The child bed rail, generic video baby monitor, baby bed, bedside crib,
