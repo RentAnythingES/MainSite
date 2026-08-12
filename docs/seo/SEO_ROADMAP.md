@@ -619,6 +619,10 @@ Priority pilot logic: start with one narrow bundle, collect usage evidence, then
      production image records contain verified variant photos. That remaining
      issue is explicitly an inventory-photo handoff, not authorization to invent
      model imagery.
+   - A subsequent legacy review removed incorrect Dyson, Herman Miller and Stokke
+     names from the air purifier, ergonomic chair and folding high chair. All three
+     now have complete, factual EN/ES FAQ sets; exact physical image/model
+     provenance remains an operations follow-up rather than customer-facing copy.
    - Mobility scooter content review completed 21 July 2026 for standard,
      lightweight, and heavy-duty listings. EN/ES copy and FAQs are complete and all
      three active listings remain in both sitemaps. Image-rights follow-up remains an

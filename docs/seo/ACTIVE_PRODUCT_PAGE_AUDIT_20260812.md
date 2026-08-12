@@ -284,6 +284,23 @@ against a neutral background and one ports/label photo sufficient to confirm tha
 record's connections. Upload the matching primary image to its product record;
 do not reuse a manufacturer image until the exact model and usage rights are known.
 
+## Legacy air-purifier and chair repair
+
+Reviewing the next legacy FAQ gaps exposed unsupported brand names in localized
+copy. The air purifier was called Dyson despite an empty brand field, no product
+image provenance record and a local render labelled `PUREFLOW`. The ergonomic
+chair was called Herman Miller despite an empty brand field and no source URL for
+its uploaded image. Both brand claims have been removed from all EN/ES customer
+copy and metadata. Their remaining specifications are limited to the stored
+capacity, dimensions, adjustments, filtration and operating data.
+
+The folding high chair also carried an incorrect Stokke brand in its base record.
+Following inventory-owner confirmation, that attribution was removed from the base
+record, EN/ES descriptions and metadata. All three products now have concise,
+decision-useful FAQs in English and Spanish. Their image/model provenance remains
+a separate inventory-evidence follow-up and was not presented to customers as a
+verification process.
+
 ## Remaining work
 
 1. Capture and upload the four verified monitor photos described above; this is an
