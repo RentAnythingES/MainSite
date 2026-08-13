@@ -40,6 +40,68 @@ function hasUsableImage(value) {
   ) && imageUrl !== "/products/placeholder.png";
 }
 
+const previouslyIncorrectBrandClaims = [
+  "Dyson",
+  "Herman Miller",
+  "FlexiSpot",
+  "BabyBjörn",
+  "BabyBjorn",
+  "Stokke",
+];
+
+function normalizeBrand(value) {
+  return String(value || "")
+    .normalize("NFKD")
+    .replace(/\p{Diacritic}/gu, "")
+    .toLowerCase();
+}
+
+function escapeRegExp(value) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+function flattenCopy(value) {
+  if (Array.isArray(value)) return value.flatMap(flattenCopy);
+  if (value && typeof value === "object") return Object.values(value).flatMap(flattenCopy);
+  return [String(value || "")];
+}
+
+function getRecognizedBrands(products) {
+  const byNormalizedName = new Map();
+  for (const brand of [
+    ...products.map((product) => String(product.brand || "").trim()).filter(Boolean),
+    ...previouslyIncorrectBrandClaims,
+  ]) {
+    const normalized = normalizeBrand(brand);
+    if (normalized && normalized !== "rentanything" && !byNormalizedName.has(normalized)) {
+      byNormalizedName.set(normalized, brand);
+    }
+  }
+  return [...byNormalizedName.entries()].map(([normalized, display]) => ({ normalized, display }));
+}
+
+function findBrandIssues(product, recognizedBrands) {
+  const baseBrand = normalizeBrand(product.brand);
+  const fields = [
+    ["name", product.name],
+    ["description", product.description],
+    ["features", product.features],
+    ["specs", product.specs],
+    ["localizations", product.product_localizations],
+    ["faqs", product.product_faqs],
+  ];
+
+  return fields.flatMap(([field, value]) => {
+    const copy = normalizeBrand(flattenCopy(value).join(" \n "));
+    return recognizedBrands.flatMap(({ normalized, display }) => {
+      const pattern = new RegExp(`(^|[^a-z0-9])${escapeRegExp(normalized)}([^a-z0-9]|$)`, "i");
+      if (!pattern.test(copy)) return [];
+      if (baseBrand && (baseBrand.includes(normalized) || normalized.includes(baseBrand))) return [];
+      return [{ field, baseBrand: product.brand || "", claimedBrand: display }];
+    });
+  });
+}
+
 function normalizedMeasurementText(value) {
   return String(value || "")
     .toLowerCase()
@@ -112,7 +174,7 @@ function findInternalCopyIssues(product) {
   });
 }
 
-function evaluateProduct(product, legacySlugs) {
+function evaluateProduct(product, legacySlugs, recognizedBrands) {
   const category = Array.isArray(product.category) ? product.category[0] : product.category;
   const categorySlug = category?.slug || "uncategorized";
   const isLegacyProduct = legacySlugs.has(product.slug);
@@ -122,6 +184,7 @@ function evaluateProduct(product, legacySlugs) {
   const faqCountEs = product.product_faqs.filter((faq) => faq.locale === "es").length;
   const identityIssues = findIdentityIssues(product);
   const internalCopyIssues = findInternalCopyIssues(product);
+  const brandIssues = findBrandIssues(product, recognizedBrands);
   const blockersEn = [];
 
   if (!product.is_active) blockersEn.push("inactive");
@@ -154,6 +217,7 @@ function evaluateProduct(product, legacySlugs) {
     faqCoverageRequired: !isLegacyProduct && product.content_status === "content_ready",
     identityIssues,
     internalCopyIssues,
+    brandIssues,
   };
 }
 
@@ -177,6 +241,7 @@ async function main() {
     .select(`
       slug,
       name,
+      brand,
       description,
       features,
       image_url,
@@ -193,7 +258,8 @@ async function main() {
   if (error) throw error;
 
   const legacySlugs = getLegacySlugs();
-  const products = (data || []).map((product) => evaluateProduct(product, legacySlugs));
+  const recognizedBrands = getRecognizedBrands(data || []);
+  const products = (data || []).map((product) => evaluateProduct(product, legacySlugs, recognizedBrands));
   const clusters = {};
   const blockerTotals = { en: {}, es: {} };
 
@@ -248,6 +314,9 @@ async function main() {
   const activeInternalCopyConflicts = products
     .filter((product) => !product.blockersEn.includes("inactive") && product.internalCopyIssues.length > 0)
     .map(({ slug, category, internalCopyIssues }) => ({ slug, category, internalCopyIssues }));
+  const activeBrandConflicts = products
+    .filter((product) => !product.blockersEn.includes("inactive") && product.brandIssues.length > 0)
+    .map(({ slug, category, brandIssues }) => ({ slug, category, brandIssues }));
 
   console.log(JSON.stringify({
     generatedAt: new Date().toISOString(),
@@ -263,6 +332,7 @@ async function main() {
     activeFaqGaps,
     activeIdentityConflicts,
     activeInternalCopyConflicts,
+    activeBrandConflicts,
     blockedActiveProducts,
   }, null, 2));
 
@@ -276,6 +346,9 @@ async function main() {
   }
   if (activeInternalCopyConflicts.length > 0) {
     throw new Error(`${activeInternalCopyConflicts.length} active products expose internal workflow copy`);
+  }
+  if (activeBrandConflicts.length > 0) {
+    throw new Error(`${activeBrandConflicts.length} active products contain brand claims that conflict with their base brand`);
   }
 }
 

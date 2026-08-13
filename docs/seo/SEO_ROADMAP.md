@@ -623,6 +623,14 @@ Priority pilot logic: start with one narrow bundle, collect usage evidence, then
      names from the air purifier, ergonomic chair and folding high chair. All three
      now have complete, factual EN/ES FAQ sets; exact physical image/model
      provenance remains an operations follow-up rather than customer-facing copy.
+   - The final identified legacy set then removed unsupported FlexiSpot and
+     BabyBjörn names, corrected the beach-set umbrella to its verified 210 cm
+     Aktive specification, removed unsupported chair details and rebuilt useful
+     EN/ES FAQs. A whole-brand scan of active product copy found only three valid
+     brands missing from base records: Baby Brezza Bottle Washer Pro and two Aktive
+     products. Those base fields are aligned, leaving zero known-brand mismatches.
+     The permanent product-readiness audit now fails on future active-listing brand
+     conflicts instead of relying on a one-off manual scan.
    - Mobility scooter content review completed 21 July 2026 for standard,
      lightweight, and heavy-duty listings. EN/ES copy and FAQs are complete and all
      three active listings remain in both sitemaps. Image-rights follow-up remains an

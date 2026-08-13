@@ -301,6 +301,44 @@ decision-useful FAQs in English and Spanish. Their image/model provenance remain
 a separate inventory-evidence follow-up and was not presented to customers as a
 verification process.
 
+## Final identified legacy-listing repair and brand consistency scan
+
+Three remaining legacy listings were then repaired from their actual records:
+
+- `beach-umbrella-set` now uses one consistent 210 cm measurement, supported by
+  the [official Aktive model 62330 page](https://www.aktive.es/playa/sombrillas-de-playa/sombrilla-playa-grande-inclinable-210-cm-uv50-marinera-cmesa).
+  The listing keeps the known set contents but removes unproven chair recline and
+  110 kg capacity claims that were not supported by the linked umbrella source;
+- `standing-desk` no longer calls the unbranded product FlexiSpot. Its EN/ES copy
+  consistently presents the stored 120 x 60 cm top, 72–120 cm height range, 70 kg
+  distributed load, memory, cable management and anti-collision functions;
+- `travel-crib` no longer calls the unbranded product BabyBjörn. Its EN/ES copy and
+  FAQs now consistently present the stored 6 kg weight, 112 x 64 x 82 cm open
+  size, mesh sides, supplied mattress/sheet/bag and 12 kg child-weight limit.
+
+A catalogue-wide whole-brand scan then compared every active product's base brand
+with its descriptions, localizations and FAQs. The three remaining mismatches were
+supported brands missing from the base field rather than unsupported copy:
+
+- Baby Brezza Bottle Washer Pro is confirmed by the
+  [manufacturer page](https://babybrezza.com/products/bottle-washer-pro);
+- Aktive Sabana glamping table is confirmed by its
+  [exact Decathlon listing](https://www.decathlon.es/es/p/mesa-plegable-glamping-altura-ajustable-aktive-cd/X8956331/m8956331);
+- Aktive model 62330 umbrella is confirmed by both its manufacturer and exact
+  supplier records.
+
+Those three base brand fields are now populated. The scan reports no unsupported
+known-brand claims across active product descriptions, localization fields or
+FAQs. This is a consistency result, not proof that every unbranded generic product
+has a known model.
+
+The same whole-brand comparison now runs as part of
+`scripts/product-seo-readiness-audit.cjs`. It fails when an active listing names a
+recognized catalogue brand, or one of the previously removed unsupported brands,
+without a matching base brand. The production run on 13 August 2026 returned zero
+brand, identity, internal-copy, FAQ or active-indexability conflicts across all 114
+active products.
+
 ## Remaining work
 
 1. Capture and upload the four verified monitor photos described above; this is an
