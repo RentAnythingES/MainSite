@@ -343,15 +343,15 @@ const categoryChecks = [
   },
   {
     slug: "travel-outdoors",
-    expectedEnglishH1: "Beach Equipment Rental in Valencia",
-    expectedSpanishH1: "Alquiler de Equipamiento de Playa en Valencia",
+    expectedEnglishH1: "Beach & Outdoor Equipment Rental in Valencia",
+    expectedSpanishH1: "Alquiler de Material de Playa y Aire Libre en Valencia",
     pathways: ["/valencia/kits/family-beach-kit"],
     englishPathways: ["/discover/malvarrosa-beach"],
     spanishPathways: ["/es/blog/best-beaches-valencia-families"],
-    requiredEnglishText: ["Choose the Right Beach Setup", "Beach Equipment Rental in Valencia: FAQs"],
+    requiredEnglishText: ["Choose the Right Beach or Outdoor Setup", "Beach & Outdoor Equipment Rental in Valencia: FAQs"],
     requiredSpanishText: [
-      "Elige el equipamiento adecuado para la playa",
-      "Preguntas sobre el alquiler de material de playa en Valencia",
+      "Elige el material adecuado para la playa o el aire libre",
+      "Preguntas sobre el alquiler de material de playa y aire libre",
     ],
     requiredSchemaTypes: ["FAQPage"],
     expectedLeadingProductSlugs: [

@@ -311,18 +311,18 @@ const categoryMeta: Record<string, CategoryContent> = {
     ],
   },
   "travel-outdoors": {
-    title: "Beach Equipment Rental in Valencia",
-    description: "Rent beach umbrellas, shelters and family beach shade in Valencia, with pickup or delivery options for Malvarrosa, Patacona and nearby stays.",
+    title: "Beach & Outdoor Equipment Rental in Valencia",
+    description: "Rent beach and outdoor equipment in Valencia for seaside days, family activities and excursions, with pickup or delivery options shown when you book.",
     emoji: "🏖️",
-    editorialHeading: "Rent Beach Gear for Valencia Days by the Sea",
+    editorialHeading: "Beach and Outdoor Equipment for Your Valencia Stay",
     editorialParagraphs: [
-      "Beach umbrellas and shelters are awkward to pack, difficult to carry through an airport and rarely supplied by holiday apartments. Renting beach equipment in Valencia gives you reliable shade without buying bulky gear for a short stay.",
-      "Choose the product that fits your group and beach plans, from a traditional umbrella setup to a compact family shelter. Each product page records the verified dimensions, weight, included parts, setup guidance and important wind or care limitations before you check availability.",
-      "Pickup and delivery options make the equipment practical for stays near Malvarrosa, Patacona, Cabanyal and the city centre. Families who need more than shade can also start with the Family Beach Kit and request the combination that suits their dates.",
+      "Beach and outdoor equipment can be awkward to carry through an airport or store in temporary accommodation. Renting it in Valencia lets you choose what suits the days you have planned without buying bulky gear for a short stay.",
+      "Use the complete catalogue for beach days, water activities, outdoor games, carrying and transport, or camping plans. Each product page shows the relevant dimensions, included parts, setup guidance and use limitations before you check availability.",
+      "Pickup and delivery options are shown for your address and dates when you book. For a day by the sea, the Family Beach Kit is also a practical starting point for combining shade, seating, a cooler, play equipment and easier transport.",
     ],
     blogTags: ["summer", "beach"],
-    featuredHeading: "Plan Your Valencia Beach Days",
-    featuredDescription: "Connect your equipment choice with a family kit or a practical guide to the beach nearest your accommodation.",
+    featuredHeading: "Plan Beach and Outdoor Days in Valencia",
+    featuredDescription: "Connect your equipment choice with a family beach setup or practical local planning for the days you have in mind.",
     featuredPathways: [
       {
         eyebrow: "Beach kit",
@@ -343,26 +343,26 @@ const categoryMeta: Record<string, CategoryContent> = {
         href: "/discover/patacona-beach",
       },
     ],
-    searchIntentHeading: "Choose the Right Beach Setup",
-    searchIntentDescription: "Use one Valencia beach-equipment hub to compare the setup you need rather than searching across separate, overlapping rental pages.",
+    searchIntentHeading: "Choose the Right Beach or Outdoor Setup",
+    searchIntentDescription: "Use one Valencia catalogue to find the equipment that suits your plans while individual product pages provide exact sizes, inclusions and availability.",
     searchIntents: [
       {
-        title: "Shade for a simple beach day",
-        description: "Compare umbrellas and compact shelters by covered area, packed size, setup method and wind guidance before checking your dates.",
+        title: "A comfortable day at the beach",
+        description: "Compare shade, seating, coolers, towels, carrying equipment and games according to your group, beach plans and accommodation.",
       },
       {
-        title: "A complete family beach setup",
-        description: "Start with the Family Beach Kit when you need shade plus practical extras such as cooling, towels, toys or easier transport.",
+        title: "Water and outdoor activities",
+        description: "Check capacity, included equipment, transport requirements and use guidance on the relevant product page before choosing dates.",
       },
       {
-        title: "Equipment that is easier to carry",
-        description: "Browse coolers, beach wagons, folding furniture and other published gear for Malvarrosa, Patacona and stays near Valencia's coast.",
+        title: "Camping, carrying and transport",
+        description: "Choose equipment around the journey, storage space and destination rather than assuming every outdoor product suits every trip.",
       },
     ],
-    faqHeading: "Beach Equipment Rental in Valencia: FAQs",
+    faqHeading: "Beach & Outdoor Equipment Rental in Valencia: FAQs",
     faqs: [
       {
-        question: "Can I rent beach equipment in Valencia?",
+        question: "Can I rent beach and outdoor equipment in Valencia?",
         answer: "Yes. Browse the published Beach & Outdoor catalogue, select your dates and check availability. Pickup or delivery options are shown during the booking flow before payment.",
       },
       {
@@ -370,15 +370,15 @@ const categoryMeta: Record<string, CategoryContent> = {
         answer: "Supported pickup and delivery options, timing and any applicable fee are shown for the address and dates entered during booking. Contact us if your accommodation sits outside the listed service areas.",
       },
       {
-        question: "What beach equipment can I rent?",
-        answer: "The published catalogue may include umbrellas, shelters, towels, coolers, wagons, folding furniture and beach games. Exact products and availability depend on your selected dates.",
+        question: "What beach and outdoor equipment can I rent?",
+        answer: "The current catalogue brings together equipment for beach days, water activities, outdoor games, carrying, transport and camping. Exact products and availability depend on your selected dates.",
       },
       {
         question: "Should I choose a beach umbrella or a shelter?",
         answer: "An umbrella is flexible and familiar for smaller groups. A shelter can provide a broader covered area for families. Compare dimensions, setup instructions and wind limitations on each product page.",
       },
       {
-        question: "Can I book beach gear for a single day?",
+        question: "Can I book outdoor equipment for a single day?",
         answer: "Enter your preferred start and end time on the relevant product page. The booking flow will show whether the item is available and calculate the applicable rental price for that period.",
       },
     ],

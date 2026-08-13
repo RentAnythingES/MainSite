@@ -95,7 +95,7 @@ category identity in the visible H1.
 | Mobility & Accessibility | 6 products; scooters and wheelchairs have separate family owners | Aligned: broad category retains general mobility intent; family owners handle type selection and exact products retain their modifiers |
 | Remote Work | 6 products | Aligned: the broad workstation owner matches monitors, desk and chair inventory |
 | Apartment Comfort | 8 products spanning cooling, air quality, cleaning and practical home equipment | Visible H1, breadcrumb, schema name and intro corrected to the broad category. AC-only metadata remains an explicit review item because it conflicts with the approved broad owner |
-| Beach & Outdoor | 49 products spanning beach, camping, water, transport and outdoor equipment | Needs review: the current beach-only H1 and metadata are narrower than the catalogue. Do not change them without an approved ownership decision |
+| Beach & Outdoor | 49 products spanning beach, camping, water, transport and outdoor equipment | Aligned 13 August: the bilingual H1, metadata and guidance now retain the established beach-equipment term while accurately covering the full outdoor catalogue; all products remain in the first continuous grid |
 | Sports & Wellness | 15 products spanning sport, fitness and recovery, plus three secondary bike-carrier memberships | Aligned: metadata and visible guidance cover the broad category; stale tennis/padel and ball-machine emphasis has been replaced with practical activity, space, transport and venue decisions |
 
 The five published family owners—mobility scooters, wheelchairs, strollers, car seats

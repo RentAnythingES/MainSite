@@ -298,16 +298,16 @@ const categoryMetaES: Record<string, CategoryContent> = {
     ],
   },
   "travel-outdoors": {
-    title: "Alquiler de Equipamiento de Playa en Valencia",
-    description: "Alquila sombrillas, refugios y sombra familiar en Valencia, con opciones de recogida o entrega para Malvarrosa, Patacona y alojamientos cercanos.",
-    editorialHeading: "Alquila material para tus días de playa en Valencia",
+    title: "Alquiler de Material de Playa y Aire Libre en Valencia",
+    description: "Alquila material de playa y aire libre en Valencia para días junto al mar, actividades familiares y excursiones, con recogida o entrega según tu reserva.",
+    editorialHeading: "Material de playa y aire libre para tu estancia en Valencia",
     editorialParagraphs: [
-      "Las sombrillas y los refugios de playa son difíciles de transportar en avión y pocos apartamentos vacacionales los incluyen. Alquilar equipamiento de playa en Valencia permite disponer de sombra sin comprar artículos voluminosos para una estancia corta.",
-      "Elige el producto que encaje con tu grupo y tus planes, desde una sombrilla tradicional hasta un refugio familiar compacto. Cada ficha recoge las medidas, el peso, las piezas incluidas, las instrucciones de montaje y las limitaciones importantes de viento o cuidado antes de comprobar la disponibilidad.",
-      "Las opciones de recogida y entrega facilitan el uso del material si te alojas cerca de Malvarrosa, Patacona, Cabanyal o el centro. Las familias que necesiten algo más que sombra también pueden empezar con el Kit de Playa Familiar y solicitar la combinación adecuada para sus fechas.",
+      "El material de playa y aire libre puede ser incómodo de transportar en avión o guardar en un alojamiento temporal. Alquilarlo en Valencia te permite elegir lo que encaja con tus planes sin comprar artículos voluminosos para una estancia corta.",
+      "Utiliza el catálogo completo para días de playa, actividades acuáticas, juegos al aire libre, transporte de material o acampada. Cada ficha muestra las medidas, los elementos incluidos, el montaje y las limitaciones de uso antes de comprobar la disponibilidad.",
+      "Las opciones de recogida y entrega se muestran para la dirección y las fechas de tu reserva. Para un día junto al mar, el Kit de Playa Familiar también sirve como punto de partida para combinar sombra, asientos, una nevera, juegos y transporte.",
     ],
-    featuredHeading: "Planifica tus días de playa en Valencia",
-    featuredDescription: "Combina el equipamiento con un kit familiar o una guía práctica de la playa más cercana a tu alojamiento.",
+    featuredHeading: "Planifica días de playa y aire libre en Valencia",
+    featuredDescription: "Combina el material con un conjunto familiar de playa o con información local útil para los planes que tengas en mente.",
     featuredPathways: [
       {
         eyebrow: "Kit de playa",
@@ -328,26 +328,26 @@ const categoryMetaES: Record<string, CategoryContent> = {
         href: "/es/blog/valencia-summer-survival-guide",
       },
     ],
-    searchIntentHeading: "Elige el equipamiento adecuado para la playa",
-    searchIntentDescription: "Compara en un único catálogo de Valencia el tipo de equipamiento que necesitas, sin saltar entre páginas de alquiler repetitivas.",
+    searchIntentHeading: "Elige el material adecuado para la playa o el aire libre",
+    searchIntentDescription: "Utiliza un único catálogo de Valencia para encontrar lo que encaja con tus planes; cada ficha ofrece las medidas, elementos incluidos y disponibilidad concretos.",
     searchIntents: [
       {
-        title: "Sombra para un día sencillo de playa",
-        description: "Compara sombrillas y refugios compactos por superficie cubierta, tamaño plegado, montaje y recomendaciones de viento antes de indicar tus fechas.",
+        title: "Un día cómodo en la playa",
+        description: "Compara sombra, asientos, neveras, toallas, transporte y juegos según tu grupo, tus planes y el alojamiento.",
       },
       {
-        title: "Un conjunto completo para familias",
-        description: "Empieza con el Kit de Playa Familiar si necesitas sombra y complementos prácticos como frío, toallas, juguetes o transporte más cómodo.",
+        title: "Actividades acuáticas y al aire libre",
+        description: "Comprueba la capacidad, los elementos incluidos, el transporte y las indicaciones de uso en la ficha correspondiente antes de elegir fechas.",
       },
       {
-        title: "Material más fácil de transportar",
-        description: "Consulta neveras, carros de playa, mobiliario plegable y otros artículos publicados para Malvarrosa, Patacona y alojamientos cerca de la costa de Valencia.",
+        title: "Acampada, carga y transporte",
+        description: "Elige el material según el trayecto, el espacio disponible y el destino, sin asumir que todos los artículos sirven para cualquier salida.",
       },
     ],
-    faqHeading: "Preguntas sobre el alquiler de material de playa en Valencia",
+    faqHeading: "Preguntas sobre el alquiler de material de playa y aire libre",
     faqs: [
       {
-        question: "¿Puedo alquilar material de playa en Valencia?",
+        question: "¿Puedo alquilar material de playa y aire libre en Valencia?",
         answer: "Sí. Consulta el catálogo publicado de Playa y Aire Libre, selecciona tus fechas y comprueba la disponibilidad. Las opciones de recogida o entrega aparecen durante la reserva antes del pago.",
       },
       {
@@ -355,15 +355,15 @@ const categoryMetaES: Record<string, CategoryContent> = {
         answer: "La reserva muestra las opciones de recogida y entrega disponibles, los horarios y cualquier coste aplicable para la dirección y las fechas indicadas. Escríbenos si tu alojamiento queda fuera de las zonas mostradas.",
       },
       {
-        question: "¿Qué material de playa puedo alquilar?",
-        answer: "El catálogo publicado puede incluir sombrillas, refugios, toallas, neveras, carros, mobiliario plegable y juegos de playa. Los artículos concretos y su disponibilidad dependen de las fechas elegidas.",
+        question: "¿Qué material de playa y aire libre puedo alquilar?",
+        answer: "El catálogo actual reúne material para días de playa, actividades acuáticas, juegos al aire libre, carga, transporte y acampada. Los artículos concretos y su disponibilidad dependen de las fechas elegidas.",
       },
       {
         question: "¿Me conviene una sombrilla o un refugio de playa?",
         answer: "Una sombrilla resulta flexible y familiar para grupos pequeños. Un refugio puede ofrecer una zona cubierta más amplia para familias. Compara las medidas, el montaje y los límites de viento en cada ficha.",
       },
       {
-        question: "¿Puedo reservar material de playa para un solo día?",
+        question: "¿Puedo reservar material de exterior para un solo día?",
         answer: "Introduce la fecha y la hora de inicio y fin en la ficha correspondiente. El proceso de reserva mostrará si el artículo está disponible y calculará el precio aplicable para ese periodo.",
       },
     ],

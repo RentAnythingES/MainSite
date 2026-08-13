@@ -557,6 +557,12 @@ Priority pilot logic: start with one narrow bundle, collect usage evidence, then
    present. Deploy, resubmit the sitemap in Search Console, then inspect the
    Apartment Comfort, Beach, Baby and Mobility owners plus their top products.
 2. **Beach cluster — ✅ Completed 18 July** — `/rental/travel-outdoors` owns broad rental and delivery intent; guides own beach-planning queries; product pages own exact-item searches. Consolidated comparison and FAQ coverage avoids overlapping thin landing pages.
+   - Owner alignment completed 13 August: the EN/ES title, H1, description and
+     decision guidance now represent the complete Beach & Outdoor catalogue rather
+     than presenting water, games, transport and camping inventory as beach shade.
+     The established beach-equipment phrase, leading beach products, Family Beach
+     pathway and complete 49-product catalogue remain intact; no new kayak owner or
+     duplicate product route was introduced.
 3. **Active catalogue** — complete EN/ES readiness for commercially available products
    - Full image-delivery and priority-copy follow-up on 12 August passed all 114
      active products across 228 EN/ES pages. Six fact-complete baby/family products

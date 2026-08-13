@@ -1,6 +1,6 @@
 # Core Keyword Ownership
 
-> **Updated:** 2026-08-11  
+> **Updated:** 2026-08-13
 > **Scope:** Valencia commercial owners in English and Spanish
 
 ## What ownership means
@@ -40,7 +40,7 @@ the product keeps one URL, canonical, primary breadcrumb and inventory record.
 | Wheelchair rental/hire | `/rental/mobility/wheelchairs` + ES peer | Transport and powered wheelchair products | Family owner; page describes current choices without claiming a missing standard manual chair |
 | Portable-air-conditioner rental | `/rental/home-living` + ES peer | Both AC product pages own model and BTU intent | Protect the established category URL; do not add another AC collection without a materially different search job |
 | Apartment-comfort equipment | `/rental/home-living` + ES peer | Exact cooling, air-quality, cleaning and practical-home products | Same broad category supports this need; visible category identity must cover the complete catalogue |
-| Family beach-equipment rental | `/rental/travel-outdoors` + ES peer | Shade, seating, towel, wagon, cooler and other exact products | Protect the established owner while keeping the full Beach & Outdoor catalogue browsable |
+| Beach and outdoor equipment rental | `/rental/travel-outdoors` + ES peer | Beach, water-activity, outdoor-game, carrying, transport, camping and other exact products | The category retains `beach equipment rental Valencia` as its primary commercial phrase while its visible identity and guidance accurately cover the full catalogue |
 | Kayak rental | No dedicated family owner yet | `/rental/travel-outdoors` supports the subject; individual kayak pages own capacity/type intent | Do not create a thin generic page until query evidence and a useful selection brief justify it |
 | Remote-work equipment and qualified monitor rental | `/rental/remote-work` + ES peer | Monitor sizes, desk and chair product pages | No separate monitor family page currently warranted |
 | Sports and wellness equipment | `/rental/fitness-wellness` + ES peer | Exact sport, fitness and recovery products | Existing broad category owner |
