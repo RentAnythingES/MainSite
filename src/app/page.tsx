@@ -9,8 +9,6 @@ import {
   getHomepageFeaturedProducts,
 } from "@/lib/homepage-products";
 
-export const revalidate = 300;
-
 export const metadata: Metadata = {
   title: "Rent Equipment in Valencia | Rent&Roll",
   description:

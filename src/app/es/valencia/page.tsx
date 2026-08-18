@@ -8,8 +8,6 @@ import { getHubCollectionJsonLd } from "@/lib/jsonld";
 
 const t = getDictionary("es");
 
-export const revalidate = 60;
-
 export const metadata: Metadata = {
   title: "Alquiler de Equipos en Valencia | Rent&Roll",
   description: "Alquila artículos de bebé, movilidad, teletrabajo y confort en Valencia, con recogida o entrega en hoteles, apartamentos y alojamientos.",

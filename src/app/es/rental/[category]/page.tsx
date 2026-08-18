@@ -436,8 +436,6 @@ interface Props {
   params: Promise<{ category: string }>;
 }
 
-export const revalidate = 300;
-
 export async function generateStaticParams() {
   return Object.keys(categoryMetaES).map((category) => ({ category }));
 }

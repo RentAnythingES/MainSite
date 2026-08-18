@@ -10,8 +10,6 @@ import {
   getHomepageFeaturedProducts,
 } from "@/lib/homepage-products";
 
-export const revalidate = 300;
-
 const t = getDictionary("es");
 
 export const metadata: Metadata = {

@@ -1,5 +1,5 @@
 # Rent&Roll — Frontend Guide
-> **Last updated**: 2026-08-11
+> **Last updated**: 2026-08-18
 
 ## Routing
 App Router with static generation (`generateStaticParams`). Prefix-based i18n (`/es/` for Spanish).
@@ -11,13 +11,13 @@ route handling while excluding APIs and static assets.
 ### Public (English)
 | Route | Type | Source | Hero |
 |-------|------|--------|------|
-| `/` | Cached | `product-service.ts` + `page.tsx` | Photo carousel (3 images) |
-| `/valencia` | Static | `page.tsx` | Beach photo background |
+| `/` | Static/on-demand | `product-service.ts` + `page.tsx` | Photo carousel (3 images) |
+| `/valencia` | Static/on-demand | `page.tsx` | Beach photo background |
 | `/valencia/kits` | Static | `bundles.ts` data | Photo-backed kit cards |
 | `/valencia/kits/[slug]` | SSG | `bundles.ts` data | Kit hero image |
-| `/product/[slug]` | Dynamic | Supabase via `product-service.ts` | Product image |
-| `/rental/[category]` | Dynamic | Supabase via `product-service.ts` | Category photo |
-| `/rental/[category]/[family]` | SSG + ISR | `product-families.ts` + live localized products | Intent-specific family hero |
+| `/product/[slug]` | Static/on-demand | Supabase via tagged `product-service.ts` cache | Product image |
+| `/rental/[category]` | Static/on-demand | Supabase via tagged `product-service.ts` cache | Category photo |
+| `/rental/[category]/[family]` | Static/on-demand | `product-families.ts` + tagged localized products | Intent-specific family hero |
 | `/blog/[slug]` | SSG | `blog.ts` data | Blog hero image |
 | `/discover` | Static | `page.tsx` | Aerial Valencia photo |
 | `/discover/[slug]` | SSG | `destinations.ts` data | Destination hero photo |
@@ -27,13 +27,13 @@ route handling while excluding APIs and static assets.
 ### Public (Spanish — `/es/` prefix)
 | Route | Type | Source |
 |-------|------|--------|
-| `/es` | Cached | `product-service.ts` + `es/page.tsx` + `i18n/dictionaries/es.ts` |
-| `/es/valencia` | Static | `es/valencia/page.tsx` |
+| `/es` | Static/on-demand | `product-service.ts` + `es/page.tsx` + `i18n/dictionaries/es.ts` |
+| `/es/valencia` | Static/on-demand | `es/valencia/page.tsx` |
 | `/es/valencia/kits` | Static | Fully localized `bundles-es.ts` kit hub |
 | `/es/valencia/kits/[slug]` | SSG | Eight localized kit details + shared configurator |
-| `/es/product/[slug]` | SSG | Same products, Spanish dictionary |
-| `/es/rental/[category]` | SSG | Same categories, Spanish dictionary |
-| `/es/rental/[category]/[family]` | SSG + ISR | Bilingual family definition + localized live products |
+| `/es/product/[slug]` | Static/on-demand | Same tagged products, Spanish localization |
+| `/es/rental/[category]` | Static/on-demand | Same tagged categories, Spanish localization |
+| `/es/rental/[category]/[family]` | Static/on-demand | Bilingual family definition + tagged localized products |
 | `/es/blog` | Static | Complete Spanish planning guides only |
 | `/es/blog/[slug]` | SSG | `content/blog-es.ts` + shared article renderer |
 | `/es/discover` | Static | Complete Spanish Discover coverage only |

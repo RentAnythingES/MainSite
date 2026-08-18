@@ -7,8 +7,6 @@ import ProductCard from "@/components/ProductCard";
 import { getProductsFromDB } from "@/lib/product-service";
 import { getHubCollectionJsonLd } from "@/lib/jsonld";
 
-export const revalidate = 60;
-
 export const metadata: Metadata = {
   title: "Rent Baby Gear, Wheelchairs & Tech in Valencia",
   description:

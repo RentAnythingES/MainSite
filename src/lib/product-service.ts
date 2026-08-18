@@ -317,7 +317,6 @@ async function fetchProductsFromDB(city: string, locale: ProductLocale): Promise
 
 const getCachedProducts = unstable_cache(fetchProductsFromDB, ["public-product-list"], {
   tags: [PUBLIC_PRODUCT_CACHE_TAG],
-  revalidate: 300,
 });
 
 export async function getProductsFromDB(city = "valencia", locale: ProductLocale = "en"): Promise<Product[]> {
@@ -364,7 +363,6 @@ async function fetchProductBySlugFromDB(slug: string, locale: ProductLocale): Pr
 
 const getCachedProductBySlug = unstable_cache(fetchProductBySlugFromDB, ["public-product-detail"], {
   tags: [PUBLIC_PRODUCT_CACHE_TAG],
-  revalidate: 300,
 });
 
 export async function getProductBySlugFromDB(slug: string, locale: ProductLocale = "en"): Promise<Product | null> {
@@ -439,7 +437,7 @@ async function fetchProductsByCategoryFromDB(categorySlug: string, locale: Produ
 const getCachedProductsByCategory = unstable_cache(
   fetchProductsByCategoryFromDB,
   ["public-products-by-category"],
-  { tags: [PUBLIC_PRODUCT_CACHE_TAG], revalidate: 300 },
+  { tags: [PUBLIC_PRODUCT_CACHE_TAG] },
 );
 
 export async function getProductsByCategoryFromDB(categorySlug: string, locale: ProductLocale = "en"): Promise<Product[]> {

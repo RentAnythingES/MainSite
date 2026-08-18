@@ -1,5 +1,5 @@
 # Rent&Roll — Architecture
-> **Last updated**: 2026-07-24
+> **Last updated**: 2026-08-18
 
 ## Tech Stack
 - **Framework**: Next.js 16 (App Router)
@@ -371,25 +371,31 @@ Components (`Header`, `Footer`) detect locale via `usePathname()` and toggle lab
 ### Public catalogue cache
 
 Homepage, category and product rendering cache successful Supabase product reads
-for up to five minutes under the shared `public-products` tag. Cache arguments
-include city, category, slug and locale, so English and Spanish responses remain
-separate. Database failures fall back to static catalogue data outside the cache
-and therefore do not poison the cache with fallback results.
+indefinitely under the shared `public-products` tag. There is deliberately no
+time-based revalidation interval: catalogue content changes only after an admin
+mutation. Cache arguments include city, category, slug and locale, so English and
+Spanish responses remain separate. Database failures fall back to static catalogue
+data outside the cache and therefore do not poison the cache with fallback results.
 
 Admin create, update, deactivate, import and content-write routes invalidate the
 tag immediately with `revalidateTag(..., { expire: 0 })`. Partial product or
 content mutations also invalidate before returning an error. Direct database
-changes outside the admin API become visible when the five-minute fallback TTL
-expires.
+changes bypass this event and remain cached until an admin mutation invalidates the
+tag or a deployment replaces the cache, so catalogue writes must use the admin API.
 
 Product URL replacements remain lookup-compatible in both public product reads and
 booking/pricing resolution. This lets an old browser session or a newly deployed
 redirect resolve the same product ID during the database-slug cutover; the canonical
 catalogue and sitemap publish only the replacement slug.
 
-English and Spanish category routes use five-minute static regeneration instead
-of request-time rendering. Their full-route cache depends on the tagged product
-read, so the same admin invalidation refreshes both the data and generated page.
+English and Spanish home, catalogue, category, family, product and sitemap routes
+use static/on-demand rendering. Their full-route caches depend on the tagged product
+read, so the same admin invalidation expires both the data and generated pages.
+Stock, date availability, checkout holds and booking quotes remain request-time API
+concerns. The booking widget initializes default dates in the browser so cached
+product pages never embed an old calendar date. `npm run audit:cache-policy` rejects
+recurring public-route TTLs, time-based product cache expiry and dynamic product
+content pages.
 The root layout avoids request-bound APIs; middleware supplies `Content-Language`
 and a small pre-hydration script keeps the document `lang` attribute aligned with
 the `/es` route prefix.

@@ -9,8 +9,6 @@ type Props = {
   params: Promise<{ category: string; family: string }>;
 };
 
-export const revalidate = 300;
-
 export function generateStaticParams() {
   return productFamilies
     .filter((family) => family.published)

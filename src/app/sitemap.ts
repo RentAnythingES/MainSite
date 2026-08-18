@@ -10,10 +10,7 @@ import { indexableSeoCategorySlugs } from "@/data/seo-clusters";
 import { productFamilies } from "@/data/product-families";
 import { SITE_URL as BASE_URL } from "@/config/site";
 
-// Keep sitemap publication close to the product cache window so newly approved
-// products and retired slugs reach crawlers promptly.
-export const revalidate = 300;
-
+// Product admin mutations invalidate this route on demand through product-cache.
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const products = await getIndexableProductsForSeo();
 

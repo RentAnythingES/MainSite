@@ -42,7 +42,8 @@ function formatDisplayDate(date: Date, locale: string): string {
 }
 
 function combineDateTime(date: string, time: string): string {
-  return new Date(`${date}T${time}:00`).toISOString();
+  const combined = new Date(`${date}T${time}:00`);
+  return Number.isNaN(combined.getTime()) ? "" : combined.toISOString();
 }
 
 const labels = {
@@ -258,10 +259,10 @@ function calculateFulfillmentFeeCents(
 
 export default function BookingWidget({ product, locale = "en" }: BookingWidgetProps) {
   const t = labels[locale];
-  const tomorrow = addDays(new Date(), 1);
-  const [startDate, setStartDate] = useState(formatDate(tomorrow));
+  const [minimumStartDate, setMinimumStartDate] = useState("");
+  const [startDate, setStartDate] = useState("");
   const [startTime, setStartTime] = useState("09:00");
-  const [endDate, setEndDate] = useState(formatDate(addDays(tomorrow, 3)));
+  const [endDate, setEndDate] = useState("");
   const [endTime, setEndTime] = useState("09:00");
   const [quantity, setQuantity] = useState(1);
   const [deliveryOption, setDeliveryOption] = useState<DeliveryOption>("standard");
@@ -371,6 +372,19 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
     new Date(activeCheckout.startAt).getTime() === new Date(combineDateTime(startDate, startTime)).getTime() &&
     new Date(activeCheckout.endAt).getTime() === new Date(combineDateTime(endDate, endTime)).getTime()
   );
+
+  useEffect(() => {
+    const frameId = window.requestAnimationFrame(() => {
+      const tomorrow = addDays(new Date(), 1);
+      const initialStartDate = formatDate(tomorrow);
+      const initialEndDate = formatDate(addDays(tomorrow, 3));
+
+      setMinimumStartDate(initialStartDate);
+      setStartDate((current) => current || initialStartDate);
+      setEndDate((current) => current || initialEndDate);
+    });
+    return () => window.cancelAnimationFrame(frameId);
+  }, []);
 
   useEffect(() => {
     const frameId = window.requestAnimationFrame(() => {
@@ -840,7 +854,7 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
             id="booking-start"
             type="date"
             value={startDate}
-            min={formatDate(tomorrow)}
+            min={minimumStartDate}
             onChange={(e) => {
               setStartDate(e.target.value);
               if (new Date(e.target.value) >= new Date(endDate)) {
@@ -858,7 +872,7 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
             id="booking-end"
             type="date"
             value={endDate}
-            min={formatDate(addDays(new Date(startDate), 1))}
+            min={startDate ? formatDate(addDays(new Date(startDate), 1)) : minimumStartDate}
             onChange={(e) => setEndDate(e.target.value)}
             className="w-full px-3 py-2.5 rounded-lg border border-border text-sm focus:outline-none focus:ring-2 focus:ring-brand/30 focus:border-brand"
           />
