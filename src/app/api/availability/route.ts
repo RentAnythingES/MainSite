@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createServiceClient } from "@/lib/supabase";
-import { BookingRuleError, assertFulfillmentTiming, calculateRentalDays, cleanupExpiredBookingDrafts, getPickupLocation, getProductWithPricing, getServiceZone, parseRentalDate, quoteBooking } from "@/lib/booking-v2";
+import { BookingRuleError, assertFulfillmentTiming, calculateRentalDays, cleanupExpiredBookingDrafts, evaluateDeliveryFulfillment, getFulfillmentPolicyMessage, getPickupLocation, getProductWithPricing, getServiceZone, quoteBooking, resolveRentalPeriod } from "@/lib/booking-v2";
 import { fetchActivePickupLocations, fetchActiveServiceZones } from "@/lib/fulfillment-options";
 import { resolveDefaultMarketContext } from "@/lib/market-context";
 import type { DeliveryType, FulfillmentMode } from "@/lib/types";
@@ -22,8 +22,9 @@ export async function GET(request: NextRequest) {
   const end = searchParams.get("end");
   const startAtParam = searchParams.get("startAt");
   const endAtParam = searchParams.get("endAt");
+  const startTime = searchParams.get("startTime");
+  const endTime = searchParams.get("endTime");
   const mode = (searchParams.get("mode") || "delivery_and_collection") as FulfillmentMode;
-  const requestedDeliveryType = (searchParams.get("deliveryType") || "standard") as DeliveryType;
   const deliveryZoneId = searchParams.get("deliveryZoneId");
   const collectionZoneId = searchParams.get("collectionZoneId");
   const pickupLocationId = searchParams.get("pickupLocationId");
@@ -41,20 +42,20 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: "Quantity must be a positive integer" }, { status: 400 });
   }
 
-  if (!["standard", "express"].includes(requestedDeliveryType)) {
-    return NextResponse.json({ error: "Invalid delivery speed" }, { status: 400 });
-  }
-
-  const deliveryType: DeliveryType =
-    mode === "customer_pickup" ? "standard" : requestedDeliveryType;
-
   try {
     const supabase = createServiceClient();
     const market = await resolveDefaultMarketContext(supabase);
     await cleanupExpiredBookingDrafts(supabase);
 
-    const startAt = parseRentalDate(startAtParam || `${start}T09:00:00+02:00`, "start");
-    const endAt = parseRentalDate(endAtParam || `${end}T09:00:00+02:00`, "end");
+    const period = start && end
+      ? resolveRentalPeriod({
+          startDate: start,
+          startTime: startTime || "09:00",
+          endDate: end,
+          endTime: endTime || "09:00",
+        })
+      : resolveRentalPeriod({ startAt: startAtParam!, endAt: endAtParam! });
+    const { startAt, endAt } = period;
     const { product, tiers, quantityDiscounts } = await getProductWithPricing(supabase, slug);
     const rentalDays = calculateRentalDays(startAt, endAt);
     let resumableDraftId: string | null = null;
@@ -140,18 +141,37 @@ export async function GET(request: NextRequest) {
       getServiceZone(supabase, deliveryZoneId, market.id),
       getServiceZone(supabase, collectionZoneId, market.id),
     ]);
-    assertFulfillmentTiming(startAt, deliveryType, pickupLocation, deliveryZone, collectionZone);
+    const fulfillment = { mode, pickupLocationId, deliveryZoneId, collectionZoneId };
+    const policy = evaluateDeliveryFulfillment(
+      period,
+      fulfillment,
+      deliveryZone,
+      collectionZone,
+    );
+    if (mode === "customer_pickup") {
+      assertFulfillmentTiming(startAt, "standard", pickupLocation, null, null);
+    }
+    if (policy && policy.decision !== "standard_checkout" && policy.decision !== "express_checkout") {
+      return NextResponse.json({
+        available: false,
+        availabilityReason: policy.decision,
+        policy,
+        error: getFulfillmentPolicyMessage(policy.reason),
+      }, { status: 409 });
+    }
+    const deliveryType: DeliveryType = policy?.deliveryType || "standard";
     const quote = quoteBooking(
       tiers,
       quantityDiscounts,
       startAt,
       endAt,
-      { mode, pickupLocationId, deliveryZoneId, collectionZoneId },
+      fulfillment,
       deliveryZone,
       collectionZone,
       quantity,
       deliveryType,
     );
+    quote.pricingSnapshot = { ...quote.pricingSnapshot, fulfillmentPolicy: policy };
 
     const [pickupLocationsResult, serviceZonesResult] = await Promise.all([
       fetchActivePickupLocations(supabase, market.id),
@@ -190,6 +210,7 @@ export async function GET(request: NextRequest) {
       maxAvailableQuantity,
       rentalDays,
       quote,
+      policy,
       pickupLocations: pickupLocationsResult.error ? [] : pickupLocationsResult.data || [],
       serviceZones: serviceZonesResult.error ? [] : serviceZonesResult.data || [],
       slug,

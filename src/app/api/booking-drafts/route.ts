@@ -7,11 +7,13 @@ import {
   assertFulfillmentFields,
   assertFulfillmentTiming,
   cleanupExpiredBookingDrafts,
+  evaluateDeliveryFulfillment,
+  getFulfillmentPolicyMessage,
   getProductWithPricing,
   getPickupLocation,
   getServiceZone,
-  parseRentalDate,
   quoteBooking,
+  resolveRentalPeriod,
   toDateOnly,
 } from "@/lib/booking-v2";
 import type { DeliveryType, FulfillmentMode } from "@/lib/types";
@@ -27,6 +29,10 @@ interface DraftRequestBody {
   customerPhone?: string;
   startAt?: string;
   endAt?: string;
+  startDate?: string;
+  startTime?: string;
+  endDate?: string;
+  endTime?: string;
   fulfillmentMode?: FulfillmentMode;
   deliveryType?: DeliveryType;
   pickupLocationId?: string | null;
@@ -49,10 +55,13 @@ export async function POST(request: NextRequest) {
   try {
     const body = (await request.json()) as DraftRequestBody;
     const fulfillmentMode = body.fulfillmentMode || "delivery_and_collection";
-    const requestedDeliveryType = body.deliveryType || "standard";
     const quantity = Number(body.quantity || 1);
 
-    if (!body.productSlug || !body.customerName || !body.customerEmail || !body.startAt || !body.endAt) {
+    const hasRentalPeriod = Boolean(
+      (body.startAt && body.endAt) ||
+      (body.startDate && body.startTime && body.endDate && body.endTime),
+    );
+    if (!body.productSlug || !body.customerName || !body.customerEmail || !hasRentalPeriod) {
       return NextResponse.json({ error: "Missing required booking details" }, { status: 400 });
     }
 
@@ -63,13 +72,6 @@ export async function POST(request: NextRequest) {
     if (!Number.isInteger(quantity) || quantity < 1) {
       return NextResponse.json({ error: "Quantity must be a positive integer" }, { status: 400 });
     }
-
-    if (!["standard", "express"].includes(requestedDeliveryType)) {
-      return NextResponse.json({ error: "Invalid delivery speed" }, { status: 400 });
-    }
-
-    const deliveryType: DeliveryType =
-      fulfillmentMode === "customer_pickup" ? "standard" : requestedDeliveryType;
 
     const supabase = createServiceClient();
     const market = await resolveDefaultMarketContext(supabase);
@@ -116,8 +118,8 @@ export async function POST(request: NextRequest) {
       body.collectionAddress
     );
 
-    const startAt = parseRentalDate(body.startAt, "startAt");
-    const endAt = parseRentalDate(body.endAt, "endAt");
+    const period = resolveRentalPeriod(body);
+    const { startAt, endAt } = period;
     await cleanupExpiredBookingDrafts(supabase);
 
     const { product, tiers, quantityDiscounts } = await getProductWithPricing(supabase, body.productSlug);
@@ -131,23 +133,41 @@ export async function POST(request: NextRequest) {
       getServiceZone(supabase, body.deliveryZoneId, market.id),
       getServiceZone(supabase, body.collectionZoneId, market.id),
     ]);
-    assertFulfillmentTiming(startAt, deliveryType, pickupLocation, deliveryZone, collectionZone);
+    const fulfillment = {
+      mode: fulfillmentMode,
+      pickupLocationId: body.pickupLocationId,
+      deliveryZoneId: body.deliveryZoneId,
+      collectionZoneId: body.collectionZoneId,
+    };
+    const policy = evaluateDeliveryFulfillment(
+      period,
+      fulfillment,
+      deliveryZone,
+      collectionZone,
+    );
+    if (fulfillmentMode === "customer_pickup") {
+      assertFulfillmentTiming(startAt, "standard", pickupLocation, null, null);
+    }
+    if (policy && policy.decision !== "standard_checkout" && policy.decision !== "express_checkout") {
+      return NextResponse.json({
+        error: getFulfillmentPolicyMessage(policy.reason),
+        bookingDecision: policy.decision,
+        policy,
+      }, { status: 409 });
+    }
+    const deliveryType: DeliveryType = policy?.deliveryType || "standard";
     const quote = quoteBooking(
       tiers,
       quantityDiscounts,
       startAt,
       endAt,
-      {
-        mode: fulfillmentMode,
-        pickupLocationId: body.pickupLocationId,
-        deliveryZoneId: body.deliveryZoneId,
-        collectionZoneId: body.collectionZoneId,
-      },
+      fulfillment,
       deliveryZone,
       collectionZone,
       quantity,
       deliveryType,
     );
+    quote.pricingSnapshot = { ...quote.pricingSnapshot, fulfillmentPolicy: policy };
 
     const { data: blockedDates, error: blockedError } = await supabase
       .from("blocked_dates")
@@ -239,6 +259,7 @@ export async function POST(request: NextRequest) {
       startAt: startAt.toISOString(),
       endAt: endAt.toISOString(),
       quote,
+      policy,
     });
   } catch (err) {
     if (err instanceof BookingRuleError) {

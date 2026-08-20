@@ -121,9 +121,16 @@ fall back to the older column set until that migration is applied.
 
 Automatic checkout eligibility is explicit per service zone. Public booking options
 return only active zones with `automatic_checkout_enabled = true`; availability and
-draft creation independently reject manual-quote zones. Draft pricing persists
-delivery speed and enforces zone surcharge, minimum order, lead time, and same-day
-cutoff rules on the server.
+draft creation independently reject manual-quote zones. Delivery speed is derived
+server-side from the requested Europe/Madrid wall clock and cannot be selected by the
+browser: eligible same-day requests use Express, later-date requests use Standard,
+and requests outside the configured lead-time or operating-hour policy return a
+WhatsApp/manual-confirmation decision before any draft or inventory hold is created.
+The 20260820 fulfillment migration configures a 6-hour same-day Express minimum, a
+12-hour later-date Standard minimum, weekly delivery start hours, and a per-zone
+automatic Express kill switch. Checkout re-evaluates the stored request before
+creating or resuming Stripe Checkout, and Express appears as a separate Stripe line
+item so the surcharge is explicit.
 
 ### Booking Lifecycle
 ```
@@ -206,15 +213,17 @@ does not reserve inventory or promise a final bundle price.
 ### Booking API v2
 ```
 GET /api/availability
-  Accepts legacy start/end dates and v2 startAt/endAt timestamps
-  Returns availability, quote, pickup locations, and service zones
+  Accepts Valencia start/end dates and times, with legacy timestamp compatibility
+  Returns availability, the derived fulfillment policy, quote, and booking options
 
 POST /api/booking-drafts
   Resolves product and pricing server-side
+  Derives Standard, Express, or manual confirmation from the requested timing
   Creates a quantity-aware booking_draft and temporary inventory hold
 
 POST /api/checkout
   Required input: draftId
+  Re-evaluates fulfillment timing and rejects stale or mismatched service decisions
   Creates Stripe Checkout using the stored draft quantity and totals
 
 POST /api/booking-drafts/[id]/cancel

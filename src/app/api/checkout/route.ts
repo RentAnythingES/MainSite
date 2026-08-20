@@ -1,7 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
 import { stripe, isStripeConfigured } from "@/lib/stripe";
 import { createServiceClient } from "@/lib/supabase";
-import { cleanupExpiredBookingDrafts } from "@/lib/booking-v2";
+import {
+  cleanupExpiredBookingDrafts,
+  evaluateDeliveryFulfillment,
+  getFulfillmentPolicyMessage,
+  getServiceZone,
+  getStoredFulfillmentFeeBreakdown,
+  resolveRentalPeriod,
+} from "@/lib/booking-v2";
 import type { BookingDraft, CustomQuoteLineItem } from "@/lib/types";
 import { getIncidentErrorMessage, recordSystemIncident } from "@/lib/system-incidents";
 import type Stripe from "stripe";
@@ -69,6 +76,51 @@ export async function POST(request: NextRequest) {
         return NextResponse.json({ error: "Booking draft expired" }, { status: 409 });
       }
 
+      if (!bookingDraft.custom_quote_id && bookingDraft.fulfillment_mode !== "customer_pickup") {
+        const [deliveryZone, collectionZone] = await Promise.all([
+          getServiceZone(supabase, bookingDraft.delivery_zone_id, bookingDraft.market_id || null),
+          getServiceZone(supabase, bookingDraft.collection_zone_id, bookingDraft.market_id || null),
+        ]);
+        const checkoutPolicy = evaluateDeliveryFulfillment(
+          resolveRentalPeriod({
+            startAt: bookingDraft.rental_start_at,
+            endAt: bookingDraft.rental_end_at,
+          }),
+          {
+            mode: bookingDraft.fulfillment_mode,
+            deliveryZoneId: bookingDraft.delivery_zone_id,
+            collectionZoneId: bookingDraft.collection_zone_id,
+          },
+          deliveryZone,
+          collectionZone,
+        );
+        const policyAllowsCheckout = checkoutPolicy &&
+          (checkoutPolicy.decision === "standard_checkout" || checkoutPolicy.decision === "express_checkout") &&
+          checkoutPolicy.deliveryType === bookingDraft.delivery_type;
+
+        if (!policyAllowsCheckout) {
+          if (bookingDraft.stripe_checkout_session_id) {
+            const staleSession = await stripe.checkout.sessions.retrieve(bookingDraft.stripe_checkout_session_id);
+            if (staleSession.status === "open") {
+              await stripe.checkout.sessions.expire(staleSession.id);
+            }
+          }
+          await supabase.from("booking_drafts").update({ status: "cancelled" }).eq("id", bookingDraft.id);
+          await supabase
+            .from("booking_inventory_blocks")
+            .delete()
+            .eq("booking_draft_id", bookingDraft.id)
+            .is("booking_id", null);
+          return NextResponse.json({
+            error: checkoutPolicy
+              ? getFulfillmentPolicyMessage(checkoutPolicy.reason)
+              : "This delivery timing now needs confirmation from our team.",
+            bookingDecision: checkoutPolicy?.decision || "manual_confirmation",
+            policy: checkoutPolicy,
+          }, { status: 409 });
+        }
+      }
+
       if (bookingDraft.stripe_checkout_session_id) {
         const existingSession = await stripe.checkout.sessions.retrieve(bookingDraft.stripe_checkout_session_id);
         if (existingSession.status !== "open" || !existingSession.url) {
@@ -96,6 +148,12 @@ export async function POST(request: NextRequest) {
       const customLines = Array.isArray(bookingDraft.custom_line_items)
         ? bookingDraft.custom_line_items as CustomQuoteLineItem[]
         : [];
+      const fulfillmentFees = getStoredFulfillmentFeeBreakdown(
+        bookingDraft.pricing_snapshot,
+        bookingDraft.delivery_fee_cents,
+        bookingDraft.collection_fee_cents,
+        bookingDraft.delivery_type,
+      );
 
       if (bookingDraft.custom_quote_id) {
         const { data: customQuote, error: customQuoteError } = await supabase
@@ -161,12 +219,26 @@ export async function POST(request: NextRequest) {
               },
               quantity: bookingDraft.quantity,
             },
-            ...(bookingDraft.delivery_fee_cents + bookingDraft.collection_fee_cents > 0
+            ...(fulfillmentFees.baseFeeCents > 0
               ? [{
                   price_data: {
                     currency: bookingDraft.currency,
-                    unit_amount: bookingDraft.delivery_fee_cents + bookingDraft.collection_fee_cents,
-                    product_data: { name: "Delivery and collection" },
+                    unit_amount: fulfillmentFees.baseFeeCents,
+                    product_data: {
+                      name: bookingDraft.fulfillment_mode === "delivery_and_collection"
+                        ? "Delivery and collection"
+                        : "Delivery",
+                    },
+                  },
+                  quantity: 1,
+                }]
+              : []),
+            ...(fulfillmentFees.expressSurchargeCents > 0
+              ? [{
+                  price_data: {
+                    currency: bookingDraft.currency,
+                    unit_amount: fulfillmentFees.expressSurchargeCents,
+                    product_data: { name: "Same-day Express surcharge" },
                   },
                   quantity: 1,
                 }]

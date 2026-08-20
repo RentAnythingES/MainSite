@@ -27,6 +27,9 @@ interface ServiceZone {
   internal_notes?: string | null;
   lead_time_hours?: number | null;
   same_day_cutoff?: string | null;
+  automatic_express_enabled: boolean;
+  express_min_lead_hours: number;
+  delivery_operating_hours: Record<string, { open: string; close: string } | null>;
   delivery_window?: string | null;
   collection_window?: string | null;
   confirmation_template?: string | null;
@@ -48,6 +51,19 @@ type EditTarget =
 const centsToEuros = (value?: number | null) => ((value || 0) / 100).toFixed(2);
 const eurosToCents = (value: string) => Math.round(Number(value || 0) * 100);
 const inputClass = "w-full rounded-lg border border-neutral-700 bg-neutral-950 px-3 py-2 text-sm text-white placeholder:text-neutral-600 focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500";
+const OPERATING_DAYS = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"] as const;
+
+function summarizeOperatingHours(schedule?: ServiceZone["delivery_operating_hours"]): string {
+  if (!schedule) return "Not configured";
+  const windows = OPERATING_DAYS.map((day) => schedule[day]);
+  const first = windows[0];
+  if (first && windows.every((window) => window?.open === first.open && window?.close === first.close)) {
+    return `Daily ${first.open}-${first.close}`;
+  }
+  return OPERATING_DAYS
+    .map((day) => schedule[day] ? `${day.slice(0, 3)} ${schedule[day]?.open}-${schedule[day]?.close}` : `${day.slice(0, 3)} closed`)
+    .join(" · ");
+}
 
 export default function AdminFulfillmentPage() {
   const [pickupLocations, setPickupLocations] = useState<PickupLocation[]>([]);
@@ -95,6 +111,18 @@ export default function AdminFulfillmentPage() {
     } as EditTarget);
   };
 
+  const setOperatingDay = (
+    day: typeof OPERATING_DAYS[number],
+    value: { open: string; close: string } | null,
+  ) => {
+    if (!editing || editing.type !== "zone") return;
+    const zone = editing.data as Partial<ServiceZone>;
+    setEditField("delivery_operating_hours", {
+      ...(zone.delivery_operating_hours || {}),
+      [day]: value,
+    });
+  };
+
   const saveEdit = async () => {
     if (!editing) return;
 
@@ -110,12 +138,15 @@ export default function AdminFulfillmentPage() {
         body: JSON.stringify(editing.data),
       });
 
-      if (!res.ok) throw new Error("Save failed");
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        throw new Error(data.error || "Save failed");
+      }
 
       setEditing(null);
       await fetchFulfillment();
-    } catch {
-      setError("Failed to save fulfillment settings.");
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to save fulfillment settings.");
     } finally {
       setSaving(false);
     }
@@ -242,7 +273,7 @@ export default function AdminFulfillmentPage() {
                       <input className={inputClass} value={form.delivery_window || ""} onChange={(e) => setEditField("delivery_window", e.target.value)} placeholder="Delivery window" />
                       <input className={inputClass} value={form.collection_window || ""} onChange={(e) => setEditField("collection_window", e.target.value)} placeholder="Collection window" />
                     </div>
-                     <div className="grid sm:grid-cols-3 gap-3">
+                     <div className="grid sm:grid-cols-2 gap-3">
                       <label className="text-xs text-neutral-400">Delivery fee €
                         <input className={`${inputClass} mt-1`} value={centsToEuros(form.delivery_fee_cents)} onChange={(e) => setEditField("delivery_fee_cents", eurosToCents(e.target.value))} />
                       </label>
@@ -260,15 +291,56 @@ export default function AdminFulfillmentPage() {
                        <label className="text-xs text-neutral-400">Minimum rental €
                          <input className={`${inputClass} mt-1`} value={centsToEuros(form.minimum_order_cents)} onChange={(e) => setEditField("minimum_order_cents", eurosToCents(e.target.value))} />
                        </label>
-                       <label className="text-xs text-neutral-400">Same-day cutoff
-                         <input className={`${inputClass} mt-1`} type="time" value={(form.same_day_cutoff || "").slice(0, 5)} onChange={(e) => setEditField("same_day_cutoff", e.target.value || null)} />
-                       </label>
                      </div>
-                    <div className="grid grid-cols-2 gap-3">
+                    <div className="grid sm:grid-cols-2 gap-3">
                       <label className="text-xs text-neutral-400">
-                        Lead time hours
-                        <input className={`${inputClass} mt-1`} type="number" value={form.lead_time_hours ?? 24} onChange={(e) => setEditField("lead_time_hours", Number(e.target.value))} />
+                        Later-date Standard lead time
+                        <input className={`${inputClass} mt-1`} type="number" min="0" max="72" step="1" value={form.lead_time_hours ?? 12} onChange={(e) => setEditField("lead_time_hours", Number(e.target.value))} />
                       </label>
+                      <label className="text-xs text-neutral-400">
+                        Same-day Express minimum lead time
+                        <input className={`${inputClass} mt-1`} type="number" min="0" max="72" step="1" value={form.express_min_lead_hours ?? 6} onChange={(e) => setEditField("express_min_lead_hours", Number(e.target.value))} />
+                      </label>
+                    </div>
+                    <div className="rounded-lg border border-neutral-800 bg-neutral-950/60 p-3">
+                      <p className="mb-2 text-xs font-semibold text-neutral-300">Automatic delivery start hours · Europe/Madrid</p>
+                      <div className="space-y-2">
+                        {OPERATING_DAYS.map((day) => {
+                          const window = form.delivery_operating_hours?.[day];
+                          const isOpen = Boolean(window);
+                          const effectiveWindow = window || { open: "09:00", close: "20:00" };
+                          return (
+                            <div key={day} className="grid grid-cols-[88px_1fr_1fr] items-center gap-2">
+                              <label className="flex items-center gap-2 text-xs capitalize text-neutral-300">
+                                <input
+                                  type="checkbox"
+                                  checked={isOpen}
+                                  onChange={(event) => setOperatingDay(day, event.target.checked ? effectiveWindow : null)}
+                                />
+                                {day.slice(0, 3)}
+                              </label>
+                              <input
+                                className={inputClass}
+                                type="time"
+                                value={effectiveWindow.open}
+                                disabled={!isOpen}
+                                aria-label={`${day} opening time`}
+                                onChange={(event) => setOperatingDay(day, { ...effectiveWindow, open: event.target.value })}
+                              />
+                              <input
+                                className={inputClass}
+                                type="time"
+                                value={effectiveWindow.close}
+                                disabled={!isOpen}
+                                aria-label={`${day} closing time`}
+                                onChange={(event) => setOperatingDay(day, { ...effectiveWindow, close: event.target.value })}
+                              />
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                    <div className="grid sm:grid-cols-2 gap-3">
                        <label className="flex items-center gap-2 text-sm text-neutral-300 mt-5">
                         <input type="checkbox" checked={Boolean(form.is_active)} onChange={(e) => setEditField("is_active", e.target.checked)} />
                          Active
@@ -276,6 +348,10 @@ export default function AdminFulfillmentPage() {
                        <label className="flex items-center gap-2 text-sm text-neutral-300 mt-5">
                          <input type="checkbox" checked={Boolean(form.automatic_checkout_enabled)} onChange={(e) => setEditField("automatic_checkout_enabled", e.target.checked)} />
                          Allow online checkout
+                       </label>
+                       <label className="flex items-center gap-2 text-sm text-amber-300 sm:col-span-2">
+                         <input type="checkbox" checked={Boolean(form.automatic_express_enabled)} onChange={(e) => setEditField("automatic_express_enabled", e.target.checked)} />
+                         Automatic same-day Express enabled (kill switch)
                        </label>
                     </div>
                   </div>
@@ -287,11 +363,11 @@ export default function AdminFulfillmentPage() {
                     <p className="text-neutral-500 text-xs">
                        Delivery {centsToEuros(zone.delivery_fee_cents)} · Collection {centsToEuros(zone.collection_fee_cents)} · Roundtrip {centsToEuros(zone.roundtrip_fee_cents)}
                     </p>
-                    <p className="text-neutral-500 text-xs">
-                       Windows: {zone.delivery_window || "delivery not set"} / {zone.collection_window || "collection not set"} · Lead time {zone.lead_time_hours || 24}h
+                     <p className="text-neutral-500 text-xs">
+                       {summarizeOperatingHours(zone.delivery_operating_hours)} · Later-date Standard {zone.lead_time_hours ?? 12}h
                      </p>
                      <p className="text-neutral-500 text-xs">
-                       Express +{centsToEuros(zone.express_surcharge_cents)} · Minimum {centsToEuros(zone.minimum_order_cents)} · Cutoff {zone.same_day_cutoff?.slice(0, 5) || "not available"}
+                       Same-day Express {zone.express_min_lead_hours ?? 6}h+ · +€{centsToEuros(zone.express_surcharge_cents)} · {zone.automatic_express_enabled ? "Automatic Express ON" : "Automatic Express OFF"}
                      </p>
                   </div>
                 )}

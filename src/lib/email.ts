@@ -40,6 +40,8 @@ export interface BookingEmailData {
   deliveryType: string;
   fulfillmentMode?: string;
   fulfillmentLabel?: string;
+  fulfillmentBaseFeeCents?: number;
+  expressSurchargeCents?: number;
   customerInstructions?: string | null;
   internalNotes?: string | null;
   deliveryWindow?: string | null;
@@ -119,6 +121,7 @@ function formatDateTime(dateStr: string): string {
     year: "numeric",
     hour: "2-digit",
     minute: "2-digit",
+    timeZone: "Europe/Madrid",
   });
 }
 
@@ -242,6 +245,18 @@ function bookingDetailsTable(data: BookingEmailData): string {
   const rentalWindow = data.rentalStartAt && data.rentalEndAt
     ? `${formatDateTime(data.rentalStartAt)} → ${formatDateTime(data.rentalEndAt)}`
     : `${formatDate(data.startDate)} → ${formatDate(data.endDate)}`;
+  const modeLabel = data.fulfillmentMode === "delivery_and_collection"
+    ? "delivery & collection"
+    : "delivery";
+  const serviceName = data.fulfillmentMode === "customer_pickup"
+    ? "Customer pickup"
+    : `${data.deliveryType === "express" ? "Same-day Express" : "Standard"} ${modeLabel}`;
+  const fulfillmentFeeRows = typeof data.fulfillmentBaseFeeCents === "number"
+    ? `<tr><td style="padding:8px 0;color:#6b7280;font-size:14px;">Fulfillment fee</td><td style="padding:8px 0;font-size:14px;">${formatEuros(data.fulfillmentBaseFeeCents)}</td></tr>
+       ${data.expressSurchargeCents
+         ? `<tr><td style="padding:8px 0;color:#b45309;font-size:14px;">Express surcharge</td><td style="padding:8px 0;color:#b45309;font-weight:600;font-size:14px;">${formatEuros(data.expressSurchargeCents)}</td></tr>`
+         : ""}`
+    : "";
 
   return `
     <table style="width:100%;border-collapse:collapse;margin:16px 0;">
@@ -249,7 +264,9 @@ function bookingDetailsTable(data: BookingEmailData): string {
       <tr><td style="padding:8px 0;color:#6b7280;font-size:14px;">Item</td><td style="padding:8px 0;font-weight:600;font-size:14px;">${escapeHtml(data.productName)}</td></tr>
       <tr><td style="padding:8px 0;color:#6b7280;font-size:14px;">Quantity</td><td style="padding:8px 0;font-weight:600;font-size:14px;">${escapeHtml(data.quantity || 1)}</td></tr>
       <tr><td style="padding:8px 0;color:#6b7280;font-size:14px;">Rental window</td><td style="padding:8px 0;font-size:14px;">${escapeHtml(rentalWindow)} (${escapeHtml(data.rentalDays)} days)</td></tr>
+      <tr><td style="padding:8px 0;color:#6b7280;font-size:14px;">Service</td><td style="padding:8px 0;font-weight:600;font-size:14px;">${escapeHtml(serviceName)}</td></tr>
       <tr><td style="padding:8px 0;color:#6b7280;font-size:14px;">${fulfillmentLabel(data)}</td><td style="padding:8px 0;font-size:14px;">${escapeHtml(data.deliveryAddress)}</td></tr>
+      ${fulfillmentFeeRows}
       <tr><td style="padding:8px 0;color:#6b7280;font-size:14px;">Total</td><td style="padding:8px 0;font-weight:700;font-size:16px;">${formatEuros(data.totalCents)}</td></tr>
     </table>
   `;

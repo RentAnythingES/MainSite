@@ -11,11 +11,26 @@ interface BookingInfo {
   quantity: number;
   startDate: string;
   endDate: string;
+  timeZone: string;
+  deliveryType: "standard" | "express";
+  fulfillmentMode: "customer_pickup" | "delivery_only" | "delivery_and_collection";
+  fulfillmentBaseFeeCents: number;
+  expressSurchargeCents: number;
   totalCents: number;
   customerEmail: string;
   deliveryAddress?: string | null;
   calendarUrl?: string | null;
   mapsUrl?: string | null;
+}
+
+interface DraftInfo {
+  startDate: string;
+  endDate: string;
+  deliveryType: "standard" | "express";
+  fulfillmentMode: "customer_pickup" | "delivery_only" | "delivery_and_collection";
+  fulfillmentBaseFeeCents: number;
+  expressSurchargeCents: number;
+  totalCents: number;
 }
 
 type CheckoutStatus =
@@ -28,15 +43,13 @@ function BookingSuccessContent() {
   const searchParams = useSearchParams();
   const sessionId = searchParams.get("session_id");
   const [booking, setBooking] = useState<BookingInfo | null>(null);
+  const [draft, setDraft] = useState<DraftInfo | null>(null);
   const [checkoutStatus, setCheckoutStatus] = useState<CheckoutStatus | null>(null);
   const [customerEmail, setCustomerEmail] = useState("");
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(Boolean(sessionId));
 
   useEffect(() => {
-    if (!sessionId) {
-      setLoading(false);
-      return;
-    }
+    if (!sessionId) return;
 
     fetch(`/api/checkout/status?id=${sessionId}`)
       .then((res) => res.json())
@@ -52,6 +65,9 @@ function BookingSuccessContent() {
         }
         if (data.booking) {
           setBooking(data.booking);
+        }
+        if (data.draft) {
+          setDraft(data.draft);
         }
       })
       .catch(() => {})
@@ -108,9 +124,33 @@ function BookingSuccessContent() {
                 <span className="font-medium">{booking.quantity || 1}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-neutral-500">Dates</span>
-                <span className="font-medium">{booking.startDate} → {booking.endDate}</span>
+                <span className="text-neutral-500">Rental time</span>
+                <span className="font-medium text-right">{booking.startDate} → {booking.endDate}<br /><span className="text-xs text-neutral-500">Valencia time</span></span>
               </div>
+              <div className="flex justify-between items-center">
+                <span className="text-neutral-500">Service</span>
+                <span className={`rounded-full px-2.5 py-1 text-xs font-bold ${
+                  booking.deliveryType === "express"
+                    ? "bg-amber-100 text-amber-800"
+                    : "bg-teal-100 text-teal-800"
+                }`}>
+                  {booking.fulfillmentMode === "customer_pickup"
+                    ? "Customer pickup"
+                    : `${booking.deliveryType === "express" ? "Express" : "Standard"} ${booking.fulfillmentMode === "delivery_and_collection" ? "delivery & collection" : "delivery"}`}
+                </span>
+              </div>
+              {booking.fulfillmentMode !== "customer_pickup" && (
+                <div className="flex justify-between">
+                  <span className="text-neutral-500">Fulfillment fee</span>
+                  <span className="font-medium">€{(booking.fulfillmentBaseFeeCents / 100).toFixed(2)}</span>
+                </div>
+              )}
+              {booking.expressSurchargeCents > 0 && (
+                <div className="flex justify-between text-amber-700">
+                  <span>Express surcharge</span>
+                  <span className="font-semibold">€{(booking.expressSurchargeCents / 100).toFixed(2)}</span>
+                </div>
+              )}
               <hr className="border-neutral-200" />
               <div className="flex justify-between">
                 <span className="text-neutral-500">Total paid</span>
@@ -147,6 +187,15 @@ function BookingSuccessContent() {
             </p>
             {sessionId && (
               <p className="text-xs text-amber-700 mt-3 font-mono break-all">{sessionId}</p>
+            )}
+            {draft && (
+              <div className="mt-4 space-y-2 border-t border-amber-200 pt-4 text-sm text-amber-950">
+                <div className="flex justify-between gap-4"><span>Rental time</span><span className="text-right font-medium">{draft.startDate} → {draft.endDate}<br /><span className="text-xs">Valencia time</span></span></div>
+                <div className="flex justify-between gap-4"><span>Service</span><span className="font-semibold">{draft.fulfillmentMode === "customer_pickup" ? "Customer pickup" : `${draft.deliveryType === "express" ? "Express" : "Standard"} delivery`}</span></div>
+                <div className="flex justify-between gap-4"><span>Fulfillment fee</span><span>€{(draft.fulfillmentBaseFeeCents / 100).toFixed(2)}</span></div>
+                {draft.expressSurchargeCents > 0 && <div className="flex justify-between gap-4 font-semibold"><span>Express surcharge</span><span>€{(draft.expressSurchargeCents / 100).toFixed(2)}</span></div>}
+                <div className="flex justify-between gap-4 border-t border-amber-200 pt-2 font-bold"><span>Total paid</span><span>€{(draft.totalCents / 100).toFixed(2)}</span></div>
+              </div>
             )}
           </div>
         )}

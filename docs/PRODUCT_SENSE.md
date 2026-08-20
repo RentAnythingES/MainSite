@@ -103,6 +103,21 @@ Partnership claims must stay factual. Do not imply endorsement, exclusivity, rev
 3. **Savings** — Rent vs buy, especially for short stays
 4. **Local expertise** — We know Valencia, we'll help you plan
 
+### Delivery promise
+
+The delivery promise must always match the service the customer pays for. Customers
+choose their requested Valencia date and time; the booking system assigns the service:
+
+- Same-day delivery with at least 6 hours of lead time, during configured operating
+  hours, is paid Express delivery with the surcharge shown separately.
+- Delivery on a later calendar date needs at least 12 hours of rolling lead time and
+  is paid Standard delivery.
+- Shorter-notice, closed-day, out-of-hours, or disabled-zone requests go to WhatsApp
+  for manual confirmation. They must not create a payment session or inventory hold.
+
+Never silently move a requested delivery to the next day or display Standard while
+the customer believes they are buying same-day Express.
+
 ## Brand Voice
 **Friendly + Trustworthy.** We talk to families, elderly, and nomads — people who want a caring, helpful service that goes the extra mile. Not corporate. Not salesy. Like a knowledgeable friend who lives in Valencia.
 

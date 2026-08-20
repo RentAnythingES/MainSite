@@ -9,7 +9,7 @@ const PICKUP_LOCATION_FALLBACK_SELECT =
   "id, slug, name, address, city, pickup_instructions, opening_hours, sort_order";
 
 const SERVICE_ZONE_SELECT =
-  "id, slug, name, city, description, customer_instructions, internal_notes, lead_time_hours, same_day_cutoff, delivery_window, collection_window, delivery_fee_cents, collection_fee_cents, roundtrip_fee_cents, express_surcharge_cents, minimum_order_cents, automatic_checkout_enabled, sort_order";
+  "id, slug, name, city, description, customer_instructions, internal_notes, lead_time_hours, same_day_cutoff, automatic_express_enabled, express_min_lead_hours, delivery_operating_hours, delivery_window, collection_window, delivery_fee_cents, collection_fee_cents, roundtrip_fee_cents, express_surcharge_cents, minimum_order_cents, automatic_checkout_enabled, sort_order";
 const PUBLIC_SERVICE_ZONE_SELECT =
   "id, slug, name, city, description, customer_instructions, lead_time_hours, same_day_cutoff, delivery_window, collection_window, delivery_fee_cents, collection_fee_cents, roundtrip_fee_cents, express_surcharge_cents, minimum_order_cents, automatic_checkout_enabled, sort_order";
 const SERVICE_ZONE_FALLBACK_SELECT =

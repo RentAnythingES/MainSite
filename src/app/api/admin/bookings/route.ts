@@ -10,6 +10,7 @@ import {
   getFulfillmentAmendmentUrl,
   isMissingFulfillmentAmendmentsTable,
 } from "@/lib/fulfillment-amendments";
+import { getStoredFulfillmentFeeBreakdown } from "@/lib/booking-v2";
 
 /**
  * GET /api/admin/bookings — List all bookings with product info
@@ -168,6 +169,12 @@ export async function GET(request: NextRequest) {
 
     const enrichedBookings = bookings.map((booking) => ({
       ...booking,
+      fulfillment_fee_breakdown: getStoredFulfillmentFeeBreakdown(
+        booking.pricing_snapshot,
+        Number(booking.delivery_fee_cents || 0),
+        Number(booking.collection_fee_cents || 0),
+        booking.delivery_type === "express" ? "express" : "standard",
+      ),
       pickup_location: booking.pickup_location_id
         ? pickupLocationById.get(booking.pickup_location_id as string) || null
         : null,

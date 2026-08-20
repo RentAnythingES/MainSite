@@ -14,6 +14,19 @@ export type BookingStatus =
 
 export type DeliveryType = "standard" | "express";
 export type FulfillmentMode = "customer_pickup" | "delivery_only" | "delivery_and_collection";
+export type OperatingDay =
+  | "monday"
+  | "tuesday"
+  | "wednesday"
+  | "thursday"
+  | "friday"
+  | "saturday"
+  | "sunday";
+export interface OperatingHoursWindow {
+  open: string;
+  close: string;
+}
+export type WeeklyOperatingHours = Record<OperatingDay, OperatingHoursWindow | null>;
 export type BookingDraftStatus = "draft" | "checkout_created" | "paid" | "expired" | "cancelled";
 export type BookingPaymentEventType =
   | "payment"
@@ -319,6 +332,9 @@ interface ServiceZoneRow {
   internal_notes: string | null;
   lead_time_hours: number;
   same_day_cutoff: string | null;
+  automatic_express_enabled: boolean;
+  express_min_lead_hours: number;
+  delivery_operating_hours: WeeklyOperatingHours;
   delivery_window: string | null;
   collection_window: string | null;
   confirmation_template: string | null;

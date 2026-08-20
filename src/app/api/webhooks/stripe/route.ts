@@ -9,6 +9,8 @@ import { getIncidentErrorMessage, recordSystemIncident } from "@/lib/system-inci
 import { buildGoogleCalendarUrl, buildGoogleMapsUrl } from "@/lib/calendar-links";
 import { sendBookingPaidWhatsAppNotification } from "@/lib/whatsapp";
 import { sendBookingPaidTelegramNotification } from "@/lib/telegram";
+import { getStoredFulfillmentFeeBreakdown } from "@/lib/booking-v2";
+import { formatValenciaDateTime } from "@/lib/fulfillment-policy";
 import Stripe from "stripe";
 
 /**
@@ -540,8 +542,14 @@ async function handleDraftCheckoutCompleted(
       : deliveryZone?.name) ||
     undefined;
 
-  const startDate = bookingDraft.rental_start_at.slice(0, 10);
-  const endDate = bookingDraft.rental_end_at.slice(0, 10);
+  const startDate = formatValenciaDateTime(new Date(bookingDraft.rental_start_at)).date;
+  const endDate = formatValenciaDateTime(new Date(bookingDraft.rental_end_at)).date;
+  const fulfillmentFees = getStoredFulfillmentFeeBreakdown(
+    bookingDraft.pricing_snapshot,
+    bookingDraft.delivery_fee_cents,
+    bookingDraft.collection_fee_cents,
+    bookingDraft.delivery_type,
+  );
 
   const { data: booking, error: bookingError } = await supabase
     .from("bookings")
@@ -662,12 +670,16 @@ async function handleDraftCheckoutCompleted(
     quantity: bookingDraft.quantity,
     startDate,
     endDate,
+    rentalStartAt: bookingDraft.rental_start_at,
+    rentalEndAt: bookingDraft.rental_end_at,
     rentalDays: bookingDraft.rental_days,
     totalCents: bookingDraft.total_cents,
     deliveryAddress: bookingDraft.delivery_address || bookingDraft.collection_address || "Customer pickup",
-    deliveryType: "standard",
+    deliveryType: bookingDraft.delivery_type,
     fulfillmentMode: bookingDraft.fulfillment_mode,
     fulfillmentLabel: fulfillmentDisplayLabel,
+    fulfillmentBaseFeeCents: fulfillmentFees.baseFeeCents,
+    expressSurchargeCents: fulfillmentFees.expressSurchargeCents,
     customerInstructions,
     internalNotes: [internalNotes, bookingDraft.custom_internal_notes].filter(Boolean).join("\n") || null,
     deliveryWindow: deliveryZone?.delivery_window || null,
@@ -692,7 +704,7 @@ async function handleDraftCheckoutCompleted(
     startDate,
     endDate,
     totalCents: bookingDraft.total_cents,
-    fulfillmentLabel: fulfillmentDisplayLabel || bookingDraft.fulfillment_mode,
+    fulfillmentLabel: `${bookingDraft.delivery_type === "express" ? "Express" : "Standard"} · ${fulfillmentDisplayLabel || bookingDraft.fulfillment_mode}`,
     deliveryAddress: bookingDraft.delivery_address || bookingDraft.collection_address || "Customer pickup",
   });
 
@@ -706,7 +718,7 @@ async function handleDraftCheckoutCompleted(
     startDate,
     endDate,
     totalCents: bookingDraft.total_cents,
-    fulfillmentLabel: fulfillmentDisplayLabel || bookingDraft.fulfillment_mode,
+    fulfillmentLabel: `${bookingDraft.delivery_type === "express" ? "Express" : "Standard"} · ${fulfillmentDisplayLabel || bookingDraft.fulfillment_mode}`,
     deliveryAddress: bookingDraft.delivery_address || bookingDraft.collection_address || "Customer pickup",
   });
 

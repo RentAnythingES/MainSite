@@ -121,6 +121,12 @@ interface Booking {
   delivery_fee_cents?: number | null;
   subtotal_cents?: number | null;
   per_day_cents?: number | null;
+  delivery_type?: "standard" | "express" | null;
+  fulfillment_fee_breakdown?: {
+    baseFeeCents: number;
+    expressSurchargeCents: number;
+    totalFeeCents: number;
+  };
   stripe_checkout_session_id?: string | null;
   stripe_payment_intent_id?: string | null;
   stripe_deposit_intent_id?: string | null;
@@ -248,7 +254,8 @@ export default function AdminBookingsPage() {
   }, [fetchBookings]);
 
   useEffect(() => {
-    setCalendarDetailExpanded(true);
+    const timeoutId = window.setTimeout(() => setCalendarDetailExpanded(true), 0);
+    return () => window.clearTimeout(timeoutId);
   }, [selectedCalendarBookingId]);
 
   const updateStatus = async (bookingId: string, newStatus: string) => {
@@ -703,7 +710,18 @@ export default function AdminBookingsPage() {
                       </div>
                       <div>
                         <p className="text-xs text-neutral-500 mb-1">Fulfillment</p>
-                        <p className="text-sm text-white">{formatFulfillmentMode(selectedBooking.fulfillment_mode)}</p>
+                        <div className="flex flex-wrap items-center gap-2">
+                          <p className="text-sm text-white">{formatFulfillmentMode(selectedBooking.fulfillment_mode)}</p>
+                          {selectedBooking.fulfillment_mode !== "customer_pickup" && (
+                            <span className={`rounded-full px-2 py-0.5 text-[11px] font-bold uppercase tracking-wide ${
+                              selectedBooking.delivery_type === "express"
+                                ? "bg-amber-500/20 text-amber-300 ring-1 ring-amber-400/30"
+                                : "bg-teal-500/15 text-teal-300"
+                            }`}>
+                              {selectedBooking.delivery_type === "express" ? "Express · urgent" : "Standard"}
+                            </span>
+                          )}
+                        </div>
                         {selectedBooking.fulfillment_mode === "customer_pickup" ? (
                           <>
                             <p className="text-sm text-neutral-300">{selectedBooking.pickup_location?.name || "Pickup location not set"}</p>
@@ -796,9 +814,15 @@ export default function AdminBookingsPage() {
                           <span className="text-neutral-300">{formatMoney(selectedBooking.subtotal_cents)}</span>
                         </div>
                         <div className="flex justify-between gap-3">
-                          <span className="text-neutral-500">Delivery</span>
-                          <span className="text-neutral-300">{formatMoney(selectedBooking.delivery_fee_cents)}</span>
+                          <span className="text-neutral-500">Fulfillment</span>
+                          <span className="text-neutral-300">{formatMoney(selectedBooking.fulfillment_fee_breakdown?.baseFeeCents)}</span>
                         </div>
+                        {(selectedBooking.fulfillment_fee_breakdown?.expressSurchargeCents || 0) > 0 && (
+                          <div className="flex justify-between gap-3 text-amber-300">
+                            <span>Express surcharge</span>
+                            <span>{formatMoney(selectedBooking.fulfillment_fee_breakdown?.expressSurchargeCents)}</span>
+                          </div>
+                        )}
                         <div className="flex justify-between gap-3 font-semibold">
                           <span className="text-neutral-400">Amount paid</span>
                           <span className="text-white">{formatMoney(selectedBooking.total_cents)}</span>
@@ -836,6 +860,11 @@ export default function AdminBookingsPage() {
                     <span className={`text-xs px-2 py-0.5 rounded-full font-medium capitalize ${STATUS_COLORS[booking.status] || ""}`}>
                       {booking.status}
                     </span>
+                    {booking.delivery_type === "express" && (
+                      <span className="rounded-full bg-amber-500/20 px-2 py-0.5 text-[11px] font-bold uppercase tracking-wide text-amber-300 ring-1 ring-amber-400/30">
+                        Express · urgent
+                      </span>
+                    )}
                   </div>
                   <p className="text-sm text-neutral-400 truncate">
                     {booking.customer_name} · {booking.quantity > 1 ? `${booking.quantity} × ` : ""}{booking.product?.name || "Unknown"}
@@ -876,7 +905,18 @@ export default function AdminBookingsPage() {
                     </div>
                     <div>
                       <p className="text-xs text-neutral-500 mb-1">Fulfillment</p>
-                      <p className="text-sm text-white">{formatFulfillmentMode(booking.fulfillment_mode)}</p>
+                      <div className="flex flex-wrap items-center gap-2">
+                        <p className="text-sm text-white">{formatFulfillmentMode(booking.fulfillment_mode)}</p>
+                        {booking.fulfillment_mode !== "customer_pickup" && (
+                          <span className={`rounded-full px-2 py-0.5 text-[11px] font-bold uppercase tracking-wide ${
+                            booking.delivery_type === "express"
+                              ? "bg-amber-500/20 text-amber-300 ring-1 ring-amber-400/30"
+                              : "bg-teal-500/15 text-teal-300"
+                          }`}>
+                            {booking.delivery_type === "express" ? "Express · urgent" : "Standard"}
+                          </span>
+                        )}
+                      </div>
                       {booking.fulfillment_mode === "customer_pickup" ? (
                         <>
                           <p className="text-sm text-neutral-300">{booking.pickup_location?.name || "Pickup location not set"}</p>
@@ -1049,9 +1089,15 @@ export default function AdminBookingsPage() {
                           <span className="text-neutral-300">{formatMoney(booking.subtotal_cents)}</span>
                         </div>
                         <div className="flex justify-between gap-3">
-                          <span className="text-neutral-500">Delivery</span>
-                          <span className="text-neutral-300">{formatMoney(booking.delivery_fee_cents)}</span>
+                          <span className="text-neutral-500">Fulfillment</span>
+                          <span className="text-neutral-300">{formatMoney(booking.fulfillment_fee_breakdown?.baseFeeCents)}</span>
                         </div>
+                        {(booking.fulfillment_fee_breakdown?.expressSurchargeCents || 0) > 0 && (
+                          <div className="flex justify-between gap-3 text-amber-300">
+                            <span>Express surcharge</span>
+                            <span>{formatMoney(booking.fulfillment_fee_breakdown?.expressSurchargeCents)}</span>
+                          </div>
+                        )}
                         <div className="flex justify-between gap-3 font-semibold">
                           <span className="text-neutral-400">Total</span>
                           <span className="text-white">{formatMoney(booking.total_cents)}</span>

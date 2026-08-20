@@ -4,8 +4,7 @@ import { useState, useMemo, useEffect } from "react";
 import type { Product } from "@/data/products";
 import { trackBookingEvent } from "@/lib/analytics";
 import GooglePlacesAddressInput from "@/components/GooglePlacesAddressInput";
-import { buildGoogleCalendarUrl, buildGoogleMapsUrl } from "@/lib/calendar-links";
-import { requestBrowserNotificationPermission, showBookingPushNotification } from "@/lib/push-notifications";
+import { requestBrowserNotificationPermission } from "@/lib/push-notifications";
 import {
   type ActiveCheckout,
   clearActiveCheckout,
@@ -74,6 +73,14 @@ const labels = {
     free: "Free",
     nextDay: "Next day",
     sameDay: "Same day",
+    derivedService: "Delivery service",
+    standardDerived: "Standard delivery",
+    expressDerived: "Same-day Express delivery",
+    valenciaTime: "Valencia time",
+    expressSurcharge: "Express surcharge",
+    manualTitle: "Let us confirm this timing",
+    manualHelp: "Message us on WhatsApp and we’ll confirm the quickest available option.",
+    manualPrice: "No payment or inventory hold will be created until we confirm it with you.",
     total: "Total",
     checkAvailability: "Check Availability",
     checking: "Checking...",
@@ -137,6 +144,14 @@ const labels = {
     free: "Gratis",
     nextDay: "Día siguiente",
     sameDay: "Mismo día",
+    derivedService: "Servicio de entrega",
+    standardDerived: "Entrega estándar",
+    expressDerived: "Entrega exprés el mismo día",
+    valenciaTime: "hora de Valencia",
+    expressSurcharge: "Suplemento exprés",
+    manualTitle: "Confirmemos este horario",
+    manualHelp: "Escríbenos por WhatsApp y confirmaremos la opción más rápida disponible.",
+    manualPrice: "No se creará ningún pago ni bloqueo de inventario hasta que lo confirmemos contigo.",
     total: "Total",
     checkAvailability: "Comprobar Disponibilidad",
     checking: "Comprobando...",
@@ -175,6 +190,25 @@ const labels = {
   },
 };
 
+const policyMessages = {
+  en: {
+    same_day_too_soon: "This same-day delivery is less than 6 hours away and needs confirmation.",
+    future_date_too_soon: "This delivery is less than 12 hours away and needs confirmation.",
+    outside_operating_hours: "This time is outside our automatic delivery hours (09:00-20:00 Valencia time).",
+    closed_day: "Automatic delivery is closed for this day.",
+    express_disabled: "Same-day delivery needs confirmation for this area.",
+    policy_unconfigured: "Our team needs to confirm this delivery timing.",
+  },
+  es: {
+    same_day_too_soon: "Esta entrega el mismo día está a menos de 6 horas y necesita confirmación.",
+    future_date_too_soon: "Esta entrega está a menos de 12 horas y necesita confirmación.",
+    outside_operating_hours: "Este horario está fuera de nuestras horas de entrega automática (09:00-20:00, hora de Valencia).",
+    closed_day: "La entrega automática está cerrada para este día.",
+    express_disabled: "La entrega el mismo día necesita confirmación para esta zona.",
+    policy_unconfigured: "Nuestro equipo necesita confirmar este horario de entrega.",
+  },
+};
+
 const CHECKOUT_REQUEST_TIMEOUT_MS = 20_000;
 
 async function fetchWithTimeout(input: RequestInfo | URL, init: RequestInit) {
@@ -191,6 +225,28 @@ async function fetchWithTimeout(input: RequestInfo | URL, init: RequestInit) {
 type BookingStep = "dates" | "form" | "success";
 type FulfillmentMode = "customer_pickup" | "delivery_only" | "delivery_and_collection";
 type DeliveryOption = "standard" | "express";
+type PolicyDecision = "standard_checkout" | "express_checkout" | "manual_confirmation" | "invalid";
+
+interface FulfillmentPolicyResponse {
+  decision: PolicyDecision;
+  deliveryType: DeliveryOption | null;
+  reason: string;
+  leadTimeMinutes: number | null;
+  fees: {
+    baseFeeCents: number;
+    expressSurchargeCents: number;
+    totalFeeCents: number;
+  };
+  requested: {
+    startAt: string;
+    endAt: string;
+    startDate: string;
+    startTime: string;
+    endDate: string;
+    endTime: string;
+    timeZone: "Europe/Madrid";
+  } | null;
+}
 
 interface ServiceZoneOption {
   id: string;
@@ -228,6 +284,8 @@ interface ServerQuote {
   rentalSubtotalCents: number;
   deliveryFeeCents: number;
   collectionFeeCents: number;
+  fulfillmentBaseFeeCents: number;
+  expressSurchargeCents: number;
   totalCents: number;
 }
 
@@ -266,11 +324,12 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
   const [endTime, setEndTime] = useState("09:00");
   const [quantity, setQuantity] = useState(1);
   const [deliveryOption, setDeliveryOption] = useState<DeliveryOption>("standard");
+  const [fulfillmentPolicy, setFulfillmentPolicy] = useState<FulfillmentPolicyResponse | null>(null);
   const [fulfillmentMode, setFulfillmentMode] = useState<FulfillmentMode>("delivery_and_collection");
   const [step, setStep] = useState<BookingStep>("dates");
 
   // Availability
-  const [availabilityStatus, setAvailabilityStatus] = useState<"idle" | "checking" | "available" | "unavailable">("idle");
+  const [availabilityStatus, setAvailabilityStatus] = useState<"idle" | "checking" | "available" | "manual" | "unavailable">("idle");
   const [bookingError, setBookingError] = useState<"none" | "availability" | "checkout">("none");
   const [availabilityReason, setAvailabilityReason] = useState("");
   const [serviceZones, setServiceZones] = useState<ServiceZoneOption[]>([]);
@@ -294,8 +353,8 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
   const [billingAddress, setBillingAddress] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [activeCheckout, setActiveCheckout] = useState<ActiveCheckout | null>(null);
-  const [calendarLink, setCalendarLink] = useState<string | null>(null);
-  const [mapsLink, setMapsLink] = useState<string | null>(null);
+  const [calendarLink] = useState<string | null>(null);
+  const [mapsLink] = useState<string | null>(null);
   const [cancellingCheckout, setCancellingCheckout] = useState(false);
   const [bookingRef] = useState("");
   const selectedPickupLocation = pickupLocations.find((location) => location.id === pickupLocationId);
@@ -319,30 +378,17 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
       selectedCollectionZone,
     );
     const deliveryFee = deliveryFeeCents / 100;
+    const fulfillmentBaseFee = calculateFulfillmentFeeCents(
+      fulfillmentMode,
+      "standard",
+      selectedDeliveryZone,
+      selectedCollectionZone,
+    ) / 100;
+    const expressSurcharge = Math.max(0, deliveryFee - fulfillmentBaseFee);
     const total = subtotal + deliveryFee;
 
-    return { days, perDay: tier.perDay, subtotal, subtotalBeforeDiscount: subtotal, deliveryFee, total, quantityDiscount: 0 };
+    return { days, perDay: tier.perDay, subtotal, subtotalBeforeDiscount: subtotal, deliveryFee, fulfillmentBaseFee, expressSurcharge, total, quantityDiscount: 0 };
   }, [startDate, endDate, deliveryOption, fulfillmentMode, product.pricing, quantity, selectedDeliveryZone, selectedCollectionZone]);
-
-  const deliveryOptionFees = useMemo(
-    () => ({
-      standard:
-        calculateFulfillmentFeeCents(
-          fulfillmentMode,
-          "standard",
-          selectedDeliveryZone,
-          selectedCollectionZone,
-        ) / 100,
-      express:
-        calculateFulfillmentFeeCents(
-          fulfillmentMode,
-          "express",
-          selectedDeliveryZone,
-          selectedCollectionZone,
-        ) / 100,
-    }),
-    [fulfillmentMode, selectedDeliveryZone, selectedCollectionZone],
-  );
 
   const displayPricing = useMemo(() => {
     if (!serverQuote) {
@@ -355,6 +401,8 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
       subtotal: serverQuote.rentalSubtotalCents / 100,
       subtotalBeforeDiscount: (serverQuote.unitRentalSubtotalCents * serverQuote.quantity) / 100,
       deliveryFee: (serverQuote.deliveryFeeCents + serverQuote.collectionFeeCents) / 100,
+      fulfillmentBaseFee: serverQuote.fulfillmentBaseFeeCents / 100,
+      expressSurcharge: serverQuote.expressSurchargeCents / 100,
       total: serverQuote.totalCents / 100,
       quantityDiscount: serverQuote.quantityDiscountCents / 100,
     };
@@ -375,11 +423,12 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
 
   useEffect(() => {
     const frameId = window.requestAnimationFrame(() => {
-      const tomorrow = addDays(new Date(), 1);
+      const today = new Date();
+      const tomorrow = addDays(today, 1);
       const initialStartDate = formatDate(tomorrow);
       const initialEndDate = formatDate(addDays(tomorrow, 3));
 
-      setMinimumStartDate(initialStartDate);
+      setMinimumStartDate(formatDate(today));
       setStartDate((current) => current || initialStartDate);
       setEndDate((current) => current || initialEndDate);
     });
@@ -436,9 +485,11 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
       setBookingError("none");
       setAvailabilityReason("");
       setServerQuote(null);
+      setFulfillmentPolicy(null);
+      setDeliveryOption("standard");
     }, 0);
     return () => window.clearTimeout(timeoutId);
-  }, [startDate, startTime, endDate, endTime, quantity, fulfillmentMode, deliveryOption, deliveryZoneId, collectionZoneId, pickupLocationId]);
+    }, [startDate, startTime, endDate, endTime, quantity, fulfillmentMode, deliveryZoneId, collectionZoneId, pickupLocationId]);
 
   const checkAvailability = async () => {
     setAvailabilityStatus("checking");
@@ -455,8 +506,8 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
         slug: product.slug,
         start: startDate,
         end: endDate,
-        startAt: combineDateTime(startDate, startTime),
-        endAt: combineDateTime(endDate, endTime),
+        startTime,
+        endTime,
         mode: fulfillmentMode,
         quantity: String(quantity),
       });
@@ -464,14 +515,19 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
       if (deliveryZoneId) params.set("deliveryZoneId", deliveryZoneId);
       if (collectionZoneId) params.set("collectionZoneId", collectionZoneId);
       if (pickupLocationId) params.set("pickupLocationId", pickupLocationId);
-      params.set("deliveryType", deliveryOption);
       if (activeCheckoutMatchesSelection && activeCheckout) {
         params.set("draftId", activeCheckout.draftId);
       }
 
       const res = await fetch(`/api/availability?${params.toString()}`, { cache: "no-store" });
       const data = await res.json();
-      setAvailabilityReason(data.availabilityReason || "");
+      const policy = data.policy as FulfillmentPolicyResponse | null;
+      setFulfillmentPolicy(policy || null);
+      if (policy?.deliveryType) setDeliveryOption(policy.deliveryType);
+      const localizedPolicyMessage = policy
+        ? policyMessages[locale][policy.reason as keyof typeof policyMessages.en] || t.manualHelp
+        : "";
+      setAvailabilityReason(localizedPolicyMessage || data.error || data.availabilityReason || "");
 
       if (Array.isArray(data.serviceZones)) {
         setServiceZones(data.serviceZones);
@@ -499,6 +555,15 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
           fulfillmentMode,
           totalCents: data.quote?.totalCents,
           quantity,
+        });
+      } else if (policy?.decision === "manual_confirmation") {
+        setAvailabilityStatus("manual");
+        setBookingError("none");
+        trackBookingEvent("fulfillment_manual_confirmation", {
+          productSlug: product.slug,
+          fulfillmentMode,
+          reason: policy.reason,
+          leadTimeMinutes: policy.leadTimeMinutes,
         });
       } else {
         setAvailabilityStatus("unavailable");
@@ -573,10 +638,11 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
           customerName: name,
           customerEmail: email,
           customerPhone: phone || null,
-          startAt: combineDateTime(startDate, startTime),
-          endAt: combineDateTime(endDate, endTime),
+          startDate,
+          startTime,
+          endDate,
+          endTime,
           fulfillmentMode,
-          deliveryType: deliveryOption,
           pickupLocationId: fulfillmentMode === "customer_pickup" ? selectedPickupLocationId : null,
           deliveryZoneId: fulfillmentMode !== "customer_pickup" ? selectedDeliveryZoneId : null,
           collectionZoneId: fulfillmentMode === "delivery_and_collection" ? selectedCollectionZoneId : null,
@@ -596,6 +662,21 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
 
       if (!draftRes.ok || !draftData.draftId) {
         await releaseCheckout(attemptedDraftId).catch(() => {});
+        const draftPolicy = draftData.policy as FulfillmentPolicyResponse | null;
+        if (draftPolicy) {
+          setFulfillmentPolicy(draftPolicy);
+          if (draftPolicy.deliveryType) setDeliveryOption(draftPolicy.deliveryType);
+        }
+        if (draftPolicy?.decision === "manual_confirmation") {
+          setStep("dates");
+          setAvailabilityStatus("manual");
+          setAvailabilityReason(
+            policyMessages[locale][draftPolicy.reason as keyof typeof policyMessages.en] || t.manualHelp,
+          );
+          setBookingError("none");
+          setSubmitting(false);
+          return;
+        }
         const isAvailabilityConflict = draftRes.status === 409;
         setAvailabilityStatus(isAvailabilityConflict ? "unavailable" : "available");
         setBookingError(isAvailabilityConflict ? "availability" : "checkout");
@@ -609,6 +690,11 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
         });
         return;
       }
+
+      const draftPolicy = draftData.policy as FulfillmentPolicyResponse | null;
+      const resolvedDeliveryType = draftPolicy?.deliveryType || "standard";
+      if (draftPolicy) setFulfillmentPolicy(draftPolicy);
+      setDeliveryOption(resolvedDeliveryType);
 
       trackBookingEvent("booking_draft_created", {
         productSlug: product.slug,
@@ -634,7 +720,7 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
           subtotalCents: Math.round(pricing.subtotal * 100),
           deliveryFeeCents: Math.round(pricing.deliveryFee * 100),
           totalCents: Math.round(pricing.total * 100),
-          deliveryType: deliveryOption,
+          deliveryType: resolvedDeliveryType,
           deliveryAddress: address,
           deliveryCity: "valencia",
           deliveryNotes: notes || null,
@@ -670,7 +756,18 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
         window.location.assign(data.checkoutUrl);
       } else {
         await releaseCheckout(draftData.draftId).catch(() => {});
-        setBookingError("checkout");
+        const checkoutPolicy = data.policy as FulfillmentPolicyResponse | null;
+        if (checkoutPolicy?.decision === "manual_confirmation") {
+          setStep("dates");
+          setFulfillmentPolicy(checkoutPolicy);
+          setAvailabilityStatus("manual");
+          setAvailabilityReason(
+            policyMessages[locale][checkoutPolicy.reason as keyof typeof policyMessages.en] || t.manualHelp,
+          );
+          setBookingError("none");
+        } else {
+          setBookingError("checkout");
+        }
         trackBookingEvent("checkout_redirect_failed_whatsapp", {
           productSlug: product.slug,
           fulfillmentMode,
@@ -691,7 +788,10 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
     }
   };
 
-  const whatsappMessage = `Hi! I'd like to book:\n\n📦 ${quantity} × ${product.name}\n📅 ${formatDisplayDate(new Date(startDate), locale)} ${startTime} → ${formatDisplayDate(new Date(endDate), locale)} ${endTime} (${displayPricing.days} ${displayPricing.days === 1 ? t.day : t.days})\n💰 €${displayPricing.total.toFixed(2)} total\n🚚 ${deliveryOption === "express" ? t.express : t.standard} ${t.delivery.toLowerCase()}\n\nPlease confirm availability!`;
+  const whatsappService = fulfillmentPolicy?.decision === "manual_confirmation"
+    ? "Delivery timing needs confirmation"
+    : `${deliveryOption === "express" ? t.express : t.standard} ${t.delivery.toLowerCase()}`;
+  const whatsappMessage = `Hi! I'd like to book:\n\n📦 ${quantity} × ${product.name}\n📅 ${formatDisplayDate(new Date(startDate), locale)} ${startTime} → ${formatDisplayDate(new Date(endDate), locale)} ${endTime} (${displayPricing.days} ${displayPricing.days === 1 ? t.day : t.days})\n🚚 ${whatsappService}\n\nPlease confirm availability and price.`;
   const whatsappUrl = `https://wa.me/34684708013?text=${encodeURIComponent(whatsappMessage)}`;
 
   // Success state
@@ -798,8 +898,14 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
             )}
             <div className="flex justify-between text-sm">
               <span className="text-neutral-500">{t.delivery}</span>
-              <span className="font-medium">{displayPricing.deliveryFee === 0 ? <span className="text-green-600">{t.free}</span> : `€${displayPricing.deliveryFee}`}</span>
+              <span className="font-medium">{displayPricing.fulfillmentBaseFee === 0 ? <span className="text-green-600">{t.free}</span> : `€${displayPricing.fulfillmentBaseFee.toFixed(2)}`}</span>
             </div>
+            {displayPricing.expressSurcharge > 0 && (
+              <div className="flex justify-between text-sm text-amber-700">
+                <span>{t.expressSurcharge}</span>
+                <span className="font-medium">€{displayPricing.expressSurcharge.toFixed(2)}</span>
+              </div>
+            )}
             <div className="flex justify-between text-base font-bold pt-2 border-t border-border">
               <span>{t.total}</span>
               <span className="text-brand">€{displayPricing.total}</span>
@@ -1055,46 +1161,41 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
         </div>
       )}
 
-      {/* Delivery Option */}
       {fulfillmentMode !== "customer_pickup" && (
-      <div className="mb-4">
-        <p className="text-xs font-medium text-neutral-500 mb-2">{t.delivery}</p>
-        <div className="grid grid-cols-2 gap-2">
-          <button
-            type="button"
-            onClick={() => setDeliveryOption("standard")}
-            className={`p-3 rounded-lg border text-sm text-left transition-colors ${
-              deliveryOption === "standard"
-                ? "border-brand bg-brand/5 text-brand"
-                : "border-border hover:border-neutral-300"
-            }`}
-            id="delivery-standard"
-          >
-            <p className="font-semibold">{t.standard}</p>
-            <p className="text-xs text-neutral-500">
-              {deliveryOptionFees.standard === 0 ? t.free : `€${deliveryOptionFees.standard}`} · {t.nextDay}
-            </p>
-          </button>
-          <button
-            type="button"
-            onClick={() => setDeliveryOption("express")}
-            className={`p-3 rounded-lg border text-sm text-left transition-colors ${
-              deliveryOption === "express"
-                ? "border-brand bg-brand/5 text-brand"
-                : "border-border hover:border-neutral-300"
-            }`}
-            id="delivery-express"
-          >
-            <p className="font-semibold">{t.express}</p>
-            <p className="text-xs text-neutral-500">
-              {deliveryOptionFees.express === 0 ? t.free : `€${deliveryOptionFees.express}`} · {t.sameDay}
-            </p>
-          </button>
+        <div className="mb-4" aria-live="polite" aria-atomic="true">
+          <p className="text-xs font-medium text-neutral-500 mb-2">{t.derivedService}</p>
+          {fulfillmentPolicy?.decision === "standard_checkout" || fulfillmentPolicy?.decision === "express_checkout" ? (
+            <div className="rounded-xl border border-brand/30 bg-brand/5 p-3">
+              <p className="text-sm font-semibold text-brand">
+                {fulfillmentPolicy.deliveryType === "express" ? t.expressDerived : t.standardDerived}
+              </p>
+              <p className="mt-1 text-xs text-neutral-600">
+                {formatDisplayDate(new Date(`${startDate}T12:00:00`), locale)} {startTime} · {t.valenciaTime}
+              </p>
+              {fulfillmentPolicy.fees.expressSurchargeCents > 0 && (
+                <p className="mt-1 text-xs font-medium text-amber-700">
+                  {t.expressSurcharge}: €{(fulfillmentPolicy.fees.expressSurchargeCents / 100).toFixed(2)}
+                </p>
+              )}
+            </div>
+          ) : fulfillmentPolicy?.decision === "manual_confirmation" ? (
+            <div className="rounded-xl border border-amber-200 bg-amber-50 p-3">
+              <p className="text-sm font-semibold text-amber-900">{t.manualTitle}</p>
+              <p className="mt-1 text-xs text-amber-800">{availabilityReason || t.manualHelp}</p>
+              <p className="mt-2 text-xs font-medium text-amber-900">{t.manualPrice}</p>
+            </div>
+          ) : (
+            <div className="rounded-xl border border-border bg-neutral-50 p-3 text-xs text-neutral-600">
+              {locale === "es"
+                ? "Comprobaremos el horario y asignaremos automáticamente entrega estándar, exprés o confirmación por WhatsApp."
+                : "We’ll check the timing and automatically assign Standard, Express, or WhatsApp confirmation."}
+            </div>
+          )}
         </div>
-      </div>
       )}
 
       {/* Price Breakdown */}
+      {availabilityStatus !== "manual" && (
       <div className="border-t border-border pt-4 mb-4 space-y-2">
         <div className="flex justify-between text-sm">
           <span className="text-neutral-500">
@@ -1113,18 +1214,25 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
             {fulfillmentMode === "delivery_and_collection" ? t.deliveryCollection : t.delivery}
           </span>
           <span className="font-medium">
-            {displayPricing.deliveryFee === 0 ? (
+            {displayPricing.fulfillmentBaseFee === 0 ? (
               <span className="text-green-600">{t.free}</span>
             ) : (
-              `€${displayPricing.deliveryFee}`
+              `€${displayPricing.fulfillmentBaseFee.toFixed(2)}`
             )}
           </span>
         </div>
+        {displayPricing.expressSurcharge > 0 && (
+          <div className="flex justify-between text-sm text-amber-700">
+            <span>{t.expressSurcharge}</span>
+            <span className="font-medium">€{displayPricing.expressSurcharge.toFixed(2)}</span>
+          </div>
+        )}
         <div className="flex justify-between text-base font-bold pt-2 border-t border-border">
           <span>{t.total}</span>
           <span className="text-brand">€{displayPricing.total}</span>
         </div>
       </div>
+      )}
 
       {/* Availability Status */}
       {availabilityStatus === "available" && (
@@ -1140,6 +1248,12 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
           <p className="text-xs text-amber-700">
             {availabilityReason === "checkout_hold" ? t.temporarilyHeldHelp : t.unavailableHelp}
           </p>
+        </div>
+      )}
+      {availabilityStatus === "manual" && (
+        <div className="bg-amber-50 border border-amber-200 rounded-lg p-3 mb-4">
+          <p className="text-sm text-amber-900 font-semibold mb-1">{t.manualTitle}</p>
+          <p className="text-xs text-amber-800">{availabilityReason || t.manualHelp}</p>
         </div>
       )}
       {bookingError === "checkout" && (
@@ -1176,6 +1290,22 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
         <button disabled className="btn btn-primary btn-lg w-full mb-3 opacity-60">
           {t.checking}
         </button>
+      ) : availabilityStatus === "manual" ? (
+        <a
+          href={whatsappUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={() => trackBookingEvent("whatsapp_clicked_urgent_request", {
+            productSlug: product.slug,
+            fulfillmentMode,
+            reason: fulfillmentPolicy?.reason || "manual_confirmation",
+            leadTimeMinutes: fulfillmentPolicy?.leadTimeMinutes,
+          })}
+          className="btn btn-primary btn-lg w-full mb-3 block text-center"
+          id="booking-whatsapp-cta"
+        >
+          {t.bookWhatsapp}
+        </a>
       ) : availabilityStatus === "available" ? (
         <div className="space-y-2">
           <button

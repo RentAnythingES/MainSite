@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { stripe, isStripeConfigured } from "@/lib/stripe";
 import { createServiceClient } from "@/lib/supabase";
 import { buildGoogleCalendarUrl, buildGoogleMapsUrl } from "@/lib/calendar-links";
+import { getStoredFulfillmentFeeBreakdown } from "@/lib/booking-v2";
 
 function formatDateTime(value?: string | null): string {
   if (!value) return "";
@@ -92,6 +93,22 @@ export async function GET(request: NextRequest) {
     } else {
       fulfillmentStatus = "payment_incomplete";
     }
+    const bookingFees = bookingRecord
+      ? getStoredFulfillmentFeeBreakdown(
+          bookingRecord.pricing_snapshot,
+          Number(bookingRecord.delivery_fee_cents || 0),
+          Number(bookingRecord.collection_fee_cents || 0),
+          bookingRecord.delivery_type === "express" ? "express" : "standard",
+        )
+      : null;
+    const draftFees = draftRecord
+      ? getStoredFulfillmentFeeBreakdown(
+          draftRecord.pricing_snapshot,
+          Number(draftRecord.delivery_fee_cents || 0),
+          Number(draftRecord.collection_fee_cents || 0),
+          draftRecord.delivery_type === "express" ? "express" : "standard",
+        )
+      : null;
 
     return NextResponse.json({
       session: {
@@ -107,6 +124,14 @@ export async function GET(request: NextRequest) {
             status: draftRecord.status,
             expiresAt: draftRecord.expires_at,
             inventoryHoldCount: inventoryBlockCount,
+            startDate: formatDateTime(draftRecord.rental_start_at as string),
+            endDate: formatDateTime(draftRecord.rental_end_at as string),
+            timeZone: "Europe/Madrid",
+            deliveryType: draftRecord.delivery_type || "standard",
+            fulfillmentMode: draftRecord.fulfillment_mode || "delivery_and_collection",
+            fulfillmentBaseFeeCents: draftFees?.baseFeeCents || 0,
+            expressSurchargeCents: draftFees?.expressSurchargeCents || 0,
+            totalCents: draftRecord.total_cents,
           }
         : null,
       booking: bookingRecord
@@ -119,6 +144,11 @@ export async function GET(request: NextRequest) {
             quantity: bookingRecord.quantity || 1,
             startDate: formatDateTime((bookingRecord.rental_start_at as string | null) || bookingRecord.start_date as string),
             endDate: formatDateTime((bookingRecord.rental_end_at as string | null) || bookingRecord.end_date as string),
+            timeZone: "Europe/Madrid",
+            deliveryType: bookingRecord.delivery_type || "standard",
+            fulfillmentMode: bookingRecord.fulfillment_mode || "delivery_and_collection",
+            fulfillmentBaseFeeCents: bookingFees?.baseFeeCents || 0,
+            expressSurchargeCents: bookingFees?.expressSurchargeCents || 0,
             totalCents: bookingRecord.total_cents,
             customerEmail: bookingRecord.customer_email,
             deliveryAddress: bookingRecord.delivery_address || null,
