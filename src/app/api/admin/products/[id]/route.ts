@@ -115,6 +115,35 @@ export async function PUT(
 
       if (error) throw error;
 
+      if (typeof body.image_url === "string") {
+        const { data: primaryImages, error: primaryImageError } = await supabase
+          .from("product_images")
+          .select("id, alt_text, source_url, rights_status")
+          .eq("product_id", id)
+          .eq("is_primary", true)
+          .limit(1);
+        if (primaryImageError) throw primaryImageError;
+
+        const primaryImage = primaryImages?.[0];
+        if (primaryImage) {
+          const { error: updateImageError } = await supabase
+            .from("product_images")
+            .update({ image_url: product.image_url })
+            .eq("id", primaryImage.id);
+          if (updateImageError) throw updateImageError;
+        } else if (product.image_url) {
+          const { error: insertImageError } = await supabase.from("product_images").insert({
+            product_id: id,
+            image_url: product.image_url,
+            alt_text: null,
+            source_url: null,
+            rights_status: "unknown",
+            is_primary: true,
+          });
+          if (insertImageError) throw insertImageError;
+        }
+      }
+
       if (Array.isArray(body.pricing_tiers)) {
         const { error: deletePricingError } = await supabase.from("pricing_tiers").delete().eq("product_id", id);
         if (deletePricingError) throw deletePricingError;
