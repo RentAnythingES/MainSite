@@ -542,8 +542,17 @@ async function handleDraftCheckoutCompleted(
       : deliveryZone?.name) ||
     undefined;
 
-  const startDate = formatValenciaDateTime(new Date(bookingDraft.rental_start_at)).date;
-  const endDate = formatValenciaDateTime(new Date(bookingDraft.rental_end_at)).date;
+  const rentalStartAtDate = new Date(bookingDraft.rental_start_at);
+  const rentalEndAtDate = new Date(bookingDraft.rental_end_at);
+  const startDate = formatValenciaDateTime(rentalStartAtDate).date;
+  let endDate = formatValenciaDateTime(rentalEndAtDate).date;
+
+  // Legacy bookings require end_date > start_date; fall back to rental_days when both timestamps land on the same day.
+  if (endDate <= startDate) {
+    const fallbackEnd = new Date(rentalStartAtDate);
+    fallbackEnd.setDate(fallbackEnd.getDate() + Math.max(1, bookingDraft.rental_days || 1));
+    endDate = formatValenciaDateTime(fallbackEnd).date;
+  }
   const fulfillmentFees = getStoredFulfillmentFeeBreakdown(
     bookingDraft.pricing_snapshot,
     bookingDraft.delivery_fee_cents,
