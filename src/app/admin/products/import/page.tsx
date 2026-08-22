@@ -18,6 +18,35 @@ type PreviewRow = {
   sourceRow?: ImportRow;
 };
 
+type ImportResponse = {
+  error?: string;
+  rows?: PreviewRow[];
+  created?: number;
+  updated?: number;
+  skipped?: number;
+  imported?: number;
+};
+
+async function readImportResponse(response: Response): Promise<ImportResponse> {
+  const responseText = await response.text();
+  const contentType = response.headers.get("content-type") || "";
+
+  if (!contentType.includes("application/json")) {
+    if (responseText.trimStart().startsWith("<")) {
+      throw new Error(
+        `The import service returned an HTML page (${response.status}). Refresh the admin page, sign in again, and try the upload once more.`,
+      );
+    }
+    throw new Error(`The import service returned an unexpected response (${response.status}).`);
+  }
+
+  try {
+    return JSON.parse(responseText) as ImportResponse;
+  } catch {
+    throw new Error(`The import service returned invalid JSON (${response.status}).`);
+  }
+}
+
 function parseCsv(csv: string): ImportRow[] {
   const rows: string[][] = [];
   let row: string[] = [];
@@ -82,7 +111,7 @@ export default function ImportProductsPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ mode: "preview", products: nextRows }),
       });
-      const data = await response.json();
+      const data = await readImportResponse(response);
       if (!response.ok) throw new Error(data.error || "Could not preview this file");
       setPreview(data.rows || []);
     } catch (previewError) {
@@ -114,7 +143,7 @@ export default function ImportProductsPage() {
           method: "POST",
           body: formData,
         });
-        const data = await response.json();
+        const data = await readImportResponse(response);
         if (!response.ok) throw new Error(data.error || "Could not preview this file");
         setPreview(data.rows || []);
         // We need to get the parsed rows for commit
@@ -172,7 +201,7 @@ export default function ImportProductsPage() {
           method: "POST",
           body: formData,
         });
-        const data = await response.json();
+        const data = await readImportResponse(response);
         if (!response.ok) throw new Error(data.error || "Import failed");
         setImportSummary({ created: data.created || 0, updated: data.updated || 0, skipped: data.skipped || 0 });
         const skippedSuffix = (data.skipped || 0) > 0 ? ` ${data.skipped} row${data.skipped === 1 ? "" : "s"} skipped because they had issues.` : "";
@@ -185,7 +214,7 @@ export default function ImportProductsPage() {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ mode: "commit", products: rows }),
         });
-        const data = await response.json();
+        const data = await readImportResponse(response);
         if (!response.ok) throw new Error(data.error || "Import failed");
         setImportSummary({ created: data.created || 0, updated: data.updated || 0, skipped: data.skipped || 0 });
         const skippedSuffix = (data.skipped || 0) > 0 ? ` ${data.skipped} row${data.skipped === 1 ? "" : "s"} skipped because they had issues.` : "";
