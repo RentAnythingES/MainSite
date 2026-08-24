@@ -328,6 +328,12 @@ Staff can prepare a private, expiring fixed-price booking link before a customer
 booked. This is separate from fulfillment amendments: it creates a new rental booking
 rather than changing an existing one.
 
+This is also the staff-approved short-notice path. Custom quotes do not apply the
+public pickup or delivery lead-time policy. The admin form automatically keeps the
+private-link expiry before the rental start, and the API clamps stale later expiry
+values instead of rejecting an otherwise valid near-term quote. Genuine stock,
+calendar-block, and overlapping-hold conflicts still fail closed.
+
 Each quote links exactly one primary catalogue product and quantity to automatic
 inventory. The quote's price lines, customer-visible conditions, delivery details,
 and staff preparation notes are stored as one-off JSON/text snapshots. They never
