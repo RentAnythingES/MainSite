@@ -96,7 +96,7 @@ export function getTelegramBookingConfigurationIssues() {
   return REQUIRED_VARS.filter((name) => !process.env[name]);
 }
 
-export async function sendBookingPaidTelegramNotification(data: BookingPaidTelegramData) {
+async function sendTelegramText(text: string, logLabel: string) {
   const botToken = process.env.TELEGRAM_BOT_TOKEN;
   const chatId = process.env.TELEGRAM_NOTIFY_CHAT_ID;
   const threadId = process.env.TELEGRAM_NOTIFY_THREAD_ID;
@@ -110,7 +110,7 @@ export async function sendBookingPaidTelegramNotification(data: BookingPaidTeleg
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         chat_id: chatId,
-        text: buildMessageText(data),
+        text,
         parse_mode: "HTML",
         disable_web_page_preview: true,
         ...(threadId ? { message_thread_id: Number(threadId) } : {}),
@@ -125,9 +125,47 @@ export async function sendBookingPaidTelegramNotification(data: BookingPaidTeleg
     return { ok: true };
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);
-    console.error("[telegram] Failed to send booking-paid notification", error);
+    console.error(`[telegram] Failed to send ${logLabel} notification`, error);
     return { ok: false, error: message };
   }
+}
+
+export async function sendBookingPaidTelegramNotification(data: BookingPaidTelegramData) {
+  return sendTelegramText(buildMessageText(data), "booking-paid");
+}
+
+export interface DueDateTelegramData {
+  bookingId?: string | null;
+  bookingRef: string;
+  eventType: "delivery" | "pickup";
+  productName: string;
+  customerName: string;
+  customerPhone?: string | null;
+  address: string;
+}
+
+function buildGoogleMapsLink(address: string) {
+  return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`;
+}
+
+function buildDueDateMessageText(data: DueDateTelegramData) {
+  const heading = data.eventType === "delivery" ? "📦 <b>Delivery due today</b>" : "🚚 <b>Pick-up due today</b>";
+  const lines = [
+    heading,
+    `<b>Ref:</b> ${escapeTelegramHtml(data.bookingRef)}`,
+    `<b>Item:</b> ${escapeTelegramHtml(data.productName)}`,
+    `<b>Customer:</b> ${escapeTelegramHtml(data.customerName)}`,
+    data.customerPhone ? `<b>Phone:</b> ${escapeTelegramHtml(data.customerPhone)}` : null,
+    `<b>Address:</b> ${escapeTelegramHtml(data.address)}`,
+    `<b>Map:</b> ${escapeTelegramHtml(buildGoogleMapsLink(data.address))}`,
+    `<b>Admin:</b> ${escapeTelegramHtml(buildAdminUrl(data.bookingId))}`,
+  ].filter(Boolean);
+
+  return lines.join("\n");
+}
+
+export async function sendDueDateTelegramNotification(data: DueDateTelegramData) {
+  return sendTelegramText(buildDueDateMessageText(data), `due-date-${data.eventType}`);
 }
 
 export async function sendTestBookingPaidTelegramNotification() {
