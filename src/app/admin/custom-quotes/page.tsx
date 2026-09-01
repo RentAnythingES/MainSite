@@ -1,6 +1,7 @@
 "use client";
 
 import { FormEvent, useEffect, useMemo, useState } from "react";
+import { resolveCustomQuoteExpiry } from "@/lib/custom-booking-quotes";
 
 type ProductOption = { id: string; name: string; brand: string; stock_total: number; stock_available: number };
 type PickupOption = { id: string; name: string; address: string };
@@ -33,6 +34,17 @@ function localDateTime(daysFromNow: number, hour: number) {
   return new Date(value.getTime() - offset).toISOString().slice(0, 16);
 }
 
+function localDateTimeValue(value: Date) {
+  const offset = value.getTimezoneOffset() * 60_000;
+  return new Date(value.getTime() - offset).toISOString().slice(0, 16);
+}
+
+function shortNoticeSafeExpiry(rentalStartAt: string, requestedExpiresAt?: string) {
+  const start = new Date(rentalStartAt);
+  const requested = requestedExpiresAt ? new Date(requestedExpiresAt) : null;
+  return localDateTimeValue(resolveCustomQuoteExpiry(start, requested));
+}
+
 const money = (cents: number) =>
   new Intl.NumberFormat("en-IE", { style: "currency", currency: "EUR" }).format(cents / 100);
 
@@ -60,7 +72,9 @@ export default function AdminCustomQuotesPage() {
   const [customerPhone, setCustomerPhone] = useState("");
   const [rentalStartAt, setRentalStartAt] = useState(localDateTime(2, 10));
   const [rentalEndAt, setRentalEndAt] = useState(localDateTime(7, 10));
-  const [expiresAt, setExpiresAt] = useState(localDateTime(1, 18));
+  const [expiresAt, setExpiresAt] = useState(() =>
+    shortNoticeSafeExpiry(localDateTime(2, 10), localDateTime(1, 18)),
+  );
   const [fulfillmentMode, setFulfillmentMode] = useState<FulfillmentMode>("delivery_only");
   const [pickupLocationId, setPickupLocationId] = useState("");
   const [deliveryAddress, setDeliveryAddress] = useState("");
@@ -106,11 +120,29 @@ export default function AdminCustomQuotesPage() {
     );
   };
 
+  const updateRentalStart = (value: string) => {
+    setRentalStartAt(value);
+    try {
+      setExpiresAt(shortNoticeSafeExpiry(value, expiresAt));
+      setError("");
+    } catch (caught) {
+      setError(caught instanceof Error ? caught.message : "Choose a valid future rental start");
+    }
+  };
+
   const createQuote = async (event: FormEvent) => {
     event.preventDefault();
-    setSaving(true);
     setError("");
     setMessage("");
+    let resolvedExpiresAt: string;
+    try {
+      resolvedExpiresAt = shortNoticeSafeExpiry(rentalStartAt, expiresAt);
+      setExpiresAt(resolvedExpiresAt);
+    } catch (caught) {
+      setError(caught instanceof Error ? caught.message : "Choose a valid future rental start");
+      return;
+    }
+    setSaving(true);
     const response = await fetch("/api/admin/custom-quotes", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -122,7 +154,7 @@ export default function AdminCustomQuotesPage() {
         customerPhone,
         rentalStartAt: new Date(rentalStartAt).toISOString(),
         rentalEndAt: new Date(rentalEndAt).toISOString(),
-        expiresAt: new Date(expiresAt).toISOString(),
+        expiresAt: new Date(resolvedExpiresAt).toISOString(),
         fulfillmentMode,
         pickupLocationId,
         deliveryAddress,
@@ -201,7 +233,7 @@ export default function AdminCustomQuotesPage() {
           </label>
           <label className="text-sm text-neutral-300">
             Rental starts
-            <input className={inputClass} type="datetime-local" value={rentalStartAt} onChange={(event) => setRentalStartAt(event.target.value)} required />
+            <input className={inputClass} type="datetime-local" value={rentalStartAt} onChange={(event) => updateRentalStart(event.target.value)} required />
           </label>
           <label className="text-sm text-neutral-300">
             Rental ends
@@ -210,6 +242,9 @@ export default function AdminCustomQuotesPage() {
           <label className="text-sm text-neutral-300">
             Quote expires
             <input className={inputClass} type="datetime-local" value={expiresAt} onChange={(event) => setExpiresAt(event.target.value)} required />
+            <span className="mt-1 block text-xs leading-5 text-neutral-500">
+              Automatically kept before the rental start. Short-notice approval does not use the public lead-time rule.
+            </span>
           </label>
           <label className="text-sm text-neutral-300">
             Fulfillment

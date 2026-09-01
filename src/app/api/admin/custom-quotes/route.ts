@@ -7,6 +7,7 @@ import {
   parseCustomQuoteLines,
   parseFulfillmentMode,
   parseQuoteDate,
+  resolveCustomQuoteExpiry,
 } from "@/lib/custom-booking-quotes";
 import { createAdminClient } from "@/lib/supabase-admin";
 
@@ -61,7 +62,9 @@ export async function POST(request: NextRequest) {
     const quantity = Number(body.quantity);
     const rentalStartAt = parseQuoteDate(body.rentalStartAt, "Rental start");
     const rentalEndAt = parseQuoteDate(body.rentalEndAt, "Rental end");
-    const expiresAt = parseQuoteDate(body.expiresAt, "Quote expiry");
+    const requestedExpiresAt = parseQuoteDate(body.expiresAt, "Quote expiry");
+    const now = new Date();
+    const expiresAt = resolveCustomQuoteExpiry(rentalStartAt, requestedExpiresAt, now);
     const fulfillmentMode = parseFulfillmentMode(body.fulfillmentMode);
     const lines = parseCustomQuoteLines(body.lineItems);
     const totalCents = customQuoteTotal(lines);
@@ -71,11 +74,8 @@ export async function POST(request: NextRequest) {
 
     if (!productId) throw new Error("Choose a product");
     if (!Number.isInteger(quantity) || quantity < 1 || quantity > 50) throw new Error("Quantity must be between 1 and 50");
-    if (rentalStartAt.getTime() <= Date.now()) throw new Error("Rental start must be in the future");
+    if (rentalStartAt.getTime() <= now.getTime()) throw new Error("Rental start must be in the future");
     if (rentalEndAt <= rentalStartAt) throw new Error("Rental end must be after the start");
-    if (expiresAt.getTime() <= Date.now() || expiresAt >= rentalStartAt) {
-      throw new Error("Quote expiry must be in the future and before the rental starts");
-    }
     if (fulfillmentMode === "customer_pickup" && !pickupLocationId) {
       throw new Error("Choose a pickup location");
     }

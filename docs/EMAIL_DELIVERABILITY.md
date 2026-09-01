@@ -1,5 +1,5 @@
 # Email Deliverability
-> Last updated: 2026-08-07
+> Last updated: 2026-08-27
 
 ## Current Sending Setup
 
@@ -10,6 +10,11 @@ Environment variables:
 - `RESEND_API_KEY`
 - `FROM_EMAIL` — defaults to `Rent&Roll <bookings@rentandroll.com>`
 - `CONTACT_EMAIL` — defaults to `hello@rentandroll.com`
+
+Resend API keys can be restricted to one sending domain. A verified domain and
+valid DNS records are not sufficient when the deployed key is still scoped to a
+former domain. Domain migrations must explicitly authorize the new domain on the
+existing key or replace `RESEND_API_KEY` in every deployed environment.
 
 Code paths:
 
@@ -40,6 +45,8 @@ Confirmed during the Rent&Roll migration on 2026-08-07:
 
 - Confirm the deployed production environment uses the verified
   `bookings@rentandroll.com` sender.
+- Confirm the deployed `RESEND_API_KEY` is authorized to send from
+  `rentandroll.com`; test the exact production sender, not only DNS verification.
 - Trigger `POST /api/admin/health` from an authenticated admin session and confirm the test email arrives.
 - Confirm booking confirmation and admin notification emails arrive during the controlled test booking.
 
@@ -72,6 +79,12 @@ Booking confirmation emails can include customer-safe invoice PDF links when a
 booking document exists. Refund/cancellation emails can include refund receipt PDF
 links after a successful Stripe refund. These links use document access tokens at
 `/api/documents/[token]/pdf`, not admin routes.
+
+Booking confirmation sends inspect Resend's returned error object, use deterministic
+customer/admin idempotency keys, and fail the Stripe webhook when Resend rejects a
+message. A Stripe retry for an already-created booking retries the confirmation
+instead of skipping it; Resend idempotency prevents normal retries from duplicating
+customer or admin messages.
 
 Admins can resend a single invoice/refund receipt link from `/admin/bookings`. The
 resend route repairs missing/expired customer document access tokens before sending

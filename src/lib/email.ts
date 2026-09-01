@@ -277,7 +277,7 @@ export async function sendBookingConfirmation(data: BookingEmailData): Promise<b
   if (!resend) return false;
 
   try {
-    await resend.emails.send({
+    const customerResult = await resend.emails.send({
       from: FROM,
       to: data.customerEmail,
       subject: `Booking confirmed — ${data.productName} (${data.bookingRef})`,
@@ -292,9 +292,16 @@ export async function sendBookingConfirmation(data: BookingEmailData): Promise<b
         <p style="font-size:15px;color:#374151;line-height:1.6;">If you need to change dates, timing, address, or fulfillment details, just reply to this email or message us on WhatsApp.</p>
         ${button(WHATSAPP_URL, "Message us on WhatsApp", "#25d366")}
       `, `Booking ${data.bookingRef} is confirmed for ${data.productName}.`),
+    }, {
+      idempotencyKey: `booking-confirmation-${data.bookingRef}`,
     });
 
-    await resend.emails.send({
+    if (customerResult.error) {
+      console.error(`[email] Resend rejected customer confirmation for ${data.bookingRef}:`, customerResult.error);
+      return false;
+    }
+
+    const adminResult = await resend.emails.send({
       from: FROM,
       to: TO_ADMIN,
       replyTo: data.customerEmail,
@@ -312,7 +319,14 @@ export async function sendBookingConfirmation(data: BookingEmailData): Promise<b
         ${internalOpsBox(data)}
         ${button(ADMIN_BOOKINGS_URL, "View in admin dashboard")}
       `, `New booking ${data.bookingRef}.`),
+    }, {
+      idempotencyKey: `booking-admin-notification-${data.bookingRef}`,
     });
+
+    if (adminResult.error) {
+      console.error(`[email] Resend rejected admin notification for ${data.bookingRef}:`, adminResult.error);
+      return false;
+    }
 
     console.log(`[email] Booking confirmation sent for ${data.bookingRef}`);
     return true;

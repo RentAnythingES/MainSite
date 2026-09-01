@@ -124,7 +124,7 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session): Promis
   if (paymentIntentId) {
     const { data: existing, error: existingError } = await supabase
       .from("bookings")
-      .select("id")
+      .select("id, booking_ref")
       .eq("stripe_payment_intent_id", paymentIntentId)
       .maybeSingle();
 
@@ -135,7 +135,20 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session): Promis
 
     if (existing) {
       console.log("[webhook] Booking already exists for session:", session.id);
-      return true;
+      return sendBookingConfirmation({
+        bookingRef: (existing as { booking_ref: string }).booking_ref,
+        customerName: meta.customer_name,
+        customerEmail: meta.customer_email || session.customer_email || "",
+        customerPhone: meta.customer_phone || undefined,
+        productName: meta.product_name || "Rental equipment",
+        quantity: parseInt(meta.quantity || "1"),
+        startDate: meta.start_date,
+        endDate: meta.end_date,
+        rentalDays: parseInt(meta.rental_days || "1"),
+        totalCents: parseInt(meta.total_cents || "0"),
+        deliveryAddress: meta.delivery_address || "",
+        deliveryType: meta.delivery_type || "standard",
+      });
     }
   }
 
@@ -230,7 +243,7 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session): Promis
   });
   const bookingMapsLink = buildGoogleMapsUrl(meta.delivery_address || "Valencia, Spain");
 
-  await sendBookingConfirmation({
+  const confirmationSent = await sendBookingConfirmation({
     bookingRef: (booking as { booking_ref: string }).booking_ref,
     customerName: meta.customer_name,
     customerEmail: meta.customer_email || session.customer_email || "",
@@ -278,7 +291,7 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session): Promis
     deliveryAddress: meta.delivery_address || null,
   });
 
-  return true;
+  return confirmationSent;
 }
 
 async function handleFulfillmentAmendmentCheckoutCompleted(
@@ -408,7 +421,7 @@ async function handleDraftCheckoutCompleted(
 
   const { data: existingBooking, error: existingBookingError } = await supabase
     .from("bookings")
-    .select("id")
+    .select("*, product:products(name)")
     .or(`booking_draft_id.eq.${bookingDraftId},stripe_checkout_session_id.eq.${session.id}`)
     .maybeSingle();
 
@@ -418,7 +431,50 @@ async function handleDraftCheckoutCompleted(
   }
 
   if (existingBooking) {
-    return true;
+    const retryBooking = existingBooking as unknown as {
+      booking_ref: string;
+      customer_name: string;
+      customer_email: string;
+      customer_phone: string | null;
+      quantity: number;
+      start_date: string;
+      end_date: string;
+      rental_start_at: string | null;
+      rental_end_at: string | null;
+      rental_days: number;
+      total_cents: number;
+      delivery_address: string | null;
+      collection_address: string | null;
+      delivery_type: string;
+      fulfillment_mode: string | null;
+      stripe_checkout_session_id: string | null;
+      stripe_payment_intent_id: string | null;
+      custom_line_items: Array<{ description: string; amountCents: number }> | null;
+      custom_terms: string | null;
+      product: { name?: string } | null;
+    };
+
+    return sendBookingConfirmation({
+      bookingRef: retryBooking.booking_ref,
+      customerName: retryBooking.customer_name || session.customer_details?.name || "Customer",
+      customerEmail: retryBooking.customer_email || session.customer_email || "",
+      customerPhone: retryBooking.customer_phone || undefined,
+      productName: retryBooking.product?.name || "Rental equipment",
+      quantity: retryBooking.quantity,
+      startDate: retryBooking.start_date,
+      endDate: retryBooking.end_date,
+      rentalStartAt: retryBooking.rental_start_at,
+      rentalEndAt: retryBooking.rental_end_at,
+      rentalDays: retryBooking.rental_days,
+      totalCents: retryBooking.total_cents,
+      deliveryAddress: retryBooking.delivery_address || retryBooking.collection_address || "Customer pickup",
+      deliveryType: retryBooking.delivery_type,
+      fulfillmentMode: retryBooking.fulfillment_mode || undefined,
+      stripeCheckoutSessionId: retryBooking.stripe_checkout_session_id || session.id,
+      stripePaymentIntentId: retryBooking.stripe_payment_intent_id || paymentIntentId || null,
+      customQuoteLines: retryBooking.custom_line_items || undefined,
+      customTerms: retryBooking.custom_terms,
+    });
   }
 
   const { data: draft, error: draftError } = await supabase
@@ -670,7 +726,7 @@ async function handleDraftCheckoutCompleted(
     }
   }
 
-  await sendBookingConfirmation({
+  const confirmationSent = await sendBookingConfirmation({
     bookingRef: (booking as { booking_ref: string }).booking_ref,
     customerName: bookingDraft.customer_name || session.customer_details?.name || "Customer",
     customerEmail: bookingDraft.customer_email || session.customer_email || "",
@@ -731,5 +787,5 @@ async function handleDraftCheckoutCompleted(
     deliveryAddress: bookingDraft.delivery_address || bookingDraft.collection_address || "Customer pickup",
   });
 
-  return true;
+  return confirmationSent;
 }

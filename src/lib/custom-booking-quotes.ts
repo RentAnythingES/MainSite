@@ -2,6 +2,8 @@ import type { CustomQuoteLineItem, FulfillmentMode } from "@/lib/types";
 
 export const CUSTOM_QUOTE_TIMEZONE = "Europe/Madrid";
 export const MAX_CUSTOM_QUOTE_LINES = 12;
+export const CUSTOM_QUOTE_DEFAULT_VALIDITY_MS = 24 * 60 * 60 * 1000;
+export const CUSTOM_QUOTE_START_BUFFER_MS = 60 * 1000;
 
 export function isMissingCustomQuotesSchema(error: { code?: string | null; message?: string | null } | null | undefined) {
   const message = (error?.message || "").toLowerCase();
@@ -55,6 +57,31 @@ export function parseQuoteDate(value: unknown, fieldName: string) {
   const date = new Date(value);
   if (Number.isNaN(date.getTime())) throw new Error(`${fieldName} is invalid`);
   return date;
+}
+
+export function resolveCustomQuoteExpiry(
+  rentalStartAt: Date,
+  requestedExpiresAt: Date | null,
+  now = new Date(),
+) {
+  if (!Number.isFinite(rentalStartAt.getTime()) || !Number.isFinite(now.getTime())) {
+    throw new Error("Rental start is invalid");
+  }
+  if (rentalStartAt.getTime() <= now.getTime()) {
+    throw new Error("Rental start must be in the future");
+  }
+
+  const latestExpiryMs = rentalStartAt.getTime() - CUSTOM_QUOTE_START_BUFFER_MS;
+  if (latestExpiryMs <= now.getTime()) {
+    throw new Error("Rental start must be at least 2 minutes in the future to create a payment link");
+  }
+
+  const requestedExpiryMs = requestedExpiresAt?.getTime();
+  const preferredExpiryMs = requestedExpiryMs && requestedExpiryMs > now.getTime()
+    ? requestedExpiryMs
+    : now.getTime() + CUSTOM_QUOTE_DEFAULT_VALIDITY_MS;
+
+  return new Date(Math.min(preferredExpiryMs, latestExpiryMs));
 }
 
 export function customQuotePublicPath(token: string) {
