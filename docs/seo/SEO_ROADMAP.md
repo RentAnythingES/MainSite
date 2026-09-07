@@ -1,5 +1,47 @@
 # Rent&Roll — SEO Roadmap
-> **Last updated**: 2026-08-11 · Prioritized by estimated traffic impact × effort
+> **Last updated**: 2026-09-07 · Prioritized by estimated traffic impact × effort
+
+---
+
+## Search performance and mobility actions — 7 September 2026
+
+The first meaningful `rentandroll.com` Search Console baseline is recorded in
+[SEO_GROWTH_AUDIT_20260907.md](./SEO_GROWTH_AUDIT_20260907.md). The preceding
+period is non-comparable because of the domain migration.
+
+- [x] Repair the product booking widget's untouched-date state and calendar-day
+  math so it cannot render `NaN days`, `Invalid Date`, `€NaN` or add an extra day
+  across a daylight-saving transition.
+- [x] Prepare a guarded migration removing the stroller/bike trailer's unrelated
+  secondary Mobility membership while preserving its Baby & Toddler primary
+  category, canonical URL and Kids & Family discovery membership.
+- [x] Protect `/rental/mobility` while clarifying exact electric-wheelchair intent
+  on the existing product owner. Verified specifications, detail copy, constraints,
+  price, stock and URL remain unchanged.
+- [x] Strengthen exact family authority from the bilingual accessibility guide and
+  Accessible Valencia Kit. Each sends one natural link to the scooter family and
+  one to the wheelchair family; no new page was created.
+- [x] Add an admin-only mobility enquiry register for requested item, dates,
+  location, language, landing/source, channel, outcome and governed loss reason,
+  including `no_stock` for inventory planning.
+- [x] Apply and verify the two reviewed production migrations. The trailer now
+  retains only Baby & Toddler primary plus Kids & Family secondary membership;
+  the electric-wheelchair English snippet is live; and the empty admin-only lead
+  table is ready. Deploying the source release remains the next release step.
+- [ ] After deployment, inspect/request indexing for EN/ES scooter families,
+  EN/ES wheelchair families and the electric-wheelchair product owner in Google;
+  submit/inspect the same owner set in Bing Webmaster Tools.
+- [ ] Recheck query-to-page ownership and CTR at Day 14 and Day 28. At Day 28 and
+  Day 90, review qualified enquiries and lost-to-stock demand before buying deeper
+  inventory.
+- [ ] Strengthen factual local authority through an accurate service-area business
+  profile, genuine customer reviews and relevant accommodation/accessibility
+  partners.
+- [ ] Investigate Spanish baby-equipment and car-seat owner discovery after the
+  mobility release is measured.
+- [ ] Keep new mobility blogs on hold until a repeated, distinct informational
+  query passes the evidence gate. Keep a Gandia owner on hold until fulfilment is
+  approved and fresh market research is complete.
 
 ---
 

@@ -1,5 +1,5 @@
 # Rent&Roll — Architecture
-> **Last updated**: 2026-08-18
+> **Last updated**: 2026-09-07
 
 ## Tech Stack
 - **Framework**: Next.js 16 (App Router)
@@ -76,6 +76,7 @@ Supabase (CRUD products, pricing, bookings)
 | `booking_status_events` | Immutable booking lifecycle transition audit trail | Server/admin only |
 | `booking_reviews` | Tokenized post-rental feedback, publication consent, and moderation state | Server/admin only |
 | `bundle_requests` | Private kit configurations captured before WhatsApp handoff | Server/admin only |
+| `mobility_inquiries` | Admin-entered cross-channel mobility leads, attribution, outcomes and governed loss reasons | Server/admin only |
 | `newsletter_subscribers` | Newsletter signup consent records | Admin/API only |
 | `product_localizations` | Locale-specific product copy and SEO metadata | Public read for active products |
 | `product_faqs` | Locale-specific pre-rental product FAQs | Public read for active products |
@@ -313,6 +314,8 @@ Stripe Checkout
 | `/api/admin/categories` | GET | List categories (for dropdowns) |
 | `/api/admin/bundle-requests` | GET | List and filter private kit requests |
 | `/api/admin/bundle-requests/[id]` | PATCH | Update kit-request status and internal notes |
+| `/api/admin/mobility-inquiries` | GET, POST | List/filter mobility leads and record a WhatsApp, email, phone, website or partner inquiry |
+| `/api/admin/mobility-inquiries/[id]` | PATCH | Update lead status, outcome, loss reason and internal notes |
 
 ---
 
@@ -323,6 +326,7 @@ Protected by Supabase Auth. Server-side cookie check in `admin/layout.tsx` — r
 | Page | Features |
 |------|----------|
 | `/admin` | Stats overview, quick actions, and migration readiness checks |
+| `/admin/mobility-inquiries` | Cross-channel mobility lead entry, source attribution, outcome and capacity-loss tracking |
 | `/admin/products` | Product table, catalogue-quality status, active/archived filters, CSV template/export, archive/restore, edit modal (core details, category, image upload/preview, features, specs, stock, pricing tiers) |
 | `/admin/products/new` | Full creation form: auto-slug, category dropdown, image upload, dynamic features, key-value specs, pricing tiers |
 | `/admin/products/import` | CSV template, row preview/validation, draft-only bulk import |

@@ -356,3 +356,50 @@ plus exact-site checks for the current RentAnything category and product owners.
 - Sup & Sea Valencia: `https://supseavalencia.com/`
 - Xsa Surf Valencia: `https://escueladesurfvalencia.es/actividades/alquiler-material-surf-en-valencia/`
 - Escalera AI portfolio mention: `https://escalera.ai/`
+
+## Valencia mobility result-page refresh — 7 September 2026
+
+Scope and method: point-in-time Google and Bing searches from Spain with an
+English interface. Google used `pws=0`. The sample is directional because result
+order, local packs, ads and AI modules vary by user, location and time.
+
+### `mobility scooter hire valencia`
+
+Google showed paid Motion4rent and orthopaedic results, an Amigo 24 local result,
+and specialist organic pages from Amigo 24, Motion4rent, Mobility Equipment Hire
+Direct, Accessible Spain Travel and Scooter a Domicilio. Rent&Roll's broad
+`/rental/mobility` page appeared lower on page one and was linked from the AI
+overview. Its focused scooter-family page was not visible in the sampled first
+page.
+
+Bing's first page showed Mobility Equipment Hire Direct, Motion4rent, Cloud of
+Goods, Freedom Mobility Spain, Accessible Spain Travel, Amigo 24 and Scooter a
+Domicilio. Rent&Roll was not visible in the sampled first page.
+
+### `wheelchair rental valencia`
+
+Google foregrounded a local Amigo 24 result with a physical Valencia address and
+98 visible Google reviews. Organic results included Amigo 24, Motion4rent,
+Mobility Equipment Hire Direct, Ortosalud and accessibility specialists.
+Rent&Roll was not visible in this point sample, although Search Console recorded
+five clicks from 16 impressions at average position 5.2 during the baseline
+window. The difference is evidence of a volatile, location-sensitive SERP rather
+than a contradiction.
+
+### Strategic implications
+
+- Specialist competitors reinforce exact family intent with dedicated scooter,
+  manual-wheelchair and electric-wheelchair pages.
+- Strong local results expose real addresses, reviews, phone access and operating
+  history. Rent&Roll should close the factual local-proof gap without fabricating
+  equivalence.
+- The current family pages have appropriate structures; the next gap is discovery,
+  authority and query ownership, not another generic mobility article.
+- Google and Bing should be monitored separately.
+
+Public representative sources reviewed:
+
+- <https://www.amigo24.com/en/valencia>
+- <https://www.motion4rent.com/mobility-equipment-rental-in-valencia>
+- <https://scooteradomicilio.com/>
+- <https://www.mobilityequipmenthiredirect.com/mobility-equipment-hire/570-mobility-scooter-hire-in-valencia-spain-portable-4-wheeled/>
