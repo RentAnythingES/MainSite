@@ -13,6 +13,7 @@ const navItems = [
   { name: "Bookings", href: "/admin/bookings", icon: "📋" },
   { name: "Custom Quotes", href: "/admin/custom-quotes", icon: "€" },
   { name: "Kit Requests", href: "/admin/kit-requests", icon: "+" },
+  { name: "Mobility Leads", href: "/admin/mobility-inquiries", icon: "♿" },
   { name: "Reviews", href: "/admin/reviews", icon: "★" },
   { name: "Invoicing", href: "/admin/invoicing", icon: "🧾" },
 ];

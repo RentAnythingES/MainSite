@@ -421,7 +421,7 @@ export const spanishBlogPosts: BlogPost[] = [
         paragraphs: [
           "El Jardín del Turia permite recorrer varios kilómetros sin tráfico y conecta el entorno del Bioparc con la Ciutat de les Arts i les Ciències. Hay rampas entre el antiguo cauce y la calle, pero la pendiente y la distancia varían; elegir de antemano el punto de entrada y salida evita desvíos innecesarios.",
           "La Ciutat de les Arts i les Ciències tiene grandes superficies peatonales y accesos adaptados en sus edificios principales. Consulta la información oficial de cada recinto para conocer ascensores, aseos, acompañantes y posibles descuentos. Un certificado de discapacidad no produce las mismas condiciones en todas las taquillas.",
-          "En el centro histórico, las plazas principales suelen ser más fáciles que las calles laterales. Diseña un recorrido corto entre puntos confirmados y deja tiempo extra. Una <a href=\"/es/product/mobility-scooter-lightweight-foldable\">scooter de movilidad</a> puede aportar autonomía en distancias largas, pero su radio de giro, batería y dimensiones también condicionan ascensores y transporte.",
+          "En el centro histórico, las plazas principales suelen ser más fáciles que las calles laterales. Diseña un recorrido corto entre puntos confirmados y deja tiempo extra. Compara nuestras <a href=\"/es/rental/mobility/mobility-scooters\">opciones de scooter de movilidad</a> para distancias largas, recordando que el radio de giro, la batería y las dimensiones también condicionan ascensores y transporte.",
         ],
       },
       {
@@ -443,7 +443,7 @@ export const spanishBlogPosts: BlogPost[] = [
       {
         heading: "Elegir y alquilar equipo de movilidad",
         paragraphs: [
-          "No todo equipo sirve para la misma persona. Para una <a href=\"/es/product/transport-wheelchair\">silla de transporte</a> es necesario confirmar que habrá un acompañante capaz de impulsarla. Una silla autopropulsable, una scooter y un <a href=\"/es/product/rollator-walker\">andador rollator</a> responden a necesidades distintas.",
+          "No todo equipo sirve para la misma persona. Compara nuestras <a href=\"/es/rental/mobility/wheelchairs\">opciones de sillas de ruedas</a>: una silla de transporte requiere un acompañante capaz de impulsarla, mientras que una eléctrica tiene otros requisitos de ajuste, control y carga. Una scooter y un <a href=\"/es/product/rollator-walker\">andador rollator</a> responden a necesidades distintas.",
           "Antes de alquilar, facilita altura, peso, capacidad de transferencia, entorno de uso y medidas críticas. En una scooter también hay que valorar autonomía, cargador, anchura, radio de giro y posibilidad de guardarla con seguridad. El equipo no sustituye una evaluación clínica ni debe recomendarse únicamente por una fotografía.",
           "Consulta nuestro <a href=\"/es/rental/mobility\">equipamiento de movilidad y accesibilidad en Valencia</a>. Confirmamos disponibilidad y logística para tus fechas; cuando un producto no encaja con el usuario o el itinerario, buscamos una alternativa en lugar de forzar la reserva.",
         ],

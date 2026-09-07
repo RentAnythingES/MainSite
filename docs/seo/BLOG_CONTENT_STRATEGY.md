@@ -1,6 +1,6 @@
 # Blog Content Strategy & Creation Guide — RentAnything.es
 
-> **Last updated**: 2026-06-17
+> **Last updated**: 2026-09-07
 > **Applies to**: All blog posts at `/blog/[slug]` — powered by `src/content/blog.ts`
 
 Spanish adaptations live in `src/content/blog-es.ts` and render at
@@ -24,7 +24,11 @@ function isPublished(post: BlogPost): boolean {
 
 **Setting a date = committing to publish.** Posts with future dates build but return 404 and are excluded from the sitemap.
 
-**Cadence**: 1-2 posts per week initially, scaling as we find what resonates.
+**Cadence**: evidence-gated, not calendar-led. Refresh an existing visible owner
+before creating another page for adjacent intent. A new article requires repeated
+query demand, a distinct user job, a demonstrated result-page gap and a clear
+non-cannibalizing route to the relevant commercial owner. The 7 September mobility
+baseline does not justify another mobility article.
 
 ---
 

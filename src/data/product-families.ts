@@ -738,7 +738,7 @@ export const productFamilies: ProductFamilyDefinition[] = [
         productDescription: "Start with how the wheelchair will be used, then open the relevant listing for its exact dimensions, weight, controls and current availability.",
         productLabels: {
           "transport-wheelchair": "Lightweight transport wheelchair",
-          "mobility-power-wheelchair": "Powered wheelchair",
+          "mobility-power-wheelchair": "Electric wheelchair",
         },
         choiceHeading: "How to choose a wheelchair for your stay",
         choiceIntro: "The practical choice depends on who will propel the chair, how it will be transported and the access available during the trip.",

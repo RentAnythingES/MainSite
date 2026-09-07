@@ -84,6 +84,9 @@ export default async function ProductPage({ params }: Props) {
   const { slug } = await params;
   const product = await getProductBySlugFromDB(slug);
   if (!product) notFound();
+  const pageHeading = product.slug === "mobility-power-wheelchair"
+    ? "Electric Wheelchair Rental in Valencia"
+    : product.name;
 
   const related = (await getProductsByCategoryFromDB(product.categorySlug))
     .filter((p) => p.categorySlug === product.categorySlug && p.slug !== product.slug)
@@ -184,7 +187,7 @@ export default async function ProductPage({ params }: Props) {
                   </div>
 
                   <h1 className="text-3xl font-extrabold tracking-tight mb-4">
-                    {product.name}
+                    {pageHeading}
                   </h1>
 
                   <p className="text-neutral-600 leading-relaxed mb-6">

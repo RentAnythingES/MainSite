@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import BundleCard from "@/components/BundleCard";
 import BundleConfigurator from "@/components/BundleConfigurator";
+import MobilityFamilyLinks from "@/components/MobilityFamilyLinks";
 import ProductCard from "@/components/ProductCard";
 import { getBlogPostBySlug } from "@/content/blog";
 import { getBundleBySlug, getBundleProducts, rentalBundles } from "@/data/bundles";
@@ -207,6 +208,8 @@ export default async function BundlePage({ params }: Props) {
       </section>
 
       <BundleConfigurator bundle={bundle} />
+
+      {bundle.slug === "accessible-valencia-kit" && <MobilityFamilyLinks />}
 
       {relatedProducts.length > 0 && (
         <section className="section bg-neutral-50">
