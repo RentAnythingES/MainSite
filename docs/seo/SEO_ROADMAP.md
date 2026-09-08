@@ -695,3 +695,8 @@ in [SEO_GROWTH_AUDIT_20260722.md](./SEO_GROWTH_AUDIT_20260722.md).
 - [x] Restrict reciprocal article hreflang to guides with complete locale parity.
 - [x] Complete Spanish parity for all six English planning guides, including
   Remote Work and day-trip intent.
+
+
+### 2026-09-08 — Explorer kit release
+
+Turia & Beach Explorer prepared in the existing EN/ES kit structure with request-for-dates flow, generated illustrated hero, core equipment and optional extras. Before confirming an order: source bike, check L/XL rider fit, Hamax attachment and child suitability, helmets/lock, packed shade/cooler fit and load; agree full rental/delivery price. Publication verification is recorded in `docs/releases/TURIA_BEACH_EXPLORER_2026-09-08.md`.

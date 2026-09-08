@@ -1,3 +1,5 @@
+import { getProductsFromDB } from "@/lib/product-service";
+import ExplorerDetails from "@/components/ExplorerDetails";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -54,8 +56,12 @@ export default async function BundlePage({ params }: Props) {
   const { slug } = await params;
   const bundle = getBundleBySlug(slug);
   if (!bundle) notFound();
+  const isExplorer = bundle.slug === "turia-beach-explorer";
 
-  const relatedProducts = getBundleProducts(bundle);
+  const explorerProducts = isExplorer ? await getProductsFromDB("valencia", "en") : [];
+  const relatedProducts = isExplorer
+    ? explorerProducts.filter((product) => bundle.relatedProductSlugs.includes(product.slug))
+    : getBundleProducts(bundle);
   const relatedGuides = bundle.relatedGuideSlugs
     .map((guideSlug) => getBlogPostBySlug(guideSlug))
     .filter((guide): guide is NonNullable<typeof guide> => Boolean(guide));
@@ -142,7 +148,7 @@ export default async function BundlePage({ params }: Props) {
               </p>
               <div className="mt-8 flex flex-wrap gap-3">
                 <a href="#configure-kit" className="btn btn-primary btn-lg">
-                  Configure this kit
+                  {isExplorer ? "Request this package" : "Configure this kit"}
                 </a>
                 <Link href="/valencia/kits" className="btn btn-outline btn-lg">
                   Compare kits
@@ -162,7 +168,7 @@ export default async function BundlePage({ params }: Props) {
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
               <div className="absolute bottom-0 left-0 right-0 p-6">
                 <p className="text-white text-lg font-bold" style={{ textShadow: "0 1px 4px rgba(0,0,0,0.5)" }}>
-                  A starting point we can tailor around your stay.
+                  {isExplorer ? "Illustrated day out · equipment appearance may vary" : "A starting point we can tailor around your stay."}
                 </p>
               </div>
             </div>
@@ -174,7 +180,7 @@ export default async function BundlePage({ params }: Props) {
         <div className="container-site">
           <div className="grid lg:grid-cols-3 gap-8">
             <div className="lg:col-span-2 card p-6 md:p-8 bg-white">
-              <h2 className="text-2xl font-bold mb-6">What this kit can include</h2>
+              <h2 className="text-2xl font-bold mb-6">{isExplorer ? "Your Explorer equipment" : "What this kit can include"}</h2>
               <div className="grid sm:grid-cols-2 gap-4">
                 {bundle.includedItems.map((item) => (
                   <div key={item.name} className="rounded-2xl border border-border bg-neutral-50 p-4">
@@ -207,6 +213,7 @@ export default async function BundlePage({ params }: Props) {
         </div>
       </section>
 
+      {isExplorer && <ExplorerDetails locale="en" />}
       <BundleConfigurator bundle={bundle} />
 
       {bundle.slug === "accessible-valencia-kit" && <MobilityFamilyLinks />}

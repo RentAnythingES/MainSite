@@ -1,3 +1,4 @@
+import { explorerSpanishContent } from "./explorer-bundle";
 import { rentalBundles, type BundleAddon, type BundleFAQ, type BundleItem, type RentalBundle } from "./bundles";
 
 type LocalizedItem = { name: string; note?: string };
@@ -8,6 +9,7 @@ type SpanishBundleContent = Pick<RentalBundle, "name" | "shortName" | "eyebrow" 
 };
 
 const content: Record<string, SpanishBundleContent> = {
+  "turia-beach-explorer": explorerSpanishContent,
   "family-beach-kit": {
     name: "Kit de playa familiar en Valencia",
     shortName: "Kit de playa familiar",

@@ -49,7 +49,14 @@ const copy = {
 } as const;
 
 export default function BundleConfigurator({ bundle, locale = "en" }: BundleConfiguratorProps) {
-  const text = copy[locale];
+  const isExplorer = bundle.slug === "turia-beach-explorer";
+  const text = { ...copy[locale], ...(isExplorer ? (locale === "es" ? {
+    badge: "Solicitud sin compromiso", title: "Prepara vuestro día de paseo", intro: "El equipo principal va junto. Elige los extras, indica tus fechas y cuéntanos quién va a pedalear y quién viajará en el remolque. Confirmamos el precio completo y el ajuste antes del pago.",
+    included: "Equipo del paquete", notes: "Ciclista y niños", notesPlaceholder: "Altura del ciclista; edades, alturas y pesos aproximados de los niños; tallas de casco si las sabes; horario de entrega...", submit: "Solicitar el paquete", footer: "Te responderemos para confirmar equipo, ajuste y presupuesto. No se cobra ni se reserva material al enviar la solicitud.", nextText: "Comprobamos disponibilidad, talla de bici, remolque, cascos, candado y transporte de los extras. Después recibes el presupuesto completo."
+  } : {
+    badge: "No-obligation request", title: "Plan your family day out", intro: "The core equipment comes together. Choose your extras, add your dates and tell us who is riding and who will travel in the trailer. We confirm the full price and fit before payment.",
+    included: "Package equipment", notes: "Rider and children", notesPlaceholder: "Rider height; children’s ages, approximate heights and weights; helmet sizes if known; preferred delivery time...", submit: "Request the package", footer: "We will reply to confirm equipment, fit and your complete quote. Sending a request does not take payment or reserve equipment.", nextText: "We check supply, bike size, trailer suitability, helmets, lock and carrying space. Then you receive the complete quote."
+  }) : {}) };
   const [startDate, setStartDate] = useState(todayIsoDate());
   const [endDate, setEndDate] = useState("");
   const [area, setArea] = useState("");
@@ -145,6 +152,7 @@ export default function BundleConfigurator({ bundle, locale = "en" }: BundleConf
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    if (submitting || (isExplorer && requestRef)) return;
     setSubmitting(true);
     setSubmitError("");
 
@@ -161,6 +169,7 @@ export default function BundleConfigurator({ bundle, locale = "en" }: BundleConf
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           bundleSlug: bundle.slug,
+          locale,
           customerName,
           customerEmail,
           customerPhone,
@@ -183,7 +192,7 @@ export default function BundleConfigurator({ bundle, locale = "en" }: BundleConf
         event_category: "bundle",
         bundle_slug: bundle.slug,
       });
-      window.location.assign(data.whatsappUrl);
+      if (!isExplorer) window.location.assign(data.whatsappUrl);
     } catch (error) {
       setSubmitError(error instanceof Error ? error.message : text.submitError);
     } finally {
@@ -253,6 +262,7 @@ export default function BundleConfigurator({ bundle, locale = "en" }: BundleConf
                     <div className="flex items-start gap-3">
                       <input
                         type="checkbox"
+                        disabled={isExplorer}
                         checked={selectedItems.has(item.name)}
                         onChange={() => toggleItem(item.name)}
                         className="mt-1 h-4 w-4 accent-brand"
@@ -353,14 +363,14 @@ export default function BundleConfigurator({ bundle, locale = "en" }: BundleConf
                   <p className="text-neutral-500">{text.nextText}</p>
                 </div>
               </div>
-              <button
+              {!isExplorer && <button
                 type="button"
                 onClick={handleAvailabilityCheck}
                 disabled={checkingAvailability || !startDate || !endDate}
                 className="btn btn-outline w-full mt-6 disabled:cursor-not-allowed disabled:opacity-50"
               >
                 {checkingAvailability ? text.checking : text.check}
-              </button>
+              </button>}
               {availabilityError && <p role="alert" className="mt-3 text-sm text-red-600">{availabilityError}</p>}
               {availability && (
                 <div className="mt-4 rounded-2xl border border-border bg-white p-4">
@@ -393,13 +403,13 @@ export default function BundleConfigurator({ bundle, locale = "en" }: BundleConf
                 </p>
               )}
               {requestRef && (
-                <p className="mt-5 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700">
+                <p role="status" className="mt-5 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700">
                   {text.saved} <strong>{requestRef}</strong>.
                 </p>
               )}
               <button
                 type="submit"
-                disabled={submitting}
+                disabled={submitting || (isExplorer && Boolean(requestRef))}
                 className="btn btn-primary w-full mt-4"
                 id={`bundle-configurator-whatsapp-${bundle.slug}`}
               >

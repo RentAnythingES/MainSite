@@ -375,3 +375,8 @@ changing bundle inventory. English and Spanish pages use reciprocal hreflang and
 localized internal links; both sets remain subordinate to their category and guide
 clusters. The Spanish configurator displays translated item names while submitting
 canonical bundle identifiers to the shared request and availability APIs.
+
+
+### 2026-09-08 — Turia & Beach Explorer kit
+
+Added one kit to the existing data-driven catalogue (8 → 9 kits per language; two new EN/ES detail URLs). The kit indexes and sitemap inherit it from the canonical bundle lists. `/valencia/kits/turia-beach-explorer` and its `/es` counterpart own this specific family bike + trailer + beach shade package; related family/beach guides retain their existing ownership. Request-led, with no instant-stock Offer or unapproved discount claim. Original generated illustration is labelled as an illustration. No product activation. See `docs/releases/TURIA_BEACH_EXPLORER_2026-09-08.md` for validation and operational handoff.

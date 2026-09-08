@@ -39,6 +39,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Kit not found" }, { status: 404 });
   }
 
+  const locale = bundleSlug === "turia-beach-explorer" && body.locale === "es" ? "es" as const : "en" as const;
   const customerName = cleanBundleRequestText(body.customerName, 120);
   const customerEmail = cleanBundleRequestText(body.customerEmail, 254)?.toLowerCase() || null;
   const customerPhone = cleanBundleRequestText(body.customerPhone, 50);
@@ -82,7 +83,7 @@ export async function POST(request: NextRequest) {
     selected_items: selectedItems,
     selected_addons: selectedAddons,
     customer_notes: customerNotes,
-    locale: "en",
+    locale,
     consent_version: BUNDLE_REQUEST_CONSENT_VERSION,
     consent_text: BUNDLE_REQUEST_CONSENT_TEXT,
     source_path: sourcePath,
@@ -119,7 +120,7 @@ export async function POST(request: NextRequest) {
     subject: `Kit request ${requestRef}`,
     productName: bundle.name,
     message,
-    locale: "en" as const,
+    locale,
   };
   const [notificationSent, confirmationSent] = await Promise.all([
     sendContactNotification(emailData),
