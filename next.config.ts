@@ -13,6 +13,7 @@ const productSlugReplacements = [
 ] as const;
 
 const nextConfig: NextConfig = {
+  turbopack: { root: __dirname },
   async redirects() {
     return [
       ...productSlugReplacements.flatMap(([sourceSlug, destinationSlug]) => [

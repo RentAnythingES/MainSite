@@ -208,7 +208,7 @@ export const blogPosts: BlogPost[] = [
         paragraphs: [
           "Turia Gardens provides several kilometres away from road traffic and connects the Bioparc area with the City of Arts and Sciences. Ramps link the former riverbed with street level, but their gradient and spacing vary. Choosing entry and exit points before the trip helps avoid unnecessary detours.",
           "The City of Arts and Sciences has large pedestrian areas and adapted access in its main buildings. Check each venue's official information for current details about lifts, toilets, companions and possible discounts. A disability certificate does not produce identical conditions at every ticket desk.",
-          "In the historic centre, the main squares are usually easier than the side streets. Plan a short route between confirmed access points and allow extra time. A <a href=\"/product/mobility-scooter-lightweight-foldable\">mobility scooter</a> can support independence over longer distances, but turning radius, battery range and dimensions also affect lifts and public transport.",
+          "In the historic centre, the main squares are usually easier than the side streets. Plan a short route between confirmed access points and allow extra time. Compare our <a href=\"/rental/mobility/mobility-scooters\">mobility scooter options</a> for longer distances, remembering that turning radius, battery range and dimensions also affect lifts and public transport.",
         ],
       },
       {
@@ -230,7 +230,7 @@ export const blogPosts: BlogPost[] = [
       {
         heading: "Choosing and Renting Mobility Equipment",
         paragraphs: [
-          "Different mobility aids serve different needs. A <a href=\"/product/transport-wheelchair\">transport wheelchair</a> requires a companion who can push it. A self-propelled chair, scooter and <a href=\"/product/rollator-walker\">rollator walker</a> each support different users and situations.",
+          "Different mobility aids serve different needs. Compare our <a href=\"/rental/mobility/wheelchairs\">wheelchair rental options</a>: a transport wheelchair requires a companion who can push it, while an electric chair has different fit, control and charging requirements. A scooter and <a href=\"/product/rollator-walker\">rollator walker</a> support different users and situations.",
           "Before renting, provide height, weight, transfer ability, intended environment and any critical measurements. For a scooter, also consider range, charger, width, turning radius and secure storage. Rental equipment does not replace a clinical assessment and should not be chosen from a photograph alone.",
           "Browse our <a href=\"/rental/mobility\">wheelchair and mobility scooter rentals in Valencia</a>. We confirm availability and logistics for your dates; if a product does not fit the user or route, we look for a more suitable option instead of forcing the booking.",
         ],

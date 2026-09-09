@@ -1,3 +1,4 @@
+import { explorerBundle } from "./explorer-bundle";
 import { products, type Product } from "./products";
 
 export interface BundleItem {
@@ -43,6 +44,7 @@ export interface RentalBundle {
 }
 
 export const rentalBundles: RentalBundle[] = [
+  explorerBundle,
   {
     slug: "family-beach-kit",
     name: "Family Beach Kit Valencia",

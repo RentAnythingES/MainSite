@@ -85,6 +85,9 @@ export default async function ProductPageES({ params }: Props) {
   const { slug } = await params;
   const product = await getProductBySlugFromDB(slug, "es");
   if (!product) notFound();
+  const pageHeading = product.slug === "mobility-power-wheelchair"
+    ? "Alquiler de silla de ruedas eléctrica en Valencia"
+    : product.name;
 
   const related = (await getProductsByCategoryFromDB(product.categorySlug, "es"))
     .filter((p) => p.categorySlug === product.categorySlug && p.slug !== product.slug)
@@ -163,7 +166,7 @@ export default async function ProductPageES({ params }: Props) {
                       <span className="text-xs text-neutral-400">{product.brand.trim()}</span>
                     )}
                   </div>
-                  <h1 className="text-3xl font-extrabold tracking-tight mb-4">{product.name}</h1>
+                  <h1 className="text-3xl font-extrabold tracking-tight mb-4">{pageHeading}</h1>
                   <p className="text-neutral-600 leading-relaxed mb-6">{product.description}</p>
                   <div className="bg-neutral-50 rounded-xl p-5">
                     <h3 className="font-bold text-sm text-neutral-800 mb-3">{t.product.pricing}</h3>

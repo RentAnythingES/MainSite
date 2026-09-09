@@ -1,13 +1,15 @@
+import { getProductsFromDB } from "@/lib/product-service";
+import ExplorerDetails from "@/components/ExplorerDetails";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import BundleCard from "@/components/BundleCard";
 import BundleConfigurator from "@/components/BundleConfigurator";
+import MobilityFamilyLinks from "@/components/MobilityFamilyLinks";
 import ProductCard from "@/components/ProductCard";
 import { getSpanishBlogPostBySlug } from "@/content/blog-es";
 import { getSpanishBundleBySlug, spanishRentalBundles } from "@/data/bundles-es";
-import { getProductsFromDB } from "@/lib/product-service";
 import { BUSINESS_SCHEMA_ID, getBreadcrumbJsonLd } from "@/lib/jsonld";
 
 interface Props {
@@ -53,6 +55,7 @@ export default async function SpanishBundlePage({ params }: Props) {
   const bundle = getSpanishBundleBySlug(slug);
   if (!bundle) notFound();
 
+  const isExplorer = bundle.slug === "turia-beach-explorer";
   const products = await getProductsFromDB("valencia", "es");
   const relatedProducts = bundle.relatedProductSlugs
     .map((productSlug) => products.find((product) => product.slug === productSlug))
@@ -124,14 +127,14 @@ export default async function SpanishBundlePage({ params }: Props) {
               <p className="mt-4 text-xl text-neutral-700 font-semibold">{bundle.tagline}</p>
               <p className="mt-4 text-neutral-600 leading-relaxed max-w-xl">{bundle.description}</p>
               <div className="mt-8 flex flex-wrap gap-3">
-                <a href="#configure-kit" className="btn btn-primary btn-lg">Configurar este kit</a>
+                <a href="#configure-kit" className="btn btn-primary btn-lg">{isExplorer ? "Solicitar este paquete" : "Configurar este kit"}</a>
                 <Link href="/es/valencia/kits" className="btn btn-outline btn-lg">Comparar kits</Link>
               </div>
             </div>
             <div className="relative aspect-[4/3] rounded-3xl overflow-hidden bg-neutral-100 shadow-lg">
               <Image src={bundle.image} alt={bundle.name} fill className="object-cover" priority sizes="(max-width: 1024px) 100vw, 50vw" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-              <div className="absolute bottom-0 left-0 right-0 p-6"><p className="text-white text-lg font-bold" style={{ textShadow: "0 1px 4px rgba(0,0,0,0.5)" }}>Un punto de partida que adaptamos a tu estancia.</p></div>
+              <div className="absolute bottom-0 left-0 right-0 p-6"><p className="text-white text-lg font-bold" style={{ textShadow: "0 1px 4px rgba(0,0,0,0.5)" }}>{isExplorer ? "Día ilustrado · el aspecto del equipo puede variar" : "Un punto de partida que adaptamos a tu estancia."}</p></div>
             </div>
           </div>
         </div>
@@ -141,7 +144,7 @@ export default async function SpanishBundlePage({ params }: Props) {
         <div className="container-site">
           <div className="grid lg:grid-cols-3 gap-8">
             <div className="lg:col-span-2 card p-6 md:p-8 bg-white">
-              <h2 className="text-2xl font-bold mb-6">Qué puede incluir este kit</h2>
+              <h2 className="text-2xl font-bold mb-6">{isExplorer ? "El equipo del Explorador" : "Qué puede incluir este kit"}</h2>
               <div className="grid sm:grid-cols-2 gap-4">
                 {bundle.includedItems.map((item) => (
                   <div key={item.name} className="rounded-2xl border border-border bg-neutral-50 p-4">
@@ -155,7 +158,10 @@ export default async function SpanishBundlePage({ params }: Props) {
         </div>
       </section>
 
+      {isExplorer && <ExplorerDetails locale="es" />}
       <BundleConfigurator bundle={bundle} locale="es" />
+
+      {bundle.slug === "accessible-valencia-kit" && <MobilityFamilyLinks locale="es" />}
 
       {relatedProducts.length > 0 && (
         <section className="section bg-neutral-50"><div className="container-site"><h2 className="text-3xl font-bold mb-6">Artículos relacionados</h2><div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">{relatedProducts.map((product) => <ProductCard key={product.slug} product={product} basePath="/es/product" id={`bundle-product-${product.slug}`} unoptimized />)}</div></div></section>

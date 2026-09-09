@@ -1,5 +1,5 @@
 # Rent&Roll — SEO Strategy & Audit
-> **Last updated**: 2026-08-12 · **Canonical migration**: deployed · **Release sitemap URLs**: 376
+> **Last updated**: 2026-09-07 · **Canonical migration**: deployed · **Release sitemap URLs**: 376
 
 This is the **living SEO strategy document** for rentandroll.com. Updated after every SEO-related change. For prioritized fixes, see [SEO_ROADMAP.md](./SEO_ROADMAP.md).
 
@@ -68,6 +68,26 @@ Each product has one primary category owner and may have governed secondary
 discovery memberships. Secondary placement exposes the same product in another
 useful category grid; it does not create another product URL, canonical, inventory
 record, or keyword owner.
+
+### First post-migration performance baseline — 7 September 2026
+
+The [SEO growth audit](./SEO_GROWTH_AUDIT_20260907.md) establishes the first useful
+`rentandroll.com` Search Console baseline: 199 clicks, 10,618 impressions, 1.9%
+CTR and average position 13.6 from 7 August through 5 September. The preceding
+period is not a valid comparison because it predates the canonical migration and
+property maturation.
+
+The mobility owner map remains unchanged: `/rental/mobility` owns broad equipment
+intent; the scooter and wheelchair family pages own type selection; exact products
+own their modifiers. Source changes in the September mobility sprint strengthen
+that map without adding URLs: the unrelated trailer membership is removed, the
+electric-wheelchair product promise is clarified while safety facts remain intact,
+and focused family links are added from the accessibility guide and kit.
+
+The fixed blog cadence is superseded by an evidence gate. Existing first-page
+pages with weak CTR are refreshed selectively; a new article requires a repeated,
+distinct informational job and a non-cannibalizing owner. No new mobility blog is
+approved from this baseline.
 
 ### Commercial cluster depth
 
@@ -327,6 +347,7 @@ Admin Dashboard:
 
 | Date | Change |
 |------|--------|
+| 2026-09-07 | Prepared the mobility conversion sprint without changing page count: fixed empty-date and daylight-saving duration defects in the booking widget; removed the stroller/bike trailer's unrelated secondary mobility membership; clarified exact electric-wheelchair intent while preserving verified detail and constraint copy; linked the accessibility guide and kit to the scooter and wheelchair family owners; and added an admin-only mobility enquiry register with source, date, location, outcome and loss-reason fields. Both guarded production migrations were applied and verified; source deployment and post-deploy indexing verification remain release steps. |
 | 2026-08-12 | Corrected two catalogue identities without changing page count: the 32-inch monitor moved from the incorrect `27-inch-monitor-hdmi-cable` slug to `32-inch-monitor-hdmi-cable` with permanent EN/ES redirects, the separate 27-inch monitor specification now matches its headline, and the 25–40 kg swimming-vest record is consistent across EN/ES copy, metadata, specifications and FAQs. |
 | 2026-08-12 | Verified rendered image delivery across all 114 active products and all 228 EN/ES product pages, with zero failures, and added a permanent full-catalogue image audit. Repaired six fact-complete baby/family product pages in both languages, added three FAQs per locale, and prevented static English FAQs from leaking onto Spanish product pages. Identity, URLs, pricing, stock, images, categories and both AC listings remain unchanged. See `ACTIVE_PRODUCT_PAGE_AUDIT_20260812.md`. |
 | 2026-08-11 | Corrected product-to-owner link context across all five current family clusters: the shared EN/ES product component now uses each matched family’s existing heading and description instead of hard-coded scooter copy. Added regression assertions for all family owners. Repaired the fact-complete Beachminton and family-kayak EN/ES product copy without changing identity, stock, pricing, imagery, category membership or indexation. See `PRIORITY_PRODUCT_PAGE_AUDIT_20260811.md`. |
@@ -354,3 +375,8 @@ changing bundle inventory. English and Spanish pages use reciprocal hreflang and
 localized internal links; both sets remain subordinate to their category and guide
 clusters. The Spanish configurator displays translated item names while submitting
 canonical bundle identifiers to the shared request and availability APIs.
+
+
+### 2026-09-08 — Turia & Beach Explorer kit
+
+Added one kit to the existing data-driven catalogue (8 → 9 kits per language; two new EN/ES detail URLs). The kit indexes and sitemap inherit it from the canonical bundle lists. `/valencia/kits/turia-beach-explorer` and its `/es` counterpart own this specific family bike + trailer + beach shade package; related family/beach guides retain their existing ownership. Request-led, with no instant-stock Offer or unapproved discount claim. Original generated illustration is labelled as an illustration. No product activation. See `docs/releases/TURIA_BEACH_EXPLORER_2026-09-08.md` for validation and operational handoff.

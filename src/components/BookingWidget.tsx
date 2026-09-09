@@ -5,6 +5,7 @@ import type { Product } from "@/data/products";
 import { trackBookingEvent } from "@/lib/analytics";
 import GooglePlacesAddressInput from "@/components/GooglePlacesAddressInput";
 import { requestBrowserNotificationPermission } from "@/lib/push-notifications";
+import { getRentalWindow } from "@/lib/rental-dates";
 import {
   type ActiveCheckout,
   clearActiveCheckout,
@@ -21,11 +22,6 @@ function addDays(date: Date, days: number): Date {
   const result = new Date(date);
   result.setDate(result.getDate() + days);
   return result;
-}
-
-function daysBetween(start: Date, end: Date): number {
-  const diff = end.getTime() - start.getTime();
-  return Math.max(1, Math.ceil(diff / (1000 * 60 * 60 * 24)));
 }
 
 function formatDate(date: Date): string {
@@ -82,6 +78,8 @@ const labels = {
     manualHelp: "Message us on WhatsApp and we’ll confirm the quickest available option.",
     manualPrice: "No payment or inventory hold will be created until we confirm it with you.",
     total: "Total",
+    datesLoading: "Preparing your rental dates…",
+    datesRequired: "Choose valid start and end dates to see your total.",
     checkAvailability: "Check Availability",
     checking: "Checking...",
     available: "✓ Available for your dates",
@@ -153,6 +151,8 @@ const labels = {
     manualHelp: "Escríbenos por WhatsApp y confirmaremos la opción más rápida disponible.",
     manualPrice: "No se creará ningún pago ni bloqueo de inventario hasta que lo confirmemos contigo.",
     total: "Total",
+    datesLoading: "Preparando las fechas del alquiler…",
+    datesRequired: "Elige fechas de inicio y fin válidas para ver el total.",
     checkAvailability: "Comprobar Disponibilidad",
     checking: "Comprobando...",
     available: "✓ Disponible para tus fechas",
@@ -360,11 +360,10 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
   const selectedPickupLocation = pickupLocations.find((location) => location.id === pickupLocationId);
   const selectedDeliveryZone = serviceZones.find((zone) => zone.id === deliveryZoneId);
   const selectedCollectionZone = serviceZones.find((zone) => zone.id === collectionZoneId);
+  const rentalWindow = useMemo(() => getRentalWindow(startDate, endDate), [startDate, endDate]);
 
   const pricing = useMemo(() => {
-    const start = new Date(startDate);
-    const end = new Date(endDate);
-    const days = daysBetween(start, end);
+    const days = rentalWindow?.days ?? 0;
 
     const tier = [...product.pricing]
       .sort((a, b) => b.days - a.days)
@@ -388,7 +387,7 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
     const total = subtotal + deliveryFee;
 
     return { days, perDay: tier.perDay, subtotal, subtotalBeforeDiscount: subtotal, deliveryFee, fulfillmentBaseFee, expressSurcharge, total, quantityDiscount: 0 };
-  }, [startDate, endDate, deliveryOption, fulfillmentMode, product.pricing, quantity, selectedDeliveryZone, selectedCollectionZone]);
+  }, [rentalWindow, deliveryOption, fulfillmentMode, product.pricing, quantity, selectedDeliveryZone, selectedCollectionZone]);
 
   const displayPricing = useMemo(() => {
     if (!serverQuote) {
@@ -492,6 +491,11 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
     }, [startDate, startTime, endDate, endTime, quantity, fulfillmentMode, deliveryZoneId, collectionZoneId, pickupLocationId]);
 
   const checkAvailability = async () => {
+    if (!rentalWindow) {
+      setAvailabilityReason(t.datesRequired);
+      return;
+    }
+
     setAvailabilityStatus("checking");
     trackBookingEvent("availability_check_started", {
       productSlug: product.slug,
@@ -791,7 +795,10 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
   const whatsappService = fulfillmentPolicy?.decision === "manual_confirmation"
     ? "Delivery timing needs confirmation"
     : `${deliveryOption === "express" ? t.express : t.standard} ${t.delivery.toLowerCase()}`;
-  const whatsappMessage = `Hi! I'd like to book:\n\n📦 ${quantity} × ${product.name}\n📅 ${formatDisplayDate(new Date(startDate), locale)} ${startTime} → ${formatDisplayDate(new Date(endDate), locale)} ${endTime} (${displayPricing.days} ${displayPricing.days === 1 ? t.day : t.days})\n🚚 ${whatsappService}\n\nPlease confirm availability and price.`;
+  const whatsappDates = rentalWindow
+    ? `${formatDisplayDate(rentalWindow.start, locale)} ${startTime} → ${formatDisplayDate(rentalWindow.end, locale)} ${endTime} (${displayPricing.days} ${displayPricing.days === 1 ? t.day : t.days})`
+    : t.datesRequired;
+  const whatsappMessage = `Hi! I'd like to book:\n\n📦 ${quantity} × ${product.name}\n📅 ${whatsappDates}\n🚚 ${whatsappService}\n\nPlease confirm availability and price.`;
   const whatsappUrl = `https://wa.me/34684708013?text=${encodeURIComponent(whatsappMessage)}`;
 
   // Success state
@@ -1035,12 +1042,18 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
 
       {/* Duration display */}
       <div className="bg-brand/5 rounded-lg p-3 mb-4 text-center">
-        <p className="text-sm text-brand font-semibold">
-          {displayPricing.days} {displayPricing.days === 1 ? t.day : t.days} {t.rental}
-        </p>
-        <p className="text-xs text-neutral-500">
-          {formatDisplayDate(new Date(startDate), locale)} → {formatDisplayDate(new Date(endDate), locale)}
-        </p>
+        {rentalWindow ? (
+          <>
+            <p className="text-sm text-brand font-semibold">
+              {displayPricing.days} {displayPricing.days === 1 ? t.day : t.days} {t.rental}
+            </p>
+            <p className="text-xs text-neutral-500">
+              {formatDisplayDate(rentalWindow.start, locale)} → {formatDisplayDate(rentalWindow.end, locale)}
+            </p>
+          </>
+        ) : (
+          <p className="text-sm text-brand font-semibold" aria-live="polite">{t.datesLoading}</p>
+        )}
       </div>
 
       {/* Fulfillment Option */}
@@ -1195,7 +1208,7 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
       )}
 
       {/* Price Breakdown */}
-      {availabilityStatus !== "manual" && (
+      {availabilityStatus !== "manual" && rentalWindow && (
       <div className="border-t border-border pt-4 mb-4 space-y-2">
         <div className="flex justify-between text-sm">
           <span className="text-neutral-500">
@@ -1281,7 +1294,8 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
       ) : availabilityStatus === "idle" ? (
         <button
           onClick={checkAvailability}
-          className="btn btn-primary btn-lg w-full mb-3"
+          disabled={!rentalWindow}
+          className="btn btn-primary btn-lg w-full mb-3 disabled:cursor-not-allowed disabled:opacity-60"
           id="booking-check-availability"
         >
           {t.checkAvailability}
