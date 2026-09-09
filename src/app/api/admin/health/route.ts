@@ -31,6 +31,13 @@ function maskChatId(value: string | undefined): string | null {
   return `${raw.slice(0, 2)}***${raw.slice(-2)}`;
 }
 
+function maskChatIds(value: string | undefined): string[] {
+  return String(value || "")
+    .split(",")
+    .map((chatId) => maskChatId(chatId))
+    .filter((chatId): chatId is string => Boolean(chatId));
+}
+
 async function isAvailable(query: unknown) {
   const { error } = await (query as PromiseLike<{ error: unknown }>);
   return !error;
@@ -133,6 +140,7 @@ export async function GET(request: NextRequest) {
     telegram: {
       configured: isTelegramBookingNotificationConfigured(),
       chatIdMasked: maskChatId(process.env.TELEGRAM_NOTIFY_CHAT_ID),
+      chatIdsMasked: maskChatIds(process.env.TELEGRAM_NOTIFY_CHAT_IDS || process.env.TELEGRAM_NOTIFY_CHAT_ID),
       threadConfigured: Boolean(process.env.TELEGRAM_NOTIFY_THREAD_ID),
       apiBaseConfigured: Boolean(process.env.TELEGRAM_API_BASE),
     },

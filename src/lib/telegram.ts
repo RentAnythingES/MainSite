@@ -89,37 +89,46 @@ function buildMessageText(data: BookingPaidTelegramData) {
 }
 
 export function isTelegramBookingNotificationConfigured() {
-  return Boolean(process.env.TELEGRAM_BOT_TOKEN && process.env.TELEGRAM_NOTIFY_CHAT_ID);
+  return Boolean(process.env.TELEGRAM_BOT_TOKEN && getTelegramChatIds().length > 0);
 }
 
 export function getTelegramBookingConfigurationIssues() {
-  return REQUIRED_VARS.filter((name) => !process.env[name]);
+  return REQUIRED_VARS.filter((name) => {
+    if (name === "TELEGRAM_NOTIFY_CHAT_ID") return getTelegramChatIds().length === 0;
+    return !process.env[name];
+  });
 }
 
 async function sendTelegramText(text: string, logLabel: string) {
   const botToken = process.env.TELEGRAM_BOT_TOKEN;
-  const chatId = process.env.TELEGRAM_NOTIFY_CHAT_ID;
+  const chatIds = getTelegramChatIds();
   const threadId = process.env.TELEGRAM_NOTIFY_THREAD_ID;
   const apiBase = process.env.TELEGRAM_API_BASE || "https://api.telegram.org";
 
-  if (!botToken || !chatId) return { ok: false, error: "Telegram bot token or chat id is not configured" };
+  if (!botToken || chatIds.length === 0) return { ok: false, error: "Telegram bot token or chat id is not configured" };
 
   try {
-    const response = await fetch(`${apiBase}/bot${botToken}/sendMessage`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        chat_id: chatId,
-        text,
-        parse_mode: "HTML",
-        disable_web_page_preview: true,
-        ...(threadId ? { message_thread_id: Number(threadId) } : {}),
-      }),
-    });
+    const failures: string[] = [];
+    for (const chatId of chatIds) {
+      const response = await fetch(`${apiBase}/bot${botToken}/sendMessage`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          chat_id: chatId,
+          text,
+          parse_mode: "HTML",
+          disable_web_page_preview: true,
+          ...(threadId ? { message_thread_id: Number(threadId) } : {}),
+        }),
+      });
 
-    if (!response.ok) {
-      const body = await response.text();
-      throw new Error(`Telegram Bot API returned ${response.status}: ${body}`);
+      if (!response.ok) {
+        failures.push(`chat ${chatId}: Telegram Bot API returned ${response.status}: ${await response.text()}`);
+      }
+    }
+
+    if (failures.length > 0) {
+      throw new Error(failures.join("; "));
     }
 
     return { ok: true };
@@ -246,4 +255,9 @@ export async function getTelegramRecentChatCandidates(limit = 20) {
   return Array.from(candidates.values())
     .sort((left, right) => right.updateId - left.updateId)
     .slice(0, limit);
+}
+
+function getTelegramChatIds() {
+  const configured = process.env.TELEGRAM_NOTIFY_CHAT_IDS || process.env.TELEGRAM_NOTIFY_CHAT_ID || "";
+  return [...new Set(configured.split(",").map((value) => value.trim()).filter(Boolean))];
 }
