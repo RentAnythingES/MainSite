@@ -32,7 +32,7 @@ function resolveProductName(product: BookingRow["product"]) {
   return row?.name || "Rental item";
 }
 
-async function alreadyNotified(
+async function hasAlreadyNotified(
   supabase: ReturnType<typeof createAdminClient>,
   bookingId: string,
   eventType: "delivery" | "pickup",
@@ -40,15 +40,27 @@ async function alreadyNotified(
 ) {
   const { data, error } = await supabase
     .from("booking_reminder_notifications")
-    .upsert(
-      { booking_id: bookingId, event_type: eventType, event_date: eventDate, channel: "telegram" },
-      { onConflict: "booking_id,event_type,event_date,channel", ignoreDuplicates: true },
-    )
-    .select("id");
+    .select("id")
+    .eq("booking_id", bookingId)
+    .eq("event_type", eventType)
+    .eq("event_date", eventDate)
+    .eq("channel", "telegram");
 
   if (error) throw error;
-  // If the row already existed, the ignored insert returns no rows.
-  return !data || data.length === 0;
+  return Boolean(data && data.length > 0);
+}
+
+async function recordNotification(
+  supabase: ReturnType<typeof createAdminClient>,
+  bookingId: string,
+  eventType: "delivery" | "pickup",
+  eventDate: string,
+) {
+  const { error } = await supabase
+    .from("booking_reminder_notifications")
+    .insert({ booking_id: bookingId, event_type: eventType, event_date: eventDate, channel: "telegram" });
+
+  if (error) throw error;
 }
 
 export async function GET(request: NextRequest) {
@@ -83,8 +95,8 @@ export async function GET(request: NextRequest) {
       booking.delivery_address
     ) {
       try {
-        const isNew = await alreadyNotified(supabase, booking.id, "delivery", today);
-        if (!isNew) {
+        const alreadySent = await hasAlreadyNotified(supabase, booking.id, "delivery", today);
+        if (alreadySent) {
           results.skippedAlreadySent += 1;
         } else {
           const sent = await sendDueDateTelegramNotification({
@@ -97,7 +109,10 @@ export async function GET(request: NextRequest) {
             address: booking.delivery_address,
           });
           if (!sent.ok) results.errors.push(`Delivery reminder for ${booking.booking_ref}: ${sent.error}`);
-          else results.deliveriesSent += 1;
+          else {
+            await recordNotification(supabase, booking.id, "delivery", today);
+            results.deliveriesSent += 1;
+          }
         }
       } catch (err) {
         results.errors.push(`Delivery reminder for ${booking.booking_ref}: ${err instanceof Error ? err.message : String(err)}`);
@@ -113,8 +128,8 @@ export async function GET(request: NextRequest) {
       const address = booking.collection_address || booking.delivery_address;
       if (address) {
         try {
-          const isNew = await alreadyNotified(supabase, booking.id, "pickup", today);
-          if (!isNew) {
+          const alreadySent = await hasAlreadyNotified(supabase, booking.id, "pickup", today);
+          if (alreadySent) {
             results.skippedAlreadySent += 1;
           } else {
             const sent = await sendDueDateTelegramNotification({
@@ -127,7 +142,10 @@ export async function GET(request: NextRequest) {
               address,
             });
             if (!sent.ok) results.errors.push(`Pick-up reminder for ${booking.booking_ref}: ${sent.error}`);
-            else results.pickupsSent += 1;
+            else {
+              await recordNotification(supabase, booking.id, "pickup", today);
+              results.pickupsSent += 1;
+            }
           }
         } catch (err) {
           results.errors.push(`Pick-up reminder for ${booking.booking_ref}: ${err instanceof Error ? err.message : String(err)}`);

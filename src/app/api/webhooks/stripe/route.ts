@@ -20,7 +20,7 @@ import Stripe from "stripe";
  * When a customer completes payment, this handler:
  *   1. Verifies the webhook signature
  *   2. Extracts booking data from session metadata
- *   3. Creates the booking in Supabase (status: "paid")
+ *   3. Creates the booking in Supabase (status: "active")
  *   4. Blocks the rental dates
  *
  * Setup:
@@ -152,7 +152,7 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session): Promis
     }
   }
 
-  // Create the booking with status "paid" (payment already confirmed)
+  // Payment is confirmed, so the booking is immediately active.
   const { data: booking, error } = await supabase
     .from("bookings")
     .insert({
@@ -173,7 +173,7 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session): Promis
       delivery_address: meta.delivery_address || "",
       delivery_city: meta.delivery_city || "valencia",
       delivery_notes: meta.delivery_notes || null,
-      status: "paid",
+      status: "active",
       stripe_payment_intent_id: paymentIntentId || null,
       paid_at: new Date().toISOString(),
     })
@@ -642,7 +642,7 @@ async function handleDraftCheckoutCompleted(
       billing_tax_id: bookingDraft.billing_tax_id || null,
       billing_address: bookingDraft.billing_address || {},
       invoice_requested: Boolean(bookingDraft.invoice_requested),
-      status: "paid",
+      status: "active",
       stripe_payment_intent_id: paymentIntentId || null,
       paid_at: new Date().toISOString(),
       booking_draft_id: bookingDraft.id,
