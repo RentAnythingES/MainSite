@@ -219,6 +219,13 @@ interface BookingRow {
   custom_internal_notes?: string | null;
   market_id?: string;
   product_offer_id?: string;
+  extra_services?: { serviceType: string; feeCents: number }[];
+  extra_services_fee_cents?: number;
+  requires_confirmation?: boolean;
+  confirmation_status?: "pending" | "approved" | "rejected" | null;
+  confirmation_requested_at?: string | null;
+  confirmed_at?: string | null;
+  confirmed_by?: string | null;
 }
 
 interface BookingStatusEventRow {
@@ -391,6 +398,9 @@ interface BookingDraftRow {
   custom_internal_notes: string | null;
   market_id?: string;
   product_offer_id?: string;
+  extra_services?: { serviceType: string; feeCents: number }[];
+  extra_services_fee_cents?: number;
+  requires_confirmation?: boolean;
 }
 
 interface BookingInventoryBlockRow {

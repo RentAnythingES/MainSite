@@ -146,6 +146,10 @@ interface Booking {
   custom_internal_notes?: string | null;
   status: string;
   created_at: string;
+  requires_confirmation?: boolean;
+  confirmation_status?: "pending" | "approved" | "rejected" | null;
+  confirmed_at?: string | null;
+  confirmed_by?: string | null;
 }
 
 const STATUS_COLORS: Record<string, string> = {
@@ -278,6 +282,28 @@ export default function AdminBookingsPage() {
       await fetchBookings();
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to update booking");
+    } finally {
+      setUpdatingStatus(null);
+    }
+  };
+
+  const updateConfirmation = async (bookingId: string, decision: "approved" | "rejected") => {
+    try {
+      setNotice("");
+      setUpdatingStatus(`${bookingId}:confirmation:${decision}`);
+      const res = await fetch(`/api/admin/bookings/${bookingId}/confirmation`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ decision }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.error || "Update failed");
+      }
+      setNotice(decision === "approved" ? "Booking confirmed." : "Booking rejected.");
+      await fetchBookings();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to update confirmation");
     } finally {
       setUpdatingStatus(null);
     }
@@ -865,6 +891,11 @@ export default function AdminBookingsPage() {
                         Express · urgent
                       </span>
                     )}
+                    {booking.confirmation_status === "pending" && (
+                      <span className="rounded-full bg-red-500/20 px-2 py-0.5 text-[11px] font-bold uppercase tracking-wide text-red-300 ring-1 ring-red-400/30">
+                        Needs confirmation
+                      </span>
+                    )}
                   </div>
                   <p className="text-sm text-neutral-400 truncate">
                     {booking.customer_name} · {booking.quantity > 1 ? `${booking.quantity} × ` : ""}{booking.product?.name || "Unknown"}
@@ -1327,6 +1358,37 @@ export default function AdminBookingsPage() {
                       </p>
                     )}
                   </div>
+
+                  {/* Short-notice confirmation */}
+                  {booking.confirmation_status === "pending" && (
+                    <div className="mb-4 rounded-lg border border-red-500/30 bg-red-500/10 p-3">
+                      <p className="text-sm font-semibold text-red-300">
+                        Short-notice booking — needs confirmation (target: within 2h during opening hours)
+                      </p>
+                      <div className="mt-2 flex gap-2">
+                        <button
+                          onClick={() => updateConfirmation(booking.id, "approved")}
+                          disabled={updatingStatus === `${booking.id}:confirmation:approved`}
+                          className="px-3 py-1.5 rounded-lg text-xs font-semibold text-white bg-emerald-600 hover:bg-emerald-500 disabled:cursor-not-allowed disabled:opacity-50"
+                        >
+                          {updatingStatus === `${booking.id}:confirmation:approved` ? "Confirming..." : "✅ Confirm"}
+                        </button>
+                        <button
+                          onClick={() => updateConfirmation(booking.id, "rejected")}
+                          disabled={updatingStatus === `${booking.id}:confirmation:rejected`}
+                          className="px-3 py-1.5 rounded-lg text-xs font-semibold text-white bg-red-600 hover:bg-red-500 disabled:cursor-not-allowed disabled:opacity-50"
+                        >
+                          {updatingStatus === `${booking.id}:confirmation:rejected` ? "Rejecting..." : "❌ Reject"}
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                  {booking.confirmation_status === "approved" && (
+                    <p className="mb-4 text-xs text-emerald-400">Confirmed by {booking.confirmed_by || "team"}</p>
+                  )}
+                  {booking.confirmation_status === "rejected" && (
+                    <p className="mb-4 text-xs text-red-400">Rejected by {booking.confirmed_by || "team"}</p>
+                  )}
 
                   {/* Status transition buttons */}
                   {getTransitions(booking).length > 0 && (

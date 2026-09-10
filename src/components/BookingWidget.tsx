@@ -114,6 +114,12 @@ const labels = {
     back: "← Back",
     tryDifferentDates: "Try different dates",
     orWhatsapp: "or contact us via WhatsApp",
+    hoursHint: "Deliveries and pick-ups run 10:00-19:00. Sundays or times outside these hours are subject to extra costs to be agreed during booking.",
+    extraServicesTitle: "Extra services",
+    assemblyLabel: "Assembly & set-up",
+    disassemblyLabel: "Disassembly",
+    shortNoticeTitle: "Short-notice booking",
+    shortNoticeMessage: "This booking is less than 24 hours away. You can still pay now, but our team needs to confirm it — usually within 2 hours during opening hours.",
   },
   es: {
     bookTitle: "Reservar Este Artículo",
@@ -187,23 +193,29 @@ const labels = {
     back: "← Volver",
     tryDifferentDates: "Prueba otras fechas",
     orWhatsapp: "o contáctanos por WhatsApp",
+    hoursHint: "Las entregas y recogidas son de 10:00 a 19:00. Los domingos o fuera de este horario tienen un coste adicional a acordar durante la reserva.",
+    extraServicesTitle: "Servicios adicionales",
+    assemblyLabel: "Montaje",
+    disassemblyLabel: "Desmontaje",
+    shortNoticeTitle: "Reserva de última hora",
+    shortNoticeMessage: "Esta reserva es en menos de 24 horas. Puedes pagar ahora, pero nuestro equipo debe confirmarla, normalmente en menos de 2 horas en horario laboral.",
   },
 };
 
 const policyMessages = {
   en: {
-    same_day_too_soon: "This same-day delivery is less than 6 hours away and needs confirmation.",
-    future_date_too_soon: "This delivery is less than 12 hours away and needs confirmation.",
-    outside_operating_hours: "This time is outside our automatic delivery hours (09:00-20:00 Valencia time).",
-    closed_day: "Automatic delivery is closed for this day.",
+    same_day_too_soon: "This booking is short notice (less than 24 hours away) and will need a quick confirmation from our team after checkout.",
+    future_date_too_soon: "This booking is short notice (less than 24 hours away) and will need a quick confirmation from our team after checkout.",
+    outside_operating_hours: "Deliveries and pick-ups run 10:00-19:00 Valencia time. Requests outside these hours are subject to extra costs to be agreed during booking.",
+    closed_day: "Deliveries and pick-ups run Monday-Saturday, 10:00-19:00. Sunday requests are subject to extra costs to be agreed during booking.",
     express_disabled: "Same-day delivery needs confirmation for this area.",
     policy_unconfigured: "Our team needs to confirm this delivery timing.",
   },
   es: {
-    same_day_too_soon: "Esta entrega el mismo día está a menos de 6 horas y necesita confirmación.",
-    future_date_too_soon: "Esta entrega está a menos de 12 horas y necesita confirmación.",
-    outside_operating_hours: "Este horario está fuera de nuestras horas de entrega automática (09:00-20:00, hora de Valencia).",
-    closed_day: "La entrega automática está cerrada para este día.",
+    same_day_too_soon: "Esta reserva es de última hora (menos de 24 horas) y necesitar\u00e1 una confirmaci\u00f3n r\u00e1pida de nuestro equipo tras el pago.",
+    future_date_too_soon: "Esta reserva es de última hora (menos de 24 horas) y necesitar\u00e1 una confirmaci\u00f3n r\u00e1pida de nuestro equipo tras el pago.",
+    outside_operating_hours: "Las entregas y recogidas son de 10:00 a 19:00, hora de Valencia. Fuera de este horario hay un coste adicional a acordar durante la reserva.",
+    closed_day: "Las entregas y recogidas son de lunes a s\u00e1bado, 10:00-19:00. Los domingos hay un coste adicional a acordar durante la reserva.",
     express_disabled: "La entrega el mismo día necesita confirmación para esta zona.",
     policy_unconfigured: "Nuestro equipo necesita confirmar este horario de entrega.",
   },
@@ -286,7 +298,13 @@ interface ServerQuote {
   collectionFeeCents: number;
   fulfillmentBaseFeeCents: number;
   expressSurchargeCents: number;
+  extraServicesFeeCents: number;
   totalCents: number;
+}
+
+interface ExtraServiceOption {
+  serviceType: "assembly" | "disassembly";
+  feeCents: number;
 }
 
 function calculateFulfillmentFeeCents(
@@ -319,9 +337,9 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
   const t = labels[locale];
   const [minimumStartDate, setMinimumStartDate] = useState("");
   const [startDate, setStartDate] = useState("");
-  const [startTime, setStartTime] = useState("09:00");
+  const [startTime, setStartTime] = useState("10:00");
   const [endDate, setEndDate] = useState("");
-  const [endTime, setEndTime] = useState("09:00");
+  const [endTime, setEndTime] = useState("10:00");
   const [quantity, setQuantity] = useState(1);
   const [deliveryOption, setDeliveryOption] = useState<DeliveryOption>("standard");
   const [fulfillmentPolicy, setFulfillmentPolicy] = useState<FulfillmentPolicyResponse | null>(null);
@@ -339,6 +357,9 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
   const [collectionZoneId, setCollectionZoneId] = useState("");
   const [pickupLocationId, setPickupLocationId] = useState("");
   const [maxAvailableQuantity, setMaxAvailableQuantity] = useState(product.stockAvailable || product.stockTotal || 20);
+  const [extraServiceOptions, setExtraServiceOptions] = useState<ExtraServiceOption[]>([]);
+  const [selectedExtraServices, setSelectedExtraServices] = useState<string[]>([]);
+  const [requiresConfirmation, setRequiresConfirmation] = useState(false);
 
   // Form fields
   const [name, setName] = useState("");
@@ -384,10 +405,13 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
       selectedCollectionZone,
     ) / 100;
     const expressSurcharge = Math.max(0, deliveryFee - fulfillmentBaseFee);
-    const total = subtotal + deliveryFee;
+    const extraServicesFee = extraServiceOptions
+      .filter((service) => selectedExtraServices.includes(service.serviceType))
+      .reduce((sum, service) => sum + service.feeCents, 0) / 100;
+    const total = subtotal + deliveryFee + extraServicesFee;
 
-    return { days, perDay: tier.perDay, subtotal, subtotalBeforeDiscount: subtotal, deliveryFee, fulfillmentBaseFee, expressSurcharge, total, quantityDiscount: 0 };
-  }, [rentalWindow, deliveryOption, fulfillmentMode, product.pricing, quantity, selectedDeliveryZone, selectedCollectionZone]);
+    return { days, perDay: tier.perDay, subtotal, subtotalBeforeDiscount: subtotal, deliveryFee, fulfillmentBaseFee, expressSurcharge, extraServicesFee, total, quantityDiscount: 0 };
+  }, [rentalWindow, deliveryOption, fulfillmentMode, product.pricing, quantity, selectedDeliveryZone, selectedCollectionZone, extraServiceOptions, selectedExtraServices]);
 
   const displayPricing = useMemo(() => {
     if (!serverQuote) {
@@ -402,6 +426,7 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
       deliveryFee: (serverQuote.deliveryFeeCents + serverQuote.collectionFeeCents) / 100,
       fulfillmentBaseFee: serverQuote.fulfillmentBaseFeeCents / 100,
       expressSurcharge: serverQuote.expressSurchargeCents / 100,
+      extraServicesFee: serverQuote.extraServicesFeeCents / 100,
       total: serverQuote.totalCents / 100,
       quantityDiscount: serverQuote.quantityDiscountCents / 100,
     };
@@ -439,6 +464,27 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
       setActiveCheckout(readActiveCheckout(product.slug));
     });
     return () => window.cancelAnimationFrame(frameId);
+  }, [product.slug]);
+
+  useEffect(() => {
+    let active = true;
+
+    async function loadExtraServices() {
+      try {
+        const res = await fetch(`/api/products/${encodeURIComponent(product.slug)}/extra-services`);
+        const data = await res.json();
+        if (active && Array.isArray(data.extraServices)) {
+          setExtraServiceOptions(data.extraServices);
+        }
+      } catch {
+        // Extra services are optional; leave the list empty on failure.
+      }
+    }
+
+    loadExtraServices();
+    return () => {
+      active = false;
+    };
   }, [product.slug]);
 
   useEffect(() => {
@@ -486,9 +532,10 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
       setServerQuote(null);
       setFulfillmentPolicy(null);
       setDeliveryOption("standard");
+      setRequiresConfirmation(false);
     }, 0);
     return () => window.clearTimeout(timeoutId);
-    }, [startDate, startTime, endDate, endTime, quantity, fulfillmentMode, deliveryZoneId, collectionZoneId, pickupLocationId]);
+    }, [startDate, startTime, endDate, endTime, quantity, fulfillmentMode, deliveryZoneId, collectionZoneId, pickupLocationId, selectedExtraServices]);
 
   const checkAvailability = async () => {
     if (!rentalWindow) {
@@ -519,6 +566,7 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
       if (deliveryZoneId) params.set("deliveryZoneId", deliveryZoneId);
       if (collectionZoneId) params.set("collectionZoneId", collectionZoneId);
       if (pickupLocationId) params.set("pickupLocationId", pickupLocationId);
+      if (selectedExtraServices.length > 0) params.set("extraServices", selectedExtraServices.join(","));
       if (activeCheckoutMatchesSelection && activeCheckout) {
         params.set("draftId", activeCheckout.draftId);
       }
@@ -527,6 +575,7 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
       const data = await res.json();
       const policy = data.policy as FulfillmentPolicyResponse | null;
       setFulfillmentPolicy(policy || null);
+      setRequiresConfirmation(Boolean(data.requiresConfirmation));
       if (policy?.deliveryType) setDeliveryOption(policy.deliveryType);
       const localizedPolicyMessage = policy
         ? policyMessages[locale][policy.reason as keyof typeof policyMessages.en] || t.manualHelp
@@ -659,6 +708,7 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
           billingTaxId: invoiceRequested ? billingTaxId || null : null,
           billingAddress: invoiceRequested ? { address: billingAddress } : null,
           invoiceRequested,
+          extraServices: selectedExtraServices,
         }),
       });
 
@@ -699,6 +749,7 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
       const resolvedDeliveryType = draftPolicy?.deliveryType || "standard";
       if (draftPolicy) setFulfillmentPolicy(draftPolicy);
       setDeliveryOption(resolvedDeliveryType);
+      setRequiresConfirmation(Boolean(draftData.requiresConfirmation));
 
       trackBookingEvent("booking_draft_created", {
         productSlug: product.slug,
@@ -913,11 +964,24 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
                 <span className="font-medium">€{displayPricing.expressSurcharge.toFixed(2)}</span>
               </div>
             )}
+            {displayPricing.extraServicesFee > 0 && (
+              <div className="flex justify-between text-sm">
+                <span className="text-neutral-500">{t.extraServicesTitle}</span>
+                <span className="font-medium">€{displayPricing.extraServicesFee.toFixed(2)}</span>
+              </div>
+            )}
             <div className="flex justify-between text-base font-bold pt-2 border-t border-border">
               <span>{t.total}</span>
               <span className="text-brand">€{displayPricing.total}</span>
             </div>
           </div>
+
+          {requiresConfirmation && (
+            <div className="bg-amber-50 border border-amber-200 rounded-lg p-3">
+              <p className="text-sm text-amber-900 font-semibold mb-1">{t.shortNoticeTitle}</p>
+              <p className="text-xs text-amber-800">{t.shortNoticeMessage}</p>
+            </div>
+          )}
 
           <button type="submit" disabled={submitting} className="btn btn-primary btn-lg w-full" id="booking-submit">
             {submitting ? t.submitting : t.submit}
@@ -1001,6 +1065,8 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
             id="booking-start-time"
             type="time"
             value={startTime}
+            min="10:00"
+            max="19:00"
             onChange={(e) => setStartTime(e.target.value)}
             className="w-full px-3 py-2.5 rounded-lg border border-border text-sm focus:outline-none focus:ring-2 focus:ring-brand/30 focus:border-brand"
           />
@@ -1013,11 +1079,16 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
             id="booking-end-time"
             type="time"
             value={endTime}
+            min="10:00"
+            max="19:00"
             onChange={(e) => setEndTime(e.target.value)}
             className="w-full px-3 py-2.5 rounded-lg border border-border text-sm focus:outline-none focus:ring-2 focus:ring-brand/30 focus:border-brand"
           />
         </div>
       </div>
+      <p className="text-xs text-neutral-500 -mt-2 mb-4">
+        {t.hoursHint}
+      </p>
 
       <div className="mb-4">
         <label htmlFor="booking-quantity" className="text-xs font-medium text-neutral-500 mb-1 block">
@@ -1080,6 +1151,40 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
           ))}
         </div>
       </div>
+
+      {extraServiceOptions.length > 0 && (
+        <div className="mb-4">
+          <p className="text-xs font-medium text-neutral-500 mb-2">{t.extraServicesTitle}</p>
+          <div className="space-y-2">
+            {extraServiceOptions.map((service) => {
+              const label = service.serviceType === "assembly" ? t.assemblyLabel : t.disassemblyLabel;
+              const checked = selectedExtraServices.includes(service.serviceType);
+              return (
+                <label
+                  key={service.serviceType}
+                  className="flex items-center justify-between gap-2 w-full p-3 rounded-lg border border-border text-sm cursor-pointer"
+                >
+                  <span className="flex items-center gap-2">
+                    <input
+                      type="checkbox"
+                      checked={checked}
+                      onChange={() =>
+                        setSelectedExtraServices((current) =>
+                          checked
+                            ? current.filter((type) => type !== service.serviceType)
+                            : [...current, service.serviceType],
+                        )
+                      }
+                    />
+                    {label}
+                  </span>
+                  <span className="font-semibold text-neutral-600">€{(service.feeCents / 100).toFixed(2)}</span>
+                </label>
+              );
+            })}
+          </div>
+        </div>
+      )}
 
       {fulfillmentMode === "customer_pickup" && pickupLocations.length > 0 && (
         <div className="mb-4">
@@ -1251,6 +1356,12 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
       {availabilityStatus === "available" && (
         <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-3 mb-4 text-sm text-emerald-700 font-medium">
           {t.available}
+        </div>
+      )}
+      {availabilityStatus === "available" && requiresConfirmation && (
+        <div className="bg-amber-50 border border-amber-200 rounded-lg p-3 mb-4">
+          <p className="text-sm text-amber-900 font-semibold mb-1">{t.shortNoticeTitle}</p>
+          <p className="text-xs text-amber-800">{t.shortNoticeMessage}</p>
         </div>
       )}
       {availabilityStatus === "unavailable" && (

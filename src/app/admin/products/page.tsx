@@ -18,6 +18,13 @@ interface QuantityDiscountTier {
   discount_bps: number;
 }
 
+interface ExtraServiceTier {
+  id: string;
+  service_type: "assembly" | "disassembly";
+  fee_cents: number;
+  is_enabled: boolean;
+}
+
 interface Category {
   id: string;
   slug: string;
@@ -42,6 +49,7 @@ interface Product {
   specs: Record<string, string>;
   pricing_tiers: PricingTier[];
   quantity_discounts: QuantityDiscountTier[];
+  extra_services: ExtraServiceTier[];
   category: Category;
   content_status?: "draft" | "facts_verified" | "content_ready";
   seo?: {
@@ -143,6 +151,12 @@ export default function AdminProductsPage() {
       stock_available: product.stock_available,
       pricing_tiers: [...product.pricing_tiers].sort((a, b) => a.min_days - b.min_days),
       quantity_discounts: [...(product.quantity_discounts || [])].sort((a, b) => a.min_quantity - b.min_quantity),
+      extra_services: (
+        ["assembly", "disassembly"] as const
+      ).map((serviceType) =>
+        product.extra_services?.find((service) => service.service_type === serviceType) ||
+        { id: "", service_type: serviceType, fee_cents: 0, is_enabled: false },
+      ),
     });
     setEditFeatures(product.features?.length ? product.features : [""]);
     setEditSpecs(
@@ -288,6 +302,12 @@ export default function AdminProductsPage() {
     const tiers = [...(editForm.quantity_discounts || [])];
     tiers[index] = { ...tiers[index], [field]: value };
     setEditForm({ ...editForm, quantity_discounts: tiers });
+  };
+
+  const updateExtraService = (index: number, field: "fee_cents" | "is_enabled", value: number | boolean) => {
+    const services = [...(editForm.extra_services || [])];
+    services[index] = { ...services[index], [field]: value };
+    setEditForm({ ...editForm, extra_services: services });
   };
 
   const updateFeature = (index: number, value: string) => {
@@ -1060,6 +1080,37 @@ export default function AdminProductsPage() {
                   {(editForm.quantity_discounts || []).length === 0 && (
                     <p className="text-xs text-neutral-600">No quantity discount configured.</p>
                   )}
+                </div>
+              </div>
+
+              <div>
+                <label className="text-xs font-medium text-neutral-400">Extra Services</label>
+                <p className="text-[11px] text-neutral-500 mb-2">Optional add-ons shown to the customer on the product page when enabled.</p>
+                <div className="space-y-2">
+                  {(editForm.extra_services || []).map((service, index) => (
+                    <div key={service.service_type} className="flex gap-2 items-center rounded-lg border border-neutral-800 bg-neutral-950 p-3">
+                      <label className="flex items-center gap-2 flex-1 text-sm text-white capitalize">
+                        <input
+                          type="checkbox"
+                          checked={service.is_enabled}
+                          onChange={(e) => updateExtraService(index, "is_enabled", e.target.checked)}
+                          className="rounded border-neutral-700 bg-neutral-800"
+                        />
+                        {service.service_type === "assembly" ? "Assembly & set-up" : "Disassembly"}
+                      </label>
+                      <div className="relative w-32">
+                        <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs text-neutral-500">€</span>
+                        <input
+                          type="number"
+                          min={0}
+                          step={0.01}
+                          value={(service.fee_cents / 100).toFixed(2)}
+                          onChange={(e) => updateExtraService(index, "fee_cents", Math.round((parseFloat(e.target.value) || 0) * 100))}
+                          className="w-full pl-7 pr-2 py-2 rounded-lg bg-neutral-800 border border-neutral-700 text-white text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/30"
+                        />
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>

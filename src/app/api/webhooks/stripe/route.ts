@@ -8,7 +8,7 @@ import { createBookingDocumentForPaymentEvent, getCustomerDocumentUrl } from "@/
 import { getIncidentErrorMessage, recordSystemIncident } from "@/lib/system-incidents";
 import { buildGoogleCalendarUrl, buildGoogleMapsUrl } from "@/lib/calendar-links";
 import { sendBookingPaidWhatsAppNotification } from "@/lib/whatsapp";
-import { sendBookingPaidTelegramNotification } from "@/lib/telegram";
+import { sendBookingPaidTelegramNotification, sendShortNoticeBookingTelegramNotification } from "@/lib/telegram";
 import { getStoredFulfillmentFeeBreakdown } from "@/lib/booking-v2";
 import { formatValenciaDateTime } from "@/lib/fulfillment-policy";
 import Stripe from "stripe";
@@ -524,6 +524,9 @@ async function handleDraftCheckoutCompleted(
     custom_line_items: Array<{ description: string; amountCents: number }>;
     custom_terms: string | null;
     custom_internal_notes: string | null;
+    extra_services?: { serviceType: string; feeCents: number }[];
+    extra_services_fee_cents?: number;
+    requires_confirmation?: boolean;
   };
 
   if (session.payment_status !== "paid" || session.amount_total !== bookingDraft.total_cents) {
@@ -662,6 +665,11 @@ async function handleDraftCheckoutCompleted(
       custom_terms: bookingDraft.custom_terms,
       custom_internal_notes: bookingDraft.custom_internal_notes,
       stripe_checkout_session_id: session.id,
+      extra_services: bookingDraft.extra_services || [],
+      extra_services_fee_cents: bookingDraft.extra_services_fee_cents || 0,
+      requires_confirmation: Boolean(bookingDraft.requires_confirmation),
+      confirmation_status: bookingDraft.requires_confirmation ? "pending" : null,
+      confirmation_requested_at: bookingDraft.requires_confirmation ? new Date().toISOString() : null,
     })
     .select()
     .single();
@@ -786,6 +794,20 @@ async function handleDraftCheckoutCompleted(
     fulfillmentLabel: `${bookingDraft.delivery_type === "express" ? "Express" : "Standard"} · ${fulfillmentDisplayLabel || bookingDraft.fulfillment_mode}`,
     deliveryAddress: bookingDraft.delivery_address || bookingDraft.collection_address || "Customer pickup",
   });
+
+  if (bookingDraft.requires_confirmation) {
+    await sendShortNoticeBookingTelegramNotification({
+      bookingId,
+      bookingRef: (booking as { booking_ref: string }).booking_ref,
+      customerName: bookingDraft.customer_name || session.customer_details?.name || "Customer",
+      customerPhone: bookingDraft.customer_phone,
+      productName: (product as { name?: string } | null)?.name || "Rental equipment",
+      quantity: bookingDraft.quantity,
+      startDate,
+      fulfillmentLabel: `${bookingDraft.delivery_type === "express" ? "Express" : "Standard"} · ${fulfillmentDisplayLabel || bookingDraft.fulfillment_mode}`,
+      address: bookingDraft.delivery_address || bookingDraft.collection_address || "Customer pickup",
+    });
+  }
 
   return confirmationSent;
 }

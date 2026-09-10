@@ -182,6 +182,29 @@ export async function PUT(
         }
       }
 
+      if (Array.isArray(body.extra_services)) {
+        const { error: deleteExtraServicesError } = await supabase.from("product_extra_services").delete().eq("product_id", id);
+        if (deleteExtraServicesError) throw deleteExtraServicesError;
+
+        const validServices = body.extra_services.filter((service) =>
+          ["assembly", "disassembly"].includes((service as { service_type?: string }).service_type || ""),
+        );
+        if (validServices.length > 0) {
+          const { error: extraServicesError } = await supabase
+            .from("product_extra_services")
+            .insert(
+              validServices.map((service) => ({
+                product_id: id,
+                service_type: (service as { service_type: string }).service_type,
+                fee_cents: Number((service as { fee_cents?: number }).fee_cents) || 0,
+                is_enabled: Boolean((service as { is_enabled?: boolean }).is_enabled),
+              }))
+            );
+
+          if (extraServicesError) throw extraServicesError;
+        }
+      }
+
       if (secondaryCategoryIds !== undefined) {
         const { error: membershipError } = await supabase.rpc("replace_product_secondary_categories", {
           p_product_id: id,

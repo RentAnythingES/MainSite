@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createServiceClient } from "@/lib/supabase";
-import { BookingRuleError, assertFulfillmentTiming, calculateRentalDays, cleanupExpiredBookingDrafts, evaluateDeliveryFulfillment, getFulfillmentPolicyMessage, getPickupLocation, getProductWithPricing, getServiceZone, quoteBooking, resolveRentalPeriod } from "@/lib/booking-v2";
+import { BookingRuleError, assertFulfillmentTiming, calculateRentalDays, cleanupExpiredBookingDrafts, evaluateDeliveryFulfillment, getEnabledProductExtraServices, getFulfillmentPolicyMessage, getPickupLocation, getProductWithPricing, getServiceZone, isShortNoticeBypassEligible, quoteBooking, resolveRentalPeriod, resolveSelectedExtraServices } from "@/lib/booking-v2";
 import { fetchActivePickupLocations, fetchActiveServiceZones } from "@/lib/fulfillment-options";
 import { resolveDefaultMarketContext } from "@/lib/market-context";
 import type { DeliveryType, FulfillmentMode } from "@/lib/types";
@@ -30,6 +30,7 @@ export async function GET(request: NextRequest) {
   const pickupLocationId = searchParams.get("pickupLocationId");
   const quantity = Number(searchParams.get("quantity") || "1");
   const draftId = searchParams.get("draftId");
+  const extraServices = (searchParams.get("extraServices") || "").split(",").map((value) => value.trim()).filter(Boolean);
 
   if (!slug || (!startAtParam && !start) || (!endAtParam && !end)) {
     return NextResponse.json(
@@ -136,11 +137,13 @@ export async function GET(request: NextRequest) {
       }, 0);
     }
 
-    const [pickupLocation, deliveryZone, collectionZone] = await Promise.all([
+    const [pickupLocation, deliveryZone, collectionZone, availableExtraServices] = await Promise.all([
       getPickupLocation(supabase, pickupLocationId, market.id),
       getServiceZone(supabase, deliveryZoneId, market.id),
       getServiceZone(supabase, collectionZoneId, market.id),
+      getEnabledProductExtraServices(supabase, product.id),
     ]);
+    const selectedExtraServices = resolveSelectedExtraServices(extraServices, availableExtraServices);
     const fulfillment = { mode, pickupLocationId, deliveryZoneId, collectionZoneId };
     const policy = evaluateDeliveryFulfillment(
       period,
@@ -148,10 +151,18 @@ export async function GET(request: NextRequest) {
       deliveryZone,
       collectionZone,
     );
+    let requiresConfirmation = false;
     if (mode === "customer_pickup") {
-      assertFulfillmentTiming(startAt, "standard", pickupLocation, null, null);
+      requiresConfirmation = assertFulfillmentTiming(startAt, "standard", pickupLocation, null, null).requiresConfirmation;
     }
-    if (policy && policy.decision !== "standard_checkout" && policy.decision !== "express_checkout") {
+    const shortNoticeBypass = isShortNoticeBypassEligible(policy);
+    if (shortNoticeBypass) requiresConfirmation = true;
+    if (
+      policy &&
+      policy.decision !== "standard_checkout" &&
+      policy.decision !== "express_checkout" &&
+      !shortNoticeBypass
+    ) {
       return NextResponse.json({
         available: false,
         availabilityReason: policy.decision,
@@ -170,6 +181,7 @@ export async function GET(request: NextRequest) {
       collectionZone,
       quantity,
       deliveryType,
+      selectedExtraServices,
     );
     quote.pricingSnapshot = { ...quote.pricingSnapshot, fulfillmentPolicy: policy };
 
@@ -211,6 +223,8 @@ export async function GET(request: NextRequest) {
       rentalDays,
       quote,
       policy,
+      requiresConfirmation,
+      extraServices: selectedExtraServices,
       pickupLocations: pickupLocationsResult.error ? [] : pickupLocationsResult.data || [],
       serviceZones: serviceZonesResult.error ? [] : serviceZonesResult.data || [],
       slug,

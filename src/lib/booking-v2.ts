@@ -4,10 +4,14 @@ import { canonicalProductSlug, productSlugLookupCandidates } from "@/lib/product
 import {
   evaluateFulfillmentPolicy,
   formatValenciaDateTime,
+  isShortNoticeBypassEligible,
+  SHORT_NOTICE_LEAD_HOURS,
   valenciaWallClockToDate,
   type FulfillmentPolicyReason,
   type FulfillmentPolicyResult,
 } from "@/lib/fulfillment-policy";
+
+export { isShortNoticeBypassEligible, SHORT_NOTICE_LEAD_HOURS } from "@/lib/fulfillment-policy";
 
 export const BOOKING_TIMEZONE = "Europe/Madrid";
 export const DEFAULT_DRAFT_TTL_MINUTES = 30;
@@ -49,8 +53,61 @@ export interface BookingQuote {
   collectionFeeCents: number;
   fulfillmentBaseFeeCents: number;
   expressSurchargeCents: number;
+  extraServicesFeeCents: number;
   totalCents: number;
   pricingSnapshot: Record<string, unknown>;
+}
+
+export type ExtraServiceType = "assembly" | "disassembly";
+
+export interface ProductExtraService {
+  serviceType: ExtraServiceType;
+  feeCents: number;
+}
+
+const EXTRA_SERVICE_TYPES: ExtraServiceType[] = ["assembly", "disassembly"];
+
+export async function getEnabledProductExtraServices(
+  supabase: SupabaseClient<Database>,
+  productId: string,
+): Promise<ProductExtraService[]> {
+  const { data, error } = await supabase
+    .from("product_extra_services")
+    .select("service_type, fee_cents")
+    .eq("product_id", productId)
+    .eq("is_enabled", true);
+
+  if (error) {
+    if (error.code === "42P01" || error.code === "PGRST205") return [];
+    throw error;
+  }
+
+  return ((data || []) as { service_type: ExtraServiceType; fee_cents: number }[]).map((row) => ({
+    serviceType: row.service_type,
+    feeCents: row.fee_cents,
+  }));
+}
+
+/**
+ * Validates the customer's requested extra-service selection against what is actually
+ * enabled for the product, and returns the resolved services with their current fee.
+ */
+export function resolveSelectedExtraServices(
+  requested: unknown,
+  available: ProductExtraService[],
+): ProductExtraService[] {
+  if (!Array.isArray(requested) || requested.length === 0) return [];
+
+  const requestedTypes = new Set(
+    requested.filter((value): value is ExtraServiceType => EXTRA_SERVICE_TYPES.includes(value as ExtraServiceType)),
+  );
+  if (requestedTypes.size === 0) return [];
+
+  const resolved = available.filter((service) => requestedTypes.has(service.serviceType));
+  if (resolved.length !== requestedTypes.size) {
+    throw new BookingRuleError("One or more selected extra services are not available for this product.");
+  }
+  return resolved;
 }
 
 export interface ExpiredDraftCleanupResult {
@@ -373,6 +430,7 @@ export function quoteBooking(
   collectionZone: ServiceZoneFee | null,
   quantity = 1,
   deliveryType: DeliveryType = "standard",
+  selectedExtraServices: ProductExtraService[] = [],
 ): BookingQuote {
   if (!Number.isInteger(quantity) || quantity < 1) {
     throw new Error("Quantity must be a positive integer");
@@ -424,6 +482,8 @@ export function quoteBooking(
     );
   }
 
+  const extraServicesFeeCents = selectedExtraServices.reduce((sum, service) => sum + service.feeCents, 0);
+
   return {
     quantity,
     rentalDays,
@@ -436,7 +496,8 @@ export function quoteBooking(
     collectionFeeCents,
     fulfillmentBaseFeeCents,
     expressSurchargeCents,
-    totalCents: rentalSubtotalCents + deliveryFeeCents + collectionFeeCents,
+    extraServicesFeeCents,
+    totalCents: rentalSubtotalCents + deliveryFeeCents + collectionFeeCents + extraServicesFeeCents,
     pricingSnapshot: {
       timezone: BOOKING_TIMEZONE,
       quantity,
@@ -447,6 +508,7 @@ export function quoteBooking(
       deliveryType,
       deliveryZone,
       collectionZone,
+      selectedExtraServices,
     },
   };
 }
@@ -549,13 +611,12 @@ export function evaluateDeliveryFulfillment(
 export function getFulfillmentPolicyMessage(reason: FulfillmentPolicyReason): string {
   switch (reason) {
     case "same_day_too_soon":
-      return "This same-day timing needs confirmation because it is less than 6 hours away.";
     case "future_date_too_soon":
-      return "This timing needs confirmation because it is less than 12 hours away.";
+      return "This booking is short notice (less than 24 hours away) and will need a quick confirmation from our team after checkout, usually within 2 hours during opening hours.";
     case "outside_operating_hours":
-      return "This delivery time is outside our automatic delivery hours (09:00-20:00 Valencia time).";
+      return "Deliveries and pick-ups run 10:00-19:00 Valencia time. Requests outside these hours are subject to extra costs to be agreed during the booking process.";
     case "closed_day":
-      return "Automatic delivery is closed for this day.";
+      return "Deliveries and pick-ups run 10:00-19:00 Monday-Saturday. Sunday requests are subject to extra costs to be agreed during the booking process.";
     case "express_disabled":
       return "Same-day delivery needs confirmation for this zone.";
     case "policy_unconfigured":
@@ -578,7 +639,7 @@ export function assertFulfillmentTiming(
   deliveryZone: ServiceZoneFee | null,
   collectionZone: ServiceZoneFee | null,
   now = new Date(),
-) {
+): { requiresConfirmation: boolean } {
   if (startAt.getTime() <= now.getTime()) {
     throw new BookingRuleError("Rental start must be in the future.");
   }
@@ -592,9 +653,13 @@ export function assertFulfillmentTiming(
   if (!deliveryZone) {
     const earliestStart = now.getTime() + leadTimeHours * 60 * 60 * 1000;
     if (startAt.getTime() < earliestStart) {
+      const leadTimeMinutes = (startAt.getTime() - now.getTime()) / 60000;
+      if (leadTimeMinutes < SHORT_NOTICE_LEAD_HOURS * 60) {
+        return { requiresConfirmation: true };
+      }
       throw new BookingRuleError(`This fulfillment option requires ${leadTimeHours} hours of lead time.`);
     }
-    return;
+    return { requiresConfirmation: false };
   }
 
   const wallClock = formatValenciaDateTime(startAt);
@@ -615,6 +680,9 @@ export function assertFulfillmentTiming(
     collectionZone,
     now,
   );
+  if (result && isShortNoticeBypassEligible(result)) {
+    return { requiresConfirmation: true };
+  }
   if (!result || result.decision === "invalid" || result.decision === "manual_confirmation") {
     throw new BookingRuleError(
       result ? getFulfillmentPolicyMessage(result.reason) : "This delivery timing needs confirmation.",
@@ -627,6 +695,7 @@ export function assertFulfillmentTiming(
         : "Later-date delivery is booked as Standard service.",
     );
   }
+  return { requiresConfirmation: false };
 }
 
 export function assertFulfillmentFields(

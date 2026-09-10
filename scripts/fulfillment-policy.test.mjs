@@ -46,12 +46,12 @@ test("same-day one minute below six hours routes to manual confirmation", () => 
 });
 
 test("same-day remains express even with more than twelve hours notice", () => {
-  const result = evaluate("2026-08-20", "20:00", "2026-08-20T05:00:00.000Z");
+  const result = evaluate("2026-08-20", "18:00", "2026-08-20T05:00:00.000Z");
   assert.equal(result.decision, "express_checkout");
 });
 
 test("next-day exact twelve-hour boundary is standard", () => {
-  const result = evaluate("2026-08-21", "09:00", "2026-08-20T19:00:00.000Z");
+  const result = evaluate("2026-08-21", "10:00", "2026-08-20T20:00:00.000Z");
   assert.equal(result.decision, "standard_checkout");
   assert.equal(result.fees.expressSurchargeCents, 0);
 });
@@ -64,17 +64,17 @@ test("crossing midnight does not waive the twelve-hour threshold", () => {
 
 test("operating window boundaries are inclusive", () => {
   assert.equal(
-    evaluate("2026-08-21", "09:00", "2026-08-20T08:00:00.000Z").decision,
+    evaluate("2026-08-21", "10:00", "2026-08-20T08:00:00.000Z").decision,
     "standard_checkout",
   );
   assert.equal(
-    evaluate("2026-08-21", "20:00", "2026-08-20T08:00:00.000Z").decision,
+    evaluate("2026-08-21", "19:00", "2026-08-20T08:00:00.000Z").decision,
     "standard_checkout",
   );
 });
 
 test("out-of-hours and closed-day requests route to manual confirmation", () => {
-  const outside = evaluate("2026-08-21", "20:01", "2026-08-20T08:00:00.000Z");
+  const outside = evaluate("2026-08-21", "19:01", "2026-08-20T08:00:00.000Z");
   assert.equal(outside.reason, "outside_operating_hours");
 
   const closedHours = { ...DEFAULT_DELIVERY_OPERATING_HOURS, friday: null };

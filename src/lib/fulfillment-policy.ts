@@ -3,14 +3,18 @@ import type { OperatingDay, WeeklyOperatingHours } from "./types";
 export const FULFILLMENT_TIME_ZONE = "Europe/Madrid";
 
 export const DEFAULT_DELIVERY_OPERATING_HOURS: WeeklyOperatingHours = {
-  monday: { open: "09:00", close: "20:00" },
-  tuesday: { open: "09:00", close: "20:00" },
-  wednesday: { open: "09:00", close: "20:00" },
-  thursday: { open: "09:00", close: "20:00" },
-  friday: { open: "09:00", close: "20:00" },
-  saturday: { open: "09:00", close: "20:00" },
-  sunday: { open: "09:00", close: "20:00" },
+  monday: { open: "10:00", close: "19:00" },
+  tuesday: { open: "10:00", close: "19:00" },
+  wednesday: { open: "10:00", close: "19:00" },
+  thursday: { open: "10:00", close: "19:00" },
+  friday: { open: "10:00", close: "19:00" },
+  saturday: { open: "10:00", close: "19:00" },
+  sunday: null,
 };
+
+// Bookings requested with less than this much notice are still allowed to complete
+// checkout, but need a human confirmation (see isShortNoticeBypassEligible below).
+export const SHORT_NOTICE_LEAD_HOURS = 24;
 
 export type FulfillmentPolicyReason =
   | "standard_eligible"
@@ -389,4 +393,16 @@ export function evaluateFulfillmentPolicy({
 export function formatValenciaDateTime(instant: Date): { date: string; time: string } {
   const parts = getZonedParts(instant);
   return { date: formatDate(parts), time: formatTime(parts) };
+}
+
+/**
+ * A booking within SHORT_NOTICE_LEAD_HOURS of the requested start is still allowed to
+ * complete checkout, but is flagged so a human can confirm it (short-notice workflow).
+ * Other manual-confirmation reasons (closed day, outside hours, etc.) still require the
+ * customer to arrange things with the team and are not bypassed here.
+ */
+export function isShortNoticeBypassEligible(policy: FulfillmentPolicyResult | null): boolean {
+  if (!policy || policy.decision !== "manual_confirmation") return false;
+  if (policy.reason !== "same_day_too_soon" && policy.reason !== "future_date_too_soon") return false;
+  return policy.leadTimeMinutes !== null && policy.leadTimeMinutes < SHORT_NOTICE_LEAD_HOURS * 60;
 }

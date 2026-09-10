@@ -7,6 +7,7 @@ import {
   getFulfillmentPolicyMessage,
   getServiceZone,
   getStoredFulfillmentFeeBreakdown,
+  isShortNoticeBypassEligible,
   resolveRentalPeriod,
 } from "@/lib/booking-v2";
 import type { BookingDraft, CustomQuoteLineItem } from "@/lib/types";
@@ -97,8 +98,9 @@ export async function POST(request: NextRequest) {
         const policyAllowsCheckout = checkoutPolicy &&
           (checkoutPolicy.decision === "standard_checkout" || checkoutPolicy.decision === "express_checkout") &&
           checkoutPolicy.deliveryType === bookingDraft.delivery_type;
+        const shortNoticeBypass = isShortNoticeBypassEligible(checkoutPolicy);
 
-        if (!policyAllowsCheckout) {
+        if (!policyAllowsCheckout && !shortNoticeBypass) {
           if (bookingDraft.stripe_checkout_session_id) {
             const staleSession = await stripe.checkout.sessions.retrieve(bookingDraft.stripe_checkout_session_id);
             if (staleSession.status === "open") {
@@ -239,6 +241,20 @@ export async function POST(request: NextRequest) {
                     currency: bookingDraft.currency,
                     unit_amount: fulfillmentFees.expressSurchargeCents,
                     product_data: { name: "Same-day Express surcharge" },
+                  },
+                  quantity: 1,
+                }]
+              : []),
+            ...((bookingDraft.extra_services_fee_cents || 0) > 0
+              ? [{
+                  price_data: {
+                    currency: bookingDraft.currency,
+                    unit_amount: bookingDraft.extra_services_fee_cents,
+                    product_data: {
+                      name: (bookingDraft.extra_services || [])
+                        .map((service) => service.serviceType === "assembly" ? "Assembly & set-up" : "Disassembly")
+                        .join(" + ") || "Extra services",
+                    },
                   },
                   quantity: 1,
                 }]

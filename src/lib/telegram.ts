@@ -99,7 +99,11 @@ export function getTelegramBookingConfigurationIssues() {
   });
 }
 
-async function sendTelegramText(text: string, logLabel: string) {
+async function sendTelegramText(
+  text: string,
+  logLabel: string,
+  replyMarkup?: { inline_keyboard: { text: string; callback_data: string }[][] },
+) {
   const botToken = process.env.TELEGRAM_BOT_TOKEN;
   const chatIds = getTelegramChatIds();
   const threadId = process.env.TELEGRAM_NOTIFY_THREAD_ID;
@@ -119,6 +123,7 @@ async function sendTelegramText(text: string, logLabel: string) {
           parse_mode: "HTML",
           disable_web_page_preview: true,
           ...(threadId ? { message_thread_id: Number(threadId) } : {}),
+          ...(replyMarkup ? { reply_markup: replyMarkup } : {}),
         }),
       });
 
@@ -175,6 +180,67 @@ function buildDueDateMessageText(data: DueDateTelegramData) {
 
 export async function sendDueDateTelegramNotification(data: DueDateTelegramData) {
   return sendTelegramText(buildDueDateMessageText(data), `due-date-${data.eventType}`);
+}
+
+export interface ShortNoticeBookingTelegramData {
+  bookingId: string;
+  bookingRef: string;
+  customerName: string;
+  customerPhone?: string | null;
+  productName: string;
+  quantity: number;
+  startDate: string;
+  fulfillmentLabel?: string | null;
+  address?: string | null;
+}
+
+function buildShortNoticeMessageText(data: ShortNoticeBookingTelegramData) {
+  const lines = [
+    "⚡ <b>Short-notice booking — confirmation needed</b>",
+    `<b>Ref:</b> ${escapeTelegramHtml(data.bookingRef)}`,
+    `<b>Item:</b> ${escapeTelegramHtml(`${data.quantity} x ${data.productName}`)}`,
+    `<b>Customer:</b> ${escapeTelegramHtml(data.customerName)}`,
+    data.customerPhone ? `<b>Phone:</b> ${escapeTelegramHtml(data.customerPhone)}` : null,
+    `<b>Start:</b> ${escapeTelegramHtml(data.startDate)}`,
+    data.fulfillmentLabel ? `<b>Fulfillment:</b> ${escapeTelegramHtml(data.fulfillmentLabel)}` : null,
+    data.address ? `<b>Address:</b> ${escapeTelegramHtml(data.address)}` : null,
+    `<b>Admin:</b> ${escapeTelegramHtml(buildAdminUrl(data.bookingId))}`,
+    "",
+    "This booking is less than 24h away and was paid, but needs a quick confirm/reject (target: within 2h during opening hours).",
+  ].filter(Boolean);
+
+  return lines.join("\n");
+}
+
+export async function sendShortNoticeBookingTelegramNotification(data: ShortNoticeBookingTelegramData) {
+  return sendTelegramText(buildShortNoticeMessageText(data), "short-notice-booking", {
+    inline_keyboard: [[
+      { text: "✅ Confirm", callback_data: `bkconfirm:${data.bookingId}` },
+      { text: "❌ Reject", callback_data: `bkreject:${data.bookingId}` },
+    ]],
+  });
+}
+
+export async function answerTelegramCallbackQuery(callbackQueryId: string, text: string) {
+  const botToken = process.env.TELEGRAM_BOT_TOKEN;
+  const apiBase = process.env.TELEGRAM_API_BASE || "https://api.telegram.org";
+  if (!botToken) return;
+  await fetch(`${apiBase}/bot${botToken}/answerCallbackQuery`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ callback_query_id: callbackQueryId, text, show_alert: false }),
+  }).catch(() => undefined);
+}
+
+export async function editTelegramMessageText(chatId: number | string, messageId: number, text: string) {
+  const botToken = process.env.TELEGRAM_BOT_TOKEN;
+  const apiBase = process.env.TELEGRAM_API_BASE || "https://api.telegram.org";
+  if (!botToken) return;
+  await fetch(`${apiBase}/bot${botToken}/editMessageText`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ chat_id: chatId, message_id: messageId, text, parse_mode: "HTML" }),
+  }).catch(() => undefined);
 }
 
 export async function sendTestBookingPaidTelegramNotification() {

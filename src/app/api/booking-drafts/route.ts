@@ -8,12 +8,15 @@ import {
   assertFulfillmentTiming,
   cleanupExpiredBookingDrafts,
   evaluateDeliveryFulfillment,
+  getEnabledProductExtraServices,
   getFulfillmentPolicyMessage,
   getProductWithPricing,
   getPickupLocation,
   getServiceZone,
+  isShortNoticeBypassEligible,
   quoteBooking,
   resolveRentalPeriod,
+  resolveSelectedExtraServices,
   toDateOnly,
 } from "@/lib/booking-v2";
 import type { DeliveryType, FulfillmentMode } from "@/lib/types";
@@ -47,6 +50,7 @@ interface DraftRequestBody {
   billingTaxId?: string | null;
   billingAddress?: Record<string, string> | null;
   invoiceRequested?: boolean;
+  extraServices?: string[];
 }
 
 const UUID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
@@ -128,11 +132,13 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Product not available" }, { status: 409 });
     }
 
-    const [pickupLocation, deliveryZone, collectionZone] = await Promise.all([
+    const [pickupLocation, deliveryZone, collectionZone, availableExtraServices] = await Promise.all([
       getPickupLocation(supabase, body.pickupLocationId, market.id),
       getServiceZone(supabase, body.deliveryZoneId, market.id),
       getServiceZone(supabase, body.collectionZoneId, market.id),
+      getEnabledProductExtraServices(supabase, product.id),
     ]);
+    const selectedExtraServices = resolveSelectedExtraServices(body.extraServices, availableExtraServices);
     const fulfillment = {
       mode: fulfillmentMode,
       pickupLocationId: body.pickupLocationId,
@@ -145,10 +151,18 @@ export async function POST(request: NextRequest) {
       deliveryZone,
       collectionZone,
     );
+    let requiresConfirmation = false;
     if (fulfillmentMode === "customer_pickup") {
-      assertFulfillmentTiming(startAt, "standard", pickupLocation, null, null);
+      requiresConfirmation = assertFulfillmentTiming(startAt, "standard", pickupLocation, null, null).requiresConfirmation;
     }
-    if (policy && policy.decision !== "standard_checkout" && policy.decision !== "express_checkout") {
+    const shortNoticeBypass = isShortNoticeBypassEligible(policy);
+    if (shortNoticeBypass) requiresConfirmation = true;
+    if (
+      policy &&
+      policy.decision !== "standard_checkout" &&
+      policy.decision !== "express_checkout" &&
+      !shortNoticeBypass
+    ) {
       return NextResponse.json({
         error: getFulfillmentPolicyMessage(policy.reason),
         bookingDecision: policy.decision,
@@ -166,6 +180,7 @@ export async function POST(request: NextRequest) {
       collectionZone,
       quantity,
       deliveryType,
+      selectedExtraServices,
     );
     quote.pricingSnapshot = { ...quote.pricingSnapshot, fulfillmentPolicy: policy };
 
@@ -224,6 +239,9 @@ export async function POST(request: NextRequest) {
         total_cents: quote.totalCents,
         deposit_cents: 0,
         pricing_snapshot: quote.pricingSnapshot,
+        extra_services: selectedExtraServices.map((service) => ({ serviceType: service.serviceType, feeCents: service.feeCents })),
+        extra_services_fee_cents: quote.extraServicesFeeCents,
+        requires_confirmation: requiresConfirmation,
         status: "draft",
         expires_at: expiresAt,
       })
@@ -260,6 +278,8 @@ export async function POST(request: NextRequest) {
       endAt: endAt.toISOString(),
       quote,
       policy,
+      requiresConfirmation,
+      extraServices: selectedExtraServices,
     });
   } catch (err) {
     if (err instanceof BookingRuleError) {
