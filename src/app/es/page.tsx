@@ -22,7 +22,6 @@ export const metadata: Metadata = {
 };
 
 const heroCategories = [
-  {"name":"Fiestas y Eventos","href":"/es/rental/events-celebrations","image":"/categories/events-celebrations.svg","description":"Pizza, granizados, karaoke y juegos","desc":"Pizza, granizados, karaoke y juegos"},
   { ...t.categories.babyGear, href: "/es/rental/baby-gear", image: "/categories/baby-gear.webp" },
   { ...t.categories.kidsFamily, href: "/es/rental/kids-family", image: "/discover/turia-gardens-hero.webp" },
   { ...t.categories.mobility, href: "/es/rental/mobility", image: "/categories/mobility.webp" },
@@ -30,6 +29,7 @@ const heroCategories = [
   { ...t.categories.homeLiving, href: "/es/rental/home-living", image: "/categories/home-living.webp" },
   { ...t.categories.travelOutdoors, href: "/es/rental/travel-outdoors", image: "/categories/travel-outdoors.webp" },
   { ...t.categories.sportsWellness, href: "/es/rental/fitness-wellness", image: "/categories/sports-wellness.webp" },
+  {"name":"Fiestas y Eventos","href":"/es/rental/events-celebrations","image":"/categories/events-celebrations.webp","description":"Pizza, granizados, karaoke y juegos","desc":"Pizza, granizados, karaoke y juegos"},
 ];
 
 const howItWorks = [

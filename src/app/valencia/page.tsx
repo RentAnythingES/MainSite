@@ -22,7 +22,6 @@ export const metadata: Metadata = {
 };
 
 const categoryCards = [
-  {"name":"Occasions & Events","slug":"events-celebrations","image":"/categories/events-celebrations.svg","desc":"Pizza kits, slush machines, karaoke and games"},
   { name: "Baby & Toddler", slug: "baby-gear", image: "/categories/baby-gear.webp", desc: "Cots, strollers, high chairs, baby setup" },
   { name: "Kids & Family", slug: "kids-family", image: "/discover/turia-gardens-hero.webp", desc: "Children's activities, family outings and travel gear" },
   { name: "Mobility & Accessibility", slug: "mobility", image: "/categories/mobility.webp", desc: "Wheelchairs, scooters, walkers" },
@@ -30,6 +29,7 @@ const categoryCards = [
   { name: "Apartment Comfort", slug: "home-living", image: "/categories/home-living.webp", desc: "Air purifiers, AC units, kitchen" },
   { name: "Beach & Outdoor", slug: "travel-outdoors", image: "/categories/travel-outdoors.webp", desc: "Beach gear, shade, recreation" },
   { name: "Sports & Wellness", slug: "fitness-wellness", image: "/categories/sports-wellness.webp", desc: "Tennis, padel and training equipment" },
+  {"name":"Occasions & Events","slug":"events-celebrations","image":"/categories/events-celebrations.webp","desc":"Pizza kits, slush machines, karaoke and games"},
 ];
 
 export default async function ValenciaPage() {

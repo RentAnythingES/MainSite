@@ -50,7 +50,7 @@ const categoryMeta: Record<string, CategoryContent> = {
   "title": "Occasions & Events Equipment Rental in Valencia",
   "description": "Rent pizza oven kits, slush machines, karaoke, games, tables and chairs for gatherings in Valencia. Choose your dates and check delivery options.",
   "emoji": "🎉",
-  "image": "/categories/events-celebrations.svg",
+  "image": "/categories/events-celebrations.webp",
   "editorialHeading": "Make room for a celebration in Valencia",
   "editorialParagraphs": [
     "Plan a pizza evening at your holiday home, karaoke with friends or a family games afternoon. Each product page shows daily rental rates, included accessories and the space or power needed.",

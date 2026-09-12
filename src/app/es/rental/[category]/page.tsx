@@ -46,7 +46,7 @@ const categoryMetaES: Record<string, CategoryContent> = {
   "events-celebrations": {
   "title": "Alquiler para Fiestas y Eventos en Valencia",
   "description": "Alquila kits de horno de pizza, granizadoras, karaoke, juegos, mesas y sillas para reuniones en Valencia. Elige tus fechas y consulta la entrega.",
-  "image": "/categories/events-celebrations.svg",
+  "image": "/categories/events-celebrations.webp",
   "editorialHeading": "Prepara una celebración en Valencia",
   "editorialParagraphs": [
     "Organiza una noche de pizza en tu alojamiento, karaoke con amigos o una tarde de juegos en familia. Cada ficha muestra las tarifas por día, los accesorios incluidos y el espacio o la alimentación eléctrica que necesita el equipo.",

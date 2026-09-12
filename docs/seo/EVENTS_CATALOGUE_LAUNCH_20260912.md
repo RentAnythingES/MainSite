@@ -41,3 +41,7 @@ Owner approved publication of pizza kits, Ninja slush machines, karaoke and eigh
 Detailed before/after evidence remains in agent-work/events-launch-2026-09-12/publication-commit.json in the operational workspace.
 
 Final local production build passed. All 28 release URLs passed HTTP, canonical, hreflang, structured-data, primary-image, daily-price and request-state checks; the sitemap contains 406 URLs including all 28. Existing rental-date tests passed 4/4. A direct mapper regression verified stock 0, 1, 5 and missing values. Browser review confirmed the standard Ninja layout, working photos, request URL with product/dates, and the 21-product category grid with no horizontal overflow at 1280 px.
+
+## Category presentation correction — 12 September 2026
+
+Replaced the category illustration with a photorealistic lifestyle image at `public/categories/events-celebrations.webp`. Moved Occasions & Events to the last position in both language homepage/Valencia lists and the shared category registry (navigation/footer). Existing card markup, overlays, typography and product images are preserved. No routes or prices changed. Generated with the built-in image tool: four adult friends sharing pizza on a leafy Valencia terrace, natural late-afternoon editorial photography, centred composition for existing category-card crops, no text or illustration.

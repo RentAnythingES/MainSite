@@ -18,7 +18,6 @@ export const metadata: Metadata = {
 };
 
 const categoryCards = [
-  {"name":"Fiestas y Eventos","slug":"events-celebrations","image":"/categories/events-celebrations.svg","desc":"Pizza, granizados, karaoke y juegos"},
   { ...t.categories.babyGear, slug: "baby-gear", image: "/categories/baby-gear.webp" },
   { ...t.categories.kidsFamily, slug: "kids-family", image: "/discover/turia-gardens-hero.webp" },
   { ...t.categories.mobility, slug: "mobility", image: "/categories/mobility.webp" },
@@ -26,6 +25,7 @@ const categoryCards = [
   { ...t.categories.homeLiving, slug: "home-living", image: "/categories/home-living.webp" },
   { ...t.categories.travelOutdoors, slug: "travel-outdoors", image: "/categories/travel-outdoors.webp" },
   { ...t.categories.sportsWellness, slug: "fitness-wellness", image: "/categories/sports-wellness.webp" },
+  {"name":"Fiestas y Eventos","slug":"events-celebrations","image":"/categories/events-celebrations.webp","desc":"Pizza, granizados, karaoke y juegos"},
 ];
 
 export default async function ValenciaPageES() {
