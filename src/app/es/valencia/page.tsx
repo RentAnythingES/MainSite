@@ -92,7 +92,7 @@ export default async function ValenciaPageES() {
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
             {categoryCards.map((cat) => (
               <Link key={cat.slug} href={`/es/rental/${cat.slug}`} className="group relative rounded-2xl overflow-hidden aspect-[3/4]" id={`val-cat-${cat.slug}`}>
-                <Image src={cat.image} alt={cat.name} fill className="object-cover group-hover:scale-105 transition-transform duration-500" sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw" />
+                <Image src={cat.image} alt={cat.name} fill className="object-cover group-hover:scale-105 transition-transform duration-500" sizes={cat.image === "/discover/turia-gardens-hero.webp" ? "(max-width: 767px) 120vw, (max-width: 1023px) 80vw, (max-width: 1279px) 60vw, 700px" : "(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"} />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
                 <div className="absolute bottom-0 left-0 right-0 p-3">
                   <h3 className="font-bold text-sm text-white mb-0.5" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>{cat.name}</h3>

@@ -107,7 +107,7 @@ export default async function HomePageES() {
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
             {heroCategories.map((cat) => (
               <Link key={cat.href} href={cat.href} className="group relative rounded-2xl overflow-hidden aspect-[4/3] md:aspect-[3/2]" id={`cat-${cat.href.split("/").pop()}`}>
-                <Image src={cat.image} alt={cat.name} fill className="object-cover group-hover:scale-105 transition-transform duration-500" sizes="(max-width: 640px) 50vw, 33vw" />
+                <Image src={cat.image} alt={cat.name} fill className="object-cover group-hover:scale-105 transition-transform duration-500" sizes={cat.image === "/discover/turia-gardens-hero.webp" ? "(max-width: 767px) 67vw, (max-width: 1279px) 40vw, 480px" : "(max-width: 640px) 50vw, 33vw"} />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
                 <div className="absolute bottom-0 left-0 right-0 p-4 md:p-5">
                   <h3 className="text-sm md:text-base font-bold text-white mb-0.5" style={{ textShadow: '0 1px 4px rgba(0,0,0,0.5)' }}>{cat.name}</h3>
