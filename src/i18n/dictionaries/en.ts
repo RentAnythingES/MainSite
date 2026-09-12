@@ -48,6 +48,7 @@ const en: Dictionary = {
   },
 
   categories: {
+    eventsCelebrations: {"name":"Occasions & Events","desc":"Pizza kits, slush machines, karaoke and games"},
     babyGear: { name: "Baby & Toddler", desc: "Strollers, cribs, car seats & high chairs" },
     kidsFamily: { name: "Kids & Family", desc: "Children's activities, family outings & travel gear" },
     mobility: { name: "Mobility & Accessibility", desc: "Wheelchairs, scooters & walkers" },

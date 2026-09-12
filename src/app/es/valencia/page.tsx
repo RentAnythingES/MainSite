@@ -18,6 +18,7 @@ export const metadata: Metadata = {
 };
 
 const categoryCards = [
+  {"name":"Fiestas y Eventos","slug":"events-celebrations","image":"/categories/events-celebrations.svg","desc":"Pizza, granizados, karaoke y juegos"},
   { ...t.categories.babyGear, slug: "baby-gear", image: "/categories/baby-gear.webp" },
   { ...t.categories.kidsFamily, slug: "kids-family", image: "/discover/turia-gardens-hero.webp" },
   { ...t.categories.mobility, slug: "mobility", image: "/categories/mobility.webp" },

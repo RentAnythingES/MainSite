@@ -1,5 +1,13 @@
 export const seoCategoryClusters = [
   {
+  "slug": "events-celebrations",
+  "nameEn": "Occasions & Events",
+  "nameEs": "Fiestas y Eventos",
+  "emoji": "🎉",
+  "primaryKeywordEn": "party equipment rental Valencia",
+  "primaryKeywordEs": "alquiler material fiestas Valencia"
+},
+  {
     slug: "baby-gear",
     nameEn: "Baby & Toddler",
     nameEs: "Bebé y Primera Infancia",

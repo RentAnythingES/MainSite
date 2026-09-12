@@ -335,6 +335,9 @@ function calculateFulfillmentFeeCents(
 
 export default function BookingWidget({ product, locale = "en" }: BookingWidgetProps) {
   const t = labels[locale];
+  const needsSupplyConfirmation = product.stockTotal === 0;
+  const requestLabel = locale === "es" ? "Solicitar para estas fechas" : "Request for these dates";
+  const supplyHelp = locale === "es" ? "Este artículo está disponible bajo petición. Confirmaremos el equipo y las fechas antes de organizar el pago." : "This item is offered on request. We will confirm the equipment and your dates before arranging payment.";
   const [minimumStartDate, setMinimumStartDate] = useState("");
   const [startDate, setStartDate] = useState("");
   const [startTime, setStartTime] = useState("10:00");
@@ -543,6 +546,11 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
       return;
     }
 
+    if (needsSupplyConfirmation) {
+      setAvailabilityStatus("manual");
+      setAvailabilityReason(supplyHelp);
+      return;
+    }
     setAvailabilityStatus("checking");
     trackBookingEvent("availability_check_started", {
       productSlug: product.slug,
@@ -988,7 +996,7 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
           </button>
         </form>
 
-        <p className="text-xs text-neutral-400 text-center mt-3">{t.securePayment}</p>
+        <p className="text-xs text-neutral-400 text-center mt-3">{needsSupplyConfirmation ? (locale === "es" ? "Confirmación antes del pago" : "Confirmation before payment") : t.securePayment}</p>
       </div>
     );
   }
@@ -996,7 +1004,8 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
   // Date selection step (default)
   return (
     <div className="bg-white rounded-2xl border border-border shadow-sm p-6" id="booking-widget">
-      <h3 className="font-bold text-lg mb-4">{t.bookTitle}</h3>
+      <h3 className="font-bold text-lg mb-4">{needsSupplyConfirmation ? (locale === "es" ? "Solicitar este artículo" : "Request this item") : t.bookTitle}</h3>
+      {needsSupplyConfirmation && <p className="text-sm text-neutral-600 mb-4">{supplyHelp}</p>}
 
       {activeCheckout && (
         <div className="bg-teal-50 border border-teal-200 rounded-lg p-3 mb-4">
@@ -1104,7 +1113,7 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
             <option key={value} value={value}>{value} {value === 1 ? t.unit : t.units}</option>
           ))}
         </select>
-        {availabilityStatus !== "idle" && (
+        {!needsSupplyConfirmation && availabilityStatus !== "idle" && (
           <p className="mt-1 text-xs text-neutral-500">
             {maxAvailableQuantity} {t.units} {t.availableUnits}
           </p>
@@ -1388,7 +1397,11 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
       )}
 
       {/* CTAs */}
-      {bookingError === "checkout" ? (
+      {needsSupplyConfirmation && rentalWindow ? (
+        <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="btn btn-primary btn-lg w-full mb-3 block text-center" id="booking-whatsapp-cta">
+          {requestLabel}
+        </a>
+      ) : bookingError === "checkout" ? (
         <a
           href={whatsappUrl}
           target="_blank"
@@ -1409,7 +1422,7 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
           className="btn btn-primary btn-lg w-full mb-3 disabled:cursor-not-allowed disabled:opacity-60"
           id="booking-check-availability"
         >
-          {t.checkAvailability}
+          {needsSupplyConfirmation ? requestLabel : t.checkAvailability}
         </button>
       ) : availabilityStatus === "checking" ? (
         <button disabled className="btn btn-primary btn-lg w-full mb-3 opacity-60">
@@ -1476,7 +1489,7 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
         </a>
       )}
 
-      <p className="text-xs text-neutral-400 text-center mt-3">{t.securePayment}</p>
+      <p className="text-xs text-neutral-400 text-center mt-3">{needsSupplyConfirmation ? (locale === "es" ? "Confirmación antes del pago" : "Confirmation before payment") : t.securePayment}</p>
     </div>
   );
 }

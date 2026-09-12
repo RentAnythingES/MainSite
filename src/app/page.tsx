@@ -24,6 +24,7 @@ export const metadata: Metadata = {
 };
 
 const heroCategories = [
+  {"name":"Occasions & Events","href":"/rental/events-celebrations","image":"/categories/events-celebrations.svg","description":"Pizza kits, slush machines, karaoke and games","desc":"Pizza kits, slush machines, karaoke and games"},
   {
     name: "Baby & Toddler",
     href: "/rental/baby-gear",

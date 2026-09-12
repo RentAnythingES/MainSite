@@ -14,7 +14,7 @@ const PRICE_COLUMNS = [
 ] as const;
 
 const CONTENT_STATUSES = new Set(["draft", "facts_verified", "content_ready"]);
-const IMAGE_RIGHTS = new Set(["unknown", "owned", "licensed", "manufacturer_approved"]);
+const IMAGE_RIGHTS = new Set(["unknown", "owned", "licensed", "manufacturer_approved", "owner_approved"]);
 
 type ImportRow = Record<string, unknown>;
 
@@ -213,7 +213,7 @@ function prepareRows(
 
     const imageRights = text(row.image_rights_status) || "unknown";
     if (imageRights && !IMAGE_RIGHTS.has(imageRights)) {
-      issues.push("image_rights_status must be unknown, owned, licensed, or manufacturer_approved");
+      issues.push("image_rights_status must be unknown, owned, licensed, manufacturer_approved, or owner_approved");
     }
 
     const english = buildLocalizationFromRow(row, "en");

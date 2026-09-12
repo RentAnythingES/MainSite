@@ -35,13 +35,13 @@ function buildReadiness(product: Record<string, unknown>) {
 
   if (!product.image_url) missing.push("A product image");
   if (!pricing.some((tier) => tier.per_day_cents > 0)) missing.push("Positive rental pricing");
-  if (Number(product.stock_total || 0) < 1) missing.push("Confirmed stock");
+  // Zero-stock listings use the shared availability-request flow.
   if (!english?.short_description?.trim()) missing.push("English short description");
   if (!english?.detail_description?.trim()) missing.push("English product detail copy");
   if (!english?.seo_title?.trim() || !english?.seo_description?.trim()) missing.push("English SEO title and description");
   if (faqs.filter((faq) => faq.locale === "en" && faq.question?.trim() && faq.answer?.trim()).length < 3) missing.push("Three English FAQs");
   if (!primaryImage?.alt_text?.trim()) missing.push("Primary image alt text");
-  if (!primaryImage?.rights_status || primaryImage.rights_status === "unknown") missing.push("Confirm why Rent&Roll is allowed to use the primary image");
+  if (!primaryImage?.rights_status || primaryImage.rights_status === "unknown") missing.push("Review the primary image for publication");
 
   return { ready: missing.length === 0, missing };
 }
@@ -79,7 +79,7 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
       faqs?: FaqPayload[];
       primary_image?: PrimaryImagePayload;
     };
-    const allowedImageStatuses = ["unknown", "owned", "licensed", "manufacturer_approved"];
+    const allowedImageStatuses = ["unknown", "owned", "licensed", "manufacturer_approved", "owner_approved"];
     if (body.primary_image?.rights_status && !allowedImageStatuses.includes(body.primary_image.rights_status)) {
       return NextResponse.json({ error: "Choose a valid image permission status." }, { status: 400 });
     }

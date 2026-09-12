@@ -1,9 +1,13 @@
 # Rent&Roll — SEO Strategy & Audit
-> **Last updated**: 2026-09-07 · **Canonical migration**: deployed · **Release sitemap URLs**: 376
+> **Last updated**: 2026-09-12 · **Canonical migration**: deployed · **Release sitemap URLs**: 406
 
 This is the **living SEO strategy document** for rentandroll.com. Updated after every SEO-related change. For prioritized fixes, see [SEO_ROADMAP.md](./SEO_ROADMAP.md).
 
 ---
+
+## Occasions & Events release — 12 September 2026
+
+Published 13 sourceable products (26 EN/ES product URLs) and the bilingual existing-architecture category hub (2 URLs). All use standard daily rates and request-for-dates for unconfirmed supply. Supplier product photos retained on owner approval. See [release details](./EVENTS_CATALOGUE_LAUNCH_20260912.md). Hosted experiences remain future work.
 
 ## Quick Reference
 

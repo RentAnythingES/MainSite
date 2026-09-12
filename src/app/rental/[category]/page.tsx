@@ -46,6 +46,53 @@ interface CategoryContent {
 }
 
 const categoryMeta: Record<string, CategoryContent> = {
+  "events-celebrations": {
+  "title": "Occasions & Events Equipment Rental in Valencia",
+  "description": "Rent pizza oven kits, slush machines, karaoke, games, tables and chairs for gatherings in Valencia. Choose your dates and check delivery options.",
+  "emoji": "🎉",
+  "image": "/categories/events-celebrations.svg",
+  "editorialHeading": "Make room for a celebration in Valencia",
+  "editorialParagraphs": [
+    "Plan a pizza evening at your holiday home, karaoke with friends or a family games afternoon. Each product page shows daily rental rates, included accessories and the space or power needed.",
+    "Equipment offered on request needs availability confirmed for your dates. For outdoor cooking, choose a suitable private space where the venue permits it. Games also appear in our Beach & Outdoor catalogue, so you can plan a picnic or an afternoon near the Turia Gardens."
+  ],
+  "blogTags": [],
+  "featuredHeading": "Plan your gathering",
+  "featuredDescription": "Choose the equipment, check your space and arrange the handover.",
+  "featuredPathways": [
+    {
+      "eyebrow": "Outdoor activities",
+      "title": "Beach & Outdoor equipment",
+      "description": "Find games, coolers and shade for your time outdoors.",
+      "href": "/rental/travel-outdoors"
+    },
+    {
+      "eyebrow": "Rental process",
+      "title": "Delivery, collection and booking",
+      "description": "See how to choose dates and arrange delivery or pickup.",
+      "href": "/how-it-works"
+    }
+  ],
+  "faqHeading": "Occasions & Events rental: FAQs",
+  "faqs": [
+    {
+      "question": "What can I rent for a gathering in Valencia?",
+      "answer": "Choose from pizza oven kits, slush machines, karaoke equipment, compact games, tables, chairs and coolers. Each listing explains the exact equipment, daily rates and booking options."
+    },
+    {
+      "question": "Do pizza rentals include accessories or a host?",
+      "answer": "The pizza kit listings specify the oven and accessories included. Fuel and ingredients are separate. These are equipment rentals; a chef, host or pizza-making experience is not included."
+    },
+    {
+      "question": "Can I book equipment that is offered on request?",
+      "answer": "Select your dates on the product page and contact us to confirm availability before arranging payment. A request is not a confirmed reservation."
+    },
+    {
+      "question": "Can I use the equipment at any venue?",
+      "answer": "Check with your host or venue that your planned activity is permitted and that the space, power and access are suitable. Follow the product’s outdoor-use and setup requirements."
+    }
+  ]
+},
   "baby-gear": {
     title: "Baby & Toddler Gear Rental in Valencia",
     description: "Rent travel cots, strollers, high chairs, baby baths and toddler gear in Valencia, with pickup and delivery options shown for your booking.",

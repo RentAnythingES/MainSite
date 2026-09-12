@@ -43,6 +43,51 @@ interface CategoryContent {
 }
 
 const categoryMetaES: Record<string, CategoryContent> = {
+  "events-celebrations": {
+  "title": "Alquiler para Fiestas y Eventos en Valencia",
+  "description": "Alquila kits de horno de pizza, granizadoras, karaoke, juegos, mesas y sillas para reuniones en Valencia. Elige tus fechas y consulta la entrega.",
+  "image": "/categories/events-celebrations.svg",
+  "editorialHeading": "Prepara una celebración en Valencia",
+  "editorialParagraphs": [
+    "Organiza una noche de pizza en tu alojamiento, karaoke con amigos o una tarde de juegos en familia. Cada ficha muestra las tarifas por día, los accesorios incluidos y el espacio o la alimentación eléctrica que necesita el equipo.",
+    "Los artículos bajo petición requieren confirmación de disponibilidad para tus fechas. Para cocinar al aire libre, elige un espacio privado adecuado donde esté permitido. También encontrarás los juegos en Playa y Aire Libre para preparar un picnic o una tarde cerca del Jardín del Turia."
+  ],
+  "featuredHeading": "Organiza tu reunión",
+  "featuredDescription": "Elige el equipo, comprueba el espacio y acuerda la entrega.",
+  "featuredPathways": [
+    {
+      "eyebrow": "Actividades al aire libre",
+      "title": "Equipamiento de playa y exterior",
+      "description": "Encuentra juegos, neveras y sombra para tus planes al aire libre.",
+      "href": "/es/rental/travel-outdoors"
+    },
+    {
+      "eyebrow": "Cómo alquilar",
+      "title": "Entrega, recogida y reserva",
+      "description": "Consulta cómo elegir las fechas y organizar la entrega o recogida.",
+      "href": "/es/how-it-works"
+    }
+  ],
+  "faqHeading": "Alquiler para fiestas y eventos: preguntas frecuentes",
+  "faqs": [
+    {
+      "question": "¿Qué puedo alquilar para una reunión en Valencia?",
+      "answer": "Puedes elegir kits de horno de pizza, granizadoras, karaoke, juegos compactos, mesas, sillas y neveras. Cada ficha explica el equipo, las tarifas por día y las opciones de reserva."
+    },
+    {
+      "question": "¿El alquiler de pizza incluye accesorios o un anfitrión?",
+      "answer": "Las fichas de los kits indican el horno y los accesorios incluidos. El combustible y los ingredientes se suministran por separado. Se alquila el equipo; no se incluye cocinero, anfitrión ni experiencia de elaboración de pizza."
+    },
+    {
+      "question": "¿Cómo solicito un artículo bajo petición?",
+      "answer": "Selecciona las fechas en la ficha y contacta con nosotros para confirmar la disponibilidad antes de organizar el pago. Una solicitud no es una reserva confirmada."
+    },
+    {
+      "question": "¿Puedo utilizar el equipo en cualquier lugar?",
+      "answer": "Comprueba con tu anfitrión o local que la actividad está permitida y que el espacio, la alimentación eléctrica y el acceso son adecuados. Sigue las indicaciones de uso exterior y montaje del producto."
+    }
+  ]
+},
   "baby-gear": {
     title: "Alquiler de Artículos de Bebé y Niños en Valencia",
     description: "Alquila cochecitos, cunas de viaje, sillas de coche, tronas y más en Valencia, con las opciones de recogida y entrega indicadas en la reserva.",

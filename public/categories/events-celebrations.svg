@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="768" viewBox="0 0 1024 768" role="img" aria-labelledby="title desc">
+  <title id="title">Tables, chairs and a cooler for a small gathering</title>
+  <desc id="desc">An illustration of a table with four chairs, a drinks cooler and bunting on a sunny terrace.</desc>
+  <defs>
+    <linearGradient id="wall" x2="0" y2="1"><stop stop-color="#f5f1e8"/><stop offset="1" stop-color="#fffaf0"/></linearGradient>
+    <linearGradient id="table" x2="0" y2="1"><stop stop-color="#ead5b8"/><stop offset="1" stop-color="#cfad83"/></linearGradient>
+  </defs>
+  <path fill="url(#wall)" d="M0 0h1024v768H0z"/>
+  <path fill="#e8e5dc" d="M0 520h1024v248H0z"/>
+  <circle cx="834" cy="175" r="87" fill="#fef3c7"/>
+  <path d="M0 75Q512 284 1024 75" fill="none" stroke="#78716c" stroke-width="4"/>
+  <g fill="#0d9488"><path d="m123 121 77 22-54 55z"/><path d="m450 188 80 1-40 65z"/><path d="m782 145 77-24-17 77z"/></g>
+  <g fill="#f59e0b"><path d="m280 164 80 13-50 60z"/><path d="m615 181 80-13-30 73z"/></g>
+  <ellipse cx="506" cy="638" rx="342" ry="47" fill="#d7d3c8"/>
+  <g stroke="#5d6864" stroke-width="13" stroke-linecap="round" fill="none"><path d="m299 403-27 209m132-209 29 209m183-209-29 209m132-209 27 209"/></g>
+  <g fill="#0f766e"><rect x="257" y="315" width="168" height="100" rx="15"/><rect x="592" y="315" width="168" height="100" rx="15"/></g>
+  <path d="m225 459 286-62 290 62-286 70z" fill="url(#table)"/>
+  <path d="M225 459v19l290 72 286-72v-19l-286 70z" fill="#bb956c"/>
+  <g stroke="#626b67" stroke-width="17" stroke-linecap="round"><path d="m264 489-19 163m519-163 19 163m-267-104v115"/></g>
+  <g fill="#0d9488"><rect x="255" y="530" width="157" height="76" rx="12"/><rect x="618" y="530" width="157" height="76" rx="12"/></g>
+  <g stroke="#626b67" stroke-width="12" stroke-linecap="round"><path d="m273 604-10 79m130-79 10 79m233-79-10 79m130-79 10 79"/></g>
+  <ellipse cx="514" cy="449" rx="62" ry="20" fill="#fafaf9"/><ellipse cx="514" cy="449" rx="43" ry="12" fill="#e7e5e4"/>
+  <path d="M507 409h15v37h-15z" fill="#d6d3d1"/><path d="m514 411-10-30m10 30 12-39" fill="none" stroke="#65a30d" stroke-width="4"/>
+  <circle cx="502" cy="378" r="12" fill="#f59e0b"/><circle cx="527" cy="369" r="13" fill="#fbbf24"/>
+  <rect x="812" y="537" width="153" height="119" rx="17" fill="#f59e0b"/><rect x="804" y="526" width="169" height="29" rx="11" fill="#fafaf9"/><path d="M827 565v-52q0-19 20-19h84q20 0 20 19v52" fill="none" stroke="#78716c" stroke-width="9"/><rect x="875" y="558" width="25" height="16" rx="3" fill="#f5f5f4"/>
+  <path d="m59 520 15 112h78l15-112z" fill="#c98260"/><g fill="#6c8970"><ellipse cx="100" cy="405" rx="24" ry="95" transform="rotate(-27 100 405)"/><ellipse cx="127" cy="427" rx="25" ry="86" transform="rotate(25 127 427)"/></g>
+</svg>
