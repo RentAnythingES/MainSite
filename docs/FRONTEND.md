@@ -283,3 +283,7 @@ This layer does not reserve inventory or create Checkout sessions yet.
 ## Newsletter signup flow
 
 `NewsletterSignup` posts email, source, locale, and explicit consent to `/api/newsletter`. The API stores a consent record in `newsletter_subscribers`, including consent text/version, source, IP, user agent, active status, and unsubscribe token, then sends `sendSignupWelcome`. The form is currently used on `/blog`.
+
+### Landscape photos in category cards (12 September 2026)
+
+The Kids & Family source is a 1920×1080 landscape photo. With `object-cover`, its source-width requirement is driven by the card height: `max(cardWidth, cardHeight × 16/9)`, plus display pixel density. At a 1280 px viewport, the Valencia 290×387 card previously downloaded only 256×144 pixels and enlarged the crop about 2.7×. The EN/ES home and Valencia category cards now supply crop-aware responsive sizes for this image (700 px desktop source-width slot in the portrait grid; 480 px in the wider home grid). Photography, CSS, crop, ordering and other category-image settings are unchanged.

@@ -30,6 +30,8 @@
 
 ## Photography & Overlays
 
+Category cards use lifestyle photography consistent with the existing cards. Do not introduce illustrations or change the shared card treatment for a new category. Occasions & Events belongs last in category discovery and navigation lists (owner instruction, 12 September 2026).
+
 All photo-backed sections use the **two-layer overlay pattern**:
 
 ```html

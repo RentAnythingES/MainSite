@@ -43,6 +43,7 @@ export interface Dictionary {
 
   // Categories
   categories: {
+    eventsCelebrations: { name: string; desc: string };
     babyGear: { name: string; desc: string };
     kidsFamily: { name: string; desc: string };
     mobility: { name: string; desc: string };

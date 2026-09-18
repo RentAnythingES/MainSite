@@ -29,6 +29,7 @@ const categoryCards = [
   { name: "Apartment Comfort", slug: "home-living", image: "/categories/home-living.webp", desc: "Air purifiers, AC units, kitchen" },
   { name: "Beach & Outdoor", slug: "travel-outdoors", image: "/categories/travel-outdoors.webp", desc: "Beach gear, shade, recreation" },
   { name: "Sports & Wellness", slug: "fitness-wellness", image: "/categories/sports-wellness.webp", desc: "Tennis, padel and training equipment" },
+  {"name":"Occasions & Events","slug":"events-celebrations","image":"/categories/events-celebrations.webp","desc":"Pizza kits, slush machines, karaoke and games"},
 ];
 
 export default async function ValenciaPage() {
@@ -125,7 +126,7 @@ export default async function ValenciaPage() {
                   alt={cat.name}
                   fill
                   className="object-cover group-hover:scale-105 transition-transform duration-500"
-                  sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
+                  sizes={cat.image === "/discover/turia-gardens-hero.webp" ? "(max-width: 767px) 120vw, (max-width: 1023px) 80vw, (max-width: 1279px) 60vw, 700px" : "(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
                 <div className="absolute bottom-0 left-0 right-0 p-3">

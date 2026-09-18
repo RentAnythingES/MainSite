@@ -67,7 +67,7 @@ type ProductImage = {
   product_id: string;
   image_url: string;
   alt_text: string | null;
-  rights_status: "unknown" | "owned" | "licensed" | "manufacturer_approved";
+  rights_status: "unknown" | "owned" | "licensed" | "manufacturer_approved" | "owner_approved";
   is_primary?: boolean;
   sort_order?: number;
 };
@@ -203,7 +203,7 @@ async function fetchProductSeoRows(slug?: string): Promise<ProductSeoRow[]> {
 function canUseEditorialImage(image: ProductImage | undefined): image is ProductImage {
   return Boolean(
     image &&
-    ["owned", "licensed", "manufacturer_approved"].includes(image.rights_status) &&
+    ["owned", "licensed", "manufacturer_approved", "owner_approved"].includes(image.rights_status) &&
     normalizeImageUrl(image.image_url) !== "/products/placeholder.png"
   );
 }
@@ -260,7 +260,7 @@ function mapToProduct(row: Record<string, unknown>): Product {
     image: normalizeImageUrl(row.image_url),
     imageAlt: row.name as string,
     contentStatus: row.content_status as Product["contentStatus"],
-    stockTotal: Number(row.stock_total || 1),
+    stockTotal: Number(row.stock_total ?? 1),
     stockAvailable: Number(row.stock_available || 0),
     city: (row.city as string) || "valencia",
     // FAQs are not yet in DB — will be added in future migration
@@ -315,7 +315,7 @@ async function fetchProductsFromDB(city: string, locale: ProductLocale): Promise
     return data.map((row) => mapEmbeddedProduct(row, locale));
 }
 
-const getCachedProducts = unstable_cache(fetchProductsFromDB, ["public-product-list"], {
+const getCachedProducts = unstable_cache(fetchProductsFromDB, ["public-product-list", "stock-aware-v2"], {
   tags: [PUBLIC_PRODUCT_CACHE_TAG],
 });
 
@@ -361,7 +361,7 @@ async function fetchProductBySlugFromDB(slug: string, locale: ProductLocale): Pr
     return { ...mapEmbeddedProduct(row, locale), slug: canonicalSlug };
 }
 
-const getCachedProductBySlug = unstable_cache(fetchProductBySlugFromDB, ["public-product-detail"], {
+const getCachedProductBySlug = unstable_cache(fetchProductBySlugFromDB, ["public-product-detail", "stock-aware-v2"], {
   tags: [PUBLIC_PRODUCT_CACHE_TAG],
 });
 
@@ -436,7 +436,7 @@ async function fetchProductsByCategoryFromDB(categorySlug: string, locale: Produ
 
 const getCachedProductsByCategory = unstable_cache(
   fetchProductsByCategoryFromDB,
-  ["public-products-by-category"],
+  ["public-products-by-category", "stock-aware-v2"],
   { tags: [PUBLIC_PRODUCT_CACHE_TAG] },
 );
 

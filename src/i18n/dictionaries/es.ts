@@ -60,6 +60,7 @@ const es: Dictionary = {
   },
 
   categories: {
+    eventsCelebrations: {"name":"Fiestas y Eventos","desc":"Pizza, granizados, karaoke y juegos"},
     babyGear: { name: "Bebé y Niños", desc: "Cochecitos, cunas, sillas de coche y tronas" },
     kidsFamily: { name: "Niños y Familia", desc: "Actividades infantiles, salidas en familia y viaje" },
     mobility: { name: "Movilidad", desc: "Sillas de ruedas, scooters y andadores" },

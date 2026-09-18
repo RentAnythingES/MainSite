@@ -66,6 +66,7 @@ const heroCategories = [
     image: "/categories/sports-wellness.webp",
     description: "Tennis, padel & training equipment",
   },
+  {"name":"Occasions & Events","href":"/rental/events-celebrations","image":"/categories/events-celebrations.webp","description":"Pizza kits, slush machines, karaoke and games","desc":"Pizza kits, slush machines, karaoke and games"},
 ];
 
 const trustStats = [
@@ -175,7 +176,7 @@ export default async function HomePage() {
                   alt={cat.name}
                   fill
                   className="object-cover group-hover:scale-105 transition-transform duration-500"
-                  sizes="(max-width: 640px) 50vw, 33vw"
+                  sizes={cat.image === "/discover/turia-gardens-hero.webp" ? "(max-width: 767px) 67vw, (max-width: 1279px) 40vw, 480px" : "(max-width: 640px) 50vw, 33vw"}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
                 <div className="absolute bottom-0 left-0 right-0 p-4 md:p-5">

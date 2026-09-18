@@ -1,7 +1,11 @@
 # Rent&Roll — SEO Roadmap
-> **Last updated**: 2026-09-07 · Prioritized by estimated traffic impact × effort
+> **Last updated**: 2026-09-12 · Prioritized by estimated traffic impact × effort
 
 ---
+
+## Occasions & Events release — 12 September 2026
+
+Published 13 sourceable products (26 EN/ES product URLs) and the bilingual existing-architecture category hub (2 URLs). All use standard daily rates and request-for-dates for unconfirmed supply. Supplier product photos retained on owner approval. See [release details](./EVENTS_CATALOGUE_LAUNCH_20260912.md). Hosted experiences remain future work.
 
 ## Search performance and mobility actions — 7 September 2026
 

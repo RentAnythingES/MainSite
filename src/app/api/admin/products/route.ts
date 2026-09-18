@@ -40,7 +40,7 @@ type ProductSeoListRow = {
 
 const legacySlugs = new Set(legacyProducts.map((product) => product.slug));
 const publicCategorySlugs = new Set<string>(seoCategorySlugs);
-const approvedImageRights = new Set(["owned", "licensed", "manufacturer_approved"]);
+const approvedImageRights = new Set(["owned", "licensed", "manufacturer_approved", "owner_approved"]);
 
 function hasText(value: unknown) {
   return typeof value === "string" && value.trim().length > 0;

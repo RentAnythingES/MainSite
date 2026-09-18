@@ -55,6 +55,14 @@ export const seoCategoryClusters = [
     primaryKeywordEn: "sports equipment rental Valencia",
     primaryKeywordEs: "alquiler material deportivo Valencia",
   },
+  {
+  "slug": "events-celebrations",
+  "nameEn": "Occasions & Events",
+  "nameEs": "Fiestas y Eventos",
+  "emoji": "🎉",
+  "primaryKeywordEn": "party equipment rental Valencia",
+  "primaryKeywordEs": "alquiler material fiestas Valencia"
+},
 ] as const;
 
 export type SeoCategorySlug = (typeof seoCategoryClusters)[number]["slug"];
