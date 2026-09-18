@@ -243,6 +243,105 @@ export async function editTelegramMessageText(chatId: number | string, messageId
   }).catch(() => undefined);
 }
 
+export async function sendTelegramToChatId(
+  chatId: string,
+  text: string,
+  replyMarkup?: { inline_keyboard: { text: string; callback_data: string }[][] },
+): Promise<{ ok: boolean; messageId?: number; error?: string }> {
+  const botToken = process.env.TELEGRAM_BOT_TOKEN;
+  const apiBase = process.env.TELEGRAM_API_BASE || "https://api.telegram.org";
+  if (!botToken) return { ok: false, error: "Telegram bot token is not configured" };
+
+  try {
+    const response = await fetch(`${apiBase}/bot${botToken}/sendMessage`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        chat_id: chatId,
+        text,
+        parse_mode: "HTML",
+        disable_web_page_preview: true,
+        ...(replyMarkup ? { reply_markup: replyMarkup } : {}),
+      }),
+    });
+    const payload = await response.json() as { ok?: boolean; result?: { message_id?: number }; description?: string };
+    if (!response.ok || !payload.ok) {
+      return { ok: false, error: payload.description || `Telegram Bot API returned ${response.status}` };
+    }
+    return { ok: true, messageId: payload.result?.message_id };
+  } catch (error) {
+    return { ok: false, error: error instanceof Error ? error.message : String(error) };
+  }
+}
+
+export interface DeliveryGroupRequestData {
+  requestId: string;
+  bookingRef: string;
+  eventType: "delivery" | "pickup";
+  productName: string;
+  windowLabel: string;
+  area: string;
+}
+
+function buildDeliveryGroupRequestText(data: DeliveryGroupRequestData) {
+  const heading = data.eventType === "delivery" ? "🚚 <b>New delivery request</b>" : "📦 <b>New pick-up request</b>";
+  const lines = [
+    heading,
+    `<b>Ref:</b> ${escapeTelegramHtml(data.bookingRef)}`,
+    `<b>Item:</b> ${escapeTelegramHtml(data.productName)}`,
+    `<b>When:</b> ${escapeTelegramHtml(data.windowLabel)}`,
+    `<b>Area:</b> ${escapeTelegramHtml(data.area)}`,
+    "",
+    "First courier to accept receives the full address and instructions in a private message.",
+  ];
+  return lines.join("\n");
+}
+
+export async function sendDeliveryGroupRequest(data: DeliveryGroupRequestData) {
+  const groupChatId = process.env.TELEGRAM_DELIVERY_GROUP_ID;
+  if (!groupChatId) return { ok: false as const, error: "TELEGRAM_DELIVERY_GROUP_ID is not configured" };
+
+  return sendTelegramToChatId(groupChatId, buildDeliveryGroupRequestText(data), {
+    inline_keyboard: [[
+      { text: "✅ I'll take it", callback_data: `dvclaim:${data.requestId}` },
+      { text: "❌ I can't", callback_data: `dvskip:${data.requestId}` },
+    ]],
+  });
+}
+
+export interface DeliveryDetailsData {
+  bookingId?: string | null;
+  bookingRef: string;
+  eventType: "delivery" | "pickup";
+  productName: string;
+  customerName: string;
+  customerPhone?: string | null;
+  address: string;
+  notes?: string | null;
+}
+
+function buildDeliveryDetailsText(data: DeliveryDetailsData) {
+  const heading = data.eventType === "delivery"
+    ? "🚚 <b>Delivery assigned to you</b>"
+    : "📦 <b>Pick-up assigned to you</b>";
+  const lines = [
+    heading,
+    `<b>Ref:</b> ${escapeTelegramHtml(data.bookingRef)}`,
+    `<b>Item:</b> ${escapeTelegramHtml(data.productName)}`,
+    `<b>Customer:</b> ${escapeTelegramHtml(data.customerName)}`,
+    data.customerPhone ? `<b>Phone:</b> ${escapeTelegramHtml(data.customerPhone)}` : null,
+    `<b>Address:</b> ${escapeTelegramHtml(data.address)}`,
+    `<b>Map:</b> ${escapeTelegramHtml(buildGoogleMapsLink(data.address))}`,
+    data.notes ? `<b>Notes:</b> ${escapeTelegramHtml(data.notes)}` : null,
+    `<b>Admin:</b> ${escapeTelegramHtml(buildAdminUrl(data.bookingId))}`,
+  ].filter(Boolean);
+  return lines.join("\n");
+}
+
+export async function sendDeliveryDetailsDirectMessage(telegramUserId: number, data: DeliveryDetailsData) {
+  return sendTelegramToChatId(String(telegramUserId), buildDeliveryDetailsText(data));
+}
+
 export async function sendTestBookingPaidTelegramNotification() {
   return sendBookingPaidTelegramNotification({
     bookingId: "telegram-test-booking",

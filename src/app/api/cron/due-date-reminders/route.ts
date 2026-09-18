@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase-admin";
-import { sendDueDateTelegramNotification } from "@/lib/telegram";
+import { sendDueDateTelegramNotification, sendDeliveryGroupRequest } from "@/lib/telegram";
 
 export const maxDuration = 60;
 
@@ -12,6 +12,17 @@ function madridDateString(date: Date) {
   return new Intl.DateTimeFormat("en-CA", { timeZone: "Europe/Madrid" }).format(date);
 }
 
+function madridWindowLabel(date: Date) {
+  return new Intl.DateTimeFormat("en-GB", {
+    timeZone: "Europe/Madrid",
+    weekday: "short",
+    day: "numeric",
+    month: "short",
+    hour: "2-digit",
+    minute: "2-digit",
+  }).format(date);
+}
+
 type BookingRow = {
   id: string;
   booking_ref: string;
@@ -21,6 +32,8 @@ type BookingRow = {
   fulfillment_mode: string | null;
   delivery_address: string | null;
   collection_address: string | null;
+  delivery_zone_id: string | null;
+  collection_zone_id: string | null;
   rental_start_at: string | null;
   rental_end_at: string | null;
   product: { name: string } | { name: string }[] | null;
@@ -63,6 +76,52 @@ async function recordNotification(
   if (error) throw error;
 }
 
+// Posts one claimable request per event to the courier group; idempotent per day.
+async function dispatchGroupRequest(
+  supabase: ReturnType<typeof createAdminClient>,
+  booking: BookingRow,
+  eventType: "delivery" | "pickup",
+  eventDate: string,
+  productName: string,
+  zoneNames: Map<string, string>,
+) {
+  if (!process.env.TELEGRAM_DELIVERY_GROUP_ID) return false;
+
+  const { data: inserted, error: insertError } = await supabase
+    .from("delivery_requests")
+    .upsert(
+      { booking_id: booking.id, event_type: eventType, event_date: eventDate },
+      { onConflict: "booking_id,event_type,event_date", ignoreDuplicates: true },
+    )
+    .select("id");
+
+  if (insertError) throw insertError;
+  const request = inserted?.[0];
+  if (!request) return false;
+
+  const zoneId = eventType === "delivery" ? booking.delivery_zone_id : booking.collection_zone_id;
+  const eventAt = new Date((eventType === "delivery" ? booking.rental_start_at : booking.rental_end_at) as string);
+  const sent = await sendDeliveryGroupRequest({
+    requestId: request.id,
+    bookingRef: booking.booking_ref,
+    eventType,
+    productName,
+    windowLabel: madridWindowLabel(eventAt),
+    area: (zoneId && zoneNames.get(zoneId)) || "Valencia",
+  });
+
+  if (!sent.ok) {
+    await supabase.from("delivery_requests").delete().eq("id", request.id);
+    throw new Error(sent.error || "Failed to post request to the courier group");
+  }
+
+  await supabase
+    .from("delivery_requests")
+    .update({ group_chat_id: process.env.TELEGRAM_DELIVERY_GROUP_ID, group_message_id: sent.messageId || null })
+    .eq("id", request.id);
+  return true;
+}
+
 export async function GET(request: NextRequest) {
   if (!process.env.CRON_SECRET || request.headers.get("authorization") !== `Bearer ${process.env.CRON_SECRET}`) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -74,7 +133,7 @@ export async function GET(request: NextRequest) {
   const { data: bookings, error } = await supabase
     .from("bookings")
     .select(
-      "id,booking_ref,customer_name,customer_phone,status,fulfillment_mode,delivery_address,collection_address,rental_start_at,rental_end_at,product:products(name)",
+      "id,booking_ref,customer_name,customer_phone,status,fulfillment_mode,delivery_address,collection_address,delivery_zone_id,collection_zone_id,rental_start_at,rental_end_at,product:products(name)",
     )
     .in("status", ACTIVE_STATUSES);
 
@@ -82,9 +141,17 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: "Failed to load bookings due today", details: error.message }, { status: 500 });
   }
 
-  const results = { deliveriesSent: 0, pickupsSent: 0, skippedAlreadySent: 0, errors: [] as string[] };
+  const bookingRows = (bookings || []) as BookingRow[];
+  const zoneIds = [...new Set(bookingRows.flatMap((booking) => [booking.delivery_zone_id, booking.collection_zone_id]).filter(Boolean))] as string[];
+  const zoneNames = new Map<string, string>();
+  if (zoneIds.length > 0) {
+    const { data: zones } = await supabase.from("service_zones").select("id,name").in("id", zoneIds);
+    for (const zone of (zones || []) as { id: string; name: string }[]) zoneNames.set(zone.id, zone.name);
+  }
 
-  for (const booking of (bookings || []) as BookingRow[]) {
+  const results = { deliveriesSent: 0, pickupsSent: 0, groupRequestsSent: 0, skippedAlreadySent: 0, errors: [] as string[] };
+
+  for (const booking of bookingRows) {
     const productName = resolveProductName(booking.product);
 
     // Delivery due: we drop the item off with the customer today.
@@ -113,6 +180,14 @@ export async function GET(request: NextRequest) {
             await recordNotification(supabase, booking.id, "delivery", today);
             results.deliveriesSent += 1;
           }
+        }
+
+        try {
+          if (await dispatchGroupRequest(supabase, booking, "delivery", today, productName, zoneNames)) {
+            results.groupRequestsSent += 1;
+          }
+        } catch (groupErr) {
+          results.errors.push(`Group delivery request for ${booking.booking_ref}: ${groupErr instanceof Error ? groupErr.message : String(groupErr)}`);
         }
       } catch (err) {
         results.errors.push(`Delivery reminder for ${booking.booking_ref}: ${err instanceof Error ? err.message : String(err)}`);
@@ -146,6 +221,14 @@ export async function GET(request: NextRequest) {
               await recordNotification(supabase, booking.id, "pickup", today);
               results.pickupsSent += 1;
             }
+          }
+
+          try {
+            if (await dispatchGroupRequest(supabase, booking, "pickup", today, productName, zoneNames)) {
+              results.groupRequestsSent += 1;
+            }
+          } catch (groupErr) {
+            results.errors.push(`Group pick-up request for ${booking.booking_ref}: ${groupErr instanceof Error ? groupErr.message : String(groupErr)}`);
           }
         } catch (err) {
           results.errors.push(`Pick-up reminder for ${booking.booking_ref}: ${err instanceof Error ? err.message : String(err)}`);
