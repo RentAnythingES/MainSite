@@ -180,6 +180,7 @@ const TRANSITIONS: Record<string, { label: string; next: string; color: string }
   ],
   delivering: [
     { label: "Mark Active", next: "active", color: "bg-teal-600 hover:bg-teal-500" },
+    { label: "Refund", next: "refunded", color: "bg-red-600/20 hover:bg-red-600/40 text-red-400" },
   ],
   active: [
     { label: "Schedule Return", next: "returning", color: "bg-orange-600 hover:bg-orange-500" },
@@ -443,7 +444,9 @@ export default function AdminBookingsPage() {
 
   const getTransitions = (booking: Booking) => {
     const actions = TRANSITIONS[booking.status] || [];
-    return actions.map((action) => {
+    const rentalStart = booking.rental_start_at || booking.start_date;
+    const hasStarted = rentalStart ? new Date(rentalStart).getTime() <= Date.now() : true;
+    return actions.filter((action) => action.next !== "refunded" || !hasStarted).map((action) => {
       if (action.next === "delivering") {
         return {
           ...action,

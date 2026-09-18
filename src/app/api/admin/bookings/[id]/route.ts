@@ -12,7 +12,7 @@ const VALID_TRANSITIONS: Record<string, string[]> = {
   pending: ["confirmed", "cancelled"],
   confirmed: ["paid", "cancelled"],
   paid: ["delivering", "cancelled", "refunded"],
-  delivering: ["active"],
+  delivering: ["active", "refunded"],
   active: ["returning"],
   returning: ["completed"],
   completed: [],
@@ -58,6 +58,17 @@ export async function PUT(
         { error: `Cannot transition from ${currentStatus} to ${status}` },
         { status: 400 }
       );
+    }
+
+    if (status === "refunded") {
+      const rentalStart = (booking as { rental_start_at?: string | null; start_date?: string | null }).rental_start_at
+        || (booking as { start_date?: string | null }).start_date;
+      if (!rentalStart || new Date(rentalStart).getTime() <= Date.now()) {
+        return NextResponse.json(
+          { error: "A booking can only be refunded before its rental has started." },
+          { status: 400 },
+        );
+      }
     }
 
     const bookingRecord = booking as Record<string, unknown>;
