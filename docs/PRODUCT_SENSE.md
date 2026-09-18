@@ -106,7 +106,8 @@ Partnership claims must stay factual. Do not imply endorsement, exclusivity, rev
 ### Delivery promise
 
 The delivery promise must always match the service the customer pays for. Customers
-choose their requested Valencia date and time; the booking system assigns the service:
+choose their requested Valencia date and an operational window (Morning 10:00–13:00,
+Midday 14:00–16:00, or Evening 18:00–20:00); the booking system assigns the service:
 
 - Same-day delivery with at least 6 hours of lead time, during configured operating
   hours, is paid Express delivery with the surcharge shown separately.

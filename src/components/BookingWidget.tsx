@@ -3,6 +3,7 @@
 import { useState, useMemo, useEffect } from "react";
 import type { Product } from "@/data/products";
 import { trackBookingEvent } from "@/lib/analytics";
+import { CUSTOMER_FULFILLMENT_WINDOWS, formatCustomerFulfillmentWindow } from "@/lib/fulfillment-windows";
 import GooglePlacesAddressInput from "@/components/GooglePlacesAddressInput";
 import { requestBrowserNotificationPermission } from "@/lib/push-notifications";
 import { getRentalWindow } from "@/lib/rental-dates";
@@ -45,9 +46,9 @@ const labels = {
   en: {
     bookTitle: "Book This Item",
     startDate: "Start Date",
-    startTime: "Start Time",
+    startTime: "Delivery window",
     endDate: "End Date",
-    endTime: "End Time",
+    endTime: "Collection window",
     days: "days",
     day: "day",
     rental: "rental",
@@ -114,7 +115,7 @@ const labels = {
     back: "← Back",
     tryDifferentDates: "Try different dates",
     orWhatsapp: "or contact us via WhatsApp",
-    hoursHint: "Deliveries and pick-ups run 10:00-19:00. Sundays or times outside these hours are subject to extra costs to be agreed during booking.",
+    hoursHint: "Choose a delivery and collection window: Morning (10:00–13:00), Midday (14:00–16:00), or Evening (18:00–20:00).",
     extraServicesTitle: "Extra services",
     assemblyLabel: "Assembly & set-up",
     disassemblyLabel: "Disassembly",
@@ -124,9 +125,9 @@ const labels = {
   es: {
     bookTitle: "Reservar Este Artículo",
     startDate: "Fecha de Inicio",
-    startTime: "Hora de Inicio",
+    startTime: "Franja de entrega",
     endDate: "Fecha de Fin",
-    endTime: "Hora de Fin",
+    endTime: "Franja de recogida",
     days: "días",
     day: "día",
     rental: "alquiler",
@@ -193,7 +194,7 @@ const labels = {
     back: "← Volver",
     tryDifferentDates: "Prueba otras fechas",
     orWhatsapp: "o contáctanos por WhatsApp",
-    hoursHint: "Las entregas y recogidas son de 10:00 a 19:00. Los domingos o fuera de este horario tienen un coste adicional a acordar durante la reserva.",
+    hoursHint: "Elige una franja de entrega y recogida: Mañana (10:00–13:00), Mediodía (14:00–16:00) o Tarde (18:00–20:00).",
     extraServicesTitle: "Servicios adicionales",
     assemblyLabel: "Montaje",
     disassemblyLabel: "Desmontaje",
@@ -855,7 +856,7 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
     ? "Delivery timing needs confirmation"
     : `${deliveryOption === "express" ? t.express : t.standard} ${t.delivery.toLowerCase()}`;
   const whatsappDates = rentalWindow
-    ? `${formatDisplayDate(rentalWindow.start, locale)} ${startTime} → ${formatDisplayDate(rentalWindow.end, locale)} ${endTime} (${displayPricing.days} ${displayPricing.days === 1 ? t.day : t.days})`
+    ? `${formatDisplayDate(rentalWindow.start, locale)} ${formatCustomerFulfillmentWindow(startTime, locale)} → ${formatDisplayDate(rentalWindow.end, locale)} ${formatCustomerFulfillmentWindow(endTime, locale)} (${displayPricing.days} ${displayPricing.days === 1 ? t.day : t.days})`
     : t.datesRequired;
   const whatsappMessage = `Hi! I'd like to book:\n\n📦 ${quantity} × ${product.name}\n📅 ${whatsappDates}\n🚚 ${whatsappService}\n\nPlease confirm availability and price.`;
   const whatsappUrl = `https://wa.me/34684708013?text=${encodeURIComponent(whatsappMessage)}`;
@@ -1070,29 +1071,35 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
           <label htmlFor="booking-start-time" className="text-xs font-medium text-neutral-500 mb-1 block">
             {t.startTime}
           </label>
-          <input
+          <select
             id="booking-start-time"
-            type="time"
             value={startTime}
-            min="10:00"
-            max="19:00"
             onChange={(e) => setStartTime(e.target.value)}
-            className="w-full px-3 py-2.5 rounded-lg border border-border text-sm focus:outline-none focus:ring-2 focus:ring-brand/30 focus:border-brand"
-          />
+            className="w-full px-3 py-2.5 rounded-lg border border-border text-sm bg-white focus:outline-none focus:ring-2 focus:ring-brand/30 focus:border-brand"
+          >
+            {CUSTOMER_FULFILLMENT_WINDOWS.map((window) => (
+              <option key={window.value} value={window.value}>
+                {formatCustomerFulfillmentWindow(window.value, locale)}
+              </option>
+            ))}
+          </select>
         </div>
         <div>
           <label htmlFor="booking-end-time" className="text-xs font-medium text-neutral-500 mb-1 block">
             {t.endTime}
           </label>
-          <input
+          <select
             id="booking-end-time"
-            type="time"
             value={endTime}
-            min="10:00"
-            max="19:00"
             onChange={(e) => setEndTime(e.target.value)}
-            className="w-full px-3 py-2.5 rounded-lg border border-border text-sm focus:outline-none focus:ring-2 focus:ring-brand/30 focus:border-brand"
-          />
+            className="w-full px-3 py-2.5 rounded-lg border border-border text-sm bg-white focus:outline-none focus:ring-2 focus:ring-brand/30 focus:border-brand"
+          >
+            {CUSTOMER_FULFILLMENT_WINDOWS.map((window) => (
+              <option key={window.value} value={window.value}>
+                {formatCustomerFulfillmentWindow(window.value, locale)}
+              </option>
+            ))}
+          </select>
         </div>
       </div>
       <p className="text-xs text-neutral-500 -mt-2 mb-4">
@@ -1297,7 +1304,7 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
                 {fulfillmentPolicy.deliveryType === "express" ? t.expressDerived : t.standardDerived}
               </p>
               <p className="mt-1 text-xs text-neutral-600">
-                {formatDisplayDate(new Date(`${startDate}T12:00:00`), locale)} {startTime} · {t.valenciaTime}
+                {formatDisplayDate(new Date(`${startDate}T12:00:00`), locale)} {formatCustomerFulfillmentWindow(startTime, locale)} · {t.valenciaTime}
               </p>
               {fulfillmentPolicy.fees.expressSurchargeCents > 0 && (
                 <p className="mt-1 text-xs font-medium text-amber-700">

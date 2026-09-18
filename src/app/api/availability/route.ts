@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createServiceClient } from "@/lib/supabase";
-import { BookingRuleError, assertFulfillmentTiming, calculateRentalDays, cleanupExpiredBookingDrafts, evaluateDeliveryFulfillment, getEnabledProductExtraServices, getFulfillmentPolicyMessage, getPickupLocation, getProductWithPricing, getServiceZone, isShortNoticeBypassEligible, quoteBooking, resolveRentalPeriod, resolveSelectedExtraServices } from "@/lib/booking-v2";
+import { BookingRuleError, assertCustomerFulfillmentWindows, assertFulfillmentTiming, calculateRentalDays, cleanupExpiredBookingDrafts, evaluateDeliveryFulfillment, getEnabledProductExtraServices, getFulfillmentPolicyMessage, getPickupLocation, getProductWithPricing, getServiceZone, isShortNoticeBypassEligible, quoteBooking, resolveRentalPeriod, resolveSelectedExtraServices } from "@/lib/booking-v2";
 import { fetchActivePickupLocations, fetchActiveServiceZones } from "@/lib/fulfillment-options";
 import { resolveDefaultMarketContext } from "@/lib/market-context";
 import type { DeliveryType, FulfillmentMode } from "@/lib/types";
@@ -51,12 +51,13 @@ export async function GET(request: NextRequest) {
     const period = start && end
       ? resolveRentalPeriod({
           startDate: start,
-          startTime: startTime || "09:00",
+          startTime: startTime || "10:00",
           endDate: end,
-          endTime: endTime || "09:00",
+          endTime: endTime || "10:00",
         })
       : resolveRentalPeriod({ startAt: startAtParam!, endAt: endAtParam! });
     const { startAt, endAt } = period;
+    assertCustomerFulfillmentWindows(period);
     const { product, tiers, quantityDiscounts } = await getProductWithPricing(supabase, slug);
     const rentalDays = calculateRentalDays(startAt, endAt);
     let resumableDraftId: string | null = null;

@@ -166,8 +166,8 @@ the company adviser before relying on the system for production invoicing.
 
 ### Customer Flow
 
-1. Customer selects start date and time.
-2. Customer selects end date and time.
+1. Customer selects start date and a delivery window: Morning (10:00–13:00), Midday (14:00–16:00), or Evening (18:00–20:00).
+2. Customer selects end date and a collection/return window from the same three options.
 3. Customer selects fulfillment:
    - Customer pickup from a configured pickup location.
    - Delivery only.
@@ -190,8 +190,10 @@ the company adviser before relying on the system for production invoicing.
 ### Time Model
 
 Bookings use `rental_start_at` and `rental_end_at` timestamps in the `Europe/Madrid`
-timezone. Date-only `start_date` and `end_date` remain for legacy compatibility,
-but new availability and checkout logic must use datetime ranges.
+timezone. For customer bookings, the stored timestamp is the start of the selected
+operational window (10:00, 14:00, or 18:00); the full window is shown in the
+customer flow and operations messages. Date-only `start_date` and `end_date` remain
+for legacy compatibility, but new availability and checkout logic must use datetime ranges.
 
 ### Inventory Model
 

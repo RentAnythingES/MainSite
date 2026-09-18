@@ -5,6 +5,7 @@ import {
   sendDueDateTelegramNotification,
   sendDeliveryGroupRequest,
 } from "@/lib/telegram";
+import { formatCustomerFulfillmentWindow } from "@/lib/fulfillment-windows";
 
 export const maxDuration = 60;
 
@@ -17,14 +18,19 @@ function madridDateString(date: Date) {
 }
 
 function madridWindowLabel(date: Date) {
-  return new Intl.DateTimeFormat("en-GB", {
+  const dateLabel = new Intl.DateTimeFormat("en-GB", {
     timeZone: "Europe/Madrid",
     weekday: "short",
     day: "numeric",
     month: "short",
+  }).format(date);
+  const time = new Intl.DateTimeFormat("en-GB", {
+    timeZone: "Europe/Madrid",
     hour: "2-digit",
     minute: "2-digit",
+    hourCycle: "h23",
   }).format(date);
+  return `${dateLabel} · ${formatCustomerFulfillmentWindow(time)}`;
 }
 
 type BookingRow = {

@@ -3,6 +3,7 @@ import { createServiceClient } from "@/lib/supabase";
 import { getIncidentErrorMessage, recordSystemIncident } from "@/lib/system-incidents";
 import {
   BookingRuleError,
+  assertCustomerFulfillmentWindows,
   DEFAULT_DRAFT_TTL_MINUTES,
   assertFulfillmentFields,
   assertFulfillmentTiming,
@@ -123,6 +124,7 @@ export async function POST(request: NextRequest) {
     );
 
     const period = resolveRentalPeriod(body);
+    assertCustomerFulfillmentWindows(period);
     const { startAt, endAt } = period;
     await cleanupExpiredBookingDrafts(supabase);
 

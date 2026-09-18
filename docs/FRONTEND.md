@@ -224,7 +224,7 @@ Online checkout is gated by server-side Supabase availability, blocked dates, an
 
 Normal v2 flow:
 1. **Booking options** — `/api/booking-options` loads active pickup locations and service zones from Supabase.
-2. **Rental window** — Pick start/end date, start/end time, fulfillment mode, pickup location or an automatic-checkout delivery/collection zone, and delivery speed.
+2. **Rental window** — Pick start/end date and one of the fixed delivery/collection windows (Morning 10:00–13:00, Midday 14:00–16:00, or Evening 18:00–20:00), fulfillment mode, pickup location or an automatic-checkout delivery/collection zone, and delivery speed.
 3. **Availability** — `/api/availability` resolves the product server-side and checks stock, blocked dates, datetime inventory holds, and server pricing.
 4. **Details** — Customer enters contact details plus delivery/collection address where required.
 5. **Draft** — `/api/booking-drafts` calculates pricing server-side and creates a temporary inventory hold.

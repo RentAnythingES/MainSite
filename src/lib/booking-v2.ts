@@ -10,6 +10,7 @@ import {
   type FulfillmentPolicyReason,
   type FulfillmentPolicyResult,
 } from "@/lib/fulfillment-policy";
+import { isCustomerFulfillmentWindow } from "@/lib/fulfillment-windows";
 
 export { isShortNoticeBypassEligible, SHORT_NOTICE_LEAD_HOURS } from "@/lib/fulfillment-policy";
 
@@ -271,6 +272,15 @@ export function resolveRentalPeriod(input: RentalPeriodInput): ResolvedRentalPer
       endTime: endWallClock.time,
     },
   };
+}
+
+export function assertCustomerFulfillmentWindows(period: ResolvedRentalPeriod) {
+  if (
+    !isCustomerFulfillmentWindow(period.wallClock.startTime) ||
+    !isCustomerFulfillmentWindow(period.wallClock.endTime)
+  ) {
+    throw new BookingRuleError("Choose Morning (10:00–13:00), Midday (14:00–16:00), or Evening (18:00–20:00) for delivery and collection.");
+  }
 }
 
 export function calculateRentalDays(startAt: Date, endAt: Date): number {

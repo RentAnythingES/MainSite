@@ -3,12 +3,12 @@ import type { OperatingDay, WeeklyOperatingHours } from "./types";
 export const FULFILLMENT_TIME_ZONE = "Europe/Madrid";
 
 export const DEFAULT_DELIVERY_OPERATING_HOURS: WeeklyOperatingHours = {
-  monday: { open: "10:00", close: "19:00" },
-  tuesday: { open: "10:00", close: "19:00" },
-  wednesday: { open: "10:00", close: "19:00" },
-  thursday: { open: "10:00", close: "19:00" },
-  friday: { open: "10:00", close: "19:00" },
-  saturday: { open: "10:00", close: "19:00" },
+  monday: { open: "10:00", close: "20:00" },
+  tuesday: { open: "10:00", close: "20:00" },
+  wednesday: { open: "10:00", close: "20:00" },
+  thursday: { open: "10:00", close: "20:00" },
+  friday: { open: "10:00", close: "20:00" },
+  saturday: { open: "10:00", close: "20:00" },
   sunday: null,
 };
 
