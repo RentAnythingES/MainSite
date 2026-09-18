@@ -87,6 +87,7 @@ Supabase (CRUD products, pricing, bookings)
 | `inventory_stock_events` | Audit history for declared stock and online-capacity changes | Server/admin only |
 | `booking_inventory_unit_assignments` | Physical-unit reservation, handover, return, and release history per booking | Admin/API only |
 | `monitoring_runs` | Scheduled production health results and alert deduplication | Server/admin only |
+| `daily_operation_manifests` | Idempotency log for the daily Telegram delivery/pick-up manifest | Server/admin only |
 | `api_rate_limits` | HMAC-keyed distributed counters for public mutation endpoints | Server only |
 
 Unexpected booking-draft creation failures and Stripe Checkout session-state

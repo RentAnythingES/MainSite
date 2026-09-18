@@ -1,6 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase-admin";
-import { sendDueDateTelegramNotification, sendDeliveryGroupRequest } from "@/lib/telegram";
+import {
+  sendDailyManifestTelegramNotification,
+  sendDueDateTelegramNotification,
+  sendDeliveryGroupRequest,
+} from "@/lib/telegram";
 
 export const maxDuration = 60;
 
@@ -72,6 +76,32 @@ async function recordNotification(
   const { error } = await supabase
     .from("booking_reminder_notifications")
     .insert({ booking_id: bookingId, event_type: eventType, event_date: eventDate, channel: "telegram" });
+
+  if (error) throw error;
+}
+
+async function hasDailyManifestBeenSent(
+  supabase: ReturnType<typeof createAdminClient>,
+  manifestDate: string,
+) {
+  const { data, error } = await supabase
+    .from("daily_operation_manifests")
+    .select("id")
+    .eq("manifest_date", manifestDate)
+    .eq("channel", "telegram")
+    .limit(1);
+
+  if (error) throw error;
+  return Boolean(data && data.length > 0);
+}
+
+async function recordDailyManifest(
+  supabase: ReturnType<typeof createAdminClient>,
+  manifestDate: string,
+) {
+  const { error } = await supabase
+    .from("daily_operation_manifests")
+    .insert({ manifest_date: manifestDate, channel: "telegram" });
 
   if (error) throw error;
 }
@@ -149,7 +179,20 @@ export async function GET(request: NextRequest) {
     for (const zone of (zones || []) as { id: string; name: string }[]) zoneNames.set(zone.id, zone.name);
   }
 
-  const results = { deliveriesSent: 0, pickupsSent: 0, groupRequestsSent: 0, skippedAlreadySent: 0, errors: [] as string[] };
+  const results = {
+    deliveriesSent: 0,
+    pickupsSent: 0,
+    groupRequestsSent: 0,
+    skippedAlreadySent: 0,
+    manifestSent: false,
+    manifestSkippedAlreadySent: false,
+    errors: [] as string[],
+  };
+  const manifest = {
+    date: today,
+    deliveries: [] as Array<{ bookingRef: string; productName: string; area: string }>,
+    pickups: [] as Array<{ bookingRef: string; productName: string; area: string }>,
+  };
 
   for (const booking of bookingRows) {
     const productName = resolveProductName(booking.product);
@@ -161,6 +204,8 @@ export async function GET(request: NextRequest) {
       (booking.fulfillment_mode === "delivery_only" || booking.fulfillment_mode === "delivery_and_collection") &&
       booking.delivery_address
     ) {
+      const area = (booking.delivery_zone_id && zoneNames.get(booking.delivery_zone_id)) || "Valencia";
+      manifest.deliveries.push({ bookingRef: booking.booking_ref, productName, area });
       try {
         const alreadySent = await hasAlreadyNotified(supabase, booking.id, "delivery", today);
         if (alreadySent) {
@@ -202,6 +247,8 @@ export async function GET(request: NextRequest) {
     ) {
       const address = booking.collection_address || booking.delivery_address;
       if (address) {
+        const area = (booking.collection_zone_id && zoneNames.get(booking.collection_zone_id)) || "Valencia";
+        manifest.pickups.push({ bookingRef: booking.booking_ref, productName, area });
         try {
           const alreadySent = await hasAlreadyNotified(supabase, booking.id, "pickup", today);
           if (alreadySent) {
@@ -235,6 +282,22 @@ export async function GET(request: NextRequest) {
         }
       }
     }
+  }
+
+  try {
+    if (await hasDailyManifestBeenSent(supabase, today)) {
+      results.manifestSkippedAlreadySent = true;
+    } else {
+      const sent = await sendDailyManifestTelegramNotification(manifest);
+      if (!sent.ok) {
+        results.errors.push(`Daily manifest: ${sent.error}`);
+      } else {
+        await recordDailyManifest(supabase, today);
+        results.manifestSent = true;
+      }
+    }
+  } catch (err) {
+    results.errors.push(`Daily manifest: ${err instanceof Error ? err.message : String(err)}`);
   }
 
   return NextResponse.json({ date: today, ...results });

@@ -113,6 +113,7 @@ async function sendTelegramText(
 
   try {
     const failures: string[] = [];
+    let successfulDeliveries = 0;
     for (const chatId of chatIds) {
       const response = await fetch(`${apiBase}/bot${botToken}/sendMessage`, {
         method: "POST",
@@ -129,11 +130,17 @@ async function sendTelegramText(
 
       if (!response.ok) {
         failures.push(`chat ${chatId}: Telegram Bot API returned ${response.status}: ${await response.text()}`);
+      } else {
+        successfulDeliveries += 1;
       }
     }
 
-    if (failures.length > 0) {
+    if (successfulDeliveries === 0) {
       throw new Error(failures.join("; "));
+    }
+
+    if (failures.length > 0) {
+      console.error(`[telegram] ${logLabel} notification was delivered to ${successfulDeliveries} recipient(s), but failed for: ${failures.join("; ")}`);
     }
 
     return { ok: true };
@@ -180,6 +187,30 @@ function buildDueDateMessageText(data: DueDateTelegramData) {
 
 export async function sendDueDateTelegramNotification(data: DueDateTelegramData) {
   return sendTelegramText(buildDueDateMessageText(data), `due-date-${data.eventType}`);
+}
+
+export interface DailyManifestTelegramData {
+  date: string;
+  deliveries: Array<{ bookingRef: string; productName: string; area: string }>;
+  pickups: Array<{ bookingRef: string; productName: string; area: string }>;
+}
+
+function buildDailyManifestMessageText(data: DailyManifestTelegramData) {
+  const lines = [
+    "📋 <b>Daily operations manifest</b>",
+    `<b>Date:</b> ${escapeTelegramHtml(data.date)}`,
+    `<b>Deliveries:</b> ${data.deliveries.length}`,
+    ...data.deliveries.map((item) => `• 📦 ${escapeTelegramHtml(item.bookingRef)} — ${escapeTelegramHtml(item.productName)} (${escapeTelegramHtml(item.area)})`),
+    `<b>Pick-ups:</b> ${data.pickups.length}`,
+    ...data.pickups.map((item) => `• 🚚 ${escapeTelegramHtml(item.bookingRef)} — ${escapeTelegramHtml(item.productName)} (${escapeTelegramHtml(item.area)})`),
+    "",
+    "Individual reminders and courier requests are sent separately.",
+  ];
+  return lines.join("\n");
+}
+
+export async function sendDailyManifestTelegramNotification(data: DailyManifestTelegramData) {
+  return sendTelegramText(buildDailyManifestMessageText(data), "daily-manifest");
 }
 
 export interface ShortNoticeBookingTelegramData {
