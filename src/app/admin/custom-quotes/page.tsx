@@ -12,6 +12,7 @@ type CustomQuote = {
   id: string;
   public_token: string;
   status: QuoteStatus;
+  display_name: string;
   quantity: number;
   customer_name: string | null;
   customer_email: string | null;
@@ -65,6 +66,7 @@ export default function AdminCustomQuotesPage() {
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
+  const [displayName, setDisplayName] = useState("Custom Quote");
   const [productId, setProductId] = useState("");
   const [quantity, setQuantity] = useState(1);
   const [customerName, setCustomerName] = useState("");
@@ -147,6 +149,7 @@ export default function AdminCustomQuotesPage() {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
+        displayName,
         productId,
         quantity,
         customerName,
@@ -207,7 +210,7 @@ export default function AdminCustomQuotesPage() {
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-white">Custom booking quotes</h1>
         <p className="mt-2 max-w-3xl text-neutral-400">
-          Prepare a private fixed-price link. Free-form lines live only on this quote; only the selected catalogue product reserves inventory.
+          Prepare a private fixed-price link. Give the arrangement a customer-facing title, then select the catalogue product used for its inventory reservation.
         </p>
       </div>
 
@@ -218,7 +221,18 @@ export default function AdminCustomQuotesPage() {
         <h2 className="text-xl font-semibold text-white">Create a quote</h2>
         <div className="mt-5 grid gap-4 md:grid-cols-2">
           <label className="text-sm text-neutral-300">
-            Primary inventory product
+            Quote title
+            <input
+              className={inputClass}
+              value={displayName}
+              onChange={(event) => setDisplayName(event.target.value)}
+              maxLength={160}
+              required
+            />
+            <span className="mt-1 block text-xs leading-5 text-neutral-500">Shown to the customer on their private quote.</span>
+          </label>
+          <label className="text-sm text-neutral-300">
+            Inventory product
             <select className={inputClass} value={productId} onChange={(event) => setProductId(event.target.value)} required>
               {products.map((product) => (
                 <option key={product.id} value={product.id}>
@@ -380,8 +394,7 @@ export default function AdminCustomQuotesPage() {
                     <div className="flex flex-wrap items-center gap-2">
                       <h3 className="font-semibold text-white">
                         {quote.quantity > 1 ? `${quote.quantity} × ` : ""}
-                        {quote.product.brand.trim() ? `${quote.product.brand.trim()} ` : ""}
-                        {quote.product.name}
+                        {quote.display_name}
                       </h3>
                       <span className="rounded-full bg-neutral-800 px-2.5 py-1 text-xs font-medium uppercase text-neutral-300">{quote.status.replace("_", " ")}</span>
                     </div>

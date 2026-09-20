@@ -14,7 +14,7 @@ export async function GET(
   const { data, error } = await supabase
     .from("booking_custom_quotes")
     .select(`
-      public_token, status, quantity, customer_name, customer_email, customer_phone,
+      public_token, status, display_name, quantity, customer_name, customer_email, customer_phone,
       rental_start_at, rental_end_at, timezone, fulfillment_mode, delivery_address,
       collection_address, delivery_notes, collection_notes, currency, line_items,
       total_cents, customer_terms, expires_at,

@@ -342,10 +342,11 @@ private-link expiry before the rental start, and the API clamps stale later expi
 values instead of rejecting an otherwise valid near-term quote. Genuine stock,
 calendar-block, and overlapping-hold conflicts still fail closed.
 
-Each quote links exactly one primary catalogue product and quantity to automatic
-inventory. The quote's price lines, customer-visible conditions, delivery details,
-and staff preparation notes are stored as one-off JSON/text snapshots. They never
-create reusable products, add-ons, SKUs, or kit definitions.
+Each quote has an editable customer-facing title (default: `Custom Quote`) and links
+exactly one separate catalogue product and quantity to automatic inventory. The
+quote's price lines, customer-visible conditions, delivery details, and staff
+preparation notes are stored as one-off JSON/text snapshots. They never create
+reusable products, add-ons, SKUs, or kit definitions.
 
 Creating a quote checks current availability but does not reserve stock for the full
 quote validity period. When the customer accepts, `accept_custom_booking_quote(...)`
@@ -358,7 +359,8 @@ snapshots, converts the hold, issues the invoice, and marks the quote paid.
 Cancelling an unpaid quote expires its open Stripe session before releasing inventory.
 An expired or cancelled quote cannot be accepted. Quote pages are private and noindex.
 
-Migration: `supabase/migrations/20260725_custom_booking_quotes.sql`.
+Migrations: `supabase/migrations/20260725_custom_booking_quotes.sql` and
+`supabase/migrations/20260920_custom_quote_display_name.sql`.
 
 Webhook event required before reopening:
 

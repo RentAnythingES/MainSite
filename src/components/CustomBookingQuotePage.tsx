@@ -8,6 +8,7 @@ type QuoteLine = { description: string; amountCents: number };
 type QuoteView = {
   public_token: string;
   status: "open" | "checkout_created" | "paid" | "cancelled" | "expired";
+  display_name: string;
   quantity: number;
   customer_name: string | null;
   customer_email: string;
@@ -156,11 +157,10 @@ export default function CustomBookingQuotePage({ token }: { token: string }) {
           <div className="border-b border-neutral-200 p-6 sm:p-8">
             <div className="grid gap-5 sm:grid-cols-2">
               <div>
-                <p className="text-xs font-semibold uppercase tracking-wider text-neutral-400">Primary rental</p>
+                <p className="text-xs font-semibold uppercase tracking-wider text-neutral-400">Your rental</p>
                 <p className="mt-1 font-semibold">
                   {quote.quantity > 1 ? `${quote.quantity} × ` : ""}
-                  {quote.product.brand.trim() ? `${quote.product.brand.trim()} ` : ""}
-                  {quote.product.name}
+                  {quote.display_name}
                 </p>
                 <p className="mt-1 text-sm text-neutral-500">{dateTime(quote.rental_start_at)} → {dateTime(quote.rental_end_at)}</p>
               </div>

@@ -58,6 +58,7 @@ export async function POST(request: NextRequest) {
 
   try {
     const body = await request.json();
+    const displayName = cleanOptionalText(body.displayName, 160);
     const productId = typeof body.productId === "string" ? body.productId : "";
     const quantity = Number(body.quantity);
     const rentalStartAt = parseQuoteDate(body.rentalStartAt, "Rental start");
@@ -72,7 +73,8 @@ export async function POST(request: NextRequest) {
     const deliveryAddress = cleanOptionalText(body.deliveryAddress, 500);
     const collectionAddress = cleanOptionalText(body.collectionAddress, 500);
 
-    if (!productId) throw new Error("Choose a product");
+    if (!displayName) throw new Error("Enter a quote title");
+    if (!productId) throw new Error("Choose an inventory product");
     if (!Number.isInteger(quantity) || quantity < 1 || quantity > 50) throw new Error("Quantity must be between 1 and 50");
     if (rentalStartAt.getTime() <= now.getTime()) throw new Error("Rental start must be in the future");
     if (rentalEndAt <= rentalStartAt) throw new Error("Rental end must be after the start");
@@ -133,6 +135,7 @@ export async function POST(request: NextRequest) {
       .from("booking_custom_quotes")
       .insert({
         status: "open",
+        display_name: displayName,
         product_id: productId,
         quantity,
         customer_name: cleanOptionalText(body.customerName, 120),
