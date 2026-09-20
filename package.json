@@ -29,6 +29,7 @@
     "test:fulfillment-policy": "node --experimental-strip-types --test scripts/fulfillment-policy.test.mjs",
     "test:telegram": "node scripts/test-telegram-communications.cjs",
     "audit:daily-operations": "node scripts/audit-daily-operations.cjs",
+    "recover:daily-operations": "node scripts/recover-daily-operations.cjs",
     "db:audit": "node scripts/audit-live-schema.cjs",
     "db:audit:lifecycle": "node scripts/audit-booking-lifecycle.cjs",
     "db:audit:inventory": "node scripts/audit-inventory-reconciliation.cjs",
