@@ -8,6 +8,7 @@ type PickupOption = { id: string; name: string; address: string };
 type QuoteLine = { description: string; amountCents: number };
 type QuoteStatus = "open" | "checkout_created" | "paid" | "cancelled" | "expired";
 type FulfillmentMode = "customer_pickup" | "delivery_only" | "delivery_and_collection";
+const CUSTOM_PRODUCT_VALUE = "__custom_product__";
 type CustomQuote = {
   id: string;
   public_token: string;
@@ -93,6 +94,7 @@ export default function AdminCustomQuotesPage() {
     () => lineItems.reduce((total, line) => total + (Number.isFinite(line.amountCents) ? line.amountCents : 0), 0),
     [lineItems],
   );
+  const isCustomProduct = productId === CUSTOM_PRODUCT_VALUE;
 
   useEffect(() => {
     let cancelled = false;
@@ -104,7 +106,7 @@ export default function AdminCustomQuotesPage() {
         setQuotes(data.quotes || []);
         setProducts(data.products || []);
         setPickupLocations(data.pickupLocations || []);
-        setProductId((current) => current || data.products?.[0]?.id || "");
+        setProductId((current) => current || CUSTOM_PRODUCT_VALUE);
         setPickupLocationId((current) => current || data.pickupLocations?.[0]?.id || "");
       })
       .catch((caught) => {
@@ -210,7 +212,7 @@ export default function AdminCustomQuotesPage() {
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-white">Custom booking quotes</h1>
         <p className="mt-2 max-w-3xl text-neutral-400">
-          Prepare a private fixed-price link. Give the arrangement a customer-facing title, then select the catalogue product used for its inventory reservation.
+          Prepare a private fixed-price link. Choose a catalogue product for inventory, or select Custom product to quote an item not in the catalogue.
         </p>
       </div>
 
@@ -221,26 +223,44 @@ export default function AdminCustomQuotesPage() {
         <h2 className="text-xl font-semibold text-white">Create a quote</h2>
         <div className="mt-5 grid gap-4 md:grid-cols-2">
           <label className="text-sm text-neutral-300">
-            Quote title
-            <input
+            Product
+            <select
               className={inputClass}
-              value={displayName}
-              onChange={(event) => setDisplayName(event.target.value)}
-              maxLength={160}
+              value={productId}
+              onChange={(event) => {
+                const nextProductId = event.target.value;
+                setProductId(nextProductId);
+                if (nextProductId === CUSTOM_PRODUCT_VALUE) {
+                  setDisplayName((current) => current || "Custom Quote");
+                  return;
+                }
+                const product = products.find((item) => item.id === nextProductId);
+                if (product) setDisplayName(`${product.brand.trim() ? `${product.brand.trim()} ` : ""}${product.name}`);
+              }}
               required
-            />
-            <span className="mt-1 block text-xs leading-5 text-neutral-500">Shown to the customer on their private quote.</span>
-          </label>
-          <label className="text-sm text-neutral-300">
-            Inventory product
-            <select className={inputClass} value={productId} onChange={(event) => setProductId(event.target.value)} required>
+            >
+              <option value={CUSTOM_PRODUCT_VALUE}>Custom product</option>
               {products.map((product) => (
                 <option key={product.id} value={product.id}>
                   {product.brand.trim() ? `${product.brand.trim()} ` : ""}{product.name} ({Math.min(product.stock_total, product.stock_available)} online)
                 </option>
               ))}
             </select>
+            <span className="mt-1 block text-xs leading-5 text-neutral-500">Catalogue products reserve their own stock. Custom products do not reserve a catalogue item.</span>
           </label>
+          {isCustomProduct && (
+            <label className="text-sm text-neutral-300">
+              Custom product title
+              <input
+                className={inputClass}
+                value={displayName}
+                onChange={(event) => setDisplayName(event.target.value)}
+                maxLength={160}
+                required
+              />
+              <span className="mt-1 block text-xs leading-5 text-neutral-500">Shown to the customer instead of a catalogue product.</span>
+            </label>
+          )}
           <label className="text-sm text-neutral-300">
             Quantity
             <input className={inputClass} type="number" min={1} max={50} value={quantity} onChange={(event) => setQuantity(Number(event.target.value))} required />

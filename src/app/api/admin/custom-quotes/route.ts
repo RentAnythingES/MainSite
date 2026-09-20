@@ -11,6 +11,9 @@ import {
 } from "@/lib/custom-booking-quotes";
 import { createAdminClient } from "@/lib/supabase-admin";
 
+const CUSTOM_PRODUCT_VALUE = "__custom_product__";
+const CUSTOM_PRODUCT_SLUG = "custom-quote";
+
 function dateOnly(value: Date) {
   return value.toISOString().slice(0, 10);
 }
@@ -60,6 +63,7 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     const displayName = cleanOptionalText(body.displayName, 160);
     const productId = typeof body.productId === "string" ? body.productId : "";
+    const isCustomProduct = productId === CUSTOM_PRODUCT_VALUE;
     const quantity = Number(body.quantity);
     const rentalStartAt = parseQuoteDate(body.rentalStartAt, "Rental start");
     const rentalEndAt = parseQuoteDate(body.rentalEndAt, "Rental end");
@@ -73,8 +77,8 @@ export async function POST(request: NextRequest) {
     const deliveryAddress = cleanOptionalText(body.deliveryAddress, 500);
     const collectionAddress = cleanOptionalText(body.collectionAddress, 500);
 
-    if (!displayName) throw new Error("Enter a quote title");
-    if (!productId) throw new Error("Choose an inventory product");
+    if (isCustomProduct && !displayName) throw new Error("Enter a custom product title");
+    if (!productId) throw new Error("Choose a product");
     if (!Number.isInteger(quantity) || quantity < 1 || quantity > 50) throw new Error("Quantity must be between 1 and 50");
     if (rentalStartAt.getTime() <= now.getTime()) throw new Error("Rental start must be in the future");
     if (rentalEndAt <= rentalStartAt) throw new Error("Rental end must be after the start");
@@ -83,15 +87,15 @@ export async function POST(request: NextRequest) {
     }
 
     const supabase = createAdminClient();
-    const { data: product, error: productError } = await supabase
+    const productQuery = supabase
       .from("products")
-      .select("id, stock_total, stock_available")
-      .eq("id", productId)
-      .eq("is_active", true)
-      .single();
+      .select("id, name, brand, stock_total, stock_available");
+    const { data: product, error: productError } = isCustomProduct
+      ? await productQuery.eq("slug", CUSTOM_PRODUCT_SLUG).maybeSingle()
+      : await productQuery.eq("id", productId).eq("is_active", true).maybeSingle();
 
-    if (productError || !product) throw new Error("Active product not found");
-    if (Math.min(product.stock_total, product.stock_available) < quantity) {
+    if (productError || !product) throw new Error(isCustomProduct ? "Custom product setup is unavailable" : "Active product not found");
+    if (!isCustomProduct && Math.min(product.stock_total, product.stock_available) < quantity) {
       throw new Error("The primary product does not have enough online capacity");
     }
 
@@ -99,14 +103,14 @@ export async function POST(request: NextRequest) {
       supabase
         .from("blocked_dates")
         .select("id")
-        .eq("product_id", productId)
+        .eq("product_id", product.id)
         .gte("blocked_date", dateOnly(rentalStartAt))
         .lte("blocked_date", dateOnly(rentalEndAt))
         .limit(1),
       supabase
         .from("booking_inventory_blocks")
         .select("quantity, booking_id, booking_draft_id, booking_drafts!left(status, expires_at)")
-        .eq("product_id", productId)
+        .eq("product_id", product.id)
         .lt("starts_at", rentalEndAt.toISOString())
         .gt("ends_at", rentalStartAt.toISOString()),
     ]);
@@ -127,16 +131,20 @@ export async function POST(request: NextRequest) {
       return active ? sum + block.quantity : sum;
     }, 0);
 
-    if ((blockedResult.data || []).length > 0 || overlappingQuantity + quantity > Math.min(product.stock_total, product.stock_available)) {
+    if (!isCustomProduct && ((blockedResult.data || []).length > 0 || overlappingQuantity + quantity > Math.min(product.stock_total, product.stock_available))) {
       throw new Error("The primary product is not currently available for those dates");
     }
+
+    const resolvedDisplayName = isCustomProduct
+      ? displayName
+      : `${product.brand.trim() ? `${product.brand.trim()} ` : ""}${product.name}`;
 
     const { data: quote, error } = await supabase
       .from("booking_custom_quotes")
       .insert({
         status: "open",
-        display_name: displayName,
-        product_id: productId,
+        display_name: resolvedDisplayName,
+        product_id: product.id,
         quantity,
         customer_name: cleanOptionalText(body.customerName, 120),
         customer_email: cleanOptionalText(body.customerEmail, 254)?.toLowerCase() || null,

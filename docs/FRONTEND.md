@@ -250,10 +250,12 @@ confirmation before showing the updated state.
 
 ### Pre-booking custom quotes
 
-Staff create one-off fixed-price arrangements at `/admin/custom-quotes`. Each quote
-has an editable customer-facing title (default: `Custom Quote`) and selects one
-separate catalogue product for inventory purposes; its customer-visible price lines,
-conditions, and internal preparation notes are free-form snapshots.
+Staff create one-off fixed-price arrangements at `/admin/custom-quotes`. Staff may
+select a catalogue product, or choose `Custom product` and enter a customer-facing
+title (default: `Custom Quote`). The latter uses only an internal, non-catalogue
+placeholder for booking compatibility and never reserves a real catalogue item. Its
+customer-visible price lines, conditions, and internal preparation notes are free-form
+snapshots.
 Those lines do not create catalogue products, add-ons, SKUs, or kit definitions.
 
 The private `/booking/quote/[token]` page displays the agreed dates, fulfillment,
