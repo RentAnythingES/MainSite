@@ -206,6 +206,9 @@ export default function AdminBookingsPage() {
   const [calendarDetailExpanded, setCalendarDetailExpanded] = useState(true);
   const [sendingDocumentId, setSendingDocumentId] = useState<string | null>(null);
   const [updatingStatus, setUpdatingStatus] = useState<string | null>(null);
+  const [refundBookingId, setRefundBookingId] = useState<string | null>(null);
+  const [refundAmount, setRefundAmount] = useState("");
+  const [refundReason, setRefundReason] = useState("");
   const [updatingOpsTask, setUpdatingOpsTask] = useState<string | null>(null);
   const [bookingOpsTasksAvailable, setBookingOpsTasksAvailable] = useState(true);
   const [fulfillmentAmendmentsAvailable, setFulfillmentAmendmentsAvailable] = useState(true);
@@ -283,6 +286,67 @@ export default function AdminBookingsPage() {
       await fetchBookings();
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to update booking");
+    } finally {
+      setUpdatingStatus(null);
+    }
+  };
+
+  const openRefund = (bookingId: string) => {
+    setError("");
+    setNotice("");
+    setRefundBookingId(refundBookingId === bookingId ? null : bookingId);
+    setRefundAmount("");
+    setRefundReason("");
+  };
+
+  const submitRefund = async (booking: Booking, mode: "full" | "partial") => {
+    try {
+      setError("");
+      setNotice("");
+      if (!booking.stripe_payment_intent_id) {
+        throw new Error("This booking has no Stripe payment to refund.");
+      }
+
+      let refundAmountCents: number | undefined;
+      if (mode === "partial") {
+        const parsedAmount = Number(refundAmount.replace(",", "."));
+        refundAmountCents = Math.round(parsedAmount * 100);
+        if (!Number.isFinite(parsedAmount) || refundAmountCents <= 0) {
+          throw new Error("Enter a valid partial refund amount.");
+        }
+      }
+
+      const amountLabel = mode === "full" ? "the remaining balance" : formatMoney(refundAmountCents);
+      if (!window.confirm(`Issue a refund for ${amountLabel}? This creates a Stripe refund and a rectifying accounting document.`)) {
+        return;
+      }
+
+      setUpdatingStatus(`${booking.id}:refund`);
+      const res = await fetch(`/api/admin/bookings/${booking.id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          status: "refunded",
+          refundAmountCents,
+          refundReason: refundReason.trim() || undefined,
+          refundRequestKey: crypto.randomUUID(),
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.error || "Refund failed");
+      }
+      setRefundBookingId(null);
+      setRefundAmount("");
+      setRefundReason("");
+      setNotice(
+        data.isPartialRefund
+          ? `Partial refund of ${formatMoney(data.refundAmountCents)} issued. The booking remains active and a rectifying invoice was created.`
+          : "Refund issued. The booking was closed, inventory released, and a rectifying invoice was created.",
+      );
+      await fetchBookings();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to issue refund");
     } finally {
       setUpdatingStatus(null);
     }
@@ -444,9 +508,7 @@ export default function AdminBookingsPage() {
 
   const getTransitions = (booking: Booking) => {
     const actions = TRANSITIONS[booking.status] || [];
-    const rentalStart = booking.rental_start_at || booking.start_date;
-    const hasStarted = rentalStart ? new Date(rentalStart).getTime() <= Date.now() : true;
-    return actions.filter((action) => action.next !== "refunded" || !hasStarted).map((action) => {
+    return actions.filter((action) => action.next !== "refunded").map((action) => {
       if (action.next === "delivering") {
         return {
           ...action,
@@ -1391,6 +1453,87 @@ export default function AdminBookingsPage() {
                   )}
                   {booking.confirmation_status === "rejected" && (
                     <p className="mb-4 text-xs text-red-400">Rejected by {booking.confirmed_by || "team"}</p>
+                  )}
+
+                  {!['completed', 'cancelled', 'refunded'].includes(booking.status) && (
+                    <div className="mt-4 border-t border-neutral-800 pt-4">
+                      <div className="flex flex-wrap items-center justify-between gap-3">
+                        <div>
+                          <p className="text-xs font-semibold text-neutral-300">Refund</p>
+                          <p className="mt-1 text-xs text-neutral-500">
+                            {booking.stripe_payment_intent_id
+                              ? "Issue a full remaining-balance refund or a custom partial refund."
+                              : "A Stripe payment is required before a refund can be issued."}
+                          </p>
+                        </div>
+                        <button
+                          onClick={() => openRefund(booking.id)}
+                          disabled={!booking.stripe_payment_intent_id || updatingStatus === `${booking.id}:refund`}
+                          title={booking.stripe_payment_intent_id ? "Open refund controls" : "No Stripe payment is available to refund"}
+                          className="rounded-lg bg-red-600/20 px-3 py-1.5 text-xs font-semibold text-red-300 transition-colors hover:bg-red-600/40 disabled:cursor-not-allowed disabled:opacity-50"
+                        >
+                          {updatingStatus === `${booking.id}:refund` ? "Processing refund..." : "Refund"}
+                        </button>
+                      </div>
+
+                      {refundBookingId === booking.id && booking.stripe_payment_intent_id && (
+                        <div className="mt-3 rounded-xl border border-red-500/20 bg-red-500/5 p-4">
+                          <p className="text-sm font-semibold text-red-100">Choose refund amount</p>
+                          <p className="mt-1 text-xs leading-5 text-neutral-400">
+                            A full refund closes this booking and releases its inventory. A partial refund keeps the booking active. Each successful refund creates a linked rectifying invoice.
+                          </p>
+                          <div className="mt-3 grid gap-3 sm:grid-cols-2">
+                            <label className="text-xs font-medium text-neutral-300">
+                              Partial amount (EUR)
+                              <input
+                                type="number"
+                                min="0.01"
+                                step="0.01"
+                                inputMode="decimal"
+                                value={refundAmount}
+                                onChange={(event) => setRefundAmount(event.target.value)}
+                                placeholder="0.00"
+                                className="mt-1 w-full rounded-lg border border-neutral-700 bg-neutral-950 px-3 py-2 text-sm text-white outline-none transition focus:border-red-400"
+                              />
+                            </label>
+                            <label className="text-xs font-medium text-neutral-300">
+                              Reason or reference (optional)
+                              <input
+                                type="text"
+                                maxLength={500}
+                                value={refundReason}
+                                onChange={(event) => setRefundReason(event.target.value)}
+                                placeholder="e.g. service adjustment"
+                                className="mt-1 w-full rounded-lg border border-neutral-700 bg-neutral-950 px-3 py-2 text-sm text-white outline-none transition focus:border-red-400"
+                              />
+                            </label>
+                          </div>
+                          <div className="mt-3 flex flex-wrap gap-2">
+                            <button
+                              onClick={() => submitRefund(booking, "partial")}
+                              disabled={updatingStatus === `${booking.id}:refund`}
+                              className="rounded-lg border border-red-500/30 bg-red-500/10 px-3 py-1.5 text-xs font-semibold text-red-200 hover:bg-red-500/20 disabled:cursor-not-allowed disabled:opacity-50"
+                            >
+                              Issue partial refund
+                            </button>
+                            <button
+                              onClick={() => submitRefund(booking, "full")}
+                              disabled={updatingStatus === `${booking.id}:refund`}
+                              className="rounded-lg bg-red-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-red-500 disabled:cursor-not-allowed disabled:opacity-50"
+                            >
+                              Refund remaining balance &amp; close booking
+                            </button>
+                            <button
+                              onClick={() => setRefundBookingId(null)}
+                              disabled={updatingStatus === `${booking.id}:refund`}
+                              className="rounded-lg px-3 py-1.5 text-xs font-semibold text-neutral-400 hover:text-white disabled:cursor-not-allowed"
+                            >
+                              Cancel
+                            </button>
+                          </div>
+                        </div>
+                      )}
+                    </div>
                   )}
 
                   {/* Status transition buttons */}

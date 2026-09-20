@@ -36,6 +36,7 @@ export interface BookingEmailData {
   rentalEndAt?: string | null;
   rentalDays: number;
   totalCents: number;
+  refundAmountCents?: number;
   deliveryAddress: string;
   deliveryType: string;
   fulfillmentMode?: string;
@@ -386,6 +387,11 @@ export async function sendBookingStatusUpdate(data: BookingEmailData, newStatus:
       subject: `Refund processed — ${data.bookingRef}`,
       title: "Refund processed",
       message: `A refund of <strong>${formatEuros(data.totalCents)}</strong> has been processed for your booking (${escapeHtml(data.bookingRef)}). It should appear in your account within 5-10 business days, depending on your bank.`,
+    },
+    partially_refunded: {
+      subject: `Partial refund processed — ${data.bookingRef}`,
+      title: "Partial refund processed",
+      message: `A partial refund of <strong>${formatEuros(data.refundAmountCents || 0)}</strong> has been processed for your booking (${escapeHtml(data.bookingRef)}). Your booking remains active. It should appear in your account within 5-10 business days, depending on your bank.`,
     },
   };
 

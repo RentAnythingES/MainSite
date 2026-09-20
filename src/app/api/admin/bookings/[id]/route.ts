@@ -9,12 +9,12 @@ import { createBookingDocumentForPaymentEvent, getCustomerDocumentUrl } from "@/
 import { createBookingReviewInvitation } from "@/lib/booking-reviews";
 
 const VALID_TRANSITIONS: Record<string, string[]> = {
-  pending: ["confirmed", "cancelled"],
-  confirmed: ["paid", "cancelled"],
+  pending: ["confirmed", "cancelled", "refunded"],
+  confirmed: ["paid", "cancelled", "refunded"],
   paid: ["delivering", "cancelled", "refunded"],
   delivering: ["active", "refunded"],
-  active: ["returning"],
-  returning: ["completed"],
+  active: ["returning", "refunded"],
+  returning: ["completed", "refunded"],
   completed: [],
   cancelled: [],
   refunded: [],
@@ -33,7 +33,7 @@ export async function PUT(
   const { id } = await params;
 
   try {
-    const { status } = await request.json();
+    const { status, refundAmountCents, refundReason, refundRequestKey } = await request.json();
     const supabase = createAdminClient();
 
     // Get current booking (with product info for email)
@@ -53,25 +53,17 @@ export async function PUT(
     const currentStatus = (booking as { status: string }).status;
     const allowed = VALID_TRANSITIONS[currentStatus] || [];
 
-    if (!allowed.includes(status)) {
+    if (typeof status !== "string" || !allowed.includes(status)) {
       return NextResponse.json(
         { error: `Cannot transition from ${currentStatus} to ${status}` },
         { status: 400 }
       );
     }
 
-    if (status === "refunded") {
-      const rentalStart = (booking as { rental_start_at?: string | null; start_date?: string | null }).rental_start_at
-        || (booking as { start_date?: string | null }).start_date;
-      if (!rentalStart || new Date(rentalStart).getTime() <= Date.now()) {
-        return NextResponse.json(
-          { error: "A booking can only be refunded before its rental has started." },
-          { status: 400 },
-        );
-      }
-    }
-
     const bookingRecord = booking as Record<string, unknown>;
+    let isPartialRefund = false;
+    let refundAmount = 0;
+    let normalizedRefundReason: string | null = null;
     let documentLinks:
       | Array<{ label: string; url: string; documentNumber?: string | null }>
       | undefined;
@@ -80,6 +72,12 @@ export async function PUT(
     // confirms the refund. The idempotency key makes network retries safe.
     if (status === "cancelled" || status === "refunded") {
       const paymentIntentId = bookingRecord.stripe_payment_intent_id as string | null;
+      if (status === "refunded" && !paymentIntentId) {
+        return NextResponse.json(
+          { error: "This booking has no Stripe payment to refund." },
+          { status: 400 },
+        );
+      }
       if (paymentIntentId) {
         if (!stripe) {
           return NextResponse.json(
@@ -89,9 +87,63 @@ export async function PUT(
         }
 
         try {
+          let requestedRefundAmount: number | undefined;
+          let idempotencyKey = `booking-refund-${id}`;
+
+          if (status === "refunded") {
+            if (typeof refundReason === "string") {
+              normalizedRefundReason = refundReason.trim().slice(0, 500) || null;
+            }
+            if (typeof refundRequestKey !== "string" || !/^[a-zA-Z0-9_-]{16,128}$/.test(refundRequestKey)) {
+              return NextResponse.json(
+                { error: "A valid refund request key is required." },
+                { status: 400 },
+              );
+            }
+
+            const paymentIntent = await stripe.paymentIntents.retrieve(paymentIntentId, {
+              expand: ["latest_charge"],
+            });
+            const latestCharge = typeof paymentIntent.latest_charge === "string"
+              ? await stripe.charges.retrieve(paymentIntent.latest_charge)
+              : paymentIntent.latest_charge;
+            const refundableCents = latestCharge
+              ? Math.max(0, latestCharge.amount - latestCharge.amount_refunded)
+              : 0;
+
+            if (refundableCents <= 0) {
+              return NextResponse.json(
+                { error: "This payment has no remaining refundable balance." },
+                { status: 400 },
+              );
+            }
+            if (refundAmountCents !== undefined && refundAmountCents !== null) {
+              if (!Number.isSafeInteger(refundAmountCents) || refundAmountCents <= 0) {
+                return NextResponse.json(
+                  { error: "Refund amount must be a positive whole number of cents." },
+                  { status: 400 },
+                );
+              }
+              if (refundAmountCents > refundableCents) {
+                return NextResponse.json(
+                  { error: `Refund amount exceeds the remaining refundable balance of ${(refundableCents / 100).toFixed(2)} ${paymentIntent.currency.toUpperCase()}.` },
+                  { status: 400 },
+                );
+              }
+              requestedRefundAmount = refundAmountCents;
+            }
+
+            refundAmount = requestedRefundAmount || refundableCents;
+            isPartialRefund = refundAmount < refundableCents;
+            idempotencyKey = `booking-refund-${id}-${refundRequestKey}`;
+          }
+
           const createdRefund = await stripe.refunds.create(
-            { payment_intent: paymentIntentId },
-            { idempotencyKey: `booking-refund-${id}` },
+            {
+              payment_intent: paymentIntentId,
+              ...(requestedRefundAmount ? { amount: requestedRefundAmount } : {}),
+            },
+            { idempotencyKey },
           );
           const refund =
             createdRefund.status === "succeeded"
@@ -115,10 +167,16 @@ export async function PUT(
             stripeRefundId: refund.id,
             stripeChargeId: typeof refund.charge === "string" ? refund.charge : refund.charge?.id || null,
             providerEventId: `refund:${refund.id}`,
-            description: status === "cancelled" ? "Stripe refund issued after cancellation" : "Stripe refund issued",
+            description: status === "cancelled"
+              ? "Stripe refund issued after cancellation"
+              : isPartialRefund
+                ? "Partial Stripe refund issued by admin"
+                : "Full Stripe refund issued by admin",
             metadata: {
               requested_booking_status: status,
               refund_status: refund.status,
+              refund_scope: isPartialRefund ? "partial" : "full",
+              refund_reason: normalizedRefundReason,
             },
             occurredAt: refund.created ? new Date(refund.created * 1000).toISOString() : null,
           });
@@ -163,6 +221,7 @@ export async function PUT(
             description: "Stripe refund attempt failed",
             metadata: {
               requested_booking_status: status,
+              refund_reason: normalizedRefundReason,
               error: refundErr instanceof Error ? refundErr.message : "Unknown refund error",
             },
           });
@@ -174,18 +233,20 @@ export async function PUT(
       }
     }
 
-    const transitionResult = await supabase
-      .rpc("transition_booking_status", {
-        p_booking_id: id,
-        p_expected_status: currentStatus,
-        p_new_status: status,
-        p_source: "admin_status_transition",
-        p_actor_user_id: user.id,
-      })
-      .single();
-    const { data, error } = transitionResult;
-
-    if (error) throw error;
+    let data: unknown = booking;
+    if (!isPartialRefund) {
+      const transitionResult = await supabase
+        .rpc("transition_booking_status", {
+          p_booking_id: id,
+          p_expected_status: currentStatus,
+          p_new_status: status,
+          p_source: "admin_status_transition",
+          p_actor_user_id: user.id,
+        })
+        .single();
+      if (transitionResult.error) throw transitionResult.error;
+      data = transitionResult.data;
+    }
 
     if (status === "paid") {
       const hasStripePayment = Boolean(bookingRecord.stripe_payment_intent_id);
@@ -279,6 +340,7 @@ export async function PUT(
       ? await createBookingReviewInvitation(supabase, id, (b.product_id as string) || null)
       : null;
 
+    const emailStatus = isPartialRefund ? "partially_refunded" : status;
     const emailSent = await sendBookingStatusUpdate(
       {
         bookingRef: b.booking_ref as string,
@@ -292,6 +354,7 @@ export async function PUT(
         rentalEndAt: (b.rental_end_at as string) || null,
         rentalDays: b.rental_days as number,
         totalCents: b.total_cents as number,
+        refundAmountCents: isPartialRefund ? refundAmount : undefined,
         deliveryAddress: fulfillmentAddress,
         deliveryType: (b.delivery_type as string) || "standard",
         fulfillmentMode: (b.fulfillment_mode as string) || undefined,
@@ -315,10 +378,10 @@ export async function PUT(
         documentLinks,
         reviewUrl,
       },
-      status
+      emailStatus
     );
 
-    return NextResponse.json({ booking: data, emailSent });
+    return NextResponse.json({ booking: data, emailSent, isPartialRefund, refundAmountCents: refundAmount || null });
   } catch (err) {
     console.error("[admin/bookings] PUT error:", err);
     return NextResponse.json({ error: "Failed to update booking" }, { status: 500 });

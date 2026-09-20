@@ -140,9 +140,10 @@ pending → confirmed → paid → delivering → active → returning → compl
                   ↘ cancelled
                             ↘ refunded
 ```
-- Cancellation/refund auto-releases blocked dates
-- Paid cancellation/refund confirms Stripe first; terminal status and inventory
-  release then commit atomically through `transition_booking_terminal_status(...)`
+- A full remaining-balance refund can close any non-completed booking and releases
+  blocked dates; a partial refund leaves the booking and its inventory allocation active
+- Paid cancellation/full refund confirms Stripe first; terminal status and inventory
+  release then commit atomically through `transition_booking_status(...)`
 - Auto-generated booking refs: `RA-20260619-XXXX`
 - Timestamps auto-set on status transitions
 
@@ -279,8 +280,10 @@ Stripe Checkout
   writes are non-blocking, so payment fulfillment does not fail if the table is not
   present yet.
 - Successful payment events create issued invoice records in `booking_documents`.
-  Successful refund events create issued refund receipt records. Admins can
-  download protected PDFs for booking documents from the booking detail panel.
+  Successful refund events create rectifying refund documents linked to the original
+  issued invoice. Immutable ledger and document snapshots retain the individual
+  refund amount, Stripe refund ID, partial/full scope, and optional staff reference.
+  Admins can download protected PDFs for booking documents from the booking detail panel.
 - Customer document emails use tokenized PDF links at `/api/documents/[token]/pdf`;
   these links do not expose admin routes and expire via
   `customer_access_expires_at`.
@@ -300,7 +303,7 @@ Stripe Checkout
 | `/api/admin/products/[id]/content` | GET, PUT | Product copy, FAQs, image-rights record, and readiness status |
 | `/api/admin/availability` | GET, POST, DELETE | View, block, and unblock product availability dates |
 | `/api/admin/bookings` | GET | List bookings (optional status filter) |
-| `/api/admin/bookings/[id]` | PUT | Update booking status |
+| `/api/admin/bookings/[id]` | PUT | Update booking status or issue a full/partial Stripe refund; partial refunds retain booking status and full refunds close the booking |
 | `/api/admin/bookings/[id]/fulfillment-amendments` | POST | Create a configured-zone or custom transport quote |
 | `/api/admin/bookings/[id]/fulfillment-amendments/[amendmentId]` | DELETE | Cancel an unpaid transport quote |
 | `/api/admin/bookings/[id]/fulfillment-amendments/[amendmentId]/email` | POST | Email the private quote link to the customer |

@@ -478,7 +478,9 @@ Payment ledger foundation:
   company, and payment snapshots.
 - Admin cancellation/refund actions record `refund` events, including failed refund
   attempts.
-- Successful refund events create issued refund receipt records.
+- Successful refund events create issued rectifying refund records linked to the
+  original issued invoice. Each record preserves the individual refund amount,
+  Stripe refund ID, partial/full scope, and optional staff reference.
 - Ledger writes are intentionally non-blocking so checkout/refund operations keep
   working even if the migration has not been applied yet.
 - Admins can download protected PDF files for invoice and refund receipt records
@@ -512,11 +514,13 @@ language, while delivery bookings show delivery/collection language. Customer
 status emails include the full rental datetime window and the configured pickup
 location or delivery/collection details.
 
-Paid cancellations/refunds are financially ordered: Stripe must confirm a successful,
-idempotent refund before the local booking status changes. Failed or pending refunds
-leave inventory reserved and return an actionable admin error. The database function
-`transition_booking_terminal_status(...)` atomically locks the expected booking
-state, applies the terminal status, and releases legacy and v2 inventory blocks.
+Refund controls appear for every non-completed booking with a Stripe payment. Staff
+can refund the remaining balance or enter a custom partial amount and optional
+reference. Stripe must confirm a successful, idempotent refund before a full refund
+closes the booking and releases inventory. A partial refund preserves the existing
+booking status and inventory allocation. Every successful refund writes a distinct
+ledger event and a rectifying invoice linked to the original issued invoice; failed
+or pending refunds leave the local booking unchanged and return an actionable error.
 
 Moving a booking to `completed` also creates a one-time verified review invitation
 when `supabase/migrations/20260719_verified_booking_reviews.sql` is installed. The

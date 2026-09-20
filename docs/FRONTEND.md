@@ -71,7 +71,7 @@ is required; they must not be used to disguise a narrow catalogue as a broad one
 | `/admin/products/new` | Client | Add new product form |
 | `/admin/fulfillment` | Client | Pickup locations, service zones, instructions, fees |
 | `/admin/inventory` | Client | Side-by-side owned stock, online capacity, physical-unit reconciliation, and asset maintenance |
-| `/admin/bookings` | Client | Booking lifecycle management, checklist-driven stages, pre-rental refund controls, status audit history, finance ledger, documents, and email controls |
+| `/admin/bookings` | Client | Booking lifecycle management, checklist-driven stages, full and partial refund controls for non-completed paid bookings, status audit history, finance ledger, documents, and email controls |
 | `/admin/kit-requests` | Client | Saved kit configurations, customer follow-up, quote and conversion statuses |
 | `/admin/custom-quotes` | Client | Flexible fixed-price pre-booking quote creation, link sharing, status, and cancellation |
 | `/booking/fulfillment/[token]` | Client | Private, noindex transport-quote review and Stripe payment handoff |

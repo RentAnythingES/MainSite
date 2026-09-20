@@ -272,9 +272,11 @@ export async function createBookingDocumentForPaymentEvent(
       stripe_checkout_session_id: paymentEvent.stripe_checkout_session_id,
       stripe_payment_intent_id: paymentEvent.stripe_payment_intent_id,
       stripe_refund_id: paymentEvent.stripe_refund_id,
+      refund_scope: paymentEvent.metadata?.refund_scope || null,
+      refund_reason: paymentEvent.metadata?.refund_reason || null,
     },
     notes: isRefund
-      ? `Rectifying invoice generated from Stripe refund event${originalInvoice?.document_number ? `; rectifies ${originalInvoice.document_number}.` : "."}`
+      ? `Rectifying invoice generated from Stripe refund event${originalInvoice?.document_number ? `; rectifies ${originalInvoice.document_number}` : ""}${typeof paymentEvent.metadata?.refund_reason === "string" && paymentEvent.metadata.refund_reason.trim() ? `; reference: ${paymentEvent.metadata.refund_reason.trim()}` : ""}.`
       : isFulfillmentAmendment
         ? "Additional transport service added after the original rental booking."
         : "Generated from Stripe Checkout payment.",
