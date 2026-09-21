@@ -44,9 +44,10 @@ Initial Booking System v2 code is now in place:
   IP/product, and email before an inventory hold can be created.
 - Quote-only service zones never appear as automatic checkout options and remain
   rejected server-side if submitted directly.
-- Booking drafts preserve standard/express delivery speed. The quote engine applies
-  configured express surcharges and minimum rental values, then validates standard
-  lead time or same-day express cutoff before reserving inventory.
+- Booking drafts preserve standard/express delivery speed. A rental beginning less
+  than 28 hours after checkout uses fixed-price Express delivery (€20); collection
+  pricing remains unchanged. Later rentals use the configured standard delivery and
+  collection fees before inventory is reserved.
 - `/api/checkout` can create Stripe Checkout from a `draftId`.
 - `/api/checkout/status` joins Stripe session, booking draft, booking, and inventory state for the success page.
 - `/api/webhooks/stripe` can fulfill `checkout.session.completed` from a booking draft.

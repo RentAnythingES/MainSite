@@ -234,10 +234,9 @@ Normal v2 flow:
 Changing fulfillment mode, pickup location, delivery/collection zone, or delivery
 speed invalidates the displayed server quote. A resumable Checkout is reused only
 when all of those fields still match. Manual-quote zones are kept out of the public
-selector, while the server remains authoritative for express surcharge, minimum
-rental value, lead time, and same-day cutoff.
-Standard and express option cards independently preview the full selected fulfillment
-fee; express adds the configured surcharge to the same one-way or round-trip base.
+selector, while the server remains authoritative for Express delivery, minimum
+rental value, and lead time. A rental start less than 28 hours away is quoted as
+fixed-price €20 Express delivery; collection pricing is unchanged.
 
 ### Post-booking delivery changes
 

@@ -15,6 +15,9 @@ export const DEFAULT_DELIVERY_OPERATING_HOURS: WeeklyOperatingHours = {
 // Bookings requested with less than this much notice are still allowed to complete
 // checkout, but need a human confirmation (see isShortNoticeBypassEligible below).
 export const SHORT_NOTICE_LEAD_HOURS = 24;
+// Delivery is Express whenever the rental starts less than this many hours from
+// checkout. This is a rolling threshold, not a calendar-day rule.
+export const EXPRESS_DELIVERY_LEAD_HOURS = 28;
 
 export type FulfillmentPolicyReason =
   | "standard_eligible"
@@ -79,7 +82,7 @@ export interface CheckoutPolicyResult extends PolicyResultBase {
 
 export interface ManualPolicyResult extends PolicyResultBase {
   decision: "manual_confirmation";
-  deliveryType: null;
+  deliveryType: "express" | null;
 }
 
 export interface InvalidPolicyResult extends PolicyResultBase {
@@ -263,10 +266,11 @@ function manualResult(
   requested: NormalizedRequest,
   leadTimeMinutes: number,
   baseFeeCents: number,
+  deliveryType: "express" | null = null,
 ): ManualPolicyResult {
   return {
     decision: "manual_confirmation",
-    deliveryType: null,
+    deliveryType,
     reason,
     leadTimeMinutes,
     requested,
@@ -332,8 +336,8 @@ export function evaluateFulfillmentPolicy({
     };
   }
 
-  const sameDay = request.startDate === today;
-  const requiredLeadHours = sameDay
+  const expressDelivery = leadTimeMinutes < EXPRESS_DELIVERY_LEAD_HOURS * 60;
+  const requiredLeadHours = expressDelivery
     ? config.expressMinLeadHours
     : config.futureDateLeadHours;
   if (!Number.isFinite(requiredLeadHours) || requiredLeadHours < 0) {
@@ -341,21 +345,12 @@ export function evaluateFulfillmentPolicy({
   }
   if (leadTimeMinutes < requiredLeadHours * 60) {
     return manualResult(
-      sameDay ? "same_day_too_soon" : "future_date_too_soon",
+      expressDelivery ? "same_day_too_soon" : "future_date_too_soon",
       requested,
       leadTimeMinutes,
       baseFeeCents,
+      expressDelivery ? "express" : null,
     );
-  }
-
-  if (sameDay && !config.automaticExpressEnabled) {
-    return manualResult("express_disabled", requested, leadTimeMinutes, baseFeeCents);
-  }
-  if (
-    sameDay &&
-    (!Number.isFinite(config.expressSurchargeCents) || config.expressSurchargeCents <= 0)
-  ) {
-    return manualResult("policy_unconfigured", requested, leadTimeMinutes, baseFeeCents);
   }
 
   const operatingState = getOperatingState(
@@ -373,19 +368,16 @@ export function evaluateFulfillmentPolicy({
     return manualResult(reason, requested, leadTimeMinutes, baseFeeCents);
   }
 
-  const expressSurchargeCents = sameDay
-    ? Math.trunc(config.expressSurchargeCents)
-    : 0;
   return {
-    decision: sameDay ? "express_checkout" : "standard_checkout",
-    deliveryType: sameDay ? "express" : "standard",
-    reason: sameDay ? "express_eligible" : "standard_eligible",
+    decision: expressDelivery ? "express_checkout" : "standard_checkout",
+    deliveryType: expressDelivery ? "express" : "standard",
+    reason: expressDelivery ? "express_eligible" : "standard_eligible",
     leadTimeMinutes,
     requested,
     fees: {
       baseFeeCents,
-      expressSurchargeCents,
-      totalFeeCents: baseFeeCents + expressSurchargeCents,
+      expressSurchargeCents: 0,
+      totalFeeCents: baseFeeCents,
     },
   };
 }

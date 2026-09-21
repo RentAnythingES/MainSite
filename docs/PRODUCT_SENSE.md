@@ -109,10 +109,11 @@ The delivery promise must always match the service the customer pays for. Custom
 choose their requested Valencia date and an operational window (Morning 10:00–13:00,
 Midday 14:00–16:00, or Evening 18:00–20:00); the booking system assigns the service:
 
-- Same-day delivery with at least 6 hours of lead time, during configured operating
-  hours, is paid Express delivery with the surcharge shown separately.
-- Delivery on a later calendar date needs at least 12 hours of rolling lead time and
-  is paid Standard delivery.
+- Delivery beginning less than 28 hours away, with at least 6 hours of lead time and
+  during configured operating hours, is fixed-price €20 Express delivery. Any
+  collection price remains unchanged.
+- Delivery beginning 28 hours or more away needs at least 12 hours of rolling lead
+  time and is paid Standard delivery.
 - Shorter-notice, closed-day, out-of-hours, or disabled-zone requests go to WhatsApp
   for manual confirmation. They must not create a payment session or inventory hold.
 

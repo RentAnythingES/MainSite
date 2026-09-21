@@ -125,14 +125,14 @@ Automatic checkout eligibility is explicit per service zone. Public booking opti
 return only active zones with `automatic_checkout_enabled = true`; availability and
 draft creation independently reject manual-quote zones. Delivery speed is derived
 server-side from the requested Europe/Madrid wall clock and cannot be selected by the
-browser: eligible same-day requests use Express, later-date requests use Standard,
+browser: requests beginning less than 28 hours away use €20 Express delivery, while
+later requests use Standard,
 and requests outside the configured lead-time or operating-hour policy return a
 WhatsApp/manual-confirmation decision before any draft or inventory hold is created.
-The 20260820 fulfillment migration configures a 6-hour same-day Express minimum, a
-12-hour later-date Standard minimum, weekly delivery start hours, and a per-zone
-automatic Express kill switch. Checkout re-evaluates the stored request before
-creating or resuming Stripe Checkout, and Express appears as a separate Stripe line
-item so the surcharge is explicit.
+The 20260820 fulfillment migration configures a 6-hour Express minimum, a 12-hour
+Standard minimum, and weekly delivery start hours. Checkout re-evaluates the stored
+request before creating or resuming Stripe Checkout. Express is a fixed €20 delivery
+line item for rental starts less than 28 hours away; collection pricing is unchanged.
 
 ### Booking Lifecycle
 ```

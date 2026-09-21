@@ -28,14 +28,31 @@ function evaluate(startDate, startTime, now, overrides = {}) {
   });
 }
 
-test("same-day exact six-hour boundary is express and charges once", () => {
+test("delivery exactly 28 hours away is Standard", () => {
+  const result = evaluate("2026-08-21", "14:00", "2026-08-20T08:00:00.000Z");
+  assert.equal(result.decision, "standard_checkout");
+  assert.equal(result.deliveryType, "standard");
+});
+
+test("delivery one minute inside 28 hours is Express", () => {
+  const result = evaluate("2026-08-21", "13:59", "2026-08-20T08:00:00.000Z");
+  assert.equal(result.decision, "express_checkout");
+  assert.equal(result.deliveryType, "express");
+  assert.deepEqual(result.fees, {
+    baseFeeCents: 2000,
+    expressSurchargeCents: 0,
+    totalFeeCents: 2000,
+  });
+});
+
+test("Express delivery at the six-hour boundary is checkout eligible", () => {
   const result = evaluate("2026-08-20", "16:00", "2026-08-20T08:00:00.000Z");
   assert.equal(result.decision, "express_checkout");
   assert.equal(result.deliveryType, "express");
   assert.deepEqual(result.fees, {
     baseFeeCents: 2000,
-    expressSurchargeCents: 500,
-    totalFeeCents: 2500,
+    expressSurchargeCents: 0,
+    totalFeeCents: 2000,
   });
 });
 
@@ -45,27 +62,27 @@ test("same-day one minute below six hours routes to manual confirmation", () => 
   assert.equal(result.reason, "same_day_too_soon");
 });
 
-test("same-day remains express even with more than twelve hours notice", () => {
-  const result = evaluate("2026-08-20", "18:00", "2026-08-20T05:00:00.000Z");
+test("a later calendar date within 28 hours is still Express", () => {
+  const result = evaluate("2026-08-21", "10:00", "2026-08-20T08:00:00.000Z");
   assert.equal(result.decision, "express_checkout");
 });
 
-test("next-day exact twelve-hour boundary is standard", () => {
-  const result = evaluate("2026-08-21", "10:00", "2026-08-20T20:00:00.000Z");
+test("a delivery more than 28 hours away is Standard", () => {
+  const result = evaluate("2026-08-22", "10:00", "2026-08-20T20:00:00.000Z");
   assert.equal(result.decision, "standard_checkout");
   assert.equal(result.fees.expressSurchargeCents, 0);
 });
 
-test("crossing midnight does not waive the twelve-hour threshold", () => {
-  const result = evaluate("2026-08-21", "09:00", "2026-08-20T19:01:00.000Z");
-  assert.equal(result.decision, "manual_confirmation");
-  assert.equal(result.reason, "future_date_too_soon");
+test("crossing midnight remains Express when the rental begins within 28 hours", () => {
+  const result = evaluate("2026-08-21", "10:00", "2026-08-20T19:01:00.000Z");
+  assert.equal(result.decision, "express_checkout");
+  assert.equal(result.deliveryType, "express");
 });
 
 test("operating window boundaries are inclusive", () => {
   assert.equal(
     evaluate("2026-08-21", "10:00", "2026-08-20T08:00:00.000Z").decision,
-    "standard_checkout",
+    "express_checkout",
   );
   assert.equal(
     evaluate("2026-08-21", "20:00", "2026-08-20T08:00:00.000Z").decision,
@@ -84,16 +101,16 @@ test("out-of-hours and closed-day requests route to manual confirmation", () => 
   assert.equal(closed.reason, "closed_day");
 });
 
-test("disabled express and zero surcharge fail closed", () => {
+test("fixed Express eligibility does not depend on legacy zone surcharge settings", () => {
   const disabled = evaluate("2026-08-20", "16:00", "2026-08-20T08:00:00.000Z", {
     automaticExpressEnabled: false,
   });
-  assert.equal(disabled.reason, "express_disabled");
+  assert.equal(disabled.decision, "express_checkout");
 
   const unpriced = evaluate("2026-08-20", "16:00", "2026-08-20T08:00:00.000Z", {
     expressSurchargeCents: 0,
   });
-  assert.equal(unpriced.reason, "policy_unconfigured");
+  assert.equal(unpriced.decision, "express_checkout");
 });
 
 test("invalid and ambiguous Madrid wall clocks are rejected", () => {

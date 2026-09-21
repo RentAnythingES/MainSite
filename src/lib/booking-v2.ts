@@ -16,6 +16,7 @@ export { isShortNoticeBypassEligible, SHORT_NOTICE_LEAD_HOURS } from "@/lib/fulf
 
 export const BOOKING_TIMEZONE = "Europe/Madrid";
 export const DEFAULT_DRAFT_TTL_MINUTES = 30;
+export const EXPRESS_DELIVERY_FEE_CENTS = 2000;
 
 export interface BookingProduct {
   id: string;
@@ -476,8 +477,12 @@ export function quoteBooking(
   }
 
   if (fulfillment.mode !== "customer_pickup" && deliveryType === "express") {
-    expressSurchargeCents = deliveryZone?.express_surcharge_cents ?? 0;
-    deliveryFeeCents += expressSurchargeCents;
+    // Express is a fixed delivery fee. Collection remains priced exactly as it
+    // would be for a normal delivery-and-collection booking.
+    deliveryFeeCents = EXPRESS_DELIVERY_FEE_CENTS;
+    if (fulfillment.mode === "delivery_and_collection") {
+      collectionFeeCents = collectionZone?.collection_fee_cents ?? 0;
+    }
   }
 
   const fulfillmentBaseFeeCents = deliveryFeeCents + collectionFeeCents - expressSurchargeCents;
@@ -516,6 +521,7 @@ export function quoteBooking(
       selectedQuantityDiscount: selectedQuantityDiscount || null,
       fulfillment,
       deliveryType,
+      expressDeliveryFeeCents: deliveryType === "express" ? EXPRESS_DELIVERY_FEE_CENTS : 0,
       deliveryZone,
       collectionZone,
       selectedExtraServices,
@@ -550,6 +556,12 @@ export function getStoredFulfillmentFeeBreakdown(
   const snapshot = pricingSnapshot && typeof pricingSnapshot === "object"
     ? pricingSnapshot as Record<string, unknown>
     : {};
+  if (
+    deliveryType === "express" &&
+    Number(snapshot.expressDeliveryFeeCents) === EXPRESS_DELIVERY_FEE_CENTS
+  ) {
+    return { baseFeeCents: totalFeeCents, expressSurchargeCents: 0, totalFeeCents };
+  }
   const policy = snapshot.fulfillmentPolicy && typeof snapshot.fulfillmentPolicy === "object"
     ? snapshot.fulfillmentPolicy as Record<string, unknown>
     : null;
@@ -622,7 +634,7 @@ export function getFulfillmentPolicyMessage(reason: FulfillmentPolicyReason): st
   switch (reason) {
     case "same_day_too_soon":
     case "future_date_too_soon":
-      return "This booking is short notice (less than 24 hours away) and will need a quick confirmation from our team after checkout, usually within 2 hours during opening hours.";
+      return "This Express delivery request is short notice (less than 24 hours away) and will need a quick confirmation from our team after checkout, usually within 2 hours during opening hours.";
     case "outside_operating_hours":
       return "Deliveries and pick-ups run 10:00-19:00 Valencia time. Requests outside these hours are subject to extra costs to be agreed during the booking process.";
     case "closed_day":
@@ -701,7 +713,7 @@ export function assertFulfillmentTiming(
   if (result.deliveryType !== deliveryType) {
     throw new BookingRuleError(
       result.deliveryType === "express"
-        ? "Same-day delivery requires Express service and its surcharge."
+        ? "Delivery within 28 hours requires Express delivery."
         : "Later-date delivery is booked as Standard service.",
     );
   }

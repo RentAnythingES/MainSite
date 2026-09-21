@@ -285,8 +285,8 @@ export default function AdminFulfillmentPage() {
                       </label>
                      </div>
                      <div className="grid sm:grid-cols-3 gap-3">
-                       <label className="text-xs text-neutral-400">Express surcharge €
-                         <input className={`${inputClass} mt-1`} value={centsToEuros(form.express_surcharge_cents)} onChange={(e) => setEditField("express_surcharge_cents", eurosToCents(e.target.value))} />
+                       <label className="text-xs text-neutral-400">Express delivery fee € (fixed for starts within 28h)
+                         <input className={`${inputClass} mt-1`} value="20.00" readOnly aria-readonly="true" />
                        </label>
                        <label className="text-xs text-neutral-400">Minimum rental €
                          <input className={`${inputClass} mt-1`} value={centsToEuros(form.minimum_order_cents)} onChange={(e) => setEditField("minimum_order_cents", eurosToCents(e.target.value))} />
@@ -298,7 +298,7 @@ export default function AdminFulfillmentPage() {
                         <input className={`${inputClass} mt-1`} type="number" min="0" max="72" step="1" value={form.lead_time_hours ?? 12} onChange={(e) => setEditField("lead_time_hours", Number(e.target.value))} />
                       </label>
                       <label className="text-xs text-neutral-400">
-                        Same-day Express minimum lead time
+                        Express minimum lead time
                         <input className={`${inputClass} mt-1`} type="number" min="0" max="72" step="1" value={form.express_min_lead_hours ?? 6} onChange={(e) => setEditField("express_min_lead_hours", Number(e.target.value))} />
                       </label>
                     </div>
@@ -350,8 +350,8 @@ export default function AdminFulfillmentPage() {
                          Allow online checkout
                        </label>
                        <label className="flex items-center gap-2 text-sm text-amber-300 sm:col-span-2">
-                         <input type="checkbox" checked={Boolean(form.automatic_express_enabled)} onChange={(e) => setEditField("automatic_express_enabled", e.target.checked)} />
-                         Automatic same-day Express enabled (kill switch)
+                         <input type="checkbox" checked disabled />
+                         Express delivery is automatic for rental starts within 28 hours
                        </label>
                     </div>
                   </div>
@@ -367,7 +367,7 @@ export default function AdminFulfillmentPage() {
                        {summarizeOperatingHours(zone.delivery_operating_hours)} · Later-date Standard {zone.lead_time_hours ?? 12}h
                      </p>
                      <p className="text-neutral-500 text-xs">
-                       Same-day Express {zone.express_min_lead_hours ?? 6}h+ · +€{centsToEuros(zone.express_surcharge_cents)} · {zone.automatic_express_enabled ? "Automatic Express ON" : "Automatic Express OFF"}
+                       Express starts within 28h · €20 delivery · minimum lead {zone.express_min_lead_hours ?? 6}h
                      </p>
                   </div>
                 )}

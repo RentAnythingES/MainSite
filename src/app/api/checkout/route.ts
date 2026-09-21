@@ -227,7 +227,9 @@ export async function POST(request: NextRequest) {
                     currency: bookingDraft.currency,
                     unit_amount: fulfillmentFees.baseFeeCents,
                     product_data: {
-                      name: bookingDraft.fulfillment_mode === "delivery_and_collection"
+                      name: bookingDraft.delivery_type === "express"
+                        ? "Express delivery"
+                        : bookingDraft.fulfillment_mode === "delivery_and_collection"
                         ? "Delivery and collection"
                         : "Delivery",
                     },
