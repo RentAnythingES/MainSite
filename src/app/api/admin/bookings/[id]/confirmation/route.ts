@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { verifyAdmin, unauthorizedResponse } from "@/lib/admin-auth";
 import { createAdminClient } from "@/lib/supabase-admin";
+import { rejectBookingWithStripeRefund } from "@/lib/booking-rejection-refund";
 
 /**
  * PATCH /api/admin/bookings/[id]/confirmation — Approve or reject a short-notice booking
@@ -22,6 +23,22 @@ export async function PATCH(
   }
 
   const supabase = createAdminClient();
+  if (decision === "rejected") {
+    try {
+      const result = await rejectBookingWithStripeRefund(supabase, {
+        bookingId: id,
+        actor: `admin:${user.email}`,
+        actorUserId: user.id,
+      });
+      return NextResponse.json({ booking: result.booking, emailSent: result.emailSent, alreadyHandled: result.alreadyHandled });
+    } catch (error) {
+      return NextResponse.json(
+        { error: error instanceof Error ? error.message : "Could not reject and refund booking" },
+        { status: 409 },
+      );
+    }
+  }
+
   const { data: updated, error } = await supabase
     .from("bookings")
     .update({

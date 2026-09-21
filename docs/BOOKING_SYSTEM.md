@@ -522,6 +522,14 @@ booking status and inventory allocation. Every successful refund writes a distin
 ledger event and a rectifying invoice linked to the original issued invoice; failed
 or pending refunds leave the local booking unchanged and return an actionable error.
 
+Short-notice booking rejection follows the same financial ordering from both the
+admin dashboard and Telegram inline button: the system confirms a full Stripe refund,
+records its ledger event, creates a rectifying receipt tied to the original invoice,
+then changes the booking to rejected/refunded and emails the customer the receipt.
+The shared Stripe idempotency key prevents duplicate charges when two operators act
+at the same time. A failed refund, ledger write, or receipt creation leaves the
+booking awaiting confirmation and does not send the customer a rejection email.
+
 Moving a booking to `completed` also creates a one-time verified review invitation
 when `supabase/migrations/20260719_verified_booking_reviews.sql` is installed. The
 completion email links to a private, `noindex` feedback form. Submission and consent

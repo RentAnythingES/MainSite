@@ -388,6 +388,11 @@ export async function sendBookingStatusUpdate(data: BookingEmailData, newStatus:
       title: "Refund processed",
       message: `A refund of <strong>${formatEuros(data.totalCents)}</strong> has been processed for your booking (${escapeHtml(data.bookingRef)}). It should appear in your account within 5-10 business days, depending on your bank.`,
     },
+    rejected_refunded: {
+      subject: `Booking update and refund — ${data.bookingRef}`,
+      title: "Your booking could not be confirmed",
+      message: `We’re sorry, but we could not confirm your short-notice booking. A full refund of <strong>${formatEuros(data.totalCents)}</strong> has been processed to your original payment method. It should appear in your account within 5-10 business days, depending on your bank. Your refund receipt is included below.`,
+    },
     partially_refunded: {
       subject: `Partial refund processed — ${data.bookingRef}`,
       title: "Partial refund processed",

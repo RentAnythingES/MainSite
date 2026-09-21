@@ -6,6 +6,7 @@ import {
   sendDeliveryDetailsDirectMessage,
   sendTelegramToChatId,
 } from "@/lib/telegram";
+import { rejectBookingWithStripeRefund } from "@/lib/booking-rejection-refund";
 
 /**
  * POST /api/webhooks/telegram — Telegram bot webhook.
@@ -161,6 +162,33 @@ async function handleConfirmationCallback(
   const actor = `telegram:${actorLabel(callbackQuery.from)}`;
 
   const supabase = createAdminClient();
+  if (decision === "rejected") {
+    try {
+      const result = await rejectBookingWithStripeRefund(supabase, {
+        bookingId,
+        actor,
+      });
+      await answerTelegramCallbackQuery(
+        callbackQuery.id,
+        result.alreadyHandled ? "Already rejected and refunded" : "Booking rejected and refunded",
+      );
+      if (callbackQuery.message) {
+        const resultLine = result.alreadyHandled
+          ? "❌ Already rejected and refunded"
+          : `❌ Rejected and refunded by ${actorLabel(callbackQuery.from)}`;
+        await editTelegramMessageText(
+          callbackQuery.message.chat.id,
+          callbackQuery.message.message_id,
+          `${resultLine}\nBooking ${result.booking.booking_ref}`,
+        );
+      }
+    } catch (error) {
+      console.error("[webhooks/telegram] Booking rejection refund failed:", error);
+      await answerTelegramCallbackQuery(callbackQuery.id, "Refund failed — booking was not rejected");
+    }
+    return;
+  }
+
   const { data: updated, error } = await supabase
     .from("bookings")
     .update({

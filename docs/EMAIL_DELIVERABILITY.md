@@ -70,6 +70,7 @@ All main transactional emails are centralized in `src/lib/email.ts` and use the 
 | Rental complete | `sendBookingStatusUpdate(..., "completed")` | Admin status transition to `completed` | `/api/admin/bookings/[id]` |
 | Cancellation | `sendBookingStatusUpdate(..., "cancelled")` | Admin status transition to `cancelled` | `/api/admin/bookings/[id]` |
 | Refund processed | `sendBookingStatusUpdate(..., "refunded")` | Admin status transition to `refunded` | `/api/admin/bookings/[id]` |
+| Booking rejected and refunded | `sendBookingStatusUpdate(..., "rejected_refunded")` | Short-notice booking is rejected only after Stripe refund and rectifying receipt creation | Admin confirmation route and `/api/webhooks/telegram` |
 | Document resend | `sendBookingDocumentLink` | Admin clicks "Email PDF" on booking document | `/api/admin/bookings/[id]/documents/[documentId]/email` |
 | Signup / newsletter welcome | `sendSignupWelcome` | `/api/newsletter` consent capture | Wired on blog newsletter form |
 | Health check | `sendEmailHealthCheck` | Admin email test | `/api/admin/health` |

@@ -284,6 +284,12 @@ Stripe Checkout
   issued invoice. Immutable ledger and document snapshots retain the individual
   refund amount, Stripe refund ID, partial/full scope, and optional staff reference.
   Admins can download protected PDFs for booking documents from the booking detail panel.
+- Rejecting a short-notice booking from either the admin confirmation control or the
+  Telegram button uses the same Stripe-first service. It uses a booking-scoped Stripe
+  idempotency key, records the refund and rectifying receipt, then marks the booking
+  rejected/refunded and emails the customer the receipt link. If the refund, ledger,
+  or receipt cannot be confirmed, the rejection is not committed and no customer
+  rejection email is sent.
 - Customer document emails use tokenized PDF links at `/api/documents/[token]/pdf`;
   these links do not expose admin routes and expire via
   `customer_access_expires_at`.
@@ -304,6 +310,7 @@ Stripe Checkout
 | `/api/admin/availability` | GET, POST, DELETE | View, block, and unblock product availability dates |
 | `/api/admin/bookings` | GET | List bookings (optional status filter) |
 | `/api/admin/bookings/[id]` | PUT | Update booking status or issue a full/partial Stripe refund; partial refunds retain booking status and full refunds close the booking |
+| `/api/admin/bookings/[id]/confirmation` | PATCH | Approve a short-notice booking or reject it only after its Stripe refund and refund receipt are confirmed |
 | `/api/admin/bookings/[id]/fulfillment-amendments` | POST | Create a configured-zone or custom transport quote |
 | `/api/admin/bookings/[id]/fulfillment-amendments/[amendmentId]` | DELETE | Cancel an unpaid transport quote |
 | `/api/admin/bookings/[id]/fulfillment-amendments/[amendmentId]/email` | POST | Email the private quote link to the customer |
