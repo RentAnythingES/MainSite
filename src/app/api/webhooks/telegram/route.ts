@@ -32,6 +32,12 @@ interface TelegramMessageUpdate {
   from?: { id: number; username?: string; first_name?: string };
 }
 
+interface TelegramChatMemberUpdate {
+  chat: { id: number };
+  from?: { id: number; username?: string; first_name?: string };
+  new_chat_member?: { status?: string; user?: { id: number; username?: string; first_name?: string } };
+}
+
 function actorLabel(from?: { id: number; username?: string; first_name?: string }) {
   if (from?.username) return `@${from.username}`;
   if (from?.first_name) return from.first_name;
@@ -119,7 +125,13 @@ export async function POST(request: NextRequest) {
   const update = await request.json().catch(() => null) as {
     callback_query?: TelegramCallbackQuery;
     message?: TelegramMessageUpdate;
+    chat_member?: TelegramChatMemberUpdate;
   } | null;
+
+  if (update?.chat_member) {
+    await handleDriverGroupMembership(update.chat_member);
+    return NextResponse.json({ ok: true });
+  }
 
   if (update?.message) {
     await handleMessage(update.message);
@@ -234,6 +246,14 @@ async function handleDeliveryCallback(
   const courierId = callbackQuery.from?.id;
   const courier = actorLabel(callbackQuery.from);
 
+  if (
+    !callbackQuery.message ||
+    String(callbackQuery.message.chat.id) !== process.env.TELEGRAM_DELIVERY_GROUP_ID
+  ) {
+    await answerTelegramCallbackQuery(callbackQuery.id, "This request must be claimed from the delivery group");
+    return;
+  }
+
   if (action === "dvskip") {
     await answerTelegramCallbackQuery(callbackQuery.id, "No problem — leaving it for others");
     return;
@@ -244,13 +264,26 @@ async function handleDeliveryCallback(
     return;
   }
 
+  const { data: driver, error: driverError } = await supabase
+    .from("delivery_drivers")
+    .select("id,full_name")
+    .eq("telegram_user_id", courierId)
+    .eq("is_active", true)
+    .eq("group_membership_status", "active")
+    .maybeSingle();
+  if (driverError) throw driverError;
+  if (!driver) {
+    await answerTelegramCallbackQuery(callbackQuery.id, "Only active Rent'n Roll drivers can claim requests");
+    return;
+  }
+
   // Atomic claim: only one courier can win an open request.
   const { data: claimed, error: claimError } = await supabase
     .from("delivery_requests")
     .update({
       status: "claimed",
       claimed_by_telegram_user_id: courierId,
-      claimed_by_label: courier,
+      claimed_by_label: (driver as { full_name: string }).full_name || courier,
       claimed_at: new Date().toISOString(),
     })
     .eq("id", requestId)
@@ -300,7 +333,7 @@ async function handleDeliveryCallback(
     await editTelegramMessageText(
       callbackQuery.message.chat.id,
       callbackQuery.message.message_id,
-      `✅ <b>Claimed by ${courier}</b>${bookingRef ? `\nRef: ${bookingRef}` : ""}`,
+      `✅ <b>Claimed</b>${bookingRef ? `\nRef: ${bookingRef}` : ""}`,
     );
   }
 }
@@ -322,4 +355,36 @@ async function handleMessage(message: TelegramMessageUpdate) {
     }
     return;
   }
+}
+
+async function handleDriverGroupMembership(update: TelegramChatMemberUpdate) {
+  if (String(update.chat.id) !== process.env.TELEGRAM_DELIVERY_GROUP_ID) return;
+  const member = update.new_chat_member;
+  const telegramUserId = member?.user?.id;
+  if (!telegramUserId) return;
+
+  const status = member?.status || "left";
+  const isMember = ["member", "administrator", "creator", "owner"].includes(status);
+  const supabase = createAdminClient();
+  const { data: driver } = await supabase
+    .from("delivery_drivers")
+    .select("id,is_active")
+    .eq("telegram_user_id", telegramUserId)
+    .maybeSingle();
+  if (!driver) return;
+
+  if (isMember && (driver as { is_active: boolean }).is_active) {
+    await supabase.from("delivery_drivers").update({
+      group_membership_status: "active",
+      telegram_username: member?.user?.username || null,
+      joined_at: new Date().toISOString(),
+      removed_at: null,
+    }).eq("id", (driver as { id: string }).id);
+    return;
+  }
+
+  await supabase.from("delivery_drivers").update({
+    group_membership_status: "removed",
+    removed_at: new Date().toISOString(),
+  }).eq("id", (driver as { id: string }).id);
 }

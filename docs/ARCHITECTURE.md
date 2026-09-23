@@ -88,6 +88,7 @@ Supabase (CRUD products, pricing, bookings)
 | `booking_inventory_unit_assignments` | Physical-unit reservation, handover, return, and release history per booking | Admin/API only |
 | `monitoring_runs` | Scheduled production health results and alert deduplication | Server/admin only |
 | `daily_operation_manifests` | Idempotency log for the daily Telegram delivery/pick-up manifest | Server/admin only |
+| `delivery_drivers` | Verified Telegram driver registry and group-membership state for dispatch claims | Server/admin only |
 | `api_rate_limits` | HMAC-keyed distributed counters for public mutation endpoints | Server only |
 
 Unexpected booking-draft creation failures and Stripe Checkout session-state
@@ -133,6 +134,14 @@ The 20260820 fulfillment migration configures a 6-hour Express minimum, a 12-hou
 Standard minimum, and weekly delivery start hours. Checkout re-evaluates the stored
 request before creating or resuming Stripe Checkout. Express is a fixed €20 delivery
 line item for rental starts less than 28 hours away; collection pricing is unchanged.
+
+### Telegram driver dispatch
+
+`/admin/drivers` manages the private driver registry. Only active drivers whose
+Telegram group membership has been verified may claim a broadcast. The group message
+contains only the event date/window and postcode; the webhook atomically assigns the
+first valid claim and sends customer/contact/address details only by private bot
+message. Setup and permissions are documented in `docs/TELEGRAM_DRIVER_DISPATCH.md`.
 
 ### Booking Lifecycle
 ```

@@ -70,6 +70,7 @@ is required; they must not be used to disguise a narrow catalogue as a broad one
 | `/admin/products` | Client | Product list, edit, archive/restore, active/archived filters |
 | `/admin/products/new` | Client | Add new product form |
 | `/admin/fulfillment` | Client | Pickup locations, service zones, instructions, fees |
+| `/admin/drivers` | Client | Verified Telegram driver registry, one-time delivery-group invites, and removal controls |
 | `/admin/inventory` | Client | Side-by-side owned stock, online capacity, physical-unit reconciliation, and asset maintenance |
 | `/admin/bookings` | Client | Booking lifecycle management, checklist-driven stages, full and partial refund controls for non-completed paid bookings, status audit history, finance ledger, documents, and email controls |
 | `/admin/kit-requests` | Client | Saved kit configurations, customer follow-up, quote and conversion statuses |

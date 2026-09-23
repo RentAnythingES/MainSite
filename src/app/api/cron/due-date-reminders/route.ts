@@ -33,6 +33,10 @@ function madridWindowLabel(date: Date) {
   return `${dateLabel} · ${formatCustomerFulfillmentWindow(time)}`;
 }
 
+function postcodeFromAddress(address: string | null) {
+  return /\b\d{5}\b/.exec(address || "")?.[0] || "Not provided";
+}
+
 type BookingRow = {
   id: string;
   booking_ref: string;
@@ -119,7 +123,6 @@ async function dispatchGroupRequest(
   eventType: "delivery" | "pickup",
   eventDate: string,
   productName: string,
-  zoneNames: Map<string, string>,
 ) {
   if (!process.env.TELEGRAM_DELIVERY_GROUP_ID) return false;
 
@@ -135,15 +138,12 @@ async function dispatchGroupRequest(
   const request = inserted?.[0];
   if (!request) return false;
 
-  const zoneId = eventType === "delivery" ? booking.delivery_zone_id : booking.collection_zone_id;
   const eventAt = new Date((eventType === "delivery" ? booking.rental_start_at : booking.rental_end_at) as string);
   const sent = await sendDeliveryGroupRequest({
     requestId: request.id,
-    bookingRef: booking.booking_ref,
     eventType,
-    productName,
     windowLabel: madridWindowLabel(eventAt),
-    area: (zoneId && zoneNames.get(zoneId)) || "Valencia",
+    postalCode: postcodeFromAddress(eventType === "delivery" ? booking.delivery_address : booking.collection_address || booking.delivery_address),
   });
 
   if (!sent.ok) {
@@ -234,7 +234,7 @@ export async function GET(request: NextRequest) {
         }
 
         try {
-          if (await dispatchGroupRequest(supabase, booking, "delivery", today, productName, zoneNames)) {
+            if (await dispatchGroupRequest(supabase, booking, "delivery", today, productName)) {
             results.groupRequestsSent += 1;
           }
         } catch (groupErr) {
@@ -277,7 +277,7 @@ export async function GET(request: NextRequest) {
           }
 
           try {
-            if (await dispatchGroupRequest(supabase, booking, "pickup", today, productName, zoneNames)) {
+            if (await dispatchGroupRequest(supabase, booking, "pickup", today, productName)) {
               results.groupRequestsSent += 1;
             }
           } catch (groupErr) {

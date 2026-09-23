@@ -10,6 +10,7 @@ const navItems = [
   { name: "Inventory", href: "/admin/inventory", icon: "#" },
   { name: "Availability", href: "/admin/availability", icon: "📅" },
   { name: "Fulfillment", href: "/admin/fulfillment", icon: "F" },
+  { name: "Drivers", href: "/admin/drivers", icon: "🚚" },
   { name: "Bookings", href: "/admin/bookings", icon: "📋" },
   { name: "Custom Quotes", href: "/admin/custom-quotes", icon: "€" },
   { name: "Kit Requests", href: "/admin/kit-requests", icon: "+" },

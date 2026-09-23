@@ -307,21 +307,17 @@ export async function sendTelegramToChatId(
 
 export interface DeliveryGroupRequestData {
   requestId: string;
-  bookingRef: string;
   eventType: "delivery" | "pickup";
-  productName: string;
   windowLabel: string;
-  area: string;
+  postalCode: string;
 }
 
 function buildDeliveryGroupRequestText(data: DeliveryGroupRequestData) {
   const heading = data.eventType === "delivery" ? "🚚 <b>New delivery request</b>" : "📦 <b>New pick-up request</b>";
   const lines = [
     heading,
-    `<b>Ref:</b> ${escapeTelegramHtml(data.bookingRef)}`,
-    `<b>Item:</b> ${escapeTelegramHtml(data.productName)}`,
     `<b>When:</b> ${escapeTelegramHtml(data.windowLabel)}`,
-    `<b>Area:</b> ${escapeTelegramHtml(data.area)}`,
+    `<b>Postcode:</b> ${escapeTelegramHtml(data.postalCode)}`,
     "",
     "First courier to accept receives the full address and instructions in a private message.",
   ];
@@ -456,4 +452,52 @@ export async function getTelegramRecentChatCandidates(limit = 20) {
 function getTelegramChatIds() {
   const configured = process.env.TELEGRAM_NOTIFY_CHAT_IDS || process.env.TELEGRAM_NOTIFY_CHAT_ID || "";
   return [...new Set(configured.split(",").map((value) => value.trim()).filter(Boolean))];
+}
+
+export async function createDeliveryDriverInviteLink(name: string): Promise<{ ok: boolean; inviteLink?: string; error?: string }> {
+  const botToken = process.env.TELEGRAM_BOT_TOKEN;
+  const groupChatId = process.env.TELEGRAM_DELIVERY_GROUP_ID;
+  const apiBase = process.env.TELEGRAM_API_BASE || "https://api.telegram.org";
+  if (!botToken || !groupChatId) return { ok: false, error: "Telegram delivery group is not configured" };
+
+  try {
+    const response = await fetch(`${apiBase}/bot${botToken}/createChatInviteLink`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        chat_id: groupChatId,
+        name: `Driver: ${name.slice(0, 24)}`,
+        member_limit: 1,
+        expire_date: Math.floor(Date.now() / 1000) + 7 * 24 * 60 * 60,
+      }),
+    });
+    const payload = await response.json() as { ok?: boolean; result?: { invite_link?: string }; description?: string };
+    if (!response.ok || !payload.ok || !payload.result?.invite_link) {
+      return { ok: false, error: payload.description || `Telegram Bot API returned ${response.status}` };
+    }
+    return { ok: true, inviteLink: payload.result.invite_link };
+  } catch (error) {
+    return { ok: false, error: error instanceof Error ? error.message : String(error) };
+  }
+}
+
+export async function removeDeliveryDriverFromGroup(telegramUserId: number): Promise<{ ok: boolean; error?: string }> {
+  const botToken = process.env.TELEGRAM_BOT_TOKEN;
+  const groupChatId = process.env.TELEGRAM_DELIVERY_GROUP_ID;
+  const apiBase = process.env.TELEGRAM_API_BASE || "https://api.telegram.org";
+  if (!botToken || !groupChatId) return { ok: false, error: "Telegram delivery group is not configured" };
+
+  try {
+    const response = await fetch(`${apiBase}/bot${botToken}/banChatMember`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ chat_id: groupChatId, user_id: telegramUserId }),
+    });
+    const payload = await response.json() as { ok?: boolean; description?: string };
+    return response.ok && payload.ok
+      ? { ok: true }
+      : { ok: false, error: payload.description || `Telegram Bot API returned ${response.status}` };
+  } catch (error) {
+    return { ok: false, error: error instanceof Error ? error.message : String(error) };
+  }
 }
