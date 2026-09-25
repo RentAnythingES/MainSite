@@ -3,6 +3,7 @@ import { createAdminClient } from "@/lib/supabase-admin";
 import {
   answerTelegramCallbackQuery,
   editTelegramMessageText,
+  isTelegramDeliveryGroupMember,
   sendDeliveryDetailsDirectMessage,
   sendTelegramToChatId,
 } from "@/lib/telegram";
@@ -266,14 +267,49 @@ async function handleDeliveryCallback(
 
   const { data: driver, error: driverError } = await supabase
     .from("delivery_drivers")
-    .select("id,full_name")
+    .select("id,full_name,group_membership_status")
     .eq("telegram_user_id", courierId)
     .eq("is_active", true)
-    .eq("group_membership_status", "active")
     .maybeSingle();
   if (driverError) throw driverError;
   if (!driver) {
-    await answerTelegramCallbackQuery(callbackQuery.id, "Only active Rent'n Roll drivers can claim requests");
+    await answerTelegramCallbackQuery(callbackQuery.id, "Only registered Rent'n Roll drivers can claim requests");
+    return;
+  }
+
+  const registeredDriver = driver as { id: string; full_name: string; group_membership_status: string };
+  if (registeredDriver.group_membership_status !== "active") {
+    const isGroupMember = await isTelegramDeliveryGroupMember(courierId);
+    if (!isGroupMember) {
+      await answerTelegramCallbackQuery(callbackQuery.id, "Join the delivery group using your personal invite before claiming work");
+      return;
+    }
+    await supabase.from("delivery_drivers").update({
+      group_membership_status: "active",
+      joined_at: new Date().toISOString(),
+      removed_at: null,
+    }).eq("id", registeredDriver.id);
+  }
+
+  if (requestId.startsWith("telegram-test-delivery-")) {
+    const testDetails = await sendDeliveryDetailsDirectMessage(courierId, {
+      bookingRef: "TEST-DELIVERY",
+      eventType: "delivery",
+      productName: "Test delivery request",
+      customerName: "Test customer — no journey required",
+      address: "Test address, Valencia",
+      notes: "This is a Telegram dispatch test. No customer or booking is attached.",
+    });
+    if (!testDetails.ok) {
+      await answerTelegramCallbackQuery(callbackQuery.id, "Open the bot privately and press Start, then try the test again");
+      return;
+    }
+    await answerTelegramCallbackQuery(callbackQuery.id, "Test claimed — test details sent privately");
+    await editTelegramMessageText(
+      callbackQuery.message.chat.id,
+      callbackQuery.message.message_id,
+      "🧪 <b>Test claimed</b>\nNo real delivery is assigned.",
+    );
     return;
   }
 
@@ -283,7 +319,7 @@ async function handleDeliveryCallback(
     .update({
       status: "claimed",
       claimed_by_telegram_user_id: courierId,
-      claimed_by_label: (driver as { full_name: string }).full_name || courier,
+      claimed_by_label: registeredDriver.full_name || courier,
       claimed_at: new Date().toISOString(),
     })
     .eq("id", requestId)

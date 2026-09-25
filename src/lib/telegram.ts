@@ -336,6 +336,28 @@ export async function sendDeliveryGroupRequest(data: DeliveryGroupRequestData) {
   });
 }
 
+export async function isTelegramDeliveryGroupMember(telegramUserId: number): Promise<boolean> {
+  const botToken = process.env.TELEGRAM_BOT_TOKEN;
+  const groupChatId = process.env.TELEGRAM_DELIVERY_GROUP_ID;
+  const apiBase = process.env.TELEGRAM_API_BASE || "https://api.telegram.org";
+  if (!botToken || !groupChatId) return false;
+
+  try {
+    const response = await fetch(`${apiBase}/bot${botToken}/getChatMember`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ chat_id: groupChatId, user_id: telegramUserId }),
+    });
+    const payload = await response.json() as { ok?: boolean; result?: { status?: string; is_member?: boolean } };
+    if (!response.ok || !payload.ok) return false;
+    const status = payload.result?.status;
+    return status === "member" || status === "administrator" || status === "creator" || status === "owner"
+      || (status === "restricted" && payload.result?.is_member === true);
+  } catch {
+    return false;
+  }
+}
+
 export interface DeliveryDetailsData {
   bookingId?: string | null;
   bookingRef: string;

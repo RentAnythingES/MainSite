@@ -21,7 +21,8 @@ references, and rental items are never posted there.
    `/chatid` to obtain their personal Telegram user ID.
 2. An admin adds that ID at `/admin/drivers`, then creates a one-time group invite.
 3. The driver joins the group. Telegram sends a `chat_member` webhook and marks
-   the driver active for claims.
+   the driver active for claims. If that webhook was missed, the first claim checks
+   the driver's current group membership with Telegram and activates the driver.
 4. The daily operations cron posts a request containing only date, delivery window,
    and postcode. An active driver taps **I'll take it**.
 5. The webhook atomically assigns the request and sends the full customer and
@@ -30,3 +31,9 @@ references, and rental items are never posted there.
 Removing a driver from `/admin/drivers` removes them from the Telegram group and
 immediately prevents any future claim. Drivers must have started the bot privately
 before they can receive assigned-job details.
+
+## Testing
+
+A test delivery request is clearly marked and contains no customer or booking data.
+When an eligible driver claims it, the group post is marked as a test claim and the
+bot sends only test details privately. It never creates or changes a booking.

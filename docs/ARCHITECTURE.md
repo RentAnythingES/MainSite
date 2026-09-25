@@ -141,7 +141,10 @@ line item for rental starts less than 28 hours away; collection pricing is uncha
 Telegram group membership has been verified may claim a broadcast. The group message
 contains only the event date/window and postcode; the webhook atomically assigns the
 first valid claim and sends customer/contact/address details only by private bot
-message. Setup and permissions are documented in `docs/TELEGRAM_DRIVER_DISPATCH.md`.
+message. A claim also verifies the driver's current group membership with Telegram,
+so drivers who joined before the membership webhook was available are activated on
+their first valid claim. Setup and permissions are documented in
+`docs/TELEGRAM_DRIVER_DISPATCH.md`.
 
 ### Booking Lifecycle
 ```
