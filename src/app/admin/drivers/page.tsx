@@ -14,8 +14,29 @@ type Driver = {
   joined_at: string | null;
 };
 
+type DriversApiResponse = {
+  error?: string;
+  drivers?: Driver[];
+  driver?: Driver;
+  inviteLink?: string;
+};
+
 const inputClass = "mt-1 w-full rounded-xl border border-neutral-700 bg-neutral-950 px-3 py-2.5 text-sm text-white";
 const blankForm = { fullName: "", phone: "", telegramUserId: "", telegramUsername: "" };
+
+async function readDriversApiResponse(response: Response): Promise<DriversApiResponse> {
+  const body = await response.text();
+  if (!body) return {};
+  try {
+    return JSON.parse(body) as DriversApiResponse;
+  } catch {
+    return {
+      error: response.ok
+        ? "The server returned an unexpected response. Please refresh and try again."
+        : `The server returned an unexpected response (HTTP ${response.status}). Please refresh and try again.`,
+    };
+  }
+}
 
 export default function DriversPage() {
   const [drivers, setDrivers] = useState<Driver[]>([]);
@@ -30,7 +51,7 @@ export default function DriversPage() {
     setLoading(true);
     try {
       const response = await fetch("/api/admin/drivers", { cache: "no-store" });
-      const data = await response.json();
+      const data = await readDriversApiResponse(response);
       if (!response.ok) throw new Error(data.error || "Could not load drivers");
       setDrivers(data.drivers || []);
     } catch (loadError) {
@@ -49,9 +70,11 @@ export default function DriversPage() {
       const response = await fetch("/api/admin/drivers", {
         method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(form),
       });
-      const data = await response.json();
+      const data = await readDriversApiResponse(response);
       if (!response.ok) throw new Error(data.error || "Could not add driver");
-      setDrivers((current) => [...current, data.driver]);
+      const newDriver = data.driver;
+      if (!newDriver) throw new Error(data.error || "The server did not return the new driver");
+      setDrivers((current) => [...current, newDriver]);
       setForm(blankForm);
       setNotice("Driver added. Create a one-time group invite below.");
     } catch (saveError) {
@@ -63,10 +86,13 @@ export default function DriversPage() {
     setBusyId(driver.id); setError(""); setNotice("");
     try {
       const response = await fetch(`/api/admin/drivers/${driver.id}/group`, { method: "POST" });
-      const data = await response.json();
+      const data = await readDriversApiResponse(response);
       if (!response.ok) throw new Error(data.error || "Could not create invite");
-      setDrivers((current) => current.map((item) => item.id === driver.id ? data.driver : item));
-      await navigator.clipboard.writeText(data.inviteLink);
+      const updatedDriver = data.driver;
+      const inviteLink = data.inviteLink;
+      if (!updatedDriver || !inviteLink) throw new Error(data.error || "The server did not return an invite link");
+      setDrivers((current) => current.map((item) => item.id === driver.id ? updatedDriver : item));
+      await navigator.clipboard.writeText(inviteLink);
       setNotice(`One-time invite for ${driver.full_name} copied. Send it to the driver privately.`);
     } catch (inviteError) {
       setError(inviteError instanceof Error ? inviteError.message : "Could not create invite");
@@ -78,9 +104,11 @@ export default function DriversPage() {
     setBusyId(driver.id); setError(""); setNotice("");
     try {
       const response = await fetch(`/api/admin/drivers/${driver.id}/group`, { method: "DELETE" });
-      const data = await response.json();
+      const data = await readDriversApiResponse(response);
       if (!response.ok) throw new Error(data.error || "Could not remove driver");
-      setDrivers((current) => current.map((item) => item.id === driver.id ? data.driver : item));
+      const updatedDriver = data.driver;
+      if (!updatedDriver) throw new Error(data.error || "The server did not return the updated driver");
+      setDrivers((current) => current.map((item) => item.id === driver.id ? updatedDriver : item));
       setNotice(`${driver.full_name} was removed from the group and can no longer claim work.`);
     } catch (removeError) {
       setError(removeError instanceof Error ? removeError.message : "Could not remove driver");
