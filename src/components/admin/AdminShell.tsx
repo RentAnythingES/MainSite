@@ -12,6 +12,7 @@ const navItems = [
   { name: "Fulfillment", href: "/admin/fulfillment", icon: "F" },
   { name: "Drivers", href: "/admin/drivers", icon: "🚚" },
   { name: "Delivery accounting", href: "/admin/delivery-accounting", icon: "📍" },
+  { name: "Asset accounting", href: "/admin/asset-accounting", icon: "📦" },
   { name: "Bookings", href: "/admin/bookings", icon: "📋" },
   { name: "Custom Quotes", href: "/admin/custom-quotes", icon: "€" },
   { name: "Kit Requests", href: "/admin/kit-requests", icon: "+" },

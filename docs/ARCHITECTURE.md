@@ -91,6 +91,7 @@ Supabase (CRUD products, pricing, bookings)
 | `delivery_drivers` | Verified Telegram driver registry and group-membership state for dispatch claims | Server/admin only |
 | `delivery_accounting_settings` | Singleton warehouse origin, mileage rate, and default driver for delivery accounting | Server/admin only |
 | `delivery_trip_accounting` | Per-trip distance, internal mileage cost, driver, and completion ledger | Server/admin only |
+| `product_asset_accounting` | Product-level purchase, owner, cost basis, useful-life, residual-value, and depreciation register | Server/admin only |
 | `api_rate_limits` | HMAC-keyed distributed counters for public mutation endpoints | Server only |
 
 Unexpected booking-draft creation failures and Stripe Checkout session-state
@@ -157,6 +158,15 @@ distance and cost are snapshotted in `delivery_trip_accounting`. The Telegram cl
 updates the trip driver, while staff can confirm completion or correct the driver in
 `/admin/delivery-accounting`. If routing is unavailable, the trip remains recorded
 with an explicit unavailable status rather than a made-up distance or cost.
+
+### Product asset accounting
+
+`/admin/asset-accounting` is a product-level fixed-asset register. Staff enter the
+purchase date, cost, purchaser, useful life, residual value, and notes for every
+catalogue product. The server calculates straight-line depreciation and the rental
+revenue accumulated from paid booking subtotals on or after the purchase date.
+Delivery and collection fees are deliberately excluded from product rental revenue;
+no historic purchase date or acquisition cost is inferred when it is unknown.
 
 ### Booking Lifecycle
 ```
