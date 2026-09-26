@@ -155,6 +155,12 @@ active bookings due today by `rental_start_at` or `rental_end_at`, with a date-o
 fallback for legacy bookings. Customer pickup handovers are preparation items and do
 not create a courier request.
 
+Short-notice booking confirmation is a single shared server action used by the
+Telegram inline button and the admin confirmation control. It atomically approves a
+pending confirmation, records the operator, then sends the customer the confirmed
+booking email. Short-notice bookings do not receive the standard confirmation email
+until that approval occurs; standard bookings continue to receive it after payment.
+
 ### Delivery trip accounting
 
 When the due-date cron broadcasts a delivery or collection request, it also creates

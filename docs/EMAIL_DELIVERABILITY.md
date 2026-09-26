@@ -99,6 +99,10 @@ Booking lifecycle emails adapt to `fulfillmentMode`:
 - `delivery_only`: delivery on the way, delivered, pickup/return coordination where needed.
 - `delivery_and_collection`: delivery window and collection scheduling language.
 
+Short-notice bookings are an exception to the normal post-payment confirmation:
+their customer confirmation email is sent only after an operator approves the
+pending booking through Telegram or the admin panel.
+
 When fulfillment configuration exists, booking confirmation and lifecycle emails also
 include customer-facing pickup/delivery instructions, lead-time expectations, and
 delivery/collection windows. The internal admin copy includes ops notes plus Stripe

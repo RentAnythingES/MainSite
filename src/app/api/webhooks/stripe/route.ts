@@ -734,7 +734,7 @@ async function handleDraftCheckoutCompleted(
     }
   }
 
-  const confirmationSent = await sendBookingConfirmation({
+  const confirmationSent = bookingDraft.requires_confirmation ? false : await sendBookingConfirmation({
     bookingRef: (booking as { booking_ref: string }).booking_ref,
     customerName: bookingDraft.customer_name || session.customer_details?.name || "Customer",
     customerEmail: bookingDraft.customer_email || session.customer_email || "",

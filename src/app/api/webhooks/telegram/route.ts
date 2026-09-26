@@ -9,6 +9,7 @@ import {
 } from "@/lib/telegram";
 import { rejectBookingWithStripeRefund } from "@/lib/booking-rejection-refund";
 import { recordClaimedTripDriver } from "@/lib/delivery-accounting";
+import { confirmShortNoticeBooking } from "@/lib/short-notice-confirmation";
 
 /**
  * POST /api/webhooks/telegram — Telegram bot webhook.
@@ -175,6 +176,20 @@ async function handleConfirmationCallback(
   const decision = action === "bkconfirm" ? "approved" : "rejected";
   const actor = `telegram:${actorLabel(callbackQuery.from)}`;
 
+  if (bookingId.startsWith("telegram-test-confirmation-")) {
+    await answerTelegramCallbackQuery(callbackQuery.id, action === "bkconfirm" ? "Test confirmation received" : "Test rejection received");
+    if (callbackQuery.message) {
+      await editTelegramMessageText(
+        callbackQuery.message.chat.id,
+        callbackQuery.message.message_id,
+        action === "bkconfirm"
+          ? "✅ <b>Test confirmation received</b>\nThe Telegram callback reached Rent'n Roll successfully."
+          : "❌ <b>Test rejection received</b>\nThe Telegram callback reached Rent'n Roll successfully.",
+      );
+    }
+    return;
+  }
+
   const supabase = createAdminClient();
   if (decision === "rejected") {
     try {
@@ -203,38 +218,23 @@ async function handleConfirmationCallback(
     return;
   }
 
-  const { data: updated, error } = await supabase
-    .from("bookings")
-    .update({
-      confirmation_status: decision,
-      confirmed_at: new Date().toISOString(),
-      confirmed_by: actor,
-    })
-    .eq("id", bookingId)
-    .eq("confirmation_status", "pending")
-    .select("booking_ref")
-    .maybeSingle();
-
-  if (error) throw error;
-
-  if (!updated) {
+  const result = await confirmShortNoticeBooking(supabase, bookingId, actor);
+  if (!result.confirmed || !result.booking) {
     await answerTelegramCallbackQuery(callbackQuery.id, "Already handled");
     return;
   }
 
   await answerTelegramCallbackQuery(
     callbackQuery.id,
-    decision === "approved" ? "Booking confirmed" : "Booking rejected",
+    result.emailSent ? "Booking confirmed and customer emailed" : "Booking confirmed; customer email needs review",
   );
 
   if (callbackQuery.message) {
-    const resultLine = decision === "approved"
-      ? `✅ Confirmed by ${actorLabel(callbackQuery.from)}`
-      : `❌ Rejected by ${actorLabel(callbackQuery.from)}`;
+    const resultLine = `✅ Confirmed by ${actorLabel(callbackQuery.from)}${result.emailSent ? "\nCustomer confirmation email sent" : "\nCustomer confirmation email needs review"}`;
     await editTelegramMessageText(
       callbackQuery.message.chat.id,
       callbackQuery.message.message_id,
-      `${resultLine}\nBooking ${(updated as { booking_ref: string }).booking_ref}`,
+      `${resultLine}\nBooking ${result.booking.booking_ref as string}`,
     );
   }
 }

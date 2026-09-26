@@ -34,11 +34,11 @@ async function main() {
   if (!botToken) throw new Error("TELEGRAM_BOT_TOKEN is not configured");
   if (chatIds.length === 0) throw new Error("No Telegram chat recipients are configured");
 
-  const [bot, webhook, updates] = await Promise.all([
+  const [bot, webhook] = await Promise.all([
     telegram("getMe"),
     telegram("getWebhookInfo"),
-    telegram("getUpdates", { limit: 20 }),
   ]);
+  const updates = webhook.url ? [] : await telegram("getUpdates", { limit: 20 });
   const deliveries = [];
   for (const chatId of chatIds) {
     try {
@@ -58,16 +58,41 @@ async function main() {
     }
   }
 
+  let confirmationTest = null;
+  try {
+    const testId = `telegram-test-confirmation-${Date.now()}`;
+    const sent = await telegram("sendMessage", {
+      chat_id: bookingsChatId,
+      parse_mode: "HTML",
+      text: [
+        "🧪 <b>Short-notice confirmation test</b>",
+        "Tap Confirm to verify that Telegram can reach the booking confirmation webhook.",
+        "This test does not change a booking or send a customer email.",
+      ].join("\n"),
+      reply_markup: {
+        inline_keyboard: [[
+          { text: "✅ Confirm test", callback_data: `bkconfirm:${testId}` },
+          { text: "❌ Reject test", callback_data: `bkreject:${testId}` },
+        ]],
+      },
+    });
+    confirmationTest = { ok: true, messageId: sent.message_id };
+  } catch (error) {
+    confirmationTest = { ok: false, error: error instanceof Error ? error.message : String(error) };
+  }
+
   console.log(JSON.stringify({
     botUsername: bot.username || null,
     webhookConfigured: Boolean(webhook.url),
     webhookPendingUpdates: webhook.pending_update_count || 0,
+    webhookLastError: webhook.last_error_message || null,
     recentUpdateChatIds: [...new Set(updates.map((update) => String((update.message || update.channel_post)?.chat?.id || "")).filter(Boolean))],
     configuredRecipients: configuredChatIds,
     testDeliveries: deliveries,
+    confirmationTest,
   }, null, 2));
 
-  if (deliveries.some((delivery) => !delivery.ok)) process.exitCode = 1;
+  if (deliveries.some((delivery) => !delivery.ok) || !confirmationTest?.ok) process.exitCode = 1;
 }
 
 main().catch((error) => {

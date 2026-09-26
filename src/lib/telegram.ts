@@ -255,6 +255,20 @@ export async function sendShortNoticeBookingTelegramNotification(data: ShortNoti
   });
 }
 
+export async function sendTestShortNoticeConfirmationTelegramNotification(chatId: string) {
+  const testId = `telegram-test-confirmation-${Date.now()}`;
+  return sendTelegramToChatId(chatId, [
+    "🧪 <b>Short-notice confirmation test</b>",
+    "Tap Confirm to verify that Telegram can reach the booking confirmation webhook.",
+    "This test does not change a booking or send a customer email.",
+  ].join("\n"), {
+    inline_keyboard: [[
+      { text: "✅ Confirm test", callback_data: `bkconfirm:${testId}` },
+      { text: "❌ Reject test", callback_data: `bkreject:${testId}` },
+    ]],
+  });
+}
+
 export async function answerTelegramCallbackQuery(callbackQueryId: string, text: string) {
   const botToken = process.env.TELEGRAM_BOT_TOKEN;
   const apiBase = process.env.TELEGRAM_API_BASE || "https://api.telegram.org";
