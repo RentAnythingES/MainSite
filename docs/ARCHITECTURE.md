@@ -87,7 +87,7 @@ Supabase (CRUD products, pricing, bookings)
 | `inventory_stock_events` | Audit history for declared stock and online-capacity changes | Server/admin only |
 | `booking_inventory_unit_assignments` | Physical-unit reservation, handover, return, and release history per booking | Admin/API only |
 | `monitoring_runs` | Scheduled production health results and alert deduplication | Server/admin only |
-| `daily_operation_manifests` | Idempotency log for the daily Telegram delivery/pick-up manifest | Server/admin only |
+| `daily_operation_manifests` | Idempotency log for the daily Telegram delivery, customer pickup, and return-collection manifest | Server/admin only |
 | `delivery_drivers` | Verified Telegram driver registry and group-membership state for dispatch claims | Server/admin only |
 | `delivery_accounting_settings` | Singleton warehouse origin, mileage rate, and default driver for delivery accounting | Server/admin only |
 | `delivery_trip_accounting` | Per-trip distance, internal mileage cost, driver, and completion ledger | Server/admin only |

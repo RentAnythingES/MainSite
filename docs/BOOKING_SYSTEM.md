@@ -274,7 +274,7 @@ Suggested setup flow for the direct Meta version:
 Paid bookings can also trigger an internal Telegram notification through the Telegram Bot API.
 
 At 08:00 Europe/Madrid, the due-date cron sends an internal daily operations manifest
-covering that day's deliveries and pick-ups, then sends the item-specific reminders and
+covering that day's deliveries and return collections, then sends the item-specific reminders and
 courier-group requests. The Vercel cron expression is UTC (`0 6 * * *` during CEST),
 so adjust it when daylight-saving time changes if a fixed local-time schedule is required.
 

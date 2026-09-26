@@ -170,7 +170,7 @@ function buildGoogleMapsLink(address: string) {
 }
 
 function buildDueDateMessageText(data: DueDateTelegramData) {
-  const heading = data.eventType === "delivery" ? "📦 <b>Delivery due today</b>" : "🚚 <b>Pick-up due today</b>";
+  const heading = data.eventType === "delivery" ? "📦 <b>Delivery due today</b>" : "🚚 <b>Return collection due today</b>";
   const lines = [
     heading,
     `<b>Ref:</b> ${escapeTelegramHtml(data.bookingRef)}`,
@@ -193,7 +193,7 @@ export interface DailyManifestTelegramData {
   date: string;
   deliveries: Array<{ bookingRef: string; productName: string; area: string }>;
   customerPickups: Array<{ bookingRef: string; productName: string; area: string }>;
-  pickups: Array<{ bookingRef: string; productName: string; area: string }>;
+  returnCollections: Array<{ bookingRef: string; productName: string; area: string }>;
 }
 
 function buildDailyManifestMessageText(data: DailyManifestTelegramData) {
@@ -204,8 +204,8 @@ function buildDailyManifestMessageText(data: DailyManifestTelegramData) {
     ...data.deliveries.map((item) => `• 📦 ${escapeTelegramHtml(item.bookingRef)} — ${escapeTelegramHtml(item.productName)} (${escapeTelegramHtml(item.area)})`),
     `<b>Customer pick-ups:</b> ${data.customerPickups.length}`,
     ...data.customerPickups.map((item) => `• 🤝 ${escapeTelegramHtml(item.bookingRef)} — ${escapeTelegramHtml(item.productName)} (${escapeTelegramHtml(item.area)})`),
-    `<b>Pick-ups:</b> ${data.pickups.length}`,
-    ...data.pickups.map((item) => `• 🚚 ${escapeTelegramHtml(item.bookingRef)} — ${escapeTelegramHtml(item.productName)} (${escapeTelegramHtml(item.area)})`),
+    `<b>Return collections:</b> ${data.returnCollections.length}`,
+    ...data.returnCollections.map((item) => `• 🚚 ${escapeTelegramHtml(item.bookingRef)} — ${escapeTelegramHtml(item.productName)} (${escapeTelegramHtml(item.area)})`),
     "",
     "Individual reminders and courier requests are sent separately.",
   ];
@@ -316,7 +316,7 @@ export interface DeliveryGroupRequestData {
 }
 
 function buildDeliveryGroupRequestText(data: DeliveryGroupRequestData) {
-  const heading = data.eventType === "delivery" ? "🚚 <b>New delivery request</b>" : "📦 <b>New pick-up request</b>";
+  const heading = data.eventType === "delivery" ? "🚚 <b>New delivery request</b>" : "📦 <b>New return collection request</b>";
   const lines = [
     heading,
     `<b>When:</b> ${escapeTelegramHtml(data.windowLabel)}`,
@@ -375,7 +375,7 @@ export interface DeliveryDetailsData {
 function buildDeliveryDetailsText(data: DeliveryDetailsData) {
   const heading = data.eventType === "delivery"
     ? "🚚 <b>Delivery assigned to you</b>"
-    : "📦 <b>Pick-up assigned to you</b>";
+    : "📦 <b>Return collection assigned to you</b>";
   const lines = [
     heading,
     `<b>Ref:</b> ${escapeTelegramHtml(data.bookingRef)}`,

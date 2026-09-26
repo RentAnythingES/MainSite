@@ -39,7 +39,7 @@ async function main() {
       events.push({ bookingRef: booking.booking_ref, eventType: "delivery", status: booking.status });
     }
     if (booking.rental_end_at && madridDate(booking.rental_end_at) === today && booking.fulfillment_mode === "delivery_and_collection" && (booking.collection_address || booking.delivery_address)) {
-      events.push({ bookingRef: booking.booking_ref, eventType: "pickup", status: booking.status });
+      events.push({ bookingRef: booking.booking_ref, eventType: "return_collection", status: booking.status });
     }
     return events;
   });

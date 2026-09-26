@@ -10,7 +10,7 @@ import { recordDeliveryTripAccounting } from "@/lib/delivery-accounting";
 
 export const maxDuration = 60;
 
-// Bookings in these statuses still need their delivery/pick-up handled by us.
+// Bookings in these statuses still need delivery or return collection handled by us.
 const ACTIVE_STATUSES = ["paid", "delivering", "active", "returning"];
 
 function madridDateString(date: Date) {
@@ -214,7 +214,7 @@ export async function GET(request: NextRequest) {
 
   const results = {
     deliveriesSent: 0,
-    pickupsSent: 0,
+    returnCollectionsSent: 0,
     groupRequestsSent: 0,
     skippedAlreadySent: 0,
     manifestSent: false,
@@ -225,7 +225,7 @@ export async function GET(request: NextRequest) {
     date: today,
     deliveries: [] as Array<{ bookingRef: string; productName: string; area: string }>,
     customerPickups: [] as Array<{ bookingRef: string; productName: string; area: string }>,
-    pickups: [] as Array<{ bookingRef: string; productName: string; area: string }>,
+    returnCollections: [] as Array<{ bookingRef: string; productName: string; area: string }>,
   };
 
   for (const booking of bookingRows) {
@@ -284,7 +284,7 @@ export async function GET(request: NextRequest) {
       }
     }
 
-    // Pick-up due: we collect the item back from the customer today.
+    // Return collection due: we collect the rented item back from the customer today.
     if (
       endDate === today &&
       booking.fulfillment_mode === "delivery_and_collection"
@@ -292,7 +292,7 @@ export async function GET(request: NextRequest) {
       const address = booking.collection_address || booking.delivery_address;
       if (address) {
         const area = (booking.collection_zone_id && zoneNames.get(booking.collection_zone_id)) || "Valencia";
-        manifest.pickups.push({ bookingRef: booking.booking_ref, productName, area });
+        manifest.returnCollections.push({ bookingRef: booking.booking_ref, productName, area });
         try {
           const alreadySent = await hasAlreadyNotified(supabase, booking.id, "pickup", today);
           if (alreadySent) {
@@ -307,10 +307,10 @@ export async function GET(request: NextRequest) {
               customerPhone: booking.customer_phone,
               address,
             });
-            if (!sent.ok) results.errors.push(`Pick-up reminder for ${booking.booking_ref}: ${sent.error}`);
+            if (!sent.ok) results.errors.push(`Return collection reminder for ${booking.booking_ref}: ${sent.error}`);
             else {
               await recordNotification(supabase, booking.id, "pickup", today);
-              results.pickupsSent += 1;
+              results.returnCollectionsSent += 1;
             }
           }
 
@@ -319,10 +319,10 @@ export async function GET(request: NextRequest) {
               results.groupRequestsSent += 1;
             }
           } catch (groupErr) {
-            results.errors.push(`Group pick-up request for ${booking.booking_ref}: ${groupErr instanceof Error ? groupErr.message : String(groupErr)}`);
+            results.errors.push(`Group return collection request for ${booking.booking_ref}: ${groupErr instanceof Error ? groupErr.message : String(groupErr)}`);
           }
         } catch (err) {
-          results.errors.push(`Pick-up reminder for ${booking.booking_ref}: ${err instanceof Error ? err.message : String(err)}`);
+          results.errors.push(`Return collection reminder for ${booking.booking_ref}: ${err instanceof Error ? err.message : String(err)}`);
         }
       }
     }

@@ -207,8 +207,8 @@ const policyMessages = {
   en: {
     same_day_too_soon: "This booking is short notice (less than 24 hours away) and will need a quick confirmation from our team after checkout.",
     future_date_too_soon: "This booking is short notice (less than 24 hours away) and will need a quick confirmation from our team after checkout.",
-    outside_operating_hours: "Deliveries and pick-ups run 10:00-19:00 Valencia time. Requests outside these hours are subject to extra costs to be agreed during booking.",
-    closed_day: "Deliveries and pick-ups run Monday-Saturday, 10:00-19:00. Sunday requests are subject to extra costs to be agreed during booking.",
+    outside_operating_hours: "Deliveries and return collections run 10:00-19:00 Valencia time. Requests outside these hours are subject to extra costs to be agreed during booking.",
+    closed_day: "Deliveries and return collections run Monday-Saturday, 10:00-19:00. Sunday requests are subject to extra costs to be agreed during booking.",
     express_disabled: "Same-day delivery needs confirmation for this area.",
     policy_unconfigured: "Our team needs to confirm this delivery timing.",
   },

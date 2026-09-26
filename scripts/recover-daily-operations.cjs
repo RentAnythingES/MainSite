@@ -75,14 +75,14 @@ async function main() {
   let manifestSent = false;
   if (existingManifests.length === 0) {
     const deliveries = due.filter((item) => item.type === "delivery");
-    const pickups = due.filter((item) => item.type === "pickup");
+    const returnCollections = due.filter((item) => item.type === "pickup");
     if (!process.argv.includes("--record-manifest-only")) await sendTelegram([
       "📋 <b>Daily operations manifest</b>",
       `<b>Date:</b> ${today}`,
       `<b>Deliveries:</b> ${deliveries.length}`,
       ...deliveries.map((item) => `• 📦 ${escapeHtml(item.booking.booking_ref)} — ${escapeHtml(item.productName)} (Valencia)`),
-      `<b>Pick-ups:</b> ${pickups.length}`,
-      ...pickups.map((item) => `• 🚚 ${escapeHtml(item.booking.booking_ref)} — ${escapeHtml(item.productName)} (Valencia)`),
+      `<b>Return collections:</b> ${returnCollections.length}`,
+      ...returnCollections.map((item) => `• 🚚 ${escapeHtml(item.booking.booking_ref)} — ${escapeHtml(item.productName)} (Valencia)`),
       "",
       "Recovery send: the scheduled job did not complete this morning.",
     ].join("\n"));
@@ -99,7 +99,7 @@ async function main() {
   for (const item of due) {
     const existing = await database(`booking_reminder_notifications?select=id&booking_id=eq.${item.booking.id}&event_type=eq.${item.type}&event_date=eq.${today}&channel=eq.telegram`);
     if (existing.length > 0) continue;
-    const heading = item.type === "delivery" ? "📦 <b>Delivery due today</b>" : "🚚 <b>Pick-up due today</b>";
+    const heading = item.type === "delivery" ? "📦 <b>Delivery due today</b>" : "🚚 <b>Return collection due today</b>";
     await sendTelegram([
       heading,
       `<b>Ref:</b> ${escapeHtml(item.booking.booking_ref)}`,

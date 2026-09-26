@@ -636,9 +636,9 @@ export function getFulfillmentPolicyMessage(reason: FulfillmentPolicyReason): st
     case "future_date_too_soon":
       return "This Express delivery request is short notice (less than 24 hours away) and will need a quick confirmation from our team after checkout, usually within 2 hours during opening hours.";
     case "outside_operating_hours":
-      return "Deliveries and pick-ups run 10:00-19:00 Valencia time. Requests outside these hours are subject to extra costs to be agreed during the booking process.";
+      return "Deliveries and return collections run 10:00-19:00 Valencia time. Requests outside these hours are subject to extra costs to be agreed during the booking process.";
     case "closed_day":
-      return "Deliveries and pick-ups run 10:00-19:00 Monday-Saturday. Sunday requests are subject to extra costs to be agreed during the booking process.";
+      return "Deliveries and return collections run 10:00-19:00 Monday-Saturday. Sunday requests are subject to extra costs to be agreed during the booking process.";
     case "express_disabled":
       return "Same-day delivery needs confirmation for this zone.";
     case "policy_unconfigured":

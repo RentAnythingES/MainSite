@@ -1,7 +1,7 @@
 # Telegram Driver Dispatch
 
 The driver group is **Rent'n Roll Deliveries**. It is used only for claimable
-delivery and pick-up broadcasts; customer names, phones, addresses, booking
+delivery and return-collection broadcasts; customer names, phones, addresses, booking
 references, and rental items are never posted there.
 
 ## One-time Telegram setup
