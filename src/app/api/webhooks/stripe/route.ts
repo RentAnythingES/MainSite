@@ -734,7 +734,7 @@ async function handleDraftCheckoutCompleted(
     }
   }
 
-  const confirmationSent = bookingDraft.requires_confirmation ? false : await sendBookingConfirmation({
+  const confirmationSent = await sendBookingConfirmation({
     bookingRef: (booking as { booking_ref: string }).booking_ref,
     customerName: bookingDraft.customer_name || session.customer_details?.name || "Customer",
     customerEmail: bookingDraft.customer_email || session.customer_email || "",
@@ -765,6 +765,7 @@ async function handleDraftCheckoutCompleted(
     documentLinks: invoiceUrl
       ? [{ label: "Download invoice", url: invoiceUrl, documentNumber: invoiceDocument?.document_number }]
       : undefined,
+    pendingTeamConfirmation: Boolean(bookingDraft.requires_confirmation),
   });
 
   await sendBookingPaidWhatsAppNotification({

@@ -99,9 +99,11 @@ Booking lifecycle emails adapt to `fulfillmentMode`:
 - `delivery_only`: delivery on the way, delivered, pickup/return coordination where needed.
 - `delivery_and_collection`: delivery window and collection scheduling language.
 
-Short-notice bookings are an exception to the normal post-payment confirmation:
-their customer confirmation email is sent only after an operator approves the
-pending booking through Telegram or the admin panel.
+Every paid booking receives an immediate customer email. For a short-notice booking,
+that email confirms successful payment but explicitly says Rent'n Roll approval is
+pending and that an unconfirmed booking receives an automatic full refund. Once an
+operator approves through Telegram or the admin panel, the customer receives the
+separate confirmed-booking email.
 
 When fulfillment configuration exists, booking confirmation and lifecycle emails also
 include customer-facing pickup/delivery instructions, lead-time expectations, and

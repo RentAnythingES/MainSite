@@ -54,6 +54,7 @@ export interface BookingEmailData {
   reviewUrl?: string | null;
   customQuoteLines?: Array<{ description: string; amountCents: number }>;
   customTerms?: string | null;
+  pendingTeamConfirmation?: boolean;
 }
 
 export interface ContactEmailData {
@@ -277,24 +278,38 @@ export async function sendBookingConfirmation(data: BookingEmailData): Promise<b
   const resend = getResend();
   if (!resend) return false;
 
+  const pendingTeamConfirmation = Boolean(data.pendingTeamConfirmation);
+  const customerSubject = pendingTeamConfirmation
+    ? `Payment received — approval pending (${data.bookingRef})`
+    : `Booking confirmed — ${data.productName} (${data.bookingRef})`;
+  const customerTitle = pendingTeamConfirmation ? "Payment received — approval pending" : "Your booking is confirmed";
+  const customerIntro = pendingTeamConfirmation
+    ? `We have received your payment successfully for <strong>${escapeHtml(data.productName)}</strong>. Your booking is awaiting confirmation from the Rent'n Roll team because it is short notice.`
+    : "Great news — your rental booking is confirmed. Here are the details:";
+  const pendingNotice = pendingTeamConfirmation
+    ? infoBox(`<p style="font-size:14px;color:#92400e;line-height:1.6;margin:0;"><strong>What happens next:</strong> Our team will review your booking as soon as possible. If we cannot confirm it, the full amount paid will be refunded automatically to your original payment method.</p>`, "#fffbeb", "#fde68a")
+    : infoBox(`<p style="font-size:14px;color:#0f766e;line-height:1.6;margin:0;"><strong>Next step:</strong> ${nextStepCopy(data)}</p>`);
+
   try {
     const customerResult = await resend.emails.send({
       from: FROM,
       to: data.customerEmail,
-      subject: `Booking confirmed — ${data.productName} (${data.bookingRef})`,
-      html: emailWrapper("Your booking is confirmed", `
+      subject: customerSubject,
+      html: emailWrapper(customerTitle, `
         <p style="font-size:15px;color:#374151;line-height:1.6;margin-top:0;">Hi ${escapeHtml(data.customerName)},</p>
-        <p style="font-size:15px;color:#374151;line-height:1.6;">Great news — your rental booking is confirmed. Here are the details:</p>
+        <p style="font-size:15px;color:#374151;line-height:1.6;">${customerIntro}</p>
         ${bookingDetailsTable(data)}
         ${customQuoteBox(data)}
-        ${infoBox(`<p style="font-size:14px;color:#0f766e;line-height:1.6;margin:0;"><strong>Next step:</strong> ${nextStepCopy(data)}</p>`)}
+        ${pendingNotice}
         ${fulfillmentInstructionsBox(data)}
         ${documentsBox(data)}
         <p style="font-size:15px;color:#374151;line-height:1.6;">If you need to change dates, timing, address, or fulfillment details, just reply to this email or message us on WhatsApp.</p>
         ${button(WHATSAPP_URL, "Message us on WhatsApp", "#25d366")}
-      `, `Booking ${data.bookingRef} is confirmed for ${data.productName}.`),
+      `, pendingTeamConfirmation
+        ? `Payment received for booking ${data.bookingRef}; Rent'n Roll approval is pending.`
+        : `Booking ${data.bookingRef} is confirmed for ${data.productName}.`),
     }, {
-      idempotencyKey: `booking-confirmation-${data.bookingRef}`,
+      idempotencyKey: `${pendingTeamConfirmation ? "booking-pending-approval" : "booking-confirmation"}-${data.bookingRef}`,
     });
 
     if (customerResult.error) {
@@ -306,9 +321,9 @@ export async function sendBookingConfirmation(data: BookingEmailData): Promise<b
       from: FROM,
       to: TO_ADMIN,
       replyTo: data.customerEmail,
-      subject: `New booking: ${data.productName} — ${data.bookingRef}`,
-      html: emailWrapper("New booking received", `
-        <p style="font-size:15px;color:#374151;line-height:1.6;margin-top:0;">A new booking has been placed and needs operational review:</p>
+      subject: `${pendingTeamConfirmation ? "Paid booking awaiting approval" : "New booking"}: ${data.productName} — ${data.bookingRef}`,
+      html: emailWrapper(pendingTeamConfirmation ? "Paid booking awaiting approval" : "New booking received", `
+        <p style="font-size:15px;color:#374151;line-height:1.6;margin-top:0;">${pendingTeamConfirmation ? "Payment is successful. This short-notice booking needs confirmation before the customer is told it is confirmed." : "A new booking has been placed and needs operational review:"}</p>
         ${bookingDetailsTable(data)}
         ${customQuoteBox(data)}
         <table style="width:100%;border-collapse:collapse;margin:16px 0;">
@@ -319,9 +334,9 @@ export async function sendBookingConfirmation(data: BookingEmailData): Promise<b
         ${fulfillmentInstructionsBox(data)}
         ${internalOpsBox(data)}
         ${button(ADMIN_BOOKINGS_URL, "View in admin dashboard")}
-      `, `New booking ${data.bookingRef}.`),
+      `, pendingTeamConfirmation ? `Paid booking ${data.bookingRef} awaits approval.` : `New booking ${data.bookingRef}.`),
     }, {
-      idempotencyKey: `booking-admin-notification-${data.bookingRef}`,
+      idempotencyKey: `${pendingTeamConfirmation ? "booking-admin-pending-approval" : "booking-admin-notification"}-${data.bookingRef}`,
     });
 
     if (adminResult.error) {

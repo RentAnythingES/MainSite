@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-require-imports */
-// Sends a clearly marked operational test to every configured admin recipient plus
-// the Bookings chat. It deliberately does not create a booking or reminder record.
+// Sends one clearly marked interactive booking-confirmation test to the Bookings chat.
+// It deliberately does not create a booking, change a booking, or send customer email.
 const fs = require("fs");
 const path = require("path");
 
@@ -13,11 +13,6 @@ for (const line of fs.readFileSync(envPath, "utf8").split(/\r?\n/)) {
 const botToken = process.env.TELEGRAM_BOT_TOKEN;
 const apiBase = process.env.TELEGRAM_API_BASE || "https://api.telegram.org";
 const bookingsChatId = "3956998068";
-const configuredChatIds = (process.env.TELEGRAM_NOTIFY_CHAT_IDS || process.env.TELEGRAM_NOTIFY_CHAT_ID || "")
-  .split(",")
-  .map((value) => value.trim())
-  .filter(Boolean);
-const chatIds = [...new Set([...configuredChatIds, bookingsChatId])];
 
 async function telegram(method, body) {
   const response = await fetch(`${apiBase}/bot${botToken}/${method}`, {
@@ -32,32 +27,12 @@ async function telegram(method, body) {
 
 async function main() {
   if (!botToken) throw new Error("TELEGRAM_BOT_TOKEN is not configured");
-  if (chatIds.length === 0) throw new Error("No Telegram chat recipients are configured");
 
   const [bot, webhook] = await Promise.all([
     telegram("getMe"),
     telegram("getWebhookInfo"),
   ]);
   const updates = webhook.url ? [] : await telegram("getUpdates", { limit: 20 });
-  const deliveries = [];
-  for (const chatId of chatIds) {
-    try {
-      const sent = await telegram("sendMessage", {
-        chat_id: chatId,
-        parse_mode: "HTML",
-        disable_web_page_preview: true,
-        text: [
-          "🧪 <b>Telegram operations test</b>",
-          "Daily booking, due-delivery and manifest notifications are being checked.",
-          "This is a test message — no customer action is required.",
-        ].join("\n"),
-      });
-      deliveries.push({ chatId, ok: true, messageId: sent.message_id });
-    } catch (error) {
-      deliveries.push({ chatId, ok: false, error: error instanceof Error ? error.message : String(error) });
-    }
-  }
-
   let confirmationTest = null;
   try {
     const testId = `telegram-test-confirmation-${Date.now()}`;
@@ -87,12 +62,10 @@ async function main() {
     webhookPendingUpdates: webhook.pending_update_count || 0,
     webhookLastError: webhook.last_error_message || null,
     recentUpdateChatIds: [...new Set(updates.map((update) => String((update.message || update.channel_post)?.chat?.id || "")).filter(Boolean))],
-    configuredRecipients: configuredChatIds,
-    testDeliveries: deliveries,
     confirmationTest,
   }, null, 2));
 
-  if (deliveries.some((delivery) => !delivery.ok) || !confirmationTest?.ok) process.exitCode = 1;
+  if (!confirmationTest?.ok) process.exitCode = 1;
 }
 
 main().catch((error) => {

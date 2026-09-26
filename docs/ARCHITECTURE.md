@@ -158,8 +158,9 @@ not create a courier request.
 Short-notice booking confirmation is a single shared server action used by the
 Telegram inline button and the admin confirmation control. It atomically approves a
 pending confirmation, records the operator, then sends the customer the confirmed
-booking email. Short-notice bookings do not receive the standard confirmation email
-until that approval occurs; standard bookings continue to receive it after payment.
+booking email. Every paid booking receives an immediate payment email. For
+short-notice bookings it explicitly says team approval is pending and that a full
+refund is issued automatically if Rent'n Roll cannot confirm the booking.
 
 ### Delivery trip accounting
 
