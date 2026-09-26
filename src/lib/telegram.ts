@@ -192,6 +192,7 @@ export async function sendDueDateTelegramNotification(data: DueDateTelegramData)
 export interface DailyManifestTelegramData {
   date: string;
   deliveries: Array<{ bookingRef: string; productName: string; area: string }>;
+  customerPickups: Array<{ bookingRef: string; productName: string; area: string }>;
   pickups: Array<{ bookingRef: string; productName: string; area: string }>;
 }
 
@@ -201,6 +202,8 @@ function buildDailyManifestMessageText(data: DailyManifestTelegramData) {
     `<b>Date:</b> ${escapeTelegramHtml(data.date)}`,
     `<b>Deliveries:</b> ${data.deliveries.length}`,
     ...data.deliveries.map((item) => `• 📦 ${escapeTelegramHtml(item.bookingRef)} — ${escapeTelegramHtml(item.productName)} (${escapeTelegramHtml(item.area)})`),
+    `<b>Customer pick-ups:</b> ${data.customerPickups.length}`,
+    ...data.customerPickups.map((item) => `• 🤝 ${escapeTelegramHtml(item.bookingRef)} — ${escapeTelegramHtml(item.productName)} (${escapeTelegramHtml(item.area)})`),
     `<b>Pick-ups:</b> ${data.pickups.length}`,
     ...data.pickups.map((item) => `• 🚚 ${escapeTelegramHtml(item.bookingRef)} — ${escapeTelegramHtml(item.productName)} (${escapeTelegramHtml(item.area)})`),
     "",

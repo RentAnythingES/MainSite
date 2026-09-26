@@ -149,6 +149,12 @@ so drivers who joined before the membership webhook was available are activated 
 their first valid claim. Setup and permissions are documented in
 `docs/TELEGRAM_DRIVER_DISPATCH.md`.
 
+The daily Telegram operations manifest separates delivery trips, customer pickup
+handovers at configured pickup locations, and driver return collections. It includes
+active bookings due today by `rental_start_at` or `rental_end_at`, with a date-only
+fallback for legacy bookings. Customer pickup handovers are preparation items and do
+not create a courier request.
+
 ### Delivery trip accounting
 
 When the due-date cron broadcasts a delivery or collection request, it also creates
