@@ -6,6 +6,7 @@ import {
   sendDeliveryGroupRequest,
 } from "@/lib/telegram";
 import { formatCustomerFulfillmentWindow } from "@/lib/fulfillment-windows";
+import { recordDeliveryTripAccounting } from "@/lib/delivery-accounting";
 
 export const maxDuration = 60;
 
@@ -155,6 +156,23 @@ async function dispatchGroupRequest(
     .from("delivery_requests")
     .update({ group_chat_id: process.env.TELEGRAM_DELIVERY_GROUP_ID, group_message_id: sent.messageId || null })
     .eq("id", request.id);
+
+  const destinationAddress = eventType === "delivery"
+    ? booking.delivery_address
+    : booking.collection_address || booking.delivery_address;
+  if (destinationAddress) {
+    try {
+      await recordDeliveryTripAccounting(supabase, {
+        deliveryRequestId: request.id,
+        bookingId: booking.id,
+        eventType,
+        eventDate,
+        destinationAddress,
+      });
+    } catch (accountingError) {
+      console.error("[due-date-reminders] Failed to record delivery trip accounting:", accountingError);
+    }
+  }
   return true;
 }
 

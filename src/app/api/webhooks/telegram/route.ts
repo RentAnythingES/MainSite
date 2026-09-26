@@ -8,6 +8,7 @@ import {
   sendTelegramToChatId,
 } from "@/lib/telegram";
 import { rejectBookingWithStripeRefund } from "@/lib/booking-rejection-refund";
+import { recordClaimedTripDriver } from "@/lib/delivery-accounting";
 
 /**
  * POST /api/webhooks/telegram — Telegram bot webhook.
@@ -357,6 +358,12 @@ async function handleDeliveryCallback(
   }
 
   await answerTelegramCallbackQuery(callbackQuery.id, "It's yours — full details sent to your private chat");
+
+  try {
+    await recordClaimedTripDriver(supabase, requestId, registeredDriver.full_name || courier);
+  } catch (accountingError) {
+    console.error("[webhooks/telegram] Failed to assign trip driver in accounting:", accountingError);
+  }
 
   if (callbackQuery.message) {
     const { data: requestRow } = await supabase

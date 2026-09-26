@@ -89,6 +89,8 @@ Supabase (CRUD products, pricing, bookings)
 | `monitoring_runs` | Scheduled production health results and alert deduplication | Server/admin only |
 | `daily_operation_manifests` | Idempotency log for the daily Telegram delivery/pick-up manifest | Server/admin only |
 | `delivery_drivers` | Verified Telegram driver registry and group-membership state for dispatch claims | Server/admin only |
+| `delivery_accounting_settings` | Singleton warehouse origin, mileage rate, and default driver for delivery accounting | Server/admin only |
+| `delivery_trip_accounting` | Per-trip distance, internal mileage cost, driver, and completion ledger | Server/admin only |
 | `api_rate_limits` | HMAC-keyed distributed counters for public mutation endpoints | Server only |
 
 Unexpected booking-draft creation failures and Stripe Checkout session-state
@@ -145,6 +147,16 @@ message. A claim also verifies the driver's current group membership with Telegr
 so drivers who joined before the membership webhook was available are activated on
 their first valid claim. Setup and permissions are documented in
 `docs/TELEGRAM_DRIVER_DISPATCH.md`.
+
+### Delivery trip accounting
+
+When the due-date cron broadcasts a delivery or collection request, it also creates
+one internal accounting trip. Google Maps Directions calculates the one-way driving
+distance from the configured warehouse to the customer address; the origin, rate,
+distance and cost are snapshotted in `delivery_trip_accounting`. The Telegram claim
+updates the trip driver, while staff can confirm completion or correct the driver in
+`/admin/delivery-accounting`. If routing is unavailable, the trip remains recorded
+with an explicit unavailable status rather than a made-up distance or cost.
 
 ### Booking Lifecycle
 ```
