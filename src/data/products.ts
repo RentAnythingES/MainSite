@@ -5,6 +5,8 @@ export interface ProductFAQ {
 
 export interface Product {
   id?: string;
+  productOfferId?: string;
+  marketId?: string;
   slug: string;
   name: string;
   brand: string;

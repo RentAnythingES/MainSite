@@ -1,6 +1,6 @@
 -- Phase 1: private city setup. Apply after the installed multi-market and fulfillment migrations.
 -- No existing market flags, prices, inventory, or booking records are changed.
-begin;
+-- The migration runner owns the transaction and ledger write.
 
 create table public.market_audit_events (
   id uuid primary key default gen_random_uuid(),
@@ -105,4 +105,3 @@ grant select(id,market_id,slug,name,city,description,customer_instructions,lead_
   same_day_cutoff,delivery_window,collection_window,delivery_fee_cents,collection_fee_cents,
   roundtrip_fee_cents,express_surcharge_cents,minimum_order_cents,automatic_checkout_enabled,
   sort_order,is_active) on public.service_zones to anon, authenticated;
-commit;

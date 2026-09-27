@@ -49,7 +49,7 @@ export async function resolveMarketContext(
     if (!isMarketId(request.marketId)) throw new MarketContextError("invalid_market", 400, "Invalid city ID");
     query = query.eq("id", request.marketId);
   }
-  const { data, error } = await query.limit(2);
+  const { data, error } = await query.limit(2).abortSignal(AbortSignal.timeout(8000));
   if (error) throw new MarketContextError("market_unavailable", 503, "City configuration is unavailable");
   if (!data || data.length === 0) throw new MarketContextError("market_not_found", 404, "City not available");
   if (data.length !== 1) throw new MarketContextError("market_configuration", 503, "City configuration is invalid");

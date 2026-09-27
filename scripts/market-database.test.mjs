@@ -40,6 +40,11 @@ test("Postgres: private setup, audit atomicity, edit conflicts and public isolat
     }
     await db.exec(`alter table pickup_locations add column handoff_contact text;
       alter table service_zones add column same_day_cutoff time, add column delivery_window text, add column collection_window text, add column automatic_checkout_enabled boolean default true;`);
+    // The runner's outer transaction must own both schema changes and its ledger.
+    await db.exec("begin");
+    await db.exec(read("20260927_private_market_setup.sql"));
+    await db.exec("rollback");
+    assert.equal((await db.query("select to_regclass('public.market_audit_events') as audit")).rows[0].audit, null);
     await db.exec(read("20260927_private_market_setup.sql"));
     const save = async (value, id = null, revision = null, actor = admin) => (await db.query(
       "select * from public.save_private_market($1,$2::jsonb,$3,$4)", [actor, JSON.stringify(value), id, revision],

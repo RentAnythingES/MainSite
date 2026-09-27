@@ -1,5 +1,7 @@
 # Private city setup — first expansion slice
 
+Follow-up: [offer reads and reconciled baseline](MARKET_OFFER_READS_2026-09-27.md) records deployment verification and recovery of all missing applied migration sources. Full Supabase staging remains pending.
+
 ## What this adds
 
 - `/admin/markets`: platform-admin city list, private creation and configuration editing.

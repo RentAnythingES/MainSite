@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-require-imports */
-const crypto = require("crypto");
+const { migrationChecksumMatches, newMigrationChecksum } = require("./migration-checksum.cjs");
 const fs = require("fs");
 const path = require("path");
 const { Client } = require("pg");
@@ -28,7 +28,7 @@ function resolveMigration(filename) {
   return {
     filename,
     sql,
-    checksum: crypto.createHash("sha256").update(sql).digest("hex"),
+    checksum: newMigrationChecksum(sql),
   };
 }
 
@@ -62,7 +62,7 @@ async function main() {
         [migration.filename]
       );
       if (existing.rows.length > 0) {
-        if (existing.rows[0].checksum_sha256 !== migration.checksum) {
+        if (!migrationChecksumMatches(migration.sql, existing.rows[0].checksum_sha256)) {
           throw new Error(`Checksum mismatch for previously applied migration ${migration.filename}`);
         }
         results.push({ filename: migration.filename, status: "already_applied", appliedAt: existing.rows[0].applied_at });

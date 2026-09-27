@@ -7,6 +7,10 @@ import { applyCategoryProductPriority } from "@/data/category-merchandising";
 import { PUBLIC_PRODUCT_CACHE_TAG } from "@/lib/product-cache";
 import { isValidProductSlug } from "@/lib/product-validation";
 import { canonicalProductSlug, productSlugLookupCandidates } from "@/lib/product-slug-aliases";
+import { resolveMarketContext } from "@/lib/market-context";
+import { getProductOffer, listProductOffers, offerProductRow } from "@/lib/product-offer-service";
+import type { ProductOfferProjection } from "@/lib/product-offer-service";
+import { catalogueParity, marketCatalogueMode, readMarketCatalogue } from "@/lib/market-catalogue-mode";
 
 /**
  * Product Service — Supabase-first with static fallback
@@ -319,7 +323,7 @@ const getCachedProducts = unstable_cache(fetchProductsFromDB, ["public-product-l
   tags: [PUBLIC_PRODUCT_CACHE_TAG],
 });
 
-export async function getProductsFromDB(city = "valencia", locale: ProductLocale = "en"): Promise<Product[]> {
+async function getLegacyProducts(city: string, locale: ProductLocale): Promise<Product[]> {
   if (!isSupabaseConfigured()) {
     return staticProducts.filter((p) => p.city === city);
   }
@@ -335,7 +339,7 @@ export async function getProductsFromDB(city = "valencia", locale: ProductLocale
 /**
  * Fetch a single product by slug from Supabase, fall back to static
  */
-async function fetchProductBySlugFromDB(slug: string, locale: ProductLocale): Promise<Product | null> {
+async function fetchProductBySlugFromDB(slug: string, locale: ProductLocale, city: string): Promise<Product | null> {
     const lookupSlugs = productSlugLookupCandidates(slug);
     const { data, error } = await supabase
       .from("products")
@@ -348,6 +352,7 @@ async function fetchProductBySlugFromDB(slug: string, locale: ProductLocale): Pr
         product_images (*)
       `)
       .in("slug", lookupSlugs)
+      .eq("city", city)
       .eq("is_active", true)
       .eq("product_localizations.locale", locale)
       .eq("product_faqs.locale", locale)
@@ -365,23 +370,25 @@ const getCachedProductBySlug = unstable_cache(fetchProductBySlugFromDB, ["public
   tags: [PUBLIC_PRODUCT_CACHE_TAG],
 });
 
-export async function getProductBySlugFromDB(slug: string, locale: ProductLocale = "en"): Promise<Product | null> {
+async function getLegacyProductBySlug(slug: string, locale: ProductLocale, city: string): Promise<Product | null> {
   if (!isSupabaseConfigured()) {
-    return staticGetBySlug(slug) || null;
+    const product = staticGetBySlug(slug);
+    return product?.city === city ? product : null;
   }
 
   try {
-    return await getCachedProductBySlug(slug, locale);
+    return await getCachedProductBySlug(slug, locale, city);
   } catch (err) {
     console.warn("[product-service] Supabase fetch failed for slug:", slug, err);
-    return staticGetBySlug(slug) || null;
+    const product = staticGetBySlug(slug);
+    return product?.city === city ? product : null;
   }
 }
 
 /**
  * Fetch products by category slug from Supabase, fall back to static
  */
-async function fetchProductsByCategoryFromDB(categorySlug: string, locale: ProductLocale): Promise<Product[]> {
+async function fetchProductsByCategoryFromDB(categorySlug: string, locale: ProductLocale, city: string): Promise<Product[]> {
     const categoryResult = await supabase
       .from("categories")
       .select("id")
@@ -416,6 +423,7 @@ async function fetchProductsByCategoryFromDB(categorySlug: string, locale: Produ
         product_images (*)
       `)
       .eq("is_active", true)
+      .eq("city", city)
       .eq("product_localizations.locale", locale)
       .eq("product_faqs.locale", locale)
       .eq("product_images.is_primary", true)
@@ -440,17 +448,101 @@ const getCachedProductsByCategory = unstable_cache(
   { tags: [PUBLIC_PRODUCT_CACHE_TAG] },
 );
 
-export async function getProductsByCategoryFromDB(categorySlug: string, locale: ProductLocale = "en"): Promise<Product[]> {
+async function getLegacyProductsByCategory(categorySlug: string, locale: ProductLocale, city: string): Promise<Product[]> {
   if (!isSupabaseConfigured()) {
-    return applyCategoryProductPriority(categorySlug, staticGetByCategory(categorySlug));
+    return applyCategoryProductPriority(categorySlug, staticGetByCategory(categorySlug).filter(product => product.city === city));
   }
 
   try {
-    return await getCachedProductsByCategory(categorySlug, locale);
+    return await getCachedProductsByCategory(categorySlug, locale, city);
   } catch (err) {
     console.warn("[product-service] Supabase category fetch failed:", categorySlug, err);
-    return applyCategoryProductPriority(categorySlug, staticGetByCategory(categorySlug));
+    return applyCategoryProductPriority(categorySlug, staticGetByCategory(categorySlug).filter(product => product.city === city));
   }
+}
+
+function mapOffer(offer: ProductOfferProjection, locale: ProductLocale): Product {
+  return { ...mapEmbeddedProduct(offerProductRow(offer), locale), productOfferId: offer.id, marketId: offer.marketId };
+}
+
+async function fetchOfferCards(marketId: string, locale: ProductLocale, categorySlug?: string): Promise<Product[]> {
+  let productIds: string[] | undefined;
+  let categoryId: string | undefined;
+  if (categorySlug !== undefined) {
+    const category = await supabase.from("categories").select("id").eq("slug", categorySlug).abortSignal(AbortSignal.timeout(8000)).maybeSingle();
+    if (category.error) throw category.error;
+    if (!category.data) return [];
+    const memberships = await supabase.from("product_category_memberships").select("product_id").eq("category_id", category.data.id).abortSignal(AbortSignal.timeout(8000));
+    if (memberships.error) {
+      if (!["42P01", "PGRST205"].includes(memberships.error.code ?? "")) throw memberships.error;
+      categoryId = category.data.id;
+    } else {
+      productIds = [...new Set((memberships.data ?? []).map(row => String(row.product_id)))];
+      if (!productIds.length) return [];
+    }
+  }
+  const rows = new Map<string, Product>();
+  // Split membership filters to avoid oversized PostgREST URLs as the catalogue grows.
+  const chunks = productIds ? Array.from({ length: Math.ceil(productIds.length / 100) }, (_, index) => productIds.slice(index * 100, (index + 1) * 100)) : [undefined];
+  for (const ids of chunks) {
+    for (let page = 0; ; page++) {
+      const offers = await listProductOffers(supabase, { marketId, locale, page, productIds: ids, categoryId });
+      for (const offer of offers) rows.set(offer.productId, mapOffer(offer, locale));
+      if (offers.length < 100) break;
+    }
+  }
+  const products = [...rows.values()].sort((a, b) => a.name.localeCompare(b.name, locale));
+  return categorySlug ? applyCategoryProductPriority(categorySlug, products) : products;
+}
+
+const cachedOfferCards = unstable_cache(fetchOfferCards, ["market-offer-cards", "v1"], { tags: [PUBLIC_PRODUCT_CACHE_TAG] });
+const cachedOfferDetail = unstable_cache(async (marketId: string, locale: ProductLocale, slug: string) => {
+  const offer = await getProductOffer(supabase, { marketId, locale, slug });
+  return offer ? { ...mapOffer(offer, locale), slug: canonicalProductSlug(slug) } : null;
+}, ["market-offer-detail", "v1"], { tags: [PUBLIC_PRODUCT_CACHE_TAG] });
+
+async function publicMarketId(city: string, locale: ProductLocale) {
+  if (!isSupabaseConfigured()) throw new Error("City catalogue requires configured database access");
+  // Outside the cache: a cached product must not make a now-private market public.
+  return (await resolveMarketContext(supabase, { mode: "public", marketSlug: city, locale })).id;
+}
+
+function reportParity(city: string, locale: ProductLocale, legacy: Product[], offers: Product[]) {
+  const mismatches = catalogueParity(legacy, offers);
+  console.info("[market-catalogue] Shadow comparison", { city, locale, legacyCount: legacy.length,
+    offerCount: offers.length, mismatchCount: mismatches.length, sample: mismatches.slice(0, 10) });
+}
+
+function shadowError(city: string, locale: ProductLocale, error: unknown) {
+  console.warn("[market-catalogue] Shadow read unavailable", { city, locale, reason: error instanceof Error ? error.message : "Database error" });
+}
+
+export function getProductsFromDB(city = "valencia", locale: ProductLocale = "en"): Promise<Product[]> {
+  return readMarketCatalogue({ mode: marketCatalogueMode(), city,
+    legacy: () => getLegacyProducts(city, locale),
+    offers: async () => cachedOfferCards(await publicMarketId(city, locale), locale),
+    compare: (legacy, offers) => reportParity(city, locale, legacy, offers),
+    onShadowError: error => shadowError(city, locale, error),
+  });
+}
+
+// The existing locale argument stays in place; city is an additive third argument.
+export function getProductBySlugFromDB(slug: string, locale: ProductLocale = "en", city = "valencia"): Promise<Product | null> {
+  return readMarketCatalogue({ mode: marketCatalogueMode(), city,
+    legacy: () => getLegacyProductBySlug(slug, locale, city),
+    offers: async () => cachedOfferDetail(await publicMarketId(city, locale), locale, slug),
+    compare: (legacy, offers) => reportParity(city, locale, legacy ? [legacy] : [], offers ? [offers] : []),
+    onShadowError: error => shadowError(city, locale, error),
+  });
+}
+
+export function getProductsByCategoryFromDB(categorySlug: string, locale: ProductLocale = "en", city = "valencia"): Promise<Product[]> {
+  return readMarketCatalogue({ mode: marketCatalogueMode(), city,
+    legacy: () => getLegacyProductsByCategory(categorySlug, locale, city),
+    offers: async () => cachedOfferCards(await publicMarketId(city, locale), locale, categorySlug),
+    compare: (legacy, offers) => reportParity(city, locale, legacy, offers),
+    onShadowError: error => shadowError(city, locale, error),
+  });
 }
 
 export async function getIndexableProductsForSeo(): Promise<ProductSeoState[]> {
