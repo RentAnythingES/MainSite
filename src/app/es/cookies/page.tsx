@@ -40,7 +40,7 @@ export default function SpanishCookiesPage() {
                 </thead>
                 <tbody className="divide-y divide-border">
                   <tr>
-                    <td className="p-3 text-neutral-600">rentanything_analytics_consent</td>
+                    <td className="p-3 text-neutral-600">rentandroll_analytics_consent</td>
                     <td className="p-3"><span className="badge badge-brand">Preferencia</span></td>
                     <td className="p-3 text-neutral-600">Guarda en almacenamiento local si permites o rechazas la analítica</td>
                     <td className="p-3 text-neutral-600">Hasta que la cambies o borres</td>

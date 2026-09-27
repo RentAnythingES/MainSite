@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { SITE_IDENTITY } from "@/config/site";
 
 export default function AdminLoginPage() {
   const router = useRouter();
@@ -43,8 +44,7 @@ export default function AdminLoginPage() {
       <div className="w-full max-w-sm">
         <div className="text-center mb-8">
           <h1 className="text-2xl font-bold text-white font-[var(--font-outfit)]">
-            <span className="text-teal-400">Rent</span>Anything
-            <span className="text-amber-400">.es</span>
+            <span className="text-teal-400">{SITE_IDENTITY.domain}</span>
           </h1>
           <p className="text-neutral-500 text-sm mt-2">Admin Dashboard</p>
         </div>

@@ -1017,8 +1017,8 @@ async function main() {
   assertPageEnhancements(privacyPageEs, ["Escalera Labs S.L.", "Google Analytics no se carga"], [], "Spanish Privacy page");
   assertPageEnhancements(termsPage, ["does not automatically add a security deposit", "Between 24 and 48 hours"], [], "Terms page");
   assertPageEnhancements(termsPageEs, ["Stripe procesa el pago", "Entre 24 y 48 horas"], [], "Spanish Terms page");
-  assertPageEnhancements(cookiesPage, ["rentanything_analytics_consent", "does not load unless you select"], [], "Cookies page");
-  assertPageEnhancements(cookiesPageEs, ["rentanything_analytics_consent", "no se carga salvo que selecciones"], [], "Spanish Cookies page");
+  assertPageEnhancements(cookiesPage, ["rentandroll_analytics_consent", "does not load unless you select"], [], "Cookies page");
+  assertPageEnhancements(cookiesPageEs, ["rentandroll_analytics_consent", "no se carga salvo que selecciones"], [], "Spanish Cookies page");
   for (const path of ["/es/faq", "/es/how-it-works", "/es/refunds", "/es/about", "/es/contact", "/es/privacy", "/es/terms", "/es/cookies"]) {
     assert(sitemap.includes(`https://rentandroll.com${path}`), `${path} is missing from the sitemap`);
   }

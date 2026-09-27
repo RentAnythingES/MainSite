@@ -3,6 +3,16 @@
 
 This is the **living SEO strategy document** for rentandroll.com. Updated after every SEO-related change. For prioritized fixes, see [SEO_ROADMAP.md](./SEO_ROADMAP.md).
 
+## Public brand cleanup — 27 September 2026
+
+Removed the former brand from organization/website alternate names, admin headings,
+cookie-policy storage labels, download filenames, and current database catalogue
+copy. Product cache keys have a new version so deployment does not reuse the old
+descriptions. Legacy browser storage remains readable to preserve customer choices
+and active checkouts. Retired social links are omitted pending confirmed current
+profile URLs. The public brand audit scans every sitemap page plus admin login,
+including HTML metadata, and saves results to `public-brand-audit.json`.
+
 ---
 
 ## Occasions & Events release — 12 September 2026

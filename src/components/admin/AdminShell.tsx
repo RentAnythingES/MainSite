@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { SITE_IDENTITY } from "@/config/site";
 
 const navItems = [
   { name: "Coupons", href: "/admin/coupons", icon: "%" },
@@ -57,9 +58,7 @@ export default function AdminShell({
       <aside className="w-64 bg-neutral-900 border-r border-neutral-800 flex flex-col">
         <div className="p-5 border-b border-neutral-800">
           <Link href="/admin" className="text-lg font-bold font-[var(--font-outfit)]">
-            <span className="text-teal-400">Rent</span>
-            <span className="text-white">Anything</span>
-            <span className="text-amber-400">.es</span>
+            <span className="text-teal-400">{SITE_IDENTITY.domain}</span>
           </Link>
           <p className="text-xs text-neutral-500 mt-1">Admin Panel</p>
         </div>

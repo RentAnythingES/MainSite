@@ -7,7 +7,7 @@ export function trackEvent(eventName: string, params: AnalyticsParams = {}) {
 
   window.gtag("event", eventName, {
     ...params,
-    app: "rentanything_web",
+    app: "rentandroll_web",
   });
 }
 

@@ -3,6 +3,13 @@
 
 ---
 
+## Brand consistency — 27 September 2026
+
+- [x] Remove the former name and domain from public metadata, admin headings,
+  cookie-policy labels, exports, and current catalogue descriptions and FAQs.
+- [x] Preserve existing checkout sessions and cookie choices under the new names.
+- [ ] Restore Instagram/Facebook links once current profile URLs are confirmed.
+
 ## Occasions & Events release — 12 September 2026
 
 Published 13 sourceable products (26 EN/ES product URLs) and the bilingual existing-architecture category hub (2 URLs). All use standard daily rates and request-for-dates for unconfirmed supply. Supplier product photos retained on owner approval. See [release details](./EVENTS_CATALOGUE_LAUNCH_20260912.md). Hosted experiences remain future work.

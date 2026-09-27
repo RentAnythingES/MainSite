@@ -2,7 +2,6 @@ const configuredSiteUrl =
   process.env.NEXT_PUBLIC_SITE_URL || "https://rentandroll.com";
 
 export const SITE_URL = configuredSiteUrl.replace(/\/$/, "");
-export const LEGACY_SITE_URL = "https://rentanything.es";
 export const EXPECTED_PRODUCTION_SITE_URL = "https://rentandroll.com";
 
 if (
@@ -17,7 +16,6 @@ if (
 export const SITE_IDENTITY = {
   brandName: "Rent&Roll",
   descriptiveName: "Rent and Roll",
-  formerName: "RentAnything.es",
   domain: "rentandroll.com",
   tagline: "Travel light. Rent what you need.",
   taglineEs: "Viaja ligero. Alquila lo que necesitas.",

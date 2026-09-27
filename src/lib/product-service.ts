@@ -315,7 +315,7 @@ async function fetchProductsFromDB(city: string, locale: ProductLocale): Promise
     return data.map((row) => mapEmbeddedProduct(row, locale));
 }
 
-const getCachedProducts = unstable_cache(fetchProductsFromDB, ["public-product-list", "stock-aware-v2"], {
+const getCachedProducts = unstable_cache(fetchProductsFromDB, ["public-product-list", "stock-aware-v2", "rentandroll-brand-v1"], {
   tags: [PUBLIC_PRODUCT_CACHE_TAG],
 });
 
@@ -361,7 +361,7 @@ async function fetchProductBySlugFromDB(slug: string, locale: ProductLocale): Pr
     return { ...mapEmbeddedProduct(row, locale), slug: canonicalSlug };
 }
 
-const getCachedProductBySlug = unstable_cache(fetchProductBySlugFromDB, ["public-product-detail", "stock-aware-v2"], {
+const getCachedProductBySlug = unstable_cache(fetchProductBySlugFromDB, ["public-product-detail", "stock-aware-v2", "rentandroll-brand-v1"], {
   tags: [PUBLIC_PRODUCT_CACHE_TAG],
 });
 
@@ -436,7 +436,7 @@ async function fetchProductsByCategoryFromDB(categorySlug: string, locale: Produ
 
 const getCachedProductsByCategory = unstable_cache(
   fetchProductsByCategoryFromDB,
-  ["public-products-by-category", "stock-aware-v2"],
+  ["public-products-by-category", "stock-aware-v2", "rentandroll-brand-v1"],
   { tags: [PUBLIC_PRODUCT_CACHE_TAG] },
 );
 

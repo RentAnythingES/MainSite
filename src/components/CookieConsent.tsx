@@ -6,23 +6,25 @@ import { useState, useSyncExternalStore } from "react";
 
 export type AnalyticsConsent = "granted" | "denied";
 
-const STORAGE_KEY = "rentanything_analytics_consent";
+const STORAGE_KEY = "rentandroll_analytics_consent";
+// Preserve choices saved before the rebrand; do not ask returning visitors again.
+const LEGACY_STORAGE_KEY = "rentanything_analytics_consent";
 
 function publishConsent(consent: AnalyticsConsent) {
-  window.dispatchEvent(new CustomEvent("rentanything:analytics-consent", { detail: consent }));
+  window.dispatchEvent(new CustomEvent("rentandroll:analytics-consent", { detail: consent }));
 }
 
 export function readAnalyticsConsent(): AnalyticsConsent | null {
   if (typeof window === "undefined") return null;
-  const value = window.localStorage.getItem(STORAGE_KEY);
+  const value = window.localStorage.getItem(STORAGE_KEY) ?? window.localStorage.getItem(LEGACY_STORAGE_KEY);
   return value === "granted" || value === "denied" ? value : null;
 }
 
 export function subscribeToAnalyticsConsent(callback: () => void) {
-  window.addEventListener("rentanything:analytics-consent", callback);
+  window.addEventListener("rentandroll:analytics-consent", callback);
   window.addEventListener("storage", callback);
   return () => {
-    window.removeEventListener("rentanything:analytics-consent", callback);
+    window.removeEventListener("rentandroll:analytics-consent", callback);
     window.removeEventListener("storage", callback);
   };
 }
@@ -55,6 +57,7 @@ export default function CookieConsent() {
 
   function save(nextConsent: AnalyticsConsent) {
     window.localStorage.setItem(STORAGE_KEY, nextConsent);
+    window.localStorage.removeItem(LEGACY_STORAGE_KEY);
     setEditing(false);
     publishConsent(nextConsent);
   }
