@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { isCheckoutPaymentSettled } from "@/lib/checkout-payment-status";
 import { stripe, isStripeConfigured } from "@/lib/stripe";
 
 /**
@@ -23,7 +24,7 @@ export async function GET(request: NextRequest) {
   try {
     const session = await stripe.checkout.sessions.retrieve(sessionId);
 
-    if (session.payment_status !== "paid") {
+    if (!isCheckoutPaymentSettled(session)) {
       return NextResponse.json({ error: "Payment not completed" }, { status: 402 });
     }
 

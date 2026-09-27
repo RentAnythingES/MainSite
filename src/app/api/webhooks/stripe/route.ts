@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { isCheckoutPaymentSettled } from "@/lib/checkout-payment-status";
 import { stripe } from "@/lib/stripe";
 import { createAdminClient } from "@/lib/supabase-admin";
 import { sendBookingConfirmation, sendFulfillmentAmendmentConfirmation } from "@/lib/email";
@@ -529,7 +530,7 @@ async function handleDraftCheckoutCompleted(
     requires_confirmation?: boolean;
   };
 
-  if (session.payment_status !== "paid" || session.amount_total !== bookingDraft.total_cents) {
+  if (!isCheckoutPaymentSettled(session) || session.amount_total !== bookingDraft.total_cents) {
     console.error("[webhook] Draft Checkout payment does not match the server-priced draft", {
       bookingDraftId,
       paymentStatus: session.payment_status,

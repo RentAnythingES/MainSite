@@ -213,13 +213,13 @@ export async function POST(request: NextRequest) {
             {
               price_data: {
                 currency: bookingDraft.currency,
-                unit_amount_decimal: (bookingDraft.rental_subtotal_cents / bookingDraft.quantity).toFixed(6) as unknown as Stripe.Decimal,
+                unit_amount: bookingDraft.rental_subtotal_cents,
                 product_data: {
                   name: `${resolvedProduct.name} rental`,
-                  description: `${formattedStart} to ${formattedEnd}`,
+                  description: `${formattedStart} to ${formattedEnd} · ${bookingDraft.quantity} unit(s)`,
                 },
               },
-              quantity: bookingDraft.quantity,
+              quantity: 1,
             },
             ...(fulfillmentFees.baseFeeCents > 0
               ? [{

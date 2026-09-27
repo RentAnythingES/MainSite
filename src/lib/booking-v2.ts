@@ -44,6 +44,8 @@ export interface FulfillmentSelection {
 }
 
 export interface BookingQuote {
+  couponCode?: string;
+  couponDiscountCents?: number;
   quantity: number;
   rentalDays: number;
   perDayCents: number;

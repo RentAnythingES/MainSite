@@ -1,6 +1,7 @@
 export const ACTIVE_CHECKOUT_STORAGE_KEY = "rentanything.active-checkout";
 
 export interface ActiveCheckout {
+  couponCode?: string;
   draftId: string;
   checkoutUrl: string;
   productSlug: string;

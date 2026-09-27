@@ -23,8 +23,10 @@ import {
 import type { DeliveryType, FulfillmentMode } from "@/lib/types";
 import { consumeRateLimits, getClientIp } from "@/lib/rate-limit";
 import { resolveDefaultMarketContext } from "@/lib/market-context";
+import { applyBookingCoupon, CouponRuleError } from "@/lib/coupons";
 
 interface DraftRequestBody {
+  couponCode?: string;
   draftId?: string;
   productSlug?: string;
   quantity?: number;
@@ -185,6 +187,7 @@ export async function POST(request: NextRequest) {
       selectedExtraServices,
     );
     quote.pricingSnapshot = { ...quote.pricingSnapshot, fulfillmentPolicy: policy };
+    await applyBookingCoupon(supabase, quote, product.id, body.couponCode);
 
     const { data: blockedDates, error: blockedError } = await supabase
       .from("blocked_dates")
@@ -285,7 +288,7 @@ export async function POST(request: NextRequest) {
     });
   } catch (err) {
     if (err instanceof BookingRuleError) {
-      return NextResponse.json({ error: err.message }, { status: 409 });
+      return NextResponse.json({ error: err.message, errorCode: err instanceof CouponRuleError ? "coupon_invalid" : undefined }, { status: 409 });
     }
     console.error("[booking-drafts] Error:", err);
     await recordSystemIncident({

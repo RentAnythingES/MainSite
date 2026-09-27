@@ -5,6 +5,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 const navItems = [
+  { name: "Coupons", href: "/admin/coupons", icon: "%" },
   { name: "Dashboard", href: "/admin", icon: "📊" },
   { name: "Products", href: "/admin/products", icon: "📦" },
   { name: "Inventory", href: "/admin/inventory", icon: "#" },
