@@ -25,6 +25,7 @@
     "audit:discover-locales": "node scripts/discover-locale-audit.cjs",
     "smoke:booking": "node scripts/booking-api-smoke.cjs",
     "test:rental-dates": "node --experimental-strip-types --test scripts/rental-dates.test.mjs",
+    "test:market-context": "node --import ./scripts/market-test-loader.mjs --test scripts/market-context.test.mjs scripts/market-routes.test.mjs scripts/market-database.test.mjs",
     "test:mobility-inquiries": "node --experimental-strip-types --test scripts/mobility-inquiries.test.mjs",
     "test:fulfillment-policy": "node --experimental-strip-types --test scripts/fulfillment-policy.test.mjs",
     "test:telegram": "node scripts/test-telegram-communications.cjs",
@@ -54,6 +55,7 @@
     "xlsx": "^0.18.5"
   },
   "devDependencies": {
+    "@electric-sql/pglite": "^0.5.8",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",

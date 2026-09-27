@@ -1,4 +1,5 @@
 # Rent&Roll — Frontend Guide
+> `/admin/markets` provides private city setup, revision-conflict recovery and immutable city slugs. New cities remain unpublished. See [release notes](releases/PRIVATE_CITY_SETUP_2026-09-27.md).
 > **Last updated**: 2026-08-18
 
 ## Routing

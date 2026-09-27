@@ -1,8 +1,9 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 import type { Database, Market } from "@/lib/types";
+import { isLocaleTag, isMarketId, isMarketSlug } from "./route-context";
 
 export interface MarketContext {
-  id: string | null;
+  id: string;
   slug: string;
   name: string;
   countryCode: string;
@@ -10,84 +11,73 @@ export interface MarketContext {
   currency: string;
   defaultLocale: string;
   supportedLocales: string[];
+  locale: string;
   isActive: boolean;
   isBookingEnabled: boolean;
   isPublic: boolean;
   isIndexable: boolean;
-  foundationAvailable: boolean;
+  foundationAvailable: true;
 }
 
-const LEGACY_VALENCIA_CONTEXT: MarketContext = {
-  id: null,
-  slug: "valencia",
-  name: "Valencia",
-  countryCode: "ES",
-  timezone: "Europe/Madrid",
-  currency: "eur",
-  defaultLocale: "en",
-  supportedLocales: ["en", "es"],
-  isActive: true,
-  isBookingEnabled: true,
-  isPublic: true,
-  isIndexable: true,
-  foundationAvailable: false,
-};
-
-function isMissingMarketFoundationError(error: { code?: string } | null): boolean {
-  return error?.code === "42P01" || error?.code === "PGRST204" || error?.code === "PGRST205";
+export class MarketContextError extends Error {
+  constructor(public code: string, public status: number, message: string) {
+    super(message);
+    this.name = "MarketContextError";
+  }
 }
 
-/**
- * Resolves the operational default without changing any public route contract.
- * The legacy fallback allows application code to deploy before the foundation
- * migration; once the table exists, an invalid/default-less setup fails closed.
- */
-export async function resolveDefaultMarketContext(
-  supabase: SupabaseClient<Database>,
+type MarketRequest =
+  | { mode: "public"; marketSlug?: string; locale?: string; requireBooking?: boolean }
+  // Internal callers must authorize the actor or transaction before resolving IDs.
+  | { mode: "operator" | "historical"; marketId: string; locale?: string };
+
+const SELECT = "id, slug, name, country_code, timezone, currency, default_locale, supported_locales, is_active, is_booking_enabled, is_public, is_indexable";
+
+/** Resolve explicit context. This is not an operator authorization check. */
+export async function resolveMarketContext(
+  supabase: SupabaseClient<Database>, request: MarketRequest,
 ): Promise<MarketContext> {
-  const { data, error } = await supabase
-    .from("markets")
-    .select("id, slug, name, country_code, timezone, currency, default_locale, supported_locales, is_active, is_booking_enabled, is_public, is_indexable")
-    .eq("is_default", true)
-    .limit(2);
-
-  if (error) {
-    if (isMissingMarketFoundationError(error)) return LEGACY_VALENCIA_CONTEXT;
-    throw error;
+  if (request.locale !== undefined && !isLocaleTag(request.locale)) {
+    throw new MarketContextError("invalid_locale", 400, "Invalid language");
   }
-
-  if (!data || data.length !== 1) {
-    throw new Error(`Expected exactly one default market, found ${data?.length || 0}`);
+  let query = supabase.from("markets").select(SELECT);
+  if (request.mode === "public") {
+    const slug = request.marketSlug === undefined ? "valencia" : request.marketSlug;
+    if (!isMarketSlug(slug)) throw new MarketContextError("invalid_market", 400, "Invalid city");
+    query = query.eq("slug", slug);
+  } else {
+    if (!isMarketId(request.marketId)) throw new MarketContextError("invalid_market", 400, "Invalid city ID");
+    query = query.eq("id", request.marketId);
   }
-
-  const market = data[0] as unknown as Pick<
-    Market,
-    | "id"
-    | "slug"
-    | "name"
-    | "country_code"
-    | "timezone"
-    | "currency"
-    | "default_locale"
-    | "supported_locales"
-    | "is_active"
-    | "is_booking_enabled"
-    | "is_public"
-    | "is_indexable"
-  >;
+  const { data, error } = await query.limit(2);
+  if (error) throw new MarketContextError("market_unavailable", 503, "City configuration is unavailable");
+  if (!data || data.length === 0) throw new MarketContextError("market_not_found", 404, "City not available");
+  if (data.length !== 1) throw new MarketContextError("market_configuration", 503, "City configuration is invalid");
+  const market = data[0] as unknown as Market;
+  if (!isMarketId(market.id) || !market.supported_locales?.includes(market.default_locale)) {
+    throw new MarketContextError("market_configuration", 503, "City configuration is invalid");
+  }
+  if (request.mode === "public" && (!market.is_active || !market.is_public)) {
+    throw new MarketContextError("market_not_found", 404, "City not available");
+  }
+  if (request.mode === "public" && request.requireBooking && !market.is_booking_enabled) {
+    throw new MarketContextError("booking_disabled", 409, "Bookings are unavailable for this city");
+  }
+  const locale = request.locale ?? market.default_locale;
+  // Historical records retain their language after it is removed from new sales.
+  if (request.mode !== "historical" && !market.supported_locales.includes(locale)) {
+    throw new MarketContextError("unsupported_locale", 400, "Language is unavailable for this city");
+  }
   return {
-    id: market.id,
-    slug: market.slug,
-    name: market.name,
-    countryCode: market.country_code,
-    timezone: market.timezone,
-    currency: market.currency,
-    defaultLocale: market.default_locale,
-    supportedLocales: market.supported_locales,
-    isActive: market.is_active,
-    isBookingEnabled: market.is_booking_enabled,
-    isPublic: market.is_public,
-    isIndexable: market.is_indexable,
-    foundationAvailable: true,
+    id: market.id, slug: market.slug, name: market.name, countryCode: market.country_code,
+    timezone: market.timezone, currency: market.currency, defaultLocale: market.default_locale,
+    supportedLocales: market.supported_locales, locale, isActive: market.is_active,
+    isBookingEnabled: market.is_booking_enabled, isPublic: market.is_public,
+    isIndexable: market.is_indexable, foundationAvailable: true,
   };
+}
+
+/** Compatibility boundary for existing Valencia availability/draft callers. */
+export function resolveDefaultMarketContext(supabase: SupabaseClient<Database>) {
+  return resolveMarketContext(supabase, { mode: "public", requireBooking: true });
 }

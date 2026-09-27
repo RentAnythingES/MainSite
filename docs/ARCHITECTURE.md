@@ -1,4 +1,5 @@
 # Rent&Roll — Architecture
+> Private city setup (27 September): [implementation and release gates](releases/PRIVATE_CITY_SETUP_2026-09-27.md). Market resolution now fails closed; public fulfillment requires an explicit city UUID. New city writes and audit events are atomic.
 > **Last updated**: 2026-09-07
 
 ## Tech Stack

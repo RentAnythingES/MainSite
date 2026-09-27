@@ -1,5 +1,6 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 import type { Database } from "@/lib/types";
+import { isMarketId } from "./route-context";
 
 const PICKUP_LOCATION_SELECT =
   "id, slug, name, address, city, pickup_instructions, customer_instructions, internal_notes, lead_time_hours, handoff_contact, opening_hours, sort_order";
@@ -22,22 +23,23 @@ function shouldFallback(error: unknown): boolean {
 
 export async function fetchActivePickupLocations(
   supabase: SupabaseClient<Database>,
-  marketId?: string | null,
+  marketId: string,
 ) {
-  let query = supabase
+  if (!isMarketId(marketId)) throw new Error("A valid market ID is required");
+  const query = supabase
     .from("pickup_locations")
     .select(PUBLIC_PICKUP_LOCATION_SELECT)
-    .eq("is_active", true);
-  if (marketId) query = query.eq("market_id", marketId);
+    .eq("is_active", true)
+    .eq("market_id", marketId);
   const result = await query.order("sort_order", { ascending: true });
 
   if (!result.error || !shouldFallback(result.error)) return result;
 
-  let fallbackQuery = supabase
+  const fallbackQuery = supabase
     .from("pickup_locations")
     .select(PICKUP_LOCATION_FALLBACK_SELECT)
-    .eq("is_active", true);
-  if (marketId) fallbackQuery = fallbackQuery.eq("market_id", marketId);
+    .eq("is_active", true)
+    .eq("market_id", marketId);
   return fallbackQuery.order("sort_order", { ascending: true });
 }
 
@@ -57,23 +59,25 @@ export async function fetchAllPickupLocations(supabase: SupabaseClient<Database>
 
 export async function fetchActiveServiceZones(
   supabase: SupabaseClient<Database>,
-  marketId?: string | null,
+  marketId: string,
 ) {
-  let query = supabase
+  if (!isMarketId(marketId)) throw new Error("A valid market ID is required");
+  const query = supabase
     .from("service_zones")
     .select(PUBLIC_SERVICE_ZONE_SELECT)
     .eq("is_active", true)
-    .eq("automatic_checkout_enabled", true);
-  if (marketId) query = query.eq("market_id", marketId);
+    .eq("automatic_checkout_enabled", true)
+    .eq("market_id", marketId);
   const result = await query.order("sort_order", { ascending: true });
 
   if (!result.error || !shouldFallback(result.error)) return result;
 
-  let fallbackQuery = supabase
+  const fallbackQuery = supabase
     .from("service_zones")
     .select(SERVICE_ZONE_FALLBACK_SELECT)
-    .eq("is_active", true);
-  if (marketId) fallbackQuery = fallbackQuery.eq("market_id", marketId);
+    .eq("is_active", true)
+    .eq("automatic_checkout_enabled", true)
+    .eq("market_id", marketId);
   return fallbackQuery.order("sort_order", { ascending: true });
 }
 

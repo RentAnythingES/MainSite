@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 
 const navItems = [
   { name: "Dashboard", href: "/admin", icon: "📊" },
+  { name: "Cities", href: "/admin/markets", icon: "◎" },
   { name: "Products", href: "/admin/products", icon: "📦" },
   { name: "Inventory", href: "/admin/inventory", icon: "#" },
   { name: "Availability", href: "/admin/availability", icon: "📅" },
@@ -51,9 +52,9 @@ export default function AdminShell({
   };
 
   return (
-    <div className="min-h-screen bg-neutral-950 flex">
+    <div className="min-h-screen bg-neutral-950 flex flex-col md:flex-row">
       {/* Sidebar */}
-      <aside className="w-64 bg-neutral-900 border-r border-neutral-800 flex flex-col">
+      <aside className="w-full md:w-64 md:shrink-0 bg-neutral-900 border-r border-neutral-800 flex flex-col">
         <div className="p-5 border-b border-neutral-800">
           <Link href="/admin" className="text-lg font-bold font-[var(--font-outfit)]">
             <span className="text-teal-400">Rent</span>
@@ -63,7 +64,7 @@ export default function AdminShell({
           <p className="text-xs text-neutral-500 mt-1">Admin Panel</p>
         </div>
 
-        <nav className="flex-1 p-3 space-y-1">
+        <nav className="flex-1 p-3 grid grid-cols-2 md:block md:space-y-1" aria-label="Admin navigation">
           {navItems.map((item) => {
             const isActive = pathname === item.href || 
               (item.href !== "/admin" && pathname.startsWith(item.href));
@@ -108,7 +109,7 @@ export default function AdminShell({
       </aside>
 
       {/* Main content */}
-      <main className="flex-1 overflow-y-auto">
+      <main className="flex-1 min-w-0 overflow-y-auto">
         <div className="p-6 md:p-8 max-w-7xl">
           {schemaWarning && (
             <div className="mb-5 flex flex-wrap items-center justify-between gap-3 rounded-lg border border-amber-500/20 bg-amber-500/10 px-4 py-3 text-sm text-amber-100">
