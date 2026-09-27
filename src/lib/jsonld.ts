@@ -15,7 +15,7 @@ export function getLocalBusinessJsonLd() {
     "@type": "LocalBusiness",
     "@id": BUSINESS_SCHEMA_ID,
     name: SITE_IDENTITY.brandName,
-    alternateName: [SITE_IDENTITY.descriptiveName, SITE_IDENTITY.formerName],
+    alternateName: SITE_IDENTITY.descriptiveName,
     legalName: SITE_IDENTITY.legalName,
     taxID: SITE_IDENTITY.taxId,
     description:
@@ -50,7 +50,7 @@ export function getWebsiteJsonLd(locale: "en" | "es" = "en") {
     "@type": "WebSite",
     "@id": WEBSITE_SCHEMA_ID,
     name: SITE_IDENTITY.brandName,
-    alternateName: [SITE_IDENTITY.descriptiveName, SITE_IDENTITY.formerName],
+    alternateName: SITE_IDENTITY.descriptiveName,
     url: SITE_URL,
     inLanguage: locale,
     publisher: { "@id": BUSINESS_SCHEMA_ID },

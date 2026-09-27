@@ -4,6 +4,7 @@ import { BookingRuleError, assertCustomerFulfillmentWindows, assertFulfillmentTi
 import { fetchActivePickupLocations, fetchActiveServiceZones } from "@/lib/fulfillment-options";
 import { resolveDefaultMarketContext } from "@/lib/market-context";
 import type { DeliveryType, FulfillmentMode } from "@/lib/types";
+import { applyBookingCoupon, CouponRuleError } from "@/lib/coupons";
 
 export const dynamic = "force-dynamic";
 
@@ -185,6 +186,7 @@ export async function GET(request: NextRequest) {
       selectedExtraServices,
     );
     quote.pricingSnapshot = { ...quote.pricingSnapshot, fulfillmentPolicy: policy };
+    await applyBookingCoupon(supabase, quote, product.id, searchParams.get("couponCode"));
 
     const [pickupLocationsResult, serviceZonesResult] = await Promise.all([
       fetchActivePickupLocations(supabase, market.id),
@@ -241,7 +243,7 @@ export async function GET(request: NextRequest) {
   } catch (err) {
     if (err instanceof BookingRuleError) {
       return NextResponse.json(
-        { available: false, availabilityReason: "fulfillment_rule", error: err.message },
+        { available: false, availabilityReason: "fulfillment_rule", error: err.message, errorCode: err instanceof CouponRuleError ? "coupon_invalid" : undefined },
         { status: 409 },
       );
     }

@@ -12,7 +12,11 @@ for (const line of fs.readFileSync(envPath, "utf8").split(/\r?\n/)) {
 
 const botToken = process.env.TELEGRAM_BOT_TOKEN;
 const apiBase = process.env.TELEGRAM_API_BASE || "https://api.telegram.org";
-const bookingsChatId = "3956998068";
+// Try the administrator's direct chat first. If the bot has not been started
+// in a direct message yet, fall back to the configured Bookings group so the
+// interactive webhook test can still be performed.
+const directAdminChatId = "3956998068";
+const bookingsGroupChatId = process.env.TELEGRAM_NOTIFY_CHAT_ID || "-1003956998068";
 
 async function telegram(method, body) {
   const response = await fetch(`${apiBase}/bot${botToken}/${method}`, {
@@ -37,7 +41,7 @@ async function main() {
   try {
     const testId = `telegram-test-confirmation-${Date.now()}`;
     const sent = await telegram("sendMessage", {
-      chat_id: bookingsChatId,
+      chat_id: directAdminChatId,
       parse_mode: "HTML",
       text: [
         "🧪 <b>Short-notice confirmation test</b>",
@@ -53,7 +57,36 @@ async function main() {
     });
     confirmationTest = { ok: true, messageId: sent.message_id };
   } catch (error) {
-    confirmationTest = { ok: false, error: error instanceof Error ? error.message : String(error) };
+    try {
+      const testId = `telegram-test-confirmation-${Date.now()}`;
+      const sent = await telegram("sendMessage", {
+        chat_id: bookingsGroupChatId,
+        parse_mode: "HTML",
+        text: [
+          "\uD83E\uDDEA <b>Short-notice confirmation test</b>",
+          "Tap Confirm to verify that Telegram can reach the booking confirmation webhook.",
+          "This test does not change a booking or send a customer email.",
+        ].join("\n"),
+        reply_markup: {
+          inline_keyboard: [[
+            { text: "\u2705 Confirm test", callback_data: `bkconfirm:${testId}` },
+            { text: "\u274C Reject test", callback_data: `bkreject:${testId}` },
+          ]],
+        },
+      });
+      confirmationTest = {
+        ok: true,
+        messageId: sent.message_id,
+        chatId: String(bookingsGroupChatId),
+        directChatError: error instanceof Error ? error.message : String(error),
+      };
+    } catch (fallbackError) {
+      confirmationTest = {
+        ok: false,
+        error: fallbackError instanceof Error ? fallbackError.message : String(fallbackError),
+        directChatError: error instanceof Error ? error.message : String(error),
+      };
+    }
   }
 
   console.log(JSON.stringify({

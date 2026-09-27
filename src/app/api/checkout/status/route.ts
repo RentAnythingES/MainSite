@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { isCheckoutPaymentSettled } from "@/lib/checkout-payment-status";
 import { stripe, isStripeConfigured } from "@/lib/stripe";
 import { createServiceClient } from "@/lib/supabase";
 import { buildGoogleCalendarUrl, buildGoogleMapsUrl } from "@/lib/calendar-links";
@@ -66,7 +67,7 @@ export async function GET(request: NextRequest) {
     }
 
     const product = bookingRecord?.product as { name?: string; slug?: string } | undefined;
-    const paymentPaid = session.payment_status === "paid";
+    const paymentPaid = isCheckoutPaymentSettled(session);
     const bookingCreated = Boolean(bookingRecord);
     const bookingStart = (bookingRecord?.rental_start_at as string | null) || (bookingRecord?.start_date as string | null);
     const bookingEnd = (bookingRecord?.rental_end_at as string | null) || (bookingRecord?.end_date as string | null);

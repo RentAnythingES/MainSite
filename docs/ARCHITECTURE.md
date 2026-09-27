@@ -262,6 +262,21 @@ estimates. Ambiguous components remain marked for manual confirmation; the endpo
 does not reserve inventory or promise a final bundle price.
 
 ### Booking API v2
+
+Coupon configuration lives in the private `coupons` table (migration
+`20260927_coupons.sql`). `/api/admin/coupons` authenticates every read, creation,
+and active-state update. `/api/availability` previews the coupon and
+`/api/booking-drafts` independently validates and prices it. No coupon value or
+eligibility decision is accepted from the browser. The immutable draft
+`pricing_snapshot.coupon` records the code, rule, original rental subtotal and
+discount. Net rental subtotal and total flow through Stripe, booking creation,
+payment ledger and invoices. Existing drafts retain their agreed prices after a
+coupon is disabled; disabling stops new discounted drafts.
+Every coupon has an `expires_on` date, defaulting to one calendar year from creation.
+The `20260927_coupon_expiry.sql` migration backfills existing rows. Server validation
+uses the current Europe/Madrid date; the selected expiry date is inclusive. Admins
+can edit expiry through the existing authenticated PATCH endpoint.
+
 ```
 GET /api/availability
   Accepts Valencia start/end dates and times, with legacy timestamp compatibility

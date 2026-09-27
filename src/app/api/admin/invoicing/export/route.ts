@@ -60,7 +60,7 @@ export async function GET(request: NextRequest) {
   ]);
 
   const csv = [headers, ...rows].map((row) => row.map(csvCell).join(",")).join("\r\n");
-  const filename = `rentanything-invoices${from ? `-${from}` : ""}${to ? `-to-${to}` : ""}.csv`;
+  const filename = `rentandroll-invoices${from ? `-${from}` : ""}${to ? `-to-${to}` : ""}.csv`;
 
   return new NextResponse(csv, {
     headers: {

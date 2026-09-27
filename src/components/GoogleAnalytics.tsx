@@ -34,7 +34,7 @@ export default function GoogleAnalytics() {
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
           gtag('config', '${GA_ID}');
-          window.dispatchEvent(new Event('rentanything:analytics-ready'));
+          window.dispatchEvent(new Event('rentandroll:analytics-ready'));
         `}
       </Script>
     </>

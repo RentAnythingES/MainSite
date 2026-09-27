@@ -566,6 +566,11 @@ export interface Database {
         };
         Update: Partial<Omit<BookingDraftRow, "id" | "created_at" | "updated_at">>;
       };
+      coupons: {
+        Row: import("./coupon-rules").Coupon & { created_at: string };
+        Insert: Omit<import("./coupon-rules").Coupon, "id"> & { id?: string };
+        Update: Partial<import("./coupon-rules").Coupon>;
+      };
       booking_custom_quotes: {
         Row: CustomBookingQuoteRow;
         Insert: Omit<CustomBookingQuoteRow, "id" | "public_token" | "created_at" | "updated_at"> & {

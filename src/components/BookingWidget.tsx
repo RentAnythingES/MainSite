@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect, useRef } from "react";
 import type { Product } from "@/data/products";
 import { trackBookingEvent } from "@/lib/analytics";
 import { CUSTOMER_FULFILLMENT_WINDOWS, formatCustomerFulfillmentWindow } from "@/lib/fulfillment-windows";
@@ -288,6 +288,8 @@ interface PickupLocationOption {
 }
 
 interface ServerQuote {
+  couponCode?: string;
+  couponDiscountCents?: number;
   quantity: number;
   rentalDays: number;
   perDayCents: number;
@@ -357,6 +359,9 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
   const [serviceZones, setServiceZones] = useState<ServiceZoneOption[]>([]);
   const [pickupLocations, setPickupLocations] = useState<PickupLocationOption[]>([]);
   const [serverQuote, setServerQuote] = useState<ServerQuote | null>(null);
+  const [couponCode, setCouponCode] = useState("");
+  const [couponError, setCouponError] = useState("");
+  const quoteRequest = useRef(0);
   const [deliveryZoneId, setDeliveryZoneId] = useState("");
   const [collectionZoneId, setCollectionZoneId] = useState("");
   const [pickupLocationId, setPickupLocationId] = useState("");
@@ -439,6 +444,7 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
   const activeCheckoutMatchesSelection = Boolean(
     activeCheckout &&
     activeCheckout.productSlug === product.slug &&
+    (activeCheckout.couponCode || "") === couponCode.trim().toUpperCase() &&
     activeCheckout.quantity === quantity &&
     activeCheckout.fulfillmentMode === fulfillmentMode &&
     activeCheckout.deliveryType === deliveryOption &&
@@ -529,6 +535,7 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
 
   // Reset availability when dates change
   useEffect(() => {
+    quoteRequest.current += 1;
     const timeoutId = window.setTimeout(() => {
       setAvailabilityStatus("idle");
       setBookingError("none");
@@ -539,9 +546,11 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
       setRequiresConfirmation(false);
     }, 0);
     return () => window.clearTimeout(timeoutId);
-    }, [startDate, startTime, endDate, endTime, quantity, fulfillmentMode, deliveryZoneId, collectionZoneId, pickupLocationId, selectedExtraServices]);
+    }, [startDate, startTime, endDate, endTime, quantity, fulfillmentMode, deliveryZoneId, collectionZoneId, pickupLocationId, selectedExtraServices, couponCode]);
 
   const checkAvailability = async () => {
+    const requestId = ++quoteRequest.current;
+    setCouponError("");
     if (!rentalWindow) {
       setAvailabilityReason(t.datesRequired);
       return;
@@ -562,6 +571,9 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
     });
 
     try {
+      if (activeCheckout && (activeCheckout.couponCode || "") !== couponCode.trim().toUpperCase()) {
+        await releaseCheckout(activeCheckout.draftId);
+      }
       const params = new URLSearchParams({
         slug: product.slug,
         start: startDate,
@@ -575,6 +587,7 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
       if (deliveryZoneId) params.set("deliveryZoneId", deliveryZoneId);
       if (collectionZoneId) params.set("collectionZoneId", collectionZoneId);
       if (pickupLocationId) params.set("pickupLocationId", pickupLocationId);
+      if (couponCode.trim()) params.set("couponCode", couponCode.trim().toUpperCase());
       if (selectedExtraServices.length > 0) params.set("extraServices", selectedExtraServices.join(","));
       if (activeCheckoutMatchesSelection && activeCheckout) {
         params.set("draftId", activeCheckout.draftId);
@@ -582,6 +595,14 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
 
       const res = await fetch(`/api/availability?${params.toString()}`, { cache: "no-store" });
       const data = await res.json();
+      if (requestId !== quoteRequest.current) return;
+      if (!res.ok && data.errorCode === "coupon_invalid") {
+        setCouponError(locale === "es" ? "No se ha podido aplicar el código. Comprueba que sea válido para este producto o elimínalo para continuar." : data.error || "Could not apply this coupon. Check the code or remove it to continue.");
+        setServerQuote(null);
+        setAvailabilityStatus("idle");
+        setBookingError("none");
+        return;
+      }
       const policy = data.policy as FulfillmentPolicyResponse | null;
       setFulfillmentPolicy(policy || null);
       setRequiresConfirmation(Boolean(data.requiresConfirmation));
@@ -637,6 +658,7 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
         });
       }
     } catch {
+      if (requestId !== quoteRequest.current) return;
       setAvailabilityStatus("unavailable");
       setBookingError("availability");
       trackBookingEvent("availability_check_failed_open", {
@@ -673,6 +695,7 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
 
   const handleSubmitBooking = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (availabilityStatus !== "available") return;
     setSubmitting(true);
     let attemptedDraftId: string | null = null;
 
@@ -718,6 +741,7 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
           billingAddress: invoiceRequested ? { address: billingAddress } : null,
           invoiceRequested,
           extraServices: selectedExtraServices,
+          couponCode: couponCode.trim().toUpperCase(),
         }),
       });
 
@@ -725,6 +749,14 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
 
       if (!draftRes.ok || !draftData.draftId) {
         await releaseCheckout(attemptedDraftId).catch(() => {});
+        if (draftData.errorCode === "coupon_invalid") {
+          setCouponError(locale === "es" ? "No se ha podido aplicar el código. Revísalo o elimínalo para continuar." : draftData.error);
+          setServerQuote(null);
+          setAvailabilityStatus("idle");
+          setBookingError("none");
+          setSubmitting(false);
+          return;
+        }
         const draftPolicy = draftData.policy as FulfillmentPolicyResponse | null;
         if (draftPolicy) {
           setFulfillmentPolicy(draftPolicy);
@@ -796,6 +828,7 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
 
       if (res.ok && data.checkoutUrl) {
         const checkoutState: ActiveCheckout = {
+          couponCode: couponCode.trim().toUpperCase(),
           draftId: draftData.draftId,
           checkoutUrl: data.checkoutUrl,
           productSlug: product.slug,
@@ -862,6 +895,30 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
   const whatsappUrl = `https://wa.me/34684708013?text=${encodeURIComponent(whatsappMessage)}`;
 
   // Success state
+  const couponField = !needsSupplyConfirmation && (
+    <div className="mb-4 space-y-2">
+      <label className="block text-xs font-medium text-neutral-500">
+        {locale === "es" ? "Código de descuento" : "Coupon code"}
+        <input value={couponCode} maxLength={40} disabled={submitting || availabilityStatus === "checking"}
+          onChange={(event) => { quoteRequest.current += 1; setCouponCode(event.target.value.toUpperCase()); setCouponError(""); setServerQuote(null); setAvailabilityStatus("idle"); }}
+          className="mt-1 w-full rounded-lg border border-border px-3 py-2.5 text-sm" autoCapitalize="characters" autoComplete="off" />
+      </label>
+      <button type="button" disabled={submitting || availabilityStatus === "checking" || !rentalWindow}
+        onClick={() => void checkAvailability()} className="text-sm font-semibold text-teal-700 disabled:opacity-50">
+        {availabilityStatus === "checking" ? (locale === "es" ? "Comprobando…" : "Checking…") : (locale === "es" ? "Actualizar precio" : "Apply / update price")}
+      </button>
+      {couponCode && <button type="button" disabled={submitting || availabilityStatus === "checking"}
+        onClick={() => { quoteRequest.current += 1; setCouponCode(""); setCouponError(""); setServerQuote(null); setAvailabilityStatus("idle"); }}
+        className="ml-4 text-sm text-neutral-600 disabled:opacity-50">{locale === "es" ? "Quitar código" : "Remove code"}</button>}
+      <p className="text-xs text-neutral-500">{locale === "es" ? "El descuento se aplica al alquiler, no a la entrega ni a los servicios adicionales." : "Discounts apply to rental charges. Delivery and extra services keep their usual price."}</p>
+      {couponError && <p role="alert" className="text-sm text-red-700">{couponError}</p>}
+      {serverQuote?.couponCode && <p role="status" className="text-sm text-teal-700">{locale === "es" ? "Código aplicado:" : "Code applied:"} {serverQuote.couponCode}</p>}
+    </div>
+  );
+  const couponDiscountLine = (serverQuote?.couponDiscountCents || 0) > 0 && (
+    <div className="flex justify-between text-sm text-emerald-700"><span>{locale === "es" ? "Descuento" : "Coupon discount"} ({serverQuote?.couponCode})</span><span>−€{((serverQuote?.couponDiscountCents || 0) / 100).toFixed(2)}</span></div>
+  );
+
   if (step === "success") {
     return (
       <div className="bg-white rounded-2xl border border-border shadow-sm p-6 text-center" id="booking-widget">
@@ -952,7 +1009,9 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
           </div>
 
           {/* Price summary */}
+          {couponField}
           <div className="border-t border-border pt-3 space-y-1.5">
+            {couponDiscountLine}
             <div className="flex justify-between text-sm">
               <span className="text-neutral-500">€{displayPricing.perDay} × {displayPricing.days} {displayPricing.days === 1 ? t.day : t.days} × {quantity}</span>
               <span className="font-medium">€{displayPricing.subtotalBeforeDiscount.toFixed(2)}</span>
@@ -992,7 +1051,7 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
             </div>
           )}
 
-          <button type="submit" disabled={submitting} className="btn btn-primary btn-lg w-full" id="booking-submit">
+          <button type="submit" disabled={submitting || availabilityStatus !== "available"} className="btn btn-primary btn-lg w-full" id="booking-submit">
             {submitting ? t.submitting : t.submit}
           </button>
         </form>
@@ -1015,6 +1074,7 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
             <button
               type="button"
               className="btn btn-primary flex-1"
+              disabled={!activeCheckoutMatchesSelection}
               onClick={() => window.location.assign(activeCheckout.checkoutUrl)}
             >
               {t.resumeCheckout}
@@ -1329,8 +1389,10 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
       )}
 
       {/* Price Breakdown */}
+      {couponField}
       {availabilityStatus !== "manual" && rentalWindow && (
       <div className="border-t border-border pt-4 mb-4 space-y-2">
+        {couponDiscountLine}
         <div className="flex justify-between text-sm">
           <span className="text-neutral-500">
             €{displayPricing.perDay} × {displayPricing.days} {displayPricing.days === 1 ? t.day : t.days} × {quantity}

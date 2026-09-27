@@ -179,7 +179,7 @@ export function productsToExcel(products: ExcelProduct[]): Buffer {
   return Buffer.from(XLSX.write(workbook, { type: "buffer", bookType: "xlsx" }));
 }
 
-export function exportRowsToExcel(rows: Record<string, unknown>[], fileName = "rentanything-import-export.xlsx") {
+export function exportRowsToExcel(rows: Record<string, unknown>[], fileName = "rentandroll-import-export.xlsx") {
   if (typeof window === "undefined") return;
   const workbook = XLSX.utils.book_new();
   const headers = [...EXCEL_HEADERS];
@@ -257,7 +257,7 @@ export function downloadProductExcelTemplate() {
     { wch: 20 },
   ];
   XLSX.utils.book_append_sheet(workbook, worksheet, "Products");
-  XLSX.writeFile(workbook, "rentanything-product-import-template.xlsx");
+  XLSX.writeFile(workbook, "rentandroll-product-import-template.xlsx");
 }
 
 export function parseExcelFile(file: File): Promise<Record<string, unknown>[]> {

@@ -83,7 +83,7 @@ export async function GET(request: NextRequest) {
     }
 
     const csv = productsToCsv(products);
-    const filename = `rentanything-products${status === "all" ? "" : `-${status}`}-${new Date().toISOString().slice(0, 10)}.csv`;
+    const filename = `rentandroll-products${status === "all" ? "" : `-${status}`}-${new Date().toISOString().slice(0, 10)}.csv`;
 
     return new NextResponse(csv, {
       headers: {

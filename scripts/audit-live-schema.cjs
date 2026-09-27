@@ -8,6 +8,7 @@ for (const line of fs.readFileSync(path.join(process.cwd(), ".env.local"), "utf8
 }
 
 const expectedTables = [
+  "coupons",
   "blocked_dates",
   "booking_document_counters",
   "booking_documents",

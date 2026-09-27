@@ -59,8 +59,8 @@ export default function WebVitalsReporter() {
     }
 
     flushMetrics();
-    window.addEventListener("rentanything:analytics-ready", flushMetrics);
-    return () => window.removeEventListener("rentanything:analytics-ready", flushMetrics);
+    window.addEventListener("rentandroll:analytics-ready", flushMetrics);
+    return () => window.removeEventListener("rentandroll:analytics-ready", flushMetrics);
   }, [consent]);
 
   return null;

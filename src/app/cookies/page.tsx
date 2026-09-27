@@ -42,7 +42,7 @@ export default function CookiesPage() {
                 </thead>
                 <tbody className="divide-y divide-border">
                   <tr>
-                    <td className="p-3 text-neutral-600">rentanything_analytics_consent</td>
+                    <td className="p-3 text-neutral-600">rentandroll_analytics_consent</td>
                     <td className="p-3"><span className="badge badge-brand">Preference</span></td>
                     <td className="p-3 text-neutral-600">Stores your allow or reject choice in local storage</td>
                     <td className="p-3 text-neutral-600">Until cleared or changed</td>

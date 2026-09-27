@@ -1,5 +1,5 @@
 {
-  "name": "rentanything",
+  "name": "rentandroll",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -26,6 +26,8 @@
     "smoke:booking": "node scripts/booking-api-smoke.cjs",
     "test:rental-dates": "node --experimental-strip-types --test scripts/rental-dates.test.mjs",
     "test:market-context": "node --import ./scripts/market-test-loader.mjs --test scripts/market-context.test.mjs scripts/market-routes.test.mjs scripts/market-database.test.mjs",
+    "test:coupons": "node --experimental-strip-types --test scripts/coupons.test.mjs",
+    "db:verify:coupons": "node scripts/verify-coupons.cjs",
     "test:mobility-inquiries": "node --experimental-strip-types --test scripts/mobility-inquiries.test.mjs",
     "test:fulfillment-policy": "node --experimental-strip-types --test scripts/fulfillment-policy.test.mjs",
     "test:telegram": "node scripts/test-telegram-communications.cjs",

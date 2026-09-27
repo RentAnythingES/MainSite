@@ -201,7 +201,7 @@ export function productsToCsv(products: ExportProduct[]) {
 export function downloadProductCsvTemplate() {
   const link = document.createElement("a");
   link.href = URL.createObjectURL(new Blob([PRODUCT_CSV_TEMPLATE], { type: "text/csv;charset=utf-8" }));
-  link.download = "rentanything-product-import-template.csv";
+  link.download = "rentandroll-product-import-template.csv";
   link.click();
   URL.revokeObjectURL(link.href);
 }

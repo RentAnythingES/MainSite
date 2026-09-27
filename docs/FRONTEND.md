@@ -83,6 +83,21 @@ is required; they must not be used to disguise a narrow catalogue as a broad one
 | `/admin/reviews` | Client | Consent-aware moderation of verified-booking feedback |
 
 ## Component Patterns
+
+Admin headings use `SITE_IDENTITY.domain` to stay consistent with public branding.
+New browser storage uses the `rentandroll` prefix; consent and active checkout
+readers retain their previous-key fallback so the rebrand preserves saved choices
+and unpaid sessions. Exports and bilingual cookie-policy labels use the new name.
+
+`/admin/coupons` creates generated or custom codes with percentage or EUR discounts
+for all products, selected products, or selected categories. Codes can be enabled
+and disabled. The coupon creation form defaults expiry to one year, and each
+existing coupon has an editable expiry date and an expired status when applicable.
+The bilingual booking widget accepts a code in either booking step,
+requires a refreshed server quote after edits, displays savings, and binds checkout
+resumption to the selected code. Changing a code releases the old unpaid checkout
+before checking availability again.
+
 - Server Components by default
 - `"use client"` only for interactive widgets:
   - `HeroCarousel` — auto-advancing homepage photo carousel

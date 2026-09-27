@@ -83,7 +83,7 @@ export async function GET(request: NextRequest) {
     }
 
     const excelBuffer = productsToExcel(products);
-    const filename = `rentanything-products${status === "all" ? "" : `-${status}`}-${new Date().toISOString().slice(0, 10)}.xlsx`;
+    const filename = `rentandroll-products${status === "all" ? "" : `-${status}`}-${new Date().toISOString().slice(0, 10)}.xlsx`;
 
     return new NextResponse(new Uint8Array(excelBuffer), {
       headers: {
