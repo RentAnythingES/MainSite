@@ -22,10 +22,11 @@ import {
 } from "@/lib/booking-v2";
 import type { DeliveryType, FulfillmentMode } from "@/lib/types";
 import { consumeRateLimits, getClientIp } from "@/lib/rate-limit";
-import { resolveDefaultMarketContext } from "@/lib/market-context";
+import { MarketContextError, resolveMarketContext } from "@/lib/market-context";
 import { applyBookingCoupon, CouponRuleError } from "@/lib/coupons";
 
 interface DraftRequestBody {
+  locale?: string;
   couponCode?: string;
   draftId?: string;
   productSlug?: string;
@@ -81,7 +82,7 @@ export async function POST(request: NextRequest) {
     }
 
     const supabase = createServiceClient();
-    const market = await resolveDefaultMarketContext(supabase);
+    const market = await resolveMarketContext(supabase, { mode: "public", requireBooking: true, locale: body.locale });
     const clientIp = getClientIp(request);
     const rateLimit = await consumeRateLimits(supabase, [
       {
@@ -218,6 +219,7 @@ export async function POST(request: NextRequest) {
         customer_email: body.customerEmail,
         customer_phone: body.customerPhone || null,
         ...(market.id ? { market_id: market.id } : {}),
+        locale: market.locale,
         rental_start_at: startAt.toISOString(),
         rental_end_at: endAt.toISOString(),
         timezone: market.timezone,
@@ -287,6 +289,7 @@ export async function POST(request: NextRequest) {
       extraServices: selectedExtraServices,
     });
   } catch (err) {
+    if (err instanceof MarketContextError) return NextResponse.json({ error: err.message, errorCode: err.code }, { status: err.status });
     if (err instanceof BookingRuleError) {
       return NextResponse.json({ error: err.message, errorCode: err instanceof CouponRuleError ? "coupon_invalid" : undefined }, { status: 409 });
     }

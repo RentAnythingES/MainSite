@@ -13,6 +13,8 @@ import {
 import type { BookingDraft, CustomQuoteLineItem } from "@/lib/types";
 import { getIncidentErrorMessage, recordSystemIncident } from "@/lib/system-incidents";
 import type Stripe from "stripe";
+import { storedBookingLocale } from "@/lib/booking-locale";
+import { localeRegistry } from "@/i18n/config";
 
 /**
  * POST /api/checkout — Create a Stripe Checkout Session
@@ -45,7 +47,7 @@ export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
 
-    const { draftId, locale } = body;
+    const { draftId } = body;
 
     if (typeof draftId !== "string" || !draftId.trim()) {
       return NextResponse.json(
@@ -71,6 +73,7 @@ export async function POST(request: NextRequest) {
       }
 
       const bookingDraft = draft as BookingDraft;
+      const locale = storedBookingLocale(bookingDraft.locale);
 
       if (new Date(bookingDraft.expires_at).getTime() <= Date.now()) {
         await supabase.from("booking_drafts").update({ status: "expired" }).eq("id", bookingDraft.id);
@@ -179,12 +182,12 @@ export async function POST(request: NextRequest) {
         customQuoteToken = customQuote.public_token;
       }
 
-      const formattedStart = new Date(bookingDraft.rental_start_at).toLocaleString("en-GB", {
+      const formattedStart = new Date(bookingDraft.rental_start_at).toLocaleString(localeRegistry[locale].format, {
         dateStyle: "medium",
         timeStyle: "short",
         timeZone: bookingDraft.timezone,
       });
-      const formattedEnd = new Date(bookingDraft.rental_end_at).toLocaleString("en-GB", {
+      const formattedEnd = new Date(bookingDraft.rental_end_at).toLocaleString(localeRegistry[locale].format, {
         dateStyle: "medium",
         timeStyle: "short",
         timeZone: bookingDraft.timezone,
@@ -194,7 +197,7 @@ export async function POST(request: NextRequest) {
       const cancelParams = new URLSearchParams({
         draft_id: bookingDraft.id,
         slug: resolvedProduct.slug,
-        locale: locale === "es" ? "es" : "en",
+        locale,
       });
       if (customQuoteToken) cancelParams.set("quote_token", customQuoteToken);
       const stripeLineItems: Stripe.Checkout.SessionCreateParams.LineItem[] = customQuoteToken
@@ -269,8 +272,10 @@ export async function POST(request: NextRequest) {
           expires_at: checkoutExpiresAt,
           customer_email: bookingDraft.customer_email || undefined,
           line_items: stripeLineItems,
+          locale,
           metadata: {
             booking_draft_id: bookingDraft.id,
+            locale,
             product_id: bookingDraft.product_id,
             quantity: String(bookingDraft.quantity),
           },

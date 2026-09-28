@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { createServiceClient } from "@/lib/supabase";
 import { BookingRuleError, assertCustomerFulfillmentWindows, assertFulfillmentTiming, calculateRentalDays, cleanupExpiredBookingDrafts, evaluateDeliveryFulfillment, getEnabledProductExtraServices, getFulfillmentPolicyMessage, getPickupLocation, getProductWithPricing, getServiceZone, isShortNoticeBypassEligible, quoteBooking, resolveRentalPeriod, resolveSelectedExtraServices } from "@/lib/booking-v2";
 import { fetchActivePickupLocations, fetchActiveServiceZones } from "@/lib/fulfillment-options";
-import { resolveDefaultMarketContext } from "@/lib/market-context";
+import { MarketContextError, resolveMarketContext } from "@/lib/market-context";
 import type { DeliveryType, FulfillmentMode } from "@/lib/types";
 import { applyBookingCoupon, CouponRuleError } from "@/lib/coupons";
 
@@ -46,7 +46,7 @@ export async function GET(request: NextRequest) {
 
   try {
     const supabase = createServiceClient();
-    const market = await resolveDefaultMarketContext(supabase);
+    const market = await resolveMarketContext(supabase, { mode: "public", requireBooking: true, locale: searchParams.get("locale") ?? undefined });
     await cleanupExpiredBookingDrafts(supabase);
 
     const period = start && end
@@ -241,6 +241,7 @@ export async function GET(request: NextRequest) {
       },
     });
   } catch (err) {
+    if (err instanceof MarketContextError) return NextResponse.json({ error: err.message, errorCode: err.code }, { status: err.status });
     if (err instanceof BookingRuleError) {
       return NextResponse.json(
         { available: false, availabilityReason: "fulfillment_rule", error: err.message, errorCode: err instanceof CouponRuleError ? "coupon_invalid" : undefined },

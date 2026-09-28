@@ -167,6 +167,7 @@ interface InventoryLocationRow {
 }
 
 interface BookingRow {
+  locale?: string | null;
   id: string;
   booking_ref: string;
   customer_name: string;
@@ -354,6 +355,7 @@ interface ServiceZoneRow {
 }
 
 interface BookingDraftRow {
+  locale?: string | null;
   id: string;
   product_id: string;
   quantity: number;

@@ -75,3 +75,25 @@ market callers (booking options and offer catalogue resolution) now use these
 checks. Legacy product rendering, shared templates, cached page invalidation and
 sitemap readers still need integration before a language can be launched or a
 complete site-wide disable promised. No public German route exists yet.
+
+## Stored transaction language (unreleased)
+
+Apply `20260928_private_translation_storage.sql` and then
+`20260928_transaction_language.sql` before deploying the current branch. The latter
+adds nullable locale references to drafts and bookings; existing rows stay null.
+The widget sends locale to availability and draft creation. Both validate the
+selected language against the public city-language booking gates before proceeding.
+New drafts save the validated locale; payment completion copies it to the booking.
+
+Checkout uses the saved draft language for Stripe's interface, date formatting and
+its cancellation URL, ignoring a conflicting browser locale. Old null-language
+records use English for display without rewriting historical data. A malformed
+stored locale fails instead of silently selecting English. Rental timezone, prices
+and inventory identity are unchanged.
+
+This does not complete transaction localization: line-item wording, success/cancel
+page rendering, custom-quote entry, booking documents, confirmation and follow-up
+emails still require shared localized rendering. Checkout resumption also needs
+an explicit policy for language disablement after a draft was issued. German stays
+private. The new route tests mock Stripe and all HTTP; no real payments or emails
+are created.

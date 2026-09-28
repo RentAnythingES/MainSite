@@ -26,6 +26,13 @@ test('translation storage preserves legacy visibility and keeps future languages
   await db.exec('rollback');
   assert.equal((await db.query("select to_regclass('public.locales') as t")).rows[0].t,null);
   await db.exec(read('20260928_private_translation_storage.sql'));
+  await db.exec('create table booking_drafts(id int primary key); create table bookings(id int primary key); insert into booking_drafts values(1); insert into bookings values(1);');
+  await db.exec(read('20260928_transaction_language.sql'));
+  for(const table of ['booking_drafts','bookings']) {
+   assert.equal((await db.query(`select locale from ${table} where id=1`)).rows[0].locale,null);
+   await db.exec(`insert into ${table}(id,locale) values(2,'es')`);
+   await assert.rejects(db.exec(`insert into ${table}(id,locale) values(3,'unknown')`),{code:'23503'});
+  }
   const after=(await db.query('select * from product_localizations')).rows;
   assert.deepEqual(after.map(({publication_status,...row})=>{assert.equal(publication_status,'published');return row;}),before);
   assert.deepEqual((await db.query('select * from markets order by id')).rows,marketsBefore);

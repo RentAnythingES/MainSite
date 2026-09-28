@@ -575,6 +575,7 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
         await releaseCheckout(activeCheckout.draftId);
       }
       const params = new URLSearchParams({
+        locale,
         slug: product.slug,
         start: startDate,
         end: endDate,
@@ -718,6 +719,7 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           draftId: attemptedDraftId,
+          locale,
           productSlug: product.slug,
           quantity,
           customerName: name,

@@ -490,6 +490,7 @@ async function handleDraftCheckoutCompleted(
   }
 
   const bookingDraft = draft as {
+    locale?: string | null;
     id: string;
     product_id: string;
     quantity: number;
@@ -626,6 +627,7 @@ async function handleDraftCheckoutCompleted(
       product_id: bookingDraft.product_id,
       quantity: bookingDraft.quantity,
       customer_name: bookingDraft.customer_name || session.customer_details?.name || "Customer",
+      locale: bookingDraft.locale ?? null,
       customer_email: bookingDraft.customer_email || session.customer_email || "",
       customer_phone: bookingDraft.customer_phone,
       customer_whatsapp: bookingDraft.customer_phone,
