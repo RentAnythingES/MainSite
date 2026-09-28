@@ -27,6 +27,9 @@ export type Agent = { id: string; email: string; full_name: string; phone: strin
 export type Application = { id: string; full_name: string; email: string; phone: string; country_code: string; city: string; business_name: string; area_of_operations: string; experience: string; equipment: string; status: string; admin_notes: string; created_at: string };
 export type Booking = { id: string; booking_ref: string; market_id: string; start_date: string; end_date: string; status: string; quantity: number; products: { name: string } | null; customer_name?: string; customer_email?: string; customer_phone?: string; fulfillment_mode?: string; delivery_address?: string; delivery_notes?: string; collection_address?: string; collection_notes?: string; requires_confirmation?: boolean; confirmation_status?: string };
 export type Assignment = { booking_id: string; agent_id: string; status: string; decline_reason: string; delivery_driver_id: string | null; collection_driver_id: string | null; delivery_scheduled_at: string | null; collection_scheduled_at: string | null; bookings: Booking };
-export type Message = { id: string; booking_id: string; agent_id: string; direction: string; body: string; status: string; created_at: string };
+export type Message = { read_at?: string | null; id: string; booking_id: string; agent_id: string; direction: string; body: string; status: string; created_at: string };
 export type OrderEvent = { id: string; booking_id: string; agent_id: string; action: string; note: string; created_at: string };
 export type Driver = { id: string; name: string; phone: string; vehicle: string; is_active: boolean };
+
+export type Unavailable = { id: string; agent_id: string; start_date: string; end_date: string; reason: string };
+export type Workspace = { agent: Agent; territories: { market_id: string; markets: Market }[]; orders: Assignment[]; drivers: Driver[]; messages: Message[]; events: OrderEvent[]; unavailable: Unavailable[] };

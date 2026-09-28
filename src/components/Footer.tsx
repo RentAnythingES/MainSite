@@ -8,6 +8,7 @@ import { SITE_IDENTITY } from "@/config/site";
 
 export default function Footer() {
   const pathname = usePathname();
+  if (pathname === "/agent" || (pathname.startsWith("/agent/") && pathname !== "/agent/login")) return null;
   const isSpanish = pathname.startsWith("/es");
   const prefix = isSpanish ? "/es" : "";
 

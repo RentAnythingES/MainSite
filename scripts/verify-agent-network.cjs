@@ -12,13 +12,14 @@ async function main() {
     await db.query("begin");
     await db.query("set local statement_timeout='10s'");
     if (process.argv.includes("--preview")) await db.query(readFileSync("supabase/migrations/20260928_agent_network.sql", "utf8"));
-    const tables = ["agent_applications", "rental_agents", "agent_sessions", "agent_territories", "agent_drivers", "agent_order_assignments", "agent_order_events", "agent_messages", "agent_audit_events"];
+    if (process.argv.includes("--workspace-preview")) await db.query(readFileSync("supabase/migrations/20260928_agent_workspace_optimization.sql", "utf8"));
+    const tables = ["agent_applications", "rental_agents", "agent_sessions", "agent_territories", "agent_drivers", "agent_order_assignments", "agent_order_events", "agent_messages", "agent_audit_events", "agent_unavailability"];
     for (const table of tables) {
       const result = await db.query("select relrowsecurity as rls,has_table_privilege('anon',oid,'select') as anon,has_table_privilege('authenticated',oid,'select') as authenticated from pg_class where oid=$1::regclass", [`public.${table}`]);
       assert.deepEqual(result.rows[0], { rls: true, anon: false, authenticated: false });
     }
-    const rpc = await db.query("select proname,has_function_privilege('authenticated',oid,'execute') as allowed from pg_proc where pronamespace='public'::regnamespace and proname in ('agent_order_action','assign_agent_order','reply_agent_message','set_agent_territories')");
-    assert.equal(rpc.rows.length, 4); assert.ok(rpc.rows.every(r => !r.allowed)); checks.push("Private tables and RPCs deny public/authenticated access");
+    const rpc = await db.query("select proname,has_function_privilege('authenticated',oid,'execute') as allowed from pg_proc where pronamespace='public'::regnamespace and proname in ('agent_order_action','assign_agent_order','reply_agent_message','set_agent_territories','agent_availability_action','mark_agent_messages_read')");
+    assert.equal(rpc.rows.length, 6); assert.ok(rpc.rows.every(r => !r.allowed)); checks.push("Private tables and RPCs deny public/authenticated access");
     const policies = await db.query("select tablename,qual,with_check from pg_policies where schemaname='public' and tablename in ('bookings','booking_drafts','rental_agents','agent_messages','invoice_settings','invoices')");
     assert.ok(policies.rows.every(p => !/\btrue\b/.test(`${p.qual} ${p.with_check}`)), "Private data has a broad permissive policy");
     const market = (await db.query("select id from public.markets where is_default")).rows[0].id;
@@ -39,6 +40,14 @@ async function main() {
       await db.query("rollback to savepoint rejected_check");
     }
     const action = (agent,name,payload={}) => db.query("select public.agent_order_action($1,$2,$3,$4::jsonb)",[agent,booking,name,JSON.stringify(payload)]);
+    await reject("select public.agent_availability_action($1,'add',null,'2031-05-01','2031-05-03','Away')",[agents[0]],/onboarding/);
+    await db.query("update public.rental_agents set must_change_password=false,profile_completed_at=now() where id=any($1::uuid[])",[agents]);
+    await db.query("select public.agent_availability_action($1,'add',null,'2031-05-01','2031-05-03','Away')",[agents[0]]);
+    const away=(await db.query("select id from public.agent_unavailability where agent_id=$1",[agents[0]])).rows[0].id;
+    await reject("select public.assign_agent_order($1,$2,$3)",[agents[0],booking,users[0]],/unavailable/);
+    await reject("select public.agent_availability_action($1,'remove',$2)",[agents[1],away],/not found/);
+    await db.query("select public.agent_availability_action($1,'remove',$2)",[agents[0],away]);
+    await db.query("update public.rental_agents set must_change_password=true,profile_completed_at=null where id=any($1::uuid[])",[agents]);
     await reject("select public.assign_agent_order($1,$2,$3)",[agents[1],booking,users[0]],/outside/);
     await db.query("select public.assign_agent_order($1,$2,$3)",[agents[0],booking,users[0]]);
     await reject("select public.agent_order_action($1,$2,'accept')",[agents[0],booking],/access denied/);
@@ -46,6 +55,8 @@ async function main() {
     await reject("select public.agent_order_action($1,$2,'accept')",[agents[1],booking],/access denied/);
     await reject("select public.agent_order_action($1,$2,'note','{\"note\":\"test\"}')",[agents[0],booking],/Accept/);
     await action(agents[0],"accept");
+    await reject("select public.agent_availability_action($1,'add',null,'2031-05-03','2031-05-04','Away')",[agents[0]],/overlaps/);
+    checks.push("Unavailable dates enforce onboarding, owner-only removal and overlapping dispatch protection");
     await reject("select public.agent_order_action($1,$2,'accept')",[agents[0],booking],/already/);
     await reject("select public.set_agent_territories($1,$2::uuid[])",[agents[0],[market2]],/Reassign/);
     checks.push("City, ownership, onboarding and offer acceptance gates");
@@ -58,6 +69,13 @@ async function main() {
     await action(agents[0],"message",{messageId:randomUUID(),body:"Verification message, never sent"});
     const token=(await db.query("select customer_token from public.agent_order_assignments where booking_id=$1",[booking])).rows[0].customer_token;
     await db.query("select public.reply_agent_message($1,'Test reply',$2)",[token,randomUUID()]);
+    const reply=(await db.query("select id from public.agent_messages where booking_id=$1 and direction='customer'",[booking])).rows[0].id;
+    await db.query("select public.mark_agent_messages_read($1,$2::uuid[])",[agents[1],[reply]]);
+    assert.equal((await db.query("select read_at from public.agent_messages where id=$1",[reply])).rows[0].read_at,null);
+    await db.query("select public.mark_agent_messages_read($1,$2::uuid[])",[agents[0],[reply]]);
+    assert.ok((await db.query("select read_at from public.agent_messages where id=$1",[reply])).rows[0].read_at);
+    checks.push("Unread state is persisted and cannot be changed by another agent");
+
     await db.query("update public.rental_agents set is_active=false where id=$1",[agents[0]]);
     await reject("select public.agent_order_action($1,$2,'note','{\"note\":\"test\"}')",[agents[0],booking],/access denied/);
     await reject("select public.reply_agent_message($1,'Test',$2)",[token,randomUUID()],/unavailable/);

@@ -7,7 +7,7 @@ import { emailField, field, json, sameOrigin, uuid } from "@/lib/agent-auth";
 export async function GET(request: NextRequest) {
   if (!await verifyAdmin(request)) return json({ error: "Unauthorized" }, 401);
   const db = createAdminClient();
-  const [applications, agents, markets, bookings, assignments, events, messages] = await Promise.all([
+  const [applications, agents, markets, bookings, assignments, events, messages, unavailable] = await Promise.all([
     db.from("agent_applications").select("*").order("created_at", { ascending: false }).limit(500),
     db.from("rental_agents").select("*,agent_territories(market_id)").order("created_at", { ascending: false }),
     db.from("markets").select("id,name,country_code,timezone,is_booking_enabled").order("country_code").order("name"),
@@ -15,9 +15,10 @@ export async function GET(request: NextRequest) {
     db.from("agent_order_assignments").select("*").order("assigned_at", { ascending: false }).limit(500),
     db.from("agent_order_events").select("*").order("created_at", { ascending: false }).limit(200),
     db.from("agent_messages").select("*").order("created_at", { ascending: false }).limit(200),
+    db.from("agent_unavailability").select("*").order("start_date"),
   ]);
-  if ([applications, agents, markets, bookings, assignments, events, messages].some(r => r.error)) return json({ error: "Agent Management is unavailable. Check the database migration." }, 503);
-  return json({ applications: applications.data, agents: agents.data, markets: markets.data, bookings: bookings.data, assignments: assignments.data, events: events.data, messages: messages.data });
+  if ([applications, agents, markets, bookings, assignments, events, messages, unavailable].some(r => r.error)) return json({ error: "Agent Management is unavailable. Check the database migration." }, 503);
+  return json({ applications: applications.data, agents: agents.data, markets: markets.data, bookings: bookings.data, assignments: assignments.data, events: events.data, messages: messages.data, unavailable: unavailable.data });
 }
 export async function POST(request: NextRequest) {
   if (!sameOrigin(request)) return json({ error: "Invalid request origin." }, 403);

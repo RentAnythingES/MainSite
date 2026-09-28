@@ -68,8 +68,10 @@ Outgoing messages are saved before Resend sends them to the booking's stored ema
 Private customer links support replies into the workspace. Internal notes never
 appear in customer conversations. Failed/queued emails can be retried with the same
 provider idempotency key. Conversations close on terminal booking states,
-reassignment, suspension or territory loss. Use Refresh for new orders/replies;
-there are no background push notifications.
+reassignment, suspension or territory loss. The visible workspace refreshes every
+minute and when returning to the tab; Refresh checks immediately. This is polling,
+not push notifications. Read state persists per customer message when a conversation
+is opened or its newly received replies are explicitly marked read.
 
 ## Security and verification
 
@@ -82,9 +84,10 @@ Supabase anon/authenticated clients. No agent Supabase token reaches browser cod
 Private pages are noindex, use no-referrer and skip analytics.
 
 ```text
-node scripts/verify-agent-network.cjs --preview   # before migration; transaction rolled back
+node scripts/verify-agent-network.cjs --workspace-preview # preview second migration before applying it
 node scripts/verify-agent-network.cjs             # applied schema; transaction rolled back
 node scripts/smoke-agent-network.cjs              # local port 3100; disposable users cleaned up
+node --experimental-strip-types --test scripts/agent-workspace.test.mjs
 npm run db:verify
 npx next build
 ```
@@ -98,3 +101,39 @@ Limits: latest 300 agent orders, 500 agent messages/events, 500 admin applicatio
 open orders, and 200 admin activity/messages. Public pages are bilingual EN/ES;
 operational panels currently use English. No agent earnings, commission rates or
 automatic settlements are assumed.
+
+## Babonbo-inspired workspace refinement (28 September 2026)
+
+The operational workspace now has a persistent desktop sidebar and a compact
+horizontal navigation on small screens. Public shopping header/footer and floating
+marketing controls are omitted inside the agent workspace. The Dashboard combines
+new assignments, unread replies, today's stops in each city's time zone, and
+unscheduled stops. Date-filtered order metrics describe assigned rentals, not agent
+earnings. Compact order cards lead to the existing detailed action controls.
+
+Calendar provides a month grid, city filter and selected-day agenda. The manifest
+filters by date/city/driver and shows only remaining lifecycle legs (delivered orders
+do not continue showing a delivery task). Printing isolates the manifest. Messages
+provides an order-scoped conversation list, persisted unread counts, email retries
+and direct links back to orders. Activity and Support expose operational history
+and concise instructions without adding financial permissions.
+
+Agents can add/remove unavailable periods spanning all assigned cities, inclusive
+of both dates. The private `agent_unavailability` table and locked mutation function
+reject overlapping active assignments and overlapping unavailable periods. An
+assignment trigger locks the same agent row and checks unavailable dates during
+dispatch/acceptance, so concurrent operations cannot bypass the rule. Blocking
+dates never cancels bookings or alters inventory. Admin Agent Management adds an
+Availability tab, disables unavailable agents in the order selector and presents
+application/agent/assignment counts.
+
+Reference observations are in `docs/seo/COMPETITOR_REFERENCE.md`. Product ownership,
+independent provider pricing, review attribution and payout accounting remain
+separate business-model work; no commercial values were copied from the reference.
+
+Verification: browser-tested dashboard, calendar month navigation, unavailable-date
+markers, inbox-to-order navigation and manifest driver filtering with fictional
+local data. The preview page was removed before production build. Four pure tests
+cover time zones/DST, remaining lifecycle legs, date overlap and calendar boundaries.
+Database tests cover owner-only availability changes, assignment collision rejection
+and read-state isolation. HTTP tests verify unavailable periods appear in admin.

@@ -45,6 +45,13 @@ async function main() {
     await request("/api/agent/workspace",{cookie:login.cookie,expected:401});
     const ready=await request("/api/agent/workspace",{cookie:changed.cookie});assert.equal(ready.data.agent.must_change_password,false);assert.ok(ready.data.agent.profile_completed_at);
     await request("/api/agent/workspace",{cookie:changed.cookie,body:{action:"driver",name:"Verification driver",phone:"000",vehicle:"Test"}});
+    await request("/api/agent/workspace",{cookie:changed.cookie,body:{action:"availability",start_date:"2036-03-01",end_date:"2036-03-03",reason:"Verification"}});
+    const awayState=await request("/api/agent/workspace",{cookie:changed.cookie});assert.equal(awayState.data.unavailable.length,1);
+    const adminAway=await request("/api/admin/agents",{cookie:adminCookie});assert.ok(adminAway.data.unavailable.some(u=>u.agent_id===created.data.agentId));
+    await request("/api/agent/workspace",{cookie:changed.cookie,body:{action:"availability",start_date:"2036-03-03",end_date:"2036-03-01"},expected:400});
+    await request("/api/agent/workspace",{cookie:changed.cookie,body:{action:"availability",id:awayState.data.unavailable[0].id}});
+    await request("/api/agent/workspace",{cookie:changed.cookie,body:{action:"read_messages",ids:[]}});
+
     await request("/api/admin/agents",{cookie:adminCookie,body:{action:"active",id:created.data.agentId,is_active:false}});
     await request("/api/agent/workspace",{cookie:changed.cookie,expected:401});
     await request("/api/admin/agents",{cookie:adminCookie,body:{action:"active",id:created.data.agentId,is_active:true}});
@@ -54,7 +61,7 @@ async function main() {
     const resetState=await request("/api/agent/workspace",{cookie:resetLogin.cookie});assert.equal(resetState.data.agent.must_change_password,true);
     await request("/api/agent/session",{cookie:resetLogin.cookie,method:"DELETE"});
     await request("/api/agent/workspace",{cookie:resetLogin.cookie,expected:401});
-    console.log(JSON.stringify({publicAndAdminIsolation:"passed",applicationAndProvisioning:"passed",onboarding:"passed",passwordAndSessionRevocation:"passed",suspension:"passed",emailsSent:0}));
+    console.log(JSON.stringify({publicAndAdminIsolation:"passed",applicationAndProvisioning:"passed",onboarding:"passed",passwordAndSessionRevocation:"passed",suspension:"passed",availabilityAndAdminVisibility:"passed",emailsSent:0}));
   } finally {
     // Delete only the disposable records created by this invocation, never production records.
     for(const id of agentIds){for(const table of ["agent_audit_events","agent_drivers"]) { const r=await db.from(table).delete().eq("agent_id",id);if(r.error)throw r.error; }const r=await db.from("rental_agents").delete().eq("id",id);if(r.error)throw r.error;}

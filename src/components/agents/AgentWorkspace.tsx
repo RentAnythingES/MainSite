@@ -1,45 +1,93 @@
 "use client";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import AgentProfile from "./AgentProfile";
 import AgentOrder from "./AgentOrder";
-import { Agent, Assignment, Driver, Market, Message, OrderEvent, api, buttonClass, Field, formValues, inputClass, Panel } from "./shared";
-type Workspace = { agent: Agent; territories: { market_id: string; markets: Market }[]; orders: Assignment[]; drivers: Driver[]; messages: Message[]; events: OrderEvent[] };
-export default function AgentWorkspace() {
-  const [data, setData] = useState<Workspace | null>(null), [error, setError] = useState(""), [notice, setNotice] = useState(""), [busy, setBusy] = useState(false), [tab, setTab] = useState("Orders"), [filter, setFilter] = useState("open"), [search, setSearch] = useState("");
+import AgentDashboard from "./AgentDashboard";
+import AgentCalendar from "./AgentCalendar";
+import AgentInbox from "./AgentInbox";
+import { AgentDrivers, AgentManifest, AgentSupport } from "./AgentOperations";
+import { Workspace, api, inputClass, Panel } from "./shared";
+import { datesOverlap, isOpenStatus } from "@/lib/agent-workspace";
+
+const sections = ["Dashboard", "Orders", "Calendar", "Messages", "Manifest", "Drivers", "Activity", "Profile", "Support"];
+export default function AgentWorkspace({ initialData }: { initialData?: Workspace }) {
+  const [data, setData] = useState<Workspace | null>(initialData || null);
+  const [error, setError] = useState(""), [notice, setNotice] = useState(""), [busy, setBusy] = useState(false);
+  const [tab, setTab] = useState("Dashboard"), [filter, setFilter] = useState("open"), [search, setSearch] = useState("");
+  const [city, setCity] = useState(""), [from, setFrom] = useState(""), [to, setTo] = useState(""), [sort, setSort] = useState("soonest");
+  const [selectedId, setSelectedId] = useState(""), [updatedAt, setUpdatedAt] = useState("");
   async function load() {
     const response = await fetch("/api/agent/workspace", { cache: "no-store" });
     if (response.status === 401) { window.location.replace("/agent/login"); return; }
-    const result = await response.json(); if (!response.ok) throw new Error(result.error); setData(result);
+    const result = await response.json(); if (!response.ok) throw new Error(result.error);
+    setData(result); setUpdatedAt(new Date().toLocaleTimeString());
   }
-  useEffect(() => { fetch("/api/agent/workspace", { cache: "no-store" }).then(async response => {
-    if (response.status === 401) { window.location.replace("/agent/login"); return; }
-    const result = await response.json(); if (!response.ok) throw new Error(result.error); setData(result);
-  }).catch(e => setError(e.message)); }, []);
+  useEffect(() => {
+    if (initialData) return;
+    let disposed = false, fetching = false;
+    async function refresh() {
+      if (fetching || document.visibilityState === "hidden") return;
+      fetching = true;
+      try {
+        const response = await fetch("/api/agent/workspace", { cache: "no-store" });
+        if (disposed) return;
+        if (response.status === 401) { window.location.replace("/agent/login"); return; }
+        const result = await response.json(); if (!response.ok) throw new Error(result.error);
+        if (!disposed) { setData(result); setUpdatedAt(new Date().toLocaleTimeString()); }
+      } catch (e) { if (!disposed) setError((e as Error).message); }
+      finally { fetching = false; }
+    }
+    void refresh();
+    const timer = window.setInterval(() => void refresh(), 60000);
+    document.addEventListener("visibilitychange", refresh);
+    return () => { disposed = true; window.clearInterval(timer); document.removeEventListener("visibilitychange", refresh); };
+  }, [initialData]);
   async function send(path: string, body: Record<string, unknown>, method = "POST") {
     setBusy(true); setError(""); setNotice(""); let success = false;
-    try { const result = await api(path, body, method); setNotice(result.warning || "Saved successfully."); success = true; }
+    try { const result = await api(path, body, method); if (body.action !== "read_messages") setNotice(result.warning || "Saved successfully."); success = true; }
     catch (e) { setError((e as Error).message); }
     try { await load(); } catch (e) { setError((e as Error).message); }
     setBusy(false); return success;
   }
-  const open = (o: Assignment) => ["paid", "delivering", "active", "returning"].includes(o.bookings.status);
+  const save = (body: Record<string, unknown>) => send("/api/agent/workspace", body);
+  const act = (body: Record<string, unknown>) => send("/api/agent/orders", body);
+  const openOrder = (id: string) => { setSelectedId(id); setTab("Orders"); };
+  const navigate = (next: string) => { setTab(next); setSelectedId(""); };
   const ready = data && !data.agent.must_change_password && !!data.agent.profile_completed_at;
-  const orders = data?.orders.filter(o => (filter === "all" || (filter === "open" ? open(o) && o.status !== "declined" : o.status === filter)) && `${o.bookings.booking_ref} ${o.bookings.products?.name || ""} ${o.bookings.customer_name || ""}`.toLowerCase().includes(search.toLowerCase())) || [];
-  const manifest = data?.orders.filter(o => o.status === "accepted" && open(o)).flatMap(o => (["delivery", "collection"] as const).map(kind => {
-    const market = data.territories.find(t => t.market_id === o.bookings.market_id)?.markets;
-    const scheduled = kind === "delivery" ? o.delivery_scheduled_at : o.collection_scheduled_at;
-    const driver = data.drivers.find(d => d.id === (kind === "delivery" ? o.delivery_driver_id : o.collection_driver_id));
-    return { order: o, kind, market, scheduled, driver };
-  })).sort((a, b) => (a.scheduled || "9999").localeCompare(b.scheduled || "9999")) || [];
-  return <div className="container-site py-10 space-y-6"><header className="flex flex-wrap items-start justify-between gap-4 print:hidden"><div><h1 className="text-3xl font-bold">Agent workspace</h1><p className="mt-2 text-neutral-600">{data?.agent.full_name || "Your local operations"}</p></div><div className="flex gap-4"><button className="text-teal-700 underline" disabled={busy} onClick={() => void load().catch(e => setError(e.message))}>Refresh</button><button className="underline" onClick={async () => { try { await api("/api/agent/session", undefined, "DELETE"); window.location.replace("/agent/login"); } catch (e) { setError((e as Error).message); } }}>Sign out</button></div></header>
-    {error && <p role="alert" className="bg-red-50 text-red-800 p-4 rounded-lg">{error}</p>}{notice && <p role="status" className="text-teal-700 print:hidden">{notice}</p>}
-    {!data ? <p>Loading your workspace…</p> : <><p className="text-sm text-neutral-500 print:hidden">Assigned coverage: {data.territories.map(t => `${t.markets.country_code} · ${t.markets.name}`).join(" / ") || "Awaiting assignment"}</p>
-      {!ready && <div className="bg-amber-50 text-amber-900 rounded-lg p-4">Complete both onboarding steps below to unlock your assigned orders and customer details.</div>}
-      {ready && <><div className="grid gap-3 sm:grid-cols-4 print:hidden">{[["New assignments", data.orders.filter(o => open(o) && o.status === "offered").length], ["Accepted open orders", data.orders.filter(o => open(o) && o.status === "accepted").length], ["Completed orders", data.orders.filter(o => o.bookings.status === "completed" && o.status === "accepted").length], ["Customer replies", data.messages.filter(m => m.direction === "customer").length]].map(([label, count]) => <div key={label} className="rounded-xl border p-4"><p className="text-2xl font-bold text-teal-700">{count}</p><p className="text-sm">{label}</p></div>)}</div><nav aria-label="Agent workspace sections" className="flex flex-wrap gap-2 print:hidden">{["Orders", "Manifest", "Drivers", "Profile"].map(t => <button onClick={() => setTab(t)} key={t} className={tab === t ? buttonClass : "rounded-lg border px-4 py-2"}>{t}</button>)}</nav></>}
-      {(!ready || tab === "Profile") && <AgentProfile agent={data.agent} busy={busy} save={body => send("/api/agent/workspace", body)} changePassword={body => send("/api/agent/session", body, "PATCH")} />}
-      {ready && tab === "Orders" && <><div className="flex flex-wrap gap-3"><label className="flex-1"><span className="sr-only">Search orders</span><input value={search} onChange={e => setSearch(e.target.value)} className={inputClass} placeholder="Search reference, product or customer" /></label><label><span className="sr-only">Filter orders</span><select className={inputClass} value={filter} onChange={e => setFilter(e.target.value)}><option value="open">Open orders</option><option value="offered">New assignments</option><option value="accepted">Accepted</option><option value="declined">Declined</option><option value="all">All recent orders</option></select></label></div><p className="text-sm text-neutral-500">Up to 300 recent assigned orders. Refresh to receive new assignments and customer replies.</p><div className="space-y-5">{orders.length ? orders.map(o => <AgentOrder key={`${o.booking_id}-${o.status}`} order={o} market={data.territories.find(t => t.market_id === o.bookings.market_id)?.markets} drivers={data.drivers} messages={data.messages.filter(m => m.booking_id === o.booking_id)} events={data.events.filter(e => e.booking_id === o.booking_id)} busy={busy} act={body => send("/api/agent/orders", body)} />) : <Panel title="No matching orders"><p>The admin assigns orders in your approved cities. New assignments will appear here.</p></Panel>}</div></>}
-      {ready && tab === "Manifest" && <Panel title="Delivery and collection manifest"><p>Accepted open orders. Times use the city&apos;s time zone. Unscheduled stops appear last.</p><button className={`${buttonClass} print:hidden`} onClick={() => window.print()}>Print manifest</button><div className="overflow-x-auto"><table className="w-full text-left text-sm"><thead><tr>{["Stop / order", "Time / city", "Customer", "Address / instructions", "Driver"].map(h => <th key={h} className="p-3 border-b">{h}</th>)}</tr></thead><tbody>{manifest.map(({ order: o, kind, market, scheduled, driver }) => <tr key={`${o.booking_id}-${kind}`} className="align-top"><td className="p-3 border-b"><b>{kind}</b><br />{o.bookings.booking_ref}<br />{o.bookings.products?.name} × {o.bookings.quantity}<br />{o.bookings.status}</td><td className="p-3 border-b">{scheduled ? new Intl.DateTimeFormat("en-GB", { dateStyle: "medium", timeStyle: "short", timeZone: market?.timezone || "UTC" }).format(new Date(scheduled)) : "Not scheduled"}<br />{market?.name}<br />{market?.timezone}</td><td className="p-3 border-b">{o.bookings.customer_name}<br />{o.bookings.customer_phone}</td><td className="p-3 border-b whitespace-pre-wrap">{kind === "delivery" ? o.bookings.delivery_address : o.bookings.collection_address || o.bookings.delivery_address}<br />{kind === "delivery" ? o.bookings.delivery_notes : o.bookings.collection_notes}</td><td className="p-3 border-b">{driver?.name || "Unassigned / self"}<br />{driver?.phone}<br />{driver?.vehicle}</td></tr>)}</tbody></table></div>{!manifest.length && <p>No accepted open orders.</p>}</Panel>}
-      {ready && tab === "Drivers" && <div className="space-y-5"><Panel title="Add a driver"><p>Drivers are contact records for your own operations; they do not receive workspace accounts.</p><form className="grid gap-4 sm:grid-cols-2" onSubmit={async e => { const form = e.currentTarget, values = formValues(e); if (await send("/api/agent/workspace", { ...values, action: "driver" })) form.reset(); }}><Field name="name" label="Driver name" /><Field name="phone" label="Phone" type="tel" maxLength={50} /><Field name="vehicle" label="Vehicle / registration (optional)" required={false} /><button className={buttonClass} disabled={busy}>Add driver</button></form></Panel>{data.drivers.map(d => <Panel title={d.name} key={d.id}><form className="grid gap-4 sm:grid-cols-2" onSubmit={e => { const values = formValues(e); void send("/api/agent/workspace", { ...values, action: "driver", id: d.id, is_active: values.is_active === "on" }); }}><Field name="name" label="Name" value={d.name} /><Field name="phone" label="Phone" value={d.phone} type="tel" maxLength={50} /><Field name="vehicle" label="Vehicle" value={d.vehicle} required={false} /><label className="flex items-center gap-3"><input name="is_active" type="checkbox" defaultChecked={d.is_active} />Active driver</label><button disabled={busy} className={buttonClass}>Save driver</button></form></Panel>)}</div>}
-    </>}
+  const unread = data?.messages.filter(m => m.direction === "customer" && !m.read_at).length || 0;
+  const offers = data?.orders.filter(o => o.status === "offered" && isOpenStatus(o.bookings.status)).length || 0;
+  const selected = data?.orders.find(o => o.booking_id === selectedId);
+  const orders = data?.orders.filter(o =>
+    (filter === "all" || (filter === "open" ? isOpenStatus(o.bookings.status) && o.status !== "declined" : ["offered", "accepted", "declined"].includes(filter) ? o.status === filter : o.bookings.status === filter)) &&
+    (!city || city === o.bookings.market_id) && datesOverlap(o.bookings.start_date, o.bookings.end_date, from, to) &&
+    `${o.bookings.booking_ref} ${o.bookings.products?.name || ""} ${o.bookings.customer_name || ""}`.toLowerCase().includes(search.toLowerCase())
+  ).sort((a, b) => sort === "latest" ? b.bookings.start_date.localeCompare(a.bookings.start_date) : a.bookings.start_date.localeCompare(b.bookings.start_date)) || [];
+  return <div className="agent-workspace min-h-screen bg-neutral-50 lg:grid lg:grid-cols-[230px_minmax(0,1fr)]">
+    <aside className="bg-white border-neutral-200 border-b lg:border-r lg:border-b-0 p-4 lg:p-6 print:hidden">
+      <div className="lg:sticky lg:top-6"><Link href="/" className="font-bold text-2xl text-teal-800">Rentandroll</Link><p className="text-xs uppercase tracking-widest text-neutral-400 mt-1 mb-6">Partner workspace</p>
+      <nav aria-label="Agent workspace sections" className="flex overflow-x-auto gap-2 lg:flex-col lg:overflow-visible">{sections.map(section => <button disabled={!ready && section !== "Profile" && section !== "Support"} key={section} onClick={() => navigate(section)} aria-current={(ready ? tab : "Profile") === section ? "page" : undefined} className={`whitespace-nowrap flex justify-between items-center gap-3 rounded-xl px-4 py-3 text-sm text-left disabled:opacity-40 ${(ready ? tab : "Profile") === section ? "bg-teal-50 text-teal-800 font-semibold" : "text-neutral-600 hover:bg-neutral-50"}`}>{section}{((section === "Messages" && unread > 0) || (section === "Orders" && offers > 0)) && <span className="rounded-full bg-teal-700 text-white px-2 text-xs">{section === "Messages" ? unread : offers}</span>}</button>)}</nav>
+      <div className="hidden lg:block mt-8 pt-5 border-t border-neutral-200"><p className="font-medium text-sm">{data?.agent.full_name}</p><p className="text-xs text-neutral-500 mt-2">{data?.territories.map(t => `${t.markets.name}, ${t.markets.country_code}`).join(" · ")}</p><Link href="/" className="inline-block mt-4 text-sm text-teal-700 underline">Visit website</Link></div></div>
+    </aside>
+    <section className="min-w-0 p-4 sm:p-6 xl:p-9 space-y-6 max-w-[1500px] w-full mx-auto">
+      <header className="flex flex-wrap justify-between gap-4 print:hidden"><div><h1 className="text-3xl font-bold">{ready ? tab : "Welcome to your workspace"}</h1><p className="text-sm text-neutral-500 mt-2">{updatedAt ? `Updated ${updatedAt} · Refreshes every minute` : "Your assigned cities, customers and operations"}</p></div><div className="flex items-center gap-4 text-sm"><button disabled={busy} className="rounded-lg border border-neutral-200 bg-white px-4 py-2" onClick={() => void load().catch(e => setError(e.message))}>Refresh</button><button className="underline text-neutral-600" onClick={async () => { try { await api("/api/agent/session", undefined, "DELETE"); window.location.replace("/agent/login"); } catch (e) { setError((e as Error).message); } }}>Sign out</button></div></header>
+      {error && <p role="alert" className="rounded-xl bg-red-50 text-red-800 p-4">{error}</p>}{notice && <p role="status" className="text-teal-700 print:hidden">{notice}</p>}
+      {!data ? <Panel title="Loading your workspace"><p>Your assigned orders and city coverage are being loaded.</p></Panel> : <>
+        {!ready && <p className="rounded-xl bg-amber-50 text-amber-900 p-4">Replace your temporary password and complete your profile to unlock orders and customer information.</p>}
+        {(!ready || tab === "Profile") && <AgentProfile agent={data.agent} busy={busy} save={save} changePassword={body => send("/api/agent/session", body, "PATCH")} />}
+        {ready && tab === "Dashboard" && <AgentDashboard data={data} openOrder={openOrder} navigate={navigate} />}
+        {ready && tab === "Calendar" && <AgentCalendar data={data} busy={busy} save={save} openOrder={openOrder} />}
+        {ready && tab === "Messages" && <AgentInbox data={data} busy={busy} send={act} markRead={ids => save({ action: "read_messages", ids })} openOrder={openOrder} />}
+        {ready && tab === "Manifest" && <AgentManifest data={data} openOrder={openOrder} />}
+        {ready && tab === "Drivers" && <AgentDrivers data={data} busy={busy} save={save} />}
+        {tab === "Support" && <AgentSupport />}
+        {ready && tab === "Orders" && (selected ? <><button className="text-sm text-teal-700 underline" onClick={() => setSelectedId("")}>← Back to orders</button><AgentOrder key={selected.booking_id} order={selected} market={data.territories.find(t => t.market_id === selected.bookings.market_id)?.markets} drivers={data.drivers} messages={data.messages.filter(m => m.booking_id === selected.booking_id)} events={data.events.filter(e => e.booking_id === selected.booking_id)} busy={busy} act={act} /></> : <>
+          <div className="rounded-2xl border border-neutral-200 bg-white p-5 space-y-4"><div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4"><label className="sm:col-span-2 text-sm">Search orders<input className={inputClass} value={search} onChange={e => setSearch(e.target.value)} placeholder="Reference, product or customer" /></label><label className="text-sm">City<select className={inputClass} value={city} onChange={e => setCity(e.target.value)}><option value="">All cities</option>{data.territories.map(t => <option key={t.market_id} value={t.market_id}>{t.markets.name}</option>)}</select></label><label className="text-sm">Sort<select className={inputClass} value={sort} onChange={e => setSort(e.target.value)}><option value="soonest">Rental start: earliest first</option><option value="latest">Rental start: latest first</option></select></label><label className="text-sm">Rental period from<input className={inputClass} type="date" value={from} max={to || undefined} onChange={e => setFrom(e.target.value)} /></label><label className="text-sm">To<input className={inputClass} type="date" value={to} min={from || undefined} onChange={e => setTo(e.target.value)} /></label></div><div className="flex flex-wrap gap-2" aria-label="Order status filters">{[["open", "Open"], ["offered", "New offers"], ["accepted", "Accepted"], ["delivering", "Delivering"], ["active", "With customer"], ["returning", "Collecting"], ["completed", "Completed"], ["declined", "Declined"], ["all", "All"]].map(([value, label]) => <button key={value} aria-pressed={filter === value} className={`rounded-full border px-3 py-1.5 text-sm ${filter === value ? "bg-teal-800 text-white border-teal-800" : "text-neutral-600"}`} onClick={() => setFilter(value)}>{label}</button>)}</div></div>
+          <p className="text-xs text-neutral-500">{orders.length} matching orders · Recent 300 assignments</p><div className="grid gap-4 xl:grid-cols-2">{orders.map(o => <button key={o.booking_id} className="rounded-2xl border border-neutral-200 bg-white p-5 text-left hover:border-teal-500" onClick={() => openOrder(o.booking_id)}><div className="flex justify-between gap-3"><b>{o.bookings.booking_ref}</b><span className={`text-xs px-2 py-1 rounded-full ${o.status === "offered" ? "bg-amber-100 text-amber-900" : "bg-teal-50 text-teal-800"}`}>{o.status === "accepted" ? o.bookings.status : o.status}</span></div><h2 className="text-lg font-semibold mt-4">{o.bookings.products?.name || "Rental"}</h2><p className="text-sm text-neutral-600 mt-2">{o.bookings.quantity} item(s) · {o.bookings.start_date} → {o.bookings.end_date}</p><p className="text-sm text-neutral-500 mt-2">{data.territories.find(t => t.market_id === o.bookings.market_id)?.markets.name} · {o.bookings.customer_name || "Customer details after acceptance"}</p><span className="block text-sm text-teal-700 mt-4">Open order →</span></button>)}</div>{!orders.length && <Panel title="No matching orders"><p>New assignments appear here when the admin assigns orders in your cities.</p></Panel>}
+        </>)}
+        {ready && tab === "Activity" && <Panel title="Recent order activity">{data.events.length ? data.events.map(e => <button key={e.id} onClick={() => openOrder(e.booking_id)} className="block w-full text-left border-t border-neutral-200 py-3"><b>{data.orders.find(o => o.booking_id === e.booking_id)?.bookings.booking_ref} · {e.action.replaceAll("_", " ")}</b><p className="text-sm text-neutral-600 whitespace-pre-wrap">{e.note}</p><time className="text-xs text-neutral-500">{new Date(e.created_at).toLocaleString()}</time></button>) : <p className="text-neutral-500">Accepted-order updates and internal notes will appear here.</p>}</Panel>}
+      </>}
+    </section>
+    <style>{`.agent-workspace h1 { font-size: 1.875rem; line-height: 1.2; } .agent-workspace h2 { font-size: 1.2rem; line-height: 1.4; } .agent-workspace .agent-hero h2 { font-size: 2rem; } @media print { body * { visibility: hidden; } .agent-print-manifest, .agent-print-manifest * { visibility: visible; } .agent-print-manifest { position: absolute; left: 0; top: 0; width: 100%; } }`}</style>
   </div>;
 }
