@@ -1,4 +1,5 @@
 # Rent&Roll — Frontend Guide
+> Shared language registry, route switching and German draft boundaries: [Localization](LOCALIZATION.md). German is not public; adding a dictionary does not enable a new customer journey.
 > Catalogue detail/category services now accept an optional third city argument while preserving existing locale arguments. See [offer reader modes](releases/MARKET_OFFER_READS_2026-09-27.md); no new city routes are published by this change.
 > `/admin/markets` provides private city setup, revision-conflict recovery and immutable city slugs. New cities remain unpublished. See [release notes](releases/PRIVATE_CITY_SETUP_2026-09-27.md).
 > **Last updated**: 2026-08-18

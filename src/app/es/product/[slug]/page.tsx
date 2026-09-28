@@ -12,7 +12,7 @@ import { getProductJsonLd, getBreadcrumbJsonLd } from "@/lib/jsonld";
 import ProductCard from "@/components/ProductCard";
 import BookingWidget from "@/components/BookingWidget";
 import ProductPlanningLinks from "@/components/ProductPlanningLinks";
-import { getProductMetadataDescription, getProductMetadataTitle } from "@/lib/seo-metadata";
+import { productPageMetadata } from "@/lib/product-page-metadata";
 import { getDictionary } from "@/i18n/getDictionary";
 
 const t = getDictionary("es");
@@ -40,45 +40,9 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const [product, seoState] = await Promise.all([
-    getProductBySlugFromDB(slug, "es"),
-    getProductSeoState(slug),
+    getProductBySlugFromDB(slug, "es"), getProductSeoState(slug),
   ]);
-  if (!product) {
-    return { title: "Producto No Encontrado", robots: { index: false, follow: false } };
-  }
-
-  const englishUrl = `https://rentandroll.com/product/${slug}`;
-  const spanishUrl = `https://rentandroll.com/es/product/${slug}`;
-  const indexable = seoState?.indexableEs === true;
-  const canonical = indexable ? spanishUrl : englishUrl;
-  const lowestPrice = product.pricing.at(-1)?.perDay;
-  const title = getProductMetadataTitle({
-    name: product.name,
-    customTitle: product.seoTitle,
-    lowestPrice,
-    locale: "es",
-  });
-  const description = getProductMetadataDescription({
-    description: product.description,
-    customDescription: product.seoDescription,
-    locale: "es",
-  });
-
-  return {
-    title,
-    description,
-    alternates: indexable
-      ? { canonical, languages: { en: englishUrl, es: spanishUrl, "x-default": englishUrl } }
-      : { canonical },
-    robots: { index: indexable, follow: true },
-    openGraph: {
-      title,
-      description,
-      url: canonical,
-      locale: "es_ES",
-      images: product.image ? [{ url: product.image, alt: product.imageAlt || product.name }] : undefined,
-    },
-  };
+  return productPageMetadata(slug, "es", product, seoState);
 }
 
 export default async function ProductPageES({ params }: Props) {

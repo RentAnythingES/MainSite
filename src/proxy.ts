@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { EXPECTED_PRODUCTION_SITE_URL } from "@/config/site";
+import { localeFromPathname } from "@/i18n/config";
 
 const canonicalHost = new URL(EXPECTED_PRODUCTION_SITE_URL).hostname;
 const redirectHosts = new Set([
@@ -51,9 +52,7 @@ export function proxy(request: NextRequest) {
 
   const requestHeaders = new Headers(request.headers);
   requestHeaders.set("x-pathname", request.nextUrl.pathname);
-  const locale = request.nextUrl.pathname === "/es" || request.nextUrl.pathname.startsWith("/es/")
-    ? "es"
-    : "en";
+  const locale = localeFromPathname(request.nextUrl.pathname);
 
   const response = NextResponse.next({
     request: {

@@ -13,7 +13,7 @@ import { getPublishedPosts } from "@/content/blog";
 import ProductCard from "@/components/ProductCard";
 import BookingWidget from "@/components/BookingWidget";
 import ProductPlanningLinks from "@/components/ProductPlanningLinks";
-import { getProductMetadataDescription, getProductMetadataTitle } from "@/lib/seo-metadata";
+import { productPageMetadata } from "@/lib/product-page-metadata";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -26,47 +26,9 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const [product, seoState] = await Promise.all([
-    getProductBySlugFromDB(slug),
-    getProductSeoState(slug),
+    getProductBySlugFromDB(slug, "en"), getProductSeoState(slug),
   ]);
-  if (!product) {
-    return { title: "Product Not Found", robots: { index: false, follow: false } };
-  }
-
-  const canonical = `https://rentandroll.com/product/${slug}`;
-  const lowestPrice = product.pricing.at(-1)?.perDay;
-  const title = getProductMetadataTitle({
-    name: product.name,
-    customTitle: product.seoTitle,
-    lowestPrice,
-    locale: "en",
-  });
-  const description = getProductMetadataDescription({
-    description: product.description,
-    customDescription: product.seoDescription,
-    locale: "en",
-  });
-  const indexable = seoState?.indexableEn === true;
-  const languages = seoState?.indexableEs
-    ? {
-        en: canonical,
-        es: `https://rentandroll.com/es/product/${slug}`,
-        "x-default": canonical,
-      }
-    : { en: canonical, "x-default": canonical };
-
-  return {
-    title,
-    description,
-    alternates: { canonical, languages },
-    robots: { index: indexable, follow: true },
-    openGraph: {
-      title,
-      description,
-      url: canonical,
-      images: product.image ? [{ url: product.image, alt: product.imageAlt || product.name }] : undefined,
-    },
-  };
+  return productPageMetadata(slug, "en", product, seoState);
 }
 
 // Map product categories to relevant blog post tags

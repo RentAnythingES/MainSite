@@ -6,60 +6,18 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { indexableSeoCategoryClusters } from "@/data/seo-clusters";
 import { SITE_IDENTITY } from "@/config/site";
-
-const localizedRoutePairs = [
-  {
-    en: "/valencia/host-services",
-    es: "/es/valencia/servicios-anfitriones",
-  },
-  {
-    en: "/partners",
-    es: "/es/colaboraciones",
-  },
-] as const;
+import { localeFromPathname, localeRegistry } from "@/i18n/config";
+import { publicLocaleHref } from "@/lib/public-routes";
 
 export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [browseOpen, setBrowseOpen] = useState(false);
   const pathname = usePathname();
   if (pathname === "/agent" || (pathname.startsWith("/agent/") && pathname !== "/agent/login")) return null;
-  const isSpanish = pathname.startsWith("/es");
-  const prefix = isSpanish ? "/es" : "";
-  const explicitLocalePair = localizedRoutePairs.find(
-    (pair) => pair.en === pathname || pair.es === pathname,
-  );
-  const hasSpanishEquivalent =
-    Boolean(explicitLocalePair) ||
-    pathname === "/" ||
-    pathname === "/valencia" ||
-    pathname === "/blog" ||
-    pathname === "/blog/best-beaches-valencia-families" ||
-    pathname === "/blog/valencia-summer-survival-guide" ||
-    pathname === "/blog/valencia-with-kids-complete-guide" ||
-    pathname === "/blog/wheelchair-accessibility-valencia" ||
-    pathname === "/blog/digital-nomad-guide-valencia" ||
-    pathname === "/blog/best-day-trips-from-valencia" ||
-    pathname === "/faq" ||
-    pathname === "/how-it-works" ||
-    pathname === "/refunds" ||
-    pathname === "/about" ||
-    pathname === "/contact" ||
-    pathname === "/privacy" ||
-    pathname === "/terms" ||
-    pathname === "/cookies" ||
-    pathname.startsWith("/product/") ||
-    pathname.startsWith("/rental/") ||
-    pathname.startsWith("/valencia/kits");
-
-  const switchLocaleHref = explicitLocalePair
-    ? isSpanish
-      ? explicitLocalePair.en
-      : explicitLocalePair.es
-    : isSpanish
-      ? pathname.replace(/^\/es/, "") || "/"
-      : hasSpanishEquivalent
-        ? `/es${pathname === "/" ? "" : pathname}`
-        : "/es";
+  const locale = localeFromPathname(pathname);
+  const isSpanish = locale === "es";
+  const prefix = localeRegistry[locale].prefix;
+  const switchLocaleHref = publicLocaleHref(pathname, isSpanish ? "en" : "es");
   const switchLocaleLabel = isSpanish ? "EN 🇬🇧" : "ES 🇪🇸";
 
   const categories = indexableSeoCategoryClusters.map((category) => ({

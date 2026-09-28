@@ -1,4 +1,5 @@
-export type Locale = "en" | "es";
+import type { Locale } from "./config";
+export type { Locale } from "./config";
 
 export interface Dictionary {
   // Global

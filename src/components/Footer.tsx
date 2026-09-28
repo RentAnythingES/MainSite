@@ -5,12 +5,14 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { indexableSeoCategoryClusters } from "@/data/seo-clusters";
 import { SITE_IDENTITY } from "@/config/site";
+import { localeFromPathname, localeRegistry } from "@/i18n/config";
 
 export default function Footer() {
   const pathname = usePathname();
   if (pathname === "/agent" || (pathname.startsWith("/agent/") && pathname !== "/agent/login")) return null;
-  const isSpanish = pathname.startsWith("/es");
-  const prefix = isSpanish ? "/es" : "";
+  const locale = localeFromPathname(pathname);
+  const isSpanish = locale === "es";
+  const prefix = localeRegistry[locale].prefix;
 
   const footerLinks = {
     [isSpanish ? "Información" : "Info & Help"]: [
