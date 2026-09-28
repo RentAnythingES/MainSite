@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { SITE_IDENTITY } from "@/config/site";
 
 const navItems = [
+  { name: "Agent Management", href: "/admin/agents", icon: "A" },
   { name: "Coupons", href: "/admin/coupons", icon: "%" },
   { name: "Dashboard", href: "/admin", icon: "📊" },
   { name: "Cities", href: "/admin/markets", icon: "◎" },

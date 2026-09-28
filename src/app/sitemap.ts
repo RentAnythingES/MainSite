@@ -16,6 +16,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   // Static pages
   const staticPages: MetadataRoute.Sitemap = [
+    { url: `${BASE_URL}/agent-network`, changeFrequency: "monthly", priority: 0.5 },
+    { url: `${BASE_URL}/es/agent-network`, changeFrequency: "monthly", priority: 0.5 },
     { url: BASE_URL, changeFrequency: "weekly", priority: 1.0 },
     { url: `${BASE_URL}/valencia`, changeFrequency: "weekly", priority: 0.9 },
     { url: `${BASE_URL}/valencia/kits`, changeFrequency: "weekly", priority: 0.9 },

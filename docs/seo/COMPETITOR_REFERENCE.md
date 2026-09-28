@@ -7,6 +7,57 @@
 
 ## Market Landscape
 
+### Babonbo provider interface — 28 September 2026
+
+Read-only inspection of the user-opened authenticated dashboard on babonbo.com
+(`/en/provider/[provider-id]/dashboard`) and its Orders, Products, Calendar,
+Settings → Delivery & Collection, Earnings and Notifications navigation.
+No account settings, products, orders or messages were changed. Private customer
+details and account-specific financial values are deliberately not reproduced.
+
+Observed patterns:
+- Persistent sidebar: dashboard, orders, products, calendar, reviews, earnings,
+  chat, notifications, settings and support.
+- Dashboard: selectable insight period, order/earnings/response metrics, unread
+  messages, pending orders, today's deliveries/collections, and operational FAQs.
+- Orders: lifecycle filter tabs, search, sorting and compact cards with reference,
+  rental dates, items and status, linking to order details.
+- Calendar: month/week/day/agenda controls, status filter and an availability
+  dialog for unavailable date ranges.
+- Product catalogue: add product/accessory, category filter, search and sorting.
+- Settings: store profile, delivery/collection, payout information and account;
+  delivery controls distinguish self-pickup, delivery/collection, areas and airports.
+- Earnings: separate earnings and payout views with date filtering.
+
+Rentandroll adaptation: dashboard action queues, city-aware calendar, dedicated
+inbox with persisted unread state, compact order overview/detail, date/status/city
+filters, agent unavailable dates enforced during dispatch, and admin oversight.
+Retain the existing Cloud of Goods-inspired driver registry and manifest. Provider
+product ownership, self-set prices, review attribution and commissions/payouts
+require their own domain model; their presence in Babonbo is not justification
+to expose Rentandroll's global catalogue or invent agent earnings.
+
+### Agent operations reference — 28 September 2026
+
+Read-only inspection of the user's signed-in Chrome session at
+https://www.cloudofgoods.com/agent/growth-opportunities,
+https://www.cloudofgoods.com/agent/dashboard and
+https://www.cloudofgoods.com/agent/manifests.
+Navigation exposed My orders, Opportunities, Manifest, Driver management,
+Growth opportunities, My stores, My Storefront, Payment details, Agreement,
+Account settings and Payment settings. The dashboard separates order counts,
+realized/unrealized revenue, requests/acceptance and upcoming drop-offs/pickups.
+The manifest exposes print/CSV/labels, scheduled time, items, delivery address,
+assigned driver, driver instructions, customer information, delivery status,
+trip times, recipient and driver notes. Growth opportunities can be filtered by
+city, item and date. No settings or orders were modified, and no customer records
+or account-specific financial data are reproduced here.
+
+Adaptation: central approval and territory assignment, explicit order ownership,
+daily fulfillment manifest, driver registry and communication history. Financial
+settlement, storefront and pool economics require separate business decisions;
+the reference UI is not evidence of terms appropriate to Rentandroll.
+
 RentAnything.es competes across 4 verticals. Unlike competitors who specialize in ONE category, we cover ALL of them — that's our positioning advantage.
 
 > [!IMPORTANT]

@@ -34,6 +34,7 @@ export default function CookieConsent() {
   const isSpanish = pathname.startsWith("/es");
   const consent = useSyncExternalStore(subscribeToAnalyticsConsent, readAnalyticsConsent, () => null);
   const [editing, setEditing] = useState(false);
+  if (pathname === "/agent" || (pathname.startsWith("/agent/") && pathname !== "/agent/login")) return null;
 
   const text = isSpanish
     ? {

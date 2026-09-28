@@ -8,6 +8,7 @@ import { SITE_IDENTITY } from "@/config/site";
 
 export default function Footer() {
   const pathname = usePathname();
+  if (pathname === "/agent" || (pathname.startsWith("/agent/") && pathname !== "/agent/login")) return null;
   const isSpanish = pathname.startsWith("/es");
   const prefix = isSpanish ? "/es" : "";
 
@@ -124,6 +125,7 @@ export default function Footer() {
         </div>
 
         {/* Bottom Bar */}
+        <div className="flex flex-wrap gap-5 pb-6 text-sm"><Link className="hover:text-white" href={isSpanish ? "/es/agent-network" : "/agent-network"}>{isSpanish ? "Únete a nuestra red de agentes" : "Join our Agent Network"}</Link><a className="hover:text-white" href="/agent/login">{isSpanish ? "Acceso para agentes" : "Agent login"}</a></div>
         <div className="border-t border-neutral-800 py-6">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
             <p className="text-xs text-neutral-500">

@@ -85,6 +85,12 @@ is required; they must not be used to disguise a narrow catalogue as a broad one
 
 ## Component Patterns
 
+The private `/agent` workspace uses a dashboard/sidebar layout with Dashboard,
+Orders, Calendar, Messages, Manifest, Drivers, Activity, Profile and Support.
+Operational view helpers live in `src/lib/agent-workspace.ts`; authorization stays
+in the APIs and SQL functions. Unread state and agent unavailable periods persist
+in the database. See `docs/AGENT_NETWORK.md` for workflow and test coverage.
+
 Admin headings use `SITE_IDENTITY.domain` to stay consistent with public branding.
 New browser storage uses the `rentandroll` prefix; consent and active checkout
 readers retain their previous-key fallback so the rebrand preserves saved choices

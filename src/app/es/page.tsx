@@ -204,6 +204,7 @@ export default async function HomePageES() {
           </div>
         </div>
       </section>
+      <section className="bg-teal-50 py-12"><div className="container-site text-center"><h2 className="text-2xl font-bold mb-3">Atención local para cada alquiler</h2><p className="text-neutral-600 mb-5">Ayuda a los viajeros con equipos, entregas y atención al cliente en tu ciudad.</p><Link className="btn btn-primary" href="/es/agent-network">Únete a nuestra red de agentes en tu ciudad</Link></div></section>
     </>
   );
 }

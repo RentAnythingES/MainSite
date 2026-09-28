@@ -22,6 +22,7 @@ export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [browseOpen, setBrowseOpen] = useState(false);
   const pathname = usePathname();
+  if (pathname === "/agent" || (pathname.startsWith("/agent/") && pathname !== "/agent/login")) return null;
   const isSpanish = pathname.startsWith("/es");
   const prefix = isSpanish ? "/es" : "";
   const explicitLocalePair = localizedRoutePairs.find(

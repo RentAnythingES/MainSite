@@ -1,6 +1,9 @@
 "use client";
+import { usePathname } from "next/navigation";
 
 export default function WhatsAppButton() {
+  const pathname = usePathname();
+  if (pathname === "/agent" || (pathname.startsWith("/agent/") && pathname !== "/agent/login")) return null;
   const phoneNumber = "34684708013"; // TODO: Replace with actual number
   const message = encodeURIComponent(
     "Hi! I'm interested in renting equipment in Valencia. Can you help?"
