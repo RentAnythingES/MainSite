@@ -29,3 +29,32 @@ The initial dictionary avoids copying unverified free-delivery or German-support
 ## Verification
 
 Run `npm run test:localization`, the existing market/booking regression tests, touched-file ESLint and `npx next build`. Run the PGlite database tests separately from a large build on machines with limited available memory. No production credentials are required for these tests.
+
+## Private translation storage (prepared migration)
+
+`20260928_private_translation_storage.sql` adds a database locale registry and
+`market_locales` settings for future city/language publication, booking and indexing.
+German starts private in both tables. Existing market rows are untouched; the new
+per-city records copy their current settings. Application readers still use
+`markets.supported_locales`, and the city-setup API/RPC deliberately still accepts
+only EN/ES. New-city creation will need to write these records atomically before
+readers switch to the new table. These tables alone do not enable any route.
+
+Product translations and FAQs reference the locale registry instead of binary
+CHECK constraints. Existing rows are backfilled as published to preserve public
+read behavior. Inserts that omit publication status retain the current EN/ES
+workflow; other languages default to draft. Trusted server writers can explicitly
+set draft, reviewed, published or stale. Anonymous/authenticated readers require
+both published content and a public locale, in addition to existing active-product
+policies. Restrictive policies prevent another permissive read policy bypassing
+these gates. Service-role readers bypass RLS and must enforce publication in their
+own application queries before any new language is served.
+
+This is storage groundwork, not the complete review workflow. Revision tracking,
+automatic stale detection, editor controls, reviewer attribution and application
+publication checks still need implementation. Do not enable German in the database
+or code registry until those controls and the complete customer journey are ready.
+The migration has passed ephemeral PostgreSQL tests, including transaction rollback,
+legacy inserts, unchanged market rows, public-role privacy and a fourth private
+language. A current-schema local Supabase rehearsal is still required before release.
+No production migration has been applied for this slice.
