@@ -345,6 +345,7 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
+      <section className="bg-teal-50 py-12"><div className="container-site text-center"><h2 className="text-2xl font-bold mb-3">Bring local care to every rental</h2><p className="text-neutral-600 mb-5">Help travellers with equipment, deliveries and customer support in your city.</p><Link className="btn btn-primary" href="/agent-network">Join our Agent Network in your City</Link></div></section>
     </>
   );
 }

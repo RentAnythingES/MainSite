@@ -21,6 +21,12 @@ Published 13 sourceable products (26 EN/ES product URLs) and the bilingual exist
 
 ## Quick Reference
 
+Agent network release (28 September 2026): added two public recruitment routes,
+`/agent-network` and `/es/agent-network`, with canonical/hreflang metadata and links
+from both homepages and the footer. Current sitemap verification returns 410 URLs.
+Agent workspace and customer conversation pages are noindex and excluded from the
+sitemap; private conversations also use no-referrer and skip analytics.
+
 | Document | Purpose |
 |----------|---------|
 | **This file** (`SEO_STRATEGY.md`) | Current site state, metrics, cluster health |

@@ -7,6 +7,27 @@
 
 ## Market Landscape
 
+### Agent operations reference — 28 September 2026
+
+Read-only inspection of the user's signed-in Chrome session at
+https://www.cloudofgoods.com/agent/growth-opportunities,
+https://www.cloudofgoods.com/agent/dashboard and
+https://www.cloudofgoods.com/agent/manifests.
+Navigation exposed My orders, Opportunities, Manifest, Driver management,
+Growth opportunities, My stores, My Storefront, Payment details, Agreement,
+Account settings and Payment settings. The dashboard separates order counts,
+realized/unrealized revenue, requests/acceptance and upcoming drop-offs/pickups.
+The manifest exposes print/CSV/labels, scheduled time, items, delivery address,
+assigned driver, driver instructions, customer information, delivery status,
+trip times, recipient and driver notes. Growth opportunities can be filtered by
+city, item and date. No settings or orders were modified, and no customer records
+or account-specific financial data are reproduced here.
+
+Adaptation: central approval and territory assignment, explicit order ownership,
+daily fulfillment manifest, driver registry and communication history. Financial
+settlement, storefront and pool economics require separate business decisions;
+the reference UI is not evidence of terms appropriate to Rentandroll.
+
 RentAnything.es competes across 4 verticals. Unlike competitors who specialize in ONE category, we cover ALL of them — that's our positioning advantage.
 
 > [!IMPORTANT]

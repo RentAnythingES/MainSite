@@ -10,17 +10,18 @@ const GA_ID =
 
 export default function GoogleAnalytics() {
   const pathname = usePathname();
+  const privatePage = pathname.startsWith("/agent") && !pathname.startsWith("/agent-network") || pathname.startsWith("/booking/messages/") || pathname.startsWith("/admin");
   const consent = useSyncExternalStore(subscribeToAnalyticsConsent, readAnalyticsConsent, () => null);
 
   useEffect(() => {
-    if (!GA_ID || consent !== "granted" || typeof window.gtag !== "function") return;
+    if (!GA_ID || privatePage || consent !== "granted" || typeof window.gtag !== "function") return;
 
     window.gtag("config", GA_ID, {
       page_path: `${pathname}${window.location.search}`,
     });
-  }, [pathname, consent]);
+  }, [pathname, consent, privatePage]);
 
-  if (!GA_ID || consent !== "granted") return null;
+  if (!GA_ID || privatePage || consent !== "granted") return null;
 
   return (
     <>

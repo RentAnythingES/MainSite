@@ -19,6 +19,14 @@ admin authentication remains enforced in the admin server layout and API routes.
 
 ## Data Flow
 
+### Agent network (28 September 2026)
+
+`/agent-network` and `/es/agent-network` accept partner applications; `/admin/agents`
+handles reviews, account provisioning, territories and order dispatch. `/agent`
+uses opaque server sessions and database-enforced city/order ownership. Customer
+messages use stored booking emails and private reply links; internal notes stay
+separate. See [`AGENT_NETWORK.md`](./AGENT_NETWORK.md) for security and operations.
+
 ### Public (customer-facing)
 ```
 Static data (src/data/products.ts, src/data/bundles.ts)

@@ -1,0 +1,11 @@
+"use client";
+import { useEffect, useState } from "react";
+import Link from "next/link";
+import { api, Area, buttonClass, formValues, Message } from "./shared";
+export default function CustomerConversation({ token }: { token: string }) {
+  const [messages, setMessages] = useState<Message[]>([]), [error, setError] = useState(""), [busy, setBusy] = useState(false), [loaded, setLoaded] = useState(false), [messageId, setMessageId] = useState<string | null>(null);
+  const path = `/api/agent/messages/${encodeURIComponent(token)}`;
+  async function load() { const data = await api(path); setMessages(data.messages); setLoaded(true); }
+  useEffect(() => { api(path).then(data => { setMessages(data.messages); setLoaded(true); }).catch(e => setError(e.message)); }, [path]);
+  return <div className="container-site max-w-2xl py-12 space-y-5"><h1 className="text-3xl font-bold">Your Rentandroll conversation</h1><p>Coordinate delivery and collection with your local agent. Keep this private link to yourself.</p>{error && <p role="alert" className="text-red-700">{error}</p>}{loaded && <><button className="underline text-teal-700" disabled={busy} onClick={() => void load().catch(e => setError(e.message))}>Refresh messages</button>{messages.map(m => <div key={m.id} className={`rounded-xl p-4 ${m.direction === "customer" ? "bg-neutral-100" : "bg-teal-50"}`}><p className="text-sm font-semibold">{m.direction === "customer" ? "You" : "Your local agent"} · {new Date(m.created_at).toLocaleString()}</p><p className="mt-2 whitespace-pre-wrap">{m.body}</p></div>)}<form className="space-y-4" onSubmit={async e => { const form = e.currentTarget, values = formValues(e), id = messageId || crypto.randomUUID(); setMessageId(id); setBusy(true); setError(""); try { await api(path, { ...values, messageId: id }); form.reset(); setMessageId(null); await load(); } catch (e) { setError((e as Error).message); } finally { setBusy(false); } }}><Area name="body" label="Your reply" required /><button disabled={busy} className={buttonClass}>Send reply</button></form></>}<p className="text-sm">For booking changes or urgent help, <Link className="underline text-teal-700" href="/contact">contact Rentandroll</Link>.</p></div>;
+}
