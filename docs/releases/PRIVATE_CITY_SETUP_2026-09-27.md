@@ -1,6 +1,6 @@
 # Private city setup — first expansion slice
 
-Follow-up: [offer reads and reconciled baseline](MARKET_OFFER_READS_2026-09-27.md) records deployment verification and recovery of all missing applied migration sources. Full Supabase staging remains pending.
+Follow-up: [offer reads and reconciled baseline](MARKET_OFFER_READS_2026-09-27.md) records deployment verification and recovery of all missing applied migration sources. The [28 September local Supabase rehearsal](FOUNDATION_REHEARSAL_2026-09-28.md) passed against the production public schema and synthetic data; production release remains pending.
 
 ## What this adds
 

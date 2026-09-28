@@ -58,7 +58,7 @@ The cache test uses an observable substitute for Next's cache; it proves argumen
 
 Next: port cart behavior onto this reconciled baseline; move quotes, date blocks, drafts and snapshots to offers; enforce one city per cart; recheck saved context at checkout; verify delayed payment behavior. Reservation SQL also needs explicit public/global-product gates, stable replay semantics and true multi-connection capacity tests. Existing `reserve_booking_cart_inventory` is restored historical code, not newly approved as sufficient for city rollout.
 
-No second-city checkout or new public route is enabled. The offer reader is not an inventory writer or reservation cutover. Full Supabase staging and concurrency verification remain release gates; Docker was unavailable locally. Do not point generic existing DB verification or Telegram scripts at production for these tests.
+No second-city checkout or new public route is enabled. The offer reader is not an inventory writer or reservation cutover. The [28 September local Supabase rehearsal](FOUNDATION_REHEARSAL_2026-09-28.md) resolves the private-city migration staging gate, including concurrent city edits. Future inventory-writer and reservation concurrency verification remain separate gates. Do not point generic existing DB verification or Telegram scripts at production for these tests.
 
 ## Rollback
 
