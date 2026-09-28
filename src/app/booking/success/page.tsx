@@ -1,250 +1,197 @@
 "use client";
-
-import { useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import Link from "next/link";
+import { isLocale, localeRegistry, type Locale } from "@/i18n/config";
+import { transactionCopy, transactionService } from "@/i18n/transaction";
 import { trackBookingEvent } from "@/lib/analytics";
-
-interface BookingInfo {
-  bookingRef: string;
-  productName: string;
-  quantity: number;
+interface Details {
+  bookingRef?: string;
+  productName?: string;
+  quantity?: number;
   startDate: string;
   endDate: string;
   timeZone: string;
-  deliveryType: "standard" | "express";
-  fulfillmentMode: "customer_pickup" | "delivery_only" | "delivery_and_collection";
+  deliveryType: string;
+  fulfillmentMode: string;
   fulfillmentBaseFeeCents: number;
   expressSurchargeCents: number;
   totalCents: number;
-  customerEmail: string;
-  deliveryAddress?: string | null;
-  calendarUrl?: string | null;
-  mapsUrl?: string | null;
+  calendarUrl?: string;
+  mapsUrl?: string;
 }
-
-interface DraftInfo {
-  startDate: string;
-  endDate: string;
-  deliveryType: "standard" | "express";
-  fulfillmentMode: "customer_pickup" | "delivery_only" | "delivery_and_collection";
-  fulfillmentBaseFeeCents: number;
-  expressSurchargeCents: number;
-  totalCents: number;
-}
-
-type CheckoutStatus =
-  | "booking_confirmed"
-  | "payment_pending"
-  | "fulfillment_pending"
-  | "payment_incomplete";
-
-function BookingSuccessContent() {
-  const searchParams = useSearchParams();
-  const sessionId = searchParams.get("session_id");
-  const [booking, setBooking] = useState<BookingInfo | null>(null);
-  const [draft, setDraft] = useState<DraftInfo | null>(null);
-  const [checkoutStatus, setCheckoutStatus] = useState<CheckoutStatus | null>(null);
-  const [customerEmail, setCustomerEmail] = useState("");
-  const [loading, setLoading] = useState(Boolean(sessionId));
-
+function Content() {
+  const params = useSearchParams();
+  const sessionId = params.get("session_id");
+  const hint = params.get("locale");
+  const [locale, setLocale] = useState<Locale>(isLocale(hint) ? hint : "en");
+  const [state, setState] = useState(sessionId ? "loading" : "unknown");
+  const [details, setDetails] = useState<Details | null>(null);
+  const t = transactionCopy[locale];
   useEffect(() => {
-    if (!sessionId) return;
-
-    fetch(`/api/checkout/status?id=${sessionId}`)
-      .then((res) => res.json())
-      .then((data) => {
-        setCheckoutStatus(data.status || null);
-        setCustomerEmail(data.session?.customerEmail || data.booking?.customerEmail || "");
-        if (data.status) {
-          trackBookingEvent("checkout_success_status_loaded", {
-            checkoutStatus: data.status,
-            sessionId,
-            bookingRef: data.booking?.bookingRef,
-          });
-        }
-        if (data.booking) {
-          setBooking(data.booking);
-        }
-        if (data.draft) {
-          setDraft(data.draft);
-        }
+    document.documentElement.lang = locale;
+  }, [locale]);
+  useEffect(() => {
+    let active = true;
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 15000);
+    if (!sessionId) {
+      clearTimeout(timeout);
+      return;
+    }
+    fetch(`/api/checkout/status?id=${encodeURIComponent(sessionId)}`, {
+      signal: controller.signal,
+      cache: "no-store",
+    })
+      .then(async (response) => {
+        if (!response.ok) throw new Error("status");
+        return response.json();
       })
-      .catch(() => {})
-      .finally(() => setLoading(false));
+      .then((data) => {
+        if (!active) return;
+        if (isLocale(data.locale)) setLocale(data.locale);
+        setState(data.status || "unknown");
+        setDetails(data.booking || data.draft || null);
+        trackBookingEvent("checkout_success_status_loaded", {
+          checkoutStatus: data.status,
+          sessionId,
+          bookingRef: data.booking?.bookingRef,
+        });
+      })
+      .catch(() => {
+        if (active) setState("unknown");
+      })
+      .finally(() => clearTimeout(timeout));
+    return () => {
+      active = false;
+      clearTimeout(timeout);
+      controller.abort();
+    };
   }, [sessionId]);
-
+  const key =
+    state === "booking_confirmed"
+      ? "confirmed"
+      : state === "fulfillment_pending" || state === "approval_pending"
+        ? "paid"
+        : state === "payment_pending"
+          ? "pending"
+          : state === "payment_incomplete"
+            ? "incomplete"
+            : state === "booking_cancelled"
+              ? "cancelled"
+              : state === "loading"
+                ? "loading"
+                : "unknown";
+  const body =
+    key === "confirmed"
+      ? t.confirmedBody
+      : key === "paid"
+        ? state === "approval_pending"
+          ? t.pendingNotice
+          : t.paidBody
+        : key === "pending"
+          ? t.pendingBody
+          : key === "incomplete"
+            ? t.incompleteBody
+            : key === "cancelled"
+              ? t.cancelled
+              : key === "loading"
+                ? ""
+                : t.unknownBody;
+  const money = (cents: number) =>
+    new Intl.NumberFormat(localeRegistry[locale].format, {
+      style: "currency",
+      currency: "EUR",
+    }).format(cents / 100);
   return (
-    <main className="min-h-screen flex items-center justify-center px-4 py-20">
-      <div className="max-w-lg w-full text-center">
-        <div className={`w-20 h-20 mx-auto mb-6 rounded-full flex items-center justify-center ${
-          checkoutStatus === "fulfillment_pending" ? "bg-amber-100" : "bg-teal-100"
-        }`}>
-          {checkoutStatus === "fulfillment_pending" ? (
-            <svg className="w-10 h-10 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-          ) : (
-            <svg className="w-10 h-10 text-teal-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-            </svg>
-          )}
-        </div>
-
-        <h1 className="text-3xl font-bold text-neutral-900 mb-2">
-          {checkoutStatus === "fulfillment_pending" ? "Payment Received" : "Booking Confirmed!"}
+    <main lang={locale} className="min-h-screen px-4 py-20">
+      <section className="card mx-auto max-w-lg p-6">
+        <h1 className="text-3xl font-bold mb-4" role="status">
+          {t[key]}
         </h1>
-
-        <p className="text-neutral-600 mb-8">
-          {checkoutStatus === "fulfillment_pending"
-            ? "Your payment went through. We are finishing your booking confirmation now."
-            : "Thank you for your booking. We'll be in touch to arrange the next step."}
-        </p>
-
-        {loading && (
-          <div className="animate-pulse bg-neutral-100 rounded-2xl p-6 mb-8">
-            <div className="h-4 bg-neutral-200 rounded w-3/4 mx-auto mb-3"></div>
-            <div className="h-4 bg-neutral-200 rounded w-1/2 mx-auto"></div>
-          </div>
+        <p className="text-neutral-600 mb-6">{body}</p>
+        {details && (
+          <dl className="space-y-3">
+            {[
+              [t.ref, details.bookingRef],
+              [t.item, details.productName],
+              [t.quantity, details.quantity],
+              [
+                t.dates,
+                `${details.startDate} → ${details.endDate} (${details.timeZone})`,
+              ],
+              [
+                t.service,
+                transactionService(
+                  locale,
+                  details.fulfillmentMode,
+                  details.deliveryType,
+                ),
+              ],
+              [t.fee, money(details.fulfillmentBaseFeeCents)],
+              [
+                t.surcharge,
+                details.expressSurchargeCents
+                  ? money(details.expressSurchargeCents)
+                  : null,
+              ],
+              [t.total, money(details.totalCents)],
+            ]
+              .filter(([, value]) => value !== undefined && value !== null)
+              .map(([label, value]) => (
+                <div key={String(label)} className="flex justify-between gap-4">
+                  <dt>{label}</dt>
+                  <dd className="text-right font-medium">{value}</dd>
+                </div>
+              ))}
+          </dl>
         )}
-
-        {booking && (
-          <div className="bg-neutral-50 border border-neutral-200 rounded-2xl p-6 mb-8 text-left">
-            <div className="space-y-3">
-              <div className="flex justify-between">
-                <span className="text-neutral-500">Booking ref</span>
-                <span className="font-mono font-semibold text-teal-700">{booking.bookingRef}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-neutral-500">Item</span>
-                <span className="font-medium">{booking.productName}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-neutral-500">Quantity</span>
-                <span className="font-medium">{booking.quantity || 1}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-neutral-500">Rental time</span>
-                <span className="font-medium text-right">{booking.startDate} → {booking.endDate}<br /><span className="text-xs text-neutral-500">Valencia time</span></span>
-              </div>
-              <div className="flex justify-between items-center">
-                <span className="text-neutral-500">Service</span>
-                <span className={`rounded-full px-2.5 py-1 text-xs font-bold ${
-                  booking.deliveryType === "express"
-                    ? "bg-amber-100 text-amber-800"
-                    : "bg-teal-100 text-teal-800"
-                }`}>
-                  {booking.fulfillmentMode === "customer_pickup"
-                    ? "Customer pickup"
-                    : `${booking.deliveryType === "express" ? "Express" : "Standard"} ${booking.fulfillmentMode === "delivery_and_collection" ? "delivery & collection" : "delivery"}`}
-                </span>
-              </div>
-              {booking.fulfillmentMode !== "customer_pickup" && (
-                <div className="flex justify-between">
-                  <span className="text-neutral-500">Fulfillment fee</span>
-                  <span className="font-medium">€{(booking.fulfillmentBaseFeeCents / 100).toFixed(2)}</span>
-                </div>
-              )}
-              {booking.expressSurchargeCents > 0 && (
-                <div className="flex justify-between text-amber-700">
-                  <span>Express surcharge</span>
-                  <span className="font-semibold">€{(booking.expressSurchargeCents / 100).toFixed(2)}</span>
-                </div>
-              )}
-              <hr className="border-neutral-200" />
-              <div className="flex justify-between">
-                <span className="text-neutral-500">Total paid</span>
-                <span className="font-bold text-lg">€{(booking.totalCents / 100).toFixed(2)}</span>
-              </div>
-              {booking.deliveryAddress && (
-                <div className="space-y-2 rounded-xl border border-neutral-200 bg-white p-3">
-                  <div className="text-sm text-neutral-500">Location</div>
-                  <div className="text-sm font-medium text-neutral-900">{booking.deliveryAddress}</div>
-                  <div className="flex flex-wrap gap-2 pt-1">
-                    {booking.calendarUrl && (
-                      <a href={booking.calendarUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-lg border border-teal-200 bg-teal-50 px-3 py-2 text-sm font-medium text-teal-800">
-                        📅 Add to Google Calendar
-                      </a>
-                    )}
-                    {booking.mapsUrl && (
-                      <a href={booking.mapsUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-lg border border-teal-200 bg-teal-50 px-3 py-2 text-sm font-medium text-teal-800">
-                        🧭 Open in Google Maps
-                      </a>
-                    )}
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
-        )}
-
-        {!loading && checkoutStatus === "fulfillment_pending" && !booking && (
-          <div className="bg-amber-50 border border-amber-200 rounded-2xl p-6 mb-8 text-left">
-            <p className="font-semibold text-amber-900 mb-2">Confirmation is still processing</p>
-            <p className="text-sm text-amber-800">
-              Stripe has received the payment, but our booking confirmation webhook has not finished yet.
-              Please do not pay again. If your confirmation email does not arrive shortly, contact us and include your checkout session ID.
-            </p>
-            {sessionId && (
-              <p className="text-xs text-amber-700 mt-3 font-mono break-all">{sessionId}</p>
+        {key === "confirmed" && (
+          <div className="flex flex-wrap gap-3 my-5">
+            {details?.calendarUrl && (
+              <a
+                href={details.calendarUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-teal-700 underline"
+              >
+                {t.calendar}
+              </a>
             )}
-            {draft && (
-              <div className="mt-4 space-y-2 border-t border-amber-200 pt-4 text-sm text-amber-950">
-                <div className="flex justify-between gap-4"><span>Rental time</span><span className="text-right font-medium">{draft.startDate} → {draft.endDate}<br /><span className="text-xs">Valencia time</span></span></div>
-                <div className="flex justify-between gap-4"><span>Service</span><span className="font-semibold">{draft.fulfillmentMode === "customer_pickup" ? "Customer pickup" : `${draft.deliveryType === "express" ? "Express" : "Standard"} delivery`}</span></div>
-                <div className="flex justify-between gap-4"><span>Fulfillment fee</span><span>€{(draft.fulfillmentBaseFeeCents / 100).toFixed(2)}</span></div>
-                {draft.expressSurchargeCents > 0 && <div className="flex justify-between gap-4 font-semibold"><span>Express surcharge</span><span>€{(draft.expressSurchargeCents / 100).toFixed(2)}</span></div>}
-                <div className="flex justify-between gap-4 border-t border-amber-200 pt-2 font-bold"><span>Total paid</span><span>€{(draft.totalCents / 100).toFixed(2)}</span></div>
-              </div>
+            {details?.mapsUrl && (
+              <a
+                href={details.mapsUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-teal-700 underline"
+              >
+                {t.maps}
+              </a>
             )}
           </div>
         )}
-
-        {!loading && !booking && !sessionId && (
-          <div className="bg-amber-50 border border-amber-200 rounded-2xl p-6 mb-8">
-            <p className="text-amber-800">
-              No booking session found. If you just completed a payment, please check your email for confirmation.
-            </p>
-          </div>
+        {["confirmed", "paid"].includes(key) && (
+          <p className="my-5 text-sm text-neutral-600">{t.emailNotice}</p>
         )}
-
-        <div className="space-y-3">
-          <p className="text-sm text-neutral-500">
-            {checkoutStatus === "fulfillment_pending"
-              ? `A confirmation email will be sent to ${customerEmail || "your email address"} as soon as the booking is created.`
-              : `A confirmation email has been sent to ${booking?.customerEmail || customerEmail || "your email address"}.`}
-          </p>
-
-          <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <Link
-              href="/"
-              className="inline-flex items-center justify-center px-6 py-3 rounded-xl bg-teal-600 text-white font-medium hover:bg-teal-700 transition-colors"
-            >
-              Back to Home
-            </Link>
-            <Link
-              href="/contact"
-              className="inline-flex items-center justify-center px-6 py-3 rounded-xl border border-neutral-300 text-neutral-700 font-medium hover:bg-neutral-50 transition-colors"
-            >
-              Contact Us
-            </Link>
-          </div>
+        <div className="flex flex-wrap gap-3 mt-6">
+          <Link
+            href={locale === "es" ? "/es" : "/"}
+            className="btn btn-primary"
+          >
+            {t.home}
+          </Link>
+          <a href="https://wa.me/34684708013" className="btn">
+            {t.contact}
+          </a>
         </div>
-      </div>
+      </section>
     </main>
   );
 }
-
-export default function BookingSuccessPage() {
+export default function Page() {
   return (
-    <Suspense
-      fallback={
-        <main className="min-h-screen flex items-center justify-center">
-          <div className="animate-pulse text-neutral-400">Loading...</div>
-        </main>
-      }
-    >
-      <BookingSuccessContent />
+    <Suspense fallback={<main className="min-h-screen" aria-busy="true" />}>
+      <Content />
     </Suspense>
   );
 }

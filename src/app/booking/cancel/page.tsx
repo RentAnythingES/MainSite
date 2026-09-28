@@ -1,4 +1,7 @@
 "use client";
+import { transactionCopy } from "@/i18n/transaction";
+import { isLocale } from "@/i18n/config";
+
 
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -7,6 +10,7 @@ import { clearActiveCheckout } from "@/lib/active-checkout";
 
 function safeProductPath(slug: string | null, locale: string | null) {
   const safeSlug = slug && /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug) ? slug : null;
+  if (locale === "de") return "/internal/localization/de";
   if (!safeSlug) return locale === "es" ? "/es" : "/";
   return `${locale === "es" ? "/es" : ""}/product/${safeSlug}`;
 }
@@ -14,6 +18,9 @@ function safeProductPath(slug: string | null, locale: string | null) {
 function BookingCancelContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const hint = searchParams.get("locale");
+  const locale = isLocale(hint) ? hint : "en";
+  const t = transactionCopy[locale];
   const draftId = searchParams.get("draft_id");
   const quoteToken = searchParams.get("quote_token");
   const safeQuoteToken = quoteToken && /^[0-9a-f-]{36}$/i.test(quoteToken) ? quoteToken : null;
@@ -21,7 +28,7 @@ function BookingCancelContent() {
     ? `/booking/quote/${safeQuoteToken}`
     : safeProductPath(searchParams.get("slug"), searchParams.get("locale"));
   const [error, setError] = useState(
-    draftId ? "" : "This booking attempt could not be identified.",
+    draftId ? "" : t.releaseErrorBody,
   );
 
   useEffect(() => {
@@ -46,29 +53,29 @@ function BookingCancelContent() {
           router.replace(`/booking/success?session_id=${encodeURIComponent(data.sessionId)}`);
           return;
         }
-        setError(data.error || "We could not cancel this booking attempt.");
+        setError(t.releaseErrorBody);
       })
       .catch(() => {
-        if (active) setError("We could not cancel this booking attempt.");
+        if (active) setError(t.releaseErrorBody);
       });
 
     return () => {
       active = false;
     };
-  }, [draftId, returnPath, router]);
+  }, [draftId, returnPath, router, t.releaseErrorBody]);
 
   return (
-    <main className="min-h-screen flex items-center justify-center px-4 py-20">
+    <main lang={locale} className="min-h-screen flex items-center justify-center px-4 py-20">
       <div className="card max-w-md w-full p-8 text-center">
         <h1 className="text-2xl font-bold mb-3">
-          {error ? "We couldn’t release your checkout" : "Releasing your dates…"}
+          {error ? t.releaseError : t.release}
         </h1>
         <p className="text-neutral-600 mb-6">
-          {error || "You’ll be returned to the product as soon as its availability is restored."}
+          {error || t.releaseBody}
         </p>
         {error && (
           <Link className="btn btn-primary" href={returnPath}>
-            Return to the product
+            {t.returnProduct}
           </Link>
         )}
       </div>

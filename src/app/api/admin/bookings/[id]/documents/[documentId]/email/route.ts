@@ -61,6 +61,7 @@ export async function POST(
     const bookingRecord = booking as Record<string, unknown>;
     const product = bookingRecord.product as { name?: string | null } | null;
     const sent = await sendBookingDocumentLink({
+      locale: (documentWithAccess.booking_snapshot?.locale || bookingRecord.locale) as string | null,
       customerName: (bookingRecord.customer_name as string) || "there",
       customerEmail: bookingRecord.customer_email as string,
       bookingRef: bookingRecord.booking_ref as string,

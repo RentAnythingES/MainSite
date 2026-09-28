@@ -20,6 +20,7 @@ async function findReview(token: string) {
       status,
       rating,
       consent_to_publish,
+      locale,
       booking:bookings!inner (
         status,
         product:products (name, slug)
@@ -56,6 +57,7 @@ export async function GET(
 
   return NextResponse.json(
     {
+      locale: data.locale,
       productName: booking.product?.name || "Rental equipment",
       productSlug: booking.product?.slug || null,
       submitted: data.status !== "invited",

@@ -3,6 +3,7 @@ export const ACTIVE_CHECKOUT_STORAGE_KEY = "rentandroll.active-checkout";
 const LEGACY_CHECKOUT_STORAGE_KEY = "rentanything.active-checkout";
 
 export interface ActiveCheckout {
+  locale?: string;
   couponCode?: string;
   draftId: string;
   checkoutUrl: string;

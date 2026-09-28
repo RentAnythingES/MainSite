@@ -1,3 +1,4 @@
+import { renderBookingMessage, renderDocumentMessage } from "./booking-message";
 ﻿import { Resend } from "resend";
 
 import { SITE_IDENTITY, SITE_URL } from "@/config/site";
@@ -24,6 +25,8 @@ function getResend(): Resend | null {
 }
 
 export interface BookingEmailData {
+  locale?: string | null;
+  timezone?: string | null;
   bookingRef: string;
   customerName: string;
   customerEmail: string;
@@ -74,6 +77,7 @@ export interface SignupWelcomeEmailData {
 }
 
 export interface BookingDocumentEmailData {
+  locale?: string | null;
   customerName: string;
   customerEmail: string;
   bookingRef: string;
@@ -278,6 +282,7 @@ export async function sendBookingConfirmation(data: BookingEmailData): Promise<b
   const resend = getResend();
   if (!resend) return false;
 
+  const localized = data.locale && data.locale !== "en" ? renderBookingMessage(data) : null;
   const pendingTeamConfirmation = Boolean(data.pendingTeamConfirmation);
   const customerSubject = pendingTeamConfirmation
     ? `Payment received — approval pending (${data.bookingRef})`
@@ -294,8 +299,8 @@ export async function sendBookingConfirmation(data: BookingEmailData): Promise<b
     const customerResult = await resend.emails.send({
       from: FROM,
       to: data.customerEmail,
-      subject: customerSubject,
-      html: emailWrapper(customerTitle, `
+      subject: localized?.subject || customerSubject,
+      html: localized?.html || emailWrapper(customerTitle, `
         <p style="font-size:15px;color:#374151;line-height:1.6;margin-top:0;">Hi ${escapeHtml(data.customerName)},</p>
         <p style="font-size:15px;color:#374151;line-height:1.6;">${customerIntro}</p>
         ${bookingDetailsTable(data)}
@@ -356,6 +361,7 @@ export async function sendBookingStatusUpdate(data: BookingEmailData, newStatus:
   const resend = getResend();
   if (!resend) return false;
 
+  const localized = data.locale && data.locale !== "en" ? renderBookingMessage(data, newStatus) : null;
   const isPickup = data.fulfillmentMode === "customer_pickup";
   const isDeliveryAndCollection = data.fulfillmentMode === "delivery_and_collection";
   const statusMessages: Record<string, { subject: string; title: string; message: string }> = {
@@ -425,8 +431,8 @@ export async function sendBookingStatusUpdate(data: BookingEmailData, newStatus:
     await resend.emails.send({
       from: FROM,
       to: data.customerEmail,
-      subject: template.subject,
-      html: emailWrapper(template.title, `
+      subject: localized?.subject || template.subject,
+      html: localized?.html || emailWrapper(template.title, `
         <p style="font-size:15px;color:#374151;line-height:1.6;margin-top:0;">Hi ${escapeHtml(data.customerName)},</p>
         <p style="font-size:15px;color:#374151;line-height:1.6;">${template.message}</p>
         ${bookingDetailsTable(data)}
@@ -452,11 +458,12 @@ export async function sendBookingDocumentLink(data: BookingDocumentEmailData): P
   if (!resend) return false;
 
   try {
+    const localized = data.locale && data.locale !== "en" ? renderDocumentMessage(data) : null;
     const result = await resend.emails.send({
       from: FROM,
       to: data.customerEmail,
-      subject: `${data.documentLabel} — ${data.bookingRef}`,
-      html: emailWrapper(data.documentLabel, `
+      subject: localized?.subject || `${data.documentLabel} — ${data.bookingRef}`,
+      html: localized?.html || emailWrapper(data.documentLabel, `
         <p style="font-size:15px;color:#374151;line-height:1.6;margin-top:0;">Hi ${escapeHtml(data.customerName)},</p>
         <p style="font-size:15px;color:#374151;line-height:1.6;">Here is the document for your <strong>${escapeHtml(data.productName)}</strong> booking.</p>
         <table style="width:100%;border-collapse:collapse;margin:16px 0;">

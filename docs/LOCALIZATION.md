@@ -20,8 +20,8 @@ English and Spanish remain public. German is a draft using informal du, pending 
 
 - Shared product rendering and the other customer page templates.
 - Server-rendered document language without making the whole static site dynamic; the existing document-language script remains for now.
-- Locale-reference and market-language/content publication storage, additive database constraints, admin translation editing and revision tracking.
-- German localized product copy and the complete draft/payment/confirmation/support journey.
+- Admin translation editing, source-revision tracking and stale-content enforcement over the prepared locale/publication storage.
+- Owner review of the private German product and booking pilot; full commercial, policy and support-page coverage.
 - Reviewed route publication, German metadata/sitemap/alternates and complete rollout checks.
 
 The initial dictionary avoids copying unverified free-delivery or German-support promises. Product and transactional translations need separate review batches. Keep prices, stock, city and the booking timezone independent from display language.
@@ -57,7 +57,7 @@ publication checks still need implementation. Do not enable German in the databa
 or code registry until those controls and the complete customer journey are ready.
 The migration has passed ephemeral PostgreSQL tests, including transaction rollback,
 legacy inserts, unchanged market rows, public-role privacy and a fourth private
-language. A current-schema local Supabase rehearsal is still required before release.
+language. The current-schema local Supabase rehearsal passed for the private pilot.
 No production migration has been applied for this slice.
 
 ## Application gate integration (unreleased)
@@ -91,9 +91,63 @@ records use English for display without rewriting historical data. A malformed
 stored locale fails instead of silently selecting English. Rental timezone, prices
 and inventory identity are unchanged.
 
-This does not complete transaction localization: line-item wording, success/cancel
-page rendering, custom-quote entry, booking documents, confirmation and follow-up
-emails still require shared localized rendering. Checkout resumption also needs
-an explicit policy for language disablement after a draft was issued. German stays
-private. The new route tests mock Stripe and all HTTP; no real payments or emails
-are created.
+The private booking pilot now localizes checkout line items, success/cancel pages,
+confirmation and lifecycle messages, document emails, German invoice/refund PDFs
+and review invitations/forms. Custom-quote entry and paid service-amendment screens
+and messages remain part of commercial coverage. German stays private.
+
+## Private German booking pilot — implemented, owner review pending
+
+The local route `/internal/localization/de` presents one selected CYBEX Coya draft,
+its category context and the shared booking widget. It is unavailable in production.
+It requires `LOCALIZATION_PREVIEW=true`, a loopback Supabase URL, a Stripe test key,
+and no Resend key. Per-city language records still control booking access. The
+global German registry remains private. These switches are for a local synthetic
+database; they are not a hosted preview publication mechanism.
+
+`src/i18n/booking.ts`, `transaction.ts` and `review.ts` own the transactional copy.
+The stored draft/booking language determines payment and follow-up output. The
+query-string language is only an initial display hint on return pages; the payment
+status response supplies the stored language. Old null-language bookings retain
+English display. Date formatting uses the saved operational timezone. Localized
+PDFs snapshot language/timezone and support Latin-1 characters including umlauts
+and ß. The existing PDF layout is not a general Unicode document engine.
+
+Payment received and booking confirmed are distinct states. A pending operator
+approval does not display a confirmation. Cancelled/refunded bookings do not show
+active handover links. Review invitations save the booking language; customer
+feedback remains private without explicit publication consent. Apply the additive
+`20260928_transaction_review_language.sql` after the two earlier German migrations.
+
+### Issued-draft resumption policy
+
+Disabling new bookings in a language prevents new availability/draft requests.
+An already issued, unexpired draft can resume in its saved language, subject to
+existing checkout, inventory and fulfillment checks. Language disablement alone
+does not invalidate issued transactions or historical customer links. The browser's
+active-checkout match includes locale, preventing a new language selection from
+silently reusing a differently localized draft.
+
+### Verification and release boundary
+
+The three additive German migrations passed local rollback/apply rehearsal. The
+local journey exercises real Supabase route handlers with synthetic data; Stripe
+and email transport are mocked and all other external HTTP is blocked. It covers
+draft creation, stored-language checkout/resumption, inventory holds, cancellation,
+paid webhook/retry, pending approval, invoice snapshots and private German feedback.
+Run `scripts/german-journey.local.mjs` only against the documented local fixture;
+provide `LOCAL_SUPABASE_STATUS_FILE` from local CLI startup. It retains synthetic
+receipts and selects fresh dates on subsequent runs.
+
+The customer-message inventory also found paths outside this pilot: contact
+auto-replies, signup emails, custom-quote entry and service-amendment messages.
+These need commercial rollout coverage before broad German publication. Admin and
+operational messages remain English. Free-form operator instructions and custom
+terms require reviewed translations; selecting German does not translate arbitrary
+database text. Global navigation, cookie/legal pages, shared commercial templates,
+server document-language routing and SEO publication remain future rollout work.
+
+Owner review package: `agent-work/expansion-readiness-2026-09-27/planpro/german-rollout/GERMAN-BOOKING-COPY-REVIEW.md`
+in the primary workspace, with 11 email examples and two synthetic PDF specimens.
+No German copy is claimed as reviewed. No production migration, payment, email,
+push or deployment was performed for this phase.

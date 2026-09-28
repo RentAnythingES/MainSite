@@ -149,6 +149,9 @@ export async function rejectBookingWithStripeRefund(
   const emailSent = await sendBookingStatusUpdate(
     {
       bookingRef: booking.booking_ref as string,
+      locale: booking.locale as string | null,
+      timezone: booking.timezone as string | null,
+      quantity: Number(booking.quantity || 1),
       customerName: booking.customer_name as string,
       customerEmail: booking.customer_email as string,
       customerPhone: (booking.customer_phone as string) || undefined,

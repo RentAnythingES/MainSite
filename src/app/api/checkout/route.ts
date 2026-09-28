@@ -1,3 +1,4 @@
+import { transactionCopy } from "@/i18n/transaction";
 import { NextRequest, NextResponse } from "next/server";
 import { stripe, isStripeConfigured } from "@/lib/stripe";
 import { createServiceClient } from "@/lib/supabase";
@@ -74,6 +75,7 @@ export async function POST(request: NextRequest) {
 
       const bookingDraft = draft as BookingDraft;
       const locale = storedBookingLocale(bookingDraft.locale);
+      const t = transactionCopy[locale];
 
       if (new Date(bookingDraft.expires_at).getTime() <= Date.now()) {
         await supabase.from("booking_drafts").update({ status: "expired" }).eq("id", bookingDraft.id);
@@ -207,7 +209,7 @@ export async function POST(request: NextRequest) {
               unit_amount: line.amountCents,
               product_data: {
                 name: line.description,
-                description: index === 0 ? `${formattedStart} to ${formattedEnd}` : undefined,
+                description: index === 0 ? `${formattedStart} ${t.to} ${formattedEnd}` : undefined,
               },
             },
             quantity: 1,
@@ -218,8 +220,8 @@ export async function POST(request: NextRequest) {
                 currency: bookingDraft.currency,
                 unit_amount: bookingDraft.rental_subtotal_cents,
                 product_data: {
-                  name: `${resolvedProduct.name} rental`,
-                  description: `${formattedStart} to ${formattedEnd} · ${bookingDraft.quantity} unit(s)`,
+                  name: `${resolvedProduct.name} · ${t.rental}`,
+                  description: `${formattedStart} ${t.to} ${formattedEnd} · ${bookingDraft.quantity} ${t.unit}`,
                 },
               },
               quantity: 1,
@@ -231,10 +233,10 @@ export async function POST(request: NextRequest) {
                     unit_amount: fulfillmentFees.baseFeeCents,
                     product_data: {
                       name: bookingDraft.delivery_type === "express"
-                        ? "Express delivery"
+                        ? t.express
                         : bookingDraft.fulfillment_mode === "delivery_and_collection"
-                        ? "Delivery and collection"
-                        : "Delivery",
+                        ? t.roundtrip
+                        : t.delivery,
                     },
                   },
                   quantity: 1,
@@ -245,7 +247,7 @@ export async function POST(request: NextRequest) {
                   price_data: {
                     currency: bookingDraft.currency,
                     unit_amount: fulfillmentFees.expressSurchargeCents,
-                    product_data: { name: "Same-day Express surcharge" },
+                    product_data: { name: t.surcharge },
                   },
                   quantity: 1,
                 }]
@@ -257,8 +259,8 @@ export async function POST(request: NextRequest) {
                     unit_amount: bookingDraft.extra_services_fee_cents,
                     product_data: {
                       name: (bookingDraft.extra_services || [])
-                        .map((service) => service.serviceType === "assembly" ? "Assembly & set-up" : "Disassembly")
-                        .join(" + ") || "Extra services",
+                        .map((service) => service.serviceType === "assembly" ? t.assembly : t.disassembly)
+                        .join(" + ") || t.extra,
                     },
                   },
                   quantity: 1,
@@ -279,7 +281,7 @@ export async function POST(request: NextRequest) {
             product_id: bookingDraft.product_id,
             quantity: String(bookingDraft.quantity),
           },
-          success_url: `${baseUrl}/booking/success?session_id={CHECKOUT_SESSION_ID}`,
+          success_url: `${baseUrl}/booking/success?session_id={CHECKOUT_SESSION_ID}&locale=${locale}`,
           cancel_url: `${baseUrl}/booking/cancel?${cancelParams.toString()}`,
         },
         { idempotencyKey: `booking-draft-${bookingDraft.id}-${requestFingerprint}` }

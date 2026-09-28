@@ -28,6 +28,15 @@ test('translation storage preserves legacy visibility and keeps future languages
   await db.exec(read('20260928_private_translation_storage.sql'));
   await db.exec('create table booking_drafts(id int primary key); create table bookings(id int primary key); insert into booking_drafts values(1); insert into bookings values(1);');
   await db.exec(read('20260928_transaction_language.sql'));
+  await db.exec("create table booking_reviews(id int primary key, locale text not null default 'en', constraint booking_reviews_locale_check check(locale in ('en','es'))); insert into booking_reviews(id,locale) values(1,'es');");
+  await db.exec('begin');
+  await db.exec(read('20260928_transaction_review_language.sql'));
+  await db.exec('rollback');
+  await assert.rejects(db.exec("insert into booking_reviews values(2,'de')"),{code:'23514'});
+  await db.exec(read('20260928_transaction_review_language.sql'));
+  assert.equal((await db.query('select locale from booking_reviews where id=1')).rows[0].locale,'es');
+  await db.exec("insert into booking_reviews values(2,'de')");
+  await assert.rejects(db.exec("insert into booking_reviews values(3,'unknown')"),{code:'23503'});
   for(const table of ['booking_drafts','bookings']) {
    assert.equal((await db.query(`select locale from ${table} where id=1`)).rows[0].locale,null);
    await db.exec(`insert into ${table}(id,locale) values(2,'es')`);

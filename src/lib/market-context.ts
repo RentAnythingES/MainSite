@@ -1,3 +1,4 @@
+import { privateGermanPreviewEnabled } from "./localization-preview";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import type { Database, Market } from "@/lib/types";
 import { isLocaleTag, isMarketId, isMarketSlug } from "./route-context";
@@ -69,10 +70,11 @@ export async function resolveMarketContext(
   if (request.mode !== "historical" && !market.supported_locales.includes(locale)) {
     throw new MarketContextError("unsupported_locale", 400, "Language is unavailable for this city");
   }
+  const privatePreview = locale === "de" && privateGermanPreviewEnabled();
   let languageBookingEnabled = true;
   let languageIndexable = true;
   if (request.mode === "public") {
-    if (!isLocale(locale) || !localeRegistry[locale].public) {
+    if (!isLocale(locale) || (!localeRegistry[locale].public && !privatePreview)) {
       throw new MarketContextError("unsupported_locale", 400, "Language is unavailable for this city");
     }
     const { data: languages, error: languageError } = await supabase.from("market_locales")
@@ -85,7 +87,7 @@ export async function resolveMarketContext(
       language: { code: string; is_public: boolean };
     } | undefined;
     if (!entry || languages?.length !== 1 || entry.market_id !== market.id || entry.locale !== locale ||
-      entry.language?.code !== locale || entry.is_public !== true || entry.language.is_public !== true) {
+      entry.language?.code !== locale || entry.is_public !== true || (!privatePreview && entry.language.is_public !== true)) {
       throw new MarketContextError("unsupported_locale", 400, "Language is unavailable for this city");
     }
     languageBookingEnabled = entry.is_booking_enabled === true;

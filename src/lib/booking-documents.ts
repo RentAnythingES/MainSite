@@ -88,7 +88,7 @@ type InvoiceSettings = {
 };
 
 async function getInvoiceSettings(supabase: SupabaseClient): Promise<InvoiceSettings | null> {
-  const { data, error } = await (supabase as any).from("invoice_settings").select("*").eq("id", true).maybeSingle();
+  const { data, error } = await supabase.from("invoice_settings").select("*").eq("id", true).maybeSingle();
   if (error || !data) {
     console.error("[booking-documents] Invoice settings unavailable:", error);
     return null;
@@ -202,7 +202,7 @@ export async function createBookingDocumentForPaymentEvent(
   let originalInvoice: { id: string; document_number: string | null } | null = null;
 
   if (isRefund) {
-    const { data, error } = await (supabase as any)
+    const { data, error } = await supabase
       .from("booking_documents")
       .select("id, document_number")
       .eq("booking_id", bookingId)
@@ -253,6 +253,8 @@ export async function createBookingDocumentForPaymentEvent(
       footer: settings.invoice_footer_text,
     },
     booking_snapshot: {
+      locale: booking.locale || null,
+      timezone: booking.timezone || "Europe/Madrid",
       booking_ref: booking.booking_ref || null,
       product_name: input.productName || null,
       quantity: booking.quantity || 1,

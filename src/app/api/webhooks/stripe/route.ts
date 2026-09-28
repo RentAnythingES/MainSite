@@ -433,7 +433,10 @@ async function handleDraftCheckoutCompleted(
 
   if (existingBooking) {
     const retryBooking = existingBooking as unknown as {
+      confirmation_status?: string | null;
       booking_ref: string;
+      locale?: string | null;
+      timezone?: string | null;
       customer_name: string;
       customer_email: string;
       customer_phone: string | null;
@@ -457,6 +460,9 @@ async function handleDraftCheckoutCompleted(
 
     return sendBookingConfirmation({
       bookingRef: retryBooking.booking_ref,
+      locale: retryBooking.locale as string | null,
+      timezone: retryBooking.timezone,
+      pendingTeamConfirmation: retryBooking.confirmation_status === "pending",
       customerName: retryBooking.customer_name || session.customer_details?.name || "Customer",
       customerEmail: retryBooking.customer_email || session.customer_email || "",
       customerPhone: retryBooking.customer_phone || undefined,
@@ -740,6 +746,8 @@ async function handleDraftCheckoutCompleted(
   const confirmationSent = await sendBookingConfirmation({
     bookingRef: (booking as { booking_ref: string }).booking_ref,
     customerName: bookingDraft.customer_name || session.customer_details?.name || "Customer",
+    locale: bookingDraft.locale,
+    timezone: bookingDraft.timezone,
     customerEmail: bookingDraft.customer_email || session.customer_email || "",
     customerPhone: bookingDraft.customer_phone || undefined,
     productName: (product as { name?: string } | null)?.name || "Rental equipment",

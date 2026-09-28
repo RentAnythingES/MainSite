@@ -1,5 +1,7 @@
 "use client";
 
+import { labels, policyMessages, bookingText } from "@/i18n/booking";
+import { localeRegistry, type Locale } from "@/i18n/config";
 import { useState, useMemo, useEffect, useRef } from "react";
 import type { Product } from "@/data/products";
 import { trackBookingEvent } from "@/lib/analytics";
@@ -16,7 +18,7 @@ import {
 
 interface BookingWidgetProps {
   product: Product;
-  locale?: "en" | "es";
+  locale?: Locale;
 }
 
 function addDays(date: Date, days: number): Date {
@@ -29,8 +31,8 @@ function formatDate(date: Date): string {
   return date.toISOString().split("T")[0];
 }
 
-function formatDisplayDate(date: Date, locale: string): string {
-  return date.toLocaleDateString(locale === "es" ? "es-ES" : "en-GB", {
+function formatDisplayDate(date: Date, locale: Locale): string {
+  return date.toLocaleDateString(localeRegistry[locale].format, {
     weekday: "short",
     day: "numeric",
     month: "short",
@@ -41,186 +43,6 @@ function combineDateTime(date: string, time: string): string {
   const combined = new Date(`${date}T${time}:00`);
   return Number.isNaN(combined.getTime()) ? "" : combined.toISOString();
 }
-
-const labels = {
-  en: {
-    bookTitle: "Book This Item",
-    startDate: "Start Date",
-    startTime: "Delivery window",
-    endDate: "End Date",
-    endTime: "Collection window",
-    days: "days",
-    day: "day",
-    rental: "rental",
-    quantity: "Quantity",
-    unit: "unit",
-    units: "units",
-    quantityDiscount: "Quantity discount",
-    availableUnits: "available for these dates",
-    delivery: "Delivery",
-    deliveryZone: "Delivery Area",
-    collectionZone: "Collection Area",
-    pickupLocation: "Pickup Location",
-    fulfillment: "Collection",
-    customerPickup: "Pick up from us",
-    deliveryOnly: "Delivery only",
-    deliveryCollection: "Delivery and collection",
-    standard: "Standard",
-    express: "Express",
-    free: "Free",
-    nextDay: "Next day",
-    sameDay: "Same day",
-    derivedService: "Delivery service",
-    standardDerived: "Standard delivery",
-    expressDerived: "Same-day Express delivery",
-    valenciaTime: "Valencia time",
-    expressSurcharge: "Express surcharge",
-    manualTitle: "Let us confirm this timing",
-    manualHelp: "Message us on WhatsApp and we’ll confirm the quickest available option.",
-    manualPrice: "No payment or inventory hold will be created until we confirm it with you.",
-    total: "Total",
-    datesLoading: "Preparing your rental dates…",
-    datesRequired: "Choose valid start and end dates to see your total.",
-    checkAvailability: "Check Availability",
-    checking: "Checking...",
-    available: "✓ Available for your dates",
-    unavailable: "This item is currently fully booked for that time frame.",
-    unavailableHelp:
-      "Contact us directly via WhatsApp and we can see if we can find alternative inventory.",
-    temporarilyHeld: "Another customer is currently completing checkout for this item.",
-    temporarilyHeldHelp:
-      "This hold may be released shortly. Try again in a few minutes, or message us and we’ll help.",
-    activeCheckout: "Your checkout is still active for these dates.",
-    resumeCheckout: "Resume secure payment",
-    cancelCheckout: "Release these dates",
-    cancellingCheckout: "Releasing dates…",
-    checkoutUnavailable: "Payment could not be started.",
-    checkoutUnavailableHelp:
-      "Your selected dates may still be available. Please contact us via WhatsApp and we will finish the booking manually.",
-    bookWhatsapp: "💬 Contact us on WhatsApp",
-    bookDirect: "📋 Book Now",
-    securePayment: "🔒 Secure payment via Stripe",
-    yourDetails: "Your Details",
-    fullName: "Full Name",
-    email: "Email",
-    phone: "Phone / WhatsApp",
-    deliveryAddress: "Delivery Address",
-    collectionAddress: "Collection Address",
-    deliveryNotes: "Delivery Notes (optional)",
-    submit: "Proceed to Payment",
-    submitting: "Redirecting to payment...",
-    successTitle: "Booking Submitted!",
-    successRef: "Reference",
-    successMsg: "We'll confirm availability and get back to you within a few hours.",
-    back: "← Back",
-    tryDifferentDates: "Try different dates",
-    orWhatsapp: "or contact us via WhatsApp",
-    hoursHint: "Choose a delivery and collection window: Morning (10:00–13:00), Midday (14:00–16:00), or Evening (18:00–20:00).",
-    extraServicesTitle: "Extra services",
-    assemblyLabel: "Assembly & set-up",
-    disassemblyLabel: "Disassembly",
-    shortNoticeTitle: "Short-notice booking",
-    shortNoticeMessage: "This booking is less than 24 hours away. You can still pay now, but our team needs to confirm it — usually within 2 hours during opening hours.",
-  },
-  es: {
-    bookTitle: "Reservar Este Artículo",
-    startDate: "Fecha de Inicio",
-    startTime: "Franja de entrega",
-    endDate: "Fecha de Fin",
-    endTime: "Franja de recogida",
-    days: "días",
-    day: "día",
-    rental: "alquiler",
-    quantity: "Cantidad",
-    unit: "unidad",
-    units: "unidades",
-    quantityDiscount: "Descuento por cantidad",
-    availableUnits: "disponibles para estas fechas",
-    delivery: "Entrega",
-    deliveryZone: "Zona de entrega",
-    collectionZone: "Zona de recogida",
-    pickupLocation: "Punto de recogida",
-    fulfillment: "Recogida",
-    customerPickup: "Recoger con nosotros",
-    deliveryOnly: "Solo entrega",
-    deliveryCollection: "Entrega y recogida",
-    standard: "Estándar",
-    express: "Exprés",
-    free: "Gratis",
-    nextDay: "Día siguiente",
-    sameDay: "Mismo día",
-    derivedService: "Servicio de entrega",
-    standardDerived: "Entrega estándar",
-    expressDerived: "Entrega exprés el mismo día",
-    valenciaTime: "hora de Valencia",
-    expressSurcharge: "Suplemento exprés",
-    manualTitle: "Confirmemos este horario",
-    manualHelp: "Escríbenos por WhatsApp y confirmaremos la opción más rápida disponible.",
-    manualPrice: "No se creará ningún pago ni bloqueo de inventario hasta que lo confirmemos contigo.",
-    total: "Total",
-    datesLoading: "Preparando las fechas del alquiler…",
-    datesRequired: "Elige fechas de inicio y fin válidas para ver el total.",
-    checkAvailability: "Comprobar Disponibilidad",
-    checking: "Comprobando...",
-    available: "✓ Disponible para tus fechas",
-    unavailable: "Este artículo está completamente reservado para esas fechas.",
-    unavailableHelp:
-      "Contáctanos directamente por WhatsApp y veremos si podemos encontrar inventario alternativo.",
-    temporarilyHeld: "Otro cliente está completando el pago de este artículo.",
-    temporarilyHeldHelp:
-      "La reserva temporal puede liberarse pronto. Inténtalo de nuevo en unos minutos o escríbenos y te ayudaremos.",
-    activeCheckout: "Tu pago sigue activo para estas fechas.",
-    resumeCheckout: "Continuar con el pago seguro",
-    cancelCheckout: "Liberar estas fechas",
-    cancellingCheckout: "Liberando fechas…",
-    checkoutUnavailable: "No se pudo iniciar el pago.",
-    checkoutUnavailableHelp:
-      "Es posible que tus fechas sigan disponibles. Contáctanos por WhatsApp y terminaremos la reserva manualmente.",
-    bookWhatsapp: "💬 Contactar por WhatsApp",
-    bookDirect: "📋 Reservar Ahora",
-    securePayment: "🔒 Pago seguro con Stripe",
-    yourDetails: "Tus Datos",
-    fullName: "Nombre Completo",
-    email: "Correo Electrónico",
-    phone: "Teléfono / WhatsApp",
-    deliveryAddress: "Dirección de Entrega",
-    collectionAddress: "Dirección de Recogida",
-    deliveryNotes: "Notas de Entrega (opcional)",
-    submit: "Proceder al Pago",
-    submitting: "Redirigiendo al pago...",
-    successTitle: "¡Reserva Enviada!",
-    successRef: "Referencia",
-    successMsg: "Confirmaremos la disponibilidad y te responderemos en pocas horas.",
-    back: "← Volver",
-    tryDifferentDates: "Prueba otras fechas",
-    orWhatsapp: "o contáctanos por WhatsApp",
-    hoursHint: "Elige una franja de entrega y recogida: Mañana (10:00–13:00), Mediodía (14:00–16:00) o Tarde (18:00–20:00).",
-    extraServicesTitle: "Servicios adicionales",
-    assemblyLabel: "Montaje",
-    disassemblyLabel: "Desmontaje",
-    shortNoticeTitle: "Reserva de última hora",
-    shortNoticeMessage: "Esta reserva es en menos de 24 horas. Puedes pagar ahora, pero nuestro equipo debe confirmarla, normalmente en menos de 2 horas en horario laboral.",
-  },
-};
-
-const policyMessages = {
-  en: {
-    same_day_too_soon: "This booking is short notice (less than 24 hours away) and will need a quick confirmation from our team after checkout.",
-    future_date_too_soon: "This booking is short notice (less than 24 hours away) and will need a quick confirmation from our team after checkout.",
-    outside_operating_hours: "Deliveries and return collections run 10:00-19:00 Valencia time. Requests outside these hours are subject to extra costs to be agreed during booking.",
-    closed_day: "Deliveries and return collections run Monday-Saturday, 10:00-19:00. Sunday requests are subject to extra costs to be agreed during booking.",
-    express_disabled: "Same-day delivery needs confirmation for this area.",
-    policy_unconfigured: "Our team needs to confirm this delivery timing.",
-  },
-  es: {
-    same_day_too_soon: "Esta reserva es de última hora (menos de 24 horas) y necesitar\u00e1 una confirmaci\u00f3n r\u00e1pida de nuestro equipo tras el pago.",
-    future_date_too_soon: "Esta reserva es de última hora (menos de 24 horas) y necesitar\u00e1 una confirmaci\u00f3n r\u00e1pida de nuestro equipo tras el pago.",
-    outside_operating_hours: "Las entregas y recogidas son de 10:00 a 19:00, hora de Valencia. Fuera de este horario hay un coste adicional a acordar durante la reserva.",
-    closed_day: "Las entregas y recogidas son de lunes a s\u00e1bado, 10:00-19:00. Los domingos hay un coste adicional a acordar durante la reserva.",
-    express_disabled: "La entrega el mismo día necesita confirmación para esta zona.",
-    policy_unconfigured: "Nuestro equipo necesita confirmar este horario de entrega.",
-  },
-};
 
 const CHECKOUT_REQUEST_TIMEOUT_MS = 20_000;
 
@@ -338,9 +160,10 @@ function calculateFulfillmentFeeCents(
 
 export default function BookingWidget({ product, locale = "en" }: BookingWidgetProps) {
   const t = labels[locale];
+  const money = (amount: number) => new Intl.NumberFormat(localeRegistry[locale].format, { style: "currency", currency: "EUR" }).format(amount);
   const needsSupplyConfirmation = product.stockTotal === 0;
-  const requestLabel = locale === "es" ? "Solicitar para estas fechas" : "Request for these dates";
-  const supplyHelp = locale === "es" ? "Este artículo está disponible bajo petición. Confirmaremos el equipo y las fechas antes de organizar el pago." : "This item is offered on request. We will confirm the equipment and your dates before arranging payment.";
+  const requestLabel = bookingText(locale, "Request for these dates", "Solicitar para estas fechas");
+  const supplyHelp = bookingText(locale, "This item is offered on request. We will confirm the equipment and your dates before arranging payment.", "Este artículo está disponible bajo petición. Confirmaremos el equipo y las fechas antes de organizar el pago.");
   const [minimumStartDate, setMinimumStartDate] = useState("");
   const [startDate, setStartDate] = useState("");
   const [startTime, setStartTime] = useState("10:00");
@@ -444,6 +267,7 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
   const activeCheckoutMatchesSelection = Boolean(
     activeCheckout &&
     activeCheckout.productSlug === product.slug &&
+    (activeCheckout.locale || "en") === locale &&
     (activeCheckout.couponCode || "") === couponCode.trim().toUpperCase() &&
     activeCheckout.quantity === quantity &&
     activeCheckout.fulfillmentMode === fulfillmentMode &&
@@ -506,7 +330,7 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
 
     async function loadBookingOptions() {
       try {
-        const res = await fetch("/api/booking-options");
+        const res = await fetch(`/api/booking-options?locale=${locale}`);
         const data = await res.json();
 
         if (!active) return;
@@ -531,7 +355,7 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
     return () => {
       active = false;
     };
-  }, [collectionZoneId, deliveryZoneId, pickupLocationId]);
+  }, [collectionZoneId, deliveryZoneId, pickupLocationId, locale]);
 
   // Reset availability when dates change
   useEffect(() => {
@@ -598,7 +422,7 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
       const data = await res.json();
       if (requestId !== quoteRequest.current) return;
       if (!res.ok && data.errorCode === "coupon_invalid") {
-        setCouponError(locale === "es" ? "No se ha podido aplicar el código. Comprueba que sea válido para este producto o elimínalo para continuar." : data.error || "Could not apply this coupon. Check the code or remove it to continue.");
+        setCouponError(bookingText(locale, "Could not apply this coupon. Check the code or remove it to continue.", "No se ha podido aplicar el código. Comprueba que sea válido para este producto o elimínalo para continuar."));
         setServerQuote(null);
         setAvailabilityStatus("idle");
         setBookingError("none");
@@ -611,7 +435,7 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
       const localizedPolicyMessage = policy
         ? policyMessages[locale][policy.reason as keyof typeof policyMessages.en] || t.manualHelp
         : "";
-      setAvailabilityReason(localizedPolicyMessage || data.error || data.availabilityReason || "");
+      setAvailabilityReason(localizedPolicyMessage || (locale === "de" ? t.manualHelp : data.error || data.availabilityReason || ""));
 
       if (Array.isArray(data.serviceZones)) {
         setServiceZones(data.serviceZones);
@@ -752,7 +576,7 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
       if (!draftRes.ok || !draftData.draftId) {
         await releaseCheckout(attemptedDraftId).catch(() => {});
         if (draftData.errorCode === "coupon_invalid") {
-          setCouponError(locale === "es" ? "No se ha podido aplicar el código. Revísalo o elimínalo para continuar." : draftData.error);
+          setCouponError(bookingText(locale, "Could not apply this coupon. Check the code or remove it to continue.", "No se ha podido aplicar el código. Revísalo o elimínalo para continuar."));
           setServerQuote(null);
           setAvailabilityStatus("idle");
           setBookingError("none");
@@ -830,6 +654,7 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
 
       if (res.ok && data.checkoutUrl) {
         const checkoutState: ActiveCheckout = {
+          locale,
           couponCode: couponCode.trim().toUpperCase(),
           draftId: draftData.draftId,
           checkoutUrl: data.checkoutUrl,
@@ -887,38 +712,38 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
     }
   };
 
-  const whatsappService = fulfillmentPolicy?.decision === "manual_confirmation"
-    ? "Delivery timing needs confirmation"
-    : `${deliveryOption === "express" ? t.express : t.standard} ${t.delivery.toLowerCase()}`;
+  const whatsappService = fulfillmentMode === "customer_pickup" ? t.customerPickup : fulfillmentPolicy?.decision === "manual_confirmation"
+    ? bookingText(locale, "Delivery timing needs confirmation")
+    : `${deliveryOption === "express" ? t.express : t.standard} · ${fulfillmentMode === "delivery_and_collection" ? t.deliveryCollection : t.delivery}`;
   const whatsappDates = rentalWindow
     ? `${formatDisplayDate(rentalWindow.start, locale)} ${formatCustomerFulfillmentWindow(startTime, locale)} → ${formatDisplayDate(rentalWindow.end, locale)} ${formatCustomerFulfillmentWindow(endTime, locale)} (${displayPricing.days} ${displayPricing.days === 1 ? t.day : t.days})`
     : t.datesRequired;
-  const whatsappMessage = `Hi! I'd like to book:\n\n📦 ${quantity} × ${product.name}\n📅 ${whatsappDates}\n🚚 ${whatsappService}\n\nPlease confirm availability and price.`;
+  const whatsappMessage = `${bookingText(locale, "Hi! I'd like to book:")}\n\n📦 ${quantity} × ${product.name}\n📅 ${whatsappDates}\n🚚 ${whatsappService}\n\n${bookingText(locale, "Please confirm availability and price.")}`;
   const whatsappUrl = `https://wa.me/34684708013?text=${encodeURIComponent(whatsappMessage)}`;
 
   // Success state
   const couponField = !needsSupplyConfirmation && (
     <div className="mb-4 space-y-2">
       <label className="block text-xs font-medium text-neutral-500">
-        {locale === "es" ? "Código de descuento" : "Coupon code"}
+        {bookingText(locale, "Coupon code", "Código de descuento")}
         <input value={couponCode} maxLength={40} disabled={submitting || availabilityStatus === "checking"}
           onChange={(event) => { quoteRequest.current += 1; setCouponCode(event.target.value.toUpperCase()); setCouponError(""); setServerQuote(null); setAvailabilityStatus("idle"); }}
           className="mt-1 w-full rounded-lg border border-border px-3 py-2.5 text-sm" autoCapitalize="characters" autoComplete="off" />
       </label>
       <button type="button" disabled={submitting || availabilityStatus === "checking" || !rentalWindow}
         onClick={() => void checkAvailability()} className="text-sm font-semibold text-teal-700 disabled:opacity-50">
-        {availabilityStatus === "checking" ? (locale === "es" ? "Comprobando…" : "Checking…") : (locale === "es" ? "Actualizar precio" : "Apply / update price")}
+        {availabilityStatus === "checking" ? (bookingText(locale, "Checking…", "Comprobando…")) : (bookingText(locale, "Apply / update price", "Actualizar precio"))}
       </button>
       {couponCode && <button type="button" disabled={submitting || availabilityStatus === "checking"}
         onClick={() => { quoteRequest.current += 1; setCouponCode(""); setCouponError(""); setServerQuote(null); setAvailabilityStatus("idle"); }}
-        className="ml-4 text-sm text-neutral-600 disabled:opacity-50">{locale === "es" ? "Quitar código" : "Remove code"}</button>}
-      <p className="text-xs text-neutral-500">{locale === "es" ? "El descuento se aplica al alquiler, no a la entrega ni a los servicios adicionales." : "Discounts apply to rental charges. Delivery and extra services keep their usual price."}</p>
+        className="ml-4 text-sm text-neutral-600 disabled:opacity-50">{bookingText(locale, "Remove code", "Quitar código")}</button>}
+      <p className="text-xs text-neutral-500">{bookingText(locale, "Discounts apply to rental charges. Delivery and extra services keep their usual price.", "El descuento se aplica al alquiler, no a la entrega ni a los servicios adicionales.")}</p>
       {couponError && <p role="alert" className="text-sm text-red-700">{couponError}</p>}
-      {serverQuote?.couponCode && <p role="status" className="text-sm text-teal-700">{locale === "es" ? "Código aplicado:" : "Code applied:"} {serverQuote.couponCode}</p>}
+      {serverQuote?.couponCode && <p role="status" className="text-sm text-teal-700">{bookingText(locale, "Code applied:", "Código aplicado:")} {serverQuote.couponCode}</p>}
     </div>
   );
   const couponDiscountLine = (serverQuote?.couponDiscountCents || 0) > 0 && (
-    <div className="flex justify-between text-sm text-emerald-700"><span>{locale === "es" ? "Descuento" : "Coupon discount"} ({serverQuote?.couponCode})</span><span>−€{((serverQuote?.couponDiscountCents || 0) / 100).toFixed(2)}</span></div>
+    <div className="flex justify-between text-sm text-emerald-700"><span>{bookingText(locale, "Coupon discount", "Descuento")} ({serverQuote?.couponCode})</span><span>−{money((serverQuote?.couponDiscountCents || 0) / 100)}</span></div>
   );
 
   if (step === "success") {
@@ -984,9 +809,10 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
           <div>
             <label className="text-xs font-medium text-neutral-500 mb-1 block">{t.deliveryAddress}</label>
             <GooglePlacesAddressInput
+              unavailableMessage={locale === "de" ? "Adressvorschläge sind gerade nicht verfügbar. Du kannst die Adresse selbst eingeben." : undefined}
               value={address}
               onChange={setAddress}
-              placeholder="Start typing an address or place"
+              placeholder={bookingText(locale, "Start typing an address or place")}
               className="w-full px-3 py-2.5 rounded-lg border border-border text-sm focus:outline-none focus:ring-2 focus:ring-brand/30 focus:border-brand"
               required
             />
@@ -996,9 +822,10 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
             <div>
               <label className="text-xs font-medium text-neutral-500 mb-1 block">{t.collectionAddress}</label>
               <GooglePlacesAddressInput
+                unavailableMessage={locale === "de" ? "Adressvorschläge sind gerade nicht verfügbar. Du kannst die Adresse selbst eingeben." : undefined}
                 value={collectionAddress}
                 onChange={setCollectionAddress}
-                placeholder={address || "Start typing a collection address"}
+                placeholder={address || bookingText(locale, "Start typing a collection address")}
                 className="w-full px-3 py-2.5 rounded-lg border border-border text-sm focus:outline-none focus:ring-2 focus:ring-brand/30 focus:border-brand"
               />
             </div>
@@ -1007,7 +834,7 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
             <label className="text-xs font-medium text-neutral-500 mb-1 block">{t.deliveryNotes}</label>
             <textarea value={notes} onChange={(e) => setNotes(e.target.value)} rows={2}
               className="w-full px-3 py-2.5 rounded-lg border border-border text-sm focus:outline-none focus:ring-2 focus:ring-brand/30 focus:border-brand resize-none"
-              placeholder="Apartment 3B, ring buzzer" />
+              placeholder={bookingText(locale, "Apartment 3B, ring buzzer")} />
           </div>
 
           {/* Price summary */}
@@ -1015,34 +842,34 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
           <div className="border-t border-border pt-3 space-y-1.5">
             {couponDiscountLine}
             <div className="flex justify-between text-sm">
-              <span className="text-neutral-500">€{displayPricing.perDay} × {displayPricing.days} {displayPricing.days === 1 ? t.day : t.days} × {quantity}</span>
-              <span className="font-medium">€{displayPricing.subtotalBeforeDiscount.toFixed(2)}</span>
+              <span className="text-neutral-500">{money(displayPricing.perDay)} × {displayPricing.days} {displayPricing.days === 1 ? t.day : t.days} × {quantity}</span>
+              <span className="font-medium">{money(displayPricing.subtotalBeforeDiscount)}</span>
             </div>
             {displayPricing.quantityDiscount > 0 && (
               <div className="flex justify-between text-sm text-emerald-700">
                 <span>{t.quantityDiscount}</span>
-                <span>−€{displayPricing.quantityDiscount.toFixed(2)}</span>
+                <span>−{money(displayPricing.quantityDiscount)}</span>
               </div>
             )}
             <div className="flex justify-between text-sm">
-              <span className="text-neutral-500">{t.delivery}</span>
-              <span className="font-medium">{displayPricing.fulfillmentBaseFee === 0 ? <span className="text-green-600">{t.free}</span> : `€${displayPricing.fulfillmentBaseFee.toFixed(2)}`}</span>
+              <span className="text-neutral-500">{fulfillmentMode === "customer_pickup" ? t.customerPickup : t.delivery}</span>
+              <span className="font-medium">{displayPricing.fulfillmentBaseFee === 0 ? <span className="text-green-600">{t.free}</span> : money(displayPricing.fulfillmentBaseFee)}</span>
             </div>
             {displayPricing.expressSurcharge > 0 && (
               <div className="flex justify-between text-sm text-amber-700">
                 <span>{t.expressSurcharge}</span>
-                <span className="font-medium">€{displayPricing.expressSurcharge.toFixed(2)}</span>
+                <span className="font-medium">{money(displayPricing.expressSurcharge)}</span>
               </div>
             )}
             {displayPricing.extraServicesFee > 0 && (
               <div className="flex justify-between text-sm">
                 <span className="text-neutral-500">{t.extraServicesTitle}</span>
-                <span className="font-medium">€{displayPricing.extraServicesFee.toFixed(2)}</span>
+                <span className="font-medium">{money(displayPricing.extraServicesFee)}</span>
               </div>
             )}
             <div className="flex justify-between text-base font-bold pt-2 border-t border-border">
               <span>{t.total}</span>
-              <span className="text-brand">€{displayPricing.total}</span>
+              <span className="text-brand">{money(displayPricing.total)}</span>
             </div>
           </div>
 
@@ -1058,7 +885,7 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
           </button>
         </form>
 
-        <p className="text-xs text-neutral-400 text-center mt-3">{needsSupplyConfirmation ? (locale === "es" ? "Confirmación antes del pago" : "Confirmation before payment") : t.securePayment}</p>
+        <p className="text-xs text-neutral-400 text-center mt-3">{needsSupplyConfirmation ? (bookingText(locale, "Confirmation before payment", "Confirmación antes del pago")) : t.securePayment}</p>
       </div>
     );
   }
@@ -1066,7 +893,7 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
   // Date selection step (default)
   return (
     <div className="bg-white rounded-2xl border border-border shadow-sm p-6" id="booking-widget">
-      <h3 className="font-bold text-lg mb-4">{needsSupplyConfirmation ? (locale === "es" ? "Solicitar este artículo" : "Request this item") : t.bookTitle}</h3>
+      <h3 className="font-bold text-lg mb-4">{needsSupplyConfirmation ? (bookingText(locale, "Request this item", "Solicitar este artículo")) : t.bookTitle}</h3>
       {needsSupplyConfirmation && <p className="text-sm text-neutral-600 mb-4">{supplyHelp}</p>}
 
       {activeCheckout && (
@@ -1256,7 +1083,7 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
                     />
                     {label}
                   </span>
-                  <span className="font-semibold text-neutral-600">€{(service.feeCents / 100).toFixed(2)}</span>
+                  <span className="font-semibold text-neutral-600">{money(service.feeCents / 100)}</span>
                 </label>
               );
             })}
@@ -1288,7 +1115,7 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
           )}
           {selectedPickupLocation?.lead_time_hours ? (
             <p className="text-[11px] text-neutral-400 mt-1">
-              Typical confirmation lead time: {selectedPickupLocation.lead_time_hours}h.
+              {bookingText(locale, "Typical confirmation lead time:", "Plazo habitual de confirmación:")} {selectedPickupLocation.lead_time_hours}h.
             </p>
           ) : null}
         </div>
@@ -1314,19 +1141,19 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
             </select>
             {(selectedDeliveryZone?.customer_instructions || selectedDeliveryZone?.delivery_window) && (
               <p className="text-xs text-neutral-500 mt-1">
-                {selectedDeliveryZone.customer_instructions || `Delivery window: ${selectedDeliveryZone.delivery_window}`}
+                {selectedDeliveryZone.customer_instructions || `${t.startTime}: ${selectedDeliveryZone.delivery_window}`}
               </p>
             )}
           </div>
           <div className="rounded-lg border border-border bg-neutral-50 p-3">
             <label className="flex items-center gap-2 text-sm font-medium text-neutral-700">
               <input type="checkbox" checked={invoiceRequested} onChange={(e) => setInvoiceRequested(e.target.checked)} />
-              I need a full invoice for my business
+              {bookingText(locale, "I need a full invoice for my business")}
             </label>
             {invoiceRequested && <div className="mt-3 space-y-3">
-              <input type="text" required value={billingCompanyName} onChange={(e) => setBillingCompanyName(e.target.value)} className="w-full px-3 py-2.5 rounded-lg border border-border text-sm" placeholder="Company legal name" />
-              <input type="text" required value={billingTaxId} onChange={(e) => setBillingTaxId(e.target.value)} className="w-full px-3 py-2.5 rounded-lg border border-border text-sm" placeholder="NIF / VAT ID" />
-              <input type="text" required value={billingAddress} onChange={(e) => setBillingAddress(e.target.value)} className="w-full px-3 py-2.5 rounded-lg border border-border text-sm" placeholder="Billing address" />
+              <input type="text" required value={billingCompanyName} onChange={(e) => setBillingCompanyName(e.target.value)} className="w-full px-3 py-2.5 rounded-lg border border-border text-sm" placeholder={bookingText(locale, "Company legal name")} />
+              <input type="text" required value={billingTaxId} onChange={(e) => setBillingTaxId(e.target.value)} className="w-full px-3 py-2.5 rounded-lg border border-border text-sm" placeholder={bookingText(locale, "NIF / VAT ID")} />
+              <input type="text" required value={billingAddress} onChange={(e) => setBillingAddress(e.target.value)} className="w-full px-3 py-2.5 rounded-lg border border-border text-sm" placeholder={bookingText(locale, "Billing address")} />
             </div>}
           </div>
 
@@ -1349,7 +1176,7 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
               </select>
               {selectedCollectionZone?.collection_window && (
                 <p className="text-xs text-neutral-500 mt-1">
-                  Collection window: {selectedCollectionZone.collection_window}
+                  {t.endTime}: {selectedCollectionZone.collection_window}
                 </p>
               )}
             </div>
@@ -1370,7 +1197,7 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
               </p>
               {fulfillmentPolicy.fees.expressSurchargeCents > 0 && (
                 <p className="mt-1 text-xs font-medium text-amber-700">
-                  {t.expressSurcharge}: €{(fulfillmentPolicy.fees.expressSurchargeCents / 100).toFixed(2)}
+                  {t.expressSurcharge}: {money(fulfillmentPolicy.fees.expressSurchargeCents / 100)}
                 </p>
               )}
             </div>
@@ -1382,7 +1209,7 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
             </div>
           ) : (
             <div className="rounded-xl border border-border bg-neutral-50 p-3 text-xs text-neutral-600">
-              {locale === "es"
+              {locale === "de" ? "Wir prüfen deinen Termin und zeigen dir Standardlieferung, Expresslieferung oder die persönliche Bestätigung über WhatsApp an." : locale === "es"
                 ? "Comprobaremos el horario y asignaremos automáticamente entrega estándar, exprés o confirmación por WhatsApp."
                 : "We’ll check the timing and automatically assign Standard, Express, or WhatsApp confirmation."}
             </div>
@@ -1397,37 +1224,37 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
         {couponDiscountLine}
         <div className="flex justify-between text-sm">
           <span className="text-neutral-500">
-            €{displayPricing.perDay} × {displayPricing.days} {displayPricing.days === 1 ? t.day : t.days} × {quantity}
+            {money(displayPricing.perDay)} × {displayPricing.days} {displayPricing.days === 1 ? t.day : t.days} × {quantity}
           </span>
-          <span className="font-medium">€{displayPricing.subtotalBeforeDiscount.toFixed(2)}</span>
+          <span className="font-medium">{money(displayPricing.subtotalBeforeDiscount)}</span>
         </div>
         {displayPricing.quantityDiscount > 0 && (
           <div className="flex justify-between text-sm text-emerald-700">
             <span>{t.quantityDiscount}</span>
-            <span>−€{displayPricing.quantityDiscount.toFixed(2)}</span>
+            <span>−{money(displayPricing.quantityDiscount)}</span>
           </div>
         )}
         <div className="flex justify-between text-sm">
           <span className="text-neutral-500">
-            {fulfillmentMode === "delivery_and_collection" ? t.deliveryCollection : t.delivery}
+            {fulfillmentMode === "customer_pickup" ? t.customerPickup : fulfillmentMode === "delivery_and_collection" ? t.deliveryCollection : t.delivery}
           </span>
           <span className="font-medium">
             {displayPricing.fulfillmentBaseFee === 0 ? (
               <span className="text-green-600">{t.free}</span>
             ) : (
-              `€${displayPricing.fulfillmentBaseFee.toFixed(2)}`
+              money(displayPricing.fulfillmentBaseFee)
             )}
           </span>
         </div>
         {displayPricing.expressSurcharge > 0 && (
           <div className="flex justify-between text-sm text-amber-700">
             <span>{t.expressSurcharge}</span>
-            <span className="font-medium">€{displayPricing.expressSurcharge.toFixed(2)}</span>
+            <span className="font-medium">{money(displayPricing.expressSurcharge)}</span>
           </div>
         )}
         <div className="flex justify-between text-base font-bold pt-2 border-t border-border">
           <span>{t.total}</span>
-          <span className="text-brand">€{displayPricing.total}</span>
+          <span className="text-brand">{money(displayPricing.total)}</span>
         </div>
       </div>
       )}
@@ -1560,7 +1387,7 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
         </a>
       )}
 
-      <p className="text-xs text-neutral-400 text-center mt-3">{needsSupplyConfirmation ? (locale === "es" ? "Confirmación antes del pago" : "Confirmation before payment") : t.securePayment}</p>
+      <p className="text-xs text-neutral-400 text-center mt-3">{needsSupplyConfirmation ? (bookingText(locale, "Confirmation before payment", "Confirmación antes del pago")) : t.securePayment}</p>
     </div>
   );
 }

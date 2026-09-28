@@ -1,6 +1,10 @@
+import { storedBookingLocale } from "./booking-locale";
+import { localeRegistry } from "@/i18n/config";
 import type { BookingDocument } from "@/lib/booking-documents";
 
 interface BookingForPdf {
+  locale?: string | null;
+  timezone?: string | null;
   booking_ref?: string | null;
   customer_name?: string | null;
   customer_email?: string | null;
@@ -19,29 +23,20 @@ interface BookingForPdf {
 const PAGE_WIDTH = 612;
 const PAGE_HEIGHT = 792;
 
-const toAscii = (value: unknown) =>
+const pdfDisplayText = (value: unknown) =>
   String(value ?? "")
-    .normalize("NFKD")
-    .replace(/[^\x20-\x7E]/g, "")
+    .replace(/[^\x20-\x7E\xA0-\xFF]/g, "")
     .trim();
 
-const escapePdfText = (value: unknown) => toAscii(value).replace(/\\/g, "\\\\").replace(/\(/g, "\\(").replace(/\)/g, "\\)");
-
-const formatMoney = (cents?: number | null, currency = "eur") =>
-  `${currency.toUpperCase()} ${(((cents || 0) / 100)).toFixed(2)}`;
-
-const formatDate = (value?: string | null) => {
-  if (!value) return "Not set";
-  const date = new Date(value);
-  if (Number.isNaN(date.getTime())) return toAscii(value);
-  return date.toLocaleString("en-GB", {
-    day: "2-digit",
-    month: "short",
-    year: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
-  });
-};
+const escapePdfText = (value: unknown) =>
+  pdfDisplayText(value)
+    .replace(/\\/g, "\\\\")
+    .replace(/\(/g, "\\(")
+    .replace(/\)/g, "\\)")
+    .replace(
+      /[\xA0-\xFF]/g,
+      (char) => `\\${char.charCodeAt(0).toString(8).padStart(3, "0")}`,
+    );
 
 const formatDocumentType = (type: string) => {
   if (type === "refund_receipt") return "Rectifying invoice";
@@ -56,7 +51,13 @@ const labelFulfillment = (mode?: string | null) => {
   return "Not set";
 };
 
-function pdfText(text: unknown, x: number, y: number, size = 10, font = "F1") {
+function rawPdfText(
+  text: unknown,
+  x: number,
+  y: number,
+  size = 10,
+  font = "F1",
+) {
   return `BT /${font} ${size} Tf ${x} ${y} Td (${escapePdfText(text)}) Tj ET\n`;
 }
 
@@ -64,72 +65,259 @@ function pdfLine(x1: number, y1: number, x2: number, y2: number, gray = 0.85) {
   return `${gray} G ${x1} ${y1} m ${x2} ${y2} l S\n`;
 }
 
-function pdfRect(x: number, y: number, width: number, height: number, r: number, g: number, b: number) {
+function pdfRect(
+  x: number,
+  y: number,
+  width: number,
+  height: number,
+  r: number,
+  g: number,
+  b: number,
+) {
   return `${r} ${g} ${b} rg ${x} ${y} ${width} ${height} re f\n`;
 }
 
-function drawKeyValue(label: string, value: unknown, x: number, y: number, width = 230) {
+function rawDrawKeyValue(
+  label: string,
+  value: unknown,
+  x: number,
+  y: number,
+  width = 230,
+) {
   return [
-    pdfText(label, x, y, 8, "F2"),
-    pdfText(value || "Not set", x + 95, y, 9, "F1"),
+    rawPdfText(label, x, y, 8, "F2"),
+    rawPdfText(value || "Not set", x + 95, y, 9, "F1"),
     pdfLine(x, y - 8, x + width, y - 8, 0.9),
   ].join("");
 }
 
-export function buildBookingDocumentPdf(document: BookingDocument, booking: BookingForPdf): Uint8Array {
+export function buildBookingDocumentPdf(
+  document: BookingDocument,
+  booking: BookingForPdf,
+): Uint8Array {
+  const locale = storedBookingLocale(
+    document.booking_snapshot?.locale ?? booking.locale,
+  );
+  const translations: Record<string, string> = {
+    "Not set": "Nicht angegeben",
+    "Not applicable": "Entfällt",
+    Invoice: "Rechnung",
+    "Rectifying invoice": "Korrekturrechnung",
+    "Rental agreement": "Mietvertrag",
+    "Travel light. Feel at home.": "Reise mit leichtem Gepäck.",
+    "Number pending": "Nummer folgt",
+    "Document details": "Rechnungsdetails",
+    Issued: "Ausgestellt",
+    "Booking ref": "Buchungsreferenz",
+    Status: "Status",
+    Rectifies: "Korrigiert",
+    From: "Aussteller",
+    Customer: "Kunde",
+    Name: "Name",
+    Email: "E-Mail",
+    Phone: "Telefon",
+    Rental: "Miete",
+    Item: "Mietartikel",
+    Quantity: "Anzahl",
+    Start: "Beginn",
+    End: "Ende",
+    Fulfillment: "Übergabe",
+    "Customer pickup": "Selbstabholung",
+    "Delivery only": "Lieferung",
+    "Delivery and collection": "Lieferung und Abholung",
+    Charges: "Beträge",
+    Description: "Beschreibung",
+    Amount: "Betrag",
+    "Refund / rectification": "Rückerstattung / Korrektur",
+    "Custom quote line": "Vereinbarte Leistung",
+    "Rectifying total": "Erstattung",
+    "Invoice total": "Gesamtbetrag",
+    "Payment reference": "Zahlungsreferenz",
+    Provider: "Anbieter",
+    "Payment ID": "Zahlungs-ID",
+    "Refund ID": "Erstattungs-ID",
+    "Issued from Rent&Roll booking and payment records.":
+      "Erstellt anhand der Buchungs- und Zahlungsdaten von Rent&Roll.",
+    "Questions? Contact Rent&Roll support.":
+      "Bei Fragen kontaktiere Rent&Roll.",
+    issued: "Ausgestellt",
+    draft: "Entwurf",
+    void: "Ungültig",
+  };
+  const translate = (value: unknown): unknown =>
+    locale === "de" && typeof value === "string"
+      ? translations[value] ||
+        value
+          .replace(/^Rental - /, "Miete - ")
+          .replace(/ included$/, " enthalten")
+          .replace(
+            /^Plus (\d+) additional agreed quote line\(s\)$/,
+            "Weitere vereinbarte Leistungen: $1",
+          )
+      : value;
+  const pdfText = (
+    text: unknown,
+    x: number,
+    y: number,
+    size = 10,
+    font = "F1",
+  ) => rawPdfText(translate(text), x, y, size, font);
+  const drawKeyValue = (
+    label: string,
+    value: unknown,
+    x: number,
+    y: number,
+    width = 230,
+  ) =>
+    rawDrawKeyValue(
+      String(translate(label)),
+      translate(value || "Not set"),
+      x,
+      y,
+      width,
+    );
+  const formatDate = (value?: string | null) =>
+    !value
+      ? String(translate("Not set"))
+      : new Date(value).toLocaleString(localeRegistry[locale].format, {
+          day: "2-digit",
+          month: "short",
+          year: "numeric",
+          hour: "2-digit",
+          minute: "2-digit",
+          timeZone: String(
+            document.booking_snapshot?.timezone ||
+              booking.timezone ||
+              "Europe/Madrid",
+          ),
+        });
+  const formatMoney = (cents?: number | null, currency = "eur") =>
+    currency.toUpperCase() +
+    " " +
+    new Intl.NumberFormat(localeRegistry[locale].format, {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    }).format((cents || 0) / 100);
   const documentTitle = formatDocumentType(document.document_type);
   const bookingSnapshot = document.booking_snapshot || {};
   const customerSnapshot = document.customer_snapshot || {};
   const companySnapshot = document.company_snapshot || {};
   const productName =
-    toAscii(booking.product?.name) ||
-    toAscii(bookingSnapshot.product_name) ||
+    pdfDisplayText(booking.product?.name) ||
+    pdfDisplayText(bookingSnapshot.product_name) ||
     "Rental equipment";
-  const customerName = toAscii(customerSnapshot.name) || toAscii(booking.customer_name) || "Customer";
-  const customerEmail = toAscii(customerSnapshot.email) || toAscii(booking.customer_email) || "Not set";
-  const startAt = toAscii(bookingSnapshot.rental_start_at) || booking.rental_start_at || booking.start_date;
-  const endAt = toAscii(bookingSnapshot.rental_end_at) || booking.rental_end_at || booking.end_date;
-  const fulfillmentMode = toAscii(bookingSnapshot.fulfillment_mode) || booking.fulfillment_mode;
+  const customerName =
+    pdfDisplayText(customerSnapshot.name) ||
+    pdfDisplayText(booking.customer_name) ||
+    "Customer";
+  const customerEmail =
+    pdfDisplayText(customerSnapshot.email) ||
+    pdfDisplayText(booking.customer_email) ||
+    "Not set";
+  const startAt =
+    pdfDisplayText(bookingSnapshot.rental_start_at) ||
+    booking.rental_start_at ||
+    booking.start_date;
+  const endAt =
+    pdfDisplayText(bookingSnapshot.rental_end_at) ||
+    booking.rental_end_at ||
+    booking.end_date;
+  const fulfillmentMode =
+    pdfDisplayText(bookingSnapshot.fulfillment_mode) ||
+    booking.fulfillment_mode;
   const quantity = Number(bookingSnapshot.quantity || booking.quantity || 1);
   const customLineItems = Array.isArray(bookingSnapshot.custom_line_items)
-    ? bookingSnapshot.custom_line_items as Array<{ description?: string; amountCents?: number }>
+    ? (bookingSnapshot.custom_line_items as Array<{
+        description?: string;
+        amountCents?: number;
+      }>)
     : [];
   const isRefund = document.document_type === "refund_receipt";
-  const taxBaseCents = document.tax_base_cents ?? Math.max(0, document.total_cents - document.tax_cents);
-  const taxRate = document.tax_rate_bps ? `${(document.tax_rate_bps / 100).toFixed(2)}% IVA` : "IVA";
+  const taxBaseCents =
+    document.tax_base_cents ??
+    Math.max(0, document.total_cents - document.tax_cents);
+  const taxRate = document.tax_rate_bps
+    ? `${new Intl.NumberFormat(localeRegistry[locale].format, { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(document.tax_rate_bps / 100)}% IVA`
+    : "IVA";
 
   let content = "";
   content += pdfRect(0, PAGE_HEIGHT - 92, PAGE_WIDTH, 92, 0.055, 0.486, 0.451);
+  content += "1 1 1 rg\n";
   content += pdfText("Rent&Roll", 48, 738, 22, "F2");
   content += pdfText("Travel light. Feel at home.", 48, 718, 10, "F1");
-  content += pdfText(documentTitle, 420, 738, 22, "F2");
-  content += pdfText(document.document_number || "Number pending", 420, 718, 10, "F1");
+  content += pdfText(documentTitle, 390, 738, locale === "de" ? 16 : 22, "F2");
+  content += pdfText(
+    document.document_number || "Number pending",
+    420,
+    718,
+    10,
+    "F1",
+  );
+  content += "0.12 0.16 0.22 rg\n";
 
   content += pdfText("Document details", 48, 660, 13, "F2");
   content += drawKeyValue("Issued", formatDate(document.issued_at), 48, 638);
-  content += drawKeyValue("Booking ref", booking.booking_ref || bookingSnapshot.booking_ref, 48, 616);
+  content += drawKeyValue(
+    "Booking ref",
+    booking.booking_ref || bookingSnapshot.booking_ref,
+    48,
+    616,
+  );
   content += drawKeyValue("Status", document.status, 48, 594);
   if (isRefund && bookingSnapshot.rectifies_document_number) {
-    content += drawKeyValue("Rectifies", bookingSnapshot.rectifies_document_number, 48, 572);
+    content += drawKeyValue(
+      "Rectifies",
+      bookingSnapshot.rectifies_document_number,
+      48,
+      572,
+    );
   }
 
   content += pdfText("From", 330, 660, 13, "F2");
   content += pdfText(companySnapshot.brand || "Rent&Roll", 330, 638, 10, "F2");
-  content += pdfText(companySnapshot.name || "Escalera Labs S.L.", 330, 622, 9, "F1");
-  content += pdfText(companySnapshot.domestic_tax_id || "Tax ID pending", 330, 606, 9, "F1");
-  content += pdfText(`${companySnapshot.address_line_1 || "Valencia"}, ${companySnapshot.postal_code || ""} ${companySnapshot.city || "Spain"}`, 330, 590, 8, "F1");
+  content += pdfText(
+    companySnapshot.name || "Escalera Labs S.L.",
+    330,
+    622,
+    9,
+    "F1",
+  );
+  content += pdfText(
+    companySnapshot.domestic_tax_id || "Tax ID pending",
+    330,
+    606,
+    9,
+    "F1",
+  );
+  content += pdfText(
+    `${companySnapshot.address_line_1 || "Valencia"}, ${companySnapshot.postal_code || ""} ${companySnapshot.city || "Spain"}`,
+    330,
+    590,
+    8,
+    "F1",
+  );
 
   content += pdfText("Customer", 48, 548, 13, "F2");
   content += drawKeyValue("Name", customerName, 48, 526);
   content += drawKeyValue("Email", customerEmail, 48, 504);
-  content += drawKeyValue("Phone", customerSnapshot.phone || booking.customer_phone || "Not set", 48, 482);
+  content += drawKeyValue(
+    "Phone",
+    customerSnapshot.phone || booking.customer_phone || "Not set",
+    48,
+    482,
+  );
 
   content += pdfText("Rental", 330, 548, 13, "F2");
   content += drawKeyValue("Item", productName, 330, 526);
   content += drawKeyValue("Quantity", quantity, 330, 504);
   content += drawKeyValue("Start", formatDate(startAt), 330, 482);
   content += drawKeyValue("End", formatDate(endAt), 330, 460);
-  content += drawKeyValue("Fulfillment", labelFulfillment(fulfillmentMode), 330, 438);
+  content += drawKeyValue(
+    "Fulfillment",
+    labelFulfillment(fulfillmentMode),
+    330,
+    438,
+  );
 
   content += pdfText("Charges", 48, 408, 13, "F2");
   content += pdfLine(48, 394, 564, 394, 0.6);
@@ -140,48 +328,127 @@ export function buildBookingDocumentPdf(document: BookingDocument, booking: Book
   let y = 340;
   if (isRefund) {
     content += pdfText("Refund / rectification", 58, y, 9, "F1");
-    content += pdfText(formatMoney(document.total_cents, document.currency), 484, y, 9, "F1");
+    content += pdfText(
+      formatMoney(document.total_cents, document.currency),
+      484,
+      y,
+      9,
+      "F1",
+    );
   } else if (customLineItems.length > 0) {
     const visibleLines = customLineItems.slice(0, 3);
     for (const line of visibleLines) {
-      content += pdfText(line.description || "Custom quote line", 58, y, 8, "F1");
-      content += pdfText(formatMoney(Number(line.amountCents) || 0, document.currency), 484, y, 8, "F1");
+      content += pdfText(
+        line.description || "Custom quote line",
+        58,
+        y,
+        8,
+        "F1",
+      );
+      content += pdfText(
+        formatMoney(Number(line.amountCents) || 0, document.currency),
+        484,
+        y,
+        8,
+        "F1",
+      );
       y -= 20;
     }
     if (customLineItems.length > visibleLines.length) {
-      content += pdfText(`Plus ${customLineItems.length - visibleLines.length} additional agreed quote line(s)`, 58, y, 8, "F1");
+      content += pdfText(
+        `Plus ${customLineItems.length - visibleLines.length} additional agreed quote line(s)`,
+        58,
+        y,
+        8,
+        "F1",
+      );
       y -= 20;
     }
     content += pdfText(`${taxRate} included`, 58, y, 8, "F1");
-    content += pdfText(formatMoney(document.tax_cents, document.currency), 484, y, 8, "F1");
+    content += pdfText(
+      formatMoney(document.tax_cents, document.currency),
+      484,
+      y,
+      8,
+      "F1",
+    );
   } else {
     content += pdfText(`Rental - ${productName} x ${quantity}`, 58, y, 9, "F1");
-    content += pdfText(formatMoney(taxBaseCents, document.currency), 484, y, 9, "F1");
+    content += pdfText(
+      formatMoney(taxBaseCents, document.currency),
+      484,
+      y,
+      9,
+      "F1",
+    );
     y -= 22;
     content += pdfText(taxRate, 58, y, 9, "F1");
-    content += pdfText(formatMoney(document.tax_cents, document.currency), 484, y, 9, "F1");
+    content += pdfText(
+      formatMoney(document.tax_cents, document.currency),
+      484,
+      y,
+      9,
+      "F1",
+    );
   }
 
   content += pdfLine(390, 248, 564, 248, 0.5);
-  content += pdfText(isRefund ? "Rectifying total" : "Invoice total", 390, 226, 12, "F2");
-  content += pdfText(formatMoney(document.total_cents, document.currency), 484, 226, 12, "F2");
+  content += pdfText(
+    isRefund ? "Rectifying total" : "Invoice total",
+    390,
+    226,
+    12,
+    "F2",
+  );
+  content += pdfText(
+    formatMoney(document.total_cents, document.currency),
+    484,
+    226,
+    12,
+    "F2",
+  );
 
   content += pdfText("Payment reference", 48, 176, 12, "F2");
   const paymentSnapshot = document.payment_snapshot || {};
-  content += drawKeyValue("Provider", paymentSnapshot.provider || "stripe", 48, 154, 500);
-  content += drawKeyValue("Payment ID", paymentSnapshot.stripe_payment_intent_id || "Not set", 48, 132, 500);
-  content += drawKeyValue("Refund ID", paymentSnapshot.stripe_refund_id || "Not applicable", 48, 110, 500);
+  content += drawKeyValue(
+    "Provider",
+    paymentSnapshot.provider || "stripe",
+    48,
+    154,
+    500,
+  );
+  content += drawKeyValue(
+    "Payment ID",
+    paymentSnapshot.stripe_payment_intent_id || "Not set",
+    48,
+    132,
+    500,
+  );
+  content += drawKeyValue(
+    "Refund ID",
+    paymentSnapshot.stripe_refund_id || "Not applicable",
+    48,
+    110,
+    500,
+  );
 
   content += pdfLine(48, 72, 564, 72, 0.85);
-  content += pdfText(companySnapshot.footer || "Issued from Rent&Roll booking and payment records.", 48, 52, 8, "F1");
+  content += pdfText(
+    companySnapshot.footer ||
+      "Issued from Rent&Roll booking and payment records.",
+    48,
+    52,
+    8,
+    "F1",
+  );
   content += pdfText("Questions? Contact Rent&Roll support.", 48, 38, 8, "F1");
 
   const objects = [
     "<< /Type /Catalog /Pages 2 0 R >>",
     "<< /Type /Pages /Kids [3 0 R] /Count 1 >>",
     `<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${PAGE_WIDTH} ${PAGE_HEIGHT}] /Resources << /Font << /F1 4 0 R /F2 5 0 R >> >> /Contents 6 0 R >>`,
-    "<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>",
-    "<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>",
+    "<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>",
+    "<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding >>",
     `<< /Length ${content.length} >>\nstream\n${content}endstream`,
   ];
 

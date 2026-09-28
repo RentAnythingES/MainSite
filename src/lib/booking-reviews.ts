@@ -12,15 +12,16 @@ export async function createBookingReviewInvitation(
   supabase: SupabaseClient,
   bookingId: string,
   productId: string | null,
+  locale: "en" | "es" | "de" = "en",
 ): Promise<string | null> {
   const { data, error } = await supabase
     .from("booking_reviews")
-    .insert({ booking_id: bookingId, product_id: productId, locale: "en" })
+    .insert({ booking_id: bookingId, product_id: productId, locale })
     .select("public_token")
     .single();
 
   if (!error && data?.public_token) {
-    return `${REVIEW_BASE_URL}/${data.public_token}`;
+    return `${REVIEW_BASE_URL}/${data.public_token}?locale=${locale}`;
   }
 
   if (isMissingBookingReviewsTable(error)) {
@@ -39,5 +40,5 @@ export async function createBookingReviewInvitation(
     return null;
   }
 
-  return `${REVIEW_BASE_URL}/${existing.public_token}`;
+  return `${REVIEW_BASE_URL}/${existing.public_token}?locale=${locale}`;
 }
