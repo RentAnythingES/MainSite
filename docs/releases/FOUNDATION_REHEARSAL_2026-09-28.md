@@ -2,7 +2,7 @@
 
 ## Result
 
-The private-city migration passed against a disposable local Supabase environment containing the production public schema and synthetic records. A hosted staging project was not needed for this rehearsal. Production remains unchanged pending verification of the Vercel catalogue setting and the release itself.
+The private-city migration passed against a disposable local Supabase environment containing the production public schema and synthetic records. A hosted staging project was not needed for this rehearsal. The production migration was applied successfully at 08:29 UTC; application deployment verification follows publication of this checkpoint.
 
 ## Environment and isolation
 
@@ -34,4 +34,8 @@ Evidence and local scripts are saved in the workspace's `agent-work/expansion-re
 
 The rehearsal covers the private-city schema and existing Valencia fulfillment/quote behavior. It does not certify the future offer-inventory writer, reservation concurrency, payment webhook lifecycle, German pages or another city's checkout. Those remain separate implementation gates.
 
-The available Vercel browser session only has access to Snappit, not the Rentandroll team. Verify `MARKET_CATALOGUE_READ_MODE` is unset or `legacy` in the correct project before release. Then apply only `20260927_private_market_setup.sql` with an atomic migration-ledger insert, publish the prepared branch using Johannes-Schiefer's GitHub identity, and verify the resulting deployment. Restored historical migrations must not be replayed.
+Rentandroll Vercel access was supplied. Project and shared searches both confirmed `MARKET_CATALOGUE_READ_MODE` is unset, preserving legacy reads. No Vercel variables were changed.
+
+The release branch incorporates the subsequent production commits through `9d3639d` (city agents and partner dashboard). Their migrations do not modify the foundation's fulfillment policies or market configuration. All 72 installed migrations matched source, all 58 targeted tests passed, and the merged production build passed.
+
+Only `20260927_private_market_setup.sql` was applied, atomically with its migration-ledger insert and bounded statement/lock timeouts. Checks inside the transaction confirmed unchanged city/fulfillment row fingerprints, Valencia as the sole default, and the expected anon/authenticated read restrictions. Canonical migration checksum: `591c4fb89bbffced82da8a8bfc001cc6ffbf8a2b4e8ebc1a77263af4d8ae86ad`. Historical migrations were not replayed. Application publication and live response comparison remain the final release steps.
