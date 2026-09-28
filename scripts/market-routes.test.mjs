@@ -23,6 +23,7 @@ function transport(t, { role = "admin", markets = [city], rpcError } = {}) {
     let body;
     if (url.pathname === "/auth/v1/user") body = { id, app_metadata: { role } };
     else if (url.pathname === "/rest/v1/markets") body = markets;
+    else if (url.pathname === "/rest/v1/market_locales") body = [{ market_id:id,locale:'en',is_public:true,is_booking_enabled:true,is_indexable:true,language:{code:'en',is_public:true} }];
     else if (url.pathname === "/rest/v1/rpc/save_private_market") body = rpcError ?? { ...setup, id };
     else if (["/rest/v1/pickup_locations", "/rest/v1/service_zones"].includes(url.pathname)) body = [];
     else assert.fail(`Unexpected HTTP request: ${url}`);

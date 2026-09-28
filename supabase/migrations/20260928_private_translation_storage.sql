@@ -84,3 +84,17 @@ create policy "FAQ publication gate" on public.product_faqs
     publication_status='published'
     and exists(select 1 from public.locales l where l.code=locale and l.is_public)
   );
+
+-- Keep future private-city language rows in the same transaction as city setup.
+-- Existing gates are never re-enabled by an ordinary city edit.
+create function public.initialize_market_locales() returns trigger
+language plpgsql security definer set search_path = public as $$
+begin
+  insert into public.market_locales(market_id,locale)
+  select new.id,l.code from public.locales l where l.code=any(new.supported_locales)
+  on conflict(market_id,locale) do nothing;
+  return new;
+end $$;
+revoke all on function public.initialize_market_locales() from public, anon, authenticated;
+create trigger initialize_market_locales after insert or update of supported_locales on public.markets
+  for each row execute function public.initialize_market_locales();

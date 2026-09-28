@@ -1,6 +1,7 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 import type { Database, Market } from "@/lib/types";
 import { isLocaleTag, isMarketId, isMarketSlug } from "./route-context";
+import { isLocale, localeRegistry } from "@/i18n/config";
 
 export interface MarketContext {
   id: string;
@@ -68,12 +69,37 @@ export async function resolveMarketContext(
   if (request.mode !== "historical" && !market.supported_locales.includes(locale)) {
     throw new MarketContextError("unsupported_locale", 400, "Language is unavailable for this city");
   }
+  let languageBookingEnabled = true;
+  let languageIndexable = true;
+  if (request.mode === "public") {
+    if (!isLocale(locale) || !localeRegistry[locale].public) {
+      throw new MarketContextError("unsupported_locale", 400, "Language is unavailable for this city");
+    }
+    const { data: languages, error: languageError } = await supabase.from("market_locales")
+      .select("market_id,locale,is_public,is_booking_enabled,is_indexable,language:locales!inner(code,is_public)")
+      .eq("market_id", market.id).eq("locale", locale)
+      .limit(2).abortSignal(AbortSignal.timeout(8000));
+    if (languageError) throw new MarketContextError("locale_unavailable", 503, "Language configuration is unavailable");
+    const entry = languages?.[0] as unknown as {
+      market_id: string; locale: string; is_public: boolean; is_booking_enabled: boolean; is_indexable: boolean;
+      language: { code: string; is_public: boolean };
+    } | undefined;
+    if (!entry || languages?.length !== 1 || entry.market_id !== market.id || entry.locale !== locale ||
+      entry.language?.code !== locale || entry.is_public !== true || entry.language.is_public !== true) {
+      throw new MarketContextError("unsupported_locale", 400, "Language is unavailable for this city");
+    }
+    languageBookingEnabled = entry.is_booking_enabled === true;
+    languageIndexable = entry.is_indexable === true;
+    if (request.requireBooking && !languageBookingEnabled) {
+      throw new MarketContextError("booking_disabled", 409, "Bookings are unavailable in this language");
+    }
+  }
   return {
     id: market.id, slug: market.slug, name: market.name, countryCode: market.country_code,
     timezone: market.timezone, currency: market.currency, defaultLocale: market.default_locale,
     supportedLocales: market.supported_locales, locale, isActive: market.is_active,
-    isBookingEnabled: market.is_booking_enabled, isPublic: market.is_public,
-    isIndexable: market.is_indexable, foundationAvailable: true,
+    isBookingEnabled: market.is_booking_enabled && languageBookingEnabled, isPublic: market.is_public,
+    isIndexable: market.is_indexable && languageIndexable, foundationAvailable: true,
   };
 }
 

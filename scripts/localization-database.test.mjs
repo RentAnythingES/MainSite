@@ -65,5 +65,17 @@ test('translation storage preserves legacy visibility and keeps future languages
   // A fourth language needs a registry row, not another CHECK rewrite.
   await db.exec("insert into locales(code,name) values('fr','Français'); insert into product_localizations(product_id,locale) select id,'fr' from products");
   assert.equal((await db.query("select publication_status from product_localizations where locale='fr'")).rows[0].publication_status,'draft');
+  const added=(await db.query("insert into markets(supported_locales,is_public,is_active,is_booking_enabled,is_indexable) values(array['en','es'],false,false,false,false) returning id")).rows[0].id;
+  const gates=(await db.query('select * from market_locales where market_id=$1 order by locale',[added])).rows;
+  assert.equal(gates.length,2);
+  assert.ok(gates.every(row=>!row.is_public&&!row.is_booking_enabled&&!row.is_indexable));
+  await db.query("update markets set supported_locales=array['en','es','fr'] where id=$1",[added]);
+  assert.equal((await db.query('select * from market_locales where market_id=$1',[added])).rows.length,3);
+  await db.query("update markets set supported_locales=array['en','es','fr'] where id=$1",[added]);
+  assert.equal((await db.query('select * from market_locales where market_id=$1 and is_public',[added])).rows.length,0);
+  await db.exec('begin');
+  const rolledBack=(await db.query("insert into markets(supported_locales) values(array['en']) returning id")).rows[0].id;
+  await db.exec('rollback');
+  assert.equal((await db.query('select * from market_locales where market_id=$1',[rolledBack])).rows.length,0);
  } finally {await db.close();}
 });

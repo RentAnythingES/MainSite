@@ -35,10 +35,11 @@ Run `npm run test:localization`, the existing market/booking regression tests, t
 `20260928_private_translation_storage.sql` adds a database locale registry and
 `market_locales` settings for future city/language publication, booking and indexing.
 German starts private in both tables. Existing market rows are untouched; the new
-per-city records copy their current settings. Application readers still use
-`markets.supported_locales`, and the city-setup API/RPC deliberately still accepts
-only EN/ES. New-city creation will need to write these records atomically before
-readers switch to the new table. These tables alone do not enable any route.
+per-city records copy their current settings. Public market resolution checks both
+these records and `markets.supported_locales`. City setup still accepts only EN/ES.
+A database trigger adds private language records atomically when a city or its
+supported languages are added, without re-enabling existing gates. These tables
+alone do not enable any route.
 
 Product translations and FAQs reference the locale registry instead of binary
 CHECK constraints. Existing rows are backfilled as published to preserve public
@@ -58,3 +59,19 @@ The migration has passed ephemeral PostgreSQL tests, including transaction rollb
 legacy inserts, unchanged market rows, public-role privacy and a fourth private
 language. A current-schema local Supabase rehearsal is still required before release.
 No production migration has been applied for this slice.
+
+## Application gate integration (unreleased)
+
+`resolveMarketContext` requires a code-public locale, membership in the city's
+supported languages, a public global locale and a public city-language record.
+Booking requests also require the city-language booking gate; the returned
+indexability is the conjunction of city and language settings. Operator/historical
+resolution remains separate, so issued bookings keep their saved locale.
+
+Missing tables, database failures and incomplete records fail closed. Apply the
+prepared migration before deploying this application checkpoint; there is no
+schema-error fallback that silently bypasses a language disable. Existing public
+market callers (booking options and offer catalogue resolution) now use these
+checks. Legacy product rendering, shared templates, cached page invalidation and
+sitemap readers still need integration before a language can be launched or a
+complete site-wide disable promised. No public German route exists yet.

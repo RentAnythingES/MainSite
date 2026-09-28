@@ -477,6 +477,16 @@ interface BookingDocumentRow {
 export interface Database {
   public: {
     Tables: {
+      locales: {
+        Row: { code: string; name: string; is_public: boolean };
+        Insert: { code: string; name: string; is_public?: boolean };
+        Update: { name?: string; is_public?: boolean };
+      };
+      market_locales: {
+        Row: { market_id: string; locale: string; is_public: boolean; is_booking_enabled: boolean; is_indexable: boolean };
+        Insert: { market_id: string; locale: string; is_public?: boolean; is_booking_enabled?: boolean; is_indexable?: boolean };
+        Update: { is_public?: boolean; is_booking_enabled?: boolean; is_indexable?: boolean };
+      };
       categories: {
         Row: CategoryRow;
         Insert: Omit<CategoryRow, "id" | "created_at" | "updated_at">;
