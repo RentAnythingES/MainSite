@@ -1,3 +1,4 @@
+import ProductEditorialNotes from "@/components/ProductEditorialNotes";
 import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
@@ -202,34 +203,7 @@ export default async function ProductPage({ params }: Props) {
                 </ul>
               </div>
 
-              {(product.includesText || product.constraintsText || product.deliverySetupNote || product.careNote) && (
-                <div className="grid sm:grid-cols-2 gap-4 mb-8">
-                  {product.includesText && (
-                    <div className="rounded-xl bg-neutral-50 border border-border p-4">
-                      <h2 className="font-bold text-sm text-neutral-800 mb-2">What&apos;s included</h2>
-                      <p className="text-sm text-neutral-600 whitespace-pre-line">{product.includesText}</p>
-                    </div>
-                  )}
-                  {product.constraintsText && (
-                    <div className="rounded-xl bg-neutral-50 border border-border p-4">
-                      <h2 className="font-bold text-sm text-neutral-800 mb-2">Good to know</h2>
-                      <p className="text-sm text-neutral-600 whitespace-pre-line">{product.constraintsText}</p>
-                    </div>
-                  )}
-                  {product.deliverySetupNote && (
-                    <div className="rounded-xl bg-neutral-50 border border-border p-4">
-                      <h2 className="font-bold text-sm text-neutral-800 mb-2">Delivery and setup</h2>
-                      <p className="text-sm text-neutral-600 whitespace-pre-line">{product.deliverySetupNote}</p>
-                    </div>
-                  )}
-                  {product.careNote && (
-                    <div className="rounded-xl bg-neutral-50 border border-border p-4">
-                      <h2 className="font-bold text-sm text-neutral-800 mb-2">Care and hygiene</h2>
-                      <p className="text-sm text-neutral-600 whitespace-pre-line">{product.careNote}</p>
-                    </div>
-                  )}
-                </div>
-              )}
+              <ProductEditorialNotes product={product} locale="en" />
 
               {/* Specs */}
               <div>

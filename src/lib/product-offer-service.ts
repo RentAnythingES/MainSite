@@ -19,9 +19,9 @@ export interface ProductOfferProjection {
 }
 export class ProductOfferError extends Error {}
 
-const PRODUCT_FACTS = "id,slug,name,brand,description,emoji,image_url,category_id,subcategory,subcategory_slug,features,specs,content_status,category:categories!products_category_id_fkey(slug,name)";
-const CARD_COPY = "product_localizations(locale,short_description,seo_title,seo_description),product_images(image_url,alt_text,rights_status,is_primary,sort_order)";
-const DETAIL_COPY = "product_localizations(*),product_faqs(locale,question,answer,sort_order),product_images(image_url,alt_text,rights_status,is_primary,sort_order)";
+const PRODUCT_FACTS = "id,slug,name,brand,description,emoji,image_url,category_id,subcategory,subcategory_slug,features,specs,content_status,translation_source_revision,category:categories!products_category_id_fkey(slug,name)";
+const CARD_COPY = "product_localizations(locale,short_description,seo_title,seo_description,publication_status,source_revision,translation_revision,reviewed_revision,reviewed_by,translated_name:translation_content->>name,translated_image_alt:translation_content->>image_alt_text),product_images(image_url,alt_text,rights_status,is_primary,sort_order)";
+const DETAIL_COPY = "product_localizations(*),product_faqs(locale,question,answer,sort_order,publication_status),product_images(image_url,alt_text,rights_status,is_primary,sort_order)";
 const OFFER_FIELDS = "id,market_id,product_id,stock_total,online_capacity,offer_pricing_tiers(min_days,per_day_cents),market:markets!inner(slug,currency,timezone,supported_locales)";
 
 function assertContext(marketId: string, locale: string) {

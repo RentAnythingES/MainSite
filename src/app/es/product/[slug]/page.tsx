@@ -1,3 +1,4 @@
+import ProductEditorialNotes from "@/components/ProductEditorialNotes";
 import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
@@ -170,34 +171,7 @@ export default async function ProductPageES({ params }: Props) {
                 </div>
               )}
 
-              {(product.includesText || product.constraintsText || product.deliverySetupNote || product.careNote) && (
-                <div className="grid sm:grid-cols-2 gap-4 mb-8">
-                  {product.includesText && (
-                    <div className="rounded-xl bg-neutral-50 border border-border p-4">
-                      <h2 className="font-bold text-sm text-neutral-800 mb-2">Incluye</h2>
-                      <p className="text-sm text-neutral-600 whitespace-pre-line">{product.includesText}</p>
-                    </div>
-                  )}
-                  {product.constraintsText && (
-                    <div className="rounded-xl bg-neutral-50 border border-border p-4">
-                      <h2 className="font-bold text-sm text-neutral-800 mb-2">Información útil</h2>
-                      <p className="text-sm text-neutral-600 whitespace-pre-line">{product.constraintsText}</p>
-                    </div>
-                  )}
-                  {product.deliverySetupNote && (
-                    <div className="rounded-xl bg-neutral-50 border border-border p-4">
-                      <h2 className="font-bold text-sm text-neutral-800 mb-2">Entrega y preparación</h2>
-                      <p className="text-sm text-neutral-600 whitespace-pre-line">{product.deliverySetupNote}</p>
-                    </div>
-                  )}
-                  {product.careNote && (
-                    <div className="rounded-xl bg-neutral-50 border border-border p-4">
-                      <h2 className="font-bold text-sm text-neutral-800 mb-2">Cuidado e higiene</h2>
-                      <p className="text-sm text-neutral-600 whitespace-pre-line">{product.careNote}</p>
-                    </div>
-                  )}
-                </div>
-              )}
+              <ProductEditorialNotes product={product} locale="es" />
 
               {/* Specs */}
               {product.specs && Object.keys(product.specs).length > 0 && (

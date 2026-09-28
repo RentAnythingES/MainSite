@@ -51,9 +51,9 @@ policies. Restrictive policies prevent another permissive read policy bypassing
 these gates. Service-role readers bypass RLS and must enforce publication in their
 own application queries before any new language is served.
 
-This is storage groundwork, not the complete review workflow. Revision tracking,
-automatic stale detection, editor controls, reviewer attribution and application
-publication checks still need implementation. Do not enable German in the database
+The later translation workflow migration adds revision tracking, stale detection,
+editor controls, reviewer attribution and product translation publication checks.
+Full commercial coverage and owner review remain outstanding. Do not enable German in the database
 or code registry until those controls and the complete customer journey are ready.
 The migration has passed ephemeral PostgreSQL tests, including transaction rollback,
 legacy inserts, unchanged market rows, public-role privacy and a fourth private
@@ -151,3 +151,48 @@ Owner review package: `agent-work/expansion-readiness-2026-09-27/planpro/german-
 in the primary workspace, with 11 email examples and two synthetic PDF specimens.
 No German copy is claimed as reviewed. No production migration, payment, email,
 push or deployment was performed for this phase.
+
+## Product translation authoring and review — implemented, unreleased
+
+Apply `20260929_translation_workflow.sql` after the three earlier German migrations
+before deploying this branch. The product reader projections now require its columns.
+The migration was rehearsed and applied only in the isolated local database.
+
+`/admin/products/[id]/translations` provides an English source beside the selected
+language, a saved-copy preview and recent change history. The database language
+registry supplies the choices. Text, display name, image description, features,
+specifications and FAQs are saved together through `manage_product_translation`.
+Stock, prices, product identity and image URLs stay outside translation content.
+
+Saving creates a draft revision and clears previous approval. Review requires both
+language and factual attestations; the authenticated administrator is recorded as
+reviewer. Publishing requires the reviewed revision, current source revision and
+both application/database language publication gates. German remains private.
+Conflicting edits return 409 and the editor retains unsaved text for reconciliation.
+
+Changes to source product facts, English editorial copy/FAQs or images advance the
+source revision and mark managed translations stale. Stock and price updates do
+not. Legacy EN/ES rows remain compatible until enrolled by saving through the new
+editor. The old editor cannot overwrite managed translations, and its FAQ saves
+preserve other languages. Product service readers reject unpublished/stale managed
+rows; successful admin mutations invalidate the existing product cache tag.
+External direct database writes still need cache invalidation or expiry. Existing
+EN/ES fallback remains; strict German commercial route coverage is not complete.
+
+Shared `ProductEditorialNotes` renders the four editorial sections on EN/ES product
+pages and the private editor preview. Other commercial templates remain to be
+consolidated. There is no general public German product/category route yet.
+
+### Coverage and review limits
+
+`npm run audit:locale-coverage -- --fixture` verifies the report mechanism.
+`--input <snapshot.json> --output <report.json>` audits an authorized offline export.
+`--live --snapshot <path>` explicitly reads active catalogue source content and
+persists it locally; it must not run while the current export approval is unresolved.
+The attempted production export was rejected before execution, so no real catalogue
+coverage percentage or translated catalogue count is claimed.
+
+Automated readiness checks cover required text, metadata length, FAQ completeness,
+revision agreement and recorded review. They do not prove factual equivalence or
+translation quality. Human review must check all source features, specifications,
+suitability, restrictions and safety guidance. See `GERMAN-CONTENT-INVENTORY.md`.

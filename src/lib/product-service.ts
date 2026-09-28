@@ -11,6 +11,7 @@ import { resolveMarketContext } from "@/lib/market-context";
 import { getProductOffer, listProductOffers, offerProductRow } from "@/lib/product-offer-service";
 import type { ProductOfferProjection } from "@/lib/product-offer-service";
 import { catalogueParity, marketCatalogueMode, readMarketCatalogue } from "@/lib/market-catalogue-mode";
+import { isPublishedTranslation, type TranslationContent } from "@/lib/translation-workflow";
 
 /**
  * Product Service — Supabase-first with static fallback
@@ -47,6 +48,14 @@ function normalizeImageUrl(value: unknown): string {
 type ProductLocale = "en" | "es";
 
 type ProductLocalization = {
+  translated_name?: string;
+  translated_image_alt?: string;
+  publication_status?: string;
+  source_revision?: number | null;
+  translation_revision?: number;
+  reviewed_revision?: number | null;
+  reviewed_by?: string | null;
+  translation_content?: TranslationContent | null;
   product_id: string;
   locale: ProductLocale;
   short_description: string | null;
@@ -60,6 +69,7 @@ type ProductLocalization = {
 };
 
 type ProductFaqRow = {
+  publication_status?: string;
   product_id: string;
   locale: ProductLocale;
   question: string;
@@ -77,6 +87,11 @@ type ProductImage = {
 };
 
 type ProductSeoLocalization = {
+  publication_status?: string;
+  source_revision?: number | null;
+  translation_revision?: number;
+  reviewed_revision?: number | null;
+  reviewed_by?: string | null;
   locale: ProductLocale;
   short_description: string | null;
   seo_title: string | null;
@@ -89,6 +104,7 @@ type ProductSeoImage = {
 };
 
 type ProductSeoRow = {
+  translation_source_revision?: number;
   slug: string;
   name: string;
   description: string;
@@ -137,7 +153,7 @@ function mapProductSeoState(row: ProductSeoRow): ProductSeoState {
     row.pricing_tiers.length > 0;
   const hasEditorialApproval = isLegacyProduct || row.content_status === "content_ready";
   const spanish = row.product_localizations.find(
-    (localization) => localization.locale === "es"
+    (localization) => localization.locale === "es" && isPublishedTranslation(localization, row.translation_source_revision)
   );
 
   const indexableEn =
@@ -188,10 +204,11 @@ async function fetchProductSeoRows(slug?: string): Promise<ProductSeoRow[]> {
       image_url,
       is_active,
       content_status,
+      translation_source_revision,
       updated_at,
       category:categories!products_category_id_fkey (slug),
       pricing_tiers (min_days),
-      product_localizations (locale, short_description, seo_title, seo_description),
+      product_localizations (*),
       product_images (is_primary, rights_status)
     `)
     .eq("is_active", true);
@@ -224,6 +241,12 @@ function mergeProductEditorialContent(
 
   return {
     ...product,
+    name: localization?.translated_name || product.name,
+    ...(localization?.translation_content ? {
+      name: localization.translation_content.name,
+      features: localization.translation_content.features,
+      specs: localization.translation_content.specs,
+    } : {}),
     description: localization?.short_description?.trim() || product.description,
     detailDescription: localization?.detail_description?.trim() || undefined,
     includesText: localization?.includes_text?.trim() || undefined,
@@ -233,8 +256,8 @@ function mergeProductEditorialContent(
     seoTitle: localization?.seo_title?.trim() || undefined,
     seoDescription: localization?.seo_description?.trim() || undefined,
     image: canUseEditorialImage(primaryImage) ? normalizeImageUrl(primaryImage.image_url) : product.image,
-    imageAlt: canUseEditorialImage(primaryImage) ? primaryImage.alt_text?.trim() || product.name : product.name,
-    faqs: faqs.length > 0 ? faqs : product.faqs,
+    imageAlt: localization?.translated_image_alt || localization?.translation_content?.image_alt_text || (canUseEditorialImage(primaryImage) ? primaryImage.alt_text?.trim() || product.name : product.name),
+    faqs: localization?.translation_content?.faqs || (faqs.length > 0 ? faqs : product.faqs),
   };
 }
 
@@ -281,9 +304,9 @@ function mapEmbeddedProduct(row: Record<string, unknown>, locale: ProductLocale)
   if (!canUseLocalizedContent) return product;
 
   const localization = ((row.product_localizations as ProductLocalization[] | undefined) || [])
-    .find((entry) => entry.locale === locale);
+    .find((entry) => entry.locale === locale && isPublishedTranslation(entry, row.translation_source_revision as number | undefined));
   const faqs = ((row.product_faqs as ProductFaqRow[] | undefined) || [])
-    .filter((entry) => entry.locale === locale)
+    .filter((entry) => entry.locale === locale && (!entry.publication_status || entry.publication_status === "published"))
     .sort((left, right) => (left.sort_order || 0) - (right.sort_order || 0));
   const primaryImage = ((row.product_images as ProductImage[] | undefined) || [])
     .filter((entry) => entry.is_primary !== false)

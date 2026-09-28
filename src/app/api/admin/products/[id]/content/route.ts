@@ -80,10 +80,21 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
       primary_image?: PrimaryImagePayload;
     };
     const allowedImageStatuses = ["unknown", "owned", "licensed", "manufacturer_approved", "owner_approved"];
+    if ((body.localizations || []).some(item => !["en", "es"].includes(item.locale)) ||
+      (body.faqs || []).some(item => !["en", "es"].includes(item.locale))) {
+      return NextResponse.json({ error: "Use the translation editor for additional languages." }, { status: 400 });
+    }
     if (body.primary_image?.rights_status && !allowedImageStatuses.includes(body.primary_image.rights_status)) {
       return NextResponse.json({ error: "Choose a valid image permission status." }, { status: 400 });
     }
     const supabase = createAdminClient();
+    const editedLocales = [...new Set([...(body.localizations || []).map(item => item.locale), ...(body.faqs || []).map(item => item.locale)])];
+    const { data: existingTranslations, error: translationError } = await supabase.from("product_localizations")
+      .select("*").eq("product_id", id);
+    if (translationError) throw translationError;
+    if ((existingTranslations || []).some(row => row.source_revision != null && editedLocales.includes(row.locale))) {
+      return NextResponse.json({ error: "This product has managed translations. Save those languages in the translation editor." }, { status: 409 });
+    }
     const { data: product, error: productError } = await supabase
       .from("products")
       .select("id, image_url")
@@ -118,7 +129,7 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
         answer: faq.answer?.trim() || "",
         sort_order: index,
       }));
-    const { error: deleteFaqError } = await supabase.from("product_faqs").delete().eq("product_id", id);
+    const { error: deleteFaqError } = await supabase.from("product_faqs").delete().eq("product_id", id).in("locale", editedLocales);
     if (deleteFaqError) throw deleteFaqError;
     didMutate = true;
     if (cleanedFaqs.length > 0) {
