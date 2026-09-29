@@ -60,13 +60,15 @@ backfilled to avoid treating them as new. Historic past jobs never broadcast are
 not recreated during rollout.
 
 Apply `20260929_advance_driver_dispatch.sql` and
-`20260929_driver_dispatch_scheduler.sql`, deploy the application, then run
+`20260929_driver_dispatch_scheduler.sql` and
+`20260929_driver_dispatch_scheduler_auth.sql`, deploy the application, then run
 `node scripts/configure-driver-dispatch-cron.cjs`. The second migration installs
 Supabase `pg_cron`/`pg_net` and leaves the named job disabled until configuration.
-The setup script stores `CRON_SECRET` in Vault and enables
+The setup script generates a dedicated random credential in Vault and enables
 `rentandroll-driver-dispatch` on `*/5 * * * *`. No secret is embedded in the cron SQL
-or committed files. Rotate the Vault value by rerunning the script after changing
-the application secret. Disable with `cron.alter_job(jobid, active := false)` for
+or committed files. The API verifies its SHA-256 fingerprint through a service-role-only
+function; the plaintext credential never passes through the application database API.
+Existing credentials are preserved on reruns. Disable with `cron.alter_job(jobid, active := false)` for
 that named job. Inspect `cron.job_run_details` and `net._http_response` to verify
 both scheduler execution and HTTP results; HTTP 500 errors also create system incidents.
 
