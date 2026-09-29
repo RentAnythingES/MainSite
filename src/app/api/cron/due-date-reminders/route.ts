@@ -4,10 +4,7 @@ import { createAdminClient } from "@/lib/supabase-admin";
 import {
   sendDailyManifestTelegramNotification,
   sendDueDateTelegramNotification,
-  sendDeliveryGroupRequest,
 } from "@/lib/telegram";
-import { formatCustomerFulfillmentWindow } from "@/lib/fulfillment-windows";
-import { recordDeliveryTripAccounting } from "@/lib/delivery-accounting";
 
 export const maxDuration = 60;
 
@@ -17,26 +14,6 @@ const ACTIVE_STATUSES = ["paid", "delivering", "active", "returning"];
 function madridDateString(date: Date) {
   // en-CA gives YYYY-MM-DD, which matches Postgres `date` string comparisons.
   return new Intl.DateTimeFormat("en-CA", { timeZone: "Europe/Madrid" }).format(date);
-}
-
-function madridWindowLabel(date: Date) {
-  const dateLabel = new Intl.DateTimeFormat("en-GB", {
-    timeZone: "Europe/Madrid",
-    weekday: "short",
-    day: "numeric",
-    month: "short",
-  }).format(date);
-  const time = new Intl.DateTimeFormat("en-GB", {
-    timeZone: "Europe/Madrid",
-    hour: "2-digit",
-    minute: "2-digit",
-    hourCycle: "h23",
-  }).format(date);
-  return `${dateLabel} · ${formatCustomerFulfillmentWindow(time)}`;
-}
-
-function postcodeFromAddress(address: string | null) {
-  return /\b\d{5}\b/.exec(address || "")?.[0] || "Not provided";
 }
 
 type BookingRow = {
@@ -116,64 +93,6 @@ async function recordDailyManifest(
   if (error) throw error;
 }
 
-// Posts one claimable request per event to the courier group; idempotent per day.
-async function dispatchGroupRequest(
-  supabase: ReturnType<typeof createAdminClient>,
-  booking: BookingRow,
-  eventType: "delivery" | "pickup",
-  eventDate: string,
-) {
-  if (!process.env.TELEGRAM_DELIVERY_GROUP_ID) return false;
-
-  const { data: inserted, error: insertError } = await supabase
-    .from("delivery_requests")
-    .upsert(
-      { booking_id: booking.id, event_type: eventType, event_date: eventDate },
-      { onConflict: "booking_id,event_type,event_date", ignoreDuplicates: true },
-    )
-    .select("id");
-
-  if (insertError) throw insertError;
-  const request = inserted?.[0];
-  if (!request) return false;
-
-  const eventAt = new Date((eventType === "delivery" ? booking.rental_start_at : booking.rental_end_at) as string);
-  const sent = await sendDeliveryGroupRequest({
-    requestId: request.id,
-    eventType,
-    windowLabel: madridWindowLabel(eventAt),
-    postalCode: postcodeFromAddress(eventType === "delivery" ? booking.delivery_address : booking.collection_address || booking.delivery_address),
-  });
-
-  if (!sent.ok) {
-    await supabase.from("delivery_requests").delete().eq("id", request.id);
-    throw new Error(sent.error || "Failed to post request to the courier group");
-  }
-
-  await supabase
-    .from("delivery_requests")
-    .update({ group_chat_id: process.env.TELEGRAM_DELIVERY_GROUP_ID, group_message_id: sent.messageId || null })
-    .eq("id", request.id);
-
-  const destinationAddress = eventType === "delivery"
-    ? booking.delivery_address
-    : booking.collection_address || booking.delivery_address;
-  if (destinationAddress) {
-    try {
-      await recordDeliveryTripAccounting(supabase, {
-        deliveryRequestId: request.id,
-        bookingId: booking.id,
-        eventType,
-        eventDate,
-        destinationAddress,
-      });
-    } catch (accountingError) {
-      console.error("[due-date-reminders] Failed to record delivery trip accounting:", accountingError);
-    }
-  }
-  return true;
-}
-
 export async function GET(request: NextRequest) {
   if (!process.env.CRON_SECRET || request.headers.get("authorization") !== `Bearer ${process.env.CRON_SECRET}`) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -210,7 +129,6 @@ export async function GET(request: NextRequest) {
   const results = {
     deliveriesSent: 0,
     returnCollectionsSent: 0,
-    groupRequestsSent: 0,
     skippedAlreadySent: 0,
     manifestSent: false,
     manifestSkippedAlreadySent: false,
@@ -250,13 +168,6 @@ export async function GET(request: NextRequest) {
           }
         }
 
-        try {
-            if (await dispatchGroupRequest(supabase, booking, "delivery", today)) {
-            results.groupRequestsSent += 1;
-          }
-        } catch (groupErr) {
-          results.errors.push(`Group delivery request for ${booking.booking_ref}: ${groupErr instanceof Error ? groupErr.message : String(groupErr)}`);
-        }
       } catch (err) {
         results.errors.push(`Delivery reminder for ${booking.booking_ref}: ${err instanceof Error ? err.message : String(err)}`);
       }
@@ -290,13 +201,6 @@ export async function GET(request: NextRequest) {
             }
           }
 
-          try {
-            if (await dispatchGroupRequest(supabase, booking, "pickup", today)) {
-              results.groupRequestsSent += 1;
-            }
-          } catch (groupErr) {
-            results.errors.push(`Group return collection request for ${booking.booking_ref}: ${groupErr instanceof Error ? groupErr.message : String(groupErr)}`);
-          }
         } catch (err) {
           results.errors.push(`Return collection reminder for ${booking.booking_ref}: ${err instanceof Error ? err.message : String(err)}`);
         }

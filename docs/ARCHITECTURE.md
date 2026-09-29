@@ -159,6 +159,12 @@ so drivers who joined before the membership webhook was available are activated 
 their first valid claim. Setup and permissions are documented in
 `docs/TELEGRAM_DRIVER_DISPATCH.md`.
 
+Paid booking webhooks now invoke advance driver dispatch; a five-minute Supabase
+Cron HTTP call reconciles deferred jobs, four-hour working-time reminders and
+two-hour unclaimed-job admin alerts. The shared dispatcher stores send timestamps
+and leases on `delivery_requests`. Supabase Vault holds the HTTP authorization
+secret. Driver offers and reminders are independent of the daily manifest.
+
 The daily Telegram operations manifest separates delivery trips, customer pickup
 handovers, customer returns, and driver return collections. It includes
 active bookings due today by `rental_start_at` or `rental_end_at`, with a date-only
@@ -177,7 +183,7 @@ refund is issued automatically if Rent'n Roll cannot confirm the booking.
 
 ### Delivery trip accounting
 
-When the due-date cron broadcasts a delivery or collection request, it also creates
+When advance dispatch first broadcasts a delivery or collection request, it also creates
 one internal accounting trip. Google Maps Directions calculates the one-way driving
 distance from the configured warehouse to the customer address; the origin, rate,
 distance and cost are snapshotted in `delivery_trip_accounting`. The Telegram claim

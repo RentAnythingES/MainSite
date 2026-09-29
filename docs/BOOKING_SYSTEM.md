@@ -273,9 +273,16 @@ Suggested setup flow for the direct Meta version:
 
 Paid bookings can also trigger an internal Telegram notification through the Telegram Bot API.
 
+Advance driver dispatch runs on payment and every five minutes through Supabase
+Cron. Jobs within seven days are offered immediately; further-ahead jobs wait until
+six days before their own due time. Open jobs repeat every four elapsed hours during
+08:00–20:00 Europe/Madrid, with one urgent admin alert two hours before the due time.
+See `TELEGRAM_DRIVER_DISPATCH.md` for scheduling, retry and deployment details.
+
 At 08:00 Europe/Madrid, the due-date cron sends an internal daily operations manifest
-covering that day's deliveries and return collections, then sends the item-specific reminders and
-courier-group requests. The Vercel cron expression is UTC (`0 6 * * *` during CEST),
+covering that day's deliveries, customer pickups/returns and return collections,
+then sends item-specific admin reminders. Driver requests use the separate dispatcher.
+The Vercel cron expression is UTC (`0 6 * * *` during CEST),
 so adjust it when daylight-saving time changes if a fixed local-time schedule is required.
 
 Required environment variables:

@@ -1,4 +1,5 @@
 import { getBookingProductName } from "@/lib/booking-operations";
+import { runDriverDispatch } from "@/lib/driver-dispatch";
 import { NextRequest, NextResponse } from "next/server";
 import { isCheckoutPaymentSettled } from "@/lib/checkout-payment-status";
 import { stripe } from "@/lib/stripe";
@@ -14,6 +15,8 @@ import { sendBookingPaidTelegramNotification, sendShortNoticeBookingTelegramNoti
 import { getStoredFulfillmentFeeBreakdown } from "@/lib/booking-v2";
 import { formatValenciaDateTime } from "@/lib/fulfillment-policy";
 import Stripe from "stripe";
+
+export const maxDuration = 60;
 
 /**
  * POST /api/webhooks/stripe — Handle Stripe webhook events
@@ -70,6 +73,20 @@ export async function POST(request: NextRequest) {
       case "checkout.session.completed": {
         const session = event.data.object as Stripe.Checkout.Session;
         const fulfilled = await handleCheckoutCompleted(session);
+        // Dispatch is independent of customer email success and safe on webhook retries.
+        try {
+          const supabase = createAdminClient();
+          const { data: booking, error } = await supabase.from("bookings").select("id")
+            .eq("stripe_checkout_session_id", session.id).maybeSingle();
+          if (error) throw error;
+          if (booking) {
+            const dispatch = await runDriverDispatch(supabase, booking.id);
+            if (dispatch.errors.length) throw new Error(dispatch.errors.join("; "));
+          }
+        } catch (error) {
+          await recordSystemIncident({ source: "driver_dispatch", eventType: "payment_dispatch_failed",
+            message: getIncidentErrorMessage(error), context: { sessionId: session.id } });
+        }
         if (!fulfilled) {
           await recordSystemIncident({
             source: "stripe_webhook",
