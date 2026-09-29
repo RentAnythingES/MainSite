@@ -1,3 +1,4 @@
+import { getBookingProductName } from "@/lib/booking-operations";
 import { NextRequest, NextResponse } from "next/server";
 import { isCheckoutPaymentSettled } from "@/lib/checkout-payment-status";
 import { stripe, isStripeConfigured } from "@/lib/stripe";
@@ -67,6 +68,7 @@ export async function GET(request: NextRequest) {
     }
 
     const product = bookingRecord?.product as { name?: string; slug?: string } | undefined;
+    const productName = getBookingProductName({ pricing_snapshot: bookingRecord?.pricing_snapshot, product });
     const paymentPaid = isCheckoutPaymentSettled(session);
     const bookingCreated = Boolean(bookingRecord);
     const bookingStart = (bookingRecord?.rental_start_at as string | null) || (bookingRecord?.start_date as string | null);
@@ -74,7 +76,7 @@ export async function GET(request: NextRequest) {
     const bookingLocation = String((bookingRecord?.delivery_address as string | null) || "Valencia, Spain");
     const bookingCalendarUrl = bookingCreated && bookingStart && bookingEnd
       ? buildGoogleCalendarUrl({
-          title: `${product?.name || "Rental booking"}`,
+          title: productName,
           description: `Booking ${bookingRecord?.booking_ref || ""}`,
           startDateTime: bookingStart,
           endDateTime: bookingEnd,
@@ -140,7 +142,7 @@ export async function GET(request: NextRequest) {
             id: bookingRecord.id,
             bookingRef: bookingRecord.booking_ref,
             status: bookingRecord.status,
-            productName: product?.name || "Rental equipment",
+            productName,
             productSlug: product?.slug || "",
             quantity: bookingRecord.quantity || 1,
             startDate: formatDateTime((bookingRecord.rental_start_at as string | null) || bookingRecord.start_date as string),

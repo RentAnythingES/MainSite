@@ -1,3 +1,4 @@
+import { getBookingProductName } from "@/lib/booking-operations";
 import { NextRequest, NextResponse } from "next/server";
 import { isCheckoutPaymentSettled } from "@/lib/checkout-payment-status";
 import { stripe } from "@/lib/stripe";
@@ -452,6 +453,7 @@ async function handleDraftCheckoutCompleted(
       stripe_payment_intent_id: string | null;
       custom_line_items: Array<{ description: string; amountCents: number }> | null;
       custom_terms: string | null;
+      pricing_snapshot?: unknown;
       product: { name?: string } | null;
     };
 
@@ -460,7 +462,7 @@ async function handleDraftCheckoutCompleted(
       customerName: retryBooking.customer_name || session.customer_details?.name || "Customer",
       customerEmail: retryBooking.customer_email || session.customer_email || "",
       customerPhone: retryBooking.customer_phone || undefined,
-      productName: retryBooking.product?.name || "Rental equipment",
+      productName: getBookingProductName(retryBooking),
       quantity: retryBooking.quantity,
       startDate: retryBooking.start_date,
       endDate: retryBooking.end_date,
@@ -701,7 +703,7 @@ async function handleDraftCheckoutCompleted(
   const invoiceDocument = await createBookingDocumentForPaymentEvent(supabase, {
     booking: booking as Record<string, unknown>,
     paymentEvent,
-    productName: (product as { name?: string } | null)?.name || "Rental equipment",
+    productName: getBookingProductName({ pricing_snapshot: bookingDraft.pricing_snapshot, product }),
   });
   const invoiceUrl = getCustomerDocumentUrl(invoiceDocument);
 
@@ -740,7 +742,7 @@ async function handleDraftCheckoutCompleted(
     customerName: bookingDraft.customer_name || session.customer_details?.name || "Customer",
     customerEmail: bookingDraft.customer_email || session.customer_email || "",
     customerPhone: bookingDraft.customer_phone || undefined,
-    productName: (product as { name?: string } | null)?.name || "Rental equipment",
+    productName: getBookingProductName({ pricing_snapshot: bookingDraft.pricing_snapshot, product }),
     quantity: bookingDraft.quantity,
     startDate,
     endDate,
@@ -774,7 +776,7 @@ async function handleDraftCheckoutCompleted(
     bookingRef: (booking as { booking_ref: string }).booking_ref,
     customerName: bookingDraft.customer_name || session.customer_details?.name || "Customer",
     customerPhone: bookingDraft.customer_phone,
-    productName: (product as { name?: string } | null)?.name || "Rental equipment",
+    productName: getBookingProductName({ pricing_snapshot: bookingDraft.pricing_snapshot, product }),
     quantity: bookingDraft.quantity,
     startDate,
     endDate,
@@ -788,7 +790,7 @@ async function handleDraftCheckoutCompleted(
     bookingRef: (booking as { booking_ref: string }).booking_ref,
     customerName: bookingDraft.customer_name || session.customer_details?.name || "Customer",
     customerPhone: bookingDraft.customer_phone,
-    productName: (product as { name?: string } | null)?.name || "Rental equipment",
+    productName: getBookingProductName({ pricing_snapshot: bookingDraft.pricing_snapshot, product }),
     quantity: bookingDraft.quantity,
     startDate,
     endDate,
@@ -803,7 +805,7 @@ async function handleDraftCheckoutCompleted(
       bookingRef: (booking as { booking_ref: string }).booking_ref,
       customerName: bookingDraft.customer_name || session.customer_details?.name || "Customer",
       customerPhone: bookingDraft.customer_phone,
-      productName: (product as { name?: string } | null)?.name || "Rental equipment",
+      productName: getBookingProductName({ pricing_snapshot: bookingDraft.pricing_snapshot, product }),
       quantity: bookingDraft.quantity,
       startDate,
       fulfillmentLabel: `${bookingDraft.delivery_type === "express" ? "Express" : "Standard"} · ${fulfillmentDisplayLabel || bookingDraft.fulfillment_mode}`,

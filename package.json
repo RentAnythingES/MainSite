@@ -32,6 +32,7 @@
     "test:mobility-inquiries": "node --experimental-strip-types --test scripts/mobility-inquiries.test.mjs",
     "test:fulfillment-policy": "node --experimental-strip-types --test scripts/fulfillment-policy.test.mjs",
     "test:telegram": "node scripts/test-telegram-communications.cjs",
+    "test:booking-operations": "node --experimental-strip-types --test scripts/booking-operations.test.mjs",
     "audit:daily-operations": "node scripts/audit-daily-operations.cjs",
     "recover:daily-operations": "node scripts/recover-daily-operations.cjs",
     "db:audit": "node scripts/audit-live-schema.cjs",

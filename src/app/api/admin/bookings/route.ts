@@ -1,3 +1,4 @@
+import { getBookingProductName } from "@/lib/booking-operations";
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase-admin";
 import { verifyAdmin, unauthorizedResponse } from "@/lib/admin-auth";
@@ -169,6 +170,13 @@ export async function GET(request: NextRequest) {
 
     const enrichedBookings = bookings.map((booking) => ({
       ...booking,
+      product: {
+        ...(booking.product as Record<string, unknown> | null),
+        name: getBookingProductName({
+          pricing_snapshot: booking.pricing_snapshot,
+          product: booking.product as { name?: string } | null,
+        }),
+      },
       fulfillment_fee_breakdown: getStoredFulfillmentFeeBreakdown(
         booking.pricing_snapshot,
         Number(booking.delivery_fee_cents || 0),

@@ -160,10 +160,13 @@ their first valid claim. Setup and permissions are documented in
 `docs/TELEGRAM_DRIVER_DISPATCH.md`.
 
 The daily Telegram operations manifest separates delivery trips, customer pickup
-handovers at configured pickup locations, and driver return collections. It includes
+handovers, customer returns, and driver return collections. It includes
 active bookings due today by `rental_start_at` or `rental_end_at`, with a date-only
 fallback for legacy bookings. Customer pickup handovers are preparation items and do
-not create a courier request.
+not create a courier request. Customer returns (including delivery-only rentals)
+are also preparation items without courier dispatch. The shared booking operations
+helper resolves custom-quote item names from the saved pricing snapshot and builds
+the manifest independently of transport notification delivery.
 
 Short-notice booking confirmation is a single shared server action used by the
 Telegram inline button and the admin confirmation control. It atomically approves a

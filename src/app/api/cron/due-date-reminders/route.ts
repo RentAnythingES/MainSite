@@ -1,3 +1,4 @@
+import { buildDailyOperationsManifest, getBookingProductName, getOperationsDate } from "@/lib/booking-operations";
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase-admin";
 import {
@@ -54,14 +55,9 @@ type BookingRow = {
   end_date: string | null;
   rental_start_at: string | null;
   rental_end_at: string | null;
+  pricing_snapshot?: unknown;
   product: { name: string } | { name: string }[] | null;
 };
-
-function resolveProductName(product: BookingRow["product"]) {
-  if (!product) return "Rental item";
-  const row = Array.isArray(product) ? product[0] : product;
-  return row?.name || "Rental item";
-}
 
 async function hasAlreadyNotified(
   supabase: ReturnType<typeof createAdminClient>,
@@ -126,7 +122,6 @@ async function dispatchGroupRequest(
   booking: BookingRow,
   eventType: "delivery" | "pickup",
   eventDate: string,
-  productName: string,
 ) {
   if (!process.env.TELEGRAM_DELIVERY_GROUP_ID) return false;
 
@@ -190,7 +185,7 @@ export async function GET(request: NextRequest) {
   const { data: bookings, error } = await supabase
     .from("bookings")
     .select(
-      "id,booking_ref,customer_name,customer_phone,status,fulfillment_mode,delivery_address,collection_address,delivery_zone_id,collection_zone_id,pickup_location_id,start_date,end_date,rental_start_at,rental_end_at,product:products(name)",
+      "id,booking_ref,customer_name,customer_phone,status,fulfillment_mode,delivery_address,collection_address,delivery_zone_id,collection_zone_id,pickup_location_id,start_date,end_date,rental_start_at,rental_end_at,pricing_snapshot,product:products(name)",
     )
     .in("status", ACTIVE_STATUSES);
 
@@ -221,27 +216,12 @@ export async function GET(request: NextRequest) {
     manifestSkippedAlreadySent: false,
     errors: [] as string[],
   };
-  const manifest = {
-    date: today,
-    deliveries: [] as Array<{ bookingRef: string; productName: string; area: string }>,
-    customerPickups: [] as Array<{ bookingRef: string; productName: string; area: string }>,
-    returnCollections: [] as Array<{ bookingRef: string; productName: string; area: string }>,
-  };
+  const manifest = buildDailyOperationsManifest(bookingRows, today, pickupLocationNames, zoneNames);
 
   for (const booking of bookingRows) {
-    const productName = resolveProductName(booking.product);
-    const startDate = booking.rental_start_at
-      ? madridDateString(new Date(booking.rental_start_at))
-      : booking.start_date;
-    const endDate = booking.rental_end_at
-      ? madridDateString(new Date(booking.rental_end_at))
-      : booking.end_date;
-
-    // Customer pickup due: prepare the booked item for handover at the selected location.
-    if (startDate === today && booking.fulfillment_mode === "customer_pickup") {
-      const area = (booking.pickup_location_id && pickupLocationNames.get(booking.pickup_location_id)) || "Pickup location";
-      manifest.customerPickups.push({ bookingRef: booking.booking_ref, productName, area });
-    }
+    const productName = getBookingProductName(booking);
+    const startDate = getOperationsDate(booking.rental_start_at, booking.start_date);
+    const endDate = getOperationsDate(booking.rental_end_at, booking.end_date);
 
     // Delivery due: we drop the item off with the customer today.
     if (
@@ -249,8 +229,6 @@ export async function GET(request: NextRequest) {
       (booking.fulfillment_mode === "delivery_only" || booking.fulfillment_mode === "delivery_and_collection") &&
       booking.delivery_address
     ) {
-      const area = (booking.delivery_zone_id && zoneNames.get(booking.delivery_zone_id)) || "Valencia";
-      manifest.deliveries.push({ bookingRef: booking.booking_ref, productName, area });
       try {
         const alreadySent = await hasAlreadyNotified(supabase, booking.id, "delivery", today);
         if (alreadySent) {
@@ -273,7 +251,7 @@ export async function GET(request: NextRequest) {
         }
 
         try {
-            if (await dispatchGroupRequest(supabase, booking, "delivery", today, productName)) {
+            if (await dispatchGroupRequest(supabase, booking, "delivery", today)) {
             results.groupRequestsSent += 1;
           }
         } catch (groupErr) {
@@ -291,8 +269,6 @@ export async function GET(request: NextRequest) {
     ) {
       const address = booking.collection_address || booking.delivery_address;
       if (address) {
-        const area = (booking.collection_zone_id && zoneNames.get(booking.collection_zone_id)) || "Valencia";
-        manifest.returnCollections.push({ bookingRef: booking.booking_ref, productName, area });
         try {
           const alreadySent = await hasAlreadyNotified(supabase, booking.id, "pickup", today);
           if (alreadySent) {
@@ -315,7 +291,7 @@ export async function GET(request: NextRequest) {
           }
 
           try {
-            if (await dispatchGroupRequest(supabase, booking, "pickup", today, productName)) {
+            if (await dispatchGroupRequest(supabase, booking, "pickup", today)) {
               results.groupRequestsSent += 1;
             }
           } catch (groupErr) {

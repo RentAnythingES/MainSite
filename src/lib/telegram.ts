@@ -193,6 +193,7 @@ export interface DailyManifestTelegramData {
   date: string;
   deliveries: Array<{ bookingRef: string; productName: string; area: string }>;
   customerPickups: Array<{ bookingRef: string; productName: string; area: string }>;
+  customerReturns: Array<{ bookingRef: string; productName: string; area: string }>;
   returnCollections: Array<{ bookingRef: string; productName: string; area: string }>;
 }
 
@@ -204,6 +205,8 @@ function buildDailyManifestMessageText(data: DailyManifestTelegramData) {
     ...data.deliveries.map((item) => `• 📦 ${escapeTelegramHtml(item.bookingRef)} — ${escapeTelegramHtml(item.productName)} (${escapeTelegramHtml(item.area)})`),
     `<b>Customer pick-ups:</b> ${data.customerPickups.length}`,
     ...data.customerPickups.map((item) => `• 🤝 ${escapeTelegramHtml(item.bookingRef)} — ${escapeTelegramHtml(item.productName)} (${escapeTelegramHtml(item.area)})`),
+    `<b>Customer returns:</b> ${data.customerReturns.length}`,
+    ...data.customerReturns.map((item) => `• ${escapeTelegramHtml(item.bookingRef)} — ${escapeTelegramHtml(item.productName)} (${escapeTelegramHtml(item.area)})`),
     `<b>Return collections:</b> ${data.returnCollections.length}`,
     ...data.returnCollections.map((item) => `• 🚚 ${escapeTelegramHtml(item.bookingRef)} — ${escapeTelegramHtml(item.productName)} (${escapeTelegramHtml(item.area)})`),
     "",

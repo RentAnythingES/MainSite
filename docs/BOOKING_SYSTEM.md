@@ -359,6 +359,18 @@ stored custom lines and must total exactly the server-owned quote. The signed we
 verifies the paid Stripe total, creates the booking, copies both customer and internal
 snapshots, converts the hold, issues the invoice, and marks the quote paid.
 
+Operational displays use the saved `pricing_snapshot.displayName` for custom quotes,
+falling back to the catalogue name for older quotes and ordinary bookings. This
+applies to the admin booking calendar/search, payment notifications, daily Telegram
+manifest/reminders, and checkout calendar links; it also fixes existing bookings
+without changing their stored product or inventory allocation.
+
+The daily Telegram manifest includes customer returns for both customer-pickup and
+delivery-only rentals, alongside deliveries, customer pickups, and courier return
+collections. Customer returns do not create courier requests. Dates use Europe/Madrid
+with legacy date-only fallback. Run `npm run test:booking-operations` for offline
+regression checks, including Telegram payload formatting with mocked network calls.
+
 Cancelling an unpaid quote expires its open Stripe session before releasing inventory.
 An expired or cancelled quote cannot be accepted. Quote pages are private and noindex.
 
