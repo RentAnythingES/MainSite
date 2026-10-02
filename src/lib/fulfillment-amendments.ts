@@ -7,6 +7,11 @@ export type FulfillmentAmendmentStatus =
   | "cancelled"
   | "expired";
 
+export function canAddTransport(status: string, rentalStartAt: string | null | undefined, now = Date.now()) {
+  return ["confirmed", "paid", "active"].includes(status)
+    && typeof rentalStartAt === "string" && Date.parse(rentalStartAt) > now;
+}
+
 export interface FulfillmentAmendment {
   id: string;
   booking_id: string;

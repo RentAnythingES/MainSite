@@ -45,6 +45,14 @@ test("document email and PDF retain saved German language and characters", () =>
   assert.match(pdf, /1 1 1 rg/);
   assert.match(pdf, /0.12 0.16 0.22 rg/);
 });
+test("German invoice preserves saved product copy and translates missing issuer details", () => {
+  const pdf = new TextDecoder().decode(buildBookingDocumentPdf({document_type:'invoice',document_number:'TEST-DE',status:'draft',currency:'eur',total_cents:7500,tax_cents:1302,tax_rate_bps:2100,booking_snapshot:{locale:'de',product_name:'Deutscher Mietartikel'},customer_snapshot:{},company_snapshot:{},payment_snapshot:{}},{locale:'en',product:{name:'English catalogue name'}}));
+  assert.match(pdf, /Deutscher Mietartikel/);
+  assert.doesNotMatch(pdf, /English catalogue name|Tax ID pending|Valencia, Spain\)/);
+  assert.match(pdf, /Steuernummer folgt/);
+  assert.match(pdf, /Valencia,\s+Spanien/);
+});
+
 test("all transactional dictionaries cover every existing key", () => {
   for (const dictionary of [
     labels,

@@ -24,6 +24,8 @@ import type { DeliveryType, FulfillmentMode } from "@/lib/types";
 import { consumeRateLimits, getClientIp } from "@/lib/rate-limit";
 import { MarketContextError, resolveMarketContext } from "@/lib/market-context";
 import { applyBookingCoupon, CouponRuleError } from "@/lib/coupons";
+import { quoteProductName } from "@/lib/private-quote-locale";
+import { bookingProductName } from "@/lib/booking-product-name";
 
 interface DraftRequestBody {
   locale?: string;
@@ -187,7 +189,10 @@ export async function POST(request: NextRequest) {
       deliveryType,
       selectedExtraServices,
     );
-    quote.pricingSnapshot = { ...quote.pricingSnapshot, fulfillmentPolicy: policy };
+    quote.pricingSnapshot = {
+      ...quote.pricingSnapshot, fulfillmentPolicy: policy,
+      ...(market.locale === "de" ? { displayName: await quoteProductName(product, "de") } : {}),
+    };
     await applyBookingCoupon(supabase, quote, product.id, body.couponCode);
 
     const { data: blockedDates, error: blockedError } = await supabase
@@ -278,7 +283,7 @@ export async function POST(request: NextRequest) {
       product: {
         id: product.id,
         slug: product.slug,
-        name: product.name,
+        name: bookingProductName(quote.pricingSnapshot, product.name),
       },
       quantity,
       startAt: startAt.toISOString(),

@@ -1,4 +1,5 @@
 import { storedBookingLocale } from "@/lib/booking-locale";
+import { bookingProductName } from "@/lib/booking-product-name";
 import { localeRegistry, type Locale } from "@/i18n/config";
 import { NextRequest, NextResponse } from "next/server";
 import { isCheckoutPaymentSettled } from "@/lib/checkout-payment-status";
@@ -78,8 +79,8 @@ export async function GET(request: NextRequest) {
     const bookingLocation = String((bookingRecord?.delivery_address as string | null) || "Valencia, Spain");
     const bookingCalendarUrl = bookingCreated && bookingStart && bookingEnd
       ? buildGoogleCalendarUrl({
-          title: `${product?.name || "Rental booking"}`,
-          description: `Booking ${bookingRecord?.booking_ref || ""}`,
+          title: bookingProductName(bookingRecord?.pricing_snapshot, product?.name || "Rental booking"),
+          description: `${locale === "de" ? "Buchung" : locale === "es" ? "Reserva" : "Booking"} ${bookingRecord?.booking_ref || ""}`,
           startDateTime: bookingStart,
           endDateTime: bookingEnd,
           location: bookingLocation,
@@ -145,7 +146,7 @@ export async function GET(request: NextRequest) {
             id: bookingRecord.id,
             bookingRef: bookingRecord.booking_ref,
             status: bookingRecord.status,
-            productName: product?.name || "Rental equipment",
+            productName: bookingProductName(bookingRecord.pricing_snapshot, product?.name || "Rental equipment"),
             productSlug: product?.slug || "",
             quantity: bookingRecord.quantity || 1,
             startDate: formatDateTime((bookingRecord.rental_start_at as string | null) || bookingRecord.start_date as string, locale, timezone),

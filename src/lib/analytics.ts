@@ -4,6 +4,7 @@ export function trackEvent(eventName: string, params: AnalyticsParams = {}) {
   if (typeof window === "undefined" || typeof window.gtag !== "function") {
     return;
   }
+  if (window.location.pathname.startsWith("/internal/")) return;
 
   window.gtag("event", eventName, {
     ...params,

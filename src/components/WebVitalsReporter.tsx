@@ -12,6 +12,7 @@ type WebVitalMetric = Parameters<Parameters<typeof useReportWebVitals>[0]>[0];
 const pendingMetrics = new Map<string, WebVitalMetric>();
 
 function sendMetric(metric: WebVitalMetric) {
+  if (window.location.pathname.startsWith("/internal/")) return true;
   if (window.location.pathname.startsWith("/booking/messages/") || /^\/(agent|admin)(\/|$)/.test(window.location.pathname)) return true;
   if (typeof window.gtag !== "function") return false;
 
@@ -37,6 +38,7 @@ function flushMetrics() {
 }
 
 function reportWebVital(metric: WebVitalMetric) {
+  if (window.location.pathname.startsWith("/internal/")) return;
   const consent = readAnalyticsConsent();
   if (consent === "denied") return;
 

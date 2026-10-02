@@ -1,3 +1,4 @@
+import { addGermanSitemap } from "@/lib/german-sitemap";
 import type { MetadataRoute } from "next";
 import { rentalBundles } from "@/data/bundles";
 import { spanishRentalBundles } from "@/data/bundles-es";
@@ -10,7 +11,8 @@ import { indexableSeoCategorySlugs } from "@/data/seo-clusters";
 import { productFamilies } from "@/data/product-families";
 import { SITE_URL as BASE_URL } from "@/config/site";
 
-// Product admin mutations invalidate this route on demand through product-cache.
+// Publication gates and source revisions must be rechecked for each sitemap request.
+export const dynamic = "force-dynamic";
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const products = await getIndexableProductsForSeo();
 
@@ -159,5 +161,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.7,
     }));
 
-  return [...staticPages, ...categoryPages, ...familyPages, ...productPages, ...bundlePages, ...blogPages, ...discoverHubs, ...discoverPages, ...spanishStaticPages, ...spanishBundlePages, ...spanishBlogPages, ...spanishDiscoverPages, ...spanishProductPages, ...spanishCategoryPages, ...spanishFamilyPages];
+  return addGermanSitemap([...staticPages, ...categoryPages, ...familyPages, ...productPages, ...bundlePages, ...blogPages, ...discoverHubs, ...discoverPages, ...spanishStaticPages, ...spanishBundlePages, ...spanishBlogPages, ...spanishDiscoverPages, ...spanishProductPages, ...spanishCategoryPages, ...spanishFamilyPages]);
 }

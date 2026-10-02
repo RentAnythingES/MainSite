@@ -1,6 +1,9 @@
+import { customerTokenPath } from "@/i18n/customer-path";
 import type { SupabaseClient } from "@supabase/supabase-js";
 
-const REVIEW_BASE_URL = "https://rentandroll.com/review";
+const REVIEW_SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || "https://rentandroll.com").replace(/\/$/, "");
+const reviewUrl = (token: string, locale: "en" | "es" | "de") =>
+  `${REVIEW_SITE_URL}${customerTokenPath(locale, `/review/${token}`)}?locale=${locale}`;
 
 export function isMissingBookingReviewsTable(error: unknown): boolean {
   if (!error || typeof error !== "object") return false;
@@ -21,7 +24,7 @@ export async function createBookingReviewInvitation(
     .single();
 
   if (!error && data?.public_token) {
-    return `${REVIEW_BASE_URL}/${data.public_token}?locale=${locale}`;
+    return reviewUrl(data.public_token, locale);
   }
 
   if (isMissingBookingReviewsTable(error)) {
@@ -40,5 +43,5 @@ export async function createBookingReviewInvitation(
     return null;
   }
 
-  return `${REVIEW_BASE_URL}/${existing.public_token}?locale=${locale}`;
+  return reviewUrl(existing.public_token, locale);
 }

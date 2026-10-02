@@ -7,10 +7,10 @@ export async function POST(request: NextRequest) {
     const normalizedToken = String(token || "").trim();
     if (!/^[0-9a-f-]{36}$/i.test(normalizedToken)) return NextResponse.json({ error: "Invalid unsubscribe link" }, { status: 400 });
     const supabase = createAdminClient();
-    const { data, error } = await supabase.from("newsletter_subscribers").update({ is_active: false, unsubscribed_at: new Date().toISOString() }).eq("unsubscribe_token", normalizedToken).select("id").maybeSingle();
+    const { data, error } = await supabase.from("newsletter_subscribers").update({ is_active: false, unsubscribed_at: new Date().toISOString() }).eq("unsubscribe_token", normalizedToken).select("id, locale").maybeSingle();
     if (error) throw error;
     if (!data) return NextResponse.json({ error: "This unsubscribe link was not found" }, { status: 404 });
-    return NextResponse.json({ success: true });
+    return NextResponse.json({ success: true, locale: data.locale });
   } catch (error) {
     console.error("[newsletter] Unsubscribe error:", error);
     return NextResponse.json({ error: "Could not update subscription" }, { status: 500 });

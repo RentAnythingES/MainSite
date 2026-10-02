@@ -14,8 +14,11 @@ import {
 import type { BookingDraft, CustomQuoteLineItem } from "@/lib/types";
 import { getIncidentErrorMessage, recordSystemIncident } from "@/lib/system-incidents";
 import type Stripe from "stripe";
+import { transactionPath } from "@/lib/transaction-path";
 import { storedBookingLocale } from "@/lib/booking-locale";
 import { localeRegistry } from "@/i18n/config";
+import { germanCustomerAccess } from "@/lib/german-customer-access";
+import { bookingProductName } from "@/lib/booking-product-name";
 
 /**
  * POST /api/checkout — Create a Stripe Checkout Session
@@ -58,7 +61,6 @@ export async function POST(request: NextRequest) {
     }
 
     const supabase = createServiceClient();
-    await cleanupExpiredBookingDrafts(supabase);
     const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || request.headers.get("origin") || "https://rentandroll.com";
 
     if (draftId) {
@@ -75,6 +77,10 @@ export async function POST(request: NextRequest) {
 
       const bookingDraft = draft as BookingDraft;
       const locale = storedBookingLocale(bookingDraft.locale);
+      if (locale === "de" && !germanCustomerAccess()) {
+        return NextResponse.json({ error: "Booking draft not found" }, { status: 404 });
+      }
+      await cleanupExpiredBookingDrafts(supabase);
       const t = transactionCopy[locale];
 
       if (new Date(bookingDraft.expires_at).getTime() <= Date.now()) {
@@ -220,7 +226,7 @@ export async function POST(request: NextRequest) {
                 currency: bookingDraft.currency,
                 unit_amount: bookingDraft.rental_subtotal_cents,
                 product_data: {
-                  name: `${resolvedProduct.name} · ${t.rental}`,
+                  name: `${bookingProductName(bookingDraft.pricing_snapshot, resolvedProduct.name)} · ${t.rental}`,
                   description: `${formattedStart} ${t.to} ${formattedEnd} · ${bookingDraft.quantity} ${t.unit}`,
                 },
               },
@@ -281,8 +287,8 @@ export async function POST(request: NextRequest) {
             product_id: bookingDraft.product_id,
             quantity: String(bookingDraft.quantity),
           },
-          success_url: `${baseUrl}/booking/success?session_id={CHECKOUT_SESSION_ID}&locale=${locale}`,
-          cancel_url: `${baseUrl}/booking/cancel?${cancelParams.toString()}`,
+          success_url: `${baseUrl}${transactionPath(locale, "/booking/success")}?session_id={CHECKOUT_SESSION_ID}&locale=${locale}`,
+          cancel_url: `${baseUrl}${transactionPath(locale, "/booking/cancel")}?${cancelParams.toString()}`,
         },
         { idempotencyKey: `booking-draft-${bookingDraft.id}-${requestFingerprint}` }
       );

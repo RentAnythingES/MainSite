@@ -1,57 +1,41 @@
-﻿import { NextRequest, NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { sendContactAutoReply, sendContactNotification } from "@/lib/email";
+import { outreachLocale } from "@/lib/outreach-locale";
+import { privateGermanPreviewEnabled } from "@/lib/localization-preview";
+import { contactMessageCopy } from "@/i18n/outreach";
+import type { Locale } from "@/i18n/config";
 
 export async function POST(request: NextRequest) {
+  let locale: Locale = "en";
   try {
-    if (!process.env.RESEND_API_KEY) {
-      return NextResponse.json({ error: "Email service not configured" }, { status: 503 });
-    }
-
     const body = await request.json();
-    const { name, email, subject, message, productName } = body;
-    const locale: "en" | "es" = body.locale === "es" ? "es" : "en";
-
+    try { locale = outreachLocale(body.locale); }
+    catch { return NextResponse.json({ error: "Language is not available" }, { status: 400 }); }
+    const t = contactMessageCopy[locale];
+    const name = typeof body.name === "string" ? body.name.trim() : "";
+    const email = typeof body.email === "string" ? body.email.trim() : "";
+    const message = typeof body.message === "string" ? body.message.trim() : "";
     if (!name || !email || !message) {
-      return NextResponse.json(
-        { error: "Name, email, and message are required" },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: t.required }, { status: 400 });
     }
-
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      return NextResponse.json(
-        { error: "Invalid email address" },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: t.invalidEmail }, { status: 400 });
     }
-
     const emailData = {
-      name,
-      email,
-      subject,
-      message,
-      productName,
-      locale,
+      name, email, message, locale,
+      subject: typeof body.subject === "string" ? body.subject : undefined,
+      productName: typeof body.productName === "string" ? body.productName : undefined,
     };
-
-    const notificationSent = await sendContactNotification(emailData);
-
-    if (!notificationSent) {
-      console.error("Contact notification failed");
-      return NextResponse.json(
-        { error: "Failed to send message" },
-        { status: 500 }
-      );
+    // The guarded local preview exercises validation without sending messages.
+    if (privateGermanPreviewEnabled()) return NextResponse.json({ success: true, preview: true });
+    if (!process.env.RESEND_API_KEY) return NextResponse.json({ error: t.error }, { status: 503 });
+    if (!await sendContactNotification(emailData)) {
+      return NextResponse.json({ error: t.error }, { status: 500 });
     }
-
     await sendContactAutoReply(emailData);
-
     return NextResponse.json({ success: true });
-  } catch (err) {
-    console.error("Contact API error:", err);
-    return NextResponse.json(
-      { error: "Internal server error" },
-      { status: 500 }
-    );
+  } catch (error) {
+    console.error("Contact API error:", error);
+    return NextResponse.json({ error: contactMessageCopy[locale].error }, { status: 500 });
   }
 }

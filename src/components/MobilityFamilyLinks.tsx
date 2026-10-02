@@ -1,6 +1,16 @@
 import Link from "next/link";
+import type { Locale } from "@/i18n/config";
+import { customerPrefix } from "@/i18n/customer-path";
 
 const copy = {
+  de: {
+    heading: "Mobilitätsoptionen vor der Paketauswahl vergleichen",
+    intro: "Vergleiche die aktuellen Rollstühle und Elektromobile und sag uns, welche Anforderungen für deinen Aufenthalt wichtig sind.",
+    links: [
+      { href: `${customerPrefix("de")}/rental/mobility/wheelchairs`, title: "Rollstühle vergleichen", description: "Vergleiche Modelle für eine Begleitperson und elektrische Optionen nach Sitz, Zugang, Transport und Lademöglichkeit." },
+      { href: `${customerPrefix("de")}/rental/mobility/mobility-scooters`, title: "Elektromobile vergleichen", description: "Prüfe faltbare, klassische und XL-Modelle nach Abstellplatz, Fahrzeugtransport und deinen geplanten Wegen in Valencia." },
+    ],
+  },
   en: {
     heading: "Compare mobility options before choosing the kit",
     intro: "Review the current wheelchair and scooter ranges, then tell us which practical constraints matter for your stay.",
@@ -35,7 +45,7 @@ const copy = {
   },
 } as const;
 
-export default function MobilityFamilyLinks({ locale = "en" }: { locale?: "en" | "es" }) {
+export default function MobilityFamilyLinks({ locale = "en" }: { locale?: Locale }) {
   const content = copy[locale];
 
   return (
@@ -48,7 +58,7 @@ export default function MobilityFamilyLinks({ locale = "en" }: { locale?: "en" |
             <Link key={link.href} href={link.href} className="card bg-white p-6 transition-shadow hover:shadow-md group">
               <h3 className="text-lg font-bold transition-colors group-hover:text-brand">{link.title}</h3>
               <p className="mt-2 text-sm leading-relaxed text-neutral-500">{link.description}</p>
-              <span className="mt-4 inline-block text-sm font-bold text-brand">{locale === "es" ? "Comparar opciones →" : "Compare options →"}</span>
+              <span className="mt-4 inline-block text-sm font-bold text-brand">{locale === "de" ? "Möglichkeiten vergleichen →" : locale === "es" ? "Comparar opciones →" : "Compare options →"}</span>
             </Link>
           ))}
         </div>

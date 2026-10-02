@@ -3,6 +3,8 @@ import { isCheckoutPaymentSettled } from "@/lib/checkout-payment-status";
 import { stripe } from "@/lib/stripe";
 import { createAdminClient } from "@/lib/supabase-admin";
 import { sendBookingConfirmation, sendFulfillmentAmendmentConfirmation } from "@/lib/email";
+import { quoteProductName } from "@/lib/private-quote-locale";
+import { storedBookingLocale } from "@/lib/booking-locale";
 import { fetchPickupLocationsById, fetchServiceZonesById } from "@/lib/fulfillment-options";
 import { recordBookingPaymentEvent } from "@/lib/payment-ledger";
 import { createBookingDocumentForPaymentEvent, getCustomerDocumentUrl } from "@/lib/booking-documents";
@@ -374,7 +376,7 @@ async function handleFulfillmentAmendmentCheckoutCompleted(
 
   const { data: updatedBooking, error: updatedBookingError } = await supabase
     .from("bookings")
-    .select("*, product:products(name)")
+    .select("*, product:products(name, slug)")
     .eq("id", booking.id)
     .single();
   if (updatedBookingError || !updatedBooking) {
@@ -382,25 +384,26 @@ async function handleFulfillmentAmendmentCheckoutCompleted(
     return false;
   }
 
+  const amendmentLocale = storedBookingLocale(updatedBooking.locale);
+  const amendmentProductName = await quoteProductName(
+    updatedBooking.product as unknown as { name: string; slug: string } | null,
+    amendmentLocale,
+    (updatedBooking.pricing_snapshot as { displayName?: string } | null)?.displayName,
+  );
   const invoiceDocument = await createBookingDocumentForPaymentEvent(supabase, {
     booking: updatedBooking as unknown as Record<string, unknown>,
     paymentEvent,
-    productName: (updatedBooking.product as unknown as { name?: string } | null)?.name || booking.product?.name || null,
+    productName: amendmentProductName,
   });
 
   if (appliedNow === true) {
     await sendFulfillmentAmendmentConfirmation({
+      locale: amendmentLocale,
       customerName: updatedBooking.customer_name,
       customerEmail: updatedBooking.customer_email,
       bookingRef: updatedBooking.booking_ref,
-      productName:
-        (updatedBooking.product as unknown as { name?: string } | null)?.name ||
-        booking.product?.name ||
-        "Rental equipment",
-      serviceLabel:
-        amendment.fulfillment_mode === "delivery_and_collection"
-          ? "Delivery and collection"
-          : "Delivery only",
+      productName: amendmentProductName,
+      fulfillmentMode: amendment.fulfillment_mode,
       deliveryAddress: amendment.delivery_address,
       collectionAddress: amendment.collection_address,
       totalCents: expectedTotal,
@@ -455,6 +458,7 @@ async function handleDraftCheckoutCompleted(
       stripe_payment_intent_id: string | null;
       custom_line_items: Array<{ description: string; amountCents: number }> | null;
       custom_terms: string | null;
+      pricing_snapshot?: { displayName?: string } | null;
       product: { name?: string } | null;
     };
 
@@ -466,7 +470,7 @@ async function handleDraftCheckoutCompleted(
       customerName: retryBooking.customer_name || session.customer_details?.name || "Customer",
       customerEmail: retryBooking.customer_email || session.customer_email || "",
       customerPhone: retryBooking.customer_phone || undefined,
-      productName: retryBooking.product?.name || "Rental equipment",
+      productName: retryBooking.pricing_snapshot?.displayName || retryBooking.product?.name || "Rental equipment",
       quantity: retryBooking.quantity,
       startDate: retryBooking.start_date,
       endDate: retryBooking.end_date,
@@ -552,6 +556,11 @@ async function handleDraftCheckoutCompleted(
     .select("name")
     .eq("id", bookingDraft.product_id)
     .single();
+
+  const customerProductName = typeof bookingDraft.pricing_snapshot?.displayName === "string"
+    && bookingDraft.pricing_snapshot.displayName.trim()
+    ? bookingDraft.pricing_snapshot.displayName
+    : (product as { name?: string } | null)?.name || "Rental equipment";
 
   const [pickupLocationsResult, serviceZonesResult] = await Promise.all([
     bookingDraft.pickup_location_id
@@ -709,7 +718,7 @@ async function handleDraftCheckoutCompleted(
   const invoiceDocument = await createBookingDocumentForPaymentEvent(supabase, {
     booking: booking as Record<string, unknown>,
     paymentEvent,
-    productName: (product as { name?: string } | null)?.name || "Rental equipment",
+    productName: customerProductName,
   });
   const invoiceUrl = getCustomerDocumentUrl(invoiceDocument);
 
@@ -750,7 +759,7 @@ async function handleDraftCheckoutCompleted(
     timezone: bookingDraft.timezone,
     customerEmail: bookingDraft.customer_email || session.customer_email || "",
     customerPhone: bookingDraft.customer_phone || undefined,
-    productName: (product as { name?: string } | null)?.name || "Rental equipment",
+    productName: customerProductName,
     quantity: bookingDraft.quantity,
     startDate,
     endDate,
@@ -784,7 +793,7 @@ async function handleDraftCheckoutCompleted(
     bookingRef: (booking as { booking_ref: string }).booking_ref,
     customerName: bookingDraft.customer_name || session.customer_details?.name || "Customer",
     customerPhone: bookingDraft.customer_phone,
-    productName: (product as { name?: string } | null)?.name || "Rental equipment",
+    productName: customerProductName,
     quantity: bookingDraft.quantity,
     startDate,
     endDate,
@@ -798,7 +807,7 @@ async function handleDraftCheckoutCompleted(
     bookingRef: (booking as { booking_ref: string }).booking_ref,
     customerName: bookingDraft.customer_name || session.customer_details?.name || "Customer",
     customerPhone: bookingDraft.customer_phone,
-    productName: (product as { name?: string } | null)?.name || "Rental equipment",
+    productName: customerProductName,
     quantity: bookingDraft.quantity,
     startDate,
     endDate,
@@ -813,7 +822,7 @@ async function handleDraftCheckoutCompleted(
       bookingRef: (booking as { booking_ref: string }).booking_ref,
       customerName: bookingDraft.customer_name || session.customer_details?.name || "Customer",
       customerPhone: bookingDraft.customer_phone,
-      productName: (product as { name?: string } | null)?.name || "Rental equipment",
+      productName: customerProductName,
       quantity: bookingDraft.quantity,
       startDate,
       fulfillmentLabel: `${bookingDraft.delivery_type === "express" ? "Express" : "Standard"} · ${fulfillmentDisplayLabel || bookingDraft.fulfillment_mode}`,

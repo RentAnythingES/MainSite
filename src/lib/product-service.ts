@@ -1,3 +1,5 @@
+import { localeRegistry } from "@/i18n/config";
+import { translationReadiness, type TranslationEntry } from "@/lib/translation-workflow";
 import { supabase } from "./supabase";
 import type { Product, ProductFAQ } from "@/data/products";
 import { products as staticProducts, getProductBySlug as staticGetBySlug, getProductsByCategory as staticGetByCategory } from "@/data/products";
@@ -92,7 +94,7 @@ type ProductSeoLocalization = {
   translation_revision?: number;
   reviewed_revision?: number | null;
   reviewed_by?: string | null;
-  locale: ProductLocale;
+  locale: ProductLocale | "de";
   short_description: string | null;
   seo_title: string | null;
   seo_description: string | null;
@@ -124,6 +126,7 @@ export type ProductSeoState = {
   updatedAt: string | null;
   indexableEn: boolean;
   indexableEs: boolean;
+  indexableDe?: boolean;
 };
 
 const governedFallbackSlugs = new Set([
@@ -171,7 +174,10 @@ function mapProductSeoState(row: ProductSeoRow): ProductSeoState {
     hasText(spanish.seo_description)
   );
 
+  const german = row.product_localizations.find(entry => entry.locale === "de") as unknown as TranslationEntry | undefined;
+  const indexableDe = !!(localeRegistry.de.public && indexableEn && german && Number.isSafeInteger(row.translation_source_revision) && translationReadiness(german, row.translation_source_revision!).published);
   return {
+    indexableDe,
     slug: row.slug,
     categorySlug: category?.slug || "",
     updatedAt: row.updated_at || null,
@@ -264,7 +270,7 @@ function mergeProductEditorialContent(
 /**
  * Map a Supabase product row + pricing to the frontend Product interface
  */
-function mapToProduct(row: Record<string, unknown>): Product {
+export function mapPublicProductSource(row: Record<string, unknown>): Product {
   const pricingTiers = (row.pricing_tiers as Array<{ min_days: number; per_day_cents: number }>) || [];
   const category = row.category as { slug: string; name: string } | null;
 
@@ -296,7 +302,7 @@ function mapToProduct(row: Record<string, unknown>): Product {
 }
 
 function mapEmbeddedProduct(row: Record<string, unknown>, locale: ProductLocale): Product {
-  const product = mapToProduct(row);
+  const product = mapPublicProductSource(row);
   const staticProduct = staticGetBySlug(product.slug);
   if (locale === "en" && staticProduct?.faqs) product.faqs = staticProduct.faqs;
 
@@ -577,7 +583,9 @@ export async function getIndexableProductsForSeo(): Promise<ProductSeoState[]> {
 
   try {
     const rows = await fetchProductSeoRows();
-    return rows.map(mapProductSeoState).filter((product) => product.indexableEn);
+    const states = rows.map(mapProductSeoState).filter((product) => product.indexableEn);
+    const germanIndexable = localeRegistry.de.public && (await resolveMarketContext(supabase, { mode: "public", locale: "de" }).catch(() => null))?.isIndexable === true;
+    return states.map(state => ({ ...state, indexableDe: germanIndexable && state.indexableDe === true }));
   } catch (error) {
     console.warn("[product-service] Product SEO feed failed, using static English fallback:", error);
     return staticProducts
@@ -591,7 +599,10 @@ export async function getProductSeoState(slug: string): Promise<ProductSeoState 
 
   try {
     const rows = await fetchProductSeoRows(slug);
-    return rows[0] ? mapProductSeoState(rows[0]) : null;
+    if (!rows[0]) return null;
+    const state = mapProductSeoState(rows[0]);
+    const germanIndexable = localeRegistry.de.public && (await resolveMarketContext(supabase, { mode: "public", locale: "de" }).catch(() => null))?.isIndexable === true;
+    return { ...state, indexableDe: germanIndexable && state.indexableDe === true };
   } catch (error) {
     console.warn("[product-service] Product SEO state fetch failed:", slug, error);
     return staticProductSeoState(slug);

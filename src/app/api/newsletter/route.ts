@@ -1,31 +1,35 @@
+import { customerTokenPath } from "@/i18n/customer-path";
 import { NextRequest, NextResponse } from "next/server";
 import { sendSignupWelcome } from "@/lib/email";
+import { outreachLocale } from "@/lib/outreach-locale";
+import { newsletterCopy, newsletterConsentVersion } from "@/i18n/outreach";
+import { privateGermanPreviewEnabled } from "@/lib/localization-preview";
+import type { Locale } from "@/i18n/config";
 import { createAdminClient } from "@/lib/supabase-admin";
-
-const CONSENT_VERSION = "2026-07-08";
-const CONSENT_TEXT =
-  "I agree to receive Rent&Roll emails with Valencia stay tips, product updates, kit launches, and occasional offers. I can unsubscribe at any time.";
 
 function isValidEmail(email: string): boolean {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
 export async function POST(request: NextRequest) {
+  let locale: Locale = "en";
   try {
     const body = await request.json();
     const email = String(body.email || "").trim().toLowerCase();
     const name = body.name ? String(body.name).trim() : null;
     const interest = body.interest ? String(body.interest).trim() : null;
     const source = body.source ? String(body.source).trim().slice(0, 80) : "website";
-    const locale = body.locale === "es" ? "es" : "en";
-    const consent = Boolean(body.consent);
+    try { locale = outreachLocale(body.locale); }
+    catch { return NextResponse.json({ error: "Language is not available" }, { status: 400 }); }
+    const text = newsletterCopy[locale];
+    const consent = body.consent === true;
 
     if (!email || !isValidEmail(email)) {
-      return NextResponse.json({ error: "A valid email address is required" }, { status: 400 });
+      return NextResponse.json({ error: text.invalidEmail }, { status: 400 });
     }
 
     if (!consent) {
-      return NextResponse.json({ error: "Consent is required before subscribing" }, { status: 400 });
+      return NextResponse.json({ error: text.missingConsent }, { status: 400 });
     }
 
     const supabase = createAdminClient();
@@ -44,8 +48,8 @@ export async function POST(request: NextRequest) {
           interest,
           locale,
           source,
-          consent_text: CONSENT_TEXT,
-          consent_version: CONSENT_VERSION,
+          consent_text: text.consent,
+          consent_version: newsletterConsentVersion,
           consented_at: new Date().toISOString(),
           ip_address: ipAddress,
           user_agent: userAgent,
@@ -59,19 +63,20 @@ export async function POST(request: NextRequest) {
 
     if (error) {
       console.error("[newsletter] Subscribe error:", error);
-      return NextResponse.json({ error: "Could not save subscription" }, { status: 500 });
+      return NextResponse.json({ error: text.error }, { status: 500 });
     }
 
-    sendSignupWelcome({
+    if (!privateGermanPreviewEnabled()) await sendSignupWelcome({
+      locale,
       name: name || undefined,
       email,
       interest: interest || undefined,
-      unsubscribeUrl: `${(process.env.NEXT_PUBLIC_SITE_URL || "https://rentandroll.com").replace(/\/$/, "")}/newsletter/unsubscribe?token=${subscriber.unsubscribe_token}`,
+      unsubscribeUrl: `${(process.env.NEXT_PUBLIC_SITE_URL || "https://rentandroll.com").replace(/\/$/, "")}${customerTokenPath(locale, "/newsletter/unsubscribe")}?token=${subscriber.unsubscribe_token}&locale=${locale}`,
     }).catch((err) => console.error("[newsletter] Welcome email error:", err));
 
-    return NextResponse.json({ success: true });
+    return NextResponse.json({ success: true, preview: privateGermanPreviewEnabled() });
   } catch (err) {
     console.error("[newsletter] API error:", err);
-    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
+    return NextResponse.json({ error: newsletterCopy[locale].error }, { status: 500 });
   }
 }

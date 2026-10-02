@@ -106,6 +106,7 @@ export function buildBookingDocumentPdf(
     "Rental agreement": "Mietvertrag",
     "Travel light. Feel at home.": "Reise mit leichtem Gepäck.",
     "Number pending": "Nummer folgt",
+    "Tax ID pending": "Steuernummer folgt",
     "Document details": "Rechnungsdetails",
     Issued: "Ausgestellt",
     "Booking ref": "Buchungsreferenz",
@@ -203,9 +204,9 @@ export function buildBookingDocumentPdf(
   const customerSnapshot = document.customer_snapshot || {};
   const companySnapshot = document.company_snapshot || {};
   const productName =
-    pdfDisplayText(booking.product?.name) ||
     pdfDisplayText(bookingSnapshot.product_name) ||
-    "Rental equipment";
+    pdfDisplayText(booking.product?.name) ||
+    (locale === "de" ? "Mietartikel" : "Rental equipment");
   const customerName =
     pdfDisplayText(customerSnapshot.name) ||
     pdfDisplayText(booking.customer_name) ||
@@ -290,7 +291,7 @@ export function buildBookingDocumentPdf(
     "F1",
   );
   content += pdfText(
-    `${companySnapshot.address_line_1 || "Valencia"}, ${companySnapshot.postal_code || ""} ${companySnapshot.city || "Spain"}`,
+    `${companySnapshot.address_line_1 || "Valencia"}, ${companySnapshot.postal_code || ""} ${companySnapshot.city || (locale === "de" ? "Spanien" : "Spain")}`,
     330,
     590,
     8,

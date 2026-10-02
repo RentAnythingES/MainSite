@@ -1,3 +1,6 @@
+import { renderContactMessage, renderSignupMessage } from "./outreach-message";
+import { renderAmendmentMessage } from "./amendment-message";
+import type { Locale } from "@/i18n/config";
 import { renderBookingMessage, renderDocumentMessage } from "./booking-message";
 ﻿import { Resend } from "resend";
 
@@ -66,10 +69,11 @@ export interface ContactEmailData {
   subject?: string;
   message: string;
   productName?: string;
-  locale?: "en" | "es";
+  locale?: Locale;
 }
 
 export interface SignupWelcomeEmailData {
+  locale?: Locale;
   name?: string;
   email: string;
   interest?: string;
@@ -88,11 +92,12 @@ export interface BookingDocumentEmailData {
 }
 
 export interface FulfillmentAmendmentEmailData {
+  locale?: Locale;
   customerName: string;
   customerEmail: string;
   bookingRef: string;
   productName: string;
-  serviceLabel: string;
+  fulfillmentMode: "delivery_only" | "delivery_and_collection";
   deliveryAddress: string;
   collectionAddress?: string | null;
   totalCents: number;
@@ -488,30 +493,12 @@ export async function sendBookingDocumentLink(data: BookingDocumentEmailData): P
 export async function sendFulfillmentAmendmentQuote(data: FulfillmentAmendmentEmailData): Promise<boolean> {
   const resend = getResend();
   if (!resend) return false;
-
   try {
-    const result = await resend.emails.send({
-      from: FROM,
-      to: data.customerEmail,
-      subject: `Transport quote — ${data.bookingRef}`,
-      html: emailWrapper("Transport option for your booking", `
-        <p style="font-size:15px;color:#374151;line-height:1.6;margin-top:0;">Hi ${escapeHtml(data.customerName)},</p>
-        <p style="font-size:15px;color:#374151;line-height:1.6;">Here is the transport option prepared for your <strong>${escapeHtml(data.productName)}</strong> rental.</p>
-        <table style="width:100%;border-collapse:collapse;margin:16px 0;">
-          <tr><td style="padding:8px 0;color:#6b7280;font-size:14px;width:145px;">Booking ref</td><td style="padding:8px 0;font-weight:700;font-size:14px;font-family:monospace;color:#0e7c73;">${escapeHtml(data.bookingRef)}</td></tr>
-          <tr><td style="padding:8px 0;color:#6b7280;font-size:14px;">Service</td><td style="padding:8px 0;font-weight:600;font-size:14px;">${escapeHtml(data.serviceLabel)}</td></tr>
-          <tr><td style="padding:8px 0;color:#6b7280;font-size:14px;">Delivery</td><td style="padding:8px 0;font-size:14px;">${escapeHtml(data.deliveryAddress)}</td></tr>
-          ${data.collectionAddress ? `<tr><td style="padding:8px 0;color:#6b7280;font-size:14px;">Collection</td><td style="padding:8px 0;font-size:14px;">${escapeHtml(data.collectionAddress)}</td></tr>` : ""}
-          <tr><td style="padding:8px 0;color:#6b7280;font-size:14px;">Total</td><td style="padding:8px 0;font-weight:700;font-size:14px;">${formatEuros(data.totalCents)}</td></tr>
-        </table>
-        ${button(data.customerUrl, "Review and pay securely")}
-        ${data.expiresAt ? `<p style="font-size:12px;color:#6b7280;line-height:1.6;margin-top:18px;">This private quote is valid until ${escapeHtml(formatDateTime(data.expiresAt))}.</p>` : ""}
-        <p style="font-size:14px;color:#6b7280;line-height:1.6;">Your original booking remains unchanged unless this transport quote is paid.</p>
-      `, `Transport quote for booking ${data.bookingRef}.`),
-    });
+    const rendered = renderAmendmentMessage(data, false);
+    const result = await resend.emails.send({ from: FROM, to: data.customerEmail, ...rendered });
     return !result.error;
   } catch (error) {
-    console.error("[email] Failed to send fulfillment amendment quote:", error);
+    console.error("[email] Failed to send transport message:", error);
     return false;
   }
 }
@@ -519,24 +506,12 @@ export async function sendFulfillmentAmendmentQuote(data: FulfillmentAmendmentEm
 export async function sendFulfillmentAmendmentConfirmation(data: FulfillmentAmendmentEmailData): Promise<boolean> {
   const resend = getResend();
   if (!resend) return false;
-
   try {
-    const result = await resend.emails.send({
-      from: FROM,
-      to: data.customerEmail,
-      subject: `Transport confirmed — ${data.bookingRef}`,
-      html: emailWrapper("Transport service confirmed", `
-        <p style="font-size:15px;color:#374151;line-height:1.6;margin-top:0;">Hi ${escapeHtml(data.customerName)},</p>
-        <p style="font-size:15px;color:#374151;line-height:1.6;">We received your transport payment and updated booking <strong>${escapeHtml(data.bookingRef)}</strong>.</p>
-        ${infoBox(`<p style="font-size:14px;color:#0f766e;line-height:1.7;margin:0;"><strong>${escapeHtml(data.serviceLabel)}</strong><br>Delivery: ${escapeHtml(data.deliveryAddress)}${data.collectionAddress ? `<br>Collection: ${escapeHtml(data.collectionAddress)}` : ""}<br>Paid: ${formatEuros(data.totalCents)}</p>`)}
-        <p style="font-size:14px;color:#6b7280;line-height:1.6;">We will confirm the exact operational timing separately.</p>
-        ${data.documentUrl ? button(data.documentUrl, "Download transport invoice") : ""}
-        ${button(WHATSAPP_URL, "Message us on WhatsApp", "#25d366")}
-      `, `Transport confirmed for booking ${data.bookingRef}.`),
-    });
+    const rendered = renderAmendmentMessage(data, true);
+    const result = await resend.emails.send({ from: FROM, to: data.customerEmail, ...rendered });
     return !result.error;
   } catch (error) {
-    console.error("[email] Failed to send fulfillment amendment confirmation:", error);
+    console.error("[email] Failed to send transport message:", error);
     return false;
   }
 }
@@ -580,26 +555,12 @@ export async function sendContactNotification(data: ContactEmailData): Promise<b
 export async function sendContactAutoReply(data: ContactEmailData): Promise<boolean> {
   const resend = getResend();
   if (!resend) return false;
-
   try {
-    const isSpanish = data.locale === "es";
-    const result = await resend.emails.send({
-      from: FROM,
-      to: data.email,
-      subject: isSpanish ? "Hemos recibido tu mensaje — Rent&Roll" : "We received your message — Rent&Roll",
-      html: emailWrapper(isSpanish ? "Gracias por escribirnos" : "Thanks for reaching out", `
-        <p style="font-size:15px;color:#374151;line-height:1.6;margin-top:0;">${isSpanish ? "Hola" : "Hi"} ${escapeHtml(data.name)},</p>
-        <p style="font-size:15px;color:#374151;line-height:1.6;">${isSpanish
-          ? "Hemos recibido tu mensaje y responderemos en cuanto podamos. Si está relacionado con una llegada próxima, WhatsApp suele ser la forma más directa de localizarnos."
-          : "We've received your message and will get back to you as soon as we can. If it is related to an upcoming arrival, WhatsApp is usually the most direct way to reach us."}</p>
-        ${data.productName ? infoBox(`<p style="font-size:14px;color:#0f766e;line-height:1.6;margin:0;"><strong>${isSpanish ? "Sobre" : "About"}:</strong> ${escapeHtml(data.productName)}</p>`) : ""}
-        ${button(WHATSAPP_URL, isSpanish ? "Escribir por WhatsApp" : "Message us on WhatsApp", "#25d366")}
-      `, isSpanish ? "Hemos recibido tu mensaje para Rent&Roll." : "We received your Rent&Roll message."),
-    });
-
+    const message = renderContactMessage(data);
+    const result = await resend.emails.send({ from: FROM, to: data.email, ...message });
     return !result.error;
-  } catch (err) {
-    console.error("[email] Failed to send contact auto-reply:", err);
+  } catch (error) {
+    console.error("[email] sendContactAutoReply failed:", error);
     return false;
   }
 }
@@ -607,27 +568,12 @@ export async function sendContactAutoReply(data: ContactEmailData): Promise<bool
 export async function sendSignupWelcome(data: SignupWelcomeEmailData): Promise<boolean> {
   const resend = getResend();
   if (!resend) return false;
-
-  const name = data.name?.trim() || "there";
-
   try {
-    const result = await resend.emails.send({
-      from: FROM,
-      to: data.email,
-      subject: "Welcome to Rent&Roll",
-      html: emailWrapper("Welcome to Rent&Roll", `
-        <p style="font-size:15px;color:#374151;line-height:1.6;margin-top:0;">Hi ${escapeHtml(name)},</p>
-        <p style="font-size:15px;color:#374151;line-height:1.6;">Thanks for signing up. We'll send useful Valencia stay tips, new kit launches, and practical updates when new inventory becomes available.</p>
-        ${data.interest ? infoBox(`<p style="font-size:14px;color:#0f766e;line-height:1.6;margin:0;"><strong>Your interest:</strong> ${escapeHtml(data.interest)}</p>`) : ""}
-        <p style="font-size:15px;color:#374151;line-height:1.6;">In the meantime, if you need something specific for a Valencia stay, just message us.</p>
-        ${button(WHATSAPP_URL, "Ask us on WhatsApp", "#25d366")}
-        <p style="font-size:12px;color:#6b7280;line-height:1.5;margin-top:24px;">You received this because you subscribed to Rent&Roll updates. <a href="${escapeHtml(data.unsubscribeUrl)}" style="color:#0e7c73;">Unsubscribe</a>.</p>
-      `, "Thanks for signing up for Rent&Roll."),
-    });
-
+    const message = renderSignupMessage(data);
+    const result = await resend.emails.send({ from: FROM, to: data.email, ...message });
     return !result.error;
-  } catch (err) {
-    console.error("[email] Failed to send signup welcome:", err);
+  } catch (error) {
+    console.error("[email] sendSignupWelcome failed:", error);
     return false;
   }
 }

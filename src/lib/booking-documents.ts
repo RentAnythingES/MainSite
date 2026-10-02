@@ -179,6 +179,16 @@ export async function createBookingDocumentForPaymentEvent(
   const isRefund = documentType === "refund_receipt";
   const bookingId = booking.id as string | undefined;
   if (!bookingId) return null;
+  const existingDocument = () => supabase
+    .from("booking_documents").select("*")
+    .eq("booking_id", bookingId).eq("payment_event_id", paymentEvent.id)
+    .eq("document_type", documentType).maybeSingle();
+  const existing = await existingDocument();
+  if (existing.error) {
+    console.error("[booking-documents] Failed to check existing document:", existing.error);
+    return null;
+  }
+  if (existing.data) return existing.data as BookingDocument;
   const settings = await getInvoiceSettings(supabase);
   if (!settings) return null;
   const isFulfillmentAmendment =
@@ -295,6 +305,10 @@ export async function createBookingDocumentForPaymentEvent(
     .single();
 
   if (error) {
+    if (typeof error === "object" && "code" in error && error.code === "23505") {
+      const winner = await existingDocument();
+      if (!winner.error && winner.data) return winner.data as BookingDocument;
+    }
     console.error("[booking-documents] Failed to create booking document:", error);
     return null;
   }

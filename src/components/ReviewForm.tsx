@@ -14,7 +14,6 @@ type ReviewState = {
 export default function ReviewForm({ token, initialLocale = "en" }: { token: string; initialLocale?: Locale }) {
   const [locale, setLocale] = useState<Locale>(initialLocale);
   const t = reviewCopy[locale];
-  useEffect(() => { document.documentElement.lang = locale; }, [locale]);
   const [review, setReview] = useState<ReviewState | null>(null);
   const [rating, setRating] = useState(0);
   const [loading, setLoading] = useState(true);

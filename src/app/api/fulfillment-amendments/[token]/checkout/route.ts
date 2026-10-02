@@ -1,7 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase-admin";
 import { stripe } from "@/lib/stripe";
-import { getFulfillmentAmendmentTotal } from "@/lib/fulfillment-amendments";
+import { getFulfillmentAmendmentTotal, canAddTransport } from "@/lib/fulfillment-amendments";
+import { storedBookingLocale } from "@/lib/booking-locale";
+import { germanCustomerAccess } from "@/lib/german-customer-access";
+import { quoteProductName } from "@/lib/private-quote-locale";
+import { amendmentCopy } from "@/i18n/private-quotes";
+import { transactionPath } from "@/lib/transaction-path";
 
 const UUID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
@@ -24,9 +29,12 @@ export async function POST(
       *,
       booking:bookings!inner (
         booking_ref,
+        locale,
+        pricing_snapshot,
         status,
+        rental_start_at,
         customer_email,
-        product:products (name)
+        product:products (name, slug)
       )
     `)
     .eq("public_token", token)
@@ -35,25 +43,30 @@ export async function POST(
   if (error || !amendment) {
     return NextResponse.json({ error: "Transport quote not found" }, { status: 404 });
   }
+  const locale = storedBookingLocale((amendment.booking as unknown as { locale: unknown }).locale);
+  if (locale === "de" && !germanCustomerAccess()) return NextResponse.json({ error: "Transport quote not found" }, { status: 404 });
+  const text = amendmentCopy[locale];
   if (amendment.status === "paid") {
     return NextResponse.json({ paid: true });
   }
   if (!["quoted", "checkout_created"].includes(amendment.status)) {
-    return NextResponse.json({ error: "This transport quote is no longer payable" }, { status: 409 });
+    return NextResponse.json({ error: text.notPayable }, { status: 409 });
   }
   if (new Date(amendment.expires_at).getTime() <= Date.now()) {
     await supabase.from("booking_fulfillment_amendments").update({ status: "expired" }).eq("id", amendment.id);
-    return NextResponse.json({ error: "This transport quote has expired" }, { status: 410 });
+    return NextResponse.json({ error: text.expired }, { status: 410 });
   }
 
   const booking = amendment.booking as unknown as {
     booking_ref: string;
     status: string;
+    rental_start_at: string | null;
     customer_email: string | null;
-    product: { name: string } | null;
+    pricing_snapshot?: { displayName?: string };
+    product: { name: string; slug: string } | null;
   };
-  if (!["confirmed", "paid"].includes(booking.status)) {
-    return NextResponse.json({ error: "This booking can no longer be changed online" }, { status: 409 });
+  if (!canAddTransport(booking.status, booking.rental_start_at)) {
+    return NextResponse.json({ error: text.bookingClosed }, { status: 409 });
   }
 
   if (amendment.stripe_checkout_session_id) {
@@ -70,13 +83,14 @@ export async function POST(
   const configuredSiteUrl = process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "");
   const requestOrigin = new URL(request.url).origin;
   const baseUrl = configuredSiteUrl || (process.env.NODE_ENV === "production" ? "https://rentandroll.com" : requestOrigin);
-  const productName = booking.product?.name || "Rental equipment";
+  const productName = await quoteProductName(booking.product, locale, booking.pricing_snapshot?.displayName);
   const serviceLabel = amendment.fulfillment_mode === "delivery_and_collection"
-    ? "Delivery and collection service"
-    : "Delivery service";
+    ? text.both
+    : text.deliveryOnly;
   const session = await stripe.checkout.sessions.create(
     {
       mode: "payment",
+      locale,
       payment_method_types: ["card"],
       customer_email: booking.customer_email || undefined,
       line_items: [
@@ -86,7 +100,7 @@ export async function POST(
             unit_amount: totalCents,
             product_data: {
               name: serviceLabel,
-              description: `${productName} · Booking ${booking.booking_ref}`,
+              description: `${productName} · ${text.booking} ${booking.booking_ref}`,
             },
           },
           quantity: 1,
@@ -94,11 +108,12 @@ export async function POST(
       ],
       metadata: {
         checkout_type: "fulfillment_amendment",
+        locale,
         fulfillment_amendment_id: amendment.id,
         booking_id: amendment.booking_id,
       },
-      success_url: `${baseUrl}/booking/fulfillment/${token}?payment=success`,
-      cancel_url: `${baseUrl}/booking/fulfillment/${token}?payment=cancelled`,
+      success_url: `${baseUrl}${transactionPath(locale, `/booking/fulfillment/${token}`)}?payment=success`,
+      cancel_url: `${baseUrl}${transactionPath(locale, `/booking/fulfillment/${token}`)}?payment=cancelled`,
     },
     { idempotencyKey: `fulfillment-amendment-${amendment.id}` },
   );
@@ -111,7 +126,7 @@ export async function POST(
 
   if (updateError) {
     console.error("[fulfillment-amendments] Failed to save checkout session", updateError);
-    return NextResponse.json({ error: "Could not save the payment session" }, { status: 500 });
+    return NextResponse.json({ error: text.save }, { status: 500 });
   }
 
   return NextResponse.json({ checkoutUrl: session.url, sessionId: session.id });

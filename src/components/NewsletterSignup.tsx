@@ -1,32 +1,18 @@
 "use client";
 
 import { FormEvent, useState } from "react";
+import type { Locale } from "@/i18n/config";
+import { newsletterCopy } from "@/i18n/outreach";
 import { trackEvent } from "@/lib/analytics";
 
 interface NewsletterSignupProps {
   source: string;
-  locale?: "en" | "es";
+  locale?: Locale;
   dark?: boolean;
 }
 
 export default function NewsletterSignup({ source, locale = "en", dark = false }: NewsletterSignupProps) {
-  const text = locale === "es"
-    ? {
-        email: "Correo electrónico",
-        submitting: "Suscribiendo...",
-        submit: "Suscribirme",
-        consent: "Acepto recibir correos de Rent&Roll con consejos para estancias en Valencia, novedades de productos, nuevos kits y ofertas ocasionales. Puedo darme de baja en cualquier momento.",
-        success: "Ya estás suscrito. Revisa tu correo para ver el mensaje de bienvenida.",
-        error: "No hemos podido completar la suscripción.",
-      }
-    : {
-        email: "Email address",
-        submitting: "Subscribing...",
-        submit: "Subscribe",
-        consent: "I agree to receive Rent&Roll emails with Valencia stay tips, product updates, kit launches, and occasional offers. I can unsubscribe at any time.",
-        success: "You're subscribed — please check your inbox for the welcome email.",
-        error: "Could not subscribe",
-      };
+  const text = newsletterCopy[locale];
   const [email, setEmail] = useState("");
   const [consent, setConsent] = useState(false);
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
@@ -49,10 +35,10 @@ export default function NewsletterSignup({ source, locale = "en", dark = false }
         }),
       });
 
-      const data = await response.json();
+      await response.json();
 
       if (!response.ok) {
-        throw new Error(data.error || text.error);
+        throw new Error(text.error);
       }
 
       trackEvent("newsletter_signup_submit", {
@@ -66,7 +52,7 @@ export default function NewsletterSignup({ source, locale = "en", dark = false }
       setConsent(false);
     } catch (err) {
       setStatus("error");
-      setError(err instanceof Error ? err.message : text.error);
+      setError(text.error);
     }
   }
 

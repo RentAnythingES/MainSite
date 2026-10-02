@@ -523,3 +523,28 @@ Analytics event definitions live in `docs/ANALYTICS_SETUP.md`.
 Email templates are centralized in `src/lib/email.ts`; deliverability and lifecycle coverage are documented in `docs/EMAIL_DELIVERABILITY.md`.
 Newsletter consent records live in `newsletter_subscribers` and are created only through `/api/newsletter` using the server-side service role.
 Analytics loads only after explicit browser consent. Operational payment failures are recorded server-side in `system_incidents` and summarized by `/api/admin/health`.
+
+## German private production checkpoint — 2 October 2026
+
+The user explicitly authorized the seven prepared production migrations and private
+import by replying “yes proceed”. The earlier automatic approval rejection is
+resolved. All seven migrations are installed with matching checksum ledger entries.
+All 128 German product translations are saved as private drafts using actual current
+production source revisions; the final read-only verification matched every field
+against the prepared package. Eight committed batches have exact per-product receipts.
+
+English/Spanish content and anonymous reads, catalogue, prices, markets and bookings
+were unchanged across each migration/import transaction. Anonymous reads expose zero
+German translations, FAQs, locale rows or market-language rows; all German visibility,
+booking and indexing gates remain closed. Workflow execution is restricted to the
+service role. No real payment/message, push, deployment or publication occurred.
+
+The save events identify an explicitly documented automated import actor, not a
+human reviewer or an impersonated auth account. All production rows remain drafts
+with null review fields. Human admin attribution and revision-bound review, approved
+release manifest, remaining visual/email acceptance and authorized activation still
+remain before launch. The 52-test localization suite and final build passed before
+these schema/import operations; no application code changed in this checkpoint.
+
+Current receipts: F:/rentanything/agent-work/german-launch-2026-10-02/private-production-verification.json.
+Release checklist: F:/rentanything/agent-work/german-launch-2026-10-02/RELEASE-CHECKLIST.md.

@@ -20,7 +20,7 @@ function check(filePath, pattern, message) {
 }
 
 for (const filePath of walk(appRoot)) {
-  const relativePath = path.relative(appRoot, filePath);
+  const relativePath = path.relative(appRoot, filePath).split(path.sep).filter(segment => !/^\(.+\)$/.test(segment)).join(path.sep);
   const isPublicPage = filePath.endsWith(`${path.sep}page.tsx`) &&
     !relativePath.startsWith(`admin${path.sep}`);
   const isSitemap = relativePath === "sitemap.ts";
@@ -37,8 +37,8 @@ check(
 );
 
 for (const productPage of [
-  path.join(appRoot, "product", "[slug]", "page.tsx"),
-  path.join(appRoot, "es", "product", "[slug]", "page.tsx"),
+  path.join(appRoot, "(english)", "product", "[slug]", "page.tsx"),
+  path.join(appRoot, "(spanish)", "es", "product", "[slug]", "page.tsx"),
 ]) {
   check(productPage, /force-dynamic/, "product content must be static/on-demand; live availability belongs in the API");
 }

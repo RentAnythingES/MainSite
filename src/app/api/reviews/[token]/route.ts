@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createServiceClient } from "@/lib/supabase";
 import { isMissingBookingReviewsTable } from "@/lib/booking-reviews";
+import { bookingProductName } from "@/lib/booking-product-name";
 
 const UUID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
@@ -23,6 +24,7 @@ async function findReview(token: string) {
       locale,
       booking:bookings!inner (
         status,
+        pricing_snapshot,
         product:products (name, slug)
       )
     `)
@@ -49,6 +51,7 @@ export async function GET(
 
   const booking = data.booking as unknown as {
     status?: string;
+    pricing_snapshot?: unknown;
     product?: { name?: string; slug?: string } | null;
   };
   if (booking?.status !== "completed") {
@@ -58,7 +61,7 @@ export async function GET(
   return NextResponse.json(
     {
       locale: data.locale,
-      productName: booking.product?.name || "Rental equipment",
+      productName: bookingProductName(booking.pricing_snapshot, booking.product?.name || "Rental equipment"),
       productSlug: booking.product?.slug || null,
       submitted: data.status !== "invited",
       rating: data.rating,

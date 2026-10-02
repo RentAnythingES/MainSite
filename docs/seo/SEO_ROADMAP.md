@@ -711,3 +711,65 @@ in [SEO_GROWTH_AUDIT_20260722.md](./SEO_GROWTH_AUDIT_20260722.md).
 ### 2026-09-08 — Explorer kit release
 
 Turia & Beach Explorer prepared in the existing EN/ES kit structure with request-for-dates flow, generated illustrated hero, core equipment and optional extras. Before confirming an order: source bike, check L/XL rider fit, Hamax attachment and child suitability, helmets/lock, packed shade/cooler fit and load; agree full rental/delivery price. Publication verification is recorded in `docs/releases/TURIA_BEACH_EXPLORER_2026-09-08.md`.
+
+## German continuation checkpoint — 2 October 2026
+
+The owner reviewed the package and said to move forward. All 128 product drafts
+now contain required fields; three missing texts were completed from evidence.
+Read-only current-source reconciliation: 128/128 unchanged, no new/missing products.
+Normal catalogue rules are retained: active products with current complete reviewed
+published German translations can be browsed; sitemap inclusion additionally follows
+existing source SEO eligibility, including legacy exceptions. No extra content_ready
+condition is imposed on German browsing. EN/ES behaviour and facts are preserved.
+
+52 localization, 16 market-context and eight market-offer tests pass. Local workflow
+rehearsal saved/reviewed all 128 using actual local revisions and a synthetic local
+actor, preserving EN/ES and anonymous DE visibility zero. The 22-case mocked journey
+passes. Browser document navigation follows saved German even with an English URL
+hint; the temporary loopback provider override was restored exactly. No real payment
+or message was sent. Screenshot/email-client acceptance remains unverified.
+
+Offline and production translations remain drafts; owner continuation is recorded
+separately from revision-bound review. Production installation and private import
+are now complete under explicit authorization; see the checkpoint below. German
+release/environment/database gates remain closed. Public German URL count is zero.
+
+Current checklist and receipts:
+F:/rentanything/agent-work/german-launch-2026-10-02/RELEASE-CHECKLIST.md.
+
+## German private production checkpoint — 2 October 2026
+
+The user explicitly authorized the seven prepared production migrations and private
+import by replying “yes proceed”. The earlier automatic approval rejection is
+resolved. All seven migrations are installed with matching checksum ledger entries.
+All 128 German product translations are saved as private drafts using actual current
+production source revisions; the final read-only verification matched every field
+against the prepared package. Eight committed batches have exact per-product receipts.
+
+English/Spanish content and anonymous reads, catalogue, prices, markets and bookings
+were unchanged across each migration/import transaction. Anonymous reads expose zero
+German translations, FAQs, locale rows or market-language rows; all German visibility,
+booking and indexing gates remain closed. Workflow execution is restricted to the
+service role. No real payment/message, push, deployment or publication occurred.
+
+The save events identify an explicitly documented automated import actor, not a
+human reviewer or an impersonated auth account. All production rows remain drafts
+with null review fields. Human admin attribution and revision-bound review, approved
+release manifest, remaining visual/email acceptance and authorized activation still
+remain before launch. The 52-test localization suite and final build passed before
+these schema/import operations; no application code changed in this checkpoint.
+
+Current receipts: F:/rentanything/agent-work/german-launch-2026-10-02/private-production-verification.json.
+Release checklist: F:/rentanything/agent-work/german-launch-2026-10-02/RELEASE-CHECKLIST.md.
+
+## German release acceptance checkpoint — 2 October 2026
+
+All 128 translated product pages, 33 commercial routes and five route boundaries passed isolated local HTTP checks. The local publication fixture sitemap contained 160 German URLs (32 commercial and 128 products), with correct reciprocal alternates and no unsupported German entries. These are local acceptance results; production German remains hidden.
+
+At 390 × 844, German product navigation, availability, booking-form labels, category, kit and contact pages passed DOM/geometry checks. The long mobility category heading now shrinks/wraps within its hero row. Delivery before a server quote shows “Noch zu berechnen” and “Zwischensumme”; confirmed free delivery/pickup retains its free label. EN/ES receive equivalent pending-price labels. Pricing and booking eligibility are unchanged. No payment form was submitted or message sent. Screenshots and actual email-client rendering remain unverified; the stalled screenshot/upload mechanism remains quarantined.
+
+The temporary release manifest was restored byte-for-byte, local publication/review/indexing gates restored, viewport reset and preview closed. The final 52-test localization suite, focused presentation lint and npx next build passed with closed release gates and placeholder local services. Fresh read-only production verification confirms seven migration receipts and 128 exact, complete, current private drafts, null review fields and zero anonymous German rows. English/Spanish and business data remain unchanged.
+
+Automatic approval review rejected marking production drafts as reviewed because “continue” did not explicitly authorize production approval-status changes or an automated recorder of human approval. No review statuses changed. The concrete proposed action is eight workflow review batches of 16 against the exact current source/translation revisions, documenting an automated recorder without impersonating a human auth account. It keeps all visibility, booking, indexing and deployment gates closed. Explicit authorization remains required before that action.
+
+Exact candidate: F:/rentanything/agent-work/german-launch-2026-10-02/release-candidate.json. Current checklist: F:/rentanything/agent-work/german-launch-2026-10-02/RELEASE-CHECKLIST.md.

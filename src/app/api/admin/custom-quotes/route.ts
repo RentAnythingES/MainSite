@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { outreachLocale } from "@/lib/outreach-locale";
 import { verifyAdmin, unauthorizedResponse } from "@/lib/admin-auth";
 import {
   cleanOptionalText,
@@ -61,6 +62,7 @@ export async function POST(request: NextRequest) {
 
   try {
     const body = await request.json();
+    const locale = outreachLocale(body.locale);
     const displayName = cleanOptionalText(body.displayName, 160);
     const productId = typeof body.productId === "string" ? body.productId : "";
     const isCustomProduct = productId === CUSTOM_PRODUCT_VALUE;
@@ -78,6 +80,7 @@ export async function POST(request: NextRequest) {
     const collectionAddress = cleanOptionalText(body.collectionAddress, 500);
 
     if (isCustomProduct && !displayName) throw new Error("Enter a custom product title");
+    if (locale !== "en" && !displayName) throw new Error("Enter a customer-facing product title in the quote language");
     if (!productId) throw new Error("Choose a product");
     if (!Number.isInteger(quantity) || quantity < 1 || quantity > 50) throw new Error("Quantity must be between 1 and 50");
     if (rentalStartAt.getTime() <= now.getTime()) throw new Error("Rental start must be in the future");
@@ -135,7 +138,7 @@ export async function POST(request: NextRequest) {
       throw new Error("The primary product is not currently available for those dates");
     }
 
-    const resolvedDisplayName = isCustomProduct
+    const resolvedDisplayName = isCustomProduct || locale !== "en"
       ? displayName
       : `${product.brand.trim() ? `${product.brand.trim()} ` : ""}${product.name}`;
 
@@ -143,6 +146,7 @@ export async function POST(request: NextRequest) {
       .from("booking_custom_quotes")
       .insert({
         status: "open",
+        locale,
         display_name: resolvedDisplayName,
         product_id: product.id,
         quantity,

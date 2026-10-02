@@ -1,35 +1,37 @@
 import assert from "node:assert/strict";
 import fs from "node:fs";
+import path from "node:path";
 import pg from "pg";
 import { NextRequest } from "next/server";
+import { rehearseGermanQuotes } from "./german-quotes.local.mjs";
 const statusFile = process.env.LOCAL_SUPABASE_STATUS_FILE;
 assert.ok(
   statusFile,
   "Set LOCAL_SUPABASE_STATUS_FILE to the local CLI status file",
 );
-const local = JSON.parse(
-  fs
-    .readFileSync(statusFile, "utf8")
-    .split(/\r?\n/)
-    .find((line) => line.startsWith('{"DB_URL"')),
-);
-assert.equal(local.API_URL, "http://127.0.0.1:54321");
+const local = JSON.parse(fs.readFileSync(statusFile, "utf8").replace(/^\uFEFF/, ""));
+assert.equal(local.API_URL, "http://127.0.0.1:55321");
+const localDatabase = new URL(local.DB_URL);
+assert.ok(["127.0.0.1", "localhost"].includes(localDatabase.hostname));
+assert.equal(localDatabase.port, "55322");
 Object.assign(process.env, {
   NODE_ENV: "test",
   LOCALIZATION_PREVIEW: "true",
+  LOCALIZATION_CATALOGUE_DRAFTS_FILE: path.join(path.dirname(statusFile), "german-catalogue-drafts.json"),
   NEXT_PUBLIC_SUPABASE_URL: local.API_URL,
   NEXT_PUBLIC_SUPABASE_ANON_KEY: local.ANON_KEY,
   SUPABASE_SERVICE_ROLE_KEY: local.SERVICE_ROLE_KEY,
   STRIPE_SECRET_KEY: "sk_test_local_mock",
   STRIPE_WEBHOOK_SECRET: "whsec_local_mock",
   NEXT_PUBLIC_SITE_URL: "http://127.0.0.1:3000",
-  RATE_LIMIT_HMAC_SECRET: "local-pilot-only",
+  // Each independent local test run gets its own limiter namespace; limits stay enabled.
+  RATE_LIMIT_HMAC_SECRET: `local-pilot-only-${crypto.randomUUID()}`,
 });
 for (const key of ["RESEND_API_KEY", "TELEGRAM_BOT_TOKEN", "VAPID_PRIVATE_KEY"])
   delete process.env[key];
 const db = new pg.Client({
   host: "127.0.0.1",
-  port: 54322,
+  port: 55322,
   user: "postgres",
   password: "postgres",
   database: "postgres",
@@ -153,6 +155,8 @@ try {
     await db.query("select * from booking_drafts where id=$1", [body.draftId])
   ).rows[0];
   assert.equal(stored.locale, "de");
+  const expectedName = JSON.parse(fs.readFileSync(process.env.LOCALIZATION_CATALOGUE_DRAFTS_FILE, "utf8")).products.find(p=>p.slug===body.productSlug).translation_content.name;
+  assert.equal(stored.pricing_snapshot.displayName, expectedName);
   assert.equal(stored.timezone, "Europe/Madrid");
   response = await checkout(
     req("/api/checkout", { draftId: body.draftId, locale: "en" }),
@@ -161,6 +165,7 @@ try {
   assert.equal(response.status, 200, JSON.stringify(data));
   assert.equal(parameters.locale, "de");
   assert.match(parameters.line_items[0].price_data.product_data.name, /Miete/);
+  assert.ok(parameters.line_items[0].price_data.product_data.name.includes(expectedName));
   const firstSessionId = session.id;
   response = await checkout(
     req("/api/checkout", { draftId: body.draftId, locale: "es" }),
@@ -219,6 +224,7 @@ try {
     ])
   ).rows[0];
   assert.equal(booking.locale, "de");
+  assert.ok(emails.some(email=>email.html?.includes(expectedName)), "German product name in confirmation");
   assert.ok(
     emails.some(
       (email) =>
@@ -241,6 +247,7 @@ try {
   response = await status(req("/api/checkout/status?id=" + session.id));
   data = await response.json();
   assert.equal(data.status, "booking_confirmed");
+  assert.equal(data.booking.productName, expectedName);
   assert.equal(data.locale, "de");
   const document = (
     await db.query(
@@ -250,6 +257,7 @@ try {
   ).rows[0];
   assert.ok(document, "Invoice created");
   assert.equal(document.booking_snapshot.locale, "de");
+  assert.equal(document.booking_snapshot.product_name, expectedName);
   assert.equal(document.total_cents, booking.total_cents);
   await db.query(
     "update bookings set confirmation_status='pending' where id=$1",
@@ -276,6 +284,7 @@ try {
   assert.equal(response.status, 200);
   assert.equal(data.locale, "de");
   assert.equal(data.consentToPublish, false);
+  assert.equal(data.productName, expectedName);
   response = await reviewPost(
     req("/api/reviews/" + token, {
       rating: 5,
@@ -293,12 +302,14 @@ try {
   assert.equal(feedback.locale, "de");
   assert.equal(feedback.consent_to_publish, false);
   assert.equal(feedback.status, "submitted");
+  const quotes = await rehearseGermanQuotes({db, booking, pickup, req, checkout, webhook, getSession:()=>session, getParameters:()=>parameters, emails});
   console.log(
     JSON.stringify({
       localOnly: true,
       externalCallsBlocked: true,
       mockedStripe: true,
       mockedEmail: true,
+      quotes,
       locale: "de",
       cases: [
         "draft",

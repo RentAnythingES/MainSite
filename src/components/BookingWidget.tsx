@@ -245,6 +245,9 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
     return { days, perDay: tier.perDay, subtotal, subtotalBeforeDiscount: subtotal, deliveryFee, fulfillmentBaseFee, expressSurcharge, extraServicesFee, total, quantityDiscount: 0 };
   }, [rentalWindow, deliveryOption, fulfillmentMode, product.pricing, quantity, selectedDeliveryZone, selectedCollectionZone, extraServiceOptions, selectedExtraServices]);
 
+  // A missing delivery quote is not a confirmed zero-priced service.
+  const fulfillmentPricePending = fulfillmentMode !== "customer_pickup" && !serverQuote;
+
   const displayPricing = useMemo(() => {
     if (!serverQuote) {
       return pricing;
@@ -809,6 +812,7 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
           <div>
             <label className="text-xs font-medium text-neutral-500 mb-1 block">{t.deliveryAddress}</label>
             <GooglePlacesAddressInput
+              locale={locale}
               unavailableMessage={locale === "de" ? "Adressvorschläge sind gerade nicht verfügbar. Du kannst die Adresse selbst eingeben." : undefined}
               value={address}
               onChange={setAddress}
@@ -822,6 +826,7 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
             <div>
               <label className="text-xs font-medium text-neutral-500 mb-1 block">{t.collectionAddress}</label>
               <GooglePlacesAddressInput
+                locale={locale}
                 unavailableMessage={locale === "de" ? "Adressvorschläge sind gerade nicht verfügbar. Du kannst die Adresse selbst eingeben." : undefined}
                 value={collectionAddress}
                 onChange={setCollectionAddress}
@@ -853,7 +858,7 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
             )}
             <div className="flex justify-between text-sm">
               <span className="text-neutral-500">{fulfillmentMode === "customer_pickup" ? t.customerPickup : t.delivery}</span>
-              <span className="font-medium">{displayPricing.fulfillmentBaseFee === 0 ? <span className="text-green-600">{t.free}</span> : money(displayPricing.fulfillmentBaseFee)}</span>
+              <span className="font-medium">{fulfillmentPricePending ? t.fulfillmentPending : displayPricing.fulfillmentBaseFee === 0 ? <span className="text-green-600">{t.free}</span> : money(displayPricing.fulfillmentBaseFee)}</span>
             </div>
             {displayPricing.expressSurcharge > 0 && (
               <div className="flex justify-between text-sm text-amber-700">
@@ -868,7 +873,7 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
               </div>
             )}
             <div className="flex justify-between text-base font-bold pt-2 border-t border-border">
-              <span>{t.total}</span>
+              <span>{fulfillmentPricePending ? t.subtotalLabel : t.total}</span>
               <span className="text-brand">{money(displayPricing.total)}</span>
             </div>
           </div>
@@ -1239,7 +1244,7 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
             {fulfillmentMode === "customer_pickup" ? t.customerPickup : fulfillmentMode === "delivery_and_collection" ? t.deliveryCollection : t.delivery}
           </span>
           <span className="font-medium">
-            {displayPricing.fulfillmentBaseFee === 0 ? (
+            {fulfillmentPricePending ? t.fulfillmentPending : displayPricing.fulfillmentBaseFee === 0 ? (
               <span className="text-green-600">{t.free}</span>
             ) : (
               money(displayPricing.fulfillmentBaseFee)
@@ -1253,7 +1258,7 @@ export default function BookingWidget({ product, locale = "en" }: BookingWidgetP
           </div>
         )}
         <div className="flex justify-between text-base font-bold pt-2 border-t border-border">
-          <span>{t.total}</span>
+          <span>{fulfillmentPricePending ? t.subtotalLabel : t.total}</span>
           <span className="text-brand">{money(displayPricing.total)}</span>
         </div>
       </div>

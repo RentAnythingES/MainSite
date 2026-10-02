@@ -1,5 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase-admin";
+import { storedBookingLocale } from "@/lib/booking-locale";
+import { germanCustomerAccess } from "@/lib/german-customer-access";
+import { quoteProductName } from "@/lib/private-quote-locale";
+import { amendmentCopy } from "@/i18n/private-quotes";
 import {
   getFulfillmentAmendmentTotal,
   isMissingFulfillmentAmendmentsTable,
@@ -23,11 +27,13 @@ export async function GET(
       *,
       booking:bookings!inner (
         booking_ref,
+        locale,
+        pricing_snapshot,
         status,
         rental_start_at,
         rental_end_at,
         customer_name,
-        product:products (name)
+        product:products (name, slug)
       ),
       delivery_zone:service_zones!booking_fulfillment_amendments_delivery_zone_id_fkey (name),
       collection_zone:service_zones!booking_fulfillment_amendments_collection_zone_id_fkey (name)
@@ -41,6 +47,10 @@ export async function GET(
   if (error || !data) {
     return NextResponse.json({ error: "Transport quote not found" }, { status: 404 });
   }
+  const savedBooking = data.booking as unknown as { locale: unknown };
+  const locale = storedBookingLocale(savedBooking.locale);
+  if (locale === "de" && !germanCustomerAccess()) return NextResponse.json({ error: "Transport quote not found" }, { status: 404 });
+  const text = amendmentCopy[locale];
 
   let status = data.status as string;
   if (["quoted", "checkout_created"].includes(status) && new Date(data.expires_at).getTime() <= Date.now()) {
@@ -58,22 +68,24 @@ export async function GET(
     rental_start_at: string | null;
     rental_end_at: string | null;
     customer_name: string;
-    product: { name: string } | null;
+    pricing_snapshot?: { displayName?: string };
+    product: { name: string; slug: string } | null;
   };
   const deliveryZone = data.delivery_zone as unknown as { name?: string } | null;
   const collectionZone = data.collection_zone as unknown as { name?: string } | null;
 
   return NextResponse.json(
     {
+      locale,
       bookingRef: booking.booking_ref,
       bookingStatus: booking.status,
       customerFirstName: booking.customer_name?.split(/\s+/)[0] || null,
-      productName: booking.product?.name || "Rental equipment",
+      productName: await quoteProductName(booking.product, locale, booking.pricing_snapshot?.displayName),
       rentalStartAt: booking.rental_start_at,
       rentalEndAt: booking.rental_end_at,
       status,
       fulfillmentMode: data.fulfillment_mode,
-      deliveryZoneName: deliveryZone?.name || (data.is_custom_quote ? "Custom transport quote" : null),
+      deliveryZoneName: deliveryZone?.name || (data.is_custom_quote ? text.custom : null),
       collectionZoneName: collectionZone?.name || null,
       deliveryAddress: data.delivery_address,
       collectionAddress: data.collection_address,

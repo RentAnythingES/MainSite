@@ -289,6 +289,7 @@ interface PickupLocationRow {
 }
 
 interface CustomBookingQuoteRow {
+  locale?: string | null;
   id: string;
   public_token: string;
   status: CustomBookingQuoteStatus;

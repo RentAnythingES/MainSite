@@ -1,14 +1,20 @@
 import { randomUUID } from "crypto";
 import { NextRequest, NextResponse } from "next/server";
+import { germanRentalBundles } from '@/data/bundles-de';
+import { spanishRentalBundles } from '@/data/bundles-es';
+import { bundleRequestMessage } from '@/lib/bundle-request-message';
 import { rentalBundles } from "@/data/bundles";
 import {
-  BUNDLE_REQUEST_CONSENT_TEXT,
-  BUNDLE_REQUEST_CONSENT_VERSION,
   cleanBundleRequestText,
   isMissingBundleRequestsTable,
 } from "@/lib/bundle-requests";
 import { sendContactAutoReply, sendContactNotification } from "@/lib/email";
 import { createServiceClient } from "@/lib/supabase";
+import { outreachLocale } from "@/lib/outreach-locale";
+import { privateGermanPreviewEnabled } from "@/lib/localization-preview";
+import { bundleConsentText, bundleConsentVersion } from "@/i18n/bundle-configurator";
+import { bundleRequestCopy } from "@/i18n/bundle-request";
+import type { Locale } from "@/i18n/config";
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const DATE_PATTERN = /^\d{4}-\d{2}-\d{2}$/;
@@ -29,17 +35,20 @@ function selectedNames(value: unknown, allowed: Set<string>): string[] {
 
 export async function POST(request: NextRequest) {
   const body = await request.json().catch(() => null) as Record<string, unknown> | null;
+  let locale: Locale;
+  try { locale = outreachLocale(body?.locale); }
+  catch { return NextResponse.json({ error: "Language is not available" }, { status: 400 }); }
+  const text = bundleRequestCopy[locale];
   if (!body || body.website) {
-    return NextResponse.json({ error: "Invalid request" }, { status: 400 });
+    return NextResponse.json({ error: text.invalid }, { status: 400 });
   }
 
   const bundleSlug = cleanBundleRequestText(body.bundleSlug, 120);
   const bundle = rentalBundles.find((candidate) => candidate.slug === bundleSlug);
   if (!bundle) {
-    return NextResponse.json({ error: "Kit not found" }, { status: 404 });
+    return NextResponse.json({ error: text.missing }, { status: 404 });
   }
 
-  const locale = bundleSlug === "turia-beach-explorer" && body.locale === "es" ? "es" as const : "en" as const;
   const customerName = cleanBundleRequestText(body.customerName, 120);
   const customerEmail = cleanBundleRequestText(body.customerEmail, 254)?.toLowerCase() || null;
   const customerPhone = cleanBundleRequestText(body.customerPhone, 50);
@@ -49,16 +58,16 @@ export async function POST(request: NextRequest) {
   const endDate = body.endDate;
 
   if (!customerName || !customerEmail || !EMAIL_PATTERN.test(customerEmail)) {
-    return NextResponse.json({ error: "Add your name and a valid email address" }, { status: 400 });
+    return NextResponse.json({ error: text.contact }, { status: 400 });
   }
   if (!validDate(startDate) || !validDate(endDate) || endDate < startDate) {
-    return NextResponse.json({ error: "Choose a valid start and end date" }, { status: 400 });
+    return NextResponse.json({ error: text.dates }, { status: 400 });
   }
   if (!accommodationArea) {
-    return NextResponse.json({ error: "Add your accommodation area" }, { status: 400 });
+    return NextResponse.json({ error: text.area }, { status: 400 });
   }
   if (body.consentAccepted !== true) {
-    return NextResponse.json({ error: "Confirm that we may use these details to manage your request" }, { status: 400 });
+    return NextResponse.json({ error: text.consent }, { status: 400 });
   }
 
   const allowedItems = new Set(bundle.includedItems.map((item) => item.name));
@@ -68,6 +77,11 @@ export async function POST(request: NextRequest) {
   const requestRef = createRequestRef();
   const forwardedFor = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || null;
   const sourcePath = cleanBundleRequestText(body.sourcePath, 500);
+
+  const localizedBundle = (locale === 'de' ? germanRentalBundles : locale === 'es' ? spanishRentalBundles : rentalBundles).find(item => item.slug === bundle.slug);
+  if (!localizedBundle) return NextResponse.json({ error: text.unavailable }, { status: 503 });
+  const message = bundleRequestMessage({ locale, bundle: localizedBundle, requestRef, startDate, endDate,
+    area: accommodationArea, phone: customerPhone, selectedItems, selectedAddons, notes: customerNotes });
 
   const supabase = createServiceClient();
   const { error } = await supabase.from("bundle_requests").insert({
@@ -84,41 +98,32 @@ export async function POST(request: NextRequest) {
     selected_addons: selectedAddons,
     customer_notes: customerNotes,
     locale,
-    consent_version: BUNDLE_REQUEST_CONSENT_VERSION,
-    consent_text: BUNDLE_REQUEST_CONSENT_TEXT,
+    consent_version: bundleConsentVersion,
+    consent_text: bundleConsentText(locale),
     source_path: sourcePath,
     ip_address: forwardedFor,
     user_agent: request.headers.get("user-agent")?.slice(0, 1000) || null,
   });
 
   if (isMissingBundleRequestsTable(error)) {
-    return NextResponse.json({ error: "Kit requests are being configured. Please contact us on WhatsApp." }, { status: 503 });
+    return NextResponse.json({ error: text.unavailable }, { status: 503 });
   }
   if (error) {
     console.error("[bundle-requests] Insert failed", error);
-    return NextResponse.json({ error: "Could not save your request" }, { status: 500 });
+    return NextResponse.json({ error: text.save }, { status: 500 });
   }
 
-  const message = [
-    `Request: ${requestRef}`,
-    `Kit: ${bundle.name}`,
-    `Dates: ${startDate} to ${endDate}`,
-    `Area: ${accommodationArea}`,
-    `Phone: ${customerPhone || "Not provided"}`,
-    "",
-    "Included items:",
-    ...(selectedItems.length ? selectedItems.map((item) => `- ${item}`) : ["- Please recommend the right setup"]),
-    "",
-    "Add-ons:",
-    ...(selectedAddons.length ? selectedAddons.map((item) => `- ${item}`) : ["- None selected"]),
-    customerNotes ? `\nNotes: ${customerNotes}` : "",
-  ].join("\n");
+  // The server guard requires a loopback database, test payments and no mail key.
+  // No customer or staff notification, WhatsApp handoff or sent flag in local previews.
+  if (privateGermanPreviewEnabled()) {
+    return NextResponse.json({ success: true, requestRef, preview: true });
+  }
 
   const emailData = {
     name: customerName,
     email: customerEmail,
     subject: `Kit request ${requestRef}`,
-    productName: bundle.name,
+    productName: localizedBundle.name,
     message,
     locale,
   };

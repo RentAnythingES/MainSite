@@ -3,10 +3,12 @@
 import { useMemo, useState } from "react";
 import ProductCard from "@/components/ProductCard";
 import type { Product } from "@/data/products";
+import { localeRegistry, type Locale } from "@/i18n/config";
 
 type CategoryProductCatalogueProps = {
   products: Product[];
-  locale?: "en" | "es";
+  locale?: Locale;
+  productBasePath?: string;
 };
 
 // Lowest per-day rate across all pricing tiers, used as the price sort key.
@@ -17,9 +19,11 @@ function lowestPerDay(product: Product): number {
 export default function CategoryProductCatalogue({
   products,
   locale = "en",
+  productBasePath,
 }: CategoryProductCatalogueProps) {
   const isEs = locale === "es";
-  const basePath = isEs ? "/es/product" : "/product";
+  const isDe = locale === "de";
+  const basePath = productBasePath ?? `${localeRegistry[locale].prefix}/product`;
 
   const subcategories = useMemo(() => {
     const bySlug = new Map<string, string>();
@@ -29,22 +33,22 @@ export default function CategoryProductCatalogue({
       }
     }
     return Array.from(bySlug, ([slug, name]) => ({ slug, name })).sort((a, b) =>
-      a.name.localeCompare(b.name)
+      a.name.localeCompare(b.name, localeRegistry[locale].format)
     );
-  }, [products]);
+  }, [products, locale]);
 
   const [selectedSubcategories, setSelectedSubcategories] = useState<string[]>([]);
 
   // Rule: subcategory (A-Z) -> title (A-Z) -> price (low to high).
   const sortedProducts = useMemo(() => {
     return [...products].sort((a, b) => {
-      const subcategoryDiff = a.subcategory.localeCompare(b.subcategory);
+      const subcategoryDiff = a.subcategory.localeCompare(b.subcategory, localeRegistry[locale].format);
       if (subcategoryDiff !== 0) return subcategoryDiff;
-      const nameDiff = a.name.localeCompare(b.name);
+      const nameDiff = a.name.localeCompare(b.name, localeRegistry[locale].format);
       if (nameDiff !== 0) return nameDiff;
       return lowestPerDay(a) - lowestPerDay(b);
     });
-  }, [products]);
+  }, [products, locale]);
 
   const visibleProducts = useMemo(() => {
     if (selectedSubcategories.length === 0) return sortedProducts;
@@ -66,7 +70,7 @@ export default function CategoryProductCatalogue({
         <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border py-4">
           <div className="flex items-baseline gap-2">
             <h2 className="text-xl font-bold">
-              {isEs ? "Productos disponibles" : "Available products"}
+              {isDe ? "Mietartikel" : isEs ? "Productos disponibles" : "Available products"}
             </h2>
             <span className="text-sm text-neutral-500">
               {isEs ? `${visibleProducts.length} en Valencia` : `${visibleProducts.length} in Valencia`}
@@ -75,14 +79,14 @@ export default function CategoryProductCatalogue({
 
           {subcategories.length > 1 && (
             <label className="flex items-center gap-2 text-sm text-neutral-500">
-              <span className="hidden sm:inline">{isEs ? "Subcategoría" : "Subcategory"}</span>
+              <span className="hidden sm:inline">{isDe ? "Produktgruppe" : isEs ? "Subcategoría" : "Subcategory"}</span>
               <select
                 value=""
                 onChange={(event) => addFilter(event.target.value)}
                 className="rounded-lg border border-border bg-white px-3 py-1.5 text-sm text-neutral-700 focus:outline-none focus:ring-2 focus:ring-brand"
-                aria-label={isEs ? "Filtrar por subcategoría" : "Filter by subcategory"}
+                aria-label={isDe ? "Nach Produktgruppe filtern" : isEs ? "Filtrar por subcategoría" : "Filter by subcategory"}
               >
-                <option value="">{isEs ? "Todas las subcategorías" : "All subcategories"}</option>
+                <option value="">{isDe ? "Alle Produktgruppen" : isEs ? "Todas las subcategorías" : "All subcategories"}</option>
                 {subcategories
                   .filter((sub) => !selectedSubcategories.includes(sub.slug))
                   .map((sub) => (
@@ -109,7 +113,7 @@ export default function CategoryProductCatalogue({
                   <button
                     type="button"
                     onClick={() => removeFilter(slug)}
-                    aria-label={isEs ? `Quitar filtro ${sub.name}` : `Remove ${sub.name} filter`}
+                    aria-label={isDe ? `Filter ${sub.name} entfernen` : isEs ? `Quitar filtro ${sub.name}` : `Remove ${sub.name} filter`}
                     className="rounded-full p-0.5 hover:bg-brand/20 transition-colors"
                   >
                     <svg viewBox="0 0 20 20" fill="currentColor" className="h-3.5 w-3.5" aria-hidden="true">
@@ -128,7 +132,7 @@ export default function CategoryProductCatalogue({
               onClick={() => setSelectedSubcategories([])}
               className="text-sm text-neutral-500 underline hover:text-neutral-700"
             >
-              {isEs ? "Limpiar todo" : "Clear all"}
+              {isDe ? "Alle Filter entfernen" : isEs ? "Limpiar todo" : "Clear all"}
             </button>
           </div>
         )}
@@ -140,13 +144,14 @@ export default function CategoryProductCatalogue({
               product={product}
               id={`cat-product-${product.slug}`}
               basePath={basePath}
+              locale={locale}
             />
           ))}
         </div>
 
         {visibleProducts.length === 0 && (
           <p className="py-10 text-center text-neutral-500">
-            {isEs
+            {isDe ? "Keine Mietartikel passen zu den gewählten Filtern." : isEs
               ? "No hay productos que coincidan con los filtros seleccionados."
               : "No products match the selected filters."}
           </p>

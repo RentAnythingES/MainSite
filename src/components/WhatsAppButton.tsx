@@ -1,12 +1,14 @@
 "use client";
 import { usePathname } from "next/navigation";
+import { siteContext } from "@/i18n/site-context";
 
 export default function WhatsAppButton() {
   const pathname = usePathname();
+  const { locale } = siteContext(pathname);
   if (pathname === "/agent" || (pathname.startsWith("/agent/") && pathname !== "/agent/login")) return null;
   const phoneNumber = "34684708013"; // TODO: Replace with actual number
   const message = encodeURIComponent(
-    "Hi! I'm interested in renting equipment in Valencia. Can you help?"
+    locale === "de" ? "Hallo! Ich möchte etwas für meinen Aufenthalt in Valencia mieten. Könnt ihr mir helfen?" : locale === "es" ? "¡Hola! Quiero alquilar artículos para mi estancia en Valencia. ¿Podéis ayudarme?" : "Hi! I'm interested in renting equipment in Valencia. Can you help?"
   );
 
   return (
@@ -15,7 +17,7 @@ export default function WhatsAppButton() {
       target="_blank"
       rel="noopener noreferrer"
       className="fixed bottom-6 right-6 z-50 w-14 h-14 bg-[#25D366] hover:bg-[#20BD5A] rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 group"
-      aria-label="Chat on WhatsApp"
+      aria-label={locale === "de" ? "Über WhatsApp schreiben" : locale === "es" ? "Escribir por WhatsApp" : "Chat on WhatsApp"}
       id="whatsapp-fab"
     >
       <svg
@@ -28,7 +30,7 @@ export default function WhatsAppButton() {
 
       {/* Tooltip */}
       <span className="absolute right-full mr-3 px-3 py-1.5 bg-neutral-800 text-white text-sm rounded-lg whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none shadow-lg">
-        Chat with us!
+        {locale === "de" ? "Schreib uns!" : locale === "es" ? "¡Escríbenos!" : "Chat with us!"}
       </span>
     </a>
   );
