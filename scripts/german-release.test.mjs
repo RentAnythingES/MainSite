@@ -59,6 +59,9 @@ function product(slug, changes = {}) {
 }
 
 test('production German release remains closed without attributable owner approval', async () => {
+  const savedReview = { ...germanReleaseReview };
+  Object.assign(germanReleaseReview, { approved: false, reviewedBy: null, reviewedAt: null, catalogueSourceHash: null });
+  try {
   assert.equal(germanReleaseApproved(), false);
   assert.equal(localeRegistry.de.public, false);
   assert.deepEqual(publicLocales, ['en', 'es']);
@@ -66,6 +69,7 @@ test('production German release remains closed without attributable owner approv
   assert.deepEqual(await publishedGermanProducts(), []);
   assert.equal(calls, 0);
   assert.throws(() => publicLocaleHref('/product/test', 'de'), /not public/);
+  } finally { Object.assign(germanReleaseReview, savedReview); }
 });
 test('German inventory exactly names implemented commercial surfaces', () => {
   for (const key of Object.keys(germanInformation)) assert.ok(germanCommercialPaths.includes('/' + key));

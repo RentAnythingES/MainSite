@@ -91,6 +91,7 @@ export async function GET(request: NextRequest) {
       return {
         ...product,
         ...profile,
+        rental_booking_count: (bookingsByProduct.get(product.id) || []).length,
         current_daily_rate_cents: lowestDailyRate.get(product.id) || 0,
         rental_revenue_since_purchase_cents: revenueSincePurchase,
         monthly_depreciation_cents: Math.round(depreciableCents / profile.useful_life_months),

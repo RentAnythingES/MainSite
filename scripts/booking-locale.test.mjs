@@ -1,3 +1,5 @@
+import { beforeEach, afterEach } from 'node:test';
+import { germanReleaseReview } from '../src/i18n/german-release.ts';
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import {NextRequest} from 'next/server';
@@ -80,3 +82,8 @@ test('availability and draft creation enforce the selected language before side 
  assert.equal(draft.status,409);assert.equal((await draft.json()).errorCode,'booking_disabled');
  assert.equal(calls.length,4);
 });
+
+// These cases intentionally exercise issued customer URLs before public release.
+const privateReviewBefore = { ...germanReleaseReview };
+beforeEach(() => { Object.assign(germanReleaseReview, { approved: false, reviewedBy: null, reviewedAt: null, catalogueSourceHash: null }); });
+afterEach(() => { Object.assign(germanReleaseReview, privateReviewBefore); });

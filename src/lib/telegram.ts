@@ -116,6 +116,7 @@ async function sendTelegramText(
     let successfulDeliveries = 0;
     for (const chatId of chatIds) {
       const response = await fetch(`${apiBase}/bot${botToken}/sendMessage`, {
+        signal: AbortSignal.timeout(15000),
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -193,6 +194,7 @@ export interface DailyManifestTelegramData {
   date: string;
   deliveries: Array<{ bookingRef: string; productName: string; area: string }>;
   customerPickups: Array<{ bookingRef: string; productName: string; area: string }>;
+  customerReturns: Array<{ bookingRef: string; productName: string; area: string }>;
   returnCollections: Array<{ bookingRef: string; productName: string; area: string }>;
 }
 
@@ -204,6 +206,8 @@ function buildDailyManifestMessageText(data: DailyManifestTelegramData) {
     ...data.deliveries.map((item) => `• 📦 ${escapeTelegramHtml(item.bookingRef)} — ${escapeTelegramHtml(item.productName)} (${escapeTelegramHtml(item.area)})`),
     `<b>Customer pick-ups:</b> ${data.customerPickups.length}`,
     ...data.customerPickups.map((item) => `• 🤝 ${escapeTelegramHtml(item.bookingRef)} — ${escapeTelegramHtml(item.productName)} (${escapeTelegramHtml(item.area)})`),
+    `<b>Customer returns:</b> ${data.customerReturns.length}`,
+    ...data.customerReturns.map((item) => `• ${escapeTelegramHtml(item.bookingRef)} — ${escapeTelegramHtml(item.productName)} (${escapeTelegramHtml(item.area)})`),
     `<b>Return collections:</b> ${data.returnCollections.length}`,
     ...data.returnCollections.map((item) => `• 🚚 ${escapeTelegramHtml(item.bookingRef)} — ${escapeTelegramHtml(item.productName)} (${escapeTelegramHtml(item.area)})`),
     "",
@@ -302,6 +306,7 @@ export async function sendTelegramToChatId(
 
   try {
     const response = await fetch(`${apiBase}/bot${botToken}/sendMessage`, {
+        signal: AbortSignal.timeout(15000),
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -327,12 +332,14 @@ export interface DeliveryGroupRequestData {
   eventType: "delivery" | "pickup";
   windowLabel: string;
   postalCode: string;
+  reminder?: boolean;
 }
 
 function buildDeliveryGroupRequestText(data: DeliveryGroupRequestData) {
   const heading = data.eventType === "delivery" ? "🚚 <b>New delivery request</b>" : "📦 <b>New return collection request</b>";
   const lines = [
     heading,
+    ...(data.reminder ? ["<b>Still open — a driver is needed for this job.</b>"] : []),
     `<b>When:</b> ${escapeTelegramHtml(data.windowLabel)}`,
     `<b>Postcode:</b> ${escapeTelegramHtml(data.postalCode)}`,
     "",
@@ -351,6 +358,19 @@ export async function sendDeliveryGroupRequest(data: DeliveryGroupRequestData) {
       { text: "❌ I can't", callback_data: `dvskip:${data.requestId}` },
     ]],
   });
+}
+
+export async function sendUnclaimedJobAdminAlert(data: {
+  bookingId: string; bookingRef: string; eventType: "delivery" | "pickup"; windowLabel: string;
+}) {
+  return sendTelegramText([
+    "<b>URGENT: no driver assigned</b>",
+    `<b>Order:</b> ${escapeTelegramHtml(data.bookingRef)}`,
+    `<b>Job:</b> ${data.eventType === "delivery" ? "Delivery" : "Return collection"}`,
+    `<b>Due:</b> ${escapeTelegramHtml(data.windowLabel)}`,
+    "This job is due within two hours or is overdue and still has no driver. Please arrange cover now.",
+    `<b>Admin:</b> ${escapeTelegramHtml(buildAdminUrl(data.bookingId))}`,
+  ].join("\n"), "unclaimed-job-urgent");
 }
 
 export async function isTelegramDeliveryGroupMember(telegramUserId: number): Promise<boolean> {

@@ -159,11 +159,20 @@ so drivers who joined before the membership webhook was available are activated 
 their first valid claim. Setup and permissions are documented in
 `docs/TELEGRAM_DRIVER_DISPATCH.md`.
 
+Paid booking webhooks now invoke advance driver dispatch; a five-minute Supabase
+Cron HTTP call reconciles deferred jobs, four-hour working-time reminders and
+two-hour unclaimed-job admin alerts. The shared dispatcher stores send timestamps
+and leases on `delivery_requests`. Supabase Vault holds the HTTP authorization
+secret. Driver offers and reminders are independent of the daily manifest.
+
 The daily Telegram operations manifest separates delivery trips, customer pickup
-handovers at configured pickup locations, and driver return collections. It includes
+handovers, customer returns, and driver return collections. It includes
 active bookings due today by `rental_start_at` or `rental_end_at`, with a date-only
 fallback for legacy bookings. Customer pickup handovers are preparation items and do
-not create a courier request.
+not create a courier request. Customer returns (including delivery-only rentals)
+are also preparation items without courier dispatch. The shared booking operations
+helper resolves custom-quote item names from the saved pricing snapshot and builds
+the manifest independently of transport notification delivery.
 
 Short-notice booking confirmation is a single shared server action used by the
 Telegram inline button and the admin confirmation control. It atomically approves a
@@ -174,7 +183,7 @@ refund is issued automatically if Rent'n Roll cannot confirm the booking.
 
 ### Delivery trip accounting
 
-When the due-date cron broadcasts a delivery or collection request, it also creates
+When advance dispatch first broadcasts a delivery or collection request, it also creates
 one internal accounting trip. Google Maps Directions calculates the one-way driving
 distance from the configured warehouse to the customer address; the origin, rate,
 distance and cost are snapshotted in `delivery_trip_accounting`. The Telegram claim
@@ -188,6 +197,10 @@ with an explicit unavailable status rather than a made-up distance or cost.
 purchase date, cost, purchaser, useful life, residual value, and notes for every
 catalogue product. The server calculates straight-line depreciation and the rental
 revenue accumulated from paid booking subtotals on or after the purchase date.
+The asset register supports all-products, active-products and already-rented filters,
+combined with name/slug search. Already-rented means at least one booking in paid,
+delivering, active, returning or completed status, regardless of purchase-date entry.
+Summary totals follow the filtered products.
 Delivery and collection fees are deliberately excluded from product rental revenue;
 no historic purchase date or acquisition cost is inferred when it is unknown.
 

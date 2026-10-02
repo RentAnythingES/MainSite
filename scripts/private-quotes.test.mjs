@@ -1,3 +1,5 @@
+import { beforeEach, afterEach } from 'node:test';
+import { germanReleaseReview } from '../src/i18n/german-release.ts';
 import assert from "node:assert/strict";
 import test from "node:test";
 import { readFileSync } from "node:fs";
@@ -146,3 +148,8 @@ test("German amendment view and Stripe checkout use saved language despite confl
   assert.equal((await POST(new NextRequest("http://localhost/", { method: "POST" }), context)).status, 404);
   assert.equal(payments, 1); assert.equal(writes, 1);
 });
+
+// These cases intentionally exercise issued customer URLs before public release.
+const privateReviewBefore = { ...germanReleaseReview };
+beforeEach(() => { Object.assign(germanReleaseReview, { approved: false, reviewedBy: null, reviewedAt: null, catalogueSourceHash: null }); });
+afterEach(() => { Object.assign(germanReleaseReview, privateReviewBefore); });

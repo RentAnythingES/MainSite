@@ -24,8 +24,8 @@ test("every published family has a complete German draft with source guidance se
   }
 });
 
-test("German family editorial links stay within implemented private pages", () => {
-  const allowed = new Set(["/rental/mobility", "/rental/baby-gear", "/how-it-works", "/contact", "/valencia/kits/accessible-valencia-kit", "/valencia/kits/baby-arrival-kit"].map(path => germanPreviewPrefix + path));
+test("German family editorial links stay within implemented German pages", () => {
+  const allowed = new Set(["/rental/mobility", "/rental/baby-gear", "/how-it-works", "/contact", "/valencia/kits/accessible-valencia-kit", "/valencia/kits/baby-arrival-kit"].flatMap(path => [germanPreviewPrefix + path, "/de" + path]));
   for (const content of Object.values(germanFamilies)) {
     assert.ok(content.links.length >= 2);
     for (const link of content.links) assert.ok(allowed.has(link.href), link.href);
