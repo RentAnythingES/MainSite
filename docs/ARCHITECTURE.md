@@ -197,6 +197,10 @@ with an explicit unavailable status rather than a made-up distance or cost.
 purchase date, cost, purchaser, useful life, residual value, and notes for every
 catalogue product. The server calculates straight-line depreciation and the rental
 revenue accumulated from paid booking subtotals on or after the purchase date.
+The asset register supports all-products, active-products and already-rented filters,
+combined with name/slug search. Already-rented means at least one booking in paid,
+delivering, active, returning or completed status, regardless of purchase-date entry.
+Summary totals follow the filtered products.
 Delivery and collection fees are deliberately excluded from product rental revenue;
 no historic purchase date or acquisition cost is inferred when it is unknown.
 
