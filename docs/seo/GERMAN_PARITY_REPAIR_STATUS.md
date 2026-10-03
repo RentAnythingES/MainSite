@@ -2,21 +2,13 @@
 
 Owner request: every public/customer page in contextually correct German using the original shared layout, content, images and formatting; afterwards audit German search terms and each page's SEO. Existing authorization covers publication.
 
-## Current checkpoint — 3 October 2026, 21:50 UTC
+## Current checkpoint — 4 October 2026
 
-- Complete translations: 205 original public equivalents, including 128 products, eight articles, 26 guides, five destination hubs, eight categories, five family/comparison pages and nine rental packages. All 205 EN/DE render comparisons pass exact structure/classes/images and German document-language/local-link checks. Receipt: ALL-PAGE-PARITY.json, build 21:39:54 UTC. These are DOM checks, not screenshot or factual acceptance.
-- Original shared templates replace the abbreviated German fork. Homepage original three-photo hero, eight categories, reviews and featured catalogue restored. Original header/footer and page body sections preserved. Current database source supplies package related cards consistently in EN/ES/DE.
-- Thirteen catalogue corrections committed through revision-guarded save/review/publish workflows, with automated review attribution. Independent read-back verifies all 128 current approved/published German translations. Prices, stock, images, markets, bookings and unrelated copy unchanged. Exact committed LIVE/VERIFIED receipts are retained under F:/rentanything/agent-work/german-parity-repair.
-- All 60 localization tests and four conversation-access fixture tests pass. Saved customer language controls private conversation pages; original active-assignment/booking/territory access checks remain required. All seven original customer route families use German dictionaries/components; no email, customer message or payment sent by verification.
-- Homepage headless geometry passed 375, 768, 1024 and 1440 widths, original local hero images loaded. Additional browser initialization failed twice; mechanism quarantined. Other responsive families remain unverified, not passed by assumption.
-- Existing English monitor and basic power-wheelchair fields conflict. German now translates each original source field rather than inserting public editorial review instructions. Physical model identity remains an inventory-check item; no new fact or corrected English claim asserted.
-- Fresh product-cache namespace, German cache invalidation and original legacy product redirect counterparts added. Original publication failure remains quarantined; SQL-native guarded replacement has successful committed receipts.
-- Code release not deployed yet. Final redirect/indexing rehearsal build, sitemap verification and deployment remain. Production still 8418a2b. German SEO audit remains the subsequent phase.
+Phase 1 deployed via PR #29, commit 325617a09b410807471dcdf59cd5e0963a25a836. All 205 live German public pages pass original structure/classes/images comparison (ALL-LIVE-PAGE-PARITY.json). Original templates, full content sections and photographs restored. All 128 current approved German catalogue translations independently verified, including thirteen committed copy corrections.
 
-## Remaining work
+Phase 2 terminology research and individual title/intent review completed with primary-source evidence retained. All 205 pages pass the fresh final local SEO sweep; 615 sitemap URLs have complete reciprocal EN/ES/DE annotations including translated Spanish B2B aliases. Metadata refinements preserve body content and design. Final build, 62 localization plus eight routing/customer-access tests and lint pass. See [German localization audit](./GERMAN_LOCALIZATION_AUDIT_20261004.md) and its per-page CSV. SEO deployment and production read-back remain.
 
-1. Final build, sitemap, private-route metadata and deployment verification.
-2. German terminology research and all-page SEO audit; implement justified localized metadata/technical repairs without changing shared designs or inventing business facts.
+Homepage browser geometry passed four widths with original photos; further browser initialization was quarantined. Complete screenshot acceptance is not claimed. Existing English monitor and basic power-wheelchair fields disagree; German visible fields remain faithful to source, and the monitor SEO snippet omits an unverified dimension. Physical inventory identification remains an independent source-data issue.
 
 ## Historical checkpoint receipts
 

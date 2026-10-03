@@ -454,3 +454,54 @@ Public representative sources reviewed:
 - <https://www.motion4rent.com/mobility-equipment-rental-in-valencia>
 - <https://scooteradomicilio.com/>
 - <https://www.mobilityequipmenthiredirect.com/mobility-equipment-hire/570-mobility-scooter-hire-in-valencia-spain-portable-4-wheeled/>
+
+
+# German terminology sample — 4 October 2026 (00:11 CEST)
+
+Scope: German-speaking visitors planning an equipment rental or trip in Valencia, Spain. The completed 205-page translation build is the baseline. This is the requested bounded localization/SEO audit, not a new site design or a full acquisition-strategy replacement. No measured search volumes or current German first-party ranking data are available in this run. Public web-search samples are not separately controlled Google/Bing rankings; engine, German location, personalization and device are unspecified.
+
+Queries sampled: Kinderwagen mieten Valencia deutsch; Kindersitz Reisebett mieten Valencia deutsch; Rollstuhl Elektromobil mieten Valencia deutsch; Klimagerät Monitor Strand Ausrüstung mieten Valencia deutsch.
+
+OBSERVED: https://vlc-location.com/de/products/cochecito-de-bebe-0-4-anos-0-22-kg uses Kinderwagen and Kinderwagenverleih for a Valencia rental. Its German wording contains grammatical defects elsewhere, so competitor prose is not an editorial standard. Class: partial business/organic competitor, existing Valencia equipment market; public source only.
+
+OBSERVED: https://www.babonbo.com/de/places/spain/valencian-community/valencia/cribs-cots uses Kinderbetten, Reisebetten, Babyausstattung, Kinderwagen and Autositze in local rental headings. Class: marketplace/distribution channel and organic search competitor, consistent with existing project competitor taxonomy. Its Krippe wording is an English crib translation artifact and is excluded as a target noun.
+
+OBSERVED: https://www.motion4rent.com/de/vermietung-von-mobilitatsausrustung-in-valencia?lat=39.8088264&lon=-0.1470569 uses Mobilitätshilfen, Elektromobil, Rollstuhl, elektrischer Rollstuhl, Gehhilfen and Rollatoren. Class: mobility marketplace/partial competitor. Product weights, prices and free-delivery claims belong to that provider and are not copied.
+
+INFERRED: broad family owners should retain Kinderwagen, Kindersitz/Autokindersitz, Reisebett/Babybett, Rollstuhl and Elektromobil plus mieten and Valencia; exact product owners retain model/type/size modifiers. Elektromobil is the relevant seated mobility-aid noun; E-Scooter alone introduces a different urban standing-scooter intent. Existing page ownership and inventory remain unchanged. Delivery and booking claims stay within the original source.
+
+Excluded evidence: own Rent&Roll results cannot independently establish German demand; retail products whose model is named Valencia do not establish Valencia rental intent; Wikipedia/reddit snippets are not primary product facts; English-only Baby Roller/Rollin Valencia support business scope but not German terminology.
+
+Limitations: observed vocabulary supports term relevance, not relative search volume, universal rank or ranking causality. German first-party performance and Keyword Planner demand require a later compatible measurement window. No new URL, rewritten body, invented product fact or competitor module is implied.
+
+## Second terminology sample — 4 October 2026, 00:16 CEST
+
+Queries: site.visitvalencia.com/de Valencia Strände Sehenswürdigkeiten Stadtviertel Tagesausflüge barrierefrei; site.delonghi.com/de-de PAC ES72 CLASSIC mobiles Klimagerät; site.decathlon.de Campingausrüstung SUP Board Kühlbox Sonnenschirm; site.babonbo.com/de/places/spain/valencian-community/valencia Kindersitz Autositze Hochstuhl.
+
+OBSERVED manufacturer vocabulary: De’Longhi uses Mobile Klimageräte, tragbare Klimaanlage and Klimagerät at https://www.delonghi.com/de-de/p/mobile-klimagerate-pinguino-compact-tragbare-klimaanlage-pac-es72-classic/PACES72CLASSIC.html . Those nouns refer to the rental appliance type; manufacturer retail price, delivery, silence and environmental claims do not transfer to Rent&Roll.
+
+OBSERVED manufacturer/retailer terminology: Decathlon's own SUP product support at https://support.decathlon.de/sup-board-stand-up-paddle-aufblasbar-einsteiger-compact-s-m-l uses SUP-Board, Stand Up Paddle and aufblasbar. Its own outdoor press page https://einblicke.decathlon.de/presse/pressekit/quechua-camping-ausrustung/ uses Camping-Ausrüstung. The marketplace brand listing https://www.decathlon.de/brands/sun-und-surf uses Sonnenschirm/Strandschirm; it is terminology context, not the physical rental set's manufacturer evidence.
+
+OBSERVED marketplace nouns: https://www.babonbo.com/de/places/spain/valencian-community uses Kinderwagen, Autositz, Reisebett and Babyausstattung. Exclude its unqualified safety, free-collection and all-address delivery claims. The overly broad tourism query did not return usable first-party German tourism evidence; Wikipedia is excluded as the replacement and narrower primary-source queries are needed.
+
+INFERRED ownership: existing home-living category supports mobile Klimaanlage/Klimagerät mieten Valencia; remote-work supports Monitor/Homeoffice-Ausstattung; outdoor category supports Strandausstattung/Campingausrüstung and exact product pages retain SUP-Board, capacity, brand and other true modifiers. Existing scope and page design stay fixed.
+
+## Primary German tourism sample — 4 October 2026, 00:18 CEST
+
+Narrow queries: site.visitvalencia.com/de Valencia Sehenswürdigkeiten; site.visitvalencia.com/de Valencia Strände; site.visitvalencia.com/de Valencia Ausflüge Umgebung.
+
+OBSERVED official destination-marketing terminology: https://www.visitvalencia.com/de/sehenswuerdigkeiten-valencia/straende/stadtstrand uses Stadtstrände and Sehenswürdigkeiten. https://www.visitvalencia.com/de/sehenswuerdigkeiten-valencia/natupark-albufera uses Albufera-Park, Naturpark, Bootsfahrt and Ausflüge. https://www.visitvalencia.com/de uses Strände. National tourism's own German Valencia brochure https://www.spain.info/export/sites/segtur/.content/Folletos/folletos/Valencia_DE.pdf uses Sehenswürdigkeiten and Umgebung. These sources establish editorial noun relevance; their fares, distances, activities and schedules are not silently substituted into existing guide bodies.
+
+INFERRED editorial ownership: the five existing Discover hubs support Stadtviertel, Strände, Sehenswürdigkeiten, Veranstaltungen/Feste and Tagesausflüge ab Valencia. Exact destination pages retain place names and topical modifiers (Albufera Naturpark, Xàtiva Burg, Sagunto, Malvarrosa Strand, Fallas Valencia). Articles retain distinct family travel, accessible travel, remote working, summer and rental-versus-purchase topics. No extra pages or cloned competitor outlines are justified.
+
+Direct snippets are summarized, not copied as page prose. Query-engine/device/market controls and quantitative demand remain unavailable; sample is German-language relevance evidence only.
+
+
+### German localization technical source — 4 October 2026
+
+Google Search Central (https://developers.google.com/search/docs/specialty/international/localized-versions), read 2026-10-03/04: HTML, HTTP-header and XML-sitemap language annotations are equivalent methods. Each URL must reference itself and all genuine language peers; annotations must reciprocate. The repair uses the existing XML sitemap for complete EN/ES/DE reciprocal groups and German HTML annotations for the corresponding peers. Spanish host-services and partnerships have translated paths; do not manufacture /es/partners or /es/valencia/host-services. No search-volume inference from this source.
+
+
+### German fitness, work and audio terminology — 4 October 2026
+
+Observed primary sources: Decathlon https://www.decathlon.de/accessoires/rudergerate and https://support.decathlon.de/domyos-r100 use Rudergerät; its https://www.decathlon.de/alle-sportarten-a-z/yoga uses Yogamatte; its own press https://einblicke.decathlon.de/presse/pressekit/heizung-runterdrehen-home-workout-starten/ uses Hanteln/Home-Gym. Dell https://www.dell.com/de-de/shop/computermonitore/ar/8605 uses Monitor/Monitore and https://www.dell.com/de-de/shop/monitore/ar/8605/h%C3%B6henverstellbar?appliedRefinements=40619 confirms höhenverstellbar as a modifier. Thomann https://www.thomann.de/de/pa-beschallungsequipment.html uses Lautsprecher and Mikrofone; not independent evidence for Valencia party-equipment rental demand. Retail prices, warranties and specifications are excluded. Existing German titles use these natural type nouns. Individual title review identified model-only child-seat titles: include Babyschale/Kindersitz; preserve model identifiers. PUKY WUTSCH retains Rutschfahrzeug, SUP uses SUP-Board. One monitor has inherited 27/34-inch source conflicts; German SEO snippet now omits the unverified dimension without changing visible source translation or product identity. No model/fact claim invented and no demand volume claimed.

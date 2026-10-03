@@ -63,11 +63,11 @@ export async function generateMetadata({ params }: Props) {
   if (path[0] === 'booking' || path[0] === 'review' || route === '/newsletter/unsubscribe') return { title: path[1] === 'messages' ? 'Privates Gespräch | Rent&Roll' : 'Deine Miete | Rent&Roll', robots: {index:false,follow:false,nocache:true}, referrer: 'no-referrer' as const };
   const context = await germanPublicContext();
   if (!context || !germanRouteCandidate(route)) return { robots: { index: false, follow: false }, title: 'Rent&Roll' };
-  if (route === "/discover/neighbourhoods") return {...germanPageMetadata(route, neighbourhoodCopy.metadata.title, neighbourhoodCopy.metadata.description, context.isIndexable), alternates:neighbourhoodCopy.metadata.alternates};
-  if (route === "/discover/attractions") return {...germanPageMetadata(route, attractionsCopy.metadata.title, attractionsCopy.metadata.description, context.isIndexable), alternates:attractionsCopy.metadata.alternates};
-  if (route === "/discover/events") return {...germanPageMetadata(route, eventsCopy.metadata.title, eventsCopy.metadata.description, context.isIndexable), alternates:eventsCopy.metadata.alternates};
-  if (route === "/discover/beaches") return {...germanPageMetadata(route, beachesCopy.metadata.title, beachesCopy.metadata.description, context.isIndexable), alternates:beachesCopy.metadata.alternates, openGraph:{...beachesCopy.metadata.openGraph,locale:"de_DE"}};
-  if (route === "/discover/day-trips") return {...germanPageMetadata(route, dayTripsCopy.metadata.title, dayTripsCopy.metadata.description, context.isIndexable), alternates:dayTripsCopy.metadata.alternates};
+  if (route === "/discover/neighbourhoods") return {...germanPageMetadata(route, neighbourhoodCopy.metadata.title, neighbourhoodCopy.metadata.description, context.isIndexable)};
+  if (route === "/discover/attractions") return {...germanPageMetadata(route, attractionsCopy.metadata.title, attractionsCopy.metadata.description, context.isIndexable)};
+  if (route === "/discover/events") return {...germanPageMetadata(route, eventsCopy.metadata.title, eventsCopy.metadata.description, context.isIndexable)};
+  if (route === "/discover/beaches") return {...germanPageMetadata(route, beachesCopy.metadata.title, beachesCopy.metadata.description, context.isIndexable), openGraph:{...beachesCopy.metadata.openGraph,locale:"de_DE"}};
+  if (route === "/discover/day-trips") return {...germanPageMetadata(route, dayTripsCopy.metadata.title, dayTripsCopy.metadata.description, context.isIndexable)};
   if (route === "/discover") return germanPageMetadata(route,"Valencia entdecken: Viertel, Strände und Ausflüge","Dein Reiseführer für Valencia: Entdecke Viertel, Tagesausflüge, Strände, Sehenswürdigkeiten und lokale Veranstaltungen mit ehrlichen Tipps von Menschen vor Ort.",context.isIndexable);
   if (path[0] === 'discover' && path.length === 2) {
     const dest = getGermanDestinationBySlug(path[1]);
@@ -86,7 +86,7 @@ export async function generateMetadata({ params }: Props) {
     if (!product) return { robots: { index: false, follow: false } };
     return productPageMetadata(product.slug, 'de', product, await getProductSeoState(product.slug));
   }
-  const title = path[0] === 'rental' ? path.length === 3 ? germanFamilies[path[2]]?.title : `${germanCategories[path[1]]?.title} mieten in Valencia`
+  const title = path[0] === 'rental' ? path.length === 3 ? germanFamilies[path[2]]?.title : germanCategories[path[1]]?.title
     : path[0] === 'valencia' && path[1] === 'kits' ? path[2] ? getGermanBundleBySlug(path[2])?.seo.title : 'Mietpakete in Valencia | Rent&Roll'
     : path[0] === 'contact' ? 'Kontakt zu Rent&Roll in Valencia'
     : germanInformation[path[0]]?.title || 'Mietartikel in Valencia | Rent&Roll';
