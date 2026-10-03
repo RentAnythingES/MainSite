@@ -3,6 +3,7 @@ import test from "node:test";
 import { productFamilies } from "../src/data/product-families.ts";
 import { germanFamilies } from "../src/content/german-families.ts";
 import { germanPreviewPrefix } from "../src/i18n/site-context.ts";
+import { germanRouteCandidate } from "../src/i18n/german-paths.ts";
 
 test("every published family has a complete German draft with source guidance sections", () => {
   const published = productFamilies.filter(family => family.published);
@@ -19,8 +20,9 @@ test("every published family has a complete German draft with source guidance se
     }
     assert.ok(draft.title.length <= 60);
     assert.ok(draft.description.length >= 130 && draft.description.length <= 155);
-    // Exact listing names are supplied by the translated catalogue, avoiding duplicated model claims.
-    assert.deepEqual(draft.productLabels, {});
+    // The full original decision labels retain exact product identities.
+    assert.deepEqual(Object.keys(draft.productLabels).sort(),Object.keys(source.productLabels).sort());
+    for (const label of Object.values(draft.productLabels)) assert.ok(label.trim());
   }
 });
 
@@ -28,6 +30,9 @@ test("German family editorial links stay within implemented German pages", () =>
   const allowed = new Set(["/rental/mobility", "/rental/baby-gear", "/how-it-works", "/contact", "/valencia/kits/accessible-valencia-kit", "/valencia/kits/baby-arrival-kit"].flatMap(path => [germanPreviewPrefix + path, "/de" + path]));
   for (const content of Object.values(germanFamilies)) {
     assert.ok(content.links.length >= 2);
-    for (const link of content.links) assert.ok(allowed.has(link.href), link.href);
+    for (const link of content.links) {
+      const route=link.href.startsWith("/de/")?link.href.slice(3):null;
+      assert.ok(allowed.has(link.href) || (route && germanRouteCandidate(route)), link.href);
+    }
   }
 });

@@ -5,7 +5,7 @@ import {
   getFaqJsonLd,
 } from "@/lib/jsonld";
 
-type Locale = "en" | "es";
+import { localeRegistry, type Locale } from "@/i18n/config";
 
 const copy = {
   en: {
@@ -152,6 +152,115 @@ const copy = {
     finalCta: "Escribir por WhatsApp",
     emailCta: "Usar el formulario de contacto",
   },
+  de: {
+  "pageUrl": "https://rentandroll.com/de/valencia/host-services",
+  "homeUrl": "https://rentandroll.com/de",
+  "valenciaUrl": "https://rentandroll.com/de/valencia",
+  "valenciaHref": "/de/valencia",
+  "contactHref": "/de/contact",
+  "kitsHref": "/de/valencia/kits",
+  "categoryPrefix": "/de/rental",
+  "badge": "Für Gastgeber und Unterkunftsverwaltungen",
+  "title": "Ausstattung für Gäste ohne dauerhaften Lagerbedarf",
+  "intro": "Hilf deinen Gästen in Valencia, nützliche Ausstattung für ihren Aufenthalt zu organisieren, ohne jeden gelegentlich benötigten Artikel selbst kaufen, lagern und warten zu müssen.",
+  "primaryCta": "Ausstattung für deine Unterkunft besprechen",
+  "secondaryCta": "Mietpakete für Gäste ansehen",
+  "whatsappText": "Hallo, ich verwalte eine Unterkunft in Valencia und möchte die Unterstützung bei der Ausstattung für Gäste besprechen.",
+  "breadcrumbHome": "Startseite",
+  "breadcrumbValencia": "Mietartikel in Valencia",
+  "breadcrumbCurrent": "Service für Gastgeber",
+  "serviceName": "Ausstattungsservice für Gäste in Unterkünften in Valencia",
+  "serviceDescription": "Organisation von Mietartikeln für Ferienwohnungsanbieter, Unterkunftsverwaltungen, Aparthotels und Relocation-Teams in Valencia.",
+  "sectionTitle": "Eine praktische Ergänzung für deinen Gästeservice",
+  "sectionIntro": "Wir kümmern uns um die angefragte Ausstattung. Du behältst die Verantwortung für die Unterkunft und den Kontakt zu deinen Gästen.",
+  "benefits": [
+    {
+      "title": "Gäste direkt an uns verweisen",
+      "text": "Teile die passende Kategorie-, Mietpaket- oder Produktseite. Deine Gäste können ihre Daten prüfen und die reguläre Buchung direkt bei uns abschließen."
+    },
+    {
+      "title": "Wiederkehrende Anfragen organisieren",
+      "text": "Wenn du mehrere Unterkünfte betreust, erzähl uns, welche Wünsche regelmäßig auftauchen. Gemeinsam können wir einen sinnvollen Ablauf auf Grundlage des tatsächlichen Bestands und unserer Servicegebiete prüfen."
+    },
+    {
+      "title": "Verlässlich informieren",
+      "text": "Jede Anfrage hängt von Reisedaten, Bestand und verfügbaren Übergabeoptionen ab. Gegenüber Gästen gilt nichts als bestätigt, bevor es tatsächlich bestätigt wurde."
+    }
+  ],
+  "categoriesTitle": "Häufige Wünsche von Gästen",
+  "categoriesIntro": "Ausgangspunkt ist der Bedarf deiner Gäste. Danach können wir einen passenden Einzelartikel oder eine umfassendere Ausstattung bestätigen.",
+  "categories": [
+    {
+      "name": "Baby & Kleinkind",
+      "slug": "baby-gear",
+      "text": "Reisebetten, Hochstühle, Kinderwagen und Ausstattung für die Ankunft"
+    },
+    {
+      "name": "Mobilität & Barrierefreiheit",
+      "slug": "mobility",
+      "text": "Rollstühle, Rollatoren, Elektromobile und Alltagshilfen"
+    },
+    {
+      "name": "Wohnkomfort",
+      "slug": "home-living",
+      "text": "Kühlung, Luftqualität, Küchenausstattung und Extras für längere Aufenthalte"
+    },
+    {
+      "name": "Strand & Outdoor",
+      "slug": "travel-outdoors",
+      "text": "Sonnenschutz, Kühlboxen, Stühle, Bollerwagen und Strandausstattung für Familien"
+    },
+    {
+      "name": "Mobiles Arbeiten",
+      "slug": "remote-work",
+      "text": "Monitore, ergonomische Stühle, Schreibtische und Zubehör"
+    }
+  ],
+  "processTitle": "So geht es los",
+  "process": [
+    {
+      "title": "Beschreibe deine Unterkünfte",
+      "text": "Nenne uns die Gegend, die Anzahl der Unterkünfte, das Gästeprofil und die häufigsten Wünsche."
+    },
+    {
+      "title": "Wähle einen einfachen Ablauf",
+      "text": "Verweise Gäste direkt an uns oder besprich einen vom Team geprüften Ablauf für wiederkehrende Anfragen."
+    },
+    {
+      "title": "Bestätige jeden Bedarf",
+      "text": "Reisedaten, Bestand, Lieferung oder Abholung sowie der Preis werden bestätigt, bevor aus der Anfrage eine Buchung wird."
+    }
+  ],
+  "boundaryTitle": "Was dieser Service nicht umfasst",
+  "boundaryText": "Rent&Roll vermietet Ausstattung. Wir übernehmen keine Inserate, Schlüsselübergaben, Reinigung, Instandhaltung, Genehmigungen oder die Einhaltung von Unterkunftsvorschriften. Diese Seite stellt keine Empfehlung oder Partnerschaft durch Airbnb dar.",
+  "faqTitle": "Fragen zum Service für Gastgeber",
+  "faqs": [
+    {
+      "q": "Können meine Gäste direkt buchen?",
+      "a": "Ja. Du kannst eine passende Rent&Roll-Seite teilen und deine Gäste können die reguläre Verfügbarkeitsprüfung und Buchung nutzen. Eine Buchung ist erst bestätigt, wenn der Bezahlvorgang erfolgreich abgeschlossen wurde."
+    },
+    {
+      "q": "Muss ich Ausstattung in der Unterkunft lagern?",
+      "a": "Nein. Der Service hilft bei gelegentlichen oder wiederkehrenden Gästewünschen, ohne dass jede Unterkunft alle Artikel dauerhaft lagern muss."
+    },
+    {
+      "q": "Könnt ihr Ausstattung für jeden Aufenthalt garantieren?",
+      "a": "Nein. Die Verfügbarkeit hängt von den gewünschten Daten, dem Bestand und den verfügbaren Liefer- und Abholmöglichkeiten ab. Wir bestätigen jede Anfrage, bevor sie als gebucht dargestellt wird."
+    },
+    {
+      "q": "Gibt es Preise für mehrere Unterkünfte oder regelmäßige Anfragen?",
+      "a": "Wir können wiederkehrenden Bedarf mit Gastgebern und Unterkunftsverwaltungen prüfen. Abläufe und Preise werden individuell vereinbart, sobald die Art der Anfragen und die betrieblichen Anforderungen klar sind."
+    },
+    {
+      "q": "Verwaltet ihr Ferienunterkünfte?",
+      "a": "Nein. Wir unterstützen ausschließlich bei Mietartikeln. Wir übernehmen keine Unterkunftsverwaltung, Reinigung, Schlüsselübergabe, Inseratsverwaltung oder Genehmigungen."
+    }
+  ],
+  "finalTitle": "Erzähl uns, was deine Gäste brauchen",
+  "finalText": "Nenne uns die Gegend deiner Unterkunft, die übliche Aufenthaltsdauer und die häufigsten Ausstattungswünsche. Wir sagen dir ehrlich, was wir derzeit anbieten können.",
+  "finalCta": "Schreib uns auf WhatsApp",
+  "emailCta": "Kontaktformular nutzen"
+},
 } as const;
 
 export default function HostServicesPage({ locale }: { locale: Locale }) {
@@ -216,9 +325,9 @@ export default function HostServicesPage({ locale }: { locale: Locale }) {
         </div>
       </section>
 
-      <nav className="border-b border-neutral-200 bg-white py-3" aria-label="Breadcrumb">
+      <nav className="border-b border-neutral-200 bg-white py-3" aria-label={{ en: "Breadcrumb", es: "Ruta de navegación", de: "Seitennavigation" }[locale]}>
         <div className="container-site flex flex-wrap items-center gap-2 text-sm text-neutral-500">
-          <Link href={locale === "es" ? "/es" : "/"} className="hover:text-brand">{content.breadcrumbHome}</Link>
+          <Link href={localeRegistry[locale].prefix || "/"} className="hover:text-brand">{content.breadcrumbHome}</Link>
           <span aria-hidden="true">/</span>
           <Link href={content.valenciaHref} className="hover:text-brand">{content.breadcrumbValencia}</Link>
           <span aria-hidden="true">/</span>

@@ -1,0 +1,205 @@
+{
+  "slug": "fallas",
+  "name": "Las Fallas",
+  "type": "event",
+  "tagline": "Europas wildestes Straßenfest: Feuer, Kunst und kontrolliertes Chaos jeden März",
+  "heroImage": "/discover/fallas.webp",
+  "heroImageAlt": "Ein Falla-Monument brennt während La Cremà, dem Abschlussabend von Valencias Fallas",
+  "heroImageProvenance": {
+    "status": "licensed",
+    "creator": "ChiralJon",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:La_Crema_Fallas.jpg",
+    "license": "CC BY 2.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
+    "verifiedAt": "2026-07-19",
+    "modifications": "Cropped and resized to 16:9 WebP."
+  },
+  "title": "Las Fallas in Valencia: Dein Reiseführer",
+  "description": "Dein Reiseführer zu Las Fallas in Valencia: Termine, Ablauf, Sicherheit, Zuschauerplätze für die Cremà und praktische Tipps für Familien.",
+  "keywords": [
+    "Fallas Valencia",
+    "Las Fallas Reiseführer",
+    "Fallas 2027",
+    "Valencia Feuerfest"
+  ],
+  "date": "2026-06-18",
+  "lastUpdated": "2026-06-18",
+  "audiences": [
+    "families",
+    "couples",
+    "budget"
+  ],
+  "region": "Stadt Valencia",
+  "hubs": [
+    "events"
+  ],
+  "eventInfo": {
+    "dates": "Jährlich 15.–19. März; das Vorprogramm beginnt am 1. März",
+    "frequency": "Jährlich; seit 2016 immaterielles UNESCO-Kulturerbe",
+    "ticketsRequired": false,
+    "crowdLevel": "extreme",
+    "bookingAdvice": "Während der Fallas ist die Nachfrage nach Unterkünften hoch. Vergleiche tatsächliche Preise, Lage und Stornierungsbedingungen, sobald deine Termine einigermaßen feststehen. Auch in Ruzafa und Benimaclet finden Festaktivitäten statt. Prüfe Lärm, Fußwege und Verkehrsanbindung, statt davon auszugehen, dass beide Viertel abseits des Andrangs liegen.",
+    "whatToExpect": [
+      "Riesige Kunstfiguren, die Fallas, stehen an über 300 Kreuzungen in der ganzen Stadt. Viele sind satirisch, politisch oder surreal.",
+      "Die Mascletà: ein ohrenbetäubendes Böllerspektakel täglich um 14 Uhr auf der Plaza del Ayuntamiento, vom 1. bis 19. März. Komm bis 13 Uhr, um einen Platz zu finden.",
+      "La Cremà: Am 19. März, dem Josefstag, werden die Fallas in einer geplanten Reihenfolge verbrannt. Im offiziellen Programm 2026 begannen die Kinder-Fallas um 20 Uhr, die großen Monumente mit Ausnahmen um 22 Uhr und das städtische Hauptmonument um 23 Uhr. Prüfe das aktuelle Jahresprogramm.",
+      "Straßenfeste, Konzerte im Freien und Paellawettbewerbe während der gesamten Festwoche",
+      "Traditionelle Fallera-Trachten mit aufwendigen Kleidern und Frisuren, getragen von Tausenden Teilnehmerinnen"
+    ],
+    "safetyTips": [
+      "Besonders bei der Mascletà ist der Lärm extrem. Bring unbedingt Gehörschutz für Kinder mit.",
+      "In den Straßen neben brennenden Fallas wird es sehr heiß. Bleib hinter den Absperrungen und befolge die Anweisungen der Feuerwehr.",
+      "Im Gedränge der Mascletà sind Taschendiebe unterwegs. Bewahre Wertsachen in vorderen Taschen oder einer körpernahen Tasche auf.",
+      "Bei Asthma oder anderen Atemwegsproblemen kann der Rauch während der Cremà stark belasten. Bleib auf der windzugewandten Seite oder schau aus größerer Entfernung zu."
+    ],
+    "months": [
+      3
+    ]
+  },
+  "overview": {
+    "paragraphs": [
+      "Las Fallas ist kein beschauliches Kulturfest. Kunst, Feuer, Schwarzpulver und organisiertes Chaos nehmen im März fast drei Wochen lang die ganze Stadt ein. Das Fest besteht seit dem 18. Jahrhundert und wurde 2016 als immaterielles UNESCO-Kulturerbe anerkannt.",
+      "Im Mittelpunkt stehen die Fallas selbst: riesige Kunstfiguren, manche über 20 Meter hoch, die monatelang gebaut und dann am Abend des 19. März absichtlich verbrannt werden. Es gibt mehr als 300, von großen städtischen Monumenten bis zu kleinen Kinder-Fallas in den Vierteln. Die künstlerische Qualität ist beeindruckend; die besten können es mit professionellen Galerieinstallationen aufnehmen.",
+      "Für Besucher sind die Fallas auf eindrucksvolle Weise überwältigend. Die Mascletà, das tägliche Böllerspektakel um 14 Uhr, spürst du im Brustkorb und hörst es nicht nur. Die Cremà, der Abend der Verbrennungen, wirkt surreal. Dazwischen wird die ganze Stadt zum durchgehenden Straßenfest mit Paella, Churros und Livemusik."
+    ],
+    "quickFacts": [
+      {
+        "label": "Wann",
+        "value": "15.–19. März; Vorprogramm ab 1. März"
+      },
+      {
+        "label": "Kosten",
+        "value": "Zuschauen auf öffentlichen Straßen ist kostenlos; manche Bereiche und Aktivitäten erfordern Tickets"
+      },
+      {
+        "label": "Andrang",
+        "value": "Extrem bei großen Veranstaltungen und auf zentralen Plätzen"
+      },
+      {
+        "label": "Lautstärke",
+        "value": "Bring Gehörschutz mit. Wirklich."
+      }
+    ]
+  },
+  "highlights": [
+    {
+      "name": "Die Mascletà",
+      "description": "Täglich um 14 Uhr, vom 1. bis 19. März, gestaltet ein professioneller Pyrotechniker auf der Plaza del Ayuntamiento ein siebenminütiges Böllerspektakel. Rhythmische Knallfolgen steigern sich zu einer Klangwand, die Gebäude erschüttert. Du spürst sie bis in die Knochen.",
+      "icon": "💥",
+      "tip": "Komm vor dem veröffentlichten Beginn und wähle einen Zuschauerplatz mit freiem Ausgang. Bleib hinter den offiziellen Absperrungen und befolge die Anweisungen des Zivilschutzes. Eine feste Entfernung garantiert keinen Schutz vor dem Lärm."
+    },
+    {
+      "name": "La Cremà – die Verbrennung",
+      "description": "Am 19. März werden die Fallas in der ganzen Stadt in einer geplanten Reihenfolge verbrannt. Das städtische Hauptmonument gehört zu den letzten Programmpunkten. Im offiziellen Programm 2026 war es für 23 Uhr angesetzt. Die Feuerwehr betreut die Sicherheitsbereiche rund um die Flammen. Bestätige das aktuelle Programm und die Beschränkungen.",
+      "icon": "🔥",
+      "tip": "Eine kleinere Cremà im Viertel kann weniger voll sein als der Hauptplatz. Prüfe die genaue Zeit und plane einen sicheren Zuschauerplatz, statt auf schnelle Wechsel zwischen großen Verbrennungen zu setzen."
+    },
+    {
+      "name": "Die Fallas-Kunstfiguren",
+      "description": "Erkunde die Stadt und ihre über 300 Fallas: satirische, politische und oft surreale Figuren, die professionelle Künstler über Monate gebaut haben. Die offizielle Bewertungsroute umfasst die Monumente der höchsten Kategorie.",
+      "icon": "🎨"
+    },
+    {
+      "name": "Ofrenda de Flores",
+      "description": "Bei dieser Blumengabe an die Jungfrau Maria ziehen Tausende Falleras in traditioneller Tracht mit Blumensträußen durch die Straßen. Das daraus entstehende Blumenmonument auf der Plaza de la Virgen ist eindrucksvoll.",
+      "icon": "💐"
+    }
+  ],
+  "bestTimeToVisit": {
+    "summary": "Der Höhepunkt der Fallas liegt vom 15. bis 19. März. Das Vorprogramm ab dem 1. März hat mit weniger Andrang seinen eigenen Reiz.",
+    "seasons": [
+      {
+        "season": "spring",
+        "description": "Die Fallas finden im März statt. Die Temperaturen sind angenehm, etwa 14–20 °C, aber abends kann es kühl werden, besonders beim Warten auf die Cremà. Bring eine Jacke mit.",
+        "rating": 5
+      },
+      {
+        "season": "summer",
+        "description": "Die Fallas finden nicht im Sommer statt.",
+        "rating": 1
+      },
+      {
+        "season": "autumn",
+        "description": "Die Fallas finden nicht im Herbst statt.",
+        "rating": 1
+      },
+      {
+        "season": "winter",
+        "description": "Die Fallas finden nicht im Winter statt.",
+        "rating": 1
+      }
+    ]
+  },
+  "whatToBring": {
+    "bring": [
+      "Gehörschutz, besonders wichtig für Kinder",
+      "Bequeme Schuhe zum Gehen",
+      "Eine leichte Jacke für den Abend",
+      "Bargeld für Straßenessen",
+      "Ein Handy mit guter Kamera"
+    ],
+    "dontBring": [
+      "Teuren Schmuck wegen des Taschendiebstahlrisikos im Gedränge",
+      "Sperriges Gepäck beim Besuch der Mascletà",
+      "Dinge, die du nicht leicht tragen kannst"
+    ],
+    "rentInstead": [
+      "Einen Kinderwagen: Ein schwerer Wagen ist im Fallas-Gedränge mühsam. Ein leichtes Modell, das sich mit einer Hand zusammenklappen lässt, ist wichtig."
+    ]
+  },
+  "accessibility": {
+    "overallRating": 2,
+    "summary": "Die Fallas sind für Rollstuhlnutzer und Menschen mit eingeschränkter Mobilität herausfordernd. Es gibt dichtes Gedränge, gesperrte Straßen und starken Rauch. Für die Mascletà auf dem Hauptplatz ist jedoch ein ausgewiesener barrierefreier Bereich vorgesehen.",
+    "wheelchairNotes": "Prüfe die aktuellen offiziellen barrierefreien Zuschauerregelungen und ob eine Voranmeldung nötig ist. Kleinere Veranstaltungen in den Vierteln können schwieriger zugänglich sein. Plane die Wege sorgfältig, weil viele Straßen für Fahrzeuge gesperrt sind.",
+    "strollerNotes": "Nutze einen kompakten Kinderwagen, der sich mit einer Hand zusammenklappen lässt. Im dichten Gedränge musst du ihn häufig zusammenklappen. Meide mit sehr kleinen Kindern die große Cremà: Hitze, Lärm und Rauch sind stark.",
+    "publicTransportAccess": "Metro- und Busbetreiber veröffentlichen besondere Fallas-Fahrpläne und Umleitungen. Bestätige für dein Datum Betriebszeiten, barrierefreie Haltestellen und die Rückfahrt. Die Verkehrsmittel können sehr voll sein. Berücksichtige Taxizugänge außerhalb gesperrter Veranstaltungsbereiche."
+  },
+  "practicalTips": [
+    "Speichere vor dem Aufbruch das offizielle Jahresprogramm und den Plan der Monumente. Prüfe Veranstaltungszeiten und Sperrungen am selben Tag erneut.",
+    "Iss Paella mittags statt abends. Churros und Buñuelos de Calabaza, Kürbiskrapfen von Straßenständen, gehören zu den typischen Fallas-Snacks.",
+    "Während des gesamten Festes riecht die Stadt nach Schwarzpulver. Deine Kleidung wird es ebenfalls tun. Trage nichts, das dir besonders kostbar ist.",
+    "Banken und Geschäfte im Zentrum können während der Fallas-Woche kürzere Öffnungszeiten haben. Sorge rechtzeitig für Bargeld."
+  ],
+  "visitingHere": {
+    "summary": "Für einen Fallas-Besuch brauchst du eine Route statt einer langen Liste. Wähle ein oder zwei Viertel, plane großzügige Gehzeiten ein und nutze das offizielle Jahresprogramm für bestätigte Veranstaltungsorte und Zugangsbeschränkungen.",
+    "idealDuration": "Ein halber Tag für Fallas in den Vierteln; ein ganzer Tag für mehrere große Veranstaltungen",
+    "bestTimeOfDay": "Tagsüber für Familien und Kunstfiguren; abends für Beleuchtung und Atmosphäre",
+    "tips": [
+      "Prüfe vor dem Aufbruch das aktuelle offizielle Programm. Routen, Sperrungen und Uhrzeiten können sich ändern.",
+      "Versuche nicht, schnell quer durch die Stadt zu gehen. Gedränge und vorübergehende Absperrungen lassen kurze Wege deutlich länger dauern.",
+      "Vereinbart einen ruhigeren Treffpunkt abseits der vollsten Plätze für den Fall, dass sich deine Gruppe trennt."
+    ]
+  },
+  "productWidgets": [
+    {
+      "categorySlug": "baby-gear",
+      "heading": "Mit Kindern zu den Fallas?",
+      "afterSection": "Accessibility"
+    }
+  ],
+  "relatedDestinations": [
+    "ruzafa",
+    "malvarrosa-beach"
+  ],
+  "relatedBlogPosts": [
+    "valencia-with-kids-complete-guide"
+  ],
+  "faqs": [
+    {
+      "question": "Sind Las Fallas für Kinder sicher?",
+      "answer": "Ja, mit Vorbereitung. Bring bei der Mascletà unbedingt Gehörschutz mit, meide die große Cremà mit Babys oder Kleinkindern wegen starker Hitze und Rauch und nutze einen kompakten Kinderwagen, der sich im Gedränge leicht zusammenklappen lässt. Tagesveranstaltungen und Fallas in den Vierteln sind schön für Kinder."
+    },
+    {
+      "question": "Brauche ich Tickets für Las Fallas?",
+      "answer": "Die großen öffentlichen Straßenveranstaltungen und der Blick auf die Monumente sind kostenlos. Manche abgesperrten Bereiche der Sección Especial, Führungen und private Aktivitäten erfordern Eintrittskarten. Prüfe für jede Aktivität die aktuellen Informationen des Veranstalters."
+    },
+    {
+      "question": "Wie früh sollte ich eine Unterkunft buchen?",
+      "answer": "Beginne mit dem Vergleich von Unterkünften und Stornierungsbedingungen, sobald deine Termine einigermaßen feststehen. Während der Fallas ist die Nachfrage hoch. Preise und Verfügbarkeit hängen aber von Unterkunft und Datum ab. Auch Ruzafa und Benimaclet haben eigene Festaktivitäten. Prüfe deshalb vor der Auswahl Lärm, Zugang und Verkehrsanbindung."
+    },
+    {
+      "question": "Was ist die Mascletà?",
+      "answer": "Ein tägliches Böllerspektakel, das traditionell vom 1. bis 19. März um 14 Uhr auf der Plaza del Ayuntamiento stattfindet. Rhythmische Schwarzpulverexplosionen steigern sich zu einem intensiven Crescendo, das du spürst und nicht nur hörst. Bestätige das aktuelle Programm, komm vor Beginn, respektiere Sicherheitsabsperrungen und plane den Lärm ein."
+    }
+  ]
+}

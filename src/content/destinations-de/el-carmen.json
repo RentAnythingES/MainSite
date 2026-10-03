@@ -1,0 +1,316 @@
+{
+  "slug": "el-carmen",
+  "name": "El Carmen",
+  "type": "neighbourhood",
+  "tagline": "Mittelalterliche Mauern, Streetart und das lebendige Herz von Valencias Altstadt",
+  "heroImage": "/discover/el-carmen-hero.webp",
+  "heroImageAlt": "Die Fußgängerstraße Carrer de Baix im historischen Viertel El Carmen in Valencia",
+  "heroImageProvenance": {
+    "status": "licensed",
+    "creator": "Joanbanjo",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Carrer_de_Baix_(Val%C3%A8ncia).JPG",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "verifiedAt": "2026-07-19",
+    "modifications": "Cropped and resized to 16:9 WebP."
+  },
+  "title": "El Carmen in Valencia: Reiseführer durch die Altstadt",
+  "description": "Entdecke El Carmen in Valencias Altstadt: mittelalterliche Türme, Streetart, Tapasbars, familienfreundliche Plätze und praktische Tipps für deinen Besuch.",
+  "keywords": [
+    "El Carmen Valencia",
+    "Valencia Altstadt",
+    "Barrio del Carmen",
+    "Valencia historische Innenstadt",
+    "Streetart Valencia"
+  ],
+  "date": "2026-06-20",
+  "lastUpdated": "2026-06-20",
+  "audiences": [
+    "families",
+    "couples",
+    "digital-nomads",
+    "elderly"
+  ],
+  "region": "Zentrum von Valencia",
+  "hubs": [
+    "neighbourhoods"
+  ],
+  "overview": {
+    "paragraphs": [
+      "El Carmen ist Valencias ältestes Viertel: ein Labyrinth enger mittelalterlicher Straßen zwischen den Torres de Serranos und den Torres de Quart, zwei markanten Stadttoren aus dem 14. Jahrhundert. Hier wird die 2.000-jährige Geschichte Valencias lebendig. Römische Ruinen, arabische Mauern und gotische Kirchen treffen auf eine Fülle moderner Streetart.",
+      "Tagsüber lädt El Carmen zu einem familienfreundlichen Spaziergang durch die Geschichte ein: zum Zentralmarkt, einem der größten Frischmärkte Europas, zur Seidenbörse, die zum UNESCO-Weltkulturerbe gehört, und zur Kathedrale, in der sich nach Ansicht mancher der Heilige Gral befindet. Abends verwandelt sich das Viertel in Valencias lebhaftestes Ausgeh- und Tapasviertel, mit Terrassen auf fast jedem Platz.",
+      "Für Besucher gehört El Carmen zum typischen Valencia-Erlebnis. Die gepflasterten Straßen lassen sich gut zu Fuß erkunden, auch wenn unebene Oberflächen mit Kinderwagen und Rollstuhl schwierig sein können. Dazu kommen hervorragendes Essen und kurze Wege zu vielen wichtigen Sehenswürdigkeiten. Hier ist es geschäftig und laut – das macht den Charme aus."
+    ],
+    "quickFacts": [
+      {
+        "label": "Anreise",
+        "value": "Metro L3/L5 bis Àngel Guimerà oder zu Fuß ab Plaça de l’Ajuntament"
+      },
+      {
+        "label": "Besonders geeignet für",
+        "value": "Geschichte, Essen, Nachtleben, Streetart und Fotografie"
+      },
+      {
+        "label": "Atmosphäre",
+        "value": "Unkonventionell, historisch und lebhaft"
+      },
+      {
+        "label": "Zu Fuß unterwegs",
+        "value": "Sehr gut geeignet: Fußgängerbereiche im ganzen Viertel"
+      }
+    ]
+  },
+  "highlights": [
+    {
+      "name": "Torres de Serranos",
+      "description": "Valencias eindrucksvollstes mittelalterliches Stadttor. Oben erwartet dich ein Panoramablick über die Altstadt und die Turia-Gärten. Sonntags ist der Eintritt frei.",
+      "icon": "🏰",
+      "tip": "Komm im Licht des späten Nachmittags, sofern die aktuellen Öffnungszeiten es erlauben. Der Blick lohnt die Treppen – einen Aufzug gibt es nicht. Prüfe die letzte Einlasszeit und wetterbedingte Einschränkungen.",
+      "googleMapsUrl": "https://maps.google.com/?q=Torres+de+Serranos+Valencia"
+    },
+    {
+      "name": "Zentralmarkt",
+      "description": "Ein großer Frischmarkt in einem eindrucksvollen Jugendstilgebäude. Seine 250 Verkaufsstände bieten valencianische Lebensmittel, Schinken, Meeresfrüchte, Gewürze und weitere Spezialitäten.",
+      "icon": "🍊",
+      "tip": "Komm vor 11 Uhr, um den größten Andrang zu vermeiden. Der frisch gepresste Saft aus valencianischen Orangen gehört zum Besten, was die Stadt zu bieten hat.",
+      "googleMapsUrl": "https://maps.google.com/?q=Mercado+Central+Valencia"
+    },
+    {
+      "name": "Streetart-Spaziergang",
+      "description": "El Carmen hat eine der lebendigsten Streetart-Szenen Spaniens. Beginne an der Plaça del Tossal, schlendere durch die Calle de Caballeros und erkunde die Straßen rund um das Museum für moderne Kunst IVAM. Regelmäßig kommen neue Wandbilder hinzu.",
+      "icon": "🎨",
+      "tip": "Besonders lohnende Wandbilder findest du am Carrer de Dalt, am Carrer dels Horts und rund um die Überreste der alten arabischen Stadtmauer."
+    },
+    {
+      "name": "La Lonja de la Seda",
+      "description": "Die Seidenbörse aus dem 15. Jahrhundert gehört zum UNESCO-Weltkulturerbe und zu Europas bedeutendsten gotischen Profanbauten. Die gedrehten Säulen der Haupthalle sind ein architektonischer Höhepunkt.",
+      "icon": "🏛️",
+      "tip": "Sonntags ist der Eintritt frei. Für die Innenräume reichen etwa 20 Minuten – gut mit dem Zentralmarkt direkt gegenüber zu verbinden.",
+      "googleMapsUrl": "https://maps.google.com/?q=La+Lonja+de+la+Seda+Valencia"
+    },
+    {
+      "name": "Kathedrale von Valencia und Heiliger Gral",
+      "description": "Die Kathedrale vereint romanische, gotische, barocke und neoklassizistische Elemente. Steige die 207 Stufen des Glockenturms Miguelete hinauf, um einen der besten Rundumblicke auf Valencia zu genießen. In der Kapelle befindet sich der Kelch, den der Vatikan als Heiligen Gral anerkennt.",
+      "icon": "⛪",
+      "tip": "Kaufe ein Kombiticket für Kathedrale und Miguelete. Komm früh: Nach 11 Uhr wird die Warteschlange am Turm oft lang.",
+      "googleMapsUrl": "https://maps.google.com/?q=Valencia+Cathedral"
+    }
+  ],
+  "gettingThere": {
+    "summary": "El Carmen liegt mitten im Zentrum. Die meisten Besucher kommen von ihrer Unterkunft aus zu Fuß.",
+    "options": [
+      {
+        "mode": "walk",
+        "description": "Ab Plaça de l’Ajuntament: etwa 10 Minuten nach Norden durch Fußgängerstraßen",
+        "duration": "10 Min."
+      },
+      {
+        "mode": "metro",
+        "description": "Àngel Guimerà (L3/L5) oder Colón (L3/L5/L7), anschließend 5–10 Minuten zu Fuß",
+        "duration": "5–10 Min. Fußweg ab der Station",
+        "cost": "€1.50"
+      },
+      {
+        "mode": "bus",
+        "description": "Die Linien 5, 28 und 95 halten am Rand des Viertels. Im Zentrum bist du ohne Auto unterwegs.",
+        "duration": "Je nach Ausgangspunkt",
+        "cost": "€1.50"
+      }
+    ],
+    "parkingNotes": "Mit dem Auto nach El Carmen zu fahren ist kaum praktikabel: Die meisten Straßen sind Fußgängerbereiche. Parke am Rand im Parkhaus Porta de la Mar oder Blanquerías (15–20 € pro Tag)."
+  },
+  "bestTimeToVisit": {
+    "summary": "El Carmen lohnt sich das ganze Jahr über. An Sommerabenden ist besonders viel los.",
+    "seasons": [
+      {
+        "season": "spring",
+        "description": "Ideal: Die Energie der Fallas ist noch spürbar, die Terrassen sind geöffnet und der Andrang ist überschaubar.",
+        "rating": 5
+      },
+      {
+        "season": "summer",
+        "description": "Tagsüber heiß, teils über 35 °C. Komm frühmorgens zum Markt und spätabends zu Tapas. Während der Siesta von 14 bis 17 Uhr ist es ruhiger.",
+        "rating": 3
+      },
+      {
+        "season": "autumn",
+        "description": "Angenehme Temperaturen, weniger Touristen und geöffnete Sehenswürdigkeiten. Für viele Einheimische die liebste Jahreszeit.",
+        "rating": 5
+      },
+      {
+        "season": "winter",
+        "description": "Mild bei etwa 10–16 °C. Rund um die Kathedrale gibt es Weihnachtsmärkte. Einige Außenterrassen schließen.",
+        "rating": 4
+      }
+    ]
+  },
+  "whatToBring": {
+    "bring": [
+      "Bequeme Schuhe zum Gehen – wegen des Kopfsteinpflasters",
+      "Kamera für Streetart",
+      "Kleiner Tagesrucksack",
+      "Wasserflasche im Sommer"
+    ],
+    "dontBring": [
+      "Schweres Gepäck",
+      "Hohe Absätze",
+      "Auto – viele Straßen sind Fußgängerbereiche"
+    ],
+    "rentInstead": [
+      "Kinderwagen mit guter Federung für das Kopfsteinpflaster",
+      "Rollstuhl – plane deine Route, denn Kopfsteinpflaster kann schwierig sein",
+      "Mobiles WLAN zur Orientierung"
+    ]
+  },
+  "accessibility": {
+    "overallRating": 2,
+    "summary": "El Carmens mittelalterlicher Charme bringt Herausforderungen für die Barrierefreiheit mit sich. Kopfsteinpflaster, enge Gassen und Eingänge mit Stufen sind häufig. Die großen Plätze und der Markt sind zugänglich; Nebenstraßen können mit dem Rollstuhl jedoch sehr schwierig sein.",
+    "wheelchairNotes": "Bleib möglichst auf den Hauptstraßen: Calle de Caballeros, Plaça de la Verge und Plaça de la Reina bieten die ebensten Wege. Der Zentralmarkt hat einen stufenlosen Zugang. Die Torres de Serranos und der Miguelete sind nur über Treppen erreichbar.",
+    "strollerNotes": "Ein kompakter Kinderwagen mit guter Federung ist wichtig. Breite Kinderwagen sind auf den engen, gepflasterten Straßen schwer zu manövrieren. Markt und große Plätze lassen sich besser bewältigen.",
+    "publicTransportAccess": "Die Metrostationen haben Aufzüge. Innerhalb von El Carmen geht es zu Fuß weiter."
+  },
+  "foodAndDrink": {
+    "summary": "El Carmen ist ein Paradies für Tapas. Von traditionellen valencianischen Bars mit kleinen Bieren für 2 € bis zu modernen Weinbars findest du Angebote in jeder Preisklasse.",
+    "recommendations": [
+      {
+        "name": "Zentralmarkt",
+        "type": "Markt und frische Lebensmittel",
+        "priceRange": "€",
+        "tip": "Komm vormittags und prüfe die offiziellen Marktöffnungszeiten, bevor du hier eine Mahlzeit einplanst.",
+        "familyFriendly": true,
+        "sourceNote": "Valencia City Council confirms the market location and morning trading pattern.",
+        "sourceUrl": "https://www.valencia.es/es/-/mercado-centr-1",
+        "sourceCheckedAt": "2026-07-19"
+      },
+      {
+        "name": "Café de las Horas",
+        "type": "Cocktailbar und Barockcafé",
+        "priceRange": "€€",
+        "tip": "Bekannt für Agua de Valencia. Prüfe die aktuelle Karte und Reservierungsinformationen auf der Website des Lokals.",
+        "familyFriendly": true,
+        "sourceNote": "Official venue site confirms its city-centre location, menu and Agua de Valencia focus.",
+        "sourceUrl": "https://cafedelashoras.com/",
+        "sourceCheckedAt": "2026-07-19"
+      },
+      {
+        "name": "La Pilareta",
+        "type": "Traditionelle Tapasbar",
+        "priceRange": "€€",
+        "tip": "Clóchinas haben Saison. Frage nach ihrer Verfügbarkeit, statt davon auszugehen, dass sie immer auf der Karte stehen.",
+        "familyFriendly": false,
+        "sourceNote": "Visit Valencia identifies La Pilareta at Moro Zeid 13 as a traditional place for seasonal clóchinas.",
+        "sourceUrl": "https://www.visitvalencia.com/en/what-to-do-valencia/gastronomy/what-to-eat/tapas",
+        "sourceCheckedAt": "2026-07-19"
+      },
+      {
+        "name": "Horchatería Santa Catalina",
+        "type": "Horchata und Gebäck",
+        "priceRange": "€€",
+        "tip": "Ein zentral gelegener Halt für Horchata und Fartons. Prüfe saisonale Öffnungszeiten direkt beim Lokal.",
+        "familyFriendly": true,
+        "sourceNote": "Official venue site confirms the historic-centre location and horchata, fartons and chocolate menu.",
+        "sourceUrl": "https://www.horchateriasantacatalina.com/menu/",
+        "sourceCheckedAt": "2026-07-19"
+      }
+    ],
+    "localSpeciality": "Horchata und Fartons: ein süßes Getränk aus Erdmandeln mit länglichem Gebäck. Probiere es in der Horchatería Santa Catalina, der bekanntesten der Stadt."
+  },
+  "stayingHere": {
+    "summary": "Mit einer Unterkunft in El Carmen bist du mittendrin. Du erreichst die wichtigsten Sehenswürdigkeiten zu Fuß, findest hervorragendes Essen vor der Tür und kannst Valencias Nachtleben ohne Taxi genießen. Dafür musst du mit Lärm und engen Straßen rechnen.",
+    "pros": [
+      "Viele Ziele zu Fuß erreichbar",
+      "Hervorragende Gastronomie und Bars",
+      "Stimmungsvolle historische Umgebung",
+      "Zentrale Lage für Tagesausflüge"
+    ],
+    "cons": [
+      "Nachts laut, besonders von Donnerstag bis Samstag",
+      "Kopfsteinpflaster erschwert die Fortbewegung",
+      "Wenig Parkmöglichkeiten",
+      "Wohnungen können klein und alt sein"
+    ],
+    "gettingElsewhere": [
+      "Zu Fuß in 5 Minuten zu den Turia-Gärten",
+      "Mit der Metro in 15 Minuten zum Strand",
+      "Zu Fuß in 15 Minuten nach Ruzafa"
+    ]
+  },
+  "visitingHere": {
+    "summary": "Plane mindestens einen halben Tag für die wichtigsten Sehenswürdigkeiten ein. Mit einem ganzen Tag kannst du die Gassen in Ruhe erkunden, gut essen und die Atmosphäre auf dich wirken lassen.",
+    "idealDuration": "4–6 Stunden",
+    "bestTimeOfDay": "Vormittags für Markt und Sehenswürdigkeiten, abends für Tapas und Atmosphäre",
+    "tips": [
+      "Beginne am Zentralmarkt, der um 7:30 Uhr öffnet, besuche anschließend La Lonja gegenüber und dann die Kathedrale.",
+      "Erkunde nach dem Mittagessen die Streetart rund um das IVAM und die Überreste der arabischen Stadtmauer.",
+      "Komm am späten Nachmittag für den Blick von den Torres de Serranos zurück, sofern die aktuellen Einlasszeiten es erlauben, und bleib anschließend im Viertel zum Abendessen."
+    ]
+  },
+  "practicalTips": [
+    "Trage flache Schuhe mit gutem Profil: Das Kopfsteinpflaster ist uneben und bei Nässe rutschig.",
+    "Der Zentralmarkt schließt um 15 Uhr und ist sonntags geschlossen. Plane deinen Besuch entsprechend.",
+    "Kostenlose Stadtführungen starten täglich um 10 Uhr an der Plaça de la Verge. Sie werden über Trinkgeld finanziert und sind sehr gut.",
+    "Rund um Markt und Kathedrale sind Taschendiebe unterwegs. Bewahre Wertsachen in vorderen Taschen auf.",
+    "Die meisten Tapasbars haben nur wenige Sitzplätze. An der Theke zu stehen ist üblich."
+  ],
+  "audienceTips": [
+    {
+      "audience": "families",
+      "tips": [
+        "Das Museo L’Iber in der Calle Caballeros 22 zeigt Zinnsoldaten und historische Miniaturen – ein interessanter Halt für Kinder, die detailreiche Modellszenen mögen.",
+        "Die Kathedrale hat einen Aufzug zu einer Aussichtsebene, jedoch nicht auf den Turm. Das kann mit kleinen Kindern hilfreich sein.",
+        "Kinder mögen den Zentralmarkt: Lass sie Obst und Gebäck aussuchen."
+      ]
+    },
+    {
+      "audience": "mobility-needs",
+      "tips": [
+        "Für einen möglichst ebenen Weg halte dich an die große Ost-West-Verbindung Calle de Caballeros.",
+        "Der Zentralmarkt ist zugänglich. La Lonja hat einen stufenlosen Zugang zur Haupthalle.",
+        "Ein leichter Mietrollstuhl kann sinnvoll sein: Schwere Modelle sind auf Kopfsteinpflaster schwerer zu bewegen."
+      ]
+    },
+    {
+      "audience": "digital-nomads",
+      "tips": [
+        "Das Ubik Café in der Calle del Literat Azorín, eigentlich schon in Ruzafa, gehört zu den nächstgelegenen guten Cafés zum Arbeiten.",
+        "Viele Bars in El Carmen haben WLAN, das jedoch unzuverlässig sein kann. Ein mobiler Hotspot ist die verlässlichere Wahl.",
+        "Das IVAM hat ein ruhiges Café mit ordentlichem WLAN."
+      ]
+    }
+  ],
+  "productWidgets": [
+    {
+      "categorySlug": "mobility",
+      "heading": "Auf Kopfsteinpflaster unterwegs? Wir helfen dir",
+      "afterSection": "Accessibility"
+    },
+    {
+      "categorySlug": "baby-gear",
+      "heading": "El Carmen mit kleinen Kindern entdecken?",
+      "afterSection": "Practical Tips"
+    }
+  ],
+  "relatedDestinations": [
+    "ruzafa",
+    "fallas",
+    "city-of-arts-and-sciences"
+  ],
+  "relatedBlogPosts": [
+    "valencia-with-kids-complete-guide",
+    "accessible-valencia-complete-guide"
+  ],
+  "faqs": [
+    {
+      "question": "Ist El Carmen nachts sicher?",
+      "answer": "Im Allgemeinen ja. Die Hauptstraßen und Plätze sind bis spätabends belebt und gut beleuchtet. Achte wie in jeder Innenstadt auf deine Wertsachen und meide sehr spät nachts völlig menschenleere Gassen."
+    },
+    {
+      "question": "Kann ich in El Carmen mit dem Auto fahren?",
+      "answer": "Der größte Teil von El Carmen ist Fußgängerbereich oder hat Zufahrtsbeschränkungen. Parke am Rand, etwa im Parkhaus Blanquerías oder Porta de la Mar, und gehe zu Fuß weiter. Es sind nur wenige Minuten."
+    },
+    {
+      "question": "Wann besuche ich den Zentralmarkt am besten?",
+      "answer": "Komm zwischen 8 und 10 Uhr: Dann erlebst du die beste Marktstimmung mit weniger Touristen. Der Markt schließt montags bis samstags um 15 Uhr und ist sonntags den ganzen Tag geschlossen."
+    }
+  ]
+}

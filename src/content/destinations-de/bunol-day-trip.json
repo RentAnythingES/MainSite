@@ -1,0 +1,195 @@
+{
+  "slug": "bunol-day-trip",
+  "name": "Buñol",
+  "type": "day-trip",
+  "tagline": "Eine Burgstadt und Flusslandschaft jenseits des berühmten Tomatenfestes",
+  "heroImage": "/discover/bunol-day-trip.jpg",
+  "heroImageAlt": "Altstadt und gekachelte Kirchenkuppel, gesehen von der Burg Buñol",
+  "heroImageProvenance": {
+    "status": "licensed",
+    "creator": "Enrique Íñiguez Rodríguez",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Bu%C3%B1ol._Castillo._Vistas.jpg",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "verifiedAt": "2026-07-20",
+    "modifications": "Resized to 1280 pixels wide by Wikimedia Commons."
+  },
+  "title": "Buñol: Tagesausflug ab Valencia mit Burg und Altstadt",
+  "description": "Plane einen Tagesausflug von Valencia nach Buñol: Burg, Altstadt und Natur, mit realistischen Fußwegen, Verkehrsinfos und Hinweisen zum Tomatina-Tag.",
+  "keywords": [
+    "Buñol Tagesausflug",
+    "Buñol ab Valencia",
+    "Burg Buñol",
+    "Buñol Sehenswürdigkeiten"
+  ],
+  "date": "2026-07-20",
+  "lastUpdated": "2026-07-20",
+  "audiences": [
+    "families",
+    "couples",
+    "elderly",
+    "mobility-needs"
+  ],
+  "region": "Hoya de Buñol, Valencia",
+  "distanceFromValencia": "Etwa 39 km westlich von Valencia",
+  "hubs": [
+    "day-trips"
+  ],
+  "overview": {
+    "paragraphs": [
+      "International ist Buñol vor allem für La Tomatina bekannt. Im übrigen Jahr eignet sich die Stadt aber für einen ganz anderen Tagesausflug. Die mittelalterliche Burg liegt mitten in der Altstadt statt als separates Monument darüber. Nahe Straßen, Brunnen und die Flusslandschaft machen daraus einen überschaubaren Ausflug ins Landesinnere.",
+      "Beginne mit Burg und Altstadt und ergänze nur dann einen Naturhalt, wenn Wetter, Tageslicht und Rückfahrt es erlauben. Das städtische Tourismusbüro nennt den San-Luis-Park, Molino Galán, historische Brunnen und Wege durch die umliegende Landschaft. Versuche aber nicht, alles in einen kurzen Besuch zu packen.",
+      "Während La Tomatina oder anderer großer örtlicher Veranstaltungen gilt die Planung für einen normalen Tag nicht. Zugangskontrollen, Andrang und Verkehr können sich erheblich ändern. Nutze die aktuellen städtischen Veranstaltungsinformationen und den Fahrplan des Betreibers für dein genaues Datum."
+    ],
+    "quickFacts": [
+      {
+        "label": "Besonders geeignet für",
+        "value": "Burg, Altstadt und Landschaft im Landesinneren"
+      },
+      {
+        "label": "Besuch einplanen",
+        "value": "Ein halber Tag; länger mit einer Naturroute"
+      },
+      {
+        "label": "Burgeintritt",
+        "value": "Laut städtischer Tourismusinformation kostenlos"
+      },
+      {
+        "label": "Wichtige Ausnahme",
+        "value": "La Tomatina erfordert eine eigene Planung"
+      }
+    ]
+  },
+  "highlights": [
+    {
+      "name": "Burg Buñol",
+      "description": "Eine Festung aus dem 11. bis 12. Jahrhundert, eingebettet in die Altstadt, mit zwei ummauerten Bereichen und Blick über Buñol.",
+      "icon": "🏰",
+      "tip": "Prüfe vor der Anreise auf der städtischen Tourismusseite mögliche vorübergehende Zugangshinweise."
+    },
+    {
+      "name": "Historische Altstadt",
+      "description": "Die Straßen rund um die Burg verbinden die Kirche San Pedro, traditionelle Häuser und ein Netz historischer Brunnen.",
+      "icon": "🏘️",
+      "tip": "Trage Schuhe für Steigungen, Stufen und unebene Bodenbeläge."
+    },
+    {
+      "name": "San Luis und die Flusslandschaft",
+      "description": "Der San-Luis-Park und die Naturwege der Gemeinde bieten nach den Burggassen einen grüneren zweiten Teil des Tages.",
+      "icon": "🌿",
+      "tip": "Wähle eine Route passend zu Jahreszeit und verbleibendem Tageslicht, statt spontan einen langen Spaziergang zu beginnen."
+    }
+  ],
+  "gettingThere": {
+    "summary": "Buñol ist mit Valencia durch regionale öffentliche Verkehrsmittel verbunden. Verbindungen und Störungen musst du aber für dein Reisedatum prüfen.",
+    "options": [
+      {
+        "mode": "train",
+        "description": "Prüfe bei Renfe Cercanías Valencia vor dem Aufbruch den aktuellen C-3-Betrieb, Ersatzverkehr und die letzte Rückfahrmöglichkeit."
+      },
+      {
+        "mode": "bus",
+        "description": "Regionale Busverbindungen können bei passenden Zeiten eine Alternative sein. Bestätige den aktuellen Betreiber, die Haltestelle und den Rückfahrplan."
+      },
+      {
+        "mode": "car",
+        "description": "Mit dem Auto bist du bei einem Naturhalt flexibler. Zentrale Straßen und Kontrollen an Veranstaltungstagen können das Parken aber erschweren."
+      }
+    ],
+    "parkingNotes": "Nutze ausgeschilderte öffentliche Parkplätze und fahre nicht ohne Zugangsprüfung in enge Altstadtstraßen. An Veranstaltungstagen können ganz andere Regelungen gelten."
+  },
+  "bestTimeToVisit": {
+    "summary": "Im Frühling und Herbst lässt sich die Burg am einfachsten mit Spaziergängen im Freien verbinden. Beginne im Sommer früh und verkürze ungeschützte Routen.",
+    "seasons": [
+      {
+        "season": "spring",
+        "description": "Angenehm für Burg, Stadt und eine ausgewählte Naturroute, abhängig von Regen und Bodenverhältnissen.",
+        "rating": 5
+      },
+      {
+        "season": "summer",
+        "description": "Die Altstadt lässt sich besuchen, doch Hitze erschwert ungeschützte Fußwege. Für die Tomatina-Termine brauchst du eine eigene Veranstaltungsplanung.",
+        "rating": 3
+      },
+      {
+        "season": "autumn",
+        "description": "Eine gute Jahreszeit für Landschaft im Landesinneren und kühlere Spaziergänge.",
+        "rating": 5
+      },
+      {
+        "season": "winter",
+        "description": "Geeignet für einen kürzeren historischen Besuch bei günstigem Wetter und ausreichend Tageslicht.",
+        "rating": 3
+      }
+    ],
+    "avoidDates": "Behandle den Tomatina-Tag nicht als normalen Besichtigungsausflug. Eintritt, Verkehr und Andrang sind außergewöhnlich."
+  },
+  "whatToBring": {
+    "bring": [
+      "Den aktuellen Rückfahrplan",
+      "Wasser",
+      "Sonnen- oder Regenschutz",
+      "Schuhe für Steigungen und unebenen Boden"
+    ],
+    "dontBring": [
+      "Einen starren Besichtigungsplan",
+      "Mehr Ausrüstung, als du durch die Altstadt tragen kannst",
+      "Erwartungen vom Tomatina-Tag für einen normalen Besuch"
+    ],
+    "rentInstead": [
+      "Einen kompakten Kinderwagen, wenn deine Route die steilsten Treppen vermeidet",
+      "Eine passende Mobilitätshilfe nach Prüfung des Burgzugangs"
+    ]
+  },
+  "accessibility": {
+    "overallRating": 2,
+    "summary": "Historische Steigungen, Stufen und Burgböden in Buñol können schwierig sein. Plane eine zugängliche Route anhand konkret bestätigter Eingänge, statt einen vollständig stufenlosen Rundgang vorauszusetzen.",
+    "wheelchairNotes": "Kontaktiere vor der Anreise die städtische Tourismusinformation und kläre den praktischen Burgeingang, Bodenbeläge und vorübergehende Einschränkungen, die für deinen Besuch wichtig sind.",
+    "strollerNotes": "Ein kompakter Kinderwagen kann in der Stadt helfen. Auf Stufen und unebenen Burgböden musst du ihn möglicherweise tragen.",
+    "publicTransportAccess": "Bestätige die Barrierefreiheit des Bahnhofs und möglichen Ersatzverkehr direkt beim Betreiber für dein gewähltes Datum."
+  },
+  "visitingHere": {
+    "summary": "Ein sinnvoller erster Besuch verbindet die Burg, einen ruhigen Altstadtspaziergang und einen Halt im Grünen. Ergänze eine längere Naturroute nur bei geeignetem Wetter und gesicherter Rückfahrt.",
+    "idealDuration": "5–7 Stunden einschließlich Anreise",
+    "bestTimeOfDay": "Morgens ankommen für kühlere Fußwege und eine entspanntere Rückfahrt",
+    "tips": [
+      "Beginne bei der Burg, solange Energie und Temperaturen günstig sind.",
+      "Lass Mittagessen oder Naturroute als flexiblen Teil des Tagesplans.",
+      "Speichere vor dem Aufbruch aus Valencia die letzte Rückverbindung und eine Alternative."
+    ]
+  },
+  "practicalTips": [
+    "Prüfe kurz vor der Reise sowohl städtische Tourismusmeldungen als auch die Informationen des Verkehrsbetreibers.",
+    "Rechne rund um Burg und Altstadt mit Steigungen und unregelmäßigen Bodenbelägen.",
+    "Halte die Tomatina-Planung getrennt von einem normalen Tagesausflug nach Buñol.",
+    "Bevorzuge bei Hitze die Burg und schattige Halte in der Stadt statt einer langen ungeschützten Route."
+  ],
+  "productWidgets": [],
+  "relatedDestinations": [
+    "requena",
+    "xativa",
+    "sagunto"
+  ],
+  "relatedBlogPosts": [
+    "valencia-with-kids-complete-guide",
+    "valencia-summer-survival-guide"
+  ],
+  "faqs": [
+    {
+      "question": "Lohnt sich Buñol außerhalb von La Tomatina?",
+      "answer": "Ja. Burg, Altstadt, Brunnen und die umliegende Naturlandschaft ergeben einen eigenen Ausflug ins Landesinnere. Es ist deutlich ruhiger, und du solltest den Besuch getrennt vom Fest planen."
+    },
+    {
+      "question": "Kann ich von Valencia mit dem Zug nach Buñol fahren?",
+      "answer": "Buñol gehört zum Cercanías-Netz von Valencia. Betriebsabläufe und Ersatzverkehr können sich aber ändern. Prüfe direkt bei Renfe die aktuellen C-3-Informationen und die letzte Rückfahrmöglichkeit."
+    },
+    {
+      "question": "Ist der Eintritt in die Burg Buñol kostenlos?",
+      "answer": "Die städtische Tourismusseite nennt derzeit einen kostenlosen Burgbesuch. Prüfe vor der Anreise auf der offiziellen Seite vorübergehende Schließungen oder Zugangsänderungen."
+    },
+    {
+      "question": "Ist Buñol mit Rollstuhl oder Kinderwagen zugänglich?",
+      "answer": "Altstadt und Burg haben Steigungen, Stufen und unebene Bodenbeläge. Bestätige eine praktisch zugängliche Route bei der städtischen Tourismusinformation und plane bei Bedarf eine kürzere Alternative."
+    }
+  ]
+}

@@ -1,6 +1,9 @@
 "use client";
 
 import Link from "next/link";
+import type { Locale } from "@/i18n/config";
+import discoverIndexCopy from "@/i18n/discover-index.json";
+import { customerPrefix } from "@/i18n/customer-path";
 import { useMemo, useState } from "react";
 
 type MapView = "city" | "region";
@@ -36,14 +39,11 @@ const mapPositions: Record<string, MapPosition> = {
   xativa: { view: "region", x: 52, y: 84 },
 };
 
-const typeLabels: Record<string, string> = {
-  neighbourhood: "Neighbourhood",
-  beach: "Beach",
-  attraction: "Attraction",
-  "day-trip": "Day trip",
-};
 
-export default function DestinationMap({ destinations }: { destinations: DestinationMapItem[] }) {
+export default function DestinationMap({ destinations, locale = "en" }: { destinations: DestinationMapItem[]; locale?: Locale }) {
+  const t = discoverIndexCopy[locale].map;
+  const typeLabels: Record<string,string> = { ...discoverIndexCopy[locale].typeLabels, "day-trip": t.dayTrip };
+  const prefix = customerPrefix(locale);
   const mappedDestinations = useMemo(
     () => destinations.filter((destination) => mapPositions[destination.slug]),
     [destinations],
@@ -72,18 +72,16 @@ export default function DestinationMap({ destinations }: { destinations: Destina
     <section className="section bg-white" aria-labelledby="destination-map-heading">
       <div className="container-site">
         <div className="max-w-3xl mb-8">
-          <span className="badge badge-brand mb-3">Plan your stay</span>
+          <span className="badge badge-brand mb-3">{t.badge}</span>
           <h2 id="destination-map-heading" className="text-3xl font-bold mb-3">
-            See where each guide takes you
+            {t.heading}
           </h2>
           <p className="text-neutral-600 leading-relaxed">
-            Compare city areas and day trips before opening the full guide. This is a
-            schematic orientation map, not a navigation map—always check the current route
-            before travelling.
+            {t.intro}
           </p>
         </div>
 
-        <div className="flex gap-2 mb-5" role="group" aria-label="Map area">
+        <div className="flex gap-2 mb-5" role="group" aria-label={t.area}>
           <button
             type="button"
             onClick={() => changeView("city")}
@@ -94,7 +92,7 @@ export default function DestinationMap({ destinations }: { destinations: Destina
             }`}
             aria-pressed={view === "city"}
           >
-            Valencia city
+            {t.city}
           </button>
           <button
             type="button"
@@ -106,7 +104,7 @@ export default function DestinationMap({ destinations }: { destinations: Destina
             }`}
             aria-pressed={view === "region"}
           >
-            Day trips
+            {t.region}
           </button>
         </div>
 
@@ -122,7 +120,7 @@ export default function DestinationMap({ destinations }: { destinations: Destina
             />
             <div className="absolute right-0 top-0 h-full w-[16%] bg-gradient-to-l from-sky-300 to-sky-100 border-l border-sky-300/70" />
             <span className="absolute right-2 top-1/2 -translate-y-1/2 -rotate-90 text-xs font-semibold uppercase tracking-[0.2em] text-sky-700/70">
-              Mediterranean
+              {t.sea}
             </span>
 
             {view === "city" ? (
@@ -150,7 +148,7 @@ export default function DestinationMap({ destinations }: { destinations: Destina
             )}
 
             <div className="absolute left-4 top-4 rounded-lg bg-white/90 px-3 py-2 text-xs font-semibold text-neutral-600 shadow-sm backdrop-blur-sm">
-              ↑ North
+              {t.north}
             </div>
             {view === "region" && (
               <div className="absolute rounded-full border-2 border-brand/30 bg-white/80 px-3 py-1 text-xs font-bold text-brand" style={{ left: "61%", top: "46%" }}>
@@ -172,7 +170,7 @@ export default function DestinationMap({ destinations }: { destinations: Destina
                       : "z-10 border-white bg-brand text-white hover:scale-110"
                   }`}
                   style={{ left: `${position.x}%`, top: `${position.y}%` }}
-                  aria-label={`Show ${destination.name}`}
+                  aria-label={t.show + " " + destination.name}
                   aria-pressed={isSelected}
                   title={destination.name}
                 >
@@ -196,13 +194,13 @@ export default function DestinationMap({ destinations }: { destinations: Destina
             {selected.transport && (
               <div className="rounded-xl bg-teal-50 p-4 mb-6">
                 <span className="block text-xs font-bold uppercase tracking-wide text-brand mb-1">
-                  Getting there
+                  {t.gettingThere}
                 </span>
                 <p className="text-sm text-neutral-700 leading-relaxed">{selected.transport}</p>
               </div>
             )}
-            <Link href={`/discover/${selected.slug}`} className="btn btn-primary mt-auto w-full">
-              Open {selected.name} guide
+            <Link href={prefix + "/discover/" + selected.slug} className="btn btn-primary mt-auto w-full">
+              {t.openBefore}{selected.name}{t.openAfter}
             </Link>
           </div>
         </div>

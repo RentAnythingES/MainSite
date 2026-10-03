@@ -1,7 +1,7 @@
 import Link from "next/link";
 import PartnerInquiryForm from "@/components/PartnerInquiryForm";
 
-type Locale = "en" | "es";
+import { localeRegistry, type Locale } from "@/i18n/config";
 
 const content = {
   en: {
@@ -112,12 +112,103 @@ const content = {
     formTitle: "Cuéntanos tu propuesta",
     formIntro: "Basta con una propuesta breve y concreta. Responderemos con un siguiente paso práctico, o diremos claramente si todavía no existe encaje.",
   },
+  de: {
+  "pageUrl": "https://rentandroll.com/de/partners",
+  "homeUrl": "https://rentandroll.com/de",
+  "home": "Startseite",
+  "breadcrumb": "Partnerschaften",
+  "eyebrow": "Mit Rent&Roll zusammenarbeiten",
+  "title": "Praktische Partnerschaften für bessere Aufenthalte in Valencia",
+  "intro": "Wir arbeiten mit Unterkunftsanbietern, lokalen Reisedienstleistern und Produktunternehmen zusammen, wenn die Zusammenarbeit den Aufenthalt für Reisende spürbar erleichtert. Starte mit einer gezielten Empfehlungsvereinbarung oder einem kleinen, messbaren Pilotprojekt in Valencia.",
+  "primaryCta": "Eine Partnerschaft besprechen",
+  "secondaryCta": "Service für Gastgeber ansehen",
+  "fitTitle": "Wen wir unterstützen können",
+  "fitIntro": "Die besten Kooperationen lösen ein konkretes Problem für Gäste oder Reisende. Wir verkaufen keine allgemeinen Werbeplatzierungen.",
+  "fits": [
+    {
+      "title": "Unterkunftsanbieter",
+      "body": "Ferienwohnungsanbieter, Aparthotels, Unterkunftsverwaltungen und Serviced Apartments können Gäste an uns verweisen, die Baby-, Mobilitäts-, Strand-, Arbeits- oder Wohnungsausstattung brauchen."
+    },
+    {
+      "title": "Reise- und Relocation-Dienstleister",
+      "body": "Concierge-Dienste, Relocation-Teams, Reiseplaner und lokale Spezialisten können die von ihnen betreuten Aufenthalte um praktische Unterstützung bei der Ausstattung ergänzen."
+    },
+    {
+      "title": "Marken und Vertriebspartner",
+      "body": "Produktunternehmen können ein begrenztes Testvermietungsprojekt erproben: Reisende nutzen passende Ausstattung während ihres tatsächlichen Aufenthalts in Valencia und geben mit ihrem Einverständnis Rückmeldung."
+    }
+  ],
+  "modelsTitle": "Möglichkeiten der Zusammenarbeit",
+  "models": [
+    {
+      "number": "01",
+      "title": "Empfehlung an Gäste",
+      "body": "Teile einen direkten Servicelink mit deinen Gästen. Sie wählen ihre Daten und wickeln alles direkt mit uns ab. Du sparst dir Kauf, Lagerung, Reinigung und Wartung selten benötigter Ausstattung."
+    },
+    {
+      "number": "02",
+      "title": "Unterstützung im Betrieb",
+      "body": "Bei wiederkehrendem Bedarf in Unterkünften können wir ein festgelegtes Ausstattungsangebot, den Lieferablauf, die Übergabe an Gäste und einen Eskalationsweg für deine Unterkünfte besprechen."
+    },
+    {
+      "number": "03",
+      "title": "Produktpilot",
+      "body": "Teste zwei bis fünf passende Produkte für einen konkreten Einsatz – etwa den Familienstrandtag, die Ankunft mit Baby, einen barrierefreien Aufenthalt oder mobiles Arbeiten –, bevor du einen größeren Umfang erwägst."
+    },
+    {
+      "number": "04",
+      "title": "Nützliche redaktionelle Zusammenarbeit",
+      "body": "Reisemedien und Content Creator können mit uns an verlässlichen Planungsinhalten für Valencia arbeiten, wenn diese ihrem Publikum helfen und geschäftliche Beziehungen transparent bleiben."
+    }
+  ],
+  "pilotTitle": "Was zu einem verantwortungsvollen Produktpilot gehört",
+  "pilotIntro": "Ein Pilot soll eine reale geschäftliche Frage beantworten, keine Empfehlung vortäuschen. Der genaue Umfang wird vereinbart, bevor etwas veröffentlicht wird.",
+  "pilotPoints": [
+    "Ein klar benannter Anwendungsfall in Valencia und eine kleine, vereinbarte Produktauswahl",
+    "Klare Zuständigkeiten für Bereitstellung, Anleitungen, Wartung und Ersatz",
+    "Sachliche Produktbeschreibung und transparente Offenlegung der geschäftlichen Beziehung",
+    "Berichte beschränkt auf vereinbarte Betriebsdaten, Rückmeldungen mit Einverständnis und erfasstes Interesse",
+    "Ein festgelegter Prüftermin vor Erweiterung, Fallstudie oder öffentlichen Leistungsversprechen"
+  ],
+  "principlesTitle": "Unsere Grundsätze für Partnerschaften",
+  "principles": [
+    {
+      "title": "Nützlichkeit vor Werbung",
+      "body": "Das Erlebnis der Gäste steht an erster Stelle. Eine Partnerschaft muss den Aufenthalt einfacher, sicherer oder angenehmer machen."
+    },
+    {
+      "title": "Konkret vor groß angelegt",
+      "body": "Wir bevorzugen ein messbares Pilotprojekt in Valencia gegenüber einem weitreichenden Sponsoringversprechen."
+    },
+    {
+      "title": "Sachlich und transparent",
+      "body": "Wir behaupten keine Empfehlungen, Exklusivität, Kundenerfahrungen oder Leistungen, die nicht vorliegen."
+    },
+    {
+      "title": "Datenschutz von Anfang an",
+      "body": "Identität und Kontaktdaten von Kunden gehören nicht in Partnerberichte. Rückmeldungen werden nur mit dem entsprechenden Einverständnis geteilt oder veröffentlicht."
+    }
+  ],
+  "processTitle": "Ein einfacher Einstieg",
+  "steps": [
+    "Erzähl uns von deinen Gästen, deinem Publikum, deinen Produkten oder deinem betrieblichen Bedarf.",
+    "Wir finden eine nützliche Form der Zusammenarbeit und prüfen, ob sie passt.",
+    "Bei Pilotprojekten vereinbaren wir vor dem Start die Produktauswahl, Zuständigkeiten, Offenlegung und Berichterstattung.",
+    "Wir prüfen die tatsächliche Nutzung, bevor wir über eine Erweiterung oder eine öffentliche Fallstudie sprechen."
+  ],
+  "relatedTitle": "Suchst du Unterstützung bei der Ausstattung für Gäste?",
+  "relatedBody": "Auf unserer Seite für Gastgeber erfährst du, wie Unterkunftsanbieter ihren Gästen bei der Organisation von Ausstattung helfen können, ohne selbst einen vollständigen Bestand vorzuhalten.",
+  "relatedCta": "Service für Gastgeber entdecken",
+  "kitsCta": "Mietpakete ansehen",
+  "formTitle": "Erzähl uns von deiner Idee",
+  "formIntro": "Ein kurzer, konkreter Vorschlag reicht. Wir antworten mit einem praktischen nächsten Schritt – oder sagen klar, wenn die Zusammenarbeit derzeit nicht passt."
+},
 } satisfies Record<Locale, Record<string, unknown>>;
 
 export default function PartnershipsPage({ locale }: { locale: Locale }) {
   const text = content[locale] as typeof content.en;
-  const hostHref = locale === "es" ? "/es/valencia/servicios-anfitriones" : "/valencia/host-services";
-  const kitsHref = locale === "es" ? "/es/valencia/kits" : "/valencia/kits";
+  const hostHref = locale === "es" ? "/es/valencia/servicios-anfitriones" : `${localeRegistry[locale].prefix}/valencia/host-services`;
+  const kitsHref = `${localeRegistry[locale].prefix}/valencia/kits`;
 
   return (
     <>
@@ -138,8 +229,8 @@ export default function PartnershipsPage({ locale }: { locale: Locale }) {
       <main>
         <section className="bg-gradient-to-br from-teal-950 via-teal-900 to-brand pb-16 text-white sm:pb-24">
           <div className="container-site pt-16 sm:pt-24">
-            <nav className="mb-10 text-sm text-teal-100/80" aria-label="Breadcrumb">
-              <Link href={locale === "es" ? "/es" : "/"} className="hover:text-white">{text.home}</Link>
+            <nav className="mb-10 text-sm text-teal-100/80" aria-label={{ en: "Breadcrumb", es: "Ruta de navegación", de: "Seitennavigation" }[locale]}>
+              <Link href={localeRegistry[locale].prefix || "/"} className="hover:text-white">{text.home}</Link>
               <span className="mx-2">/</span>
               <span>{text.breadcrumb}</span>
             </nav>

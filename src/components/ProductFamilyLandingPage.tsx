@@ -62,13 +62,13 @@ export default function ProductFamilyLandingPage({ family, locale, products, con
   const content = suppliedContent ?? (locale === "de" ? undefined : family.content[locale as ProductFamilyLocale]);
   if (!content || (locale === "de" && !prefix)) throw new Error("German family previews require explicit content and route prefix");
   const homeHref = prefix || "/";
-  const valenciaHref = locale === "de" ? homeHref : `${prefix}/valencia`;
+  const valenciaHref = `${prefix}/valencia`;
   const categoryHref = `${prefix}/rental/${family.categorySlug}`;
   const categoryLabel = content.categoryLabel;
 
   return (
     <>
-      <nav className="border-b border-border bg-neutral-50 py-3" aria-label={locale === "de" ? "Brotkrümelnavigation" : locale === "es" ? "Migas de pan" : "Breadcrumb"}>
+      <nav className="border-b border-border bg-neutral-50 py-3" aria-label={locale === "de" ? "Navigationspfad" : locale === "es" ? "Migas de pan" : "Breadcrumb"}>
         <div className="container-site">
           <ol className="flex flex-wrap items-center gap-2 text-sm text-neutral-500">
             <li><Link href={homeHref} className="hover:text-brand">{locale === "de" ? "Startseite" : locale === "es" ? "Inicio" : "Home"}</Link></li>

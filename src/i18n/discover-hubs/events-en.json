@@ -1,0 +1,139 @@
+{
+  "hub": "events",
+  "hubName": "Valencia Events",
+  "hubDescription": "Plan a Valencia trip around published festival and seasonal guides, with practical dates, local context and booking advice.",
+  "metadata": {
+    "title": "Valencia Events — Festivals, Holidays & Seasonal Highlights",
+    "description": "Plan a Valencia trip around published festival and seasonal guides, with practical dates, local context and booking advice.",
+    "alternates": {
+      "canonical": "https://rentandroll.com/discover/events",
+      "languages": {
+        "en": "https://rentandroll.com/discover/events",
+        "es": "https://rentandroll.com/es/discover/events",
+        "x-default": "https://rentandroll.com/discover/events"
+      }
+    }
+  },
+  "editorial": {
+    "introTitle": "Plan around Valencia's festivals, not just their dates",
+    "intro": [
+      "A major Valencia event can change transport, street access, noise, opening hours, restaurant availability, and the amount of time needed to move through the city. The event itself may be free while accommodation and practical planning require decisions months earlier.",
+      "Our event pages separate evergreen traditions from the current annual programme. Confirm exact dates, routes, ticket rules, and public-transport changes through official sources shortly before attending."
+    ],
+    "choiceTitle": "Build the trip around the right event type",
+    "choices": [
+      {
+        "title": "Fallas",
+        "description": "Valencia's largest festival, with monuments, fireworks, processions, major crowds, and city-wide disruption.",
+        "href": "/discover/fallas"
+      },
+      {
+        "title": "Maritime traditions",
+        "description": "Semana Santa Marinera connects processions and neighbourhood traditions around Cabanyal and the seafront.",
+        "href": "/discover/semana-santa-marinera-valencia"
+      },
+      {
+        "title": "Summer festivals",
+        "description": "Feria de Julio and the Gran Fira programme bring outdoor culture, fireworks and traditions across Valencia.",
+        "href": "/discover/gran-fira-valencia"
+      },
+      {
+        "title": "Historic processions",
+        "description": "Corpus Christi brings La Moma, the Rocas, the Convite Parade and the solemn procession into Ciutat Vella.",
+        "href": "/discover/corpus-christi-valencia"
+      },
+      {
+        "title": "Christmas season",
+        "description": "Plan lights, nativity scenes, markets, New Year's Eve and Three Kings without relying on last year's programme.",
+        "href": "/discover/christmas-valencia"
+      }
+    ],
+    "planningTitle": "Check again before the event",
+    "planningPoints": [
+      "Verify the current-year programme and route through an official organiser or tourism source.",
+      "Allow extra time for road closures, crowded stations, and changed bus routes.",
+      "Plan hearing protection, meeting points, water, and rest breaks for children or sensitive travellers.",
+      "Confirm whether accessible viewing areas or assistance require advance registration."
+    ],
+    "pathways": [
+      {
+        "title": "Staying during a busy festival",
+        "description": "Compare Valencia neighbourhoods for noise, walking access, transport, and the practical trade-offs of being close to the programme.",
+        "href": "/discover/neighbourhoods",
+        "label": "Compare neighbourhoods"
+      },
+      {
+        "title": "Travelling with family",
+        "description": "Use the family guide to plan pacing, equipment, and realistic days around Valencia's busiest periods.",
+        "href": "/blog/valencia-with-kids-complete-guide",
+        "label": "Read the family guide"
+      }
+    ],
+    "faqs": [
+      {
+        "question": "What is the biggest festival in Valencia?",
+        "answer": "Fallas is Valencia's largest and most internationally recognised festival. Its main celebrations take place in March, with monuments, fireworks, processions, and extensive changes to normal city movement."
+      },
+      {
+        "question": "Do Valencia festival dates stay the same every year?",
+        "answer": "Some celebrations have fixed anchor dates, while programmes, routes, and individual activities change annually. Always verify the current official programme before making travel decisions."
+      },
+      {
+        "question": "Is Valencia suitable for families during major events?",
+        "answer": "Yes with preparation, but crowds, noise, fireworks, late schedules, and road closures can be demanding. Choose suitable activities, establish a meeting plan, and allow children regular breaks away from the busiest areas."
+      },
+      {
+        "question": "How far ahead should I book accommodation for Fallas?",
+        "answer": "Fallas creates exceptional demand, so earlier planning gives more choice. We avoid fake urgency or fixed booking claims: compare accommodation and cancellation terms as soon as your travel dates are reasonably certain."
+      }
+    ]
+  },
+  "monthNames": [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec"
+  ],
+  "templateText": [
+    {
+      "kind": "text",
+      "value": "Home"
+    },
+    {
+      "kind": "text",
+      "value": "Discover"
+    },
+    {
+      "kind": "text",
+      "value": "Events"
+    },
+    {
+      "kind": "text",
+      "value": "Valencia Events"
+    },
+    {
+      "kind": "text",
+      "value": "Plan your trip around Valencia's festivals, holidays, and seasonal highlights. Evergreen guides with dates, booking tips, and what to expect."
+    },
+    {
+      "kind": "text",
+      "value": "Events by Month"
+    },
+    {
+      "kind": "text",
+      "value": "Read guide →"
+    },
+    {
+      "kind": "text",
+      "value": "Event guides coming soon — check back shortly."
+    }
+  ]
+}

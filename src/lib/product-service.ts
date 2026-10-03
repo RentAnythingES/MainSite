@@ -6,7 +6,7 @@ import { products as staticProducts, getProductBySlug as staticGetBySlug, getPro
 import { seoCategorySlugs } from "@/data/seo-clusters";
 import { unstable_cache } from "next/cache";
 import { applyCategoryProductPriority } from "@/data/category-merchandising";
-import { PUBLIC_PRODUCT_CACHE_TAG } from "@/lib/product-cache";
+import { PUBLIC_PRODUCT_CACHE_TAG, PUBLIC_PRODUCT_CACHE_VERSION } from "@/lib/product-cache";
 import { isValidProductSlug } from "@/lib/product-validation";
 import { canonicalProductSlug, productSlugLookupCandidates } from "@/lib/product-slug-aliases";
 import { resolveMarketContext } from "@/lib/market-context";
@@ -348,7 +348,7 @@ async function fetchProductsFromDB(city: string, locale: ProductLocale): Promise
     return data.map((row) => mapEmbeddedProduct(row, locale));
 }
 
-const getCachedProducts = unstable_cache(fetchProductsFromDB, ["public-product-list", "stock-aware-v2", "rentandroll-brand-v1"], {
+const getCachedProducts = unstable_cache(fetchProductsFromDB, ["public-product-list", "stock-aware-v2", "rentandroll-brand-v1", PUBLIC_PRODUCT_CACHE_VERSION], {
   tags: [PUBLIC_PRODUCT_CACHE_TAG],
 });
 
@@ -395,7 +395,7 @@ async function fetchProductBySlugFromDB(slug: string, locale: ProductLocale, cit
     return { ...mapEmbeddedProduct(row, locale), slug: canonicalSlug };
 }
 
-const getCachedProductBySlug = unstable_cache(fetchProductBySlugFromDB, ["public-product-detail", "stock-aware-v2", "rentandroll-brand-v1"], {
+const getCachedProductBySlug = unstable_cache(fetchProductBySlugFromDB, ["public-product-detail", "stock-aware-v2", "rentandroll-brand-v1", PUBLIC_PRODUCT_CACHE_VERSION], {
   tags: [PUBLIC_PRODUCT_CACHE_TAG],
 });
 
@@ -473,7 +473,7 @@ async function fetchProductsByCategoryFromDB(categorySlug: string, locale: Produ
 
 const getCachedProductsByCategory = unstable_cache(
   fetchProductsByCategoryFromDB,
-  ["public-products-by-category", "stock-aware-v2", "rentandroll-brand-v1"],
+  ["public-products-by-category", "stock-aware-v2", "rentandroll-brand-v1", PUBLIC_PRODUCT_CACHE_VERSION],
   { tags: [PUBLIC_PRODUCT_CACHE_TAG] },
 );
 
@@ -524,11 +524,11 @@ async function fetchOfferCards(marketId: string, locale: ProductLocale, category
   return categorySlug ? applyCategoryProductPriority(categorySlug, products) : products;
 }
 
-const cachedOfferCards = unstable_cache(fetchOfferCards, ["market-offer-cards", "v1"], { tags: [PUBLIC_PRODUCT_CACHE_TAG] });
+const cachedOfferCards = unstable_cache(fetchOfferCards, ["market-offer-cards", "v1", PUBLIC_PRODUCT_CACHE_VERSION], { tags: [PUBLIC_PRODUCT_CACHE_TAG] });
 const cachedOfferDetail = unstable_cache(async (marketId: string, locale: ProductLocale, slug: string) => {
   const offer = await getProductOffer(supabase, { marketId, locale, slug });
   return offer ? { ...mapOffer(offer, locale), slug: canonicalProductSlug(slug) } : null;
-}, ["market-offer-detail", "v1"], { tags: [PUBLIC_PRODUCT_CACHE_TAG] });
+}, ["market-offer-detail", "v1", PUBLIC_PRODUCT_CACHE_VERSION], { tags: [PUBLIC_PRODUCT_CACHE_TAG] });
 
 async function publicMarketId(city: string, locale: ProductLocale) {
   if (!isSupabaseConfigured()) throw new Error("City catalogue requires configured database access");

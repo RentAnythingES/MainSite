@@ -1,6 +1,6 @@
 import type { MetadataRoute } from 'next';
 import { SITE_URL } from '@/config/site';
-import { germanCommercialPaths } from '@/i18n/german-paths';
+import { germanCommercialPaths, germanEditorialPaths } from '@/i18n/german-paths';
 import { germanPublicContext, germanIndexingAllowed } from './german-publication';
 import { publishedGermanProducts } from './german-catalogue';
 import { getIndexableProductsForSeo } from './product-service';
@@ -12,7 +12,8 @@ export async function addGermanSitemap(existing: MetadataRoute.Sitemap): Promise
   if (!context?.isIndexable) return existing;
   const [products, seoStates] = await Promise.all([publishedGermanProducts(), getIndexableProductsForSeo()]);
   const indexable = new Set(seoStates.filter(state => state.indexableDe).map(state => state.slug));
-  const paths = [...germanCommercialPaths.filter(path => !['/valencia', '/newsletter'].includes(path)),
+  const paths = [...germanCommercialPaths.filter(path => !['/newsletter'].includes(path)),
+    ...germanEditorialPaths(),
     ...products.filter(product => indexable.has(product.slug)).map(product => `/product/${product.slug}`)];
   const existingUrls = new Set(existing.map(page => page.url));
   const groups = new Map<string, Record<string, string>>();

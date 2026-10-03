@@ -1,0 +1,293 @@
+{
+  "slug": "benimaclet",
+  "name": "Benimaclet",
+  "type": "neighbourhood",
+  "tagline": "Valencias Dorf mitten in der Stadt: Studierende, Wochenmärkte und echtes Nachbarschaftsleben",
+  "heroImage": "/discover/benimaclet-hero.webp",
+  "heroImageAlt": "Kirche und traditioneller Dorfplatz im Herzen von Benimaclet in Valencia",
+  "heroImageProvenance": {
+    "status": "licensed",
+    "creator": "Joanbanjo",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Pla%C3%A7a_de_Benimaclet.JPG",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "verifiedAt": "2026-07-19",
+    "modifications": "Cropped and resized to 16:9 WebP."
+  },
+  "title": "Benimaclet in Valencia: Reiseführer durch das Viertel",
+  "description": "Entdecke Benimaclets dörfliche Atmosphäre, den Wochenmarkt, lokale Gastronomie und Verkehrsanbindungen – mit praktischen Tipps für deinen Besuch in Valencia.",
+  "keywords": [
+    "Benimaclet Valencia",
+    "Valencia Studentenviertel",
+    "Benimaclet Reiseführer",
+    "alternatives Valencia",
+    "Valencia wie Einheimische erleben"
+  ],
+  "date": "2026-06-20",
+  "lastUpdated": "2026-06-20",
+  "audiences": [
+    "digital-nomads",
+    "budget",
+    "couples"
+  ],
+  "region": "Nördliches Valencia",
+  "hubs": [
+    "neighbourhoods"
+  ],
+  "overview": {
+    "paragraphs": [
+      "Benimaclet fühlt sich an wie ein Dorf, das zufällig in einer Stadt liegt. Das ehemalige Bauerndorf wurde von Valencias Wachstum umschlossen, hat seinen eigenen Charakter aber bewahrt: ein zentraler Platz mit älteren Männern beim Dominospiel, ein Wochenmarkt, kleine Tapasbars, in denen sich Stammgäste beim Namen kennen, und eine unabhängige Gemeinschaft, die sich seit Jahrzehnten gegen großflächige kommerzielle Bauprojekte wehrt.",
+      "Das Viertel liegt zwischen dem Campus der Universität Valencia und dem nördlichen Rand der Turia-Gärten. Dadurch ist es ein natürlicher Treffpunkt für Studierende, Wissenschaftler und junge Berufstätige. Essen und Trinken bieten hier ein gutes Preis-Leistungs-Verhältnis: Ein dreigängiges Menú del día gibt es für etwa 10–12 €. Dazu kommt eine vielfältige internationale Gastronomie mit indischen, senegalesischen, chinesischen und nahöstlichen Restaurants entlang der Hauptstraßen.",
+      "Benimaclet zeigt Besuchern eine Seite, die in den Touristenvierteln weniger sichtbar ist: echten valencianischen Alltag. Keine großen Denkmäler, keine Museen und keine typischen Instagram-Kulissen, sondern gutes Essen, günstige Getränke, freundliche Menschen und der vertraute Rhythmus eines gewachsenen Viertels. Die Anbindung ist überraschend gut: Mit der Metro bist du in etwa acht Minuten im Zentrum."
+    ],
+    "quickFacts": [
+      {
+        "label": "Anreise",
+        "value": "Metro L3/L9 bis Benimaclet; prüfe Fahrzeiten im aktuellen Routenplaner"
+      },
+      {
+        "label": "Besonders geeignet für",
+        "value": "Preiswertes Essen, lokaler Alltag, längere Aufenthalte und Studierende"
+      },
+      {
+        "label": "Atmosphäre",
+        "value": "Dörflich, alternativ und multikulturell"
+      },
+      {
+        "label": "Tourismus",
+        "value": "Kaum touristisch: hier erlebst du Valencias Alltag"
+      }
+    ]
+  },
+  "highlights": [
+    {
+      "name": "Plaça de Benimaclet",
+      "description": "Das Herz des Viertels: ein grüner Platz mit Pfarrkirche, Caféterrassen und Spielplatz. Hier treffen sich Einheimische zum Morgenkaffee, zum Wermut am Abend und zum Sonntagsspaziergang. Samstags findet der Lebensmittelmarkt mit Direktverkauf der Erzeuger statt.",
+      "icon": "🌳",
+      "tip": "Am Samstagvormittag lohnt sich der Besuch besonders: Auf dem Markt ist viel los, und auf den Caféterrassen sitzen Einheimische mit ihrer Zeitung."
+    },
+    {
+      "name": "Wochenmarkt in Benimaclet",
+      "description": "Samstagvormittags verkaufen lokale Landwirte und Erzeuger auf dem Mercat de l’Horta an der Plaça de Benimaclet direkt ihre Produkte, darunter saisonales Obst und Gemüse, Brot, Käse und Honig. Der separate Straßenmarkt für Waren außerhalb des Lebensmittelangebots findet freitags statt.",
+      "icon": "🛍️",
+      "tip": "Komm bis 10 Uhr für die beste Auswahl. Biogemüse ist oft schnell ausverkauft. Bring eine wiederverwendbare Einkaufstasche mit."
+    },
+    {
+      "name": "Horts Urbans de Benimaclet",
+      "description": "Ein gemeinschaftlicher Stadtgarten auf einer zurückgewonnenen Fläche am Rand des Viertels. Einheimische pflegen Beete mit Gemüse und Blumen. Der Garten steht für Benimaclets Gemeinschaftssinn und den Widerstand gegen Bauprojekte.",
+      "icon": "🌱",
+      "tip": "Komm am späten Nachmittag vorbei, wenn die Gärtner ihre Beete pflegen. Viele sind freundlich und freuen sich über ein Gespräch."
+    },
+    {
+      "name": "Internationale Küche auf kurzen Wegen",
+      "description": "Am Carrer de Mistral und in den umliegenden Straßen findest du auf wenigen Häuserblocks eine große kulinarische Vielfalt: indische Thalis, senegalesische Thieboudienne, chinesische handgezogene Nudeln und klassische spanische Tapas – zu studentenfreundlichen Preisen.",
+      "icon": "🍛",
+      "tip": "Frag Studierende nach ihrem Lieblingslokal: Fast jeder hat eine klare Empfehlung. Die indischen Restaurants am Carrer de Mistral bieten besonders gute Preise."
+    }
+  ],
+  "gettingThere": {
+    "summary": "Die Metrolinien 3 und 9 verbinden Benimaclet mit dem Zentrum. Prüfe die aktuellen Verbindungen und Fahrzeiten im Routenplaner.",
+    "options": [
+      {
+        "mode": "metro",
+        "description": "L3/L9 bis zur Metrostation Benimaclet, mit Verbindungen ab Àngel Guimerà oder Colón",
+        "duration": "Etwa 8 Min. ab Zentrum",
+        "cost": "€1.50"
+      },
+      {
+        "mode": "tram",
+        "description": "Die Straßenbahn L4 erschließt den östlichen Teil des Viertels",
+        "duration": "12 Min.",
+        "cost": "€1.50"
+      },
+      {
+        "mode": "bike",
+        "description": "Einfache, flache Fahrt ab Zentrum oder Turia-Gärten. Valenbisi-Leihstationen sind vorhanden.",
+        "duration": "15 Min.",
+        "cost": "€2 (Valenbisi)"
+      },
+      {
+        "mode": "walk",
+        "description": "Folge den Turia-Gärten aus Richtung Stadt der Künste und Wissenschaften nach Nordosten",
+        "duration": "25 Min."
+      }
+    ],
+    "parkingNotes": "In einigen Wohnstraßen gibt es noch kostenlose Parkplätze, immer mehr Bereiche sind jedoch gebührenpflichtig. Die Metro ist einfacher."
+  },
+  "bestTimeToVisit": {
+    "summary": "Am lebhaftesten ist Benimaclet während des Hochschuljahres von September bis Juni, wenn viele Studierende im Viertel sind.",
+    "seasons": [
+      {
+        "season": "spring",
+        "description": "Angenehmes Wetter, der Samstagsmarkt ist besonders schön und die Studierenden sind da: jetzt ist das Viertel am lebendigsten.",
+        "rating": 5
+      },
+      {
+        "season": "summer",
+        "description": "Ruhiger, weil viele Studierende wegfahren. Die Terrassen bleiben geöffnet und vieles ist besonders günstig.",
+        "rating": 3
+      },
+      {
+        "season": "autumn",
+        "description": "Im September beginnt das Hochschuljahr wieder. Das Viertel lebt auf, und das Wetter ist angenehm.",
+        "rating": 5
+      },
+      {
+        "season": "winter",
+        "description": "Mild und gemütlich. Jetzt kommen die Tapasbars im Innenbereich besonders zur Geltung. Der Samstagsmarkt findet weiterhin statt.",
+        "rating": 4
+      }
+    ]
+  },
+  "whatToBring": {
+    "bring": [
+      "Wiederverwendbare Einkaufstasche für den Markt",
+      "Bargeld für kleine Bars – manche nehmen keine Karten an",
+      "Appetit auf gutes, günstiges Essen"
+    ],
+    "dontBring": [
+      "Die Erwartung großer Touristenattraktionen",
+      "Elegante Kleidung – hier geht es entspannt zu"
+    ],
+    "rentInstead": [
+      "Fahrrad, um das Viertel und die Turia-Gärten zu erkunden"
+    ]
+  },
+  "accessibility": {
+    "overallRating": 3,
+    "summary": "Benimaclet hat flache Straßen und gute Gehwege an den Hauptverbindungen. Manche Nebenstraßen sind eng und uneben. Die Metrostation hat einen Aufzug.",
+    "wheelchairNotes": "Die Hauptstraßen rund um den Platz sind zugänglich. Auf dem Markt kann es eng und schwieriger zu manövrieren sein. Die Metrostation ist stufenlos erreichbar.",
+    "strollerNotes": "Auf den Hauptstraßen kommst du in der Regel gut voran. Der Spielplatz auf dem zentralen Platz ist ein Pluspunkt für Familien.",
+    "publicTransportAccess": "Die Metrostation Benimaclet an L3/L9 hat Aufzüge. Die Straßenbahnhaltestellen sind zugänglich."
+  },
+  "foodAndDrink": {
+    "summary": "In Benimaclet treffen langjährige Nachbarschaftscafés auf neuere Bäckereien und valencianische Restaurants. Prüfe die aktuellen Öffnungszeiten: Viele unabhängige Lokale schließen zwischen den Essenszeiten oder an einzelnen Wochentagen.",
+    "recommendations": [
+      {
+        "name": "Kaf Café",
+        "type": "Literaturcafé und Kulturbar",
+        "priceRange": "€",
+        "tip": "Prüfe vor dem Besuch die aktuellen Öffnungszeiten und das Kulturprogramm auf den Social-Media-Kanälen des Cafés.",
+        "familyFriendly": true,
+        "sourceNote": "Benimaclet Entra identifies Kaf Café as a neighbourhood literary and cultural café.",
+        "sourceUrl": "https://benimacletentra.org/portfolio-item/kaf-cafe/",
+        "sourceCheckedAt": "2026-07-19"
+      },
+      {
+        "name": "Bar Verbena",
+        "type": "Tapas und Nachbarschaftsbar",
+        "priceRange": "€€",
+        "tip": "Auf der offiziellen Website findest du aktuelle Reservierungsinformationen und Angaben zum Angebot.",
+        "familyFriendly": true,
+        "sourceNote": "Official venue site confirms the Utiel 20 location in Benimaclet and its tapas-led concept.",
+        "sourceUrl": "https://barverbena.es/",
+        "sourceCheckedAt": "2026-07-19"
+      },
+      {
+        "name": "Ambra",
+        "type": "Traditionelle valencianische Küche",
+        "priceRange": "€€€",
+        "tip": "Reserviere vorab, wenn du eines der Reisgerichte möchtest, besonders am Wochenende.",
+        "familyFriendly": true,
+        "sourceNote": "Current local reporting confirms the Mistral 10 venue, traditional Valencian cooking and rice focus.",
+        "sourceUrl": "https://cadenaser.com/comunitat-valenciana/2025/07/04/ambra-el-sabor-de-la-cocina-valenciana-mas-autentica-en-una-casa-de-pueblo-en-benimaclet-radio-valencia/",
+        "sourceCheckedAt": "2026-07-19"
+      },
+      {
+        "name": "KÜME Café",
+        "type": "Bäckerei und Café",
+        "priceRange": "€€",
+        "tip": "Prüfe die getrennten Öffnungszeiten am Vormittag und Abend, bevor du deinen Besuch planst.",
+        "familyFriendly": true,
+        "sourceNote": "Official venue site confirms the Guardia Civil 20 location, bakery range and current hours.",
+        "sourceUrl": "https://kumepasteleria.com/",
+        "sourceCheckedAt": "2026-07-19"
+      }
+    ],
+    "localSpeciality": "Das Menú del día: ein dreigängiges Mittagsmenü mit Brot und Getränk, meist für etwa 10–12 €. Diese Tradition der arbeitenden Bevölkerung ist in Vierteln wie Benimaclet besonders lebendig, wo sich die Preise an Einheimischen statt an Touristen orientieren."
+  },
+  "stayingHere": {
+    "summary": "Benimaclet eignet sich für längere Aufenthalte, digitale Nomaden und alle, die valencianischen Alltag erleben möchten. Die Mieten liegen etwa 30–40 % unter denen im Zentrum oder in Ruzafa, und mit der Metro bist du in ungefähr acht Minuten zentral unterwegs.",
+    "pros": [
+      "Eines der günstigsten zentral gelegenen Viertel",
+      "Echte lokale Atmosphäre",
+      "Gutes Preis-Leistungs-Verhältnis bei Essen und Getränken",
+      "Mit der Metro in etwa 8 Min. ins Zentrum",
+      "Nahe Universität und Turia-Gärten"
+    ],
+    "cons": [
+      "Keine großen Touristenattraktionen in direkter Nähe",
+      "Ruhigeres Nachtleben als in Ruzafa oder El Carmen",
+      "Manche Wohnstraßen wirken nachts menschenleer",
+      "In lokalen Bars wird wenig Englisch gesprochen"
+    ],
+    "gettingElsewhere": [
+      "Metro ins Zentrum: etwa 8 Min.",
+      "Zu Fuß zu den Turia-Gärten: 10 Min.",
+      "Straßenbahn zum Strand: 20 Min."
+    ]
+  },
+  "visitingHere": {
+    "summary": "Benimaclet eignet sich für einen halben Tag im lokalen Alltag, weniger als Ziel für klassisches Sightseeing. Komm samstags zum Markt und bleib zum Mittagessen.",
+    "idealDuration": "3–4 Stunden, ideal am Samstagvormittag",
+    "bestTimeOfDay": "Samstags von 9 bis 13 Uhr für Markt und Mittagessen",
+    "tips": [
+      "Komm samstags zum Markt. Dann zeigt sich das Viertel besonders lebendig.",
+      "Trinke auf einer Terrasse am zentralen Platz einen Kaffee zum späten Frühstück, schlendere über den Markt und bleib anschließend für ein Menú del día.",
+      "Gehe nach Süden durch das Viertel und setze deinen Spaziergang am Nachmittag in den Turia-Gärten fort."
+    ]
+  },
+  "practicalTips": [
+    "Bring Bargeld mit: Mehrere kleine Bars und Marktstände nehmen keine Karten an.",
+    "Der Samstagsmarkt findet ungefähr von 9 bis 14 Uhr statt. Vor 11 Uhr ist die Auswahl am besten.",
+    "Hier wird hauptsächlich Spanisch gesprochen. Schon ein paar spanische Wörter helfen im Gespräch mit den Besitzern der lokalen Bars.",
+    "Das Viertel hat einen starken Gemeinschaftssinn. Respektiere die Stadtgärten und lokalen Initiativen."
+  ],
+  "audienceTips": [
+    {
+      "audience": "digital-nomads",
+      "tips": [
+        "Das Kaf Café eignet sich besonders gut zum Arbeiten und bietet gutes WLAN und Steckdosen.",
+        "Benimaclet bietet besonders günstige, gute Unterkünfte für längere Aufenthalte. Viele digitale Nomaden wohnen hier für mehrere Monate.",
+        "Die Universitätsbibliothek Biblioteca de la Universitat liegt in der Nähe und ist öffentlich zugänglich."
+      ]
+    },
+    {
+      "audience": "budget",
+      "tips": [
+        "Hier kannst du in Valencia besonders gut mit kleinem Budget essen. Die Tradition des Menú del día ist lebendig.",
+        "Auf dem Samstagsmarkt findest du gute Lebensmittel zum Selbstkochen zu lokalen Preisen.",
+        "Unterkünfte kosten hier etwa 30–40 % weniger als in Ruzafa oder im Zentrum."
+      ]
+    }
+  ],
+  "productWidgets": [
+    {
+      "categorySlug": "remote-work",
+      "heading": "Dein Arbeitsplatz für den Aufenthalt in Valencia?",
+      "afterSection": "Highlights"
+    }
+  ],
+  "relatedDestinations": [
+    "ruzafa",
+    "el-carmen",
+    "city-of-arts-and-sciences"
+  ],
+  "relatedBlogPosts": [
+    "digital-nomad-valencia-guide"
+  ],
+  "faqs": [
+    {
+      "question": "Lohnt sich Benimaclet für Touristen?",
+      "answer": "Wenn du sehen möchtest, wie die Menschen in Valencia leben, ja. Es gibt keine großen Museen oder Denkmäler, aber der Samstagsmarkt, lokale Tapasbars und die Atmosphäre des Viertels bieten einen angenehmen Kontrast zum touristischen Zentrum."
+    },
+    {
+      "question": "Ist Benimaclet sicher?",
+      "answer": "Ja, es ist ein Wohnviertel mit einem starken Gemeinschaftssinn. Achte wie überall nachts in ruhigen Straßen auf deine Umgebung. Insgesamt gilt das Viertel als sehr sicher."
+    },
+    {
+      "question": "Wofür ist Benimaclet bekannt?",
+      "answer": "Für seine dörfliche Atmosphäre, die studentische Kultur nahe der Universität, den Samstagsmarkt, die internationale Gastronomie und den erfolgreichen Widerstand der Gemeinschaft gegen großflächige kommerzielle Bauprojekte."
+    }
+  ]
+}

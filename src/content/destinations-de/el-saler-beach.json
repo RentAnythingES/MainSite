@@ -1,0 +1,198 @@
+{
+  "slug": "el-saler-beach",
+  "name": "Strand El Saler",
+  "type": "beach",
+  "tagline": "Dünen, Pinienwald und ein naturnaher Strandtag südlich von Valencia",
+  "heroImage": "/discover/el-saler-beach.jpg",
+  "heroImageAlt": "Sand, Dünen und Mittelmeer am Strand El Saler bei Valencia",
+  "heroImageProvenance": {
+    "status": "licensed",
+    "creator": "Ron Oliver",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:El_Saler_beach.jpg",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "verifiedAt": "2026-07-20",
+    "modifications": "Resized to 1280 pixels wide by Wikimedia Commons."
+  },
+  "title": "Strand El Saler bei Valencia: Praktischer Reiseführer",
+  "description": "Plane deinen Tag am Strand El Saler bei Valencia: Anreise, Einrichtungen, Barrierefreiheit, Dünenschutz und praktische Tipps für einen Strandbesuch mit Kindern.",
+  "keywords": [
+    "Strand El Saler",
+    "El Saler Strand Valencia",
+    "Naturstrand Valencia",
+    "Strände bei Valencia"
+  ],
+  "date": "2026-07-20",
+  "lastUpdated": "2026-07-20",
+  "audiences": [
+    "families",
+    "couples",
+    "mobility-needs"
+  ],
+  "region": "Naturpark Albufera / südliches Valencia",
+  "distanceFromValencia": "Etwa 25–35 Minuten ab dem Zentrum von Valencia",
+  "hubs": [
+    "beaches"
+  ],
+  "overview": {
+    "paragraphs": [
+      "El Saler bietet einen naturnäheren Strandbesuch als Valencias städtische Küste. Der Strand liegt südlich der Stadt in der Landschaft des Naturparks Albufera. Hinter dem langen Abschnitt mit feinem, goldenem Sand liegen geschützte Dünen und Pinienwald.",
+      "Der Strand ist etwa 2,6 Kilometer lang und bietet im Sommer Einrichtungen, Rettungsposten, Toiletten, Duschen, Picknicktische, Schattenbereiche und angepasste Zugänge. Die Angebote verteilen sich auf mehrere Zugänge und liegen nicht an einer durchgehenden Promenade. Wenn du Ausrüstung mitbringst, ist der richtige Ankunftspunkt deshalb besonders wichtig.",
+      "El Saler eignet sich für Besucher, denen Platz und eine natürliche Umgebung wichtig sind. Der Besuch erfordert aber mehr Planung als Malvarrosa oder Patacona. Prüfe vor dem Aufbruch aus Valencia die Anreise, die Betriebszeiten der Strandeinrichtungen und die aktuellen Bedingungen im Meer."
+    ],
+    "quickFacts": [
+      {
+        "label": "Strandlänge",
+        "value": "Etwa 2,6 km"
+      },
+      {
+        "label": "Umgebung",
+        "value": "Dünen und Pinienwald im Naturpark Albufera"
+      },
+      {
+        "label": "Besonders geeignet für",
+        "value": "Natur, viel Platz und längere Strandtage"
+      },
+      {
+        "label": "Einrichtungen",
+        "value": "Saisonale Rettungsschwimmer, Toiletten, Duschen und barrierefreie Einrichtungen"
+      }
+    ]
+  },
+  "highlights": [
+    {
+      "name": "Geschützte Dünenlandschaft",
+      "description": "Durch die Dünen und Pinien unterscheidet sich El Saler deutlich von den Stadtstränden. Nutze die markierten Wege und Holzstege, um die Vegetation zu schützen.",
+      "icon": "🌿"
+    },
+    {
+      "name": "Langer, offener Strand",
+      "description": "An der breiten Küste finden Besucher mehr Platz, besonders abseits der am stärksten besuchten Zugänge.",
+      "icon": "🏖️"
+    },
+    {
+      "name": "Saisonaler barrierefreier Bereich",
+      "description": "Der städtische Strandführer nennt angepasste Parkplätze, Zugänge, Toiletten und Duschen sowie einen barrierefreien Sommerbereich nahe Rettungsposten 2.",
+      "icon": "♿",
+      "tip": "Badeassistenz in El Saler musst du vorab bestätigen lassen. Kontaktiere den städtischen Dienst vor der Anreise."
+    }
+  ],
+  "gettingThere": {
+    "summary": "Die Anreise ist mit Linienbus, Taxi, Fahrrad und Auto möglich. Der anschließende Fußweg unterscheidet sich aber erheblich je nach Strandzugang.",
+    "options": [
+      {
+        "mode": "bus",
+        "description": "EMT bedient das Gebiet El Saler. Prüfe für dein Reisedatum die aktuelle Verbindung und den nächstgelegenen Strandzugang.",
+        "duration": "Meist 25–40 Minuten ab dem Zentrum von Valencia"
+      },
+      {
+        "mode": "bike",
+        "description": "Für geübte Radfahrer ist eine Route Richtung Süden möglich. Berücksichtige aber Hitze, Entfernung und die Rückfahrt.",
+        "duration": "Etwa 45–60 Minuten ab dem Stadtzentrum"
+      },
+      {
+        "mode": "car",
+        "description": "Nahe den Strandzugängen gibt es abgegrenzte, unbewachte Parkplätze mit angepassten Stellplätzen. An Sommerwochenenden werden sie voll."
+      }
+    ],
+    "parkingNotes": "Parke nicht auf Dünen, Randstreifen oder geschützter Vegetation. Nutze ausgewiesene Parkplätze und nimm Wertsachen mit."
+  },
+  "bestTimeToVisit": {
+    "summary": "Juni und September verbinden warme Bedingungen mit weniger Andrang als im August. Komm an Sommerwochenenden früh.",
+    "seasons": [
+      {
+        "season": "spring",
+        "description": "Angenehm für Spaziergänge und Picknicks. Das Meer ist allerdings noch kühl, und saisonale Einrichtungen können eingeschränkt sein.",
+        "rating": 4
+      },
+      {
+        "season": "summer",
+        "description": "Am besten zum Baden und für das vollständige saisonale Angebot. Hitze, knappe Parkplätze und UV-Strahlung erfordern Planung.",
+        "rating": 5
+      },
+      {
+        "season": "autumn",
+        "description": "Im September kann das Wasser noch warm und der Strand ruhiger sein. Der spätere Herbst eignet sich eher zum Spazierengehen als zum Baden.",
+        "rating": 4
+      },
+      {
+        "season": "winter",
+        "description": "Eine ruhige Naturlandschaft für Spaziergänge bei passendem Wetter, mit eingeschränkten Strandeinrichtungen.",
+        "rating": 2
+      }
+    ],
+    "avoidDates": "Sommerwochenenden in der Hauptsaison ab dem späten Vormittag, wenn Parkplätze und Hauptzugänge am stärksten besucht sein können."
+  },
+  "whatToBring": {
+    "bring": [
+      "Sonnenschutz",
+      "Reichlich Wasser",
+      "Essen oder einen bestätigten Plan für die Mahlzeit",
+      "Eine Tüte für den gesamten Müll"
+    ],
+    "dontBring": [
+      "Glasbehälter",
+      "Alles, wofür du geschützte Dünen überqueren müsstest",
+      "Mehr Ausrüstung, als deine Gruppe sicher tragen kann"
+    ],
+    "rentInstead": [
+      "Strandschirm oder Sonnenschutz",
+      "Kühlbox",
+      "Strandstühle",
+      "Strandwagen, sofern der gewählte Zugang geeignet ist"
+    ]
+  },
+  "accessibility": {
+    "overallRating": 4,
+    "summary": "Die Stadt nennt angepasste Parkplätze, Zugänge, Toiletten und Duschen sowie einen saisonalen barrierefreien Bereich nahe Rettungsposten 2. Bestätige für deinen Besuchstag die genauen Angebote und die Verfügbarkeit der Badeassistenz.",
+    "wheelchairNotes": "Nutze den ausgewiesenen barrierefreien Eingang und bestätige den aktuellen Verlauf der Stege. Außerhalb angepasster Flächen bleibt der natürliche Sand schwierig.",
+    "strollerNotes": "Wähle einen markierten Steg und ziehe keinen Kinderwagen über geschützte Dünen. Ein Strandwagen kann den Transport erleichtern, ist aber ebenfalls vom Untergrund am Zugang abhängig.",
+    "publicTransportAccess": "Der städtische Führer nennt einen barrierefreien EMT-Bus. Prüfe vor der Anreise trotzdem die aktuelle Verbindung und die Entfernung vom Ausstieg zum Strand."
+  },
+  "visitingHere": {
+    "summary": "El Saler eignet sich am besten für einen geplanten halben oder ganzen Tag statt für einen kurzen Halt am Stadtstrand. Wähle vor dem Aufbruch einen Zugang und nimm ausreichend Wasser, Schattenspender und Essen für deine Gruppe mit.",
+    "idealDuration": "4–7 Stunden",
+    "bestTimeOfDay": "Am Morgen: leichteres Parken, weniger Hitze und ein ruhigerer Start",
+    "tips": [
+      "Speichere vor dem Aufbruch den genauen Zugang oder Parkplatz, denn der Strand ist lang.",
+      "Nutze durch die Dünen ausschließlich markierte Wege und nimm jeden Abfall wieder mit.",
+      "Prüfe am Besuchstag Badeflagge, Rettungsschwimmer und die Regelungen für Badeassistenz."
+    ]
+  },
+  "practicalTips": [
+    "Plane Schatten sorgfältig ein: Der Pinienwald spendet keinen Schatten direkt auf dem Sand.",
+    "Halte Essen im Sommer gekühlt und nimm mehr Trinkwasser mit, als du voraussichtlich brauchst.",
+    "Mobilfunkempfang und Geschäfte in der Nähe ersetzen keine vollständige Planung für den Strandtag.",
+    "Der Strand liegt in einer geschützten Naturlandschaft. Beachte die Schilder und überquere niemals abgesperrte Dünenbereiche."
+  ],
+  "productWidgets": [
+    {
+      "categorySlug": "travel-outdoors",
+      "heading": "Für einen ganzen Strandtag vorbereitet",
+      "afterSection": "Highlights"
+    }
+  ],
+  "relatedDestinations": [
+    "pinedo-beach",
+    "albufera",
+    "malvarrosa-beach"
+  ],
+  "relatedBlogPosts": [
+    "best-beaches-valencia-families",
+    "valencia-summer-survival-guide"
+  ],
+  "faqs": [
+    {
+      "question": "Wie komme ich von Valencia zum Strand El Saler?",
+      "answer": "Du kannst EMT-Busse, Taxi, Fahrrad oder Auto nutzen. Prüfe die aktuelle Verbindung und wähle vor der Anreise einen konkreten Strandzugang. El Saler ist lang, und die Einrichtungen verteilen sich auf mehrere Stellen."
+    },
+    {
+      "question": "Eignet sich der Strand El Saler für Familien?",
+      "answer": "Ja, besonders für Familien, die Platz und eine natürliche Umgebung suchen. Der Besuch erfordert mehr Vorbereitung als ein Stadtstrand. Nimm Schattenspender, Wasser und Essen mit und komm an Sommerwochenenden früh."
+    },
+    {
+      "question": "Ist der Strand El Saler barrierefrei?",
+      "answer": "Die Stadt nennt angepasste Parkplätze, Zugänge, Toiletten und Duschen sowie einen saisonalen barrierefreien Bereich nahe Rettungsposten 2. Badeassistenz musst du vorab mit dem städtischen Dienst bestätigen."
+    }
+  ]
+}

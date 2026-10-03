@@ -1,5 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
+import type { Locale } from "@/i18n/config";
+import { customerPrefix } from "@/i18n/customer-path";
 import type { BlogPost } from "@/content/blog";
 import {
   BUSINESS_SCHEMA_ID,
@@ -25,7 +27,7 @@ interface BlogArticleLabels {
 
 interface BlogArticlePageProps {
   post: BlogPost;
-  locale: "en" | "es";
+  locale: Locale;
   blogHref: string;
   pageUrl: string;
   cta: BlogArticleCta;
@@ -68,7 +70,7 @@ export default function BlogArticlePage({
         dangerouslySetInnerHTML={{
           __html: JSON.stringify(
             getBreadcrumbJsonLd([
-              { name: labels.home, url: `https://rentandroll.com${locale === "es" ? "/es" : ""}` },
+              { name: labels.home, url: `https://rentandroll.com${customerPrefix(locale)}` },
               { name: labels.blog, url: `https://rentandroll.com${blogHref}` },
               { name: post.title, url: pageUrl },
             ])
@@ -98,7 +100,7 @@ export default function BlogArticlePage({
             </h1>
             <p className="text-lg text-neutral-600 mb-4">{post.excerpt}</p>
             <time className="text-sm text-neutral-400" dateTime={post.date}>
-              {new Date(post.date).toLocaleDateString(locale === "es" ? "es-ES" : "en-GB", {
+              {new Date(post.date).toLocaleDateString(locale === "de" ? "de-DE" : locale === "es" ? "es-ES" : "en-GB", {
                 day: "numeric",
                 month: "long",
                 year: "numeric",

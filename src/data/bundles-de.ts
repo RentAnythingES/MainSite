@@ -1,13 +1,13 @@
 import { rentalBundles } from "./bundles";
 import { localizeBundle, type BundleContent } from "./bundle-localization";
 
-/** Private, unapproved drafts. Never register these as public routes or sitemap entries. */
+/** German translations retain canonical source items, quantities, media and request identities. */
 export const germanBundleContent: Record<string, BundleContent> = {
   "remote-work-apartment-kit": {
     name: "Arbeitsplatzpaket für dein Apartment in Valencia", shortName: "Arbeitsplatzpaket", eyebrow: "Arbeiten unterwegs", tagline: "Aus dem Apartment wird ein praktischer Arbeitsplatz.",
     description: "Ein Paket für digitale Nomaden, Gründer und Angestellte, die von einem Apartment in Valencia aus arbeiten und länger als ein paar Tage bleiben.",
     bestFor: ["Digitale Nomaden", "Berufliche Langzeitaufenthalte", "Paare, die beide von unterwegs arbeiten", "Apartments ohne geeigneten Schreibtisch"],
-    includedItems: [{ name: "Externer Monitor", note: "27 Zoll, sofern verfügbar" }, { name: "Laptopständer" }, { name: "Tastatur und Maus" }, { name: "USB-C-Hub oder Kabelset" }, { name: "Ergonomischer Bürostuhl", note: "Optional, abhängig von Unterkunft und Liefermöglichkeiten" }],
+    includedItems: [{ name: "Externer Monitor", note: "Größe wird für deine Buchung bestätigt" }, { name: "Laptopständer" }, { name: "Tastatur und Maus" }, { name: "USB-C-Hub oder Kabelset" }, { name: "Ergonomischer Bürostuhl", note: "Optional, abhängig von Unterkunft und Liefermöglichkeiten" }],
     addons: [{ name: "Höhenverstellbarer Schreibtisch", note: "Für längere Aufenthalte" }, { name: "Zweiter Monitor", note: "Für einen umfangreicheren Arbeitsplatz" }, { name: "Webcam oder Beleuchtung", note: "Für Videogespräche und die Erstellung von Inhalten" }],
     seo: { title: "Arbeitsplatzpaket in Valencia mieten", description: "Frage einen Arbeitsplatz in Valencia mit Monitor, Laptopständer, Tastatur, Maus und Kabeln an. Ergänze nach Bedarf einen passenden Bürostuhl.", keywords: ["Arbeitsplatz mieten Valencia", "Monitor mieten Valencia", "Homeoffice Artikel Valencia"] },
     faqs: [{ question: "Kann das Paket Coworking ergänzen oder ersetzen?", answer: "Für viele Gäste bei längeren Aufenthalten kann es Coworking ergänzen oder ersetzen, indem das Apartment einen angenehmeren Platz für konzentriertes Arbeiten und Videogespräche bietet." }],

@@ -1,0 +1,215 @@
+{
+  "slug": "valencia-historic-centre",
+  "name": "Valencias historische Altstadt",
+  "type": "attraction",
+  "tagline": "Ein praktischer Rundgang durch 2.000 Jahre Stadt-, Religions- und Handelsgeschichte",
+  "heroImage": "/discover/valencia-historic-centre.jpg",
+  "heroImageAlt": "Plaza de la Virgen, die Kathedrale und die Basilika in Valencias historischer Altstadt",
+  "heroImageProvenance": {
+    "status": "licensed",
+    "creator": "Jl FilpoC",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Plaza_de_la_Virgen,_Valencia.jpg",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "verifiedAt": "2026-07-20",
+    "modifications": "Resized to 1280 pixels wide by Wikimedia Commons."
+  },
+  "title": "Valencias Altstadt: Rundgang auf eigene Faust",
+  "description": "Erkunde Valencias Altstadt von Serranos bis Quart: eine realistische Route mit wichtigen Sehenswürdigkeiten, Barrierefreiheit, Familienpausen und lokalen Tipps.",
+  "keywords": [
+    "Valencia Altstadt",
+    "Valencia Altstadt Rundgang",
+    "Valencia Altstadt Sehenswürdigkeiten",
+    "Ciutat Vella Valencia"
+  ],
+  "date": "2026-07-20",
+  "lastUpdated": "2026-07-20",
+  "audiences": [
+    "families",
+    "mobility-needs",
+    "elderly",
+    "couples",
+    "budget"
+  ],
+  "region": "Ciutat Vella, Valencia",
+  "hubs": [
+    "attractions"
+  ],
+  "overview": {
+    "paragraphs": [
+      "In Valencias historischer Altstadt liegen römische Fundamente, islamische Mauern, mittelalterliche Stadttore, gotische Handelsbauten und spätere städtische Architektur auf engem Raum beieinander. Turisme Comunitat Valenciana nennt mehr als 20 offiziell anerkannte Kulturdenkmäler innerhalb der Altstadt.",
+      "Die städtische Kulturroute bietet eine hilfreiche, etwa einstündige Grundstrecke von den Torres de Serranos zu den Torres de Quart. Diese Zeit gilt für den Fußweg, nicht für ausführliche Besuche in der Kathedrale, der Almoina, La Lonja, dem Zentralmarkt oder anderen Denkmälern. Plane einen halben Tag für ausgewählte Stationen ein. Ein ganzer Tag eignet sich nur, wenn längere Stadtspaziergänge für deine Gruppe gut machbar sind.",
+      "Dieser Reiseführer gibt dir einen Überblick über die Altstadt. Für einen Vormittag mit Zentralmarkt und La Lonja findest du einen eigenen Reiseführer. Der El-Carmen-Reiseführer hilft dir, wenn du das Viertel erkunden oder dort übernachten möchtest."
+    ],
+    "quickFacts": [
+      {
+        "label": "Grundroute",
+        "value": "Von den Serranos-Türmen zu den Quart-Türmen"
+      },
+      {
+        "label": "Reine Gehzeit",
+        "value": "Etwa 1 Stunde ohne Besichtigungen im Inneren"
+      },
+      {
+        "label": "Realistische Besuchsdauer",
+        "value": "Ein halber Tag mit ausgewählten Sehenswürdigkeiten"
+      },
+      {
+        "label": "Sinnvolle Auswahl",
+        "value": "2–3 Innenbesichtigungen statt aller Sehenswürdigkeiten"
+      }
+    ]
+  },
+  "highlights": [
+    {
+      "name": "Serranos- und Quart-Türme",
+      "description": "Die beiden erhaltenen befestigten Stadttore bilden natürliche Start- und Endpunkte für einen Rundgang durch Ciutat Vella.",
+      "icon": "🏰",
+      "tip": "Beginne bei Serranos und gehe zum Abschluss durch El Carmen nach Quart. So führt die Route durchgehend nach Westen."
+    },
+    {
+      "name": "Plaza de la Virgen und Kathedrale",
+      "description": "Im historischen Zentrum von Stadt und Kirche liegen die Basilika, die Kathedrale, der Micalet und die archäologischen Zeugnisse rund um die Almoina eng beieinander.",
+      "icon": "⛪",
+      "tip": "Plane den Eintritt in die Kathedrale und die Turmbesteigung als eigene Zeitblöcke ein."
+    },
+    {
+      "name": "Marktplatz",
+      "description": "Der Zentralmarkt und die zum UNESCO-Welterbe gehörende La Lonja zeigen Valencias Esskultur und die Bedeutung der Stadt für den mittelalterlichen Handel.",
+      "icon": "🏛️",
+      "tip": "Der eigene Reiseführer zu Zentralmarkt und La Lonja hilft dir bei der Reihenfolge nach den Öffnungszeiten."
+    },
+    {
+      "name": "Plaza del Ayuntamiento",
+      "description": "Der weitläufige Rathausplatz bildet einen angenehmen Gegensatz zu den engen mittelalterlichen Gassen.",
+      "icon": "📍"
+    }
+  ],
+  "gettingThere": {
+    "summary": "Fahre mit öffentlichen Verkehrsmitteln zur Altstadt und gehe zwischen den einzelnen Bereichen zu Fuß. Autofahrten zwischen den Sehenswürdigkeiten sind langsamer und weniger praktisch.",
+    "options": [
+      {
+        "mode": "metro",
+        "description": "Mehrere zentrale Metrovalencia-Stationen erschließen verschiedene Seiten der Ciutat Vella. Wähle die Station passend zur Richtung deines Rundgangs."
+      },
+      {
+        "mode": "bus",
+        "description": "EMT-Busse bedienen den Rand der Altstadt und zentrale Plätze. Bei Veranstaltungen und Straßensperrungen können sich die Verbindungen ändern."
+      },
+      {
+        "mode": "bike",
+        "description": "Fahre mit dem Fahrrad bis an den Rand deiner Route und gehe in den belebtesten Fußgängergassen zu Fuß weiter."
+      },
+      {
+        "mode": "walk",
+        "description": "Die Grundroute ist gut zu Fuß machbar. Eintritte, Umwege und historische Pflasterflächen erhöhen jedoch die benötigte Zeit und Anstrengung."
+      }
+    ],
+    "parkingNotes": "Es gibt zentrale Tiefgaragen. Wegen Zufahrtsbeschränkungen und Fußgängerzonen sind öffentliche Verkehrsmittel oder der Fußweg meist die einfachere Wahl."
+  },
+  "bestTimeToVisit": {
+    "summary": "Beginne morgens, um den Markt im laufenden Betrieb und kühlere Gehzeiten zu erleben. Plane anschließend die Sehenswürdigkeiten nach ihren aktuellen Öffnungszeiten.",
+    "seasons": [
+      {
+        "season": "spring",
+        "description": "Angenehmes Wetter für Spaziergänge. Prüfe für dein Datum die Veranstaltungsrouten und mögliche Sperrungen.",
+        "rating": 5
+      },
+      {
+        "season": "summer",
+        "description": "Starte früh, nutze schattige Gassen und Innenbesichtigungen und vermeide einen durchgehenden Rundgang in der Mittagshitze.",
+        "rating": 3
+      },
+      {
+        "season": "autumn",
+        "description": "Außerhalb von Starkregenperioden gute Bedingungen für Spaziergänge und weniger Einschränkungen durch Hitze.",
+        "rating": 5
+      },
+      {
+        "season": "winter",
+        "description": "Tagsüber sind Spaziergänge bei mildem Wetter möglich. Wegen der kürzeren Tage lohnt sich eine gezielte Auswahl.",
+        "rating": 4
+      }
+    ]
+  },
+  "whatToBring": {
+    "bring": [
+      "Bequeme Schuhe",
+      "Wasser",
+      "Sonnenschutz",
+      "Eine offline gespeicherte Karte der Route",
+      "Eine kurze Liste deiner wichtigsten Innenbesichtigungen"
+    ],
+    "dontBring": [
+      "Großes Gepäck",
+      "Eine übervolle Liste von Sehenswürdigkeiten",
+      "Einen Plan, bei dem du zwischen jeder Station mit dem Auto fahren musst"
+    ],
+    "rentInstead": [
+      "Einen kompakten Kinderwagen für jüngere Kinder",
+      "Eine Mobilitätshilfe für mehrere Stunden auf unterschiedlichen städtischen Bodenbelägen"
+    ]
+  },
+  "accessibility": {
+    "overallRating": 3,
+    "summary": "Viele Plätze und Fußwege sind zugänglich. Historisches Pflaster, Schwellen, Menschenmengen und Wege im Inneren der einzelnen Gebäude unterscheiden sich jedoch.",
+    "wheelchairNotes": "Bestätige für jede wichtige Innenbesichtigung den stufenlosen Eingang und den Zustand der Aufzüge. Plane deine Route nach den zugänglichen Eingängen, nicht nur danach, wie nahe die Gebäude auf der Karte liegen.",
+    "strollerNotes": "Ein kompakter Kinderwagen ist in Menschenmengen und bei Cafépausen leichter zu handhaben. In manchen Türmen und historischen Innenräumen musst du ihn tragen oder draußen lassen.",
+    "publicTransportAccess": "Barrierefreie öffentliche Verkehrsmittel erreichen den Rand der Altstadt und wichtige Plätze. Der letzte Teil des Weges führt aber über unterschiedliche Fußgängerflächen."
+  },
+  "practicalTips": [
+    "Nutze die städtische Route von Serranos nach Quart als Grundstrecke. Sie bedeutet nicht, dass alle Sehenswürdigkeiten in einer Stunde zu besichtigen sind.",
+    "Wähle zwei oder drei Innenbesichtigungen und genieße die übrigen Sehenswürdigkeiten vom öffentlichen Weg aus.",
+    "Prüfe die offiziellen Öffnungszeiten jedes Gebäudes einzeln. Benachbarte Sehenswürdigkeiten haben keinen gemeinsamen Zeitplan.",
+    "Plane eine Sitzpause an der Plaza de la Virgen, der Plaza de la Reina oder am Marktplatz ein, bevor die Gruppe müde wird."
+  ],
+  "visitingHere": {
+    "summary": "Für einen gelungenen ersten Besuch gehst du eine zusammenhängende Route mit ausgewählten Innenbesichtigungen, statt für jede Sehenswürdigkeit erneut quer durch Ciutat Vella zu laufen.",
+    "idealDuration": "3–5 Stunden für eine ausgewählte Route",
+    "bestTimeOfDay": "Vom Morgen bis zum frühen Nachmittag",
+    "tips": [
+      "Beginne bei Serranos, wenn du eine klare Route nach Westen möchtest.",
+      "Besuche den Zentralmarkt, solange dort noch der morgendliche Betrieb herrscht.",
+      "Lass El Carmen als flexiblen letzten Abschnitt vor den Quart-Türmen."
+    ]
+  },
+  "productWidgets": [
+    {
+      "categorySlug": "baby-gear",
+      "heading": "Ciutat Vella mit Kindern erkunden?",
+      "afterSection": "Accessibility"
+    },
+    {
+      "categorySlug": "mobility",
+      "heading": "Brauchst du Unterstützung für einen Altstadtspaziergang?",
+      "afterSection": "Getting There"
+    }
+  ],
+  "relatedDestinations": [
+    "central-market-la-lonja",
+    "el-carmen",
+    "el-ensanche"
+  ],
+  "relatedBlogPosts": [
+    "valencia-with-kids-complete-guide",
+    "wheelchair-accessibility-valencia"
+  ],
+  "faqs": [
+    {
+      "question": "Wie viel Zeit brauche ich für Valencias Altstadt?",
+      "answer": "Die städtische Grundroute dauert ohne Innenbesichtigungen etwa eine Stunde. Plane für einen lohnenden ersten Besuch mit zwei oder drei Sehenswürdigkeiten drei bis fünf Stunden ein."
+    },
+    {
+      "question": "Was sollte ich zuerst in Valencias Altstadt sehen?",
+      "answer": "Eine praktische Route beginnt bei den Serranos-Türmen, führt über die Plaza de la Virgen und den Bereich der Kathedrale zum Marktplatz und endet nach einem Weg durch El Carmen bei den Quart-Türmen."
+    },
+    {
+      "question": "Ist Valencias Altstadt barrierefrei?",
+      "answer": "Große Teile sind Fußgängerzonen und relativ eben. Historische Bodenbeläge und Eingänge unterscheiden sich jedoch. Bestätige den stufenlosen Zugang zu jedem Innenraum, den du unbedingt besuchen möchtest."
+    },
+    {
+      "question": "Ist die Altstadt dasselbe wie El Carmen?",
+      "answer": "Nein. El Carmen ist ein Viertel innerhalb der Ciutat Vella. Die größere Altstadtroute umfasst außerdem den Bereich der Kathedrale, den Marktplatz, das Rathausviertel und weitere Teile der Altstadt."
+    }
+  ]
+}

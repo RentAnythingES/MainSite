@@ -1,3 +1,4 @@
+import { blogCategoryLabel } from "@/i18n/blog-category";
 import Link from "next/link";
 import CategoryProductCatalogue from "@/components/CategoryProductCatalogue";
 import type { CategoryContent } from "@/content/category-content";
@@ -7,7 +8,7 @@ import { localeRegistry, type Locale } from "@/i18n/config";
 const copy = {
   en: { home: "Home", explore: "Explore →", guides: "Related Guides", read: "Read guide →", missing: "Can't find what you need?", ask: "We're constantly adding new products. Message us!", whatsapp: "💬 WhatsApp Us" },
   es: { home: "Inicio", explore: "Explorar →", guides: "Guías relacionadas", read: "Leer guía →", missing: "¿No encuentras lo que necesitas?", ask: "Escríbenos y te ayudaremos a encontrar una opción.", whatsapp: "💬 Escríbenos por WhatsApp" },
-  de: { home: "Startseite", explore: "Entdecken →", guides: "Passende Ratgeber", read: "Ratgeber lesen →", missing: "Du findest nicht, was du brauchst?", ask: "Schreib uns, damit wir gemeinsam eine passende Möglichkeit finden.", whatsapp: "💬 Über WhatsApp schreiben" },
+  de: { home: "Startseite", explore: "Entdecken →", guides: "Passende Ratgeber", read: "Ratgeber lesen →", missing: "Du findest nicht, was du brauchst?", ask: "Wir ergänzen laufend neue Produkte. Schreib uns!", whatsapp: "💬 Über WhatsApp schreiben" },
 };
 export default function CategoryLandingPage({
   meta, products, locale, prefix = localeRegistry[locale].prefix, relatedPosts = [],
@@ -25,7 +26,7 @@ export default function CategoryLandingPage({
           <ol className="flex items-center gap-2 text-sm text-neutral-500">
             <li><Link href={prefix || "/"} className="hover:text-brand transition-colors">{text.home}</Link></li>
             <li>/</li>
-            <li><Link href={locale === "de" ? prefix : `${prefix}/valencia`} className="hover:text-brand transition-colors">Valencia</Link></li>
+            <li><Link href={`${prefix}/valencia`} className="hover:text-brand transition-colors">Valencia</Link></li>
             <li>/</li>
             <li className="text-neutral-800 font-medium">{displayTitle}</li>
           </ol>
@@ -141,7 +142,7 @@ export default function CategoryLandingPage({
                   href={`${prefix}/blog/${post.slug}`}
                   className="card p-6 hover:shadow-md transition-shadow group"
                 >
-                  <span className="badge badge-brand capitalize mb-2">{post.category}</span>
+                  <span className="badge badge-brand capitalize mb-2">{blogCategoryLabel(locale, post.category)}</span>
                   <h3 className="font-bold text-lg mb-2 group-hover:text-brand transition-colors">
                     {post.title}
                   </h3>

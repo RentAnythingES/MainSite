@@ -1,9 +1,14 @@
+import { getDestinationsByHub, getPublishedDestinations } from "@/content/destinations";
+import { getPublishedGermanDestinations } from "@/content/destinations-de";
+import { getPublishedGermanPosts } from "@/content/blog-de";
 /** Complete commercial route inventory; publication requires owner and database gates. */
 export const germanCommercialPaths = [
   "/",
   "/valencia",
+  "/valencia/host-services",
+  "/partners",
+  "/agent-network",
   "/contact",
-  "/newsletter",
   "/about",
   "/faq",
   "/privacy",
@@ -35,4 +40,15 @@ export const germanCommercialPaths = [
   "/valencia/kits/grandparents-visiting-kit",
   "/valencia/kits/long-stay-kitchen-upgrade-kit"
 ] as const;
-export function germanRouteCandidate(path: string) { return (germanCommercialPaths as readonly string[]).includes(path) || /^\/product\/[a-z0-9]+(?:-[a-z0-9]+)*$/.test(path); }
+/** A hub is available only when every original guide has its full translation. */
+export function germanEditorialPaths() {
+  const guides = getPublishedGermanDestinations();
+  const completeHubs = (["neighbourhoods", "attractions", "events", "beaches", "day-trips"] as const).filter(hub => {
+    const originals = getDestinationsByHub(hub);
+    return originals.length > 0 && originals.every(original => guides.some(guide => guide.slug === original.slug));
+  });
+  const originals = getPublishedDestinations();
+  const indexComplete = originals.length > 0 && originals.every(original => guides.some(guide => guide.slug === original.slug));
+  return ["/blog", ...(indexComplete ? ["/discover"] : []), ...completeHubs.map(hub=>"/discover/"+hub), ...getPublishedGermanPosts().map(post=>"/blog/"+post.slug), ...guides.map(dest=>"/discover/"+dest.slug)];
+}
+export function germanRouteCandidate(path: string) { return (germanCommercialPaths as readonly string[]).includes(path) || germanEditorialPaths().includes(path) || /^\/product\/[a-z0-9]+(?:-[a-z0-9]+)*$/.test(path); }

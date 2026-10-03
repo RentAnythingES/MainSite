@@ -1,0 +1,13 @@
+import assert from 'node:assert/strict';
+import test from 'node:test';
+import { registerHooks } from 'node:module';
+let assignment, territory, calls=[];
+globalThis.__conversationTestDb={from(table){const conditions=[];calls.push({table,conditions});const query={select(value){conditions.push(['select',value]);return query;},eq(key,value){conditions.push(['eq',key,value]);return query;},async maybeSingle(){return {data:table==='agent_order_assignments'?assignment:territory,error:null};}};return query;}};
+const hooks=registerHooks({load(url,context,next){if(url.endsWith('/src/lib/supabase-admin.ts'))return {format:'module',shortCircuit:true,source:'export const createAdminClient=()=>globalThis.__conversationTestDb;'};return next(url,context);}});
+const {customerConversationAccess}=await import('../src/lib/customer-conversation-access.ts');hooks.deregister();
+const token='11111111-1111-4111-8111-111111111111';
+function fixture(locale='de',status='paid',active=true){calls=[];assignment={booking_id:'booking',agent_id:'agent',bookings:{status,market_id:'valencia',locale},rental_agents:{is_active:active}};territory={market_id:'valencia'};}
+test('saved conversation languages resolve only after all existing access checks',async()=>{for(const locale of ['en','es','de',null]){fixture(locale);const access=await customerConversationAccess(token);assert.equal(access.locale,locale??'en');assert.equal(access.booking_id,'booking');assert.deepEqual(calls[0].conditions.filter(c=>c[0]==='eq'),[['eq','customer_token',token],['eq','status','accepted']]);assert.deepEqual(calls[1].conditions.filter(c=>c[0]==='eq'),[['eq','agent_id','agent'],['eq','market_id','valencia']]);}});
+test('unpaid or inactive assignments never resolve a customer locale',async()=>{for(const status of ['draft','pending','cancelled','returned']){fixture('de',status);assert.equal(await customerConversationAccess(token),null);assert.equal(calls.length,1);}fixture('de','paid',false);assert.equal(await customerConversationAccess(token),null);assert.equal(calls.length,1);});
+test('missing assignment or territory prevents token access',async()=>{fixture();assignment=null;assert.equal(await customerConversationAccess(token),null);assert.equal(calls.length,1);fixture();territory=null;assert.equal(await customerConversationAccess(token),null);});
+test('corrupt stored locale and malformed token fail without exposing a conversation',async()=>{fixture('xx');await assert.rejects(customerConversationAccess(token),/Invalid stored booking language/);fixture();await assert.rejects(customerConversationAccess('not-a-token'),/Invalid record identifier/);assert.equal(calls.length,1);assert.equal(calls[0].conditions.length,1);});

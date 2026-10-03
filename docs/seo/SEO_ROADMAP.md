@@ -1,5 +1,5 @@
 # Rent&Roll — SEO Roadmap
-> **Last updated**: 2026-09-12 · Prioritized by estimated traffic impact × effort
+> **Last updated**: 2026-10-03 · Prioritized by estimated traffic impact × effort
 
 ---
 
@@ -779,3 +779,36 @@ Exact candidate: F:/rentanything/agent-work/german-launch-2026-10-02/release-can
 The owner explicitly requested updating the site to support German after the exact release candidate and delegated approval-recording action were presented. All 128 current translations are now revision-bound reviewed through the workflow. The documented automated recorder 0aa81312-9694-42b3-a3e4-81381c519b1f records that chat approval; no human auth account was created or impersonated. All seven migration checksums, 128 review events and translation contents were verified read-only. English/Spanish and business data remain unchanged; anonymous German records and open gates remain zero.
 
 The release manifest now binds owner approval at 2026-10-02T19:03:59.972Z to source SHA256 56dc2923e0e647feb34aab169e1ddb505feaa064bc96d0707a0749d02c839bc3. Draft SHA256: 4d7b37d56e24fda3e635ee23d93f73414d092d12b45180b6dada2db09ffae45a. Environment and database gates still determine publication. The latest four production operations commits are integrated, with snapshot-aware product-name conflicts resolved to preserve German booking labels, custom quotes, driver dispatch and asset-accounting filters. Production activation awaits Vercel project access and the final merged-release checks. Screenshots and actual email-client rendering remain unverified; known unreliable mechanisms stay quarantined. Exact authorization/reviews: F:/rentanything/agent-work/german-launch-2026-10-02/launch-authorization.json and production-reviewed-verification.json.
+
+
+## German production launch — 3 October 2026
+
+German is live at https://rentandroll.com/de. PR #28 was merged and Vercel production commit 8418a2bef9dab8958ada3722efb6b0e499070e68 completed successfully. The repository build command includes the approved public German flag. The global German locale and Valencia German visibility, booking and indexing gates are open; other German markets remain closed.
+
+Published 126 exact, current, owner-approved translations through eight verified workflow batches. The karaoke-kit and portable-table-tennis-set German copies remain stale and excluded because source details changed. EN/ES translation content, prices, inventory and bookings were preserved.
+
+Production HTTP acceptance passed for all 126 products, 33 commercial pages and seven route boundaries. German availability returned the same stock and price as English; the live browser showed the German availability success and customer-details form. No booking, payment or message was submitted. The sitemap has 568 URLs, including 158 German URLs (126 products + 32 commercial), with reciprocal hreflang and no unsupported German entries. German newsletter is public but noindex. Final live root/product robots allow indexing.
+
+Remaining work: reconcile and review the two stale products; translate operator-authored pickup/delivery names and instructions, which retain existing English text; verify screenshots and actual email-client rendering when dependable capture is available. Known stalled screenshot/upload mechanisms remain quarantined. Receipts: F:/rentanything/agent-work/german-launch-2026-10-03/LIVE-RECEIPT.json, production-acceptance.json, production-runtime.json and production-sitemap.json.
+
+
+## German parity correction in progress — 3 October 2026
+
+The preceding launch HTTP/metadata checks did not establish original-content or layout parity. The abbreviated German release is being corrected under the owner’s existing authorization. Production counts and release remain unchanged until full correction verification and deployment. [Repair status](GERMAN_PARITY_REPAIR_STATUS.md) records completed shared templates, exact verification evidence, unfinished pages, source factual issues and quarantined operations. The German SEO audit follows complete translation/parity repair.
+
+
+German parity local checkpoint (2026-10-03T19:28:06.563Z): all eight articles and fifteen destination guides have full source-shaped translations; eleven destination render comparisons pass. Complete neighbourhood hub registered behind full original membership, awaiting rendering verification. Four other hubs and eleven guide translations remain. Ten verified City of Arts source fields corrected consistently before German translation. Production counts remain unchanged; no release or German SEO audit completion claimed.
+
+
+German parity local checkpoint (2026-10-03T19:45:49.176Z): sixteen complete source-shaped destination translations and three original shared hubs pass EN/DE render checks. Fresh production build and 12 release contracts pass. Ten guides and beaches/day-trips hubs remain, followed by whole-site/customer/product validation and live release. Production sitemap counts remain unchanged. German SEO phase not started.
+
+
+German parity local checkpoint (2026-10-03T19:51:27.384Z): eighteen full destination translations now pass EN/DE structure/media/link checks, including Buñol and Cullera. Fresh production build passes. Eight guide translations and actual beaches/day-trips hubs remain. No production counts or SEO-phase completion changed.
+
+
+German final local checkpoint (2026-10-03, 21:50 UTC): all 205 original public German equivalents pass structure/classes/images/lang comparison; all 128 catalogue translations are current and approved, thirteen exact copy corrections committed and independently verified. All 60 localization tests pass. Homepage four-width geometry passed; further headless initialization failed twice and is quarantined. Fresh source-cache namespace and German legacy redirects added. Code deployment and the subsequent German SEO audit are still pending. Local sitemap remains intentionally excluded unless VERCEL_ENV=production; the final local rehearsal now explicitly uses production indexing identity with outbound messages/payments disabled.
+
+
+## Release-ready checkpoint — 2026-10-03T22:07:58.215Z
+
+Required final production build passes (2026-10-03T22:05:47.400Z). All 205 original public equivalence comparisons pass on the earlier body-equivalent build (2026-10-03T21:39:54.695Z); subsequent changes concern redirects, 404 routing and indexing rehearsal, not those page bodies. Final actual response checks pass: six representative legacy redirects, German booking success/cancel/unsubscribe privacy metadata, four malformed private-token 404s and unknown public German URL with full German document. Production indexing rehearsal: 615 unique sitemap URLs, all 205 German equivalents included. All 60 localization tests, four routing regressions and four conversation-access fixtures pass. Changed-source lint passes. Browser CLI fallback failed to produce a loaded DOM and remains unverified/quarantined; the earlier four-width homepage geometry receipt is the only browser acceptance. Thirteen committed catalogue corrections independently verified, all 128 current German products approved. Code is ready for the authorized repair deployment; publication and the subsequent German SEO audit are still pending.

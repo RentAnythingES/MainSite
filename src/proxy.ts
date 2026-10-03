@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { EXPECTED_PRODUCTION_SITE_URL } from "@/config/site";
 import { siteContext } from "@/i18n/site-context";
+import { germanRouteCandidate } from "@/i18n/german-paths";
 
 const canonicalHost = new URL(EXPECTED_PRODUCTION_SITE_URL).hostname;
 const redirectHosts = new Set([
@@ -52,7 +53,22 @@ export function proxy(request: NextRequest) {
 
   const requestHeaders = new Headers(request.headers);
   requestHeaders.set("x-pathname", request.nextUrl.pathname);
-  const { locale } = siteContext(request.nextUrl.pathname);
+  const notFoundLanguage = request.nextUrl.pathname === "/_not-found" ? request.nextUrl.searchParams.get("lang") : null;
+  const displayPath = notFoundLanguage === "de" ? "/de" : notFoundLanguage === "es" ? "/es" : request.nextUrl.pathname;
+  requestHeaders.set("x-pathname", displayPath);
+  const { locale } = siteContext(displayPath);
+
+  // Catch-all routes otherwise turn routing-level 404s into a client error shell.
+  const germanPath = request.nextUrl.pathname.startsWith("/de/") ? request.nextUrl.pathname.slice(3) : null;
+  const token = "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}";
+  const customerPath = germanPath && (/^\/booking\/(success|cancel)$/.test(germanPath) || germanPath === "/newsletter/unsubscribe" || new RegExp("^/(?:booking/(?:quote|fulfillment|messages)|review)/" + token + "$").test(germanPath));
+  if (germanPath && !germanRouteCandidate(germanPath) && !customerPath) {
+    const destination = new URL("/_not-found?lang=de", request.url);
+    const response = NextResponse.rewrite(destination, {status:404, request:{headers:requestHeaders}});
+    response.headers.set("Content-Language", "de");
+    response.headers.set("Referrer-Policy", "no-referrer");
+    return response;
+  }
 
   const response = NextResponse.next({
     request: {

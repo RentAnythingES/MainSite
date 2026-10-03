@@ -1,0 +1,290 @@
+{
+  "slug": "turia-gardens",
+  "name": "Turia-Gärten",
+  "type": "attraction",
+  "tagline": "Europas größter Stadtpark – 9 km Grün in Valencias altem Flussbett",
+  "heroImage": "/discover/turia-gardens-hero.webp",
+  "heroImageAlt": "Gestaltete Wege und ein flacher Wasserlauf in Valencias Turia-Gärten",
+  "heroImageProvenance": {
+    "status": "licensed",
+    "creator": "Joanbanjo",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Jard%C3%AD_del_T%C3%BAria_de_Val%C3%A8ncia,_riuet.JPG",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "verifiedAt": "2026-07-19",
+    "modifications": "Cropped and resized to 16:9 WebP."
+  },
+  "title": "Turia-Gärten in Valencia: vollständiger Besucherführer",
+  "description": "Valencias Turia-Gärten besuchen: praktische Tipps zu Radwegen, Gulliver-Park, Spazierwegen, Zugängen und Aktivitäten für Familien.",
+  "keywords": [
+    "Turia-Gärten Valencia",
+    "Jardín del Turia",
+    "Valencia Park",
+    "Gulliver-Spielplatz Valencia",
+    "Radfahren Valencia"
+  ],
+  "date": "2026-06-20",
+  "lastUpdated": "2026-06-20",
+  "audiences": [
+    "families",
+    "couples",
+    "digital-nomads",
+    "elderly",
+    "budget"
+  ],
+  "region": "Zentrum von Valencia",
+  "hubs": [
+    "attractions"
+  ],
+  "overview": {
+    "paragraphs": [
+      "Die Turia-Gärten sind Valencias Meisterwerk der Stadtplanung. Nach einer verheerenden Überschwemmung 1957 wurde der Fluss Turia nach Süden umgeleitet. Das alte Flussbett wurde in einen neun Kilometer langen, gewundenen Park verwandelt, der sich durch die ganze Stadt zieht. Heute ist er eine der größten städtischen Grünflächen Europas – und vollständig kostenlos.",
+      "Der Park reicht vom Bioparc im Westen bis zur Stadt der Künste und Wissenschaften im Osten und führt unterwegs unter 18 historischen Brücken hindurch. Er bietet Fußballplätze, Laufwege, Radwege, botanische Gärten, Spielplätze – darunter den berühmten Gulliver-Spielplatz –, Cafés und Tausende Orangenbäume und Palmen. Ob beim Joggen, Radfahren, mit dem Kinderwagen oder mit einem Buch unter einem Baum: Hier entspannt sich Valencia.",
+      "Für Besucher verbindet der Turia-Park die Stadt – nutze ihn statt der Metro. Zu Fuß oder mit dem Fahrrad ist der Weg von der Altstadt zum Strand oder von Ruzafa nach Benimaclet durch den Park schneller und deutlich angenehmer als auf den Straßen darüber. Er ist eben, schattig und autofrei."
+    ],
+    "quickFacts": [
+      {
+        "label": "Länge",
+        "value": "9 km (5,6 Meilen) von Ende zu Ende"
+      },
+      {
+        "label": "Zugang",
+        "value": "Kostenlos, rund um die Uhr geöffnet"
+      },
+      {
+        "label": "Besonders geeignet für",
+        "value": "Radfahren, Joggen, Familien, Picknicks"
+      },
+      {
+        "label": "Wichtige Ziele",
+        "value": "Gulliver-Spielplatz, Bioparc, Stadt der Künste und Wissenschaften"
+      }
+    ]
+  },
+  "highlights": [
+    {
+      "name": "Gulliver-Spielplatz",
+      "description": "Eine riesige, 70 Meter lange Skulptur des liegenden Gulliver mit Rutschen, Rampen, Stufen und Kletterflächen. Kinder und Erwachsene klettern über diesen Spielplatz im Maßstab der Liliputaner. Er gehört zu Valencias bekanntesten Erlebnissen.",
+      "icon": "🛝",
+      "tip": "Komme frühmorgens oder am späten Nachmittag, um Sommerhitze und Andrang zu meiden. Der Eintritt ist kostenlos und es gibt keine Altersbeschränkung – auch Erwachsene dürfen klettern.",
+      "googleMapsUrl": "https://maps.google.com/?q=Parque+Gulliver+Valencia"
+    },
+    {
+      "name": "Bioparc Valencia",
+      "description": "Ein moderner Zoo ohne sichtbare Barrieren am westlichen Ende des Turia-Parks. Tiere sind nach afrikanischen Lebensräumen gruppiert – Savanne, Äquatorialwald, Madagaskar und Feuchtgebiete – statt nach Arten. Die Gorilla- und Elefantenanlagen sind besonders eindrucksvoll.",
+      "icon": "🦁",
+      "tip": "Kaufe Eintrittskarten online, um Zeit zu sparen. Die Fütterungszeiten, die du am Eingang prüfen kannst, bereichern den Besuch. Plane drei bis vier Stunden ein.",
+      "googleMapsUrl": "https://maps.google.com/?q=Bioparc+Valencia"
+    },
+    {
+      "name": "Die ganzen 9 km mit dem Fahrrad",
+      "description": "Ein eigener Radweg führt durch den gesamten Park. Vom Bioparc zur Stadt der Künste brauchst du in gemütlichem Tempo etwa 40 Minuten – eine der schönsten städtischen Fahrradrouten Europas. Eben, schattig und vollständig autofrei.",
+      "icon": "🚲",
+      "tip": "Nutze die Valenbisi-Leihfahrräder: Entlang des Parks gibt es Dutzende Stationen. Oder miete für einen halben Tag ein besseres Fahrrad bei einem lokalen Anbieter."
+    },
+    {
+      "name": "Palau de la Música",
+      "description": "Valencias wichtigster Konzertort liegt mitten im Park, umgeben von einem See und Gärten. Auch ohne Konzert lohnt sich ein Spaziergang durch die Anlage. Im Sommer gibt es kostenlose Aufführungen im Freien.",
+      "icon": "🎵",
+      "tip": "Prüfe auf der Website die kostenlosen Sommerkonzerte – ein schöner Abend im Park.",
+      "googleMapsUrl": "https://maps.google.com/?q=Palau+de+la+Musica+Valencia"
+    },
+    {
+      "name": "Jardí Botànic",
+      "description": "Der botanische Garten der Universität liegt knapp außerhalb des Turia-Parks, ist aber mit seinem westlichen Abschnitt verbunden. Über 3.000 Pflanzenarten, ein Orchideengewächshaus und eine bemerkenswert ruhige Atmosphäre. Er wurde 1567 gegründet und gehört zu den ältesten Europas.",
+      "icon": "🌺",
+      "tip": "Der Eintritt kostet 2,50 €. Die Kakteensammlung und das Tropengewächshaus sind die Höhepunkte. An heißen Sommertagen ist er ein angenehmer Rückzugsort.",
+      "googleMapsUrl": "https://maps.google.com/?q=Jardí+Botànic+Valencia"
+    }
+  ],
+  "gettingThere": {
+    "summary": "Du musst kaum eigens zu den Turia-Gärten fahren – sie sind meist schon in deiner Nähe. Der Park durchquert die Stadt und hat Dutzende Zugänge über Treppen und Rampen von den Brücken darüber.",
+    "options": [
+      {
+        "mode": "walk",
+        "description": "Von fast überall im Zentrum Valencias erreichbar. Von jeder Brücke führen Treppen und Rampen hinunter.",
+        "duration": "Von den meisten Orten 0–15 Min."
+      },
+      {
+        "mode": "metro",
+        "description": "Alameda (L3/L5) führt direkt in den Park. Auch Àngel Guimerà liegt in der Nähe.",
+        "duration": "Direkt"
+      },
+      {
+        "mode": "bike",
+        "description": "An vielen Zugängen gibt es Valenbisi-Stationen. Der Park selbst ist die Fahrradroute.",
+        "duration": "Unterschiedlich",
+        "cost": "2 € (Valenbisi)"
+      }
+    ],
+    "parkingNotes": "Parkplätze an den Straßen oberhalb des Parks. Alternativ gibt es Tiefgaragen an der Porta de la Mar und nahe der Stadt der Künste."
+  },
+  "bestTimeToVisit": {
+    "summary": "Der Turia-Park ist das ganze Jahr angenehm, am schönsten aber im Frühling und Herbst. Im Sommer ist es heiß – komme frühmorgens oder am späten Nachmittag.",
+    "seasons": [
+      {
+        "season": "spring",
+        "description": "Ideal: überall Orangenblüten, angenehme Temperaturen und alles blüht.",
+        "rating": 5
+      },
+      {
+        "season": "summer",
+        "description": "Heiß, über 35 °C. Komme vor 10 Uhr oder nach 19 Uhr. Bäume spenden Schatten, doch mittags ist die Hitze stark.",
+        "rating": 3
+      },
+      {
+        "season": "autumn",
+        "description": "Wunderschön: warmes, goldenes Licht und reifende Orangen an den Bäumen. Ideales Fahrradwetter.",
+        "rating": 5
+      },
+      {
+        "season": "winter",
+        "description": "Mild, etwa 10–16 °C. Weniger Grün, aber angenehm zum Joggen und Spazierengehen. Der Park ist ruhig und friedlich.",
+        "rating": 4
+      }
+    ]
+  },
+  "whatToBring": {
+    "bring": [
+      "Trinkflasche – im Sommer unverzichtbar",
+      "Sonnencreme",
+      "Bequeme Schuhe oder Laufausstattung",
+      "Picknickdecke"
+    ],
+    "dontBring": [
+      "Schwere Taschen – du legst längere Strecken zu Fuß oder mit dem Fahrrad zurück"
+    ],
+    "rentInstead": [
+      "Fahrrad, um den ganzen Park zu erleben",
+      "Kinderwagen für Familien mit kleinen Kindern",
+      "Laufuhr oder Fitnesstracker für die Laufwege"
+    ]
+  },
+  "accessibility": {
+    "overallRating": 5,
+    "summary": "Die Turia-Gärten gehören zu den zugänglichsten Grünflächen europäischer Städte. Der Park ist vollständig eben, da er in einem Flussbett liegt. Die Wege sind breit und befestigt, und an den meisten Brückenzugängen gibt es Rampen.",
+    "wheelchairNotes": "Sehr gut. Die Hauptwege sind glatt, eben und für jeden Rollstuhl breit genug. Die meisten Brückenzugänge haben Rampen; einige ältere Brücken haben nur Treppen, besonders am westlichen Ende solltest du das prüfen. Der Gulliver-Spielplatz hat zugängliche Bereiche.",
+    "strollerNotes": "Ideal für Kinderwagen jeder Größe: ebene, glatte Wege, schattige Abschnitte, mehrere Spielplätze und Cafés unterwegs. Dies ist Valencias schönster Familienspaziergang.",
+    "publicTransportAccess": "Der Ausgang der Metrostation Alameda liegt auf Parkebene. Von mehreren Bushaltestellen an den Brücken darüber führen Rampen hinunter."
+  },
+  "foodAndDrink": {
+    "summary": "Im Park gibt es Cafés und Verpflegungsstellen, sie verteilen sich aber über neun Kilometer. Nimm Wasser mit und plane Essensstopps flexibel, statt dich auf einen bestimmten geöffneten Kiosk zu verlassen.",
+    "recommendations": [
+      {
+        "name": "Cafébereich am Palau de la Música",
+        "type": "Café / Terrasse",
+        "priceRange": "€",
+        "tip": "Nutze ihn als flexible Verpflegungspause und bestätige die Öffnung am jeweiligen Tag.",
+        "familyFriendly": true,
+        "sourceNote": "Visit Valencia's accessibility guide confirms a café and adapted toilet facilities by the Palau de la Música.",
+        "sourceUrl": "https://www.visitvalencia.com/en/valencia-accesible/turia-garden",
+        "sourceCheckedAt": "2026-07-19"
+      },
+      {
+        "name": "Verpflegungsbereich am Gulliver-Park",
+        "type": "Café / Automaten",
+        "priceRange": "€",
+        "tip": "Bring vorsichtshalber eigenes Wasser mit, besonders bei geteilten Sommeröffnungszeiten.",
+        "familyFriendly": true,
+        "sourceNote": "Visit Valencia confirms refreshment and adapted toilet facilities around Gulliver Park.",
+        "sourceUrl": "https://www.visitvalencia.com/en/what-to-do-valencia/nature-in-valencia/parks-and-gardens-valencia/gulliver-park",
+        "sourceCheckedAt": "2026-07-19"
+      },
+      {
+        "name": "Picknick im Turia-Park",
+        "type": "Selbst mitgebrachtes Picknick",
+        "priceRange": "€",
+        "tip": "Kaufe Verpflegung, bevor du einen langen Parkabschnitt betrittst, und nimm sämtlichen Abfall wieder mit.",
+        "familyFriendly": true,
+        "sourceNote": "Visit Valencia describes the Turia as suitable for picnics and confirms cafés are distributed along the route.",
+        "sourceUrl": "https://www.visitvalencia.com/en/what-to-do-valencia/nature-in-valencia/parks-and-gardens-valencia/turia-gardens",
+        "sourceCheckedAt": "2026-07-19"
+      }
+    ],
+    "localSpeciality": "Packe ein Picknick mit Einkäufen vom Mercado Central oder Mercadona ein. Unter den Orangenbäumen im Turia-Park zu essen gehört zu den typischen Erlebnissen in Valencia."
+  },
+  "visitingHere": {
+    "summary": "Für die gesamten neun Kilometer brauchst du einen halben Tag mit dem Fahrrad oder einen ganzen Tag zu Fuß. Die meisten Besucher wählen einen Abschnitt; am beliebtesten ist das östliche Ende von der Stadt der Künste bis zum Gulliver-Park.",
+    "idealDuration": "2–4 Stunden für einen Abschnitt oder ein ganzer Tag von Ende zu Ende mit dem Fahrrad",
+    "bestTimeOfDay": "Frühmorgens zum Joggen, später am Vormittag für Familien, am späten Nachmittag zum Radfahren und Spazierengehen",
+    "tips": [
+      "Der östliche Abschnitt vom Gulliver-Park zur Stadt der Künste ist am beliebtesten und landschaftlich reizvoll. Beginne hier, wenn du wenig Zeit hast.",
+      "Miete ein Fahrrad und fahre die gesamten neun Kilometer: eben, schattig und eine der schönsten städtischen Fahrradrouten Europas.",
+      "Packe im Sommer Wasser und Sonnencreme ein. Die Bäume spenden Schatten, doch die Mittagssonne ist stark.",
+      "Nutze den Park für deine täglichen Wege. Durch den Turia-Park zu gehen ist schneller und angenehmer als auf der Straße darüber."
+    ]
+  },
+  "practicalTips": [
+    "Der Park liegt unter Straßenniveau in einem Flussbett. Du erreichst ihn über Treppen oder Rampen an den Brücken. Die meisten Brücken haben beides.",
+    "Pflücke die Orangen nicht: Es sind bittere Pomeranzen für Marmelade, keine Speiseorangen. Du wirst es bereuen.",
+    "Radwege und Fußwege sind getrennt. Bleibe auf dem passenden Weg; Radfahrer sind schnell unterwegs.",
+    "Der Park ist tagsüber und nachts sicher, wobei das westliche Ende nach Einbruch der Dunkelheit ruhiger und weniger beleuchtet ist.",
+    "Öffentliche Toiletten gibt es nahe dem Gulliver-Spielplatz und an einigen Café-Kiosken. Sie sind nicht zahlreich – plane voraus."
+  ],
+  "audienceTips": [
+    {
+      "audience": "families",
+      "tips": [
+        "Der Gulliver-Spielplatz ist der Höhepunkt, aber es gibt mindestens sechs weitere kleinere Spielplätze im Park.",
+        "Der Bioparc am westlichen Ende ist hervorragend für Kinder. Durch die Gestaltung ohne sichtbare Barrieren wirken die Tiere ganz nah.",
+        "Bring ein Picknick mit: Die Rasenflächen nahe Gulliver eignen sich ideal, um eine Decke auszubreiten."
+      ]
+    },
+    {
+      "audience": "digital-nomads",
+      "tips": [
+        "Morgens im Turia-Park joggen und anschließend in einem Café darüber arbeiten: so sieht der Alltag digitaler Nomaden in Valencia aus.",
+        "In der Gegend um Pont de Fusta gibt es direkt oberhalb des Parks gute Cafés mit WLAN.",
+        "Das östliche Parkende liegt nahe Ruzafa. Verbinde eine Laufrunde mit einem Brunch in Ruzafa."
+      ]
+    },
+    {
+      "audience": "elderly",
+      "tips": [
+        "Die ebenen Wege eignen sich ideal für leichte Spaziergänge. Der Abschnitt nahe dem Palau de la Música bietet Bänke und Schatten.",
+        "Elektromobile eignen sich gut für die breiten, ebenen und glatten Hauptwege.",
+        "Der botanische Garten Jardí Botànic ist eine ruhige Alternative zum großen Park, die du in langsamem Tempo genießen kannst."
+      ]
+    }
+  ],
+  "productWidgets": [
+    {
+      "categorySlug": "mobility",
+      "heading": "Den Park mit Mobilitätshilfen erkunden?",
+      "afterSection": "Accessibility"
+    },
+    {
+      "categorySlug": "baby-gear",
+      "heading": "Ein Parktag mit den Kleinen?",
+      "afterSection": "Practical Tips"
+    }
+  ],
+  "relatedDestinations": [
+    "city-of-arts-and-sciences",
+    "el-carmen",
+    "ruzafa",
+    "benimaclet"
+  ],
+  "relatedBlogPosts": [
+    "valencia-with-kids-complete-guide",
+    "accessible-valencia-complete-guide"
+  ],
+  "faqs": [
+    {
+      "question": "Wie lang sind die Turia-Gärten?",
+      "answer": "Neun Kilometer, entsprechend 5,6 Meilen, vom Bioparc im Westen bis zur Stadt der Künste und Wissenschaften im Osten. Mit dem Fahrrad dauert die gesamte Strecke etwa 40 Minuten, zu Fuß in gemütlichem Tempo zwei bis drei Stunden."
+    },
+    {
+      "question": "Ist der Turia-Park kostenlos?",
+      "answer": "Ja, vollständig kostenlos und rund um die Uhr an 365 Tagen im Jahr geöffnet. Einzelne Attraktionen im oder am Park, etwa Bioparc und der botanische Garten, haben eigene Eintrittspreise."
+    },
+    {
+      "question": "Kann man in den Turia-Gärten Fahrrad fahren?",
+      "answer": "Ja: Eigene Radwege führen durch den gesamten Park. Nutze Valenbisi, das städtische Leihradsystem für 2 € pro Tag, oder miete bei einem lokalen Anbieter. Die Strecke ist eben und autofrei."
+    },
+    {
+      "question": "Ist der Gulliver-Spielplatz kostenlos?",
+      "answer": "Ja, vollständig kostenlos. Er ist täglich ungefähr von 10 bis 20 Uhr geöffnet; die Zeiten ändern sich je nach Saison. Es gibt keine Altersbeschränkung, auch Erwachsene dürfen klettern. Komme frühmorgens oder am späten Nachmittag, um Andrang zu meiden."
+    }
+  ]
+}

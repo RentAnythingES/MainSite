@@ -109,7 +109,7 @@ const content: Record<string, SpanishBundleContent> = {
     description: "Una configuración práctica para nómadas digitales, profesionales y parejas que trabajan desde apartamentos de Valencia durante más de unos días.",
     bestFor: ["Nómadas digitales", "Profesionales en estancias largas", "Parejas que teletrabajan", "Apartamentos sin escritorio adecuado"],
     includedItems: [
-      { name: "Monitor externo", note: "De 27 pulgadas cuando esté disponible" },
+      { name: "Monitor externo", note: "Tamaño confirmado para tu reserva" },
       { name: "Soporte para portátil" },
       { name: "Teclado y ratón" },
       { name: "Hub USB-C o kit de cables" },

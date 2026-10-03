@@ -36,7 +36,7 @@ const en: Dictionary = {
     howItWorksTitle: "How It Works",
     howItWorksSubtitle: "Three simple steps to a stress-free trip.",
     howItWorksSteps: [
-      { title: "Browse & Book", description: "Explore our selection of premium gear. Choose your dates, add extras, and book instantly." },
+      { title: "Browse & Book", description: "Explore the rental range, choose your dates, and check live availability before payment." },
       { title: "We Deliver", description: "Doorstep delivery to your hotel, Airbnb, or apartment. Everything cleaned and safety-checked." },
       { title: "Enjoy & Return", description: "Use worry-free! When your trip ends, we pick everything up. No cleaning needed." },
     ],

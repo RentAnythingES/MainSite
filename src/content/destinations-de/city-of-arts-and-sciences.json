@@ -1,0 +1,188 @@
+{
+  "slug": "city-of-arts-and-sciences",
+  "name": "Stadt der Künste und Wissenschaften",
+  "type": "attraction",
+  "tagline": "Valencias futuristisches Wahrzeichen: Aquarium, Wissenschaftsmuseum und eindrucksvolle Architektur von Calatrava",
+  "heroImage": "/discover/city-of-arts-and-sciences.webp",
+  "heroImageAlt": "Der Hemisfèric und die umliegende Architektur spiegeln sich in den Wasserbecken der Stadt der Künste und Wissenschaften in Valencia",
+  "heroImageProvenance": {
+    "status": "licensed",
+    "creator": "Diego Delso, delso.photo",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Ciudad_de_las_Artes_y_las_Ciencias,_Valencia,_Espa%C3%B1a,_2014-06-29,_DD_39.JPG",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "verifiedAt": "2026-07-19",
+    "modifications": "Cropped and resized to 16:9 WebP."
+  },
+  "title": "Stadt der Künste und Wissenschaften: Valencia-Reiseführer",
+  "description": "Dein Reiseführer zu Valencias Stadt der Künste und Wissenschaften: Oceanogràfic, Hemisfèric und Wissenschaftsmuseum, mit Tickets, Besuchstipps und Zeitplanung.",
+  "keywords": [
+    "Stadt der Künste und Wissenschaften Valencia",
+    "Oceanogràfic",
+    "Calatrava Valencia",
+    "Ciudad de las Artes"
+  ],
+  "date": "2026-06-18",
+  "lastUpdated": "2026-06-18",
+  "audiences": [
+    "families",
+    "couples",
+    "mobility-needs"
+  ],
+  "region": "Stadt Valencia",
+  "distanceFromValencia": "20 Min. zu Fuß ab dem Stadtzentrum",
+  "hubs": [
+    "attractions"
+  ],
+  "overview": {
+    "paragraphs": [
+      "Die Stadt der Künste und Wissenschaften (Ciudad de las Artes y las Ciencias) ist Valencias bekanntestes Wahrzeichen: eine Gruppe futuristischer weißer Gebäude des Architekten Santiago Calatrava im trockengelegten ehemaligen Flussbett des Turia. Ob dir der Baustil gefällt oder nicht: Der Anblick ist beeindruckend, besonders vor Ort.",
+      "Zum Komplex gehören Europas größtes Aquarium (Oceanogràfic), ein IMAX-Kino in einem Gebäude in Form eines riesigen Auges (Hemisfèric), ein interaktives Wissenschaftsmuseum (Museu de les Ciències) und ein Opernhaus (Palau de les Arts). Du kannst hier einen ganzen Tag verbringen oder an einem Nachmittag kostenlos über das Gelände spazieren.",
+      "Für Familien ist dies die wichtigste Sehenswürdigkeit in Valencia. Schon das Oceanogràfic lohnt den Besuch: ein Aquarium von Weltrang mit Belugawalen, Haien, Pinguinen und einem Unterwassertunnel. Das Wissenschaftsmuseum bietet älteren Kindern viele interaktive Ausstellungen."
+    ],
+    "quickFacts": [
+      {
+        "label": "Eintrittskarten",
+        "value": "Preise je nach Datum; Kombitickets erhältlich"
+      },
+      {
+        "label": "Zeit einplanen",
+        "value": "Ein halber bis ganzer Tag; mindestens ein halber Tag für das Oceanogràfic"
+      },
+      {
+        "label": "Kostenlose Bereiche",
+        "value": "Gelände, Gärten und Architektur von außen"
+      },
+      {
+        "label": "Anreise",
+        "value": "20 Min. zu Fuß oder Bus 35/95"
+      }
+    ]
+  },
+  "highlights": [
+    {
+      "name": "Oceanogràfic",
+      "description": "Europas größtes Aquarium mit über 45.000 Tieren aus 500 Arten. Zu den Höhepunkten zählen der Haitunnel, Belugawale, die Delfinpräsentation und der Arktisbereich. Plane mindestens einen halben Tag ein. Mit einem ganzen Tag bleibt mehr Zeit für die Lebensräume und Aktivitäten.",
+      "icon": "🐬",
+      "tip": "Kaufe die Tickets online, um deinen Besuch im Voraus zu planen. Prüfe das Präsentationsprogramm bei der Ankunft. Es kann sich je nach Besucherandrang, Wetter oder biologischen Bedingungen ändern."
+    },
+    {
+      "name": "Hemisfèric (IMAX-Kino)",
+      "description": "Ein IMAX-Kino und Planetarium in einem Gebäude in Form eines riesigen Auges. Die Architektur ist der eigentliche Blickfang: Das Gebäude spiegelt sich in den umliegenden Wasserbecken. Die Vorführungen dauern in der Regel 45–50 Minuten. Prüfe das Programm für dein Besuchsdatum.",
+      "icon": "👁️",
+      "tip": "Die Spiegelungen lassen sich morgens oder am späten Nachmittag bei Windstille am besten fotografieren. Auch die abendliche Beleuchtung ist eindrucksvoll."
+    },
+    {
+      "name": "Museu de les Ciències",
+      "description": "Ein großes interaktives Wissenschaftsmuseum, besonders geeignet für Kinder von 6 bis 14 Jahren. Die Ausstellungen behandeln das Weltall, den menschlichen Körper und Technik. Ein Höhepunkt ist die DNA-Kletterstruktur.",
+      "icon": "🔬",
+      "tip": "Wenn du nur einen halben Tag hast, lass das Museum aus. Für die meisten Besucher ist die Zeit dann im Oceanogràfic besser genutzt."
+    },
+    {
+      "name": "Kostenloses Gelände und Architektur",
+      "description": "Auch ohne Eintrittskarte lohnt sich ein kostenloser Spaziergang über das Gelände. Die außergewöhnlichen weißen Gebäude erinnern an Knochenstrukturen und spiegeln sich in türkisfarbenen Becken. Hier entstehen einige der schönsten Fotos von Valencia.",
+      "icon": "📸"
+    }
+  ],
+  "gettingThere": {
+    "summary": "Die Stadt der Künste und Wissenschaften liegt am östlichen Ende der Turia-Gärten. Du erreichst sie zu Fuß aus dem Zentrum oder schnell mit dem Bus.",
+    "options": [
+      {
+        "mode": "walk",
+        "description": "Folge den Turia-Gärten nach Osten. Der schöne, schattige Weg führt durch das ehemalige Flussbett und ist durchgehend eben.",
+        "duration": "20 Min. ab Ruzafa, 35 Min. ab der Altstadt"
+      },
+      {
+        "mode": "bus",
+        "description": "Die Linien 35 und 95 halten direkt am Komplex. Vom Strand aus ist auch die Linie 1 praktisch.",
+        "cost": "€1.50"
+      },
+      {
+        "mode": "bike",
+        "description": "Der Radweg durch die Turia-Gärten führt direkt am Komplex vorbei. Am Eingang gibt es Valenbisi-Stationen.",
+        "duration": "15 Min. ab dem Zentrum"
+      }
+    ]
+  },
+  "bestTimeToVisit": {
+    "summary": "Morgens ist es weniger voll. Bei Sonnenuntergang und nach Einbruch der Dunkelheit mit Beleuchtung wirkt das Gelände besonders eindrucksvoll.",
+    "seasons": [
+      {
+        "season": "spring",
+        "description": "Ideal: angenehme Bedingungen für Spaziergänge im Freien und überschaubarer Andrang. Die gefüllten Becken sorgen für schöne Spiegelungen.",
+        "rating": 5
+      },
+      {
+        "season": "summer",
+        "description": "Draußen ist es sehr heiß, doch das Oceanogràfic ist klimatisiert. Komm früh oder am späten Nachmittag und rechne mit viel Betrieb.",
+        "rating": 3
+      },
+      {
+        "season": "autumn",
+        "description": "Sehr angenehm: warm genug für die Außenbereiche und weniger Andrang als im Sommer.",
+        "rating": 5
+      },
+      {
+        "season": "winter",
+        "description": "Die ruhigste Zeit. Die Innenbereiche eignen sich gut für kühlere Tage. Die Spiegelbecken können teilweise abgelassen sein.",
+        "rating": 3
+      }
+    ]
+  },
+  "accessibility": {
+    "overallRating": 5,
+    "summary": "Der gesamte Komplex wurde auf Barrierefreiheit ausgelegt. Die Gebäude bieten Aufzüge, angepasste Toiletten und Rampen. Das Gelände ist eben und befestigt. Im Oceanogràfic sind Leihrollstühle erhältlich.",
+    "wheelchairNotes": "Die Gebäude des Oceanogràfic haben Rampen und/oder Aufzüge für Rollstuhlnutzer. Manuelle Rollstühle können nach Verfügbarkeit gegen eine rückzahlbare Kaution von 10 € ausgeliehen werden. Bestätige vor dem Besuch alle wichtigen Zugangsvorkehrungen und die Sitzplätze für Präsentationen.",
+    "strollerNotes": "Sehr gut geeignet: Das Gelände ist vollständig eben und kinderwagenfreundlich. Auch im Oceanogràfic ist durchgehend ausreichend Platz für Kinderwagen. Zusammenklappen ist nicht nötig.",
+    "publicTransportAccess": "Die Bushaltestellen direkt vor dem Komplex sind vollständig barrierefrei. Der Weg durch die Turia-Gärten ist eben und befestigt."
+  },
+  "practicalTips": [
+    "Kaufe Kombitickets online: Oceanogràfic und Hemisfèric zusammen sind günstiger als einzelne Tickets.",
+    "Plane mindestens einen halben Tag für das Oceanogràfic ein, bei einem entspannten Besuch mit Aktivitäten auch länger. Lass dir Zeit.",
+    "Nimm im Sommer Wasser und Sonnenschutz für die Wege über das Gelände mit. Draußen gibt es wenig Schatten.",
+    "Im Restaurant Submarino im Oceanogràfic isst du umgeben von Fischen. Für dieses besondere Erlebnis lohnt sich eine Reservierung, auch wenn das Essen eher durchschnittlich ist."
+  ],
+  "visitingHere": {
+    "summary": "Du kannst den Komplex kostenlos wegen seiner Architektur besuchen, ein bestimmtes Museum erkunden oder einen ganzen Attraktionstag einplanen. Entscheide vor dem Ticketkauf, welche Gebäude du betreten möchtest, denn Gehstrecken und Besichtigungszeiten summieren sich.",
+    "idealDuration": "2 Stunden für die Außenbereiche; 4–8 Stunden mit kostenpflichtigen Attraktionen",
+    "bestTimeOfDay": "Zur Öffnung für die großen Attraktionen; am späten Nachmittag für Außenaufnahmen",
+    "tips": [
+      "Buche die gewünschten Attraktionen gezielt im Voraus. Gehe nicht davon aus, dass ein kurzer Besuch für den gesamten Komplex reicht.",
+      "Plane die Gehzeit zwischen den Gebäuden ein und vereinbart einen Treffpunkt, falls sich deine Gruppe aufteilt.",
+      "Nutze die Turia-Gärten für einen flacheren Zugang und bring Sonnenschutz für die ungeschützten Außenbereiche mit."
+    ]
+  },
+  "productWidgets": [
+    {
+      "categorySlug": "mobility",
+      "heading": "Brauchst du Mobilitätshilfen?",
+      "afterSection": "Accessibility"
+    },
+    {
+      "categorySlug": "baby-gear",
+      "heading": "Mit Kindern unterwegs?",
+      "afterSection": "Practical Tips"
+    }
+  ],
+  "relatedDestinations": [
+    "malvarrosa-beach",
+    "ruzafa"
+  ],
+  "relatedBlogPosts": [
+    "valencia-with-kids-complete-guide"
+  ],
+  "faqs": [
+    {
+      "question": "Was kosten die Tickets für die Stadt der Künste und Wissenschaften?",
+      "answer": "Die Preise hängen vom Datum, der Besuchergruppe und den gewählten Gebäuden ab. Prüfe den offiziellen Kalender für Oceanogràfic, Hemisfèric, Museu de les Ciències und ihre Kombinationen. Buche die gewünschten Attraktionen im Voraus und kontrolliere Datum und Vorführung auf jeder Eintrittskarte."
+    },
+    {
+      "question": "Lohnt sich ein Besuch der Stadt der Künste und Wissenschaften?",
+      "answer": "Ja. Selbst wenn du nur das Oceanogràfic besuchst, erlebst du eines der besten Aquarien Europas. Auf dem Gelände kannst du kostenlos spazieren gehen und fotografieren. Für Familien ist es Valencias wichtigste Attraktion."
+    },
+    {
+      "question": "Wie viel Zeit brauche ich für die Stadt der Künste und Wissenschaften?",
+      "answer": "Plane je nach gewählten Gebäuden einen halben bis ganzen Tag ein. Das Oceanogràfic verdient mindestens einen halben Tag und kann mit Aktivitäten einen ganzen Tag füllen. Für einen entspannten Besuch von Museu de les Ciències und Hemisfèric solltest du einen weiteren Tag einplanen."
+    }
+  ]
+}

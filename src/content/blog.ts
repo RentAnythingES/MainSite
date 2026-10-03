@@ -94,7 +94,7 @@ export const blogPosts: BlogPost[] = [
         paragraphs: [
           "<strong>La Malvarrosa Beach</strong> is the go-to family beach. It's wide, sandy, and has a gentle slope into shallow water — perfect for toddlers. The promenade behind it is lined with restaurants, ice cream shops, and playgrounds. Sunbed and umbrella rental runs about 9-10 euros per item for the day, available from mid-May through mid-October.",
           "<strong>La Patacona</strong>, just north of Malvarrosa, is slightly quieter with the same great amenities. The beach club <em>La Mas Bonita</em> is a local favourite with families — good food, a relaxed atmosphere, and staff who don't mind sandy children.",
-          "<strong>El Saler</strong>, near the Albufera Natural Park, offers a completely different experience — wild dunes, pine forests, and hardly any crowds. It's a 20-minute drive from the city centre and feels like a different world. Better for older kids who don't need constant supervision near the water.",
+          "<strong>El Saler</strong>, near the Albufera Natural Park, offers a completely different experience — wild dunes, pine forests, and hardly any crowds. It's a 20-minute drive from the city centre and feels like a different world. Better for families prepared for fewer facilities. Children need continuous adult supervision near the water, including children who can swim.",
           "Pro tip: bring your own shade if you're visiting with babies. The beach umbrella rental areas fill up fast in July and August, and there's essentially no natural shade on Valencia's urban beaches."
         ]
       },
@@ -112,7 +112,7 @@ export const blogPosts: BlogPost[] = [
         paragraphs: [
           "The good news: Valencia is flat. Unlike many European cities built on hills, virtually every street in Valencia is stroller-friendly. The Turia Gardens has smooth paths throughout, and most public transport is accessible.",
           "The old town (El Carmen) is the exception — cobblestones and narrow medieval streets can be challenging with a heavy stroller. A lightweight, compact stroller with good wheels makes a real difference here. If you didn't bring one, that's exactly the kind of thing worth <a href=\"/rental/baby-gear\">renting locally</a> rather than lugging through airports.",
-          "The metro and tram system is fully accessible with lifts and ramps at every station. Buses kneel for strollers and wheelchairs. Taxis are plentiful and drivers are generally helpful with car seats — though you're not legally required to use one in a taxi in Spain, we'd strongly recommend it for longer journeys.",
+          "The metro and tram system is fully accessible with lifts and ramps at every station. Buses kneel for strollers and wheelchairs. Taxis are plentiful and drivers are generally helpful with car seats — the urban taxi exception is limited to rear seats. Arrange a suitable child seat for every journey, including airport transfers; do not assume an exemption on motorway journeys.",
           "If you're planning day trips to the Albufera or El Saler beach, renting a car makes sense. All major rental companies at the airport offer child seats, though the quality varies. Bringing your own — or <a href=\"/product/car-seat-infant\">renting a premium one</a> — gives you peace of mind."
         ]
       },
@@ -146,7 +146,7 @@ export const blogPosts: BlogPost[] = [
       },
       {
         question: "Do I need a car seat in taxis in Valencia?",
-        answer: "Spanish law exempts taxis from the child car seat requirement. However, for safety we recommend using one, especially for longer journeys. You can rent a quality infant car seat locally and keep it for your entire trip."
+        answer: "Spanish taxis have a limited child-seat exception for urban journeys on rear seats. Children 135 cm or shorter need a suitable restraint on motorway journeys. Arrange an appropriate seat for every journey, including airport transfers. You can rent an infant car seat locally for your trip."
       },
       {
         question: "Can I rent baby equipment in Valencia?",
@@ -637,7 +637,7 @@ export const blogPosts: BlogPost[] = [
         paragraphs: [
           "<strong>Distance from centre:</strong> 20 min by car · <strong>Our rating:</strong> ⭐⭐⭐⭐ (older kids), ⭐⭐⭐ (toddlers)",
           "El Saler is a completely different experience — wild dunes, pine forests, and beautiful isolation. Part of the Albufera Natural Park, this beach has minimal infrastructure and a nature-reserve atmosphere. It feels like a different world from the city beaches.",
-          "The sand is clean, the water is clear, and you might have stretches entirely to yourself outside peak summer. The catch: no lifeguards in many sections, no sunbed rental, no chiringuitos. You need a car, your own shade, and self-sufficiency. Better for families with older kids who don't need constant water supervision.",
+          "The sand is clean, the water is clear, and you might have stretches entirely to yourself outside peak summer. The catch: no lifeguards in many sections, no sunbed rental, no chiringuitos. You need a car, your own shade, and self-sufficiency. Better for families prepared for fewer facilities. Children need continuous adult supervision near the water, including children who can swim.",
           "Combine it with a paella lunch at El Palmar (15 min drive) for the perfect Albufera day."
         ]
       },
@@ -661,9 +661,9 @@ export const blogPosts: BlogPost[] = [
       }
     ],
     faqs: [
-      { question: "Which is the best family beach in Valencia?", answer: "Patacona. It's wider and less crowded than Malvarrosa, the water stays shallow for a long way out (safe for toddlers), and the seafront restaurants serve excellent paella to locals. The tram gets you there in 20 minutes." },
+      { question: "Which is the best family beach in Valencia?", answer: "Patacona. It's wider and less crowded than Malvarrosa, the water stays shallow for a long way out (but shallow water does not remove the need for supervision), and the seafront restaurants serve excellent paella to locals. The tram gets you there in 20 minutes." },
       { question: "Is Malvarrosa Beach good for kids?", answer: "Yes — it's wide, sandy, has gentle waves, lifeguards all summer, and a promenade with playgrounds and restaurants. The main downside is crowds in July-August. Arrive before 10am for the best spots." },
-      { question: "Are Valencia beaches safe for children?", answer: "Very safe. The main city beaches (Malvarrosa, Patacona, Las Arenas) have lifeguards June-September, shallow water that extends far out, and a flag warning system. Glass bottles are banned on all Valencia beaches." },
+      { question: "Are Valencia beaches safe for children?", answer: "Beach safety depends on daily sea conditions, warning flags and supervision. Check current lifeguard coverage before visiting. Adults must continuously supervise children near water, even when they can swim; shallow water is not a guarantee of safety." },
       { question: "Can you rent beach equipment in Valencia?", answer: "Sunbeds and umbrellas are available for rent directly on Malvarrosa and Las Arenas (€9-10/day each). For a full beach set including shade tent and toys — especially useful for families — check our travel and outdoors rental range." },
     ],
     crossLinks: [

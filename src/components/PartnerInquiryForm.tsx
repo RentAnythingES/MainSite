@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 
-type Locale = "en" | "es";
+import { localeRegistry, type Locale } from "@/i18n/config";
 
 const copy = {
   en: {
@@ -56,6 +56,31 @@ const copy = {
     again: "Enviar otra propuesta",
     error: "No hemos podido enviar la propuesta. Inténtalo de nuevo.",
   },
+  de: {
+  "organization": "Organisation",
+  "organizationPlaceholder": "Unternehmen, Unterkunft, Marke oder Medium",
+  "name": "Dein Name",
+  "email": "Geschäftliche E-Mail-Adresse",
+  "partnerType": "Wie möchtest du mit uns zusammenarbeiten?",
+  "choose": "Option auswählen",
+  "types": [
+    "Empfehlungen durch Unterkunftsanbieter oder Unterkunftsverwaltungen",
+    "Empfehlungen durch Reise-, Relocation- oder Concierge-Dienste",
+    "Pilotprojekt mit einer Marke oder einem Vertriebspartner",
+    "Redaktionelle Zusammenarbeit oder Kooperation mit Content Creators",
+    "Andere Partnerschaft"
+  ],
+  "message": "Wie könnte eine nützliche Zusammenarbeit aussehen?",
+  "messagePlaceholder": "Erzähl uns von deinen Gästen, deinem Publikum, deinen Produkten oder einem geplanten Pilotprojekt in Valencia.",
+  "submit": "Partnerschaftsanfrage senden",
+  "sending": "Wird gesendet …",
+  "privacyLead": "Mit dem Absenden stimmst du unserer",
+  "privacy": "Datenschutzerklärung zu",
+  "successTitle": "Danke – wir prüfen deinen Vorschlag.",
+  "successBody": "Wir melden uns per E-Mail mit dem sinnvollsten nächsten Schritt. Partnerschaftsanfragen werden nicht in Marketinglisten aufgenommen.",
+  "again": "Weitere Anfrage senden",
+  "error": "Deine Anfrage konnte nicht gesendet werden. Bitte versuche es erneut."
+},
 } satisfies Record<Locale, Record<string, string | string[]>>;
 
 export default function PartnerInquiryForm({ locale }: { locale: Locale }) {
@@ -159,7 +184,7 @@ export default function PartnerInquiryForm({ locale }: { locale: Locale }) {
         {status === "sending" ? text.sending : text.submit}
       </button>
       <p className="text-center text-xs text-neutral-500">
-        {text.privacyLead} <Link href={locale === "es" ? "/es/privacy" : "/privacy"} className="underline hover:text-brand">{text.privacy}</Link>.
+        {text.privacyLead} <Link href={`${localeRegistry[locale].prefix}/privacy`} className="underline hover:text-brand">{text.privacy}</Link>.
       </p>
     </form>
   );

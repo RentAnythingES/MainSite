@@ -44,7 +44,7 @@ export function getLocalBusinessJsonLd() {
   };
 }
 
-export function getWebsiteJsonLd(locale: "en" | "es" = "en") {
+export function getWebsiteJsonLd(locale: "en" | "es" | "de" = "en") {
   return {
     "@context": "https://schema.org",
     "@type": "WebSite",
@@ -67,7 +67,7 @@ export function getHubCollectionJsonLd({
   name: string;
   description: string;
   url: string;
-  locale: "en" | "es";
+  locale: "en" | "es" | "de";
   items: Array<{ name: string; url: string }>;
 }) {
   return {
@@ -188,7 +188,7 @@ export function getCategoryCollectionJsonLd({
   name: string;
   description: string;
   url: string;
-  locale: "en" | "es";
+  locale: "en" | "es" | "de";
   products: Product[];
 }) {
   return {
@@ -207,7 +207,7 @@ export function getCategoryCollectionJsonLd({
         position: index + 1,
         name: product.name,
         url: absoluteUrl(
-          `${locale === "es" ? "/es" : ""}/product/${product.slug}`,
+          `${locale === "en" ? "" : "/" + locale}/product/${product.slug}`,
         ),
       })),
     },

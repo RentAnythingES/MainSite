@@ -1,0 +1,226 @@
+{
+  "slug": "christmas-valencia",
+  "name": "Weihnachten in Valencia",
+  "type": "event",
+  "tagline": "Lichter, Krippen, Märkte und Dreikönigstraditionen in der ganzen Stadt",
+  "heroImage": "/discover/christmas-valencia.jpg",
+  "heroImageAlt": "Weihnachtsstern und beleuchtete Krippenmotive über einer Straße in Valencia bei Nacht",
+  "heroImageProvenance": {
+    "status": "licensed",
+    "creator": "Dimitri Nicolopoulos",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Navidad-Valencia.jpg",
+    "license": "CC BY-SA 3.0 Spain",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/es/deed.en",
+    "verifiedAt": "2026-07-20",
+    "modifications": "Resized to 1280 pixels wide by Wikimedia Commons."
+  },
+  "title": "Weihnachten in Valencia: Märkte, Lichter und Traditionen",
+  "description": "Plane Weihnachten in Valencia: Lichter, Krippen, Märkte, Silvester und die Heiligen Drei Könige, mit Hinweisen zu Nahverkehr und Feiertagsöffnungszeiten.",
+  "keywords": [
+    "Weihnachten Valencia",
+    "Valencia Weihnachtsmärkte",
+    "Valencia Weihnachtsbeleuchtung",
+    "Heilige Drei Könige Valencia"
+  ],
+  "date": "2026-07-20",
+  "lastUpdated": "2026-07-20",
+  "audiences": [
+    "families",
+    "couples",
+    "elderly",
+    "mobility-needs",
+    "budget"
+  ],
+  "region": "Ganz Valencia",
+  "hubs": [
+    "events"
+  ],
+  "eventInfo": {
+    "dates": "Ende November bis 6. Januar; das Programm wird jährlich veröffentlicht",
+    "frequency": "Jährliche Weihnachts- und Dreikönigszeit",
+    "ticketsRequired": false,
+    "ticketUrl": "https://www.visitvalencia.com/en/christmas",
+    "crowdLevel": "high",
+    "bookingAdvice": "Lichter und öffentliche Traditionen sind meist kostenlos. Shows, Attraktionen und Workshops können Eintrittskarten erfordern. Das Programm 2026 ist noch nicht veröffentlicht. Prüfe jeden Termin und Veranstaltungsort nach der Veröffentlichung.",
+    "whatToExpect": [
+      "Weihnachtsbeleuchtung und Dekorationen in zentralen Straßen und Stadtvierteln",
+      "Städtische und kulturelle Krippen auf öffentlichen Plätzen, in Museen und Kirchen",
+      "Saisonale Märkte rund um den Zentralmarkt und an weiteren Orten, die jährlich wechseln können",
+      "Silvesterfeiern und den Dreikönigsumzug am 5. Januar"
+    ],
+    "safetyTips": [
+      "Abends, am Wochenende und am 5. Januar ist auf den zentralen Plätzen am meisten los.",
+      "Prüfe vor späten Veranstaltungen die Nahverkehrszeiten an Feiertagen und mögliche Straßensperrungen.",
+      "Vereinbart einen Familientreffpunkt und halte Kinder bei Umzügen und vollen Märkten nahe bei dir.",
+      "Bestätige die Öffnungszeiten am 24., 25. und 31. Dezember sowie am 1. und 6. Januar."
+    ],
+    "months": [
+      12,
+      1
+    ]
+  },
+  "overview": {
+    "paragraphs": [
+      "Weihnachten in Valencia ist eine ganze Festzeit und keine einzelne Veranstaltung. Im Dezember nehmen Lichter, Krippen, Märkte, Konzerte und Familienaktivitäten zu. Es folgen Silvester und die Dreikönigstraditionen, die am 5. und 6. Januar ihren Höhepunkt erreichen.",
+      "Für einen ersten Rundgang eignet sich die Altstadt: Plaza del Ayuntamiento, Plaza de la Reina, der Bereich des Zentralmarkts und ausgewählte städtische oder kulturelle Krippen. Familien können eine Aktivität mit Eintritt oder den Dreikönigsumzug ergänzen, statt jede vorübergehende Attraktion besuchen zu wollen.",
+      "Das genaue städtische Programm, Marktgenehmigungen, Beleuchtungszeiten und die Umzugsroute ändern sich jährlich. Stand Juli 2026 ist das Weihnachtsprogramm 2026 noch nicht veröffentlicht. Dieser Reiseführer behandelt beständige Traditionen und die Besuchsplanung. Prüfe alle organisatorischen Einzelheiten, sobald die offiziellen Informationen erscheinen."
+    ],
+    "quickFacts": [
+      {
+        "label": "Festzeit",
+        "value": "Ende November bis 6. Januar"
+      },
+      {
+        "label": "Familienhöhepunkt",
+        "value": "Heilige Drei Könige am 5.–6. Januar"
+      },
+      {
+        "label": "Zentraler Bereich",
+        "value": "Altstadt und Plaza del Ayuntamiento"
+      },
+      {
+        "label": "Programm 2026",
+        "value": "Noch nicht veröffentlicht; im November erneut prüfen"
+      }
+    ]
+  },
+  "highlights": [
+    {
+      "name": "Lichter und zentrale Plätze",
+      "description": "Nach dem jährlichen Einschalten der Beleuchtung bieten die Plaza del Ayuntamiento und die umliegenden Einkaufsstraßen den einfachsten Abendrundgang.",
+      "icon": "✨",
+      "tip": "Bestätige das aktuelle Einschalt-Datum und die Betriebszeiten, bevor du eigens dafür anreist."
+    },
+    {
+      "name": "Krippenrundgang",
+      "description": "Krippen der Stadt, Museen, Kirchen und Märkte machen die Altstadt zu einer Kulturroute, die du zu Fuß erkunden kannst.",
+      "icon": "🌟",
+      "tip": "Orte und Öffnungszeiten ändern sich. Wähle drei nahe beieinanderliegende Krippen aus der aktuellen Liste."
+    },
+    {
+      "name": "Weihnachtsmärkte",
+      "description": "Saisonale Stände gibt es traditionell rund um den Zentralmarkt und an weiteren Orten der Stadt. Termine und Warenregeln werden jährlich festgelegt.",
+      "icon": "🎁",
+      "tip": "Jeder veröffentlichte Marktplan gilt für das jeweilige Jahr."
+    },
+    {
+      "name": "Heilige Drei Könige",
+      "description": "Der Abendumzug am 5. Januar ist der große Familienabschluss, bevor am 6. Januar traditionell die Geschenke geöffnet werden.",
+      "icon": "👑",
+      "tip": "Route und Ankunftsregelungen ändern sich. Nutze ausschließlich das aktuelle städtische Programm."
+    }
+  ],
+  "gettingThere": {
+    "summary": "Sobald du Ciutat Vella erreicht hast, liegen die meisten zentralen Weihnachtsziele in Gehweite. Gedränge und vorübergehende Sperrungen beeinflussen aber den letzten Wegabschnitt.",
+    "options": [
+      {
+        "mode": "metro",
+        "description": "Nutze zentrale Metrovalencia-Stationen und prüfe für die Rückfahrt die Betriebszeiten an Feiertagen."
+      },
+      {
+        "mode": "bus",
+        "description": "EMT-Busse erreichen Veranstaltungen im Zentrum und in den Vierteln. An Silvester und beim Dreikönigsumzug gibt es Umleitungen."
+      },
+      {
+        "mode": "walk",
+        "description": "Für einen kompakten Rundgang zu Lichtern und Krippen in der Altstadt ist der Fußweg am besten."
+      }
+    ],
+    "parkingNotes": "An den großen Veranstaltungsabenden werden Parken und Zufahrt im Zentrum schwierig. Nutze öffentliche Verkehrsmittel oder parke außerhalb des Veranstaltungsbereichs."
+  },
+  "bestTimeToVisit": {
+    "summary": "Am frühen Abend unter der Woche siehst du die Lichter mit weniger Andrang. Familien sollten einen späten Rundgang im Zentrum nicht mit einer weiteren großen Aktivität verbinden.",
+    "seasons": [
+      {
+        "season": "spring",
+        "description": "Das Weihnachtsprogramm findet nicht im Frühling statt.",
+        "rating": 1
+      },
+      {
+        "season": "summer",
+        "description": "Das Weihnachtsprogramm findet nicht im Sommer statt.",
+        "rating": 1
+      },
+      {
+        "season": "autumn",
+        "description": "Ende November können die ersten Lichter und Märkte beginnen, sobald das offizielle Programm startet.",
+        "rating": 3
+      },
+      {
+        "season": "winter",
+        "description": "Von Dezember bis zum 6. Januar läuft die gesamte Festzeit. Rund um Feiertage und die Heiligen Drei Könige ist am meisten los.",
+        "rating": 5
+      }
+    ],
+    "avoidDates": "Gehe an Feiertagen nicht von normalen Öffnungszeiten aus. Rechne an den wichtigsten Veranstaltungsabenden mit dem größten Andrang."
+  },
+  "whatToBring": {
+    "bring": [
+      "Das aktuelle offizielle Programm",
+      "Warme Kleidung in mehreren Schichten",
+      "Bequeme Schuhe",
+      "Ein geladenes Handy",
+      "Einen Familientreffpunkt"
+    ],
+    "dontBring": [
+      "Große Taschen auf vollen Märkten",
+      "Eine starre Liste vorübergehender Attraktionen",
+      "Ungeprüfte Screenshots alter Programme"
+    ],
+    "rentInstead": [
+      "Einen kompakten Kinderwagen für jüngere Kinder",
+      "Eine Mobilitätshilfe für einen längeren Rundgang im Zentrum"
+    ]
+  },
+  "accessibility": {
+    "overallRating": 3,
+    "summary": "Zentrale Plätze sind im Allgemeinen erreichbar. Menschenmengen, historisches Pflaster, vorübergehende Stände und Umzugsabsperrungen können zugängliche Wege aber verengen.",
+    "wheelchairNotes": "Bestätige stufenlose Eingänge zu Krippen in Innenräumen und mögliche barrierefreie Zuschauerbereiche beim Dreikönigsumzug.",
+    "strollerNotes": "Ein kompakter Kinderwagen eignet sich für ruhigere Abende, ist aber auf dicht besuchten Märkten und bei Umzügen schwieriger zu handhaben. Wähle frühe Zeiten und breitere Straßen.",
+    "publicTransportAccess": "Zentrale Stationen und Buslinien sind verfügbar. Beachte aber Feiertagszeiten, Umleitungen und Veranstaltungssperrungen."
+  },
+  "visitingHere": {
+    "summary": "Plane einen kompakten Altstadtrundgang mit Lichtern und zwei oder drei bestätigten Krippen. Behandle Silvester und den Dreikönigsumzug als separate Veranstaltungstage.",
+    "idealDuration": "2–4 Stunden für einen Abendrundgang im Zentrum",
+    "bestTimeOfDay": "Früher Abend unter der Woche, sobald die Beleuchtung in Betrieb ist",
+    "tips": [
+      "Prüfe vor dem Weg dorthin die Feiertagsöffnungszeiten jedes Innenraums.",
+      "Wähle pro Tag höchstens eine Familienaktivität mit Eintritt.",
+      "Plane den Dreikönigsumzug getrennt vom normalen Besichtigungsprogramm."
+    ]
+  },
+  "practicalTips": [
+    "Prüfe im November das offizielle Programm 2026, statt Termine der vergangenen Saison zu verwenden.",
+    "Verbinde Plaza del Ayuntamiento, Plaza de la Reina und den Zentralmarktbereich zu einer Fußroute.",
+    "Reserviere direkt bei Restaurants für Heiligabend, den ersten Weihnachtstag oder Silvester, wenn ein Restaurantbesuch zu deinem Plan gehört.",
+    "Prüfe die Nahverkehrszeiten vor späten Feiern und an Feiertagen."
+  ],
+  "productWidgets": [],
+  "relatedDestinations": [
+    "valencia-historic-centre",
+    "central-market-la-lonja",
+    "el-carmen"
+  ],
+  "relatedBlogPosts": [
+    "valencia-with-kids-complete-guide",
+    "accessible-valencia-complete-guide"
+  ],
+  "faqs": [
+    {
+      "question": "Wann beginnt die Weihnachtszeit in Valencia?",
+      "answer": "Sie beginnt meist Ende November oder Anfang Dezember und dauert bis zum Dreikönigstag am 6. Januar. Die Termine für Beleuchtung, Märkte und Programm werden jährlich bestätigt."
+    },
+    {
+      "question": "Sind Valencias Weihnachtsaktivitäten kostenlos?",
+      "answer": "Die Beleuchtung, öffentliche Plätze und viele Krippen sind kostenlos zugänglich. Shows, Attraktionen, Workshops und manche reservierten Aktivitäten können Eintrittskarten erfordern."
+    },
+    {
+      "question": "Wo sind die wichtigsten Weihnachtsziele in Valencia?",
+      "answer": "Plaza del Ayuntamiento, Plaza de la Reina und der Zentralmarktbereich bilden eine praktische erste Route. Ergänze sie anhand der aktuellen städtischen Krippen- und Marktlisten."
+    },
+    {
+      "question": "Wann findet der Dreikönigsumzug in Valencia statt?",
+      "answer": "Der Umzug findet traditionell am 5. Januar statt. Ankunft, Route und Startzeit ändern sich jedoch. Prüfe das aktuelle städtische Programm, bevor du einen Zuschauerplatz wählst."
+    }
+  ]
+}

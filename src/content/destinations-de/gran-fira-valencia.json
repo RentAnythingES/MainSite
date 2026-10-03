@@ -1,0 +1,238 @@
+{
+  "slug": "gran-fira-valencia",
+  "name": "Feria de Julio / Gran Fira",
+  "type": "event",
+  "tagline": "Ein Monat voller Kultur im Freien, Veranstaltungen in den Vierteln, Feuerwerk und Sommertraditionen in ganz Valencia",
+  "heroImage": "/discover/gran-fira-valencia.jpg",
+  "heroImageAlt": "Blumengeschmückte Festwagen bei der Blumenschlacht der Feria de Julio in Valencia",
+  "heroImageProvenance": {
+    "status": "licensed",
+    "creator": "Rafa Esteve",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Gran_Fira_Valencia_2016_Batalla_de_Flors_03.jpg",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "verifiedAt": "2026-07-20",
+    "modifications": "Resized to 1280 pixels wide by Wikimedia Commons."
+  },
+  "title": "Feria de Julio Valencia 2026: Reiseführer zur Gran Fira",
+  "description": "Plane Valencias Feria de Julio 2026: Gran Nit, Blumenschlacht und Familienveranstaltungen, mit Ticketinfos, Hitzetipps und Links zum offiziellen Programm.",
+  "keywords": [
+    "Feria de Julio Valencia",
+    "Gran Fira Valencia",
+    "Valencia Veranstaltungen Juli",
+    "Blumenschlacht Valencia"
+  ],
+  "date": "2026-07-20",
+  "lastUpdated": "2026-07-20",
+  "audiences": [
+    "families",
+    "couples",
+    "budget",
+    "elderly"
+  ],
+  "region": "Ganz Valencia",
+  "hubs": [
+    "events"
+  ],
+  "eventInfo": {
+    "dates": "1.–26. Juli 2026",
+    "frequency": "Jährliches Programm im Juli",
+    "ticketsRequired": false,
+    "ticketUrl": "https://feriadejuliovlc.es/",
+    "crowdLevel": "high",
+    "bookingAdvice": "Viele Aktivitäten sind kostenlos. Ausgewählte Konzerte und Veranstaltungen mit Anmeldung erfordern jedoch Tickets oder eine Vorabreservierung. Plane anhand des offiziellen Programms des aktuellen Jahres.",
+    "whatToExpect": [
+      "Rund 300 Aktivitäten mit Musik, Kultur, Feuerwerk, Traditionen und Unterhaltung in ganz Valencia im Jahr 2026",
+      "Gran Nit am 18. Juli mit einem gebündelten Abendprogramm und späteren Aktivitäten in der ganzen Stadt",
+      "Die Blumenschlacht als Abschluss am Passeig de l’Albereda am 26. Juli 2026",
+      "Veranstaltungen in den Vierteln, Familienaktivitäten, Konzerte und Feuerwerk mit unterschiedlichen Zugangsregeln"
+    ],
+    "safetyTips": [
+      "Plane Wasser, Schatten und Pausen in Innenräumen ein, bevor du tagsüber Veranstaltungen in der Julihitze besuchst.",
+      "Nutze bei Feuerwerk Gehörschutz für Kinder und lärmempfindliche Besucher.",
+      "Vereinbart für Gran Nit und die Blumenschlacht einen Treffpunkt. Dort kann es dichtes Gedränge geben.",
+      "Prüfe vor Veranstaltungsbeginn die nächtlichen Nahverkehrsverbindungen und Straßensperrungen."
+    ],
+    "months": [
+      7
+    ]
+  },
+  "overview": {
+    "paragraphs": [
+      "Valencias Feria de Julio, auch als Gran Fira bekannt, bringt sommerliche Kultur in die ganze Stadt. Sie ist kein einzelnes umzäuntes Festivalgelände. Das Programm 2026 umfasst rund 300 Aktivitäten, darunter Musik, Veranstaltungen in den Vierteln, Familienunterhaltung, Feuerwerk und langjährige valencianische Traditionen.",
+      "Zwei Termine bestimmen viele Besuchspläne: Gran Nit am 18. Juli und die Blumenschlacht am 26. Juli. Es sind sehr unterschiedliche Erlebnisse. Bei Gran Nit laufen an einem Abend viele Aktivitäten gleichzeitig. Die Blumenschlacht ist dagegen ein bestimmter Abschlussumzug am Passeig de l’Albereda.",
+      "Das Programm ändert sich jedes Jahr. Dieser Reiseführer hilft dir, die passende Art von Veranstaltung zu wählen und Hitze, Anreise und Andrang einzuplanen. Nutze danach die offizielle Website für endgültige Zeiten, Orte, Absagen, Anmeldungen und Ticketregeln."
+    ],
+    "quickFacts": [
+      {
+        "label": "Programm 2026",
+        "value": "1.–26. Juli"
+      },
+      {
+        "label": "Umfang",
+        "value": "Rund 300 Aktivitäten"
+      },
+      {
+        "label": "Gran Nit",
+        "value": "18. Juli 2026"
+      },
+      {
+        "label": "Blumenschlacht",
+        "value": "26. Juli, Passeig de l’Albereda"
+      }
+    ]
+  },
+  "highlights": [
+    {
+      "name": "Gran Nit",
+      "description": "Eine Sommernacht in der ganzen Stadt mit Kultur und Unterhaltung, die sich an einem Abend konzentrieren.",
+      "icon": "🌙",
+      "tip": "Wähle zwei nahe beieinanderliegende Aktivitäten, statt wiederholt quer durch die Stadt zu fahren."
+    },
+    {
+      "name": "Blumenschlacht",
+      "description": "Blumengeschmückte Festwagen und eine ausgelassene Blumenschlacht schließen das Juliprogramm am Passeig de l’Albereda ab.",
+      "icon": "🌸",
+      "tip": "Bestätige die aktuellen Zugangs-, Sitzplatz- und Ticketregelungen im offiziellen Programm."
+    },
+    {
+      "name": "Konzerte in den Viveros-Gärten",
+      "description": "Das Konzertprogramm in den Jardines de Viveros ist ein wichtiger Bestandteil mit eigenen Eintrittskarten und Veranstaltungsregeln.",
+      "icon": "🎵",
+      "tip": "Plane den Konzerteintritt getrennt vom überwiegend kostenlosen Stadtprogramm."
+    },
+    {
+      "name": "Programm in den Vierteln",
+      "description": "Auch außerhalb des Zentrums gibt es Familien-, Musik- und Gemeinschaftsveranstaltungen in Stadtvierteln und Außenbezirken.",
+      "icon": "📍"
+    }
+  ],
+  "gettingThere": {
+    "summary": "Es gibt keinen einzigen Festivaleingang. Wähle die Anreise passend zum Veranstaltungsort im offiziellen Programm und prüfe Änderungen am Veranstaltungstag.",
+    "options": [
+      {
+        "mode": "metro",
+        "description": "Metrovalencia ist für verstreute Veranstaltungsorte und späte Fahrten praktisch. Beachte die aktuellen Betriebszeiten."
+      },
+      {
+        "mode": "bus",
+        "description": "EMT-Busse bedienen Veranstaltungsorte im Zentrum und in den Vierteln. Bei großen Veranstaltungen sind Umleitungen möglich."
+      },
+      {
+        "mode": "bike",
+        "description": "Valencias Radwegenetz eignet sich für viele Orte im Freien, bevor sich die Menschenmengen sammeln."
+      },
+      {
+        "mode": "walk",
+        "description": "Für nahe beieinanderliegende Veranstaltungen im Zentrum bei Gran Nit sind Fußwege praktisch. Tagsüber sind längere Strecken wegen der Julihitze anstrengender."
+      }
+    ],
+    "parkingNotes": "Rechne bei der Blumenschlacht, Gran Nit oder Feuerwerk nicht mit den üblichen Zufahrten. Öffentliche Verkehrsmittel lassen sich meist besser einplanen."
+  },
+  "bestTimeToVisit": {
+    "summary": "Abendveranstaltungen verringern die Belastung durch Hitze. Familienaktivitäten können früher stattfinden. Wähle nach Programm, Temperatur und Ausdauer deiner Gruppe.",
+    "seasons": [
+      {
+        "season": "spring",
+        "description": "Die Feria de Julio findet nicht im Frühling statt.",
+        "rating": 1
+      },
+      {
+        "season": "summer",
+        "description": "Im Juli ist Festzeit. Rechne mit Hitze, starker Sonne und warmen Nächten und plane Pausen und ausreichend Wasser ein.",
+        "rating": 5
+      },
+      {
+        "season": "autumn",
+        "description": "Die Feria de Julio findet nicht im Herbst statt.",
+        "rating": 1
+      },
+      {
+        "season": "winter",
+        "description": "Die Feria de Julio findet nicht im Winter statt.",
+        "rating": 1
+      }
+    ],
+    "avoidDates": "Kombiniere an einem Tag nicht zu viele Aktivitäten in der Tageshitze mit späten Abendveranstaltungen. Plane am nächsten Morgen Erholungszeit ein."
+  },
+  "whatToBring": {
+    "bring": [
+      "Eine nachfüllbare Wasserflasche",
+      "Sonnenschutz",
+      "Leichte Kleidung",
+      "Das offizielle Programm auf deinem Handy",
+      "Gehörschutz für Feuerwerk"
+    ],
+    "dontBring": [
+      "Große Taschen bei Veranstaltungen mit Eintritt",
+      "Glasbehälter",
+      "Ausrüstung, die du schlecht durch Menschenmengen tragen kannst"
+    ],
+    "rentInstead": [
+      "Einen kompakten Kinderwagen für Familienveranstaltungen",
+      "Strand- oder Outdoor-Ausrüstung für Tagespläne zwischen den Veranstaltungen"
+    ]
+  },
+  "accessibility": {
+    "overallRating": 3,
+    "summary": "Die Zugänglichkeit ist unterschiedlich, da das Programm viele Veranstaltungsorte nutzt. Kläre für jede ausgewählte Aktivität direkt die Route, den Bodenbelag, Sitzplätze und Unterstützung.",
+    "wheelchairNotes": "Prüfe den einzelnen Veranstaltungsort und den offiziellen Programmeintrag. Ein stadtweites Fest kann keine einheitlichen Zugangsbedingungen garantieren.",
+    "strollerNotes": "Kompakte Kinderwagen lassen sich im Gedränge am besten handhaben. Für jüngere Kinder können Abendzeiten und Hitze wichtiger sein als die Entfernung.",
+    "publicTransportAccess": "Viele zentrale Orte sind gut angebunden. Sperrungen und späte Endzeiten können aber die praktischste Heimfahrt verändern."
+  },
+  "practicalTips": [
+    "Filtere das offizielle Programm nach Datum und Gebiet, bevor du Aktivitäten auswählst.",
+    "Unterscheide kostenlose öffentliche Veranstaltungen von Konzerten oder Aktivitäten mit Eintritt oder Anmeldung.",
+    "Plane während der heißesten Nachmittagsstunden eine längere Pause drinnen oder im Schatten ein.",
+    "Prüfe am selben Tag erneut Wetter, Feuerwerksmeldungen, Verkehr und mögliche Absagen."
+  ],
+  "visitingHere": {
+    "summary": "Ein guter Plan kombiniert eine große Veranstaltung mit kleineren Aktivitäten in der Nähe, statt die Feria de Julio als einen einzigen Besuchsort zu betrachten.",
+    "idealDuration": "2–5 Stunden je gewähltem Programmabschnitt",
+    "bestTimeOfDay": "Später Nachmittag und Abend, mit Vorkehrungen gegen Hitze",
+    "tips": [
+      "Bündele Aktivitäten nach Viertel oder Verkehrsverbindung.",
+      "Plane den Morgen nach Gran Nit oder einem späten Konzert ruhiger.",
+      "Halte eine ruhigere Alternative bereit, falls Feuerwerk, Hitze oder Gedränge unangenehm werden."
+    ]
+  },
+  "productWidgets": [
+    {
+      "categorySlug": "travel-outdoors",
+      "heading": "Planst du einen Sommertag in Valencia?",
+      "afterSection": "What to Bring"
+    },
+    {
+      "categorySlug": "baby-gear",
+      "heading": "Mit kleinen Kindern dabei?",
+      "afterSection": "Accessibility"
+    }
+  ],
+  "relatedDestinations": [
+    "turia-gardens",
+    "malvarrosa-beach",
+    "albufera"
+  ],
+  "relatedBlogPosts": [
+    "valencia-summer-survival-guide",
+    "valencia-with-kids-complete-guide"
+  ],
+  "faqs": [
+    {
+      "question": "Wann findet Valencias Feria de Julio 2026 statt?",
+      "answer": "Das offizielle Programm 2026 erstreckt sich über den Juli, mit aufgeführten Aktivitäten vom 1. bis 26. Juli. Gran Nit findet am 18. Juli statt, die abschließende Blumenschlacht am 26. Juli."
+    },
+    {
+      "question": "Ist die Feria de Julio kostenlos?",
+      "answer": "Viele Aktivitäten in der Stadt und den Vierteln sind kostenlos. Ausgewählte Konzerte und Veranstaltungen mit Anmeldung erfordern jedoch Tickets oder eine Vorabreservierung. Prüfe jeden Eintrag im offiziellen Programm."
+    },
+    {
+      "question": "Wo findet die Gran Fira statt?",
+      "answer": "In ganz Valencia. Zu den Orten gehören zentrale Plätze, Stadtviertel, die Jardines de Viveros und der Passeig de l’Albereda. Deshalb braucht jede Veranstaltung einen eigenen Anreiseplan."
+    },
+    {
+      "question": "Ist die Feria de Julio für Kinder geeignet?",
+      "answer": "Ja, das Programm umfasst Familienaktivitäten. Wähle altersgerechte Veranstaltungen, vermeide längere Aufenthalte in der Mittagshitze und bring Gehörschutz für Feuerwerk oder laute Aufführungen mit."
+    }
+  ]
+}

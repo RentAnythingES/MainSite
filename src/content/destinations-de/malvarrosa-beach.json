@@ -1,0 +1,231 @@
+{
+  "slug": "malvarrosa-beach",
+  "name": "Strand Malvarrosa",
+  "type": "beach",
+  "tagline": "Valencias beliebter Stadtstrand – breiter Sand, warmes Wasser und eine berühmte Promenade",
+  "heroImage": "/discover/malvarrosa-beach.webp",
+  "heroImageAlt": "Strand Malvarrosa in Valencia am Abend mit Mittelmeer und Gebäuden an der Küste",
+  "heroImageProvenance": {
+    "status": "licensed",
+    "creator": "Manuel Martín Vicente",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Playa_de_la_Malvarrosa_(Valencia)_01.jpg",
+    "license": "CC BY 2.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
+    "verifiedAt": "2026-07-19",
+    "modifications": "Cropped and resized to 16:9 WebP."
+  },
+  "title": "Strand Malvarrosa: Valencias Stadtstrand entdecken",
+  "description": "Dein Reiseführer für den Strand Malvarrosa in Valencia: Einrichtungen, Barrierefreiheit, Strandlokale, beste Besuchszeiten und praktische Tipps vor Ort.",
+  "keywords": [
+    "Strand Malvarrosa Valencia",
+    "Valencia Strand Reiseführer",
+    "bester Strand Valencia",
+    "Malvarrosa"
+  ],
+  "date": "2026-06-18",
+  "lastUpdated": "2026-06-18",
+  "audiences": [
+    "families",
+    "couples",
+    "mobility-needs"
+  ],
+  "region": "Stadt Valencia",
+  "distanceFromValencia": "20 Minuten ab dem Stadtzentrum",
+  "hubs": [
+    "beaches"
+  ],
+  "overview": {
+    "paragraphs": [
+      "Malvarrosa gehört zu Valencias beliebtesten Stadtstränden. Der breite Abschnitt mit goldenem Sand liegt zwischen Alboraya und der Calle Acequia de la Cadena. Weiter südlich Richtung Hafen folgt der Strand Cabanyal. Eine lebhafte Promenade verbindet die Restaurants und Bars am Meer, einschließlich des weiter südlich gelegenen Bereichs Las Arenas.",
+      "Malvarrosa ist ein echter Stadtstrand. Einheimische joggen hier vor der Arbeit, Familien verbringen ganze Sonntage am Meer, und die Chiringuitos, die Strandbars, servieren Paella mit entspannter Strandatmosphäre. Der Strand gehört außerdem zu Spaniens besonders gut zugänglichen Stränden und bietet ein umfangreiches Badeassistenzprogramm des Roten Kreuzes.",
+      "Strandlokale und saisonale Einrichtungen können sich zwischen Besuchen ändern. Prüfe die aktuellen städtischen Strandinformationen und die eigenen Öffnungszeiten der Restaurants, bevor du einen bestimmten Halt planst. Gehe nicht davon aus, dass an deinem Besuchstag jedes Lokal oder jede Einrichtung geöffnet ist."
+    ],
+    "quickFacts": [
+      {
+        "label": "Strandlänge",
+        "value": "Etwa 1 km Sandstrand"
+      },
+      {
+        "label": "Wassertemperatur",
+        "value": "16 °C im Winter bis 26 °C im Sommer"
+      },
+      {
+        "label": "Rettungsschwimmer",
+        "value": "Saisonal; aktuelle städtische Termine und Zeiten bestätigen"
+      },
+      {
+        "label": "Blaue Flagge",
+        "value": "Aktuellen Auszeichnungsstatus prüfen"
+      }
+    ]
+  },
+  "highlights": [
+    {
+      "name": "Strandpromenade Paseo Marítimo",
+      "description": "Die Promenade verläuft entlang des gesamten Strandes. Sie ist breit und eben und eignet sich gut zum Spazierengehen, Radfahren oder für Rollstuhlfahrer. Auf einer Seite liegen Restaurants, auf der anderen das Mittelmeer.",
+      "icon": "🚶"
+    },
+    {
+      "name": "Chiringuitos und Paella",
+      "description": "Die Restaurants am Meer sind für valencianische Reisgerichte bekannt. Die Wurzeln der Paella liegen in der Reislandschaft rund um die Albufera und nicht an dieser Promenade. Prüfe bei den einzelnen Lokalen die aktuellen Speisekarten und Öffnungszeiten.",
+      "icon": "🥘",
+      "tip": "Reserviere ein Reisgericht zum Sonntagsmittag direkt bei beliebten Restaurants wie La Pepica oder Casa Carmela und bestätige ihre aktuellen Küchenzeiten."
+    },
+    {
+      "name": "Badeassistenzprogramm",
+      "description": "Die Stadt nennt Badeassistenz vom 1. Juni bis zum 15. September mit amphibischen Hilfsmitteln, angepassten Einrichtungen und geschulter Unterstützung. Bestätige aktuelle Zeiten, Teilnahmevoraussetzungen und Anmeldebedingungen beim Dienst unter 96 367 73 75.",
+      "icon": "♿",
+      "tip": "Bestätige vor der Anreise die Betriebszeit. Der ausgewiesene Bereich bietet Schatten und angepasste Einrichtungen. Verfügbarkeit und Unterstützung hängen aber vom Dienstplan ab."
+    },
+    {
+      "name": "Sport am Strand",
+      "description": "An der Küste gibt es Sportbereiche, Volleyballplätze und Spielbereiche für Kinder sowie eine Radroute entlang der Promenade. Prüfe Verfügbarkeit und Gebühren buchbarer Sportanlagen, statt davon auszugehen, dass jede Aktivität kostenlos ist.",
+      "icon": "🏐"
+    }
+  ],
+  "gettingThere": {
+    "summary": "Malvarrosa ist vom Stadtzentrum aus gut mit Straßenbahn, Bus und Fahrrad erreichbar.",
+    "options": [
+      {
+        "mode": "tram",
+        "description": "Nutze Metrovalencia-Straßenbahnen Richtung Küste und prüfe die aktuelle Haltestelle für deinen gewählten Abschnitt, etwa La Cadena oder Eugenia Viñes. Der anschließende Fußweg hängt von der Haltestelle ab.",
+        "duration": "Aktuelle Route, Umstiege und Fußweg berücksichtigen",
+        "cost": "Aktuellen Metrovalencia-Tarif prüfen"
+      },
+      {
+        "mode": "bus",
+        "description": "EMT bedient die Küste. Wähle mit der aktuellen Verbindungsauskunft die nächste Haltestelle zu deinem Strandzugang, statt dich auf eine alte Linienliste zu verlassen.",
+        "cost": "Aktuellen EMT-Tarif prüfen"
+      },
+      {
+        "mode": "bike",
+        "description": "Nutze das städtische Radwegenetz und die Radroute an der Küste. Prüfe vor dem Aufbruch Strecke und Rückgabeort. Gehe nicht davon aus, dass der Turia-Park selbst direkt bis zum Sand führt.",
+        "duration": "Abhängig von Ausgangspunkt und gewählter Route"
+      },
+      {
+        "mode": "walk",
+        "description": "Gehe auf einer geplanten Stadtroute Richtung Küste. Die Turia-Gärten führen nicht direkt auf den Strand Malvarrosa. Plane deshalb den Stadtabschnitt und die gesamte Entfernung.",
+        "duration": "Gesamte Strecke ab deinem Ausgangspunkt prüfen"
+      }
+    ],
+    "parkingNotes": "Parkplätze an der Straße sind begrenzt. Öffentliche Parkhäuser bedienen den weiteren Küstenbereich Las Arenas. An Sommerwochenenden kann es voll werden. Erwäge öffentliche Verkehrsmittel und prüfe die verbleibende Entfernung nach Malvarrosa."
+  },
+  "bestTimeToVisit": {
+    "summary": "Juni und September sind besonders angenehm: warm genug zum Baden, ohne den Andrang im August.",
+    "seasons": [
+      {
+        "season": "spring",
+        "description": "Angenehm mit 18–24 °C für Spaziergänge und Terrassen. Das Wasser ist noch kühl mit 17–19 °C. Weniger Andrang.",
+        "rating": 3
+      },
+      {
+        "season": "summer",
+        "description": "Hauptsaison. Heiß mit 30–38 °C, warmes Wasser mit 24–26 °C und Rettungsschwimmer im Dienst. Im Juli und August sehr voll, besonders an Wochenenden.",
+        "rating": 4
+      },
+      {
+        "season": "autumn",
+        "description": "Der September bietet warmes Wasser, weniger Andrang und goldenes Licht. Im Oktober sind Spaziergänge weiterhin gut möglich.",
+        "rating": 5
+      },
+      {
+        "season": "winter",
+        "description": "Mildes Wetter kann sich für Spaziergänge an der Promenade und Kaffee auf einer Terrasse eignen. Das Meer ist kalt, und saisonale Strandeinrichtungen sind eingeschränkt.",
+        "rating": 2
+      }
+    ],
+    "avoidDates": "Wochenenden Mitte August: Der Strand ist sehr voll. Wenn du dann kommen möchtest, sei vor 10 Uhr da."
+  },
+  "accessibility": {
+    "overallRating": 5,
+    "summary": "Einer der besonders gut zugänglichen Strände Spaniens, nach UNE 170001 zertifiziert. Angepasste Infrastruktur mit Promenade, Zugangsrampen, barrierefreien Toiletten und dem Badeassistenzprogramm des Roten Kreuzes.",
+    "wheelchairNotes": "Die Promenade ist eben und breit und bietet angepasste Strandstege. Bestätige das aktuelle Ende der Stege und die Regelungen für Badeassistenz. Mit einem gewöhnlichen Rollstuhl kannst du nicht durch losen Sand ins Meer fahren. Kontaktiere den Dienst unter 96 367 73 75.",
+    "strollerNotes": "Sehr gut: Die Promenade ist breit und glatt. Auf Sand musst du den Kinderwagen anheben, die Stege bringen dich aber nah ans Wasser.",
+    "publicTransportAccess": "Die Straßenbahnhaltestellen sind mit Rampen zugänglich. EMT-Busse zum Strand verfügen über Rollstuhlrampen."
+  },
+  "foodAndDrink": {
+    "summary": "An der Küste gibt es Restaurants mit einer langen Tradition valencianischer Reisgerichte. Paella entstand in der Reislandschaft rund um die Albufera. Die Strandrestaurants trugen dazu bei, ihre gastronomische Tradition in der Stadt zu etablieren.",
+    "recommendations": [
+      {
+        "name": "La Pepica",
+        "type": "Traditionelles Reisrestaurant",
+        "priceRange": "€€€",
+        "tip": "Reserviere für das Mittagessen am Wochenende und bestätige die aktuellen Küchenzeiten direkt.",
+        "familyFriendly": true,
+        "sourceNote": "Die offizielle Website bestätigt das Restaurant an der Avenida Neptuno am Meer, die Reiskarte und die aktuellen Zeiten.",
+        "sourceUrl": "https://lapepica.com/menu/",
+        "sourceCheckedAt": "2026-07-19"
+      },
+      {
+        "name": "Casa Carmela",
+        "type": "Paella über Holzfeuer",
+        "priceRange": "€€€",
+        "tip": "Reserviere vorab und bestelle Reis für den ganzen Tisch statt als einzelnes Gericht.",
+        "familyFriendly": true,
+        "sourceNote": "Die offizielle Website bestätigt den Standort in der Isabel de Villena und die Tradition von Paella über Holzfeuer seit 1922.",
+        "sourceUrl": "https://www.casa-carmela.com/es/",
+        "sourceCheckedAt": "2026-07-19"
+      },
+      {
+        "name": "La Más Bonita",
+        "type": "Café am Meer und Brunch",
+        "priceRange": "€€",
+        "tip": "Prüfe die aktuellen Öffnungszeiten des Standorts, bevor du mit einer bestimmten Mahlzeit planst.",
+        "familyFriendly": true,
+        "sourceNote": "Die offizielle Website der Gruppe bestätigt das Lokal an Valencias Küste und die aktuell betriebenen Standorte.",
+        "sourceUrl": "https://www.lamasbonita.es/",
+        "sourceCheckedAt": "2026-07-19"
+      }
+    ],
+    "localSpeciality": "Bestelle Paella Valenciana mit Huhn, Kaninchen und Bohnen oder Arroz a banda, Reis in Fischbrühe. In Valencia isst man Paella traditionell mittags – bestelle sie deshalb lieber zum Mittagessen als am Abend."
+  },
+  "practicalTips": [
+    "Bring einen eigenen Schattenspender mit oder frage den Anbieter direkt nach aktuellen Liegen und Sonnenschirmen. Preise und Verfügbarkeit unterscheiden sich, besonders an Sommerwochenenden.",
+    "Trage Sonnencreme vor der Ankunft auf und plane Schatten, einen Hut und Trinkwasser ein. Die Sommersonne kann intensiv sein. Prüfe aktuelle UV- und Wetterinformationen.",
+    "Duschen und Fußwaschstellen sind kostenlos und liegen in regelmäßigen Abständen entlang der Promenade.",
+    "Wähle mit Kindern einen Zugang mit den benötigten Einrichtungen und prüfe die Bedingungen bei der Ankunft. Die Strände näher am Hafen sind Cabanyal und Las Arenas, nicht das südliche Ende von Malvarrosa."
+  ],
+  "visitingHere": {
+    "summary": "Malvarrosa eignet sich für einen kurzen Besuch der Promenade oder einen ganzen Strandtag. Entscheide vor der Platzwahl, ob du vor allem baden, lange zu Mittag essen, barrierefreie Zeit am Meer verbringen oder einen vollständigen Familientag vorbereiten möchtest.",
+    "idealDuration": "3–6 Stunden",
+    "bestTimeOfDay": "Morgens für Platz und mildere Hitze; am späten Nachmittag für einen Spaziergang an der Promenade",
+    "tips": [
+      "Nutze die Promenade zur Orientierung und wähle einen Abschnitt, bevor du Ausrüstung auf den Sand trägst.",
+      "Prüfe am Besuchstag die aktuelle Badeflagge, den Rettungsschwimmerdienst und die Regelungen für Badeassistenz.",
+      "Reserviere das Mittagessen am Meer separat von einer Ausrüstungsbuchung, besonders an Sommerwochenenden."
+    ]
+  },
+  "productWidgets": [
+    {
+      "categorySlug": "travel-outdoors",
+      "heading": "Alles für deinen Strandtag",
+      "afterSection": "Practical Tips"
+    },
+    {
+      "categorySlug": "mobility",
+      "heading": "Brauchst du Unterstützung bei der Mobilität?",
+      "afterSection": "Accessibility"
+    }
+  ],
+  "relatedDestinations": [
+    "ruzafa"
+  ],
+  "relatedBlogPosts": [
+    "valencia-summer-survival-guide",
+    "wheelchair-accessible-valencia"
+  ],
+  "faqs": [
+    {
+      "question": "Ist der Strand Malvarrosa kostenlos?",
+      "answer": "Ja. Der Zugang zum öffentlichen Strand ist kostenlos. Essen, Getränke, Liegen und andere kommerzielle Angebote werden separat berechnet und unterscheiden sich je nach Anbieter. Prüfe vor deinem Besuch die aktuelle Verfügbarkeit von Duschen, Toiletten und Badeassistenz."
+    },
+    {
+      "question": "Eignet sich Malvarrosa für Familien mit kleinen Kindern?",
+      "answer": "Malvarrosa bietet eine breite Promenade, Spielbereiche für Kinder und saisonale Strandeinrichtungen. Prüfe Badeflagge und aktuellen Rettungsschwimmerdienst. Flaches oder warmes Wasser macht das Baden für kleine Kinder nicht sicher: Beaufsichtige sie ständig aus unmittelbarer Nähe und befolge die Hinweise der Rettungsschwimmer."
+    },
+    {
+      "question": "Können Rollstuhlfahrer in Malvarrosa ins Wasser?",
+      "answer": "Die Stadt nennt saisonale Badeassistenz mit amphibischen Hilfsmitteln und angepassten Einrichtungen, üblicherweise vom 1. Juni bis zum 15. September. Bestätige vor der Anreise aktuelle Zeiten, Teilnahmevoraussetzungen und Anmeldebedingungen unter 96 367 73 75."
+    }
+  ]
+}

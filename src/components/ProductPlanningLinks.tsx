@@ -19,15 +19,15 @@ export default function ProductPlanningLinks({
   locale = "en",
 }: ProductPlanningLinksProps) {
   const prefix = customerPrefix(locale);
-  const pathways = locale === "de" ? [{ eyebrow: "Für deinen Aufenthalt", title: "Mietpakete in Valencia", description: "Entdecke passende Kombinationen und prüfe, welche Artikel enthalten sind.", href: `${prefix}/valencia/kits` }] : getProductSeoPathways(categorySlug, locale);
+  const pathways = getProductSeoPathways(categorySlug, locale);
   const family = productSlug ? getProductFamilyForProduct(productSlug) : undefined;
   const familyContent = locale === "de" ? (family ? germanFamilies[family.slug] : undefined) : family?.content[locale];
   const categoryHref = `${prefix}/rental/${categorySlug}`;
   const copy = locale === "de" ? {
     heading: "Plane deine Miete in Valencia",
-    description: "Vergleiche weitere Mietartikel und finde eine passende Kombination für deinen Aufenthalt.",
-    categoryEyebrow: "Alle Artikel der Kategorie", categoryTitle: categoryName,
-    categoryDescription: "Vergleiche die verfügbaren Mietartikel und prüfe deine gewünschten Mietdaten.", action: "Möglichkeiten ansehen",
+    description: "Vergleiche weitere Artikel dieser Kategorie oder ergänze deinen Aufenthalt mit einem praktischen Mietpaket und einem lokalen Ratgeber.",
+    categoryEyebrow: "Alle Artikel der Kategorie", categoryTitle: `${categoryName} in Valencia mieten`,
+    categoryDescription: "Vergleiche verfügbare Artikel und wähle, was am besten zu deinen Daten und deinem Aufenthalt passt.", action: "Möglichkeiten ansehen",
   } : locale === "es"
     ? {
         heading: "Planifica tu alquiler en Valencia",

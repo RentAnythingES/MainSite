@@ -189,7 +189,7 @@ export const rentalBundles: RentalBundle[] = [
     accent: "blue",
     bestFor: ["Digital nomads", "Long-stay professionals", "Couples working remotely", "Apartments without proper desks"],
     includedItems: [
-      { name: "External monitor", note: "27-inch where available", productSlug: "monitor-27" },
+      { name: "External monitor", note: "Size confirmed for your booking", productSlug: "monitor-27" },
       { name: "Laptop stand" },
       { name: "Keyboard and mouse" },
       { name: "USB-C hub or cable kit" },

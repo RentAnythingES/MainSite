@@ -1,0 +1,123 @@
+{
+  "hub": "neighbourhoods",
+  "editorial": {
+    "introTitle": "Das passende Viertel für deinen Aufenthalt in Valencia",
+    "intro": [
+      "Das richtige Viertel bestimmt den Rhythmus deines Valencia-Aufenthalts. Eine Unterkunft im historischen Zentrum verkürzt die Wege zu Sehenswürdigkeiten, eine Gegend am Strand erleichtert Tage am Meer, und ein Wohnviertel kann mehr Platz und ruhigere Abende bieten.",
+      "Vergleiche Atmosphäre, nächtlichen Lärm, öffentliche Verkehrsmittel, Einkaufsmöglichkeiten für Lebensmittel, Fußwege und die Häufigkeit deiner Fahrten quer durch die Stadt. Das angesagteste Viertel ist nicht automatisch das praktischste für deine Reisegruppe."
+    ],
+    "choiceTitle": "Welches Viertel passt zu deinem Reisestil?",
+    "choices": [
+      {
+        "title": "Ruzafa",
+        "description": "Für Restaurants, unabhängige Geschäfte, Nachtleben und eine lebhafte Basis südlich des Zentrums.",
+        "href": "/discover/ruzafa"
+      },
+      {
+        "title": "El Carmen",
+        "description": "Für historische Gassen und zentrale Sehenswürdigkeiten, mit mehr Betrieb am Abend und älteren Gebäuden.",
+        "href": "/discover/el-carmen"
+      },
+      {
+        "title": "Cabanyal",
+        "description": "Für maritimen Charakter, farbenfrohe Architektur und kurze Wege zu den Stadtstränden.",
+        "href": "/discover/cabanyal"
+      },
+      {
+        "title": "Benimaclet",
+        "description": "Für eine von Studierenden geprägte Wohngegend mit lokalen Geschäften und Straßenbahnanbindung.",
+        "href": "/discover/benimaclet"
+      },
+      {
+        "title": "El Ensanche",
+        "description": "Für zentrale Einkaufsmöglichkeiten, elegante Straßen und eine gepflegte Basis zwischen Altstadt und Ruzafa.",
+        "href": "/discover/el-ensanche"
+      }
+    ],
+    "planningTitle": "Vor der Unterkunftsbuchung vergleichen",
+    "planningPoints": [
+      "Prüfe den Fußweg zur nächsten Metro-, Straßenbahn- oder für dich passenden Bushaltestelle.",
+      "Achte auf nächtlichen Betrieb, wenn du mit Kindern reist, früh aufstehst oder einen leichten Schlaf hast.",
+      "Bestätige bei älteren Apartmentgebäuden, ob es einen Aufzug und Stufen am Eingang gibt.",
+      "Überlege, wo größere Babyartikel, Mobilitätshilfen oder Arbeitsausstattung geliefert und untergebracht werden können."
+    ],
+    "pathways": [
+      {
+        "title": "Deinen gesamten Valencia-Aufenthalt planen",
+        "description": "Verbinde deine Viertelwahl auf der Valencia-Seite mit Mietausstattung, Paketen, Lieferung und praktischer Aufenthaltsplanung.",
+        "href": "/valencia",
+        "label": "Mietausstattung in Valencia entdecken"
+      },
+      {
+        "title": "Mehr Bedarf als Platz im Gepäck",
+        "description": "Entdecke Mietpakete für die Anreise mit der Familie, mobiles Arbeiten, Komfort im Sommer und Unterstützung bei eingeschränkter Mobilität.",
+        "href": "/valencia/kits",
+        "label": "Mietpakete für Valencia ansehen"
+      }
+    ],
+    "faqs": [
+      {
+        "question": "Welches Viertel eignet sich für den ersten Valencia-Besuch?",
+        "answer": "El Carmen und die übrige historische Innenstadt bieten kurze Wege zu den wichtigsten Sehenswürdigkeiten. Ruzafa liegt nahebei und hat eine lebhafte Gastronomie- und Abendszene. Die beste Wahl hängt davon ab, ob zentrale Sehenswürdigkeiten, ruhiger Schlaf, Strandnähe oder Platz in der Unterkunft für dich am wichtigsten sind."
+      },
+      {
+        "question": "Welches Viertel in Valencia eignet sich für den Strand?",
+        "answer": "Cabanyal bietet unter den Stadtvierteln die direktesten Wege zu den Stadtstränden. Patacona nördlich der Stadt ist eine weitere praktische Küstenbasis. Du findest es im eigenen Bereich für Strände, weil für Besucher dort vor allem die Lage am Meer zählt."
+      },
+      {
+        "question": "Kann ich Valencia gut erkunden, wenn ich außerhalb des Zentrums wohne?",
+        "answer": "Oft ja. Metro, Straßenbahn, Busse, Radwege und die vergleichsweise kompakte Stadt verbinden viele Gegenden gut. Prüfe die konkrete Strecke ab deiner Unterkunft, statt dich allein auf den Namen des Viertels zu verlassen."
+      },
+      {
+        "question": "Welche Gegenden passen zu einem längeren Valencia-Aufenthalt?",
+        "answer": "Wohngegenden wie Benimaclet oder Teile von Cabanyal bieten eher einen alltäglichen Rhythmus. In Ruzafa und El Ensanche bleiben Restaurants und zentrale Dienstleistungen nah. Zustand der Wohnung, Kühlung, Arbeitsplatz und Verkehrsanbindung sind ebenso wichtig wie das Viertel selbst."
+      }
+    ]
+  },
+  "hubUrl": "https://rentandroll.com/de/discover/neighbourhoods",
+  "hubName": "Valencias Stadtviertel",
+  "hubDescription": "Ehrliche Reiseführer zu Valencias Stadtvierteln: Ruzafa, El Carmen, Malvarrosa, Benimaclet und mehr. Finde die passende Gegend für deine Reise.",
+  "metadata": {
+    "title": "Valencias Stadtviertel: Wohnen und Entdecken",
+    "description": "Ehrliche Reiseführer zu Valencias Stadtvierteln: Ruzafa, El Carmen, Malvarrosa, Benimaclet und mehr. Finde die passende Gegend für deine Reise.",
+    "alternates": {
+      "canonical": "https://rentandroll.com/de/discover/neighbourhoods",
+      "languages": {
+        "en": "https://rentandroll.com/discover/neighbourhoods",
+        "es": "https://rentandroll.com/es/discover/neighbourhoods",
+        "x-default": "https://rentandroll.com/discover/neighbourhoods",
+        "de": "https://rentandroll.com/de/discover/neighbourhoods"
+      }
+    }
+  },
+  "templateText": [
+    {
+      "kind": "text",
+      "value": "Startseite"
+    },
+    {
+      "kind": "text",
+      "value": "Entdecken"
+    },
+    {
+      "kind": "text",
+      "value": "Stadtviertel"
+    },
+    {
+      "kind": "text",
+      "value": "Valencias Stadtviertel"
+    },
+    {
+      "kind": "text",
+      "value": "Jedes Viertel hat seinen eigenen Charakter. Finde das passende für deinen Reisestil – vom unkonventionellen Ruzafa bis zum strandnahen Malvarrosa."
+    },
+    {
+      "kind": "text",
+      "value": "Reiseführer lesen →"
+    },
+    {
+      "kind": "text",
+      "value": "Reiseführer zu den Stadtvierteln folgen in Kürze. Schau bald wieder vorbei."
+    }
+  ]
+}

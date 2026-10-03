@@ -32,15 +32,15 @@ export default function CategoryProductCatalogue({
         bySlug.set(product.subcategorySlug, product.subcategory);
       }
     }
-    return Array.from(bySlug, ([slug, name]) => ({ slug, name })).sort((a, b) =>
-      a.name.localeCompare(b.name, localeRegistry[locale].format)
-    );
+    const entries=Array.from(bySlug, ([slug, name]) => ({ slug, name }));
+    return locale === "de" ? entries : entries.sort((a,b)=>a.name.localeCompare(b.name,localeRegistry[locale].format));
   }, [products, locale]);
 
   const [selectedSubcategories, setSelectedSubcategories] = useState<string[]>([]);
 
   // Rule: subcategory (A-Z) -> title (A-Z) -> price (low to high).
   const sortedProducts = useMemo(() => {
+    if (locale === "de") return products;
     return [...products].sort((a, b) => {
       const subcategoryDiff = a.subcategory.localeCompare(b.subcategory, localeRegistry[locale].format);
       if (subcategoryDiff !== 0) return subcategoryDiff;

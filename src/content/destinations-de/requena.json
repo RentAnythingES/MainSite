@@ -1,0 +1,226 @@
+{
+  "slug": "requena",
+  "name": "Requena",
+  "type": "day-trip",
+  "tagline": "Mittelalterliche Weinstadt mit unterirdischen Höhlen, Bobal-Weinbergen und unvergesslicher Küche",
+  "heroImage": "/discover/requena-hero.webp",
+  "heroImageAlt": "Historische Dächer und Kirchtürme im Viertel La Villa in Requena",
+  "heroImageProvenance": {
+    "status": "licensed",
+    "creator": "19Tarrestnom65",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Vista_de_Requena.jpg",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "verifiedAt": "2026-07-19",
+    "modifications": "Cropped and resized to 16:9 WebP."
+  },
+  "title": "Requena: Tagesausflug ab Valencia zu Wein und Höhlen",
+  "description": "Plane deinen Tagesausflug von Valencia nach Requena: Anreise, Weinhöhlen, Bobal-Weingüter und praktische Tipps für die mittelalterliche Altstadt.",
+  "keywords": [
+    "Requena Tagesausflug",
+    "Requena Wein",
+    "Weinregion Valencia",
+    "Bobal Wein",
+    "Tagesausflüge ab Valencia"
+  ],
+  "date": "2026-06-20",
+  "lastUpdated": "2026-06-20",
+  "audiences": [
+    "couples",
+    "luxury",
+    "budget"
+  ],
+  "region": "Utiel-Requena",
+  "distanceFromValencia": "70 km westlich, etwa eine Stunde",
+  "hubs": [
+    "day-trips"
+  ],
+  "overview": {
+    "paragraphs": [
+      "Requena liegt in Valencias Weinregion: eine befestigte mittelalterliche Stadt auf einer Hochebene, 70 km im Landesinneren, umgeben von Weinbergen für ausgezeichnete spanische Bobal-Weine. Während viele Besucher an die Küste fahren, bietet diese stimmungsvolle Stadt unterirdische Höhlen aus der arabischen Zeit, die gut erhaltene Altstadt La Villa, hervorragende Restaurants und Weinproben zu einem Bruchteil der Preise vergleichbarer Erlebnisse in der Toskana oder im Napa Valley.",
+      "Besonders bemerkenswert ist das unterirdische Höhlennetz Cuevas de la Villa. Während der maurischen Herrschaft dienten diese verbundenen Keller unter der Altstadt zur Weinlagerung und der Legende nach als Versteck bei Belagerungen. Heute kannst du sie mit einer Führung erkunden und durch stimmungsvolle Gänge gehen, in denen es selbst im Sommer gleichmäßig kühl bleibt.",
+      "Auch außerhalb der Höhlen lohnt sich ein Spaziergang durch Requena. Das mittelalterliche Viertel bietet eine maurische Burg, gotische Kirchen und Straßen, die so schmal sind, dass du beide Wände berühren kannst. Die umliegende Weinregion DO Utiel-Requena erzeugt ausgezeichnete Rot- und Roséweine aus der heimischen Bobal-Traube. Bei einer Verkostung in einer Bodega lernst du einen Wein kennen, den viele Besucher bisher nicht kennen."
+    ],
+    "quickFacts": [
+      {
+        "label": "Entfernung",
+        "value": "Etwa 70 km westlich; rund eine Stunde mit dem Auto, öffentliche Reisezeiten prüfen"
+      },
+      {
+        "label": "Anreise",
+        "value": "Aktuelle Renfe-Verbindung oder Ersatzverkehr; mit dem Auto über die A-3"
+      },
+      {
+        "label": "Besonders geeignet für",
+        "value": "Weinliebhaber, Paare, Feinschmecker und Geschichte"
+      },
+      {
+        "label": "Zeitbedarf",
+        "value": "Ein ganzer Tag empfohlen"
+      }
+    ]
+  },
+  "highlights": [
+    {
+      "name": "Cuevas de la Villa",
+      "description": "Ein unterirdisches Höhlennetz unter Requenas Altstadt aus maurischer Zeit. Jahrhundertelang als Weinkeller, Lager und Zuflucht genutzt. Führungen bringen dich durch stimmungsvolle Gänge mit gleichmäßig kühlen Temperaturen.",
+      "icon": "🕳️",
+      "tip": "Buche die Führung bei der Tourismusinformation an der Plaza del Albornoz. Es gibt mehrere tägliche Touren. Im Sommer sind die Höhlen erfrischende 15 °C kühl – bring eine leichte Jacke mit."
+    },
+    {
+      "name": "La Villa: Mittelalterliches Viertel",
+      "description": "Requenas ummauerte Altstadt ist ein Gewirr aus engen mittelalterlichen Straßen, den Ruinen des maurischen Alcázar, gotischen Kirchen und Adelshäusern mit verzierten Portalen. Bemerkenswert gut erhalten und meist mit wenigen Touristen.",
+      "icon": "🏰",
+      "tip": "Betritt das Viertel durch das Tor Arco de la Villa. Die Iglesia de El Salvador hat ein wunderschön gearbeitetes gotisches Portal. Verpasse nicht den Blick von den Burgruinen."
+    },
+    {
+      "name": "Weinproben und Bodegas",
+      "description": "Die Weinregion DO Utiel-Requena umgibt die Stadt. Mehrere Bodegas bieten Verkostungen, von kleinen Familienbetrieben bis zu größeren Weingütern. Die heimische Bobal-Traube ergibt ausgezeichnete Rot- und Roséweine.",
+      "icon": "🍷",
+      "tip": "Bodega Murviedro und Bodegas Vegalfaro sind gute Adressen und bieten englischsprachige Führungen. Buche vorab. Rechne mit 10–15 € für eine Verkostung von vier bis fünf Weinen."
+    },
+    {
+      "name": "Museo del Vino",
+      "description": "Ein sorgfältig gestaltetes Weinmuseum im Palacio del Cid erklärt die Geschichte des Weinbaus in der Region seit römischer Zeit. Dazu gehören Verkostungen und ein Laden mit lokalen Weinen zu Bodega-Preisen.",
+      "icon": "🏛️",
+      "tip": "Ein guter Einstieg, um Bobal vor dem Besuch einer Bodega zu verstehen. Im Laden gibt es ausgezeichnete Weine für 5–15 € pro Flasche, deutlich günstiger als in Valencia."
+    }
+  ],
+  "gettingThere": {
+    "summary": "Ein Auto bietet Flexibilität für ländliche Bodegas. Öffentliche Verkehrsmittel können für die Stadt funktionieren. Prüfe aber aktuelle Bahn- und Ersatzbusregelungen und den endgültigen Halt.",
+    "options": [
+      {
+        "mode": "train",
+        "description": "Prüfe Renfes aktuelle Verbindung nach Requena, einschließlich eines möglichen C-3-Ersatzbusses. Der Hochgeschwindigkeitsbahnhof Requena-Utiel liegt außerhalb der Stadt. Er ist kein C-3-Halt neben der Altstadt.",
+        "duration": "Gesamte Verbindung und letzte Weiterfahrt prüfen",
+        "cost": "Aktuellen Renfe-Tarif für die gewählte Verbindung prüfen"
+      },
+      {
+        "mode": "car",
+        "description": "Über die Autobahn A-3 nach Westen. Eine schnelle, einfache Fahrt durch Orangenhaine und Weinberge.",
+        "duration": "Eine Stunde",
+        "cost": "Mautfrei"
+      }
+    ],
+    "parkingNotes": "Kostenlose Parkplätze außerhalb der Altstadtmauern. Die Straßen innerhalb von La Villa sind zu schmal für Autos."
+  },
+  "bestTimeToVisit": {
+    "summary": "Der Herbst zur Weinlese ist besonders schön. Im Frühling sorgen angenehme Temperaturen ebenfalls für einen lohnenden Besuch.",
+    "seasons": [
+      {
+        "season": "spring",
+        "description": "Grüne Weinberge, angenehme Temperaturen für die Altstadt und Wildblumen in der Landschaft.",
+        "rating": 5
+      },
+      {
+        "season": "summer",
+        "description": "Heiß im Landesinneren, auch über 38 °C, aber die Höhlen sind kühle 15 °C. Komm früh, probiere Wein und nutze die Höhlen während der Nachmittagshitze.",
+        "rating": 3
+      },
+      {
+        "season": "autumn",
+        "description": "Weinlese, Vendimia, im September und Oktober. In den Bodegas herrscht Betrieb, mit Festen rund um das Traubenstampfen. Die beste Besuchszeit.",
+        "rating": 5
+      },
+      {
+        "season": "winter",
+        "description": "Für Spanien kalt mit 5–10 °C. Wenige Besucher, gemütliche Weinbars und Restaurants. Gut für ein Wochenende rund um Wein.",
+        "rating": 3
+      }
+    ]
+  },
+  "whatToBring": {
+    "bring": [
+      "Leichte Jacke für die Höhlen mit 15 °C im Inneren",
+      "Bequeme Schuhe",
+      "Nüchternen Fahrer oder Tickets für öffentliche Verkehrsmittel",
+      "Appetit"
+    ],
+    "dontBring": [
+      "Erwartungen an Napa-Glamour – hier erlebst du ländliches, authentisches Spanien"
+    ],
+    "rentInstead": [
+      "Auto, wenn du ländliche Bodegas außerhalb der Stadt besuchen möchtest"
+    ]
+  },
+  "accessibility": {
+    "overallRating": 2,
+    "summary": "Die mittelalterliche Altstadt hat steile, enge Straßen und unebene Flächen. Die Höhlen haben Stufen. Der neuere Stadtteil ist eben und zugänglich.",
+    "wheelchairNotes": "La Villa ist großteils schwer zugänglich, mit steilen Kopfsteinpflasterstraßen und fehlenden Rampen. Das Museo del Vino und einige Bodegas außerhalb der Stadt sind zugänglich.",
+    "strollerNotes": "In der Altstadt sehr schwierig. Lass den Kinderwagen beim Auto und trage dein Kind. Der neuere Stadtteil ist gut geeignet.",
+    "publicTransportAccess": "Bestätige die Barrierefreiheit des genauen Bahnhofs oder Ersatzbushalts und der Weiterfahrt. Der Hochgeschwindigkeitsbahnhof Requena-Utiel liegt außerhalb der Stadt. Gehe deshalb nicht von einem fünfzehnminütigen Fußweg zur Altstadt aus."
+  },
+  "foodAndDrink": {
+    "summary": "Requenas Küche ist die herzhafte valencianische Küche des Landesinneren mit Wurstwaren, Reisgerichten, saisonalen Zutaten und regionalem Wein. Reserviere gezielt ausgewählte Restaurants und bestätige die Anreise, wenn du außerhalb der Altstadt essen möchtest.",
+    "recommendations": [
+      {
+        "name": "Restaurant im Hotel La Villa",
+        "type": "Traditionelle regionale Küche",
+        "priceRange": "€€",
+        "tip": "Die Lage in der Altstadt ist für die Höhlen praktisch. Bestätige beim Hotel den aktuellen Restaurantbetrieb.",
+        "familyFriendly": true,
+        "sourceNote": "Der Requena-Tourismusführer nennt Hotel La Villa Restaurante an der Plaza del Albornoz 8 im historischen Viertel.",
+        "sourceUrl": "https://guiasturisticasct.com/wp-content/uploads/Guia-REQUENA-2023.pdf",
+        "sourceCheckedAt": "2026-07-19"
+      },
+      {
+        "name": "La Posada de Águeda",
+        "type": "Traditionelle regionale Küche",
+        "priceRange": "€€",
+        "tip": "Das Restaurant liegt außerhalb des Altstadtrundgangs zu Fuß. Plane die Anreise und reserviere vor dem Besuch.",
+        "familyFriendly": true,
+        "sourceNote": "Der Guide Michelin bestätigt den Standort in Requena, traditionelle regionale Küche und den aktuellen Betrieb nur zur Mittagszeit.",
+        "sourceUrl": "https://guide.michelin.com/us/en/comunidad-valenciana/requena/restaurant/la-posada-de-agueda",
+        "sourceCheckedAt": "2026-07-19"
+      }
+    ],
+    "localSpeciality": "Embutidos, Wurstwaren, und Gazpachos manchegos: ein herzhaftes Wildgericht mit ungesäuertem Brot, das du nicht mit der kalten andalusischen Suppe verwechseln solltest."
+  },
+  "visitingHere": {
+    "summary": "Ein ganzer Tag lässt Zeit für Altstadt, Höhlenführung, Weinprobe und ein ausgiebiges Mittagessen. Ein kürzerer halber Tag kann sich auf Höhlen und Altstadt konzentrieren.",
+    "idealDuration": "Ein ganzer Tag, 6–8 Stunden",
+    "bestTimeOfDay": "Morgens Altstadt und Höhlen, Mittagessen bis 14 Uhr, nachmittags Bodegas",
+    "tips": [
+      "Beginne mit der Führung durch die Cuevas de la Villa. Buche bei der Tourismusinformation an der Plaza del Albornoz.",
+      "Spaziere nach den Höhlen durch das mittelalterliche Viertel La Villa. Es ist kompakt und wunderschön.",
+      "Bestätige vor der Anreise dein gewähltes Mittagslokal. Restaurants in der Altstadt und außerhalb brauchen unterschiedliche Verkehrsplanung.",
+      "Nachmittags eine Bodega außerhalb der Stadt besuchen, wofür du ein Auto brauchst, oder das Museo del Vino erkunden."
+    ]
+  },
+  "practicalTips": [
+    "Wenn du Auto fährst, bestimme einen Fahrer, der keinen Alkohol trinkt, oder spucke den Wein bei der Verkostung aus. Die spanischen Alkoholgrenzen am Steuer sind streng.",
+    "Die Höhlen haben ganzjährig etwa 15 °C. Bring auch im Sommer eine leichte Jacke mit.",
+    "Buche Bodega-Besuche im Voraus, besonders am Wochenende. Viele sind Familienbetriebe mit begrenzter Kapazität.",
+    "Montags ist die Stadt sehr ruhig. Einige Restaurants und das Museum können geschlossen sein."
+  ],
+  "audienceTips": [
+    {
+      "audience": "couples",
+      "tips": [
+        "Ein romantischer Tagesausflug ab Valencia mit Weinprobe, mittelalterlichen Straßen und langen Mittagessen.",
+        "Buche eine private Bodega-Führung für zwei. Einige bieten dazu Käse und Wurstwaren an.",
+        "Bleib mit Auto bis zum Sonnenuntergang über den Weinbergen. Das Licht ist außergewöhnlich."
+      ]
+    }
+  ],
+  "productWidgets": [],
+  "relatedDestinations": [
+    "sagunto",
+    "albufera"
+  ],
+  "relatedBlogPosts": [],
+  "faqs": [
+    {
+      "question": "Wie komme ich von Valencia nach Requena?",
+      "answer": "Fahre auf der A-3 nach Westen und plane etwa eine Stunde ein oder prüfe Renfes aktuellen Bahn- und Ersatzbusverkehr nach Requena. Der Hochgeschwindigkeitsbahnhof Requena-Utiel liegt außerhalb der Stadt und erfordert eine Weiterfahrt. Für ländliche Bodegas ist ein Auto flexibler."
+    },
+    {
+      "question": "Für welchen Wein ist Requena bekannt?",
+      "answer": "Für die heimische Bobal-Traube, Spaniens dritthäufigste rote Rebsorte. Sie ergibt ausgezeichnete Rot- und Roséweine. Die Region DO Utiel-Requena wird zunehmend als eine spanische Weinregion mit gutem Preis-Leistungs-Verhältnis anerkannt."
+    },
+    {
+      "question": "Lohnt sich ein Besuch der Höhlen in Requena?",
+      "answer": "Ja. Das unterirdische Höhlennetz unter der mittelalterlichen Altstadt ist einzigartig. Führungen dauern etwa 45 Minuten, und die gleichmäßige Temperatur von 15 °C bietet eine angenehme Pause von der Sommerhitze."
+    }
+  ]
+}

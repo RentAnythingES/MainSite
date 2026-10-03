@@ -1,0 +1,140 @@
+{
+  "hub": "events",
+  "hubName": "Veranstaltungen in Valencia",
+  "hubDescription": "Plane deine Valencia-Reise mit Reiseführern zu Festen und saisonalen Veranstaltungen: praktische Termine, lokaler Hintergrund und Hinweise zur Buchung.",
+  "metadata": {
+    "title": "Valencia: Veranstaltungen, Feste und Feiertage",
+    "description": "Plane deine Valencia-Reise mit Reiseführern zu Festen und saisonalen Veranstaltungen: praktische Termine, lokaler Hintergrund und Hinweise zur Buchung.",
+    "alternates": {
+      "canonical": "https://rentandroll.com/de/discover/events",
+      "languages": {
+        "en": "https://rentandroll.com/discover/events",
+        "es": "https://rentandroll.com/es/discover/events",
+        "x-default": "https://rentandroll.com/discover/events",
+        "de": "https://rentandroll.com/de/discover/events"
+      }
+    }
+  },
+  "editorial": {
+    "introTitle": "Plane nach Valencias Festen, nicht nur nach ihren Terminen",
+    "intro": [
+      "Eine große Veranstaltung in Valencia kann Verkehr, Straßenzugänge, Lärm, Öffnungszeiten, Restaurantverfügbarkeit und die nötige Zeit für Wege durch die Stadt verändern. Das Fest selbst kann kostenlos sein, während Unterkunft und praktische Planung schon Monate vorher Entscheidungen erfordern.",
+      "Unsere Veranstaltungsseiten unterscheiden beständige Traditionen vom aktuellen Jahresprogramm. Bestätige kurz vor deinem Besuch genaue Termine, Routen, Ticketregeln und Nahverkehrsänderungen über offizielle Quellen."
+    ],
+    "choiceTitle": "Plane die Reise rund um die passende Art von Veranstaltung",
+    "choices": [
+      {
+        "title": "Fallas",
+        "description": "Valencias größtes Fest mit Monumenten, Feuerwerk, Prozessionen, großem Andrang und Einschränkungen in der ganzen Stadt.",
+        "href": "/discover/fallas"
+      },
+      {
+        "title": "Maritime Traditionen",
+        "description": "Die Semana Santa Marinera verbindet Prozessionen und Nachbarschaftstraditionen rund um Cabanyal und die Küste.",
+        "href": "/discover/semana-santa-marinera-valencia"
+      },
+      {
+        "title": "Sommerfeste",
+        "description": "Die Feria de Julio und das Gran-Fira-Programm bringen Kultur im Freien, Feuerwerk und Traditionen in die ganze Stadt.",
+        "href": "/discover/gran-fira-valencia"
+      },
+      {
+        "title": "Historische Prozessionen",
+        "description": "Fronleichnam bringt La Moma, die Rocas, die Cabalgata del Convite und die feierliche Prozession in die Ciutat Vella.",
+        "href": "/discover/corpus-christi-valencia"
+      },
+      {
+        "title": "Weihnachtszeit",
+        "description": "Plane Lichter, Krippen, Märkte, Silvester und die Heiligen Drei Könige, ohne dich auf das Programm des Vorjahres zu verlassen.",
+        "href": "/discover/christmas-valencia"
+      }
+    ],
+    "planningTitle": "Prüfe kurz vor der Veranstaltung erneut",
+    "planningPoints": [
+      "Bestätige das aktuelle Jahresprogramm und die Route über den offiziellen Veranstalter oder eine offizielle Tourismusquelle.",
+      "Plane zusätzliche Zeit für Straßensperrungen, volle Stationen und geänderte Buslinien ein.",
+      "Plane für Kinder und empfindliche Reisende Gehörschutz, Treffpunkte, Wasser und Ruhepausen ein.",
+      "Kläre, ob barrierefreie Zuschauerbereiche oder Unterstützung eine Voranmeldung erfordern."
+    ],
+    "pathways": [
+      {
+        "title": "Während eines gut besuchten Festes übernachten",
+        "description": "Vergleiche Valencias Viertel nach Lärm, Fußwegen, Verkehrsanbindung und den praktischen Vor- und Nachteilen einer Unterkunft nahe am Programm.",
+        "href": "/discover/neighbourhoods",
+        "label": "Stadtviertel vergleichen"
+      },
+      {
+        "title": "Mit der Familie reisen",
+        "description": "Nutze den Familienreiseführer für Tempo, Ausrüstung und realistische Tagespläne während Valencias belebtester Zeiten.",
+        "href": "/blog/valencia-with-kids-complete-guide",
+        "label": "Familienreiseführer lesen"
+      }
+    ],
+    "faqs": [
+      {
+        "question": "Was ist das größte Fest in Valencia?",
+        "answer": "Die Fallas sind Valencias größtes und international bekanntestes Fest. Die Hauptfeiern finden im März statt, mit Monumenten, Feuerwerk, Prozessionen und weitreichenden Änderungen bei Wegen durch die Stadt."
+      },
+      {
+        "question": "Bleiben Valencias Festtermine jedes Jahr gleich?",
+        "answer": "Einige Feiern haben feste Eckdaten. Programme, Routen und einzelne Aktivitäten ändern sich jedoch jährlich. Bestätige immer das aktuelle offizielle Programm, bevor du Reiseentscheidungen triffst."
+      },
+      {
+        "question": "Eignet sich Valencia während großer Veranstaltungen für Familien?",
+        "answer": "Ja, mit Vorbereitung. Menschenmengen, Lärm, Feuerwerk, späte Zeiten und Straßensperrungen können aber anstrengend sein. Wähle passende Aktivitäten, vereinbart Treffpunkte und ermögliche Kindern regelmäßige Pausen abseits der vollsten Bereiche."
+      },
+      {
+        "question": "Wie früh sollte ich eine Unterkunft für die Fallas buchen?",
+        "answer": "Die Fallas sorgen für außergewöhnlich hohe Nachfrage. Frühere Planung bietet mehr Auswahl. Wir vermeiden künstliche Dringlichkeit oder feste Buchungsfristen: Vergleiche Unterkünfte und Stornierungsbedingungen, sobald deine Reisetermine einigermaßen feststehen."
+      }
+    ]
+  },
+  "monthNames": [
+    "Jan",
+    "Feb",
+    "Mär",
+    "Apr",
+    "Mai",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Okt",
+    "Nov",
+    "Dez"
+  ],
+  "templateText": [
+    {
+      "kind": "text",
+      "value": "Startseite"
+    },
+    {
+      "kind": "text",
+      "value": "Entdecken"
+    },
+    {
+      "kind": "text",
+      "value": "Veranstaltungen"
+    },
+    {
+      "kind": "text",
+      "value": "Veranstaltungen in Valencia"
+    },
+    {
+      "kind": "text",
+      "value": "Plane deine Reise rund um Valencias Feste, Feiertage und saisonale Höhepunkte. Reiseführer mit Terminen, Buchungstipps und Informationen zum Ablauf."
+    },
+    {
+      "kind": "text",
+      "value": "Veranstaltungen nach Monat"
+    },
+    {
+      "kind": "text",
+      "value": "Reiseführer lesen →"
+    },
+    {
+      "kind": "text",
+      "value": "Reiseführer zu Veranstaltungen folgen in Kürze. Schau bald wieder vorbei."
+    }
+  ]
+}
