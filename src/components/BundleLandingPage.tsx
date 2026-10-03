@@ -1,3 +1,4 @@
+import { blogCategoryLabel } from "@/i18n/blog-category";
 import Image from "next/image";
 import Link from "next/link";
 import type { ReactNode } from "react";
@@ -34,7 +35,7 @@ export default function BundleLandingPage({ bundle, locale, prefix = localeRegis
           <ol className="flex flex-wrap items-center gap-2 text-sm text-neutral-500">
             <li><Link href={prefix || "/"} className="hover:text-brand transition-colors">{text.home}</Link></li>
             <li>/</li>
-            <li><Link href={locale === "de" ? prefix : `${prefix}/valencia`} className="hover:text-brand transition-colors">Valencia</Link></li>
+            <li><Link href={`${prefix}/valencia`} className="hover:text-brand transition-colors">Valencia</Link></li>
             <li>/</li>
             <li><Link href={`${prefix}/valencia/kits`} className="hover:text-brand transition-colors">{text.kits}</Link></li>
             <li>/</li>
@@ -151,7 +152,7 @@ export default function BundleLandingPage({ bundle, locale, prefix = localeRegis
             <div className="grid md:grid-cols-3 gap-6">
               {relatedGuides.map((guide) => (
                 <Link key={guide.slug} href={`${prefix}/blog/${guide.slug}`} className="card p-6 bg-white hover:shadow-md transition-shadow group">
-                  <span className="badge badge-brand capitalize mb-3">{guide.category}</span>
+                  <span className="badge badge-brand capitalize mb-3">{blogCategoryLabel(locale, guide.category)}</span>
                   <h3 className="font-bold text-lg group-hover:text-brand transition-colors">{guide.title}</h3>
                   <p className="mt-2 text-sm text-neutral-500 leading-relaxed">{guide.excerpt}</p>
                   <span className="mt-4 inline-block text-sm font-bold text-brand">{text.read}</span>

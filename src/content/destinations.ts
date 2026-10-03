@@ -964,15 +964,15 @@ export const destinations: Destination[] = [
     hubs: ["beaches"],
     overview: {
       paragraphs: [
-        "Malvarrosa is Valencia's most popular urban beach — and for good reason. A wide stretch of golden sand running from the port area north towards Patacona, backed by a lively promenade packed with restaurants, bars, and the historic Las Arenas spa hotel.",
+        "Malvarrosa is one of Valencia's most popular urban beaches. Its wide stretch of golden sand lies between Alboraya and Calle Acequia de la Cadena, with Cabanyal beach farther south towards the port. A lively promenade connects the seafront restaurants and bars, including the Las Arenas area farther south.",
         "Unlike resort beaches, Malvarrosa is a real city beach. Locals jog here before work, families spend entire Sundays, and the chiringuitos (beach bars) serve proper paella with their feet-in-the-sand vibes. It's also one of Spain's most accessible beaches, with a comprehensive assisted bathing programme run by the Red Cross.",
-        "The beach is undergoing a renovation in 2026, with new modernised chiringuito buildings featuring glass panoramic designs and solar panels. Some venues may be temporarily closed, but the beach itself is fully open and as good as ever."
+        "Beach venues and seasonal services can change between visits. Check current municipal beach information and each restaurant's own opening hours before planning a specific stop; do not assume every beachfront venue or facility is operating on your visit date."
       ],
       quickFacts: [
-        { label: "Beach length", value: "1.8 km of sand" },
+        { label: "Beach length", value: "Approximately 1 km of sand" },
         { label: "Water temp", value: "16°C (winter) to 26°C (summer)" },
-        { label: "Lifeguards", value: "June–September" },
-        { label: "Blue Flag", value: "Yes (check current status)" },
+        { label: "Lifeguards", value: "Seasonal; confirm current municipal dates and hours" },
+        { label: "Blue Flag", value: "Check the current award status" },
       ],
     },
     highlights: [
@@ -983,31 +983,31 @@ export const destinations: Destination[] = [
       },
       {
         name: "Chiringuitos & Paella",
-        description: "The beach restaurants serve some of Valencia's best paella — this is where the dish was born, after all. New modernised venues are opening through 2026 with panoramic glass designs.",
+        description: "The beachfront restaurants are well known for Valencian rice dishes. Paella's roots lie in the rice-growing landscape around Albufera, rather than on this promenade. Check individual venues for current menus and opening hours.",
         icon: "🥘",
-        tip: "Book Sunday paella by Friday at popular spots like La Pepica or Casa Carmela.",
+        tip: "Reserve a Sunday rice lunch directly at popular restaurants such as La Pepica or Casa Carmela, and confirm their current service hours.",
       },
       {
         name: "Assisted Bathing Programme",
-        description: "From June 1 to September 15, the Red Cross operates an assisted bathing service with amphibious wheelchairs, lifting cranes, and trained volunteers. Free of charge. Book ahead by calling 96 367 73 75.",
+        description: "The city lists assisted bathing from June 1 to September 15 with amphibious equipment, adapted facilities and trained support. Confirm current hours, eligibility and booking arrangements with the service on 96 367 73 75.",
         icon: "♿",
-        tip: "Arrive before 11am to avoid the busiest period. The reserved area has shade and adapted facilities.",
+        tip: "Confirm the operating time before travelling. The designated area includes shade and adapted facilities, but availability and assistance depend on the service schedule.",
       },
       {
         name: "Beach Sports",
-        description: "Volleyball courts, CrossFit areas, and a children's playground are available free. The cycle path runs the full length of the promenade.",
+        description: "The beachfront has sports areas, volleyball courts and children's play areas, with a cycle route along the promenade. Check availability and charges for booked sports facilities rather than assuming every activity is free.",
         icon: "🏐",
       },
     ],
     gettingThere: {
       summary: "Malvarrosa is well-connected by tram, bus, and bike from the city centre.",
       options: [
-        { mode: "tram", description: "Lines 4 and 6 run directly to the beach. La Cadena or Eugenia Viñes stops.", duration: "20 min from centre", cost: "€1.50" },
-        { mode: "bus", description: "Lines 1, 2, and 31 serve the beach area from Gran Vía and the city centre.", cost: "€1.50" },
-        { mode: "bike", description: "Flat cycle path from the Turia Gardens runs directly to the beach. Valenbisi stations available.", duration: "25 min from Ruzafa" },
-        { mode: "walk", description: "Follow the Turia Gardens east — the path leads straight to the beach.", duration: "40 min from old town" },
+        { mode: "tram", description: "Use Metrovalencia trams towards the beachfront and check the current stop for your chosen section, such as La Cadena or Eugenia Viñes. The final walk depends on the stop.", duration: "Allow for the current route, transfers and final walk", cost: "Check the current Metrovalencia fare" },
+        { mode: "bus", description: "EMT serves the beachfront. Use the current route planner to choose the nearest stop to your beach access rather than relying on an old route list.", cost: "Check the current EMT fare" },
+        { mode: "bike", description: "Use the city cycle network and the seafront cycle route. Check the route and bicycle-return location before leaving; do not assume the Turia park itself continues directly to the sand.", duration: "Depends on starting point and chosen route" },
+        { mode: "walk", description: "Walk towards the coast using a mapped city route. The Turia Gardens do not lead straight onto Malvarrosa beach, so plan the urban section and final distance.", duration: "Check the full route from your starting point" },
       ],
-      parkingNotes: "Limited street parking. Public car parks near Las Arenas hotel. Avoid driving on summer weekends — it's a nightmare.",
+      parkingNotes: "Street parking is limited. Public car parks serve the wider Las Arenas seafront area. Summer weekends can be busy, so consider public transport and check the final distance to Malvarrosa.",
     },
     bestTimeToVisit: {
       summary: "June and September are the sweet spot — warm enough to swim, without the August crowds.",
@@ -1015,19 +1015,19 @@ export const destinations: Destination[] = [
         { season: "spring", description: "Pleasant (18-24°C) for walking and terraces. Water is still cool (17-19°C). Fewer crowds.", rating: 3 },
         { season: "summer", description: "Peak season. Hot (30-38°C), warm water (24-26°C), lifeguards on duty. Very busy July-August, especially weekends.", rating: 4 },
         { season: "autumn", description: "September is excellent — warm water, thinner crowds, golden light. October still good for walks.", rating: 5 },
-        { season: "winter", description: "Mild (12-18°C). Great for promenade walks and terrace coffee. Nobody swims.", rating: 2 },
+        { season: "winter", description: "Mild weather can suit promenade walks and terrace coffee. The sea is cold, and seasonal beach services are limited.", rating: 2 },
       ],
       avoidDates: "Mid-August weekends — the beach is packed shoulder-to-shoulder. Arrive before 10am if you must go.",
     },
     accessibility: {
       overallRating: 5,
       summary: "One of Spain's most accessible beaches. UNE 170001 certified. Fully adapted infrastructure including the promenade, access ramps, adapted toilets, and the Red Cross assisted bathing programme.",
-      wheelchairNotes: "The promenade is fully flat and wide. Adapted wooden walkways extend to the water's edge. Amphibious wheelchairs are available free June-September via the Red Cross (96 367 73 75).",
+      wheelchairNotes: "The promenade is flat and wide, with adapted beach walkways. Confirm the current walkway endpoint and bathing-assistance arrangements; an ordinary wheelchair cannot continue through loose sand into the sea. Contact the service on 96 367 73 75.",
       strollerNotes: "Excellent — the promenade is wide and smooth. Sandy areas require lifting the stroller, but the walkways get you close to the water.",
       publicTransportAccess: "Tram stops are fully accessible with ramps. EMT buses serving the beach have wheelchair ramps.",
     },
     foodAndDrink: {
-      summary: "The Malvarrosa promenade is where paella was born — specifically, in the beachfront restaurants that have served rice dishes for over a century.",
+      summary: "The seafront has restaurants with a long tradition of Valencian rice dishes. Paella originated in the rice-growing landscape around Albufera; the beachfront restaurants helped establish its dining tradition in the city.",
       recommendations: [
         { name: "La Pepica", type: "Traditional rice restaurant", priceRange: "€€€", tip: "Reserve for weekend lunch and confirm current service hours directly.", familyFriendly: true, sourceNote: "Official site confirms the beachfront Avenida Neptuno restaurant, rice menu and current hours.", sourceUrl: "https://lapepica.com/menu/", sourceCheckedAt: "2026-07-19" },
         { name: "Casa Carmela", type: "Wood-fired paella", priceRange: "€€€", tip: "Reserve ahead and order rice for the table rather than as an individual dish.", familyFriendly: true, sourceNote: "Official site confirms its Isabel de Villena location and wood-fired paella tradition since 1922.", sourceUrl: "https://www.casa-carmela.com/es/", sourceCheckedAt: "2026-07-19" },
@@ -1036,10 +1036,10 @@ export const destinations: Destination[] = [
       localSpeciality: "Order paella Valenciana (chicken, rabbit, beans) or arroz a banda (fish stock rice). Never order paella for dinner — it's a lunch dish in Valencia.",
     },
     practicalTips: [
-      "Bring your own shade — chiringuito sunbed rental is €9-10 each and the good spots fill up by 11am in summer.",
-      "Apply sunscreen before arriving. The UV index in Valencia hits 9-10+ in summer — burns happen fast.",
+      "Bring your own shade or check the current sunbed and umbrella options directly with the provider. Prices and availability vary, especially on summer weekends.",
+      "Apply sunscreen before arriving and plan shade, a hat and drinking water. Summer sun exposure can be intense; check current UV and weather information.",
       "The showers and foot-wash stations are free and located at regular intervals along the promenade.",
-      "If you're coming with kids, the southern end near the port is slightly less crowded than the main central section.",
+      "If you are coming with children, choose an access with the facilities you need and check the conditions on arrival. The beaches nearer the port are Cabanyal and Las Arenas, not the southern end of Malvarrosa.",
     ],
     visitingHere: {
       summary: "Malvarrosa works as a short promenade visit or a full beach day. Decide whether you mainly want a swim, a long lunch, accessible seafront time or a complete family setup before choosing where to stop.",
@@ -1058,9 +1058,9 @@ export const destinations: Destination[] = [
     relatedDestinations: ["ruzafa"],
     relatedBlogPosts: ["valencia-summer-survival-guide", "wheelchair-accessible-valencia"],
     faqs: [
-      { question: "Is Malvarrosa Beach free?", answer: "Yes — the beach itself is completely free. You only pay for sunbed rental at chiringuitos (€9-10 each) or for food and drinks. Showers, toilets, and the assisted bathing programme are all free." },
-      { question: "Is Malvarrosa good for families with small children?", answer: "Excellent. The water is shallow and warm in summer, lifeguards are on duty June-September, and there's a children's playground area. The southern end near the port tends to be slightly quieter." },
-      { question: "Can wheelchair users access the water at Malvarrosa?", answer: "Yes — from June 1 to September 15, the Red Cross operates a free assisted bathing service with amphibious wheelchairs and lifting cranes. Book ahead: 96 367 73 75." },
+      { question: "Is Malvarrosa Beach free?", answer: "Yes. Access to the public beach is free. Food, drinks, sunbeds and other commercial services have separate charges that vary by provider. Check the current availability of showers, toilets and bathing assistance before your visit." },
+      { question: "Is Malvarrosa good for families with small children?", answer: "Malvarrosa has a broad promenade, children's play areas and seasonal beach services. Check the flag and current lifeguard coverage. Shallow or warm water does not make swimming safe for young children: keep them under continuous close adult supervision and follow lifeguard instructions." },
+      { question: "Can wheelchair users access the water at Malvarrosa?", answer: "The city lists a seasonal assisted-bathing service with amphibious equipment and adapted facilities, generally from June 1 to September 15. Confirm current hours, eligibility and booking arrangements before travelling: 96 367 73 75." },
     ],
   },
   {
@@ -1092,11 +1092,11 @@ export const destinations: Destination[] = [
       frequency: "Annual — UNESCO Intangible Cultural Heritage since 2016",
       ticketsRequired: false,
       crowdLevel: "extreme",
-      bookingAdvice: "Book accommodation at least 2-3 months ahead. Prices triple during Fallas week. Consider staying in Ruzafa or Benimaclet — slightly outside the chaos but walkable to everything.",
+      bookingAdvice: "Fallas brings strong accommodation demand. Compare actual prices, locations and cancellation terms once your dates are reasonably certain. Ruzafa and Benimaclet also have festival activity; check noise, walking distances and transport rather than assuming either is outside the crowds.",
       whatToExpect: [
         "Enormous artistic sculptures (fallas) erected at 300+ intersections citywide — many are satirical, political, or surreal",
         "The Mascletà: a deafening firecracker display in Plaza del Ayuntamiento at 2pm daily (March 1-19). Arrive by 1pm for a spot.",
-        "La Cremà: on March 19 (St Joseph's Day) ALL the fallas are burned. The city becomes an inferno — deliberately. The biggest falla in Plaza del Ayuntamiento burns last, usually around 1am.",
+        "La Cremà: on March 19 (St Joseph's Day), the fallas are burned in a scheduled sequence. In the official 2026 programme, children's monuments began at 8pm, large monuments at 10pm with exceptions, and the main municipal monument at 11pm. Check the current annual programme.",
         "Street parties, open-air concerts, and paella competitions throughout the week",
         "Traditional fallera outfits — ornate dresses and hairstyles — worn by thousands of participants",
       ],
@@ -1116,8 +1116,8 @@ export const destinations: Destination[] = [
       ],
       quickFacts: [
         { label: "When", value: "March 15-19 (build-up from March 1)" },
-        { label: "Cost", value: "Free — everything is open-air" },
-        { label: "Crowds", value: "Extreme — 2M+ visitors over the festival" },
+        { label: "Cost", value: "Public street viewing is free; some enclosures and activities need tickets" },
+        { label: "Crowds", value: "Extreme around major events and central squares" },
         { label: "Noise level", value: "Bring earplugs. Seriously." },
       ],
     },
@@ -1126,13 +1126,13 @@ export const destinations: Destination[] = [
         name: "The Mascletà",
         description: "Every day at 2pm (March 1-19) in Plaza del Ayuntamiento, a professional pyrotechnician orchestrates a 7-minute firecracker display. It builds from rhythmic pops to a wall of sound that shakes buildings. You feel it in your bones.",
         icon: "💥",
-        tip: "Arrive by 1pm or you won't get a spot. The best position is about 30m from the barriers — close enough to feel it, far enough to keep your hearing.",
+        tip: "Arrive before the published start and choose a viewing point with an exit route. Stay behind the official barriers and follow civil-protection instructions; no fixed distance guarantees protection from the noise.",
       },
       {
         name: "La Cremà (The Burning)",
-        description: "On the night of March 19, all 300+ fallas are burned simultaneously across the city. The biggest falla in Plaza del Ayuntamiento burns last, usually around 1am. Firefighters hose down buildings as flames reach 15+ metres.",
+        description: "On March 19, the fallas are burned across the city in a scheduled sequence. The main municipal monument is one of the final acts; its 2026 official time was 11pm. Firefighters manage the safety areas around the flames. Confirm the current programme and restrictions.",
         icon: "🔥",
-        tip: "Watch a smaller neighbourhood cremà first (10pm) — they're more intimate and less crowded. Then head to the main plaza for the finale.",
+        tip: "A smaller neighbourhood cremà can be less crowded than the main square. Check the exact time and plan one safe viewing point rather than relying on moving quickly between major burnings.",
       },
       {
         name: "The Fallas Sculptures",
@@ -1162,12 +1162,12 @@ export const destinations: Destination[] = [
     accessibility: {
       overallRating: 2,
       summary: "Fallas is challenging for wheelchair users and people with mobility issues. Crowds are dense, streets are closed, and smoke can be intense. However, the Mascletà in the plaza has a designated accessible area.",
-      wheelchairNotes: "The main plazas have accessible viewing areas during Mascletà. Smaller neighbourhood events are harder to navigate. Plan routes carefully — many streets are closed to vehicles.",
+      wheelchairNotes: "Check the current official accessible viewing arrangements and whether advance registration is required. Smaller neighbourhood events can be harder to navigate. Plan routes carefully because many streets are closed to vehicles.",
       strollerNotes: "Use a compact, one-hand fold stroller. You will need to fold it frequently in dense crowds. Avoid the main Cremà with very young children — the heat, noise, and smoke are intense.",
-      publicTransportAccess: "Metro and buses run extended hours during Fallas. Accessible, but very crowded. Consider taxis outside peak events.",
+      publicTransportAccess: "Metro and bus operators publish special Fallas service arrangements and diversions. Confirm operating hours, accessible stops and the return journey for your date; services can be very crowded. Consider taxi access outside closed event areas.",
     },
     practicalTips: [
-      "Download the official Fallas app — it has a map of all 300+ fallas and daily event schedules.",
+      "Save the official current-year programme and monument map before leaving, and check event schedules and closures again on the day.",
       "Eat paella for lunch, not dinner. Street churros and buñuelos de calabaza (pumpkin fritters) are the essential Fallas snacks.",
       "The city smells of gunpowder for the entire festival. Your clothes will too. Don't wear anything precious.",
       "Banks and shops in the city centre may have reduced hours during Fallas week. Stock up on cash.",
@@ -1189,9 +1189,9 @@ export const destinations: Destination[] = [
     relatedBlogPosts: ["valencia-with-kids-complete-guide"],
     faqs: [
       { question: "Is Las Fallas safe for children?", answer: "Yes, with preparation. Bring earplugs (non-negotiable for the Mascletà), avoid the main Cremà with babies or toddlers (heat and smoke are intense), and use a compact stroller that folds easily in crowds. The daytime events and neighbourhood fallas are wonderful for kids." },
-      { question: "Do I need tickets for Las Fallas?", answer: "No — Fallas is entirely free and open-air. The Mascletà, Cremà, and all street events are public. Some private Fallas casals host dinners, but the main festival costs nothing." },
-      { question: "How far in advance should I book accommodation?", answer: "At least 2-3 months ahead. Hotel prices triple during Fallas week and availability is extremely limited. Apartments in Ruzafa or Benimaclet are good alternatives — slightly outside the chaos but walkable to everything." },
-      { question: "What is the Mascletà?", answer: "A daily firecracker display at 2pm in Plaza del Ayuntamiento (March 1-19). It's not fireworks — it's a rhythmic, building crescendo of gunpowder explosions designed to be felt in your chest, not just watched. Arrive by 1pm for a spot. It lasts about 7 minutes and is unlike anything else in Europe." },
+      { question: "Do I need tickets for Las Fallas?", answer: "The main public street displays and views of the monuments are free to watch. Some fenced Special Section monument areas, guided visits and private activities require tickets. Check the current organiser information for each activity." },
+      { question: "How far in advance should I book accommodation?", answer: "Start comparing accommodation and cancellation terms once your dates are reasonably certain. Fallas creates strong demand, but prices and availability depend on the property and dates. Ruzafa and Benimaclet have their own festival activity, so check noise, access and transport before choosing." },
+      { question: "What is the Mascletà?", answer: "A daily firecracker display traditionally held at 2pm in Plaza del Ayuntamiento from March 1 to 19. It builds through rhythmic gunpowder explosions and an intense crescendo felt as well as heard. Confirm the current programme, arrive ahead of the start, follow safety barriers and plan for the noise." },
     ],
   },
   {
@@ -1447,7 +1447,7 @@ export const destinations: Destination[] = [
     slug: "albufera",
     name: "Albufera Natural Park",
     type: "day-trip",
-    tagline: "Sunset boat rides, wild rice fields, and the birthplace of paella — 15 minutes from the city",
+    tagline: "Sunset boat rides, rice fields and the landscape behind paella — a short trip south of Valencia",
     heroImage: "/discover/albufera.webp",
     heroImageAlt: "View across Albufera lagoon from the bow of a traditional wooden boat",
     heroImageProvenance: {
@@ -1460,23 +1460,23 @@ export const destinations: Destination[] = [
       modifications: "Cropped and resized to 16:9 WebP.",
     },
     title: "Albufera Natural Park — Valencia Day Trip Guide",
-    description: "Visit Albufera Natural Park from Valencia. Boat rides, paella at source, birdwatching, and sunset tours. Just 15 minutes by bus.",
+    description: "Visit Albufera Natural Park from Valencia. Plan boat rides, paella in El Palmar, birdwatching and sunset outings with current transport information.",
     keywords: ["Albufera Valencia", "Albufera boat trip", "Albufera Natural Park", "day trip from Valencia"],
     date: "2026-06-18",
     lastUpdated: "2026-06-18",
     audiences: ["families", "couples", "budget"],
     region: "Valencia Province",
-    distanceFromValencia: "15 min by bus",
+    distanceFromValencia: "South of Valencia; journey time depends on the chosen stop",
     hubs: ["day-trips"],
     overview: {
       paragraphs: [
         "Albufera is one of Spain's most important wetlands — a vast freshwater lagoon surrounded by rice paddies, just 10 km south of Valencia city. It's the actual birthplace of paella: the dish was invented by rice farmers cooking over wood fires with whatever ingredients were at hand.",
         "The main draw is a sunset boat ride on the lagoon. Traditional flat-bottomed boats glide through reed channels onto the open water as the sky turns orange. It's genuinely beautiful and takes about 40 minutes. Afterwards, eat paella at one of the restaurants in El Palmar — the village at the heart of the lagoon.",
-        "The park is also excellent for birdwatching (over 300 species) and has several walking trails through the rice fields and pine forests. It's one of the easiest day trips from Valencia — bus 25 runs directly from the city centre.",
+        "The park is also excellent for birdwatching (over 300 species) and has several walking trails through the rice fields and pine forests. It is an accessible day-trip option from Valencia: the official tourism guide distinguishes bus 24 towards El Palmar from bus 25 towards El Perellonet. Check the current EMT route for your chosen stop.",
       ],
       quickFacts: [
-        { label: "Distance", value: "10 km south (15 min by bus)" },
-        { label: "Boat ride", value: "€5-8 per person, ~40 min" },
+        { label: "Distance", value: "About 10 km south to the park; El Palmar is farther along the route" },
+        { label: "Boat ride", value: "Around 40 min; price and duration depend on the operator" },
         { label: "Best time", value: "Sunset — book an evening trip" },
         { label: "Entry fee", value: "Free (park), boats separate" },
       ],
@@ -1486,13 +1486,13 @@ export const destinations: Destination[] = [
         name: "Sunset Boat Ride",
         description: "The signature experience — a traditional flat-bottomed boat glides through reed channels onto the open lagoon as the sun sets. About 40 minutes, departing from El Palmar or the Gola de Pujol.",
         icon: "🚤",
-        tip: "Book for 1 hour before sunset. The light is magical. €5-8 per person.",
+        tip: "Choose a departure that matches sunset on your visit date. Confirm the current price and duration directly with the boat operator.",
       },
       {
         name: "Paella in El Palmar",
-        description: "This tiny village inside the park is where paella was literally invented. Restaurants like Bon Aire and Mateu serve wood-fired paella Valenciana in its purest form — chicken, rabbit, snails, and local rice.",
+        description: "El Palmar sits within the landscape closely associated with paella's origins. Restaurants such as Bon Aire and Mateu serve Valencian rice dishes; confirm the current menu, cooking method and ingredients with your chosen venue.",
         icon: "🥘",
-        tip: "Lunch only — paella is never served for dinner. Book ahead on weekends.",
+        tip: "Paella is traditionally a lunch dish. Check each restaurant’s service times and reserve directly for a weekend visit.",
       },
       {
         name: "Birdwatching",
@@ -1501,24 +1501,24 @@ export const destinations: Destination[] = [
       },
       {
         name: "Rice Field Walks",
-        description: "Walking trails weave through the rice paddies surrounding the lagoon. In autumn (September-October), the flooded fields create mirror-like reflections. In spring, they're vivid green.",
+        description: "Walking routes pass through the rice-growing landscape around the lagoon. Its appearance changes with planting, summer growth, harvest and seasonal flooding. Follow marked public routes rather than entering working fields.",
         icon: "🌾",
       },
     ],
     gettingThere: {
-      summary: "Albufera is one of the easiest day trips from Valencia — direct bus service in 15-20 minutes.",
+      summary: "Public buses serve the Albufera area, but the journey depends on whether you choose a lagoon viewpoint, El Palmar or the farther southern coastline. Check the full route and return service.",
       options: [
-        { mode: "bus", description: "EMT Bus 25 runs from the city centre (Paseo de la Gran Vía) to El Palmar. Frequent service.", duration: "15-20 min", cost: "€1.50", tip: "Last bus back is around 9:30pm — check the schedule for your visit day." },
-        { mode: "car", description: "15 minutes via the V-31. Free parking at El Palmar and the Gola de Pujol.", duration: "15 min" },
+        { mode: "bus", description: "The official tourism guide lists EMT 24 towards El Palmar and EMT 25 towards El Perellonet. Confirm the current route, departure point and stop with EMT.", duration: "Check the current timetable; do not assume a 15-minute trip to El Palmar", cost: "Check current operator fares for the chosen journey", tip: "Check the last practical return service for your exact stop and date before booking a sunset boat." },
+        { mode: "car", description: "Drive south using a current route to your chosen park entrance, viewpoint or El Palmar. Check designated parking and restrictions; do not assume every access has free parking.", duration: "Depends on destination and traffic" },
         { mode: "bike", description: "Flat cycle path runs from the city to the park entrance. Beautiful ride through orange groves.", duration: "40-50 min" },
       ],
     },
     bestTimeToVisit: {
-      summary: "Sunset is the magic hour year-round. Autumn is best for birdwatching; spring for the green rice fields.",
+      summary: "Sunset is a highlight throughout the year. Birdwatching and rice-field scenery change with the season and cultivation cycle.",
       seasons: [
-        { season: "spring", description: "Rice fields are vivid green. Pleasant temperatures. Bird nesting season.", rating: 5 },
+        { season: "spring", description: "Pleasant temperatures and bird nesting season. Rice fields are prepared in spring, with planting and flooding later; do not expect green rice throughout the season.", rating: 5 },
         { season: "summer", description: "Hot but the water keeps it cooler than the city. Mosquitoes can be fierce — bring repellent.", rating: 3 },
-        { season: "autumn", description: "Peak birdwatching. Flooded rice fields create mirror reflections. Rice harvest atmosphere.", rating: 5 },
+        { season: "autumn", description: "A rewarding birdwatching period, with rice harvest and changing field conditions. Flooded reflections depend on the cultivation and water-management stage.", rating: 5 },
         { season: "winter", description: "Quietest season. Cool but beautiful. Fewer boat services — check availability.", rating: 3 },
       ],
     },
@@ -1550,9 +1550,9 @@ export const destinations: Destination[] = [
     relatedDestinations: ["malvarrosa-beach"],
     relatedBlogPosts: ["valencia-with-kids-complete-guide"],
     faqs: [
-      { question: "How much does an Albufera boat ride cost?", answer: "€5-8 per person for a 40-minute traditional boat ride. Children under 3 are usually free. Book through your boatman at El Palmar or the Gola de Pujol jetty." },
-      { question: "Can I visit Albufera without a car?", answer: "Yes — EMT Bus 25 runs from Valencia city centre to El Palmar in 15-20 minutes. It's one of the easiest day trips from the city." },
-      { question: "Is Albufera worth visiting?", answer: "Absolutely — especially at sunset. The boat ride, followed by paella in El Palmar, is one of Valencia's best experiences. It's free to enter the park, the boat ride is €5-8, and a paella lunch is €12-20 per person." },
+      { question: "How much does an Albufera boat ride cost?", answer: "The price, duration and child-ticket conditions depend on the operator and tour. Many traditional lagoon trips take around 40 minutes. Book directly with your chosen operator at El Palmar or Gola de Pujol and confirm the exact meeting point." },
+      { question: "Can I visit Albufera without a car?", answer: "Yes. EMT buses serve the Albufera area. The official tourism guide distinguishes route 24 towards El Palmar from route 25 towards El Perellonet. Check the current connection and return time for your exact stop; El Palmar is not a guaranteed 15–20-minute trip from the centre." },
+      { question: "Is Albufera worth visiting?", answer: "Yes, especially for a sunset boat ride, birdwatching or a rice lunch in El Palmar. Access to the park is free, while boat trips and restaurant meals have separate operator prices. Choose one main experience and plan transport and reservations around it." },
     ],
   },
   {
@@ -1584,11 +1584,11 @@ export const destinations: Destination[] = [
       paragraphs: [
         "The City of Arts and Sciences (Ciudad de las Artes y las Ciencias) is Valencia's most iconic landmark — a cluster of futuristic white buildings designed by architect Santiago Calatrava, set in the drained bed of the old Turia River. Love it or hate it architecturally, it's visually stunning and genuinely impressive in person.",
         "The complex contains Europe's largest aquarium (Oceanogràfic), an IMAX cinema in a building shaped like a giant eye (Hemisfèric), a hands-on science museum (Museu de les Ciències), and an opera house (Palau de les Arts). You could spend a full day here, or just an afternoon walking the grounds for free.",
-        "For families, it's the top attraction in Valencia. The Oceanogràfic alone justifies the visit — it's world-class, with beluga whales, sharks, penguins, and a 30-metre underwater tunnel. The Science Museum is excellent for older kids with interactive exhibits.",
+        "For families, it's the top attraction in Valencia. The Oceanogràfic alone justifies the visit — it's world-class, with beluga whales, sharks, penguins, and an underwater tunnel. The Science Museum is excellent for older kids with interactive exhibits.",
       ],
       quickFacts: [
-        { label: "Tickets", value: "Oceanogràfic €34, combo deals available" },
-        { label: "Time needed", value: "3-5 hours (Oceanogràfic alone: 2-3h)" },
+        { label: "Tickets", value: "Date-dependent prices; combo tickets available" },
+        { label: "Time needed", value: "Half to full day; allow at least half a day for Oceanogràfic" },
         { label: "Free areas", value: "Grounds, gardens, exterior architecture" },
         { label: "Getting there", value: "20 min walk, or bus 35/95" },
       ],
@@ -1596,13 +1596,13 @@ export const destinations: Destination[] = [
     highlights: [
       {
         name: "Oceanogràfic",
-        description: "Europe's largest aquarium, with over 45,000 animals from 500 species. The shark tunnel, beluga whales, dolphin show, and Arctic zone are standouts. Allow 2-3 hours minimum.",
+        description: "Europe's largest aquarium, with over 45,000 animals from 500 species. The shark tunnel, beluga whales, dolphin show, and Arctic zone are standouts. Allow at least half a day; a full day gives more time for the habitats and activities.",
         icon: "🐬",
-        tip: "Buy tickets online — the queue at the entrance can be 30+ minutes in summer. The dolphin show runs 3-4 times daily; check the schedule on arrival.",
+        tip: "Buy tickets online to arrange your visit in advance. Check the presentation schedule on arrival; it may change with attendance, weather or biological conditions.",
       },
       {
         name: "Hemisfèric (IMAX Cinema)",
-        description: "An IMAX and planetarium inside a building shaped like a giant eye. The architecture is the real star — the building reflects perfectly in the surrounding pools. Shows run every 45 minutes.",
+        description: "An IMAX and planetarium inside a building shaped like a giant eye. The architecture is the real star — the building reflects perfectly in the surrounding pools. Screenings generally last 45–50 minutes; check the programme for your date.",
         icon: "👁️",
         tip: "The reflection photos are best in the morning or late afternoon when there's no wind. Evening illumination is spectacular.",
       },
@@ -1622,7 +1622,7 @@ export const destinations: Destination[] = [
       summary: "The City of Arts and Sciences sits at the eastern end of the Turia Gardens — walkable from the city centre or quick by bus.",
       options: [
         { mode: "walk", description: "Follow the Turia Gardens east — it's a beautiful, shaded walk along the former riverbed. Flat the entire way.", duration: "20 min from Ruzafa, 35 min from old town" },
-        { mode: "bus", description: "Lines 35 and 95 stop directly at the complex. Line 1 from the beach is also useful.", cost: "€1.50" },
+        { mode: "bus", description: "Lines 35 and 95 stop directly at the complex. Line 1 from the beach is also useful.", cost: "Check the current EMT fare" },
         { mode: "bike", description: "The Turia Gardens cycle path runs right past. Valenbisi stations at the entrance.", duration: "15 min from centre" },
       ],
     },
@@ -1638,13 +1638,13 @@ export const destinations: Destination[] = [
     accessibility: {
       overallRating: 5,
       summary: "The entire complex was designed to be fully accessible. All venues have lift access, adapted toilets, and ramps. The grounds are flat and paved. Wheelchair rental available at the Oceanogràfic.",
-      wheelchairNotes: "Fully accessible throughout. The Oceanogràfic provides free wheelchair loans. The underwater tunnel and all exhibits are accessible. The dolphin show has reserved wheelchair seating.",
+      wheelchairNotes: "The Oceanogràfic buildings have ramps and/or lifts for wheelchair access. Manual wheelchair loans are available subject to availability with a refundable €10 deposit. Confirm essential access arrangements and presentation seating before visiting.",
       strollerNotes: "Excellent — the grounds are completely flat and stroller-friendly. The Oceanogràfic interior is spacious enough for strollers throughout. No need to fold.",
       publicTransportAccess: "Bus stops directly outside are fully accessible. The Turia Gardens path to the complex is flat and paved.",
     },
     practicalTips: [
       "Buy combo tickets online — Oceanogràfic + Hemisfèric is better value than individual tickets.",
-      "The Oceanogràfic alone needs 2-3 hours. Don't try to rush it.",
+      "Allow at least half a day for the Oceanogràfic, or longer for a relaxed visit with activities. Don't try to rush it.",
       "Bring water and sunscreen if walking the grounds in summer — there's minimal shade outside.",
       "The restaurant inside the Oceanogràfic (Submarino) lets you eat surrounded by fish — worth booking for the novelty, though the food is average.",
     ],
@@ -1665,9 +1665,9 @@ export const destinations: Destination[] = [
     relatedDestinations: ["malvarrosa-beach", "ruzafa"],
     relatedBlogPosts: ["valencia-with-kids-complete-guide"],
     faqs: [
-      { question: "How much do City of Arts and Sciences tickets cost?", answer: "Oceanogràfic: €34 adult, €26 child. Hemisfèric: €9. Science Museum: €9. Combo tickets available from €30-40 for 2-3 venues. Buy online to skip queues." },
+      { question: "How much do City of Arts and Sciences tickets cost?", answer: "Prices vary by date, visitor category and chosen venues. Check the official calendar for Oceanogràfic, Hemisfèric, Museu de les Ciències and their combinations. Book the attractions you want in advance and confirm the date and screening on each ticket." },
       { question: "Is the City of Arts and Sciences worth visiting?", answer: "Yes — even if you only visit the Oceanogràfic, it's one of the best aquariums in Europe. The grounds are free to walk and photograph. For families, it's Valencia's #1 attraction." },
-      { question: "How long do you need at the City of Arts and Sciences?", answer: "3-5 hours for a good visit. The Oceanogràfic alone takes 2-3 hours. If you add the Hemisfèric or Science Museum, plan a full day." },
+      { question: "How long do you need at the City of Arts and Sciences?", answer: "Allow half to a full day for a useful visit, depending on which buildings you enter. Oceanogràfic deserves at least half a day and can fill a day with activities. Add another day if you want to explore Museu de les Ciències and Hemisfèric at a relaxed pace." },
     ],
   },
 
@@ -2141,12 +2141,12 @@ export const destinations: Destination[] = [
         name: "Torres de Serranos",
         description: "Valencia's most impressive medieval gate tower. Climb to the top for panoramic views of the old town and Turia Gardens. Free on Sundays.",
         icon: "🏰",
-        tip: "Go at sunset for golden light. The view is worth the stairs (no lift).",
+        tip: "Go in late-afternoon light if current opening hours allow. The view is worth the stairs (no lift); check the last admission time and weather restrictions.",
         googleMapsUrl: "https://maps.google.com/?q=Torres+de+Serranos+Valencia",
       },
       {
         name: "Mercado Central",
-        description: "Europe's largest operating fresh food market in a stunning Art Nouveau building. Over 1,200 stalls selling Valencia's finest produce, jamón, seafood, and spices.",
+        description: "A large fresh food market in a stunning Art Nouveau building. Its 250 trading stalls sell Valencia’s produce, jamón, seafood, spices and other foods.",
         icon: "🍊",
         tip: "Go before 11am to beat the crowds. The freshly squeezed Valencia orange juice is the best in the city.",
         googleMapsUrl: "https://maps.google.com/?q=Mercado+Central+Valencia",
@@ -2225,7 +2225,7 @@ export const destinations: Destination[] = [
       tips: [
         "Start at Mercado Central (opens 7:30am), then La Lonja next door, then the Cathedral.",
         "After lunch, wander the street art around IVAM and the Arabic wall ruins.",
-        "Come back at sunset for Torres de Serranos views, then stay for dinner.",
+        "Return in the late afternoon for Torres de Serranos views if current admission hours allow, then stay in the neighbourhood for dinner.",
       ],
     },
     practicalTips: [
@@ -2239,7 +2239,7 @@ export const destinations: Destination[] = [
       {
         audience: "families",
         tips: [
-          "The puppet museum (Museu de l'Iber) near Plaça del Carme is a hidden gem for kids.",
+          "Museo L’Iber on Calle Caballeros 22 is a museum of lead soldiers and historical miniatures, an interesting stop for children who enjoy detailed model scenes.",
           "The Cathedral has a lift to a viewing level (not the tower), useful with little ones.",
           "Kids love the Mercado Central — let them pick fruits and pastries.",
         ],
@@ -2335,9 +2335,9 @@ export const destinations: Destination[] = [
       },
       {
         name: "La Fábrica de Hielo",
-        description: "A converted ice factory turned cultural space with a rooftop terrace bar, live music venue, and rotating art exhibitions. The rooftop views over the port and neighbourhood are excellent.",
+        description: "A former ice factory now used as an independent cultural space near Cabanyal beach, with a programme spanning music and other arts. Check the current programme before visiting.",
         icon: "🎵",
-        tip: "Check their Instagram for event listings. The rooftop is best at sunset. Craft beers on tap.",
+        tip: "Check the official event calendar for current performances and the venue’s food and drink information before planning your evening.",
       },
     ],
     gettingThere: {
@@ -2345,7 +2345,7 @@ export const destinations: Destination[] = [
       options: [
         { mode: "tram", description: "Lines L4/L6 from Pont de Fusta (near Turia Gardens) to La Marina or Eugenia Viñes", duration: "15 min", cost: "€1.50" },
         { mode: "bus", description: "Lines 1, 2, 19, 32 from the city centre to various Cabanyal stops", duration: "20 min", cost: "€1.50" },
-        { mode: "bike", description: "Flat, easy ride from the city centre via Turia Gardens bike path. Valenbisi bike-share stations throughout the area.", duration: "20 min", cost: "€2 (Valenbisi)" },
+        { mode: "bike", description: "Flat, easy ride from the city centre via Turia Gardens bike path. Valenbisi bike-share stations throughout the area.", duration: "20 min", cost: "Check the current bicycle-hire tariff" },
         { mode: "walk", description: "From the City of Arts and Sciences, follow the Turia park east. Pleasant 30-minute stroll.", duration: "30 min" },
       ],
       parkingNotes: "Street parking is available but metered and fills fast in summer. The Marina Juan Carlos I car park has ample space (€10-15/day).",
@@ -2394,7 +2394,7 @@ export const destinations: Destination[] = [
       tips: [
         "Start with the tiled facades on Calle de la Reina — best light is morning.",
         "Book paella lunch at Casa Carmela or La Pepica by noon (paella takes 30 min to cook).",
-        "Spend the afternoon on Las Arenas beach, then sunset drinks at La Fábrica de Hielo rooftop.",
+        "Spend the afternoon on Las Arenas beach, then visit La Fábrica de Hielo if its current programme suits your evening plans.",
       ],
     },
     practicalTips: [
@@ -2407,7 +2407,7 @@ export const destinations: Destination[] = [
       {
         audience: "families",
         tips: [
-          "Las Arenas beach has lifeguards in summer and a shallow, gradual entry — safe for kids.",
+          "Las Arenas has seasonal lifeguard services and a gradually sloping shore. Check flags and service hours, and supervise children continuously; shallow water does not guarantee safe swimming.",
           "Rent a beach set (umbrella, chairs, toys) rather than lugging everything from your accommodation.",
           "The promenade is perfect for scooters, trikes, and running around.",
         ],
@@ -2466,7 +2466,7 @@ export const destinations: Destination[] = [
         "For visitors, Benimaclet offers something the tourist areas can't: a genuine slice of Valencian daily life. There are no monuments, no museums, no Instagram spots. Just good food, cheap drinks, friendly people, and the comforting rhythm of a real neighbourhood. It's also surprisingly well-connected — the metro has you in the city centre in 8 minutes.",
       ],
       quickFacts: [
-        { label: "Getting there", value: "Metro L1 Benimaclet (8 min from centre)" },
+        { label: "Getting there", value: "Metro L3/L9 to Benimaclet; check the current journey planner for timings" },
         { label: "Best for", value: "Budget food, local life, long-stay living, students" },
         { label: "Vibe", value: "Village-like, alternative, multicultural" },
         { label: "Tourist factor", value: "Almost zero — this is local Valencia" },
@@ -2475,13 +2475,13 @@ export const destinations: Destination[] = [
     highlights: [
       {
         name: "Plaça de Benimaclet",
-        description: "The heart of the neighbourhood — a leafy square with the parish church, café terraces, and a playground. This is where locals gather for morning coffee, evening vermouth, and Sunday strolls. The weekly flea market happens here on Saturdays.",
+        description: "The heart of the neighbourhood: a leafy square with the parish church, café terraces and a playground. Locals gather for morning coffee, evening vermouth and Sunday strolls. The direct-producer food market takes place here on Saturdays.",
         icon: "🌳",
         tip: "Saturday morning is the best time to visit — the market is bustling and the café terraces are full of locals reading the paper.",
       },
       {
         name: "Benimaclet Street Market",
-        description: "Every Saturday morning, Benimaclet's streets fill with stalls selling fresh produce, artisan bread, cheese, honey, vintage clothes, and handmade crafts. It's entirely local — no tourist tat.",
+        description: "On Saturday mornings, the Mercat de l’Horta in Plaça de Benimaclet sells produce directly from local growers and producers, including seasonal fruit and vegetables, bread, cheese and honey. The separate non-food street market takes place on Fridays.",
         icon: "🛍️",
         tip: "Arrive by 10am for the best produce. The organic vegetable stalls sell out fast. Bring a reusable bag.",
       },
@@ -2499,9 +2499,9 @@ export const destinations: Destination[] = [
       },
     ],
     gettingThere: {
-      summary: "Metro Line 1 makes Benimaclet quick and easy to reach from the centre.",
+      summary: "Metro lines 3 and 9 connect Benimaclet with the centre. Check the current journey planner for services and timings.",
       options: [
-        { mode: "metro", description: "Line L1 to Benimaclet station — direct from Àngel Guimerà or Colón", duration: "8 min from centre", cost: "€1.50" },
+        { mode: "metro", description: "Lines L3/L9 to Benimaclet station, with connections from Àngel Guimerà or Colón", duration: "8 min from centre", cost: "€1.50" },
         { mode: "tram", description: "Tram L4 connects to the eastern end of the neighbourhood", duration: "12 min", cost: "€1.50" },
         { mode: "bike", description: "Easy flat ride from the city centre or Turia Gardens. Valenbisi stations available.", duration: "15 min", cost: "€2 (Valenbisi)" },
         { mode: "walk", description: "Follow Turia Gardens north-east from the City of Arts and Sciences area", duration: "25 min" },
@@ -2527,7 +2527,7 @@ export const destinations: Destination[] = [
       summary: "Benimaclet has flat streets and good pavements on the main roads. Some side streets are narrow with uneven surfaces. The metro station has lift access.",
       wheelchairNotes: "Main streets around the plaza are accessible. The market can be crowded and harder to navigate. The metro station has step-free access.",
       strollerNotes: "Generally easy on the main streets. The playground in the main plaza is a plus for families.",
-      publicTransportAccess: "Metro L1 Benimaclet has lifts. Tram stops are accessible.",
+      publicTransportAccess: "Benimaclet metro station on L3/L9 has lifts. Tram stops are accessible.",
     },
     foodAndDrink: {
       summary: "Benimaclet mixes long-running neighbourhood cafés with newer bakeries and Valencian restaurants. Check current opening hours because many independent venues close between services or on selected weekdays.",
@@ -2957,7 +2957,7 @@ export const destinations: Destination[] = [
       quickFacts: [
         { label: "Distance", value: "30 km north of Valencia (30 min train)" },
         { label: "Train", value: "Cercanías C-5/C-6 from Valencia Nord to Sagunto" },
-        { label: "Cost", value: "~€3.60 return train fare" },
+        { label: "Cost", value: "Check the current Renfe fare" },
         { label: "Time needed", value: "Half day (4-5 hours)" },
       ],
     },
@@ -2990,9 +2990,9 @@ export const destinations: Destination[] = [
       },
     ],
     gettingThere: {
-      summary: "The Cercanías commuter train is the easiest way. Runs every 15-30 minutes, costs less than €4 return.",
+      summary: "Cercanías is a practical option for Sagunto. Check the current timetable, fare and return connection for your date rather than assuming a fixed frequency.",
       options: [
-        { mode: "train", description: "Cercanías C-5 or C-6 from Valencia Nord (Estació del Nord) to Sagunto station", duration: "30 min", cost: "~€3.60 return" },
+        { mode: "train", description: "Cercanías C-5 or C-6 from Valencia Nord (Estació del Nord) to Sagunto station", duration: "30 min", cost: "Check the current Renfe return fare" },
         { mode: "car", description: "A-7 motorway north. Free parking available near the old town.", duration: "25-30 min", cost: "Free (toll-free route)" },
       ],
       parkingNotes: "Free street parking around the base of the old town. Parking near the Roman theatre is limited but usually available outside summer weekends.",
@@ -3031,14 +3031,14 @@ export const destinations: Destination[] = [
       idealDuration: "4-5 hours",
       bestTimeOfDay: "Morning (arrive by 10am, avoid midday heat on the castle)",
       tips: [
-        "Take the 9:30-10am Cercanías from Valencia Nord. You'll be at the castle by 11am.",
+        "Choose a morning Cercanías service from Valencia and allow time for the walk and climb. Check the current timetable and monument opening time first.",
         "Visit the Roman theatre first (free), then climb to the castle (20 min uphill).",
         "Descend via the Jewish quarter and old town. Have lunch at Plaça Major.",
-        "Take the afternoon train back (runs every 15-30 min). You'll be in Valencia by 3pm.",
+        "Choose the afternoon return service before leaving Valencia, with time for the walk back to the station. Do not assume a fixed fifteen-minute train frequency.",
       ],
     },
     practicalTips: [
-      "The castle is free to enter and open daily. Check winter hours (may close earlier).",
+      "The official tourism schedule lists free castle admission and Monday closure. Check current hours and any exceptional closures before travelling.",
       "Bring at least 1 litre of water per person — there are no facilities on the castle hill.",
       "The castle climb is moderate (20 min) but exposed. In summer, start early or you'll be climbing in full sun.",
       "The train station is a 10-minute flat walk from the old town. Follow signs to 'Centro Histórico'.",
@@ -3047,8 +3047,8 @@ export const destinations: Destination[] = [
       {
         audience: "families",
         tips: [
-          "Kids love the castle — it's like a real-life adventure playground. The walls are safe to walk on but supervise closely.",
-          "The Roman theatre is a great spot for kids to run around. Free entry, open space.",
+          "The castle can feel like an adventure for children, but it is a historic ruin rather than a playground. Keep children under close supervision, follow barriers and avoid exposed edges.",
+          "The Roman theatre is an interesting family stop. Follow monument rules and supervise children instead of treating the archaeological site as a running area.",
           "Pack snacks and water — options on the hill are zero.",
         ],
       },
@@ -3059,9 +3059,9 @@ export const destinations: Destination[] = [
     relatedDestinations: ["albufera", "city-of-arts-and-sciences"],
     relatedBlogPosts: ["valencia-with-kids-complete-guide"],
     faqs: [
-      { question: "How do I get to Sagunto from Valencia?", answer: "Take the Cercanías commuter train (C-5 or C-6) from Valencia Nord station. It runs every 15-30 minutes, takes 30 minutes, and costs about €3.60 return." },
+      { question: "How do I get to Sagunto from Valencia?", answer: "Check Cercanías services towards Sagunto from Valencia and confirm the current departure station, timetable and fare with Renfe. Allow for the walk to the old town and the separate castle climb." },
       { question: "Is Sagunto Castle worth visiting?", answer: "Absolutely. The 1km-long hilltop ruins with 360° views are spectacular. Combined with the Roman theatre and charming old town, it's Valencia's best half-day trip." },
-      { question: "Is Sagunto Castle free?", answer: "Yes, completely free to enter. Open daily, though winter hours may be shorter. The Roman theatre below is also free." },
+      { question: "Is Sagunto Castle free?", answer: "The official tourism schedule lists free admission to the castle and Roman theatre, with Monday closure. Check current seasonal hours and any exceptional closures before your visit." },
     ],
   },
 
@@ -3098,8 +3098,8 @@ export const destinations: Destination[] = [
         "Beyond the caves, Requena rewards wandering. The medieval quarter has a Moorish castle, Gothic churches, and streets so narrow you can touch both walls. The surrounding DO Utiel-Requena wine region produces excellent reds and rosados from the indigenous Bobal grape — visit a bodega for a tasting and you'll discover a wine most visitors have never heard of.",
       ],
       quickFacts: [
-        { label: "Distance", value: "70 km west (1 hour by car or train)" },
-        { label: "Transport", value: "Cercanías C-3 from Valencia or A-3 motorway" },
+        { label: "Distance", value: "About 70 km west; allow around an hour by car and check public-transport times" },
+        { label: "Transport", value: "Current Renfe connection or replacement service; A-3 by car" },
         { label: "Best for", value: "Wine lovers, couples, foodies, history" },
         { label: "Time needed", value: "Full day recommended" },
       ],
@@ -3131,9 +3131,9 @@ export const destinations: Destination[] = [
       },
     ],
     gettingThere: {
-      summary: "Car gives the most flexibility for visiting bodegas. The train works for the town itself.",
+      summary: "A car gives flexibility for rural bodegas. Public transport can work for the town, but verify the current rail and replacement-bus arrangements and the final stop.",
       options: [
-        { mode: "train", description: "Cercanías C-3 from Valencia Nord to Requena-Utiel", duration: "1 hour 10 min", cost: "~€5 return" },
+        { mode: "train", description: "Check Renfe’s current service to Requena, including any C-3 replacement bus. The Requena-Utiel high-speed station is separate from the town; it is not a C-3 stop beside the old quarter.", duration: "Check the complete connection and final transfer", cost: "Check the current Renfe fare for the chosen service" },
         { mode: "car", description: "A-3 motorway west. Fast, easy drive through orange groves and vineyards.", duration: "1 hour", cost: "Toll-free" },
       ],
       parkingNotes: "Free parking outside the old town walls. The streets inside La Villa are too narrow for cars.",
@@ -3157,7 +3157,7 @@ export const destinations: Destination[] = [
       summary: "The medieval old town has steep, narrow streets and uneven surfaces. The caves have steps. The newer part of town is flat and accessible.",
       wheelchairNotes: "La Villa is largely inaccessible — steep cobblestone streets and no ramps. The Museo del Vino and some bodegas outside town are accessible.",
       strollerNotes: "Very difficult in the old town. Leave the buggy at the car and carry. The newer town is fine.",
-      publicTransportAccess: "Requena-Utiel train station has step-free access. Taxi or walk to old town (15 min).",
+      publicTransportAccess: "Confirm the accessibility of the exact station or replacement-bus stop and the onward route. Requena-Utiel high-speed station is outside town, so do not assume a fifteen-minute walk to the old quarter.",
     },
     foodAndDrink: {
       summary: "Requena's food is hearty inland Valencian cuisine, with cured meats, rice dishes, seasonal produce and regional wine. Reserve destination restaurants and confirm transport if dining outside the old town.",
@@ -3198,7 +3198,7 @@ export const destinations: Destination[] = [
     relatedDestinations: ["sagunto", "albufera"],
     relatedBlogPosts: [],
     faqs: [
-      { question: "How do I get to Requena from Valencia?", answer: "Drive the A-3 motorway west (1 hour, toll-free) or take the Cercanías C-3 train from Valencia Nord (1 hour 10 min, ~€5 return). Car is better if you want to visit rural bodegas." },
+      { question: "How do I get to Requena from Valencia?", answer: "Drive west on the A-3, allowing around an hour, or check Renfe’s current rail and replacement-bus service to Requena. The Requena-Utiel high-speed station is outside town and requires onward travel. A car is more flexible for rural bodegas." },
       { question: "What wine is Requena known for?", answer: "The indigenous Bobal grape — Spain's third most planted red variety. It produces excellent reds and rosados. The DO Utiel-Requena region is increasingly recognized as one of Spain's best-value wine areas." },
       { question: "Are the Requena caves worth visiting?", answer: "Absolutely. The underground cave network beneath the medieval old town is unique. Tours take about 45 minutes and the constant 15°C temperature is a welcome escape from summer heat." },
     ],
@@ -3232,11 +3232,11 @@ export const destinations: Destination[] = [
     overview: {
       paragraphs: [
         "Patacona is the beach Valencians recommend when tourists ask where to go. Just north of the city's main Las Arenas and Malvarrosa beaches, Patacona technically belongs to the municipality of Alboraya but is seamlessly connected — you can walk here from Malvarrosa in 15 minutes along the promenade.",
-        "The difference is immediately noticeable: wider sand, fewer sunbeds-for-rent, more space between towels, and a distinctly local atmosphere. Families set up camp for the day with cooler boxes and beach games. Beach volleyball nets line the southern end. The chiringuitos (beach bars) are friendlier and less corporate. And the paella restaurants along the seafront serve some of the best rice dishes in the region.",
-        "Patacona is where you come when you want a proper beach day without the tourist intensity of Las Arenas. The water is the same clean Mediterranean blue, the sand is the same golden quality, but the vibe is noticeably more relaxed. For families with kids, it's the best beach in the Valencia area.",
+        "Patacona offers broad sand and a distinctly local atmosphere. Families bring cooler boxes and beach games, volleyball is part of the beach scene, and the chiringuitos and seafront rice restaurants make it easy to combine time outdoors with lunch. Space and crowd levels vary by day and access point.",
+        "Patacona is a useful choice for a relaxed beach day north of the city beaches. It shares the Mediterranean coastline, but conditions and water-quality notices must be checked for the specific beach and date. Families should choose the access, facilities and current conditions that suit their group.",
       ],
       quickFacts: [
-        { label: "Getting there", value: "Tram L4/L6 to La Patacona or walk from Malvarrosa (15 min)" },
+        { label: "Getting there", value: "Bus towards La Patacona or a promenade walk from Malvarrosa" },
         { label: "Best for", value: "Families, locals, beach volleyball, paella" },
         { label: "Vibe", value: "Relaxed, local, spacious" },
         { label: "Facilities", value: "Chiringuitos, showers, lifeguards (summer)" },
@@ -3245,9 +3245,9 @@ export const destinations: Destination[] = [
     highlights: [
       {
         name: "Wide, Spacious Beach",
-        description: "Patacona's beach is noticeably wider and less crowded than the city beaches to the south. Even in peak summer, you can find space. The sand is clean and golden, the water shallow and safe for children.",
+        description: "Patacona has a broad sandy beach with space that varies by season and access point. Check the current flag and water conditions. Shallow water is not a guarantee of safety for children, who need continuous close adult supervision.",
         icon: "🏖️",
-        tip: "The northern end (towards Alboraya) is the quietest. Walk past the volleyball nets for the most space.",
+        tip: "Try farther along the promenade if the first access is busy, but choose a section with the services your group needs.",
       },
       {
         name: "Beach Volleyball Hub",
@@ -3263,40 +3263,40 @@ export const destinations: Destination[] = [
       },
       {
         name: "Horchata in Alboraya",
-        description: "Patacona borders Alboraya, the town where horchata was invented. The surrounding farms still grow the tiger nuts (chufas) used to make Valencia's signature drink. Several traditional horchaterías are a short walk from the beach.",
+        description: "Patacona belongs to Alboraya, an area known for horchata and the tiger nuts (chufas) grown in its surrounding farmland. Traditional horchaterías make a worthwhile separate stop; check their locations rather than assuming all are close to the beach.",
         icon: "🥛",
-        tip: "Horchatería Daniel (the original, not the Mercado de Colón branch) is a 10-minute walk into Alboraya. The horchata is made fresh from locally-grown chufas.",
+        tip: "The original Horchatería Daniel is at Avenida de la Horchata 41 in Alboraya. Plan the separate journey and check current opening hours; it is not established as a ten-minute walk from the beach.",
       },
     ],
     gettingThere: {
-      summary: "Walk from Malvarrosa, take the tram, or cycle the promenade.",
+      summary: "Walk north from Malvarrosa, use a bus towards La Patacona, or cycle a planned route along the seafront. A tram journey requires an onward connection from the Valencia beachfront.",
       options: [
-        { mode: "tram", description: "Lines L4/L6 to La Patacona stop — direct from the city centre via Pont de Fusta", duration: "20 min from centre", cost: "€1.50" },
+        { mode: "tram", description: "Use Metrovalencia to reach the Valencia beachfront, then plan the final promenade walk or bus connection towards Patacona. There is no direct tram stop named La Patacona; EMT route 31 serves that direction.", duration: "Check the complete journey including the onward connection", cost: "€1.50" },
         { mode: "walk", description: "Walk north along the promenade from Malvarrosa beach. Flat, paved, scenic.", duration: "15 min from Malvarrosa" },
-        { mode: "bike", description: "Flat cycle along the seafront. Valenbisi stations available. One of Valencia's best rides.", duration: "25 min from centre", cost: "€2 (Valenbisi)" },
+        { mode: "bike", description: "Cycle the seafront on the permitted route. Check the current cycle-hire service area and return station before leaving, as Patacona is in Alboraya rather than Valencia municipality.", duration: "Depends on your starting point and route", cost: "€2 (Valenbisi)" },
       ],
-      parkingNotes: "Free street parking in the residential streets behind the beach. Easier to find than at Las Arenas, especially on weekdays.",
+      parkingNotes: "Check the signs in the residential streets behind the beach. Restrictions, charges and availability vary; do not assume a free space will be available on arrival.",
     },
     bestTimeToVisit: {
       summary: "June-September for swimming. May and October still warm enough for comfortable beach days without the crowds.",
       seasons: [
         { season: "spring", description: "Warm enough for sunbathing from May. Beach is quiet. Water still cool for swimming.", rating: 4 },
-        { season: "summer", description: "Peak season. Arrive before 10am for the best spot. Water is warm and perfect. Lifeguards on duty.", rating: 5 },
-        { season: "autumn", description: "September-October is the secret season — warm water, empty beach, golden light. Locals' favourite time.", rating: 5 },
+        { season: "summer", description: "Peak season. An early arrival gives more time to choose an access and set up before the heat. Check current water conditions and lifeguard operating hours.", rating: 5 },
+        { season: "autumn", description: "September and October can bring warm conditions and fewer visitors. Weather, water temperature and seasonal facilities vary, so check the day rather than assuming an empty beach.", rating: 5 },
         { season: "winter", description: "Cool but sunny. Pleasant for walks along the promenade. Some chiringuitos close.", rating: 2 },
       ],
     },
     whatToBring: {
       bring: ["Sun cream", "Water and snacks", "Beach towel", "Cash for chiringuitos"],
-      dontBring: ["Valuables (no lockers)", "Glass bottles (banned on all Valencia beaches)"],
+      dontBring: ["Valuables (no lockers)", "Glass bottles; follow the beach rules posted by Alboraya"],
       rentInstead: ["Beach umbrella and chairs set", "Stroller for the promenade", "Beach toys for kids"],
     },
     accessibility: {
       overallRating: 4,
-      summary: "The promenade is fully paved and accessible. The beach has wooden walkways extending to the sand in summer. The tram stop has step-free access.",
+      summary: "The paved promenade and seasonal wooden beach walkways offer accessible routes. Confirm the chosen entrance and current walkway layout. For public transport, check the complete journey and final distance rather than assuming a direct tram stop at Patacona.",
       wheelchairNotes: "The promenade is excellent. Wooden beach walkways provide access to the sand line. Some chiringuitos have accessible terraces.",
-      strollerNotes: "Very easy. Flat promenade, wide paths, no obstacles. One of the best beaches for buggies.",
-      publicTransportAccess: "Tram stop La Patacona has step-free platform access.",
+      strollerNotes: "The flat promenade and wide paved paths make a stroller practical. Check the chosen access and any temporary obstacles; ordinary wheels are harder to use on loose sand.",
+      publicTransportAccess: "Check the current EMT or Metrovalencia connection, vehicle accessibility and final route to the promenade. Patacona does not have a direct tram stop named La Patacona.",
     },
     foodAndDrink: {
       summary: "Patacona's seafront has rice restaurants, cafés and beach-adjacent terraces. Reserve a rice lunch separately from your beach setup and check current service hours before travelling.",
@@ -3311,24 +3311,24 @@ export const destinations: Destination[] = [
       idealDuration: "Half day to full day",
       bestTimeOfDay: "Arrive by 10am in summer, stay for sunset",
       tips: [
-        "Arrive early in summer to claim your spot. The northern end is always quietest.",
+        "Arrive early in summer to choose a suitable spot. A quieter section may be farther north, but crowd levels and access facilities vary.",
         "Book a seafront paella lunch for 1:30-2pm — the traditional time.",
-        "After lunch, walk into Alboraya for horchata at the original Daniel horchatería.",
+        "After lunch, consider a separate trip into Alboraya for horchata at the original Daniel horchatería. Check the route, distance and opening hours first.",
         "Stay for sunset — Patacona faces east but the evening light on the water is beautiful.",
       ],
     },
     practicalTips: [
-      "Glass bottles are banned on all Valencia beaches. Bring cans or plastic.",
-      "Lifeguards are on duty June-September. Red flag = no swimming, yellow = caution, green = safe.",
-      "The water is shallow for a long way out — excellent for kids but you need to wade far to swim properly.",
+      "Avoid glass containers and follow the beach rules posted locally by Alboraya. Bring reusable non-glass containers and take your rubbish away.",
+      "Check the current lifeguard dates and hours. Red flag means swimming is prohibited, yellow means caution and green means swimming is permitted; green does not guarantee safety.",
+      "Depth and conditions vary. Even in shallow water, children require continuous close adult supervision. Follow the flags and lifeguard instructions.",
       "Jellyfish occasionally appear in late summer. Check the flag system at lifeguard towers.",
     ],
     audienceTips: [
       {
         audience: "families",
         tips: [
-          "Patacona is Valencia's best family beach — wider, calmer, and more spacious than Las Arenas.",
-          "The shallow water extends far out, making it very safe for small children.",
+          "Patacona can suit families seeking a broad beach and local atmosphere. Choose a section with the facilities you need and check current crowd and sea conditions.",
+          "Do not treat shallow water as safe for small children. Keep continuous close adult supervision and follow lifeguard advice.",
           "Rent a beach set (umbrella + chairs + toys) and you're sorted for the day.",
         ],
       },
@@ -3337,7 +3337,7 @@ export const destinations: Destination[] = [
         tips: [
           "Morning work at a café in Alboraya, afternoon beach break at Patacona — the nomad dream.",
           "Several chiringuitos have Wi-Fi, but it's unreliable. Bring a hotspot for serious work.",
-          "Long-term rentals near Patacona are cheaper than Cabanyal and quieter.",
+          "Compare current long-term rental listings near Patacona and Cabanyal, including price, transport, noise and distance from the beach, rather than assuming one area is always cheaper.",
         ],
       },
     ],
@@ -3348,9 +3348,9 @@ export const destinations: Destination[] = [
     relatedDestinations: ["malvarrosa-beach", "cabanyal", "turia-gardens"],
     relatedBlogPosts: ["valencia-with-kids-complete-guide"],
     faqs: [
-      { question: "Is Patacona Beach better than Malvarrosa?", answer: "For families and anyone wanting more space, yes. Patacona is wider, less crowded, and has a more local atmosphere. Malvarrosa is closer to the city and has more nightlife. Both have the same water quality." },
-      { question: "How do I get to Patacona from Valencia centre?", answer: "Tram L4/L6 to La Patacona (20 min from centre), or walk north along the promenade from Malvarrosa (15 min). Cycling the seafront is also easy and enjoyable." },
-      { question: "Are there restaurants at Patacona Beach?", answer: "Yes — a row of excellent paella and seafood restaurants line the seafront. They're less touristy than the Las Arenas strip and serve to a primarily local crowd." },
+      { question: "Is Patacona Beach better than Malvarrosa?", answer: "Patacona can suit families and visitors looking for a broad beach and local atmosphere; Malvarrosa may be more convenient for a city-based visit. Crowd levels and water conditions vary. Choose by your access needs and check the current information for the specific beach." },
+      { question: "How do I get to Patacona from Valencia centre?", answer: "Use a current EMT route towards La Patacona, or travel by Metrovalencia to the Valencia beachfront and plan the onward connection. You can also walk north along the promenade from Malvarrosa or use a planned cycle route. Check the total journey for your starting point." },
+      { question: "Are there restaurants at Patacona Beach?", answer: "Yes. The seafront has rice and seafood restaurants, cafés and terraces. Reserve rice lunches directly with the venue and confirm current menus and service hours before travelling." },
     ],
   },
 
@@ -3383,13 +3383,13 @@ export const destinations: Destination[] = [
     overview: {
       paragraphs: [
         "Xàtiva (pronounced 'SHA-tee-va') is arguably the most spectacular day trip from Valencia. This ancient city, birthplace of two Borgia popes and once the second city of the Kingdom of Valencia, is crowned by a jaw-dropping castle that stretches along an entire mountain ridge — one of the most dramatic fortifications in Spain.",
-        "The castle alone would justify the trip, but Xàtiva's old town is equally rewarding. The Colegiata basilica, the narrow streets climbing towards the castle, the Almudín (medieval grain exchange) housing a museum, and the famous upside-down portrait of Philip V in the town museum — hung inverted as revenge for his burning of the city in 1707 and never righted since.",
+        "The castle alone would justify the trip, but Xàtiva's old town is equally rewarding. Visit the Colegiata basilica, streets climbing towards the castle, the Almodí archaeological museum in the historic grain exchange and the Museum of Fine Arts in Casa de l’Ensenyança. The latter displays the famous upside-down portrait of Philip V, a protest remembering his order to burn the city in 1707.",
         "Xàtiva sits in a fertile valley surrounded by mountains, orange groves, and rice paddies. The town has excellent restaurants serving local cuisine (the arnadí dessert is unique to the area), and the pace of life is wonderfully slow. The Cercanías train from Valencia takes about an hour and costs under €6 return.",
       ],
       quickFacts: [
         { label: "Distance", value: "60 km south (1 hour by train)" },
         { label: "Train", value: "Cercanías C-2 from Valencia Nord to Xàtiva" },
-        { label: "Cost", value: "~€5.50 return + €6 castle entry" },
+        { label: "Cost", value: "Check the current train fare; castle adult admission €6" },
         { label: "Time needed", value: "Full day recommended" },
       ],
     },
@@ -3398,14 +3398,14 @@ export const destinations: Destination[] = [
         name: "Xàtiva Castle",
         description: "One of Spain's most spectacular castles — actually two linked fortifications (Castell Menor and Castell Major) stretching along a dramatic rocky ridge. Views from the walls encompass the entire Valencian plain from the mountains to the sea. Hannibal reportedly passed through, and the Borgias were born in its shadow.",
         icon: "🏰",
-        tip: "The castle is a 30-minute steep uphill walk from the old town, or take the tourist road train (€3 return). Go early morning in summer — there's limited shade. Bring water.",
+        tip: "The castle involves a steep climb from the old town. Check the current tourist train or shuttle options and their operating dates if you want to avoid the full ascent. Start early in summer, allow for limited shade and bring water.",
         googleMapsUrl: "https://maps.google.com/?q=Castillo+de+Xàtiva",
       },
       {
         name: "The Upside-Down Portrait",
-        description: "In the Museo de Bellas Artes, a portrait of King Philip V hangs deliberately upside down — Xàtiva's centuries-long protest against his order to burn the city during the War of Spanish Succession in 1707. The museum has refused to right it ever since. It's petty, magnificent, and very Spanish.",
+        description: "The Museum of Fine Arts displays a portrait of King Philip V deliberately upside down. It is a memorable expression of Xàtiva’s historical protest against his order to burn the city during the War of Spanish Succession in 1707.",
         icon: "🖼️",
-        tip: "The museum is in the Almudín (medieval grain exchange). The building itself is beautiful. Ask the staff about the portrait — they love telling the story.",
+        tip: "The portrait is in the Museum of Fine Arts in Casa de l’Ensenyança, not the Almodí archaeological museum. Ask the staff about its story and plan the two museums as separate buildings.",
       },
       {
         name: "Colegiata Basílica",
@@ -3424,7 +3424,7 @@ export const destinations: Destination[] = [
     gettingThere: {
       summary: "The Cercanías train runs hourly from Valencia Nord. Easy, comfortable, and scenic.",
       options: [
-        { mode: "train", description: "Cercanías C-2 from Valencia Nord to Xàtiva. Scenic ride through orange groves and rice paddies.", duration: "1 hour", cost: "~€5.50 return" },
+        { mode: "train", description: "Cercanías C-2 from Valencia Nord to Xàtiva. Scenic ride through orange groves and rice paddies.", duration: "1 hour", cost: "Check the current Renfe return fare" },
         { mode: "car", description: "A-7 motorway south, then CV-40 to Xàtiva. Easy drive.", duration: "50 min", cost: "Toll-free" },
       ],
       parkingNotes: "Free parking near the Alameda park at the base of town. The old town streets are narrow — park and walk.",
@@ -3433,7 +3433,7 @@ export const destinations: Destination[] = [
       summary: "Spring and autumn are ideal. Summer is very hot — the castle climb in full sun is gruelling after 11am.",
       seasons: [
         { season: "spring", description: "Perfect — wildflowers on the castle hill, comfortable climbing temperatures, orange blossoms in the valley.", rating: 5 },
-        { season: "summer", description: "Brutally hot (38°C+). The castle climb is exposed. Go at 9am opening or don't go. The tourist train helps.", rating: 2 },
+        { season: "summer", description: "Very hot, sometimes above 38°C. The castle climb is exposed. Check opening hours, start early and avoid the midday ascent. Confirm current shuttle or tourist-train operation rather than assuming it is available.", rating: 2 },
         { season: "autumn", description: "Excellent — golden light, comfortable temperatures, harvest season in the surrounding fields.", rating: 5 },
         { season: "winter", description: "Mild (8-15°C). Clear views from the castle. The town is quiet and atmospheric. Some restaurants close Monday.", rating: 4 },
       ],
@@ -3470,7 +3470,7 @@ export const destinations: Destination[] = [
       ],
     },
     practicalTips: [
-      "Castle entry is €6 adults, free under 12. The tourist road train is €3 return (runs from near the tourist office).",
+      "The official castle ticket page lists €6 general admission, reduced tickets for ages 8–16 and free admission through age 7. Confirm current prices and ticket conditions. Tourist transport has separate fares and schedules.",
       "The castle is open 10am-6pm (winter) / 10am-7pm (summer). Closed Mondays.",
       "Bring at least 1L of water per person. There's a small café at the castle with drinks and snacks.",
       "The walk from train station to old town is flat (10 min). From old town to castle is 30 min uphill.",
@@ -3500,9 +3500,9 @@ export const destinations: Destination[] = [
     relatedDestinations: ["sagunto", "requena", "albufera"],
     relatedBlogPosts: ["valencia-with-kids-complete-guide"],
     faqs: [
-      { question: "How do I get to Xàtiva from Valencia?", answer: "Take the Cercanías C-2 train from Valencia Nord station. It runs hourly, takes about 1 hour, and costs ~€5.50 return. The scenic ride passes through orange groves and rice paddies." },
+      { question: "How do I get to Xàtiva from Valencia?", answer: "Check the current Cercanías C-2 service from Valencia towards Xàtiva with Renfe. The journey is usually around an hour; confirm departure station, timetable, fare and the final return service for your date." },
       { question: "Is Xàtiva Castle worth visiting?", answer: "Absolutely — it's one of Spain's most dramatic castles. The twin fortifications stretch along an entire mountain ridge with 360° views from mountains to sea. Combined with the charming old town and Borgia history, it's the best full-day trip from Valencia." },
-      { question: "What is the upside-down portrait in Xàtiva?", answer: "A portrait of King Philip V in the town museum, hung deliberately upside down since the 18th century. It's Xàtiva's protest against his order to burn the city in 1707 during the War of Spanish Succession. The museum has never righted it." },
+      { question: "What is the upside-down portrait in Xàtiva?", answer: "The Museum of Fine Arts in Casa de l’Ensenyança displays a portrait of King Philip V upside down. It expresses Xàtiva’s historical protest against his order to burn the city in 1707 during the War of Spanish Succession. The portrait is not in the separate Almodí archaeological museum." },
     ],
   },
   {

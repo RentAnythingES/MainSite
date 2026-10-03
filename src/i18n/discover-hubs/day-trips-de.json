@@ -1,0 +1,127 @@
+{
+  "hub": "day-trips",
+  "hubName": "Tagesausflüge ab Valencia",
+  "hubDescription": "Vergleiche Tagesausflüge ab Valencia: Albufera, Burgen, Städte im Landesinneren und Culleras Küste – mit praktischen Tipps zu Anreise und Planung.",
+  "metadata": {
+    "title": "Tagesausflüge ab Valencia: Strände, Berge und Burgen",
+    "description": "Vergleiche Tagesausflüge ab Valencia: Albufera, Burgen, Städte im Landesinneren und Culleras Küste – mit praktischen Tipps zu Anreise und Planung.",
+    "alternates": {
+      "canonical": "https://rentandroll.com/de/discover/day-trips",
+      "languages": {
+        "en": "https://rentandroll.com/discover/day-trips",
+        "es": "https://rentandroll.com/es/discover/day-trips",
+        "x-default": "https://rentandroll.com/discover/day-trips",
+        "de": "https://rentandroll.com/de/discover/day-trips"
+      }
+    }
+  },
+  "editorial": {
+    "introTitle": "Wähle einen Tagesausflug passend zu Zeit und Energie",
+    "intro": [
+      "Ein guter Tagesausflug ab Valencia hängt von mehr als der Entfernung ab. Zugtakt, Fußweg ab dem Bahnhof, Mittagshitze, Öffnungszeiten der Attraktionen und Rückfahrt können entscheiden, ob ein Ziel entspannt oder hektisch wirkt.",
+      "Die Albufera passt zu Natur und Essen, Sagunto und Xàtiva zu Burgen und Geschichte. Requena bietet einen langsameren Tag im Landesinneren. Beginne mit dem gewünschten Erlebnis und prüfe dann den aktuellen Fahrplan, bevor du dich festlegst."
+    ],
+    "choiceTitle": "Die aktuellen Tagesausflugsführer vergleichen",
+    "choices": [
+      {
+        "title": "Albufera",
+        "description": "Für Feuchtgebiete, Reisfelder, Bootstouren, Sonnenuntergänge und die Landschaft hinter Valencias Paella-Tradition.",
+        "href": "/discover/albufera"
+      },
+      {
+        "title": "Sagunto",
+        "description": "Für einen kompakten historischen Ausflug mit Burg auf dem Hügel, römischem Theater und Altstadt.",
+        "href": "/discover/sagunto"
+      },
+      {
+        "title": "Xàtiva",
+        "description": "Für einen besonders eindrucksvollen Burgtag mit längerem Aufstieg und lohnender Altstadt.",
+        "href": "/discover/xativa"
+      },
+      {
+        "title": "Requena",
+        "description": "Für Weinlandschaft, unterirdische Höhlen und einen entspannten ganzen Tag im Landesinneren.",
+        "href": "/discover/requena"
+      },
+      {
+        "title": "Buñol",
+        "description": "Für eine Burg mitten in der Altstadt, historische Brunnen und einen optionalen Naturhalt abseits von La Tomatina.",
+        "href": "/discover/bunol-day-trip"
+      },
+      {
+        "title": "Cullera",
+        "description": "Für einen Burgbesuch am Morgen, gefolgt von einem sorgfältig ausgewählten Mittelmeerstrand.",
+        "href": "/discover/cullera-day-trip"
+      }
+    ],
+    "planningTitle": "Vor dem Aufbruch aus Valencia prüfen",
+    "planningPoints": [
+      "Bestätige am Reisetag die Hinfahrt und die letzte praktisch passende Rückverbindung.",
+      "Prüfe Schließungen, Ticketregeln und ob du vorab reservieren musst.",
+      "Plane ungeschützte Aufstiege und Fußwege rund um die Sommerhitze.",
+      "Nimm Wasser und nur Ausrüstung mit, die in öffentlichen Verkehrsmitteln praktisch bleibt."
+    ],
+    "pathways": [
+      {
+        "title": "Mit Kindern unterwegs",
+        "description": "Unser Familienführer für Valencia hilft bei Tempo, Anreise, Hitze und Ausrüstungsentscheidungen für Tage innerhalb und außerhalb der Stadt.",
+        "href": "/blog/valencia-with-kids-complete-guide",
+        "label": "Familienführer lesen"
+      },
+      {
+        "title": "Lieber einen einfacheren Tag in der Stadt?",
+        "description": "Vergleiche Valencias Attraktionen, wenn die gesamte Hin- und Rückfahrt zu viel Zeit oder Kraft kosten würde.",
+        "href": "/discover/attractions",
+        "label": "Valencias Attraktionen ansehen"
+      }
+    ],
+    "faqs": [
+      {
+        "question": "Welcher Tagesausflug ab Valencia ist ohne Auto am einfachsten?",
+        "answer": "Sagunto und Xàtiva bieten direkte Bahnverbindungen, die Albufera ist mit dem Bus erreichbar. Wie einfach die Reise ist, hängt trotzdem vom aktuellen Fahrplan, den Fußwegen am Ziel und der Mobilität sowie Hitzeverträglichkeit deiner Gruppe ab."
+      },
+      {
+        "question": "Welcher Tagesausflug ab Valencia passt am besten mit Kindern?",
+        "answer": "Die Albufera passt gut zu Familien, die sich für Natur und eine Bootstour interessieren. Burgen können ältere Kinder begeistern, die steile und unebene Wege bewältigen können. Stimme den Ausflug auf Aufmerksamkeitsspanne, Wetter und Reisezeit ab."
+      },
+      {
+        "question": "Kann ich Albufera und einen Strand am selben Tag besuchen?",
+        "answer": "Mit sorgfältiger Verkehrsplanung ist das möglich, besonders rund um die südlichen Strände. Zu viele Halte können den Tag aber hektisch machen. Entscheide dich vorrangig für Natur und Mittagessen oder einen längeren Strandbesuch."
+      },
+      {
+        "question": "Bleiben die Reisezeiten für Tagesausflüge das ganze Jahr gleich?",
+        "answer": "Nein. Bahn, Bus, saisonale Tourismusangebote und Öffnungszeiten der Attraktionen können sich ändern. Nutze Zeiten im Reiseführer zur Orientierung und bestätige den offiziellen Fahrplan kurz vor der Reise."
+      }
+    ]
+  },
+  "templateText": [
+    {
+      "kind": "text",
+      "value": "Startseite"
+    },
+    {
+      "kind": "text",
+      "value": "Entdecken"
+    },
+    {
+      "kind": "text",
+      "value": "Tagesausflüge"
+    },
+    {
+      "kind": "text",
+      "value": "Tagesausflüge ab Valencia"
+    },
+    {
+      "kind": "text",
+      "value": "Burgen, Feuchtgebiete, Städte im Landesinneren und die Küste – praktische Ausflüge, die du ohne Übernachtung planen kannst."
+    },
+    {
+      "kind": "text",
+      "value": "Reiseführer lesen →"
+    },
+    {
+      "kind": "text",
+      "value": "Reiseführer für Tagesausflüge folgen in Kürze. Schau bald wieder vorbei."
+    }
+  ]
+}

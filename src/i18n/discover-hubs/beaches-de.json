@@ -1,0 +1,211 @@
+{
+  "hub": "beaches",
+  "hubName": "Valencias Strände entdecken",
+  "hubDescription": "Vergleiche Valencias Strände für Familien, Baden, Barrierefreiheit und ruhigere Tage – mit praktischer Anreise und Reiseführern zu den einzelnen Stränden.",
+  "metadata": {
+    "title": "Valencias Strände: Den passenden Strand finden",
+    "description": "Vergleiche Valencias Strände für Familien, Baden, Barrierefreiheit und ruhigere Tage – mit praktischer Anreise und Reiseführern zu den einzelnen Stränden.",
+    "alternates": {
+      "canonical": "https://rentandroll.com/de/discover/beaches",
+      "languages": {
+        "en": "https://rentandroll.com/discover/beaches",
+        "es": "https://rentandroll.com/es/discover/beaches",
+        "x-default": "https://rentandroll.com/discover/beaches",
+        "de": "https://rentandroll.com/de/discover/beaches"
+      }
+    },
+    "openGraph": {
+      "title": "Valencias Strände entdecken",
+      "description": "Vergleiche Valencias Strände für Familien, Baden, Barrierefreiheit und ruhigere Tage – mit praktischer Anreise und Reiseführern zu den einzelnen Stränden.",
+      "url": "https://rentandroll.com/de/discover/beaches",
+      "images": [
+        {
+          "url": "/discover/malvarrosa-beach.webp",
+          "alt": "Strand Malvarrosa in Valencia"
+        }
+      ]
+    }
+  },
+  "faqs": [
+    {
+      "question": "Welcher Strand in Valencia ist vom Stadtzentrum am einfachsten erreichbar?",
+      "answer": "Malvarrosa und Las Arenas sind die unkompliziertesten Stadtstrände mit regelmäßigen öffentlichen Verkehrsmitteln und einer langen Promenade am Meer. Prüfe vor der Anreise die aktuellen EMT- und Metrovalencia-Verbindungen für deinen genauen Ausgangspunkt."
+    },
+    {
+      "question": "Ist Malvarrosa oder Patacona besser für Familien?",
+      "answer": "Beide können gut passen. Malvarrosa bietet umfangreiche Stadtstrand-Einrichtungen und direkte Verbindungen aus der Stadt. Patacona wirkt oft ruhiger und eignet sich für Familien, die eine etwas weniger zentrale Küste bevorzugen. Der Standort deiner Unterkunft kann entscheidend sein."
+    },
+    {
+      "question": "Muss ich Strandausrüstung nach Valencia mitbringen?",
+      "answer": "Nicht unbedingt. Handtücher und Sonnenschutz sind wichtig. Größere Gegenstände wie Sonnenschirme, Schattenspender, Stühle, Kühlboxen und Strandwagen kannst du in Valencia mieten, wenn Kauf und Transport umständlich wären."
+    },
+    {
+      "question": "Sind Valencias Strände barrierefrei?",
+      "answer": "Mehrere Strände bieten zugängliche Wege und saisonale Badeassistenz. Verfügbare Einrichtungen und Termine können sich aber ändern. Bestätige vor deinem Besuch das aktuelle Angebot am jeweiligen Strand."
+    }
+  ],
+  "comparisons": [
+    {
+      "name": "Malvarrosa",
+      "bestFor": "Erste Besuche, Anreise aus der Stadt und eine breite Promenade",
+      "feel": "Großer, lebhafter Stadtstrand",
+      "href": "/discover/malvarrosa-beach"
+    },
+    {
+      "name": "Patacona",
+      "bestFor": "Ein ruhigerer Strandtag und Unterkünfte im Norden",
+      "feel": "Entspannte Fortsetzung der städtischen Küste",
+      "href": "/discover/patacona-beach"
+    },
+    {
+      "name": "Pinedo",
+      "bestFor": "Barrierefreie Einrichtungen und ein ruhigerer örtlicher Strand",
+      "feel": "Halbländlicher Strand südlich des Hafens",
+      "href": "/discover/pinedo-beach"
+    },
+    {
+      "name": "El Saler",
+      "bestFor": "Dünen, Natur und ein geplanter ganzer Strandtag",
+      "feel": "Langer Naturstrand in der Albufera-Landschaft",
+      "href": "/discover/el-saler-beach"
+    }
+  ],
+  "templateText": [
+    {
+      "kind": "text",
+      "value": "Startseite"
+    },
+    {
+      "kind": "text",
+      "value": "Entdecken"
+    },
+    {
+      "kind": "text",
+      "value": "Strände"
+    },
+    {
+      "kind": "alt",
+      "value": "Breiter Sandstrand und Mittelmeer in Valencia"
+    },
+    {
+      "kind": "text",
+      "value": "Strandbesuch vor Ort planen"
+    },
+    {
+      "kind": "text",
+      "value": "Valencias Strände entdecken"
+    },
+    {
+      "kind": "text",
+      "value": "Wähle den passenden Strand für deinen Aufenthalt, verstehe die Anreise und plane, was du für einen angenehmen Tag am Mittelmeer tatsächlich brauchst."
+    },
+    {
+      "kind": "text",
+      "value": "Einen Strand in Valencia wählen"
+    },
+    {
+      "kind": "text",
+      "value": "Valencias Küste umfasst belebte Stadtstrände, ruhigere Abschnitte nördlich der Stadt und naturnähere Strände Richtung Albufera. Die beste Wahl hängt von deiner Unterkunft, der Menge deiner Ausrüstung und deinem Bedarf an stufenlosen Wegen oder Familieneinrichtungen ab."
+    },
+    {
+      "kind": "text",
+      "value": "Malvarrosa ist für viele Erstbesucher der einfachste Ausgangspunkt. Patacona setzt die Küste nach Norden mit ruhigerer Atmosphäre fort. Südlich des Hafens verbindet Pinedo örtlichen Charakter mit einem eingerichteten barrierefreien Bereich. El Saler bietet Dünen, Pinienwald und einen naturnäheren Ausflug, der zusätzliche Planung für Anreise und Ausrüstung erfordert."
+    },
+    {
+      "kind": "text",
+      "value": "Rund um deinen Aufenthalt planen"
+    },
+    {
+      "kind": "text",
+      "value": "Familien:"
+    },
+    {
+      "kind": "text",
+      "value": "Achte vor allem auf Schatten, Toiletten, Essen in der Nähe und einen möglichst kurzen Weg mit der Ausrüstung."
+    },
+    {
+      "kind": "text",
+      "value": "Eingeschränkte Mobilität:"
+    },
+    {
+      "kind": "text",
+      "value": "Bestätige vor der Anreise aktuelle barrierefreie Eingänge und saisonale Unterstützung."
+    },
+    {
+      "kind": "text",
+      "value": "Lange Strandtage:"
+    },
+    {
+      "kind": "text",
+      "value": "Plane Wasser, Schatten, Sitzgelegenheiten und sichere Aufbewahrung von Lebensmitteln, statt dich auf Einkäufe in der Nähe zu verlassen."
+    },
+    {
+      "kind": "text",
+      "value": "Valencias Stadtstrände vergleichen"
+    },
+    {
+      "kind": "text",
+      "value": "Beginne mit den praktischen Unterschieden zwischen den beiden bereits ausführlich beschriebenen Strandgebieten."
+    },
+    {
+      "kind": "text",
+      "value": "Besonders geeignet für"
+    },
+    {
+      "kind": "text",
+      "value": "Atmosphäre"
+    },
+    {
+      "kind": "text",
+      "value": "Reiseführer vor Ort lesen →"
+    },
+    {
+      "kind": "text",
+      "value": "Ausführliche Strandführer"
+    },
+    {
+      "kind": "text",
+      "value": "Strand entdecken →"
+    },
+    {
+      "kind": "text",
+      "value": "Miete, was dir hilft"
+    },
+    {
+      "kind": "text",
+      "value": "Strandausrüstung in Valencia geliefert"
+    },
+    {
+      "kind": "text",
+      "value": "Entdecke Sonnenschirme, Schattenspender, Handtücher, Kühlboxen, Stühle, Spiele und Transporthilfen und prüfe dann die Verfügbarkeit für deine genauen Mietdaten."
+    },
+    {
+      "kind": "text",
+      "value": "Strand- und Outdoor-Ausrüstung ansehen"
+    },
+    {
+      "kind": "text",
+      "value": "Mit der Familie planen"
+    },
+    {
+      "kind": "text",
+      "value": "Eine vollständige Familienausrüstung für den Strand zusammenstellen"
+    },
+    {
+      "kind": "text",
+      "value": "Nutze das Familien-Strandpaket als Checkliste und passe es dann an deine Gruppe, Unterkunft und Transportbedürfnisse an."
+    },
+    {
+      "kind": "text",
+      "value": "Familien-Strandpaket ansehen"
+    },
+    {
+      "kind": "text",
+      "value": "Strandführer für Familien →"
+    },
+    {
+      "kind": "text",
+      "value": "Fragen zu Valencias Stränden"
+    }
+  ]
+}

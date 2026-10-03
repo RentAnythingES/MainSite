@@ -1,0 +1,192 @@
+{
+  "slug": "oceanografic-valencia",
+  "name": "Oceanogràfic Valencia",
+  "type": "attraction",
+  "tagline": "Ein praktischer Reiseführer zu Europas größtem Aquarium, mit Familientipps und barrierefreien Wegen",
+  "heroImage": "/discover/oceanografic-valencia.jpg",
+  "heroImageAlt": "Weiße geschwungene Gebäude und Wasser im Oceanogràfic Valencia",
+  "heroImageProvenance": {
+    "status": "licensed",
+    "creator": "Andrew Stobart",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Oceanogr%C3%A0fic_Valencia.jpg",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "verifiedAt": "2026-07-20",
+    "modifications": "Resized to 1280 pixels wide by Wikimedia Commons."
+  },
+  "title": "Oceanogràfic Valencia: Praktischer Reiseführer",
+  "description": "Plane deinen Besuch im Oceanogràfic Valencia: Zeitplanung mit Kindern, Barrierefreiheit, Essensregeln, Anreise und Tipps für einen angenehmen Tag im Aquarium.",
+  "keywords": [
+    "Oceanogràfic Valencia",
+    "Valencia Aquarium",
+    "Oceanogràfic mit Kindern",
+    "Oceanogràfic Barrierefreiheit"
+  ],
+  "date": "2026-07-20",
+  "lastUpdated": "2026-07-20",
+  "audiences": [
+    "families",
+    "mobility-needs",
+    "couples",
+    "elderly"
+  ],
+  "region": "Stadt der Künste und Wissenschaften, Valencia",
+  "distanceFromValencia": "Etwa 20–30 Minuten ab der historischen Innenstadt",
+  "hubs": [
+    "attractions"
+  ],
+  "overview": {
+    "paragraphs": [
+      "Das Oceanogràfic ist das Aquarium in Valencias Stadt der Künste und Wissenschaften und wird vom Betreiber als Europas größtes Aquarium beschrieben. Der Rundgang führt durch Meereslebensräume wie Mittelmeer, Ozeane, tropische Inseln, Arktis und Antarktis. Große Ausstellungsbereiche im Inneren sind durch Wege im Freien miteinander verbunden.",
+      "Dies ist kein kleines Museum in einem einzigen Gebäude. Familien sollten Gehstrecken, Mahlzeiten, Ruhepausen und das aktuelle Programm einplanen. Ein Besuch mit ausgewählten Schwerpunkten kann einen halben Tag füllen. Wer die meisten Lebensräume und Aktivitäten besucht, braucht häufig fast einen ganzen Tag.",
+      "Öffnungszeiten, Eintrittspreise und Programmpunkte variieren je nach Datum. Prüfe den offiziellen Kalender direkt vor der Buchung und erneut bei der Ankunft, statt dich auf einen älteren Reiseführer oder Screenshot zu verlassen."
+    ],
+    "quickFacts": [
+      {
+        "label": "Besonders geeignet für",
+        "value": "Meereslebewesen, Familien und einen Attraktionstag bei jedem Wetter"
+      },
+      {
+        "label": "Zeit einplanen",
+        "value": "Mindestens einen halben Tag; länger mit Kindern und Aktivitäten"
+      },
+      {
+        "label": "Essensregel",
+        "value": "Mitgebrachtes Essen ist nicht erlaubt"
+      },
+      {
+        "label": "Zugang",
+        "value": "Rampen, Aufzüge und angepasste Wege im gesamten Komplex"
+      }
+    ]
+  },
+  "highlights": [
+    {
+      "name": "Rundgang durch Meereslebensräume",
+      "description": "Der Besuch verbindet unterschiedliche Meeresumgebungen statt einer einzigen klassischen Aquarienhalle. Wähle anhand des offiziellen Plans die Bereiche aus, die deiner Gruppe am wichtigsten sind.",
+      "icon": "🐠"
+    },
+    {
+      "name": "Unterwassertunnel",
+      "description": "Im Bereich der Ozeane kannst du durch einen Tunnel gehen, während Haie und andere Meerestiere über deinem Kopf schwimmen. Das ist eines der bekanntesten Erlebnisse des Aquariums.",
+      "icon": "🦈"
+    },
+    {
+      "name": "Tagesprogramm",
+      "description": "Vorträge, Fütterungen und Präsentationen können den Rundgang bestimmen. Betriebsabläufe, Wetter oder Tierwohl können jedoch zu Änderungen führen.",
+      "icon": "🗓️",
+      "tip": "Prüfe bei der Ankunft das Tagesprogramm und wähle nur die Aktivitäten aus, für die du deinen Rundgang wirklich umplanen möchtest."
+    }
+  ],
+  "gettingThere": {
+    "summary": "Das Oceanogràfic liegt am östlichen Ende der Stadt der Künste und Wissenschaften. Die Anreise ist mit öffentlichen Verkehrsmitteln, Fahrrad, Taxi oder Auto möglich.",
+    "options": [
+      {
+        "mode": "bus",
+        "description": "Nutze den aktuellen EMT-Routenplaner und wähle eine Haltestelle am Oceanogràfic, nicht nur am größeren Komplex.",
+        "duration": "Meist 20–35 Min. ab dem Zentrum"
+      },
+      {
+        "mode": "bike",
+        "description": "Die Turia-Gärten bieten eine weitgehend flache Anfahrt. Schließe das Fahrrad draußen sicher ab und berücksichtige die Sommerhitze.",
+        "duration": "Etwa 15–25 Min. ab Zentrum"
+      },
+      {
+        "mode": "car",
+        "description": "Das Aquarium hat einen großen Parkplatz mit ausgewiesenen barrierefreien Stellplätzen. Prüfe die aktuellen Parkbedingungen auf der offiziellen Website."
+      },
+      {
+        "mode": "walk",
+        "description": "Der Fußweg durch die Turia-Gärten ist schön und flach, verlängert aber die Gehstrecke vor einem ohnehin langen Besuch deutlich.",
+        "duration": "Etwa 35–50 Min. ab Altstadt"
+      }
+    ],
+    "parkingNotes": "Die offiziellen Informationen zur Barrierefreiheit nennen entsprechend ausgewiesene Stellplätze sowohl auf dem Parkplatz als auch an der Straße. Ihre Verfügbarkeit ist nicht garantiert."
+  },
+  "bestTimeToVisit": {
+    "summary": "Komm nahe der Öffnungszeit für einen ruhigeren Start. Der Rundgang verbindet Innenbereiche mit ungeschützten Wegen im Freien, deshalb sind Wetter und Hitze wichtig.",
+    "seasons": [
+      {
+        "season": "spring",
+        "description": "Angenehm für die Wege zwischen den Lebensräumen. Beachte Zeiten mit vielen Schulgruppen und Besucherandrang in den Ferien.",
+        "rating": 5
+      },
+      {
+        "season": "summer",
+        "description": "Innenausstellungen bieten Abkühlung, doch die Wege draußen können heiß und belebt sein. Beginne früh und plane Trinkpausen ein.",
+        "rating": 3
+      },
+      {
+        "season": "autumn",
+        "description": "Oft angenehm für den ganzen Rundgang. Wie voll es wird, hängt von Schul- und Ferienterminen ab.",
+        "rating": 5
+      },
+      {
+        "season": "winter",
+        "description": "Eine praktische Kombination aus Innen- und Außenbereichen. Prüfe Wetter und das Programm für dein Datum vor der Anreise.",
+        "rating": 4
+      }
+    ]
+  },
+  "accessibility": {
+    "overallRating": 5,
+    "summary": "Die offiziellen Informationen nennen Rampen, Aufzüge, automatische Türen, rutschfeste Oberflächen und angepasste Wege durch die Gebäude.",
+    "wheelchairNotes": "Manuelle Rollstühle können nach Verfügbarkeit gegen eine rückzahlbare Kaution ausgeliehen werden. Bestätige die aktuellen Bedingungen beim Betreiber, bevor du dich auf einen Leihrollstuhl verlässt.",
+    "strollerNotes": "Der Rundgang lässt sich mit Kinderwagen bewältigen, führt aber durch ein großes Gelände. Nimm nur mit, was du auf langen Gehstrecken und bei Essenspausen gut handhaben kannst.",
+    "publicTransportAccess": "Prüfe die aktuelle barrierefreie EMT-Verbindung und den letzten Weg ab der Haltestelle. Der Betreiber nennt außerdem ausgewiesene barrierefreie Parkplätze."
+  },
+  "visitingHere": {
+    "summary": "Plane das Oceanogràfic als Hauptaktivität des Tages. Wähle deine wichtigsten Lebensräume aus, berücksichtige das aktuelle Programm und entscheide vor Beginn, wo die Gruppe essen wird.",
+    "idealDuration": "4–7 Stunden je nach Tempo und Aktivitäten",
+    "bestTimeOfDay": "Nahe der Öffnungszeit für einen ruhigeren Start",
+    "tips": [
+      "Fotografiere die Programmtafel oder speichere den offiziellen Tagesplan, bevor du den Rundgang beginnst.",
+      "Wenn du mit einem Baby reist, nutze die Still- und Wickelräume hinter dem Informationspunkt.",
+      "Vereinbart einen Treffpunkt, wenn Erwachsene und ältere Kinder getrennte Wege gehen. Das Gelände ist groß."
+    ]
+  },
+  "practicalTips": [
+    "Trage bequeme Schuhe. Die Gehstrecken innerhalb des Komplexes sind lang.",
+    "Bring kein Picknick mit, das du drinnen essen möchtest: Mitgebrachtes Essen ist nicht erlaubt.",
+    "Schließfächer sind vorhanden, doch Zahlungsbedingungen und Verfügbarkeit können sich ändern.",
+    "Der Wiedereinlass ist eingeschränkt. Bestätige die Regel, bevor du das Gelände während deines Besuchs verlässt."
+  ],
+  "productWidgets": [
+    {
+      "categorySlug": "baby-gear",
+      "heading": "Den Ausflug mit der Familie erleichtern",
+      "afterSection": "Highlights"
+    },
+    {
+      "categorySlug": "mobility",
+      "heading": "Brauchst du Mobilitätshilfen für deinen Aufenthalt?",
+      "afterSection": "Accessibility"
+    }
+  ],
+  "relatedDestinations": [
+    "city-of-arts-and-sciences",
+    "turia-gardens"
+  ],
+  "relatedBlogPosts": [
+    "valencia-with-kids-complete-guide",
+    "wheelchair-accessibility-valencia"
+  ],
+  "faqs": [
+    {
+      "question": "Wie viel Zeit sollte ich für das Oceanogràfic Valencia einplanen?",
+      "answer": "Plane mindestens einen halben Tag ein. Familien, Besucher mehrerer Programmpunkte und alle, die es ruhig angehen lassen, können fast einen ganzen Tag brauchen."
+    },
+    {
+      "question": "Darf ich Essen in das Oceanogràfic mitbringen?",
+      "answer": "Laut offiziellen FAQs ist mitgebrachtes Essen nicht erlaubt. Plane die Gastronomie vor Ort ein und kläre besondere Ernährungsbedürfnisse direkt vor dem Besuch."
+    },
+    {
+      "question": "Ist das Oceanogràfic für Rollstuhlnutzer zugänglich?",
+      "answer": "Der Betreiber nennt Rampen, Aufzüge, automatische Türen, angepasste Wege und Leihrollstühle nach Verfügbarkeit. Bestätige alle wichtigen Vorkehrungen vor deiner Anreise."
+    },
+    {
+      "question": "Sollte ich Oceanogràfic-Tickets im Voraus kaufen?",
+      "answer": "Für beliebte Besuchstage ist eine Buchung im Voraus sinnvoll. Preise, Öffnungszeiten und Ticketkombinationen ändern sich jedoch. Nutze den offiziellen Oceanogràfic-Kalender für dein konkretes Datum."
+    }
+  ]
+}

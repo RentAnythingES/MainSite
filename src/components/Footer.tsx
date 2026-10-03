@@ -5,49 +5,43 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { indexableSeoCategoryClusters } from "@/data/seo-clusters";
 import { SITE_IDENTITY } from "@/config/site";
+import { germanCategoryLabels } from "@/content/german-categories";
 import { siteContext } from "@/i18n/site-context";
 
 export default function Footer() {
   const pathname = usePathname();
   if (pathname === "/agent" || (pathname.startsWith("/agent/") && pathname !== "/agent/login")) return null;
-  const { locale, prefix, privatePreview } = siteContext(pathname);
+  const { locale, prefix } = siteContext(pathname);
   const isSpanish = locale === "es";
   const isGerman = locale === "de";
 
-  const footerLinks: Record<string, { name: string; href: string; disabled?: boolean }[]> = isGerman ? {
-    "Informationen und Hilfe": [
-      { name: "So funktioniert’s", href: `${prefix}/how-it-works` },
-      { name: "Kontakt", href: `${prefix}/contact` },
-      { name: "Neuigkeiten", href: `${prefix}/newsletter` },
-    ],
-    "Mietartikel": [{ name: privatePreview ? "Private Produktvorschau" : "Alles zum Mieten", href: prefix }, { name: "Mietpakete", href: `${prefix}/valencia/kits` }],
-  } : {
-    [isSpanish ? "Información" : "Info & Help"]: [
-      { name: isSpanish ? "Cómo Funciona" : "How It Works", href: `${prefix}/how-it-works` },
-      { name: isSpanish ? "Descubrir Valencia" : "Discover Valencia", href: `${prefix}/discover` },
-      { name: isSpanish ? "Sobre Nosotros" : "About Us", href: `${prefix}/about` },
-      { name: isSpanish ? "Preguntas Frecuentes" : "FAQ", href: `${prefix}/faq` },
+  const footerLinks: Record<string, { name: string; href: string; disabled?: boolean }[]> = {
+    [isGerman ? "Informationen & Hilfe" : (isSpanish ? "Información" : "Info & Help")]: [
+      { name: isGerman ? "So funktioniert’s" : (isSpanish ? "Cómo Funciona" : "How It Works"), href: `${prefix}/how-it-works` },
+      { name: isGerman ? "Valencia entdecken" : (isSpanish ? "Descubrir Valencia" : "Discover Valencia"), href: `${prefix}/discover` },
+      { name: isGerman ? "Über uns" : (isSpanish ? "Sobre Nosotros" : "About Us"), href: `${prefix}/about` },
+      { name: isGerman ? "FAQ" : (isSpanish ? "Preguntas Frecuentes" : "FAQ"), href: `${prefix}/faq` },
       {
-        name: isSpanish ? "Servicios para Anfitriones" : "Host Services",
+        name: isGerman ? "Service für Gastgeber" : (isSpanish ? "Servicios para Anfitriones" : "Host Services"),
         href: isSpanish
           ? "/es/valencia/servicios-anfitriones"
-          : "/valencia/host-services",
+          : `${prefix}/valencia/host-services`,
       },
       {
-        name: isSpanish ? "Colaboraciones" : "Partnerships",
-        href: isSpanish ? "/es/colaboraciones" : "/partners",
+        name: isGerman ? "Partnerschaften" : (isSpanish ? "Colaboraciones" : "Partnerships"),
+        href: isSpanish ? "/es/colaboraciones" : `${prefix}/partners`,
       },
       { name: "Blog", href: `${prefix}/blog` },
-      { name: isSpanish ? "Contacto" : "Contact", href: `${prefix}/contact` },
+      { name: isGerman ? "Kontakt" : (isSpanish ? "Contacto" : "Contact"), href: `${prefix}/contact` },
     ],
-    [isSpanish ? "Categorías" : "Categories"]: [
-      { name: "Kits", href: `${prefix}/valencia/kits` },
+    [isGerman ? "Kategorien" : (isSpanish ? "Categorías" : "Categories")]: [
+      { name: isGerman ? "Mietpakete" : "Kits", href: `${prefix}/valencia/kits` },
       ...indexableSeoCategoryClusters.map((category) => ({
-        name: isSpanish ? category.nameEs : category.nameEn,
+        name: isGerman ? germanCategoryLabels[category.slug] : isSpanish ? category.nameEs : category.nameEn,
         href: `${prefix}/rental/${category.slug}`,
       })),
     ],
-    [isSpanish ? "Ciudades" : "Cities"]: [
+    [isGerman ? "Städte" : (isSpanish ? "Ciudades" : "Cities")]: [
       { name: "Valencia", href: `${prefix}/valencia` },
       { name: "Barcelona", href: "#", disabled: true },
       { name: "Madrid", href: "#", disabled: true },
@@ -62,7 +56,7 @@ export default function Footer() {
     { name: isGerman ? "Beschwerdeformulare (Spanisch)" : "Hojas de Reclamaciones", href: "https://www.hojasderereclamaciones.com/", external: true },
   ];
 
-  const tagline = isGerman ? "Reise mit leichtem Gepäck. Mietartikel und Mietpakete für deinen Aufenthalt in Valencia." : isSpanish
+  const tagline = isGerman ? "Reise mit leichtem Gepäck. Miete, was du brauchst. Praktische Mietpakete und einzelne Artikel, direkt in Valencia geliefert." : isSpanish
     ? `${SITE_IDENTITY.taglineEs} Equipamiento práctico entregado en Valencia.`
     : `${SITE_IDENTITY.tagline} Practical rental kits and individual items delivered in Valencia.`;
 
@@ -134,7 +128,7 @@ export default function Footer() {
         </div>
 
         {/* Bottom Bar */}
-        {!isGerman && <div className="flex flex-wrap gap-5 pb-6 text-sm"><Link className="hover:text-white" href={isSpanish ? "/es/agent-network" : "/agent-network"}>{isSpanish ? "Únete a nuestra red de agentes" : "Join our Agent Network"}</Link><a className="hover:text-white" href="/agent/login">{isSpanish ? "Acceso para agentes" : "Agent login"}</a></div>}
+        {<div className="flex flex-wrap gap-5 pb-6 text-sm"><Link className="hover:text-white" href={`${prefix}/agent-network`}>{isGerman ? "Unserem Partnernetzwerk beitreten" : (isSpanish ? "Únete a nuestra red de agentes" : "Join our Agent Network")}</Link><a className="hover:text-white" href="/agent/login">{isGerman ? "Anmeldung für Partner" : (isSpanish ? "Acceso para agentes" : "Agent login")}</a></div>}
         <div className="border-t border-neutral-800 py-6">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
             <p className="text-xs text-neutral-500">

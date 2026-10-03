@@ -1,0 +1,298 @@
+{
+  "slug": "el-ensanche",
+  "name": "El Ensanche",
+  "type": "neighbourhood",
+  "tagline": "Breite Boulevards, Designermode und Valencias elegantes Gastronomieviertel",
+  "heroImage": "/discover/el-ensanche-hero.webp",
+  "heroImageAlt": "Farbenfrohe Fassade des Mercado de Colón im valencianischen Jugendstil im Viertel Ensanche",
+  "heroImageProvenance": {
+    "status": "licensed",
+    "creator": "acediscovery",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Mercat-de-Col%C3%B3n_Valencia.jpg",
+    "license": "CC BY 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+    "verifiedAt": "2026-07-19",
+    "modifications": "Cropped and resized to 16:9 WebP."
+  },
+  "title": "El Ensanche in Valencia: Einkaufen und Essen gehen",
+  "description": "Entdecke El Ensanche in Valencia: Calle Colón, Mercado de Colón, Restaurants und Verkehrsanbindungen – mit praktischen Tipps für eine Unterkunft im Viertel.",
+  "keywords": [
+    "El Ensanche Valencia",
+    "Calle Colón Valencia",
+    "Einkaufen Valencia",
+    "Mercado de Colón",
+    "Valencia Shopping Tipps"
+  ],
+  "date": "2026-06-20",
+  "lastUpdated": "2026-06-20",
+  "audiences": [
+    "families",
+    "couples",
+    "elderly",
+    "luxury"
+  ],
+  "region": "Zentrales Valencia",
+  "hubs": [
+    "neighbourhoods"
+  ],
+  "overview": {
+    "paragraphs": [
+      "El Ensanche, also die „Erweiterung“, ist Valencias im 19. Jahrhundert angelegtes Viertel mit rasterförmigen Straßen. Es bildet das Gegenstück zum mittelalterlichen El Carmen. Als Valencia über seine alten Stadtmauern hinauswuchs, entstanden hier breite, von Bäumen gesäumte Boulevards, elegante Fassaden im Jugendstil und Modernisme sowie die Calle Colón, eine der belebtesten Einkaufsstraßen Spaniens.",
+      "Hier zeigt sich Valencia besonders gepflegt. Die Straßen sind breit und flach und eignen sich gut für Rollstühle und Kinderwagen. Das Angebot reicht von Zara bis zu Luxusboutiquen. Zum Essen findest du Sternerestaurants ebenso wie den eindrucksvollen Mercado de Colón, einen Jugendstilmarkt, der heute als gehobene Markthalle mit Gastronomie dient.",
+      "Für Besucher ist El Ensanche eine sichere, komfortable und zentrale Wahl. El Carmen liegt etwa zehn Minuten zu Fuß nördlich, Ruzafa zehn Minuten südlich und die Turia-Gärten fünf Minuten östlich. Die Hotels sind meist gehobener, und das Viertel wirkt ruhig und gepflegt – ein angenehmer Gegenpol zum lebhaften Treiben der Altstadt."
+    ],
+    "quickFacts": [
+      {
+        "label": "Anreise",
+        "value": "Metro L3/L5/L7 bis Colón im Stadtzentrum"
+      },
+      {
+        "label": "Besonders geeignet für",
+        "value": "Einkaufen, gehobene Gastronomie und den ersten Valencia-Besuch"
+      },
+      {
+        "label": "Atmosphäre",
+        "value": "Elegant, modern und gepflegt"
+      },
+      {
+        "label": "Wichtigste Straße",
+        "value": "Calle Colón – Valencias zentrale Einkaufsstraße"
+      }
+    ]
+  },
+  "highlights": [
+    {
+      "name": "Calle Colón",
+      "description": "Valencias wichtigste Einkaufsstraße: ein breiter Boulevard, der sich gut zu Fuß erkunden lässt, mit spanischen und internationalen Marken. Von Zara und Mango bis zum traditionsreichen spanischen Kaufhaus El Corte Inglés – hier kaufen die Menschen aus Valencia ein.",
+      "icon": "🛍️",
+      "tip": "Die Rabattaktionen Rebajas beginnen im Januar und Juli. El Corte Inglés hat ein schönes Restaurant mit Blick über die Stadt.",
+      "googleMapsUrl": "https://maps.google.com/?q=Calle+Colón+Valencia"
+    },
+    {
+      "name": "Mercado de Colón",
+      "description": "Ein beeindruckendes Jugendstilmarktgebäude von 1916, restauriert und in eine gehobene Markthalle mit Gastronomie umgewandelt. Die mit Keramikfliesen verkleidete Fassade und das Innere aus Eisen und Glas sind architektonisch sehenswert. Drinnen findest du guten Kaffee, Weinbars, Tapas und hervorragende Horchata.",
+      "icon": "🏛️",
+      "tip": "Komm am späten Vormittag zum Kaffee oder zum Aperitif. Die Horchata bei Daniel ist hervorragend. Schon die Architektur allein lohnt den Besuch.",
+      "googleMapsUrl": "https://maps.google.com/?q=Mercado+de+Colón+Valencia"
+    },
+    {
+      "name": "Calle Jorge Juan",
+      "description": "Eine von Valencias elegantesten Straßen für unabhängige Boutiquen, Kunstgalerien und gehobene Gastronomie. Sie ist ruhiger und feiner als die Calle Colón. In den Seitenstraßen findest du einige der besten Restaurants der Stadt.",
+      "icon": "✨",
+      "tip": "Zwischen Colón und Ruzafa liegen besonders schöne Boutiquen. Donnerstag- und Freitagabend eignen sich für einen stimmungsvollen Paseo, den abendlichen Spaziergang."
+    },
+    {
+      "name": "Plaza del Ayuntamiento",
+      "description": "Valencias großer zentraler Platz wird vom imposanten Rathaus mit seiner reich verzierten Fassade und dem Uhrturm geprägt. Während der Fallas findet hier die Mascletà statt: ein ohrenbetäubendes Feuerwerk am Tag, dessen Druckwellen die Fenster der Stadt erzittern lassen.",
+      "icon": "🏛️",
+      "tip": "Besuche den Rathausbalkon für den Blick auf den Platz. Der Eintritt ist frei, die Öffnungszeiten sind begrenzt. Der große Brunnen auf dem Platz ist nachts schön beleuchtet.",
+      "googleMapsUrl": "https://maps.google.com/?q=Plaza+del+Ayuntamiento+Valencia"
+    }
+  ],
+  "gettingThere": {
+    "summary": "Vielleicht bist du schon hier: El Ensanche liegt im geografischen Zentrum des modernen Valencia.",
+    "options": [
+      {
+        "mode": "metro",
+        "description": "Colón (L3/L5/L7) liegt mitten in El Ensanche. Xàtiva (L3/L5) erschließt den südlichen Teil.",
+        "duration": "Direkt",
+        "cost": "€1.50"
+      },
+      {
+        "mode": "walk",
+        "description": "Etwa zehn Minuten ab El Carmen und zehn Minuten ab Ruzafa. Viele Ziele sind zentral erreichbar.",
+        "duration": "Etwa 10 Min. aus vielen zentralen Vierteln"
+      },
+      {
+        "mode": "bus",
+        "description": "Zahlreiche Buslinien fahren durch das Viertel. Verbindungen in Richtung Centro oder Colón bringen dich hierher.",
+        "duration": "Je nach Ausgangspunkt",
+        "cost": "€1.50"
+      }
+    ],
+    "parkingNotes": "Tiefgaragen findest du an der Calle Colón und der Plaza del Ayuntamiento. Rechne mit etwa 15–20 € pro Tag. Im Zentrum ist der Verkehr langsam; Metro oder Fußwege sind oft schneller."
+  },
+  "bestTimeToVisit": {
+    "summary": "Ein Besuch lohnt sich das ganze Jahr. Zum Einkaufen und Essen im Freien sind Frühling und Herbst besonders angenehm.",
+    "seasons": [
+      {
+        "season": "spring",
+        "description": "Angenehme Temperaturen zum Spazieren und Essen im Freien. Die Fallas im März verändern das ganze Viertel.",
+        "rating": 5
+      },
+      {
+        "season": "summer",
+        "description": "Heiß, aber klimatisierte Geschäfte sorgen für Abkühlung. El Corte Inglés und Mercado de Colón bieten Rückzugsmöglichkeiten.",
+        "rating": 3
+      },
+      {
+        "season": "autumn",
+        "description": "Ideal: angenehmes Wetter, neue Modekollektionen und weiterhin schöne Temperaturen auf den Restaurantterrassen.",
+        "rating": 5
+      },
+      {
+        "season": "winter",
+        "description": "Die Weihnachtsbeleuchtung entlang der Calle Colón ist beeindruckend. Oft bleibt es mild genug für einen Kaffee draußen.",
+        "rating": 4
+      }
+    ]
+  },
+  "whatToBring": {
+    "bring": [
+      "Bequeme Schuhe zum Gehen",
+      "Einkaufstaschen – oder kaufe eine vor Ort",
+      "Appetit auf den Mercado de Colón"
+    ],
+    "dontBring": [
+      "Schweres Gepäck",
+      "Ungeduld – manche Geschäfte schließen von 14 bis 17 Uhr zur Siesta"
+    ],
+    "rentInstead": [
+      "Kinderwagen für einen Einkaufsbummel mit der Familie",
+      "Rollstuhl, um das Viertel bequem zu erkunden"
+    ]
+  },
+  "accessibility": {
+    "overallRating": 5,
+    "summary": "El Ensanche ist Valencias am besten zugängliches Viertel. Der rasterförmige Grundriss aus dem 19. Jahrhundert bedeutet breite, flache Gehwege, abgesenkte Bordsteine an den Kreuzungen und stufenlosen Zugang zu vielen Geschäften und Restaurants.",
+    "wheelchairNotes": "Im ganzen Viertel kommst du gut voran: breite Gehwege, flaches Gelände und stufenlose Ladeneingänge an der Calle Colón. Mercado de Colón und El Corte Inglés sind zugänglich.",
+    "strollerNotes": "Eines der einfachsten Viertel mit Kinderwagen. Breite, flache Gehwege ohne Kopfsteinpflaster. Metrostationen und Kaufhäuser haben Aufzüge.",
+    "publicTransportAccess": "Die Metrostation Colón hat Aufzüge. Auf den wichtigsten Buslinien fahren Niederflurfahrzeuge."
+  },
+  "foodAndDrink": {
+    "summary": "El Ensanche bietet Valencias größte gastronomische Vielfalt, von Sternerestaurants bis zur schönen Gastronomiehalle im Mercado de Colón.",
+    "recommendations": [
+      {
+        "name": "Mercado de Colón",
+        "type": "Gastronomiehalle und Terrassen",
+        "priceRange": "€€",
+        "tip": "Die einzelnen Betriebe haben eigene Öffnungszeiten. Prüfe das gewünschte Lokal, bevor du dich auf den Weg machst.",
+        "familyFriendly": true,
+        "sourceNote": "Official market site confirms the food, drink and terrace businesses operating inside the modernist building.",
+        "sourceUrl": "https://mercadocolon.es/",
+        "sourceCheckedAt": "2026-07-19"
+      },
+      {
+        "name": "Canalla Bistro by Ricard Camarena",
+        "type": "Kreatives internationales Bistro",
+        "priceRange": "€€€",
+        "tip": "Reserviere für das Abendessen vorab und prüfe die aktuellen Menüs und À-la-carte-Angebote.",
+        "familyFriendly": false,
+        "sourceNote": "Official site confirms this is Ricard Camarena's informal international bistro; it is not presented as a Michelin-starred venue.",
+        "sourceUrl": "https://www.canallabistro.com/en/home/",
+        "sourceCheckedAt": "2026-07-19"
+      },
+      {
+        "name": "La Plaça at El Corte Inglés Colón",
+        "type": "Gastronomiehalle mit Stadtblick",
+        "priceRange": "€€",
+        "tip": "Prüfe die Öffnungszeiten des Kaufhauses und das aktuelle Restaurantangebot vor deinem Besuch.",
+        "familyFriendly": true,
+        "sourceNote": "El Corte Inglés confirms La Plaça on the sixth floor of its Colón store and panoramic city views.",
+        "sourceUrl": "https://www.elcorteingles.es/hosteleria/nuevos-conceptos/la-plasa-valencia-colon/",
+        "sourceCheckedAt": "2026-07-19"
+      },
+      {
+        "name": "Horchatería Daniel",
+        "type": "Traditionelle Horchata",
+        "priceRange": "€",
+        "tip": "Probiere Horchata mit Fartons und bestätige am Besuchstag die Öffnungszeiten des Standes im Mercado de Colón.",
+        "familyFriendly": true,
+        "sourceNote": "Official Horchatería Daniel and Mercado de Colón pages confirm the market location and horchata focus.",
+        "sourceUrl": "https://horchateria-daniel.es/",
+        "sourceCheckedAt": "2026-07-19"
+      }
+    ],
+    "localSpeciality": "Horchata und Fartons im Mercado de Colón: Valencias typisches süßes Getränk aus Erdmandeln, eiskalt serviert und begleitet von länglichem Gebäck mit Zuckerglasur."
+  },
+  "stayingHere": {
+    "summary": "El Ensanche ist eine gute Basis für den ersten Valencia-Besuch, wenn du Komfort, kurze Wege und eine praktische Lage suchst. Die Hotels sind meist modern und gut ausgestattet. El Carmen, Ruzafa und die Turia-Gärten erreichst du in wenigen Minuten zu Fuß.",
+    "pros": [
+      "Zentrale Lage mit kurzen Fußwegen",
+      "Breite, zugängliche Straßen",
+      "Hervorragende Einkaufsmöglichkeiten",
+      "Gute Hotels und Restaurants",
+      "Sicher, gepflegt und komfortabel"
+    ],
+    "cons": [
+      "Teurer als Ruzafa oder Benimaclet",
+      "Weniger historische Atmosphäre als El Carmen",
+      "Manche Bereiche wirken geschäftlich und wenig individuell",
+      "Begrenztes Nachtleben"
+    ],
+    "gettingElsewhere": [
+      "Zu Fuß nach El Carmen: 10 Min.",
+      "Zu Fuß nach Ruzafa: 10 Min.",
+      "Zu Fuß zu den Turia-Gärten: 5 Min.",
+      "Mit der Metro zum Strand: 15 Min."
+    ]
+  },
+  "visitingHere": {
+    "summary": "Verbinde El Ensanche am besten mit anderen Vierteln. Verbringe den Vormittag beim Einkaufen und mit einem Kaffee im Mercado de Colón und gehe nachmittags nach El Carmen oder Ruzafa weiter.",
+    "idealDuration": "2–3 Stunden",
+    "bestTimeOfDay": "Vormittags von 10 bis 14 Uhr zum Einkaufen, abends zum Essen",
+    "tips": [
+      "Beginne im Mercado de Colón mit einem Kaffee und gehe anschließend zum Einkaufen durch die Calle Colón.",
+      "Geschäfte schließen teils von 14 bis 17 Uhr zur Siesta. Plane dann dein Mittagessen oder einen Besuch in El Carmen ein.",
+      "Abends findest du gehobene Gastronomie in der Calle Jorge Juan und ihren Seitenstraßen."
+    ]
+  },
+  "practicalTips": [
+    "Spanische Geschäfte schließen häufig von 14 bis 17 Uhr zur Siesta. Kaufhäuser wie El Corte Inglés bleiben durchgehend geöffnet.",
+    "Die Rabattaktionen Rebajas beginnen im Januar und Juli. Dann sinken die Preise in den Geschäften um etwa 30–70 %.",
+    "Der Mercado de Colón ist kein traditioneller Lebensmittelmarkt. Erwarte keine günstigen Lebensmittelstände, sondern eine Gastronomiehalle.",
+    "Rund um die Plaza del Ayuntamiento kann es während der Fallas im März sehr voll werden."
+  ],
+  "audienceTips": [
+    {
+      "audience": "families",
+      "tips": [
+        "El Corte Inglés hat eine Kinderabteilung mit Spielzeug und Kleidung sowie ein familienfreundliches Restaurant.",
+        "Im Mercado de Colón gibt es Hochstühle und Platz für Kinderwagen. Das macht ihn zu einer der einfacheren Optionen zum Essen mit der Familie.",
+        "Die Turia-Gärten mit dem Gulliver-Spielplatz liegen etwa fünf Minuten zu Fuß östlich und eignen sich für einen Ausflug am Nachmittag."
+      ]
+    },
+    {
+      "audience": "elderly",
+      "tips": [
+        "Die flachen, breiten Gehwege machen das Viertel besonders einfach zu erkunden.",
+        "Im Mercado de Colón findest du Sitzplätze, Klimatisierung und zugängliche Toiletten.",
+        "El Corte Inglés bietet Aufzüge zu jeder Etage und zugängliche Einrichtungen."
+      ]
+    }
+  ],
+  "productWidgets": [
+    {
+      "categorySlug": "mobility",
+      "heading": "Valencia bequem erkunden?",
+      "afterSection": "Accessibility"
+    },
+    {
+      "categorySlug": "baby-gear",
+      "heading": "Einkaufsbummel mit kleinen Kindern?",
+      "afterSection": "Practical Tips"
+    }
+  ],
+  "relatedDestinations": [
+    "el-carmen",
+    "ruzafa",
+    "turia-gardens"
+  ],
+  "relatedBlogPosts": [
+    "valencia-with-kids-complete-guide"
+  ],
+  "faqs": [
+    {
+      "question": "Welche ist Valencias wichtigste Einkaufsstraße?",
+      "answer": "Die Calle Colón im Viertel Ensanche. Der breite Boulevard lässt sich gut zu Fuß erkunden und bietet spanische und internationale Marken sowie das Kaufhaus El Corte Inglés."
+    },
+    {
+      "question": "Ist der Mercado de Colón ein klassischer Markt?",
+      "answer": "Nicht im traditionellen Sinn. Das schön restaurierte Jugendstilgebäude dient heute als gehobene Gastronomiehalle mit Cafés, Weinbars und Feinkostangeboten. Schon die Architektur allein lohnt den Besuch."
+    },
+    {
+      "question": "Welches Viertel eignet sich für den ersten Valencia-Besuch?",
+      "answer": "El Ensanche rund um die Calle Colón ist eine gute Wahl: zentral, sicher und zugänglich, mit kurzen Fußwegen nach El Carmen, Ruzafa und zu den Turia-Gärten."
+    }
+  ]
+}

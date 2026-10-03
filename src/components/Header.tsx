@@ -7,7 +7,7 @@ import { useState } from "react";
 import { indexableSeoCategoryClusters } from "@/data/seo-clusters";
 import { SITE_IDENTITY } from "@/config/site";
 import { siteContext } from "@/i18n/site-context";
-import { germanCategories } from "@/content/german-categories";
+import { germanCategoryLabels } from "@/content/german-categories";
 import { publicLocales, localeRegistry } from "@/i18n/config";
 import { publicLocaleHref } from "@/lib/public-routes";
 
@@ -22,31 +22,25 @@ export default function Header() {
   const languageLinks = privatePreview ? [{ locale: "en", href: "/", label: "English" }] : publicLocales.filter(target => target !== locale).map(target => ({ locale: target, href: publicLocaleHref(pathname, target), label: localeRegistry[target].name }));
 
   const categories = (privatePreview ? [] : indexableSeoCategoryClusters).map((category) => ({
-    name: isGerman ? germanCategories[category.slug]?.title || "Mietartikel" : isSpanish ? category.nameEs : category.nameEn,
+    name: isGerman ? germanCategoryLabels[category.slug] || "Mietartikel" : isSpanish ? category.nameEs : category.nameEn,
     href: `${prefix}/rental/${category.slug}`,
     emoji: category.emoji,
   }));
 
-  const navLinks = isGerman ? [
-    { name: privatePreview ? "Mietartikel-Vorschau" : "Alles zum Mieten", href: prefix },
-    { name: "Mietpakete", href: `${prefix}/valencia/kits` },
-    { name: "So funktioniert’s", href: `${prefix}/how-it-works` },
-    { name: "Kontakt", href: `${prefix}/contact` },
-    { name: "Neuigkeiten", href: `${prefix}/newsletter` },
-  ] : [
-    { name: "Kits", href: `${prefix}/valencia/kits` },
+  const navLinks = [
+    { name: isGerman ? "Mietpakete" : "Kits", href: `${prefix}/valencia/kits` },
     { name: "Valencia", href: `${prefix}/valencia` },
-    { name: isSpanish ? "Descubrir" : "Discover", href: `${prefix}/discover` },
-    { name: isSpanish ? "Cómo Funciona" : "How It Works", href: `${prefix}/how-it-works` },
-    { name: isSpanish ? "Sobre Nosotros" : "About", href: `${prefix}/about` },
-    { name: isSpanish ? "Preguntas" : "FAQ", href: `${prefix}/faq` },
+    { name: isGerman ? "Entdecken" : isSpanish ? "Descubrir" : "Discover", href: `${prefix}/discover` },
+    { name: isGerman ? "So funktioniert’s" : isSpanish ? "Cómo Funciona" : "How It Works", href: `${prefix}/how-it-works` },
+    { name: isGerman ? "Über uns" : isSpanish ? "Sobre Nosotros" : "About", href: `${prefix}/about` },
+    { name: isGerman ? "FAQ" : isSpanish ? "Preguntas" : "FAQ", href: `${prefix}/faq` },
     { name: "Blog", href: `${prefix}/blog` },
   ];
 
-  const ctaLabel = isGerman ? "Verfügbarkeit prüfen" : isSpanish ? "Reservar" : "Rent Now";
-  const ctaHref = isGerman ? prefix : `${prefix}/valencia`;
+  const ctaLabel = isGerman ? "Jetzt mieten" : isSpanish ? "Reservar" : "Rent Now";
+  const ctaHref = `${prefix}/valencia`;
   const categoriesLabel = isGerman ? "Kategorien" : isSpanish ? "Categorías" : "Categories";
-  const browseLabel = isGerman ? "Alles zum Mieten" : isSpanish ? "Explorar ▾" : "Browse ▾";
+  const browseLabel = isGerman ? "Mietartikel ▾" : isSpanish ? "Explorar ▾" : "Browse ▾";
 
   return (
     <header className="sticky top-0 z-50 bg-white border-b border-border">

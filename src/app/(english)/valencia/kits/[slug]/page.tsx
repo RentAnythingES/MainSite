@@ -1,3 +1,4 @@
+import { bundleRelatedProducts } from "@/lib/bundle-related-products";
 import BundleLandingPage from "@/components/BundleLandingPage";
 import { getProductsFromDB } from "@/lib/product-service";
 import ExplorerDetails from "@/components/ExplorerDetails";
@@ -6,7 +7,7 @@ import type { Metadata } from "next";
 import BundleConfigurator from "@/components/BundleConfigurator";
 import MobilityFamilyLinks from "@/components/MobilityFamilyLinks";
 import { getBlogPostBySlug } from "@/content/blog";
-import { getBundleBySlug, getBundleProducts, rentalBundles } from "@/data/bundles";
+import { getBundleBySlug, rentalBundles } from "@/data/bundles";
 import { BUSINESS_SCHEMA_ID, getBreadcrumbJsonLd } from "@/lib/jsonld";
 
 interface Props {
@@ -48,10 +49,8 @@ export default async function BundlePage({ params }: Props) {
   if (!bundle) notFound();
   const isExplorer = bundle.slug === "turia-beach-explorer";
 
-  const explorerProducts = isExplorer ? await getProductsFromDB("valencia", "en") : [];
-  const relatedProducts = isExplorer
-    ? explorerProducts.filter((product) => bundle.relatedProductSlugs.includes(product.slug))
-    : getBundleProducts(bundle);
+  const catalogue = await getProductsFromDB("valencia", "en");
+  const relatedProducts = bundleRelatedProducts(bundle, catalogue);
   const relatedGuides = bundle.relatedGuideSlugs
     .map((guideSlug) => getBlogPostBySlug(guideSlug))
     .filter((guide): guide is NonNullable<typeof guide> => Boolean(guide));

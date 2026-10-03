@@ -10,7 +10,7 @@ type PublishedReview = {
   booking: { status: string; product: { name: string } | null };
 };
 
-export default async function VerifiedReviews({ locale }: { locale: "en" | "es" }) {
+export default async function VerifiedReviews({ locale }: { locale: "en" | "es" | "de" }) {
   const supabase = createServiceClient();
   const { data, error } = await supabase
     .from("booking_reviews")
@@ -33,7 +33,9 @@ export default async function VerifiedReviews({ locale }: { locale: "en" | "es" 
   const reviews = (data || []) as unknown as PublishedReview[];
   if (reviews.length === 0) return null;
 
-  const text = locale === "es"
+  const text = locale === "de"
+    ? { badge: "Verifizierte Bewertungen", title: "Erfahrungen mit unseren Mietartikeln", intro: "Mit Zustimmung veröffentlichte Bewertungen nach einer abgeschlossenen Miete.", verified: "Verifizierte abgeschlossene Miete", customer: "Verifizierter Kunde" }
+    : locale === "es"
     ? {
         badge: "Opiniones verificadas",
         title: "Experiencias de alquiler reales",
@@ -60,7 +62,7 @@ export default async function VerifiedReviews({ locale }: { locale: "en" | "es" 
         <div className="mt-9 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
           {reviews.map((review) => (
             <article key={review.id} className="card p-6">
-              <div className="text-amber-500" aria-label={`${review.rating} out of 5 stars`}>
+              <div className="text-amber-500" aria-label={`${review.rating} ${locale === "de" ? "von 5 Sternen" : locale === "es" ? "de 5 estrellas" : "out of 5 stars"}`}>
                 {"★".repeat(review.rating)}<span className="text-neutral-200">{"★".repeat(5 - review.rating)}</span>
               </div>
               {review.title && <h3 className="mt-4 text-lg font-bold">{review.title}</h3>}

@@ -1,0 +1,209 @@
+{
+  "slug": "bioparc-valencia",
+  "name": "BIOPARC Valencia",
+  "type": "attraction",
+  "tagline": "Ein Tierpark mit naturnah gestalteten afrikanischen Lebensräumen am westlichen Ende der Turia-Gärten",
+  "heroImage": "/discover/bioparc-valencia.jpg",
+  "heroImageAlt": "Afrikanischer Lebensraum mit Felsen, Wasser und Pflanzen im BIOPARC Valencia",
+  "heroImageProvenance": {
+    "status": "licensed",
+    "creator": "Gabriel Villena",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Bioparc_Valencia_II_(2787453634).jpg",
+    "license": "CC BY 2.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
+    "verifiedAt": "2026-07-20",
+    "modifications": "Resized to 1280 pixels wide by Wikimedia Commons."
+  },
+  "title": "BIOPARC Valencia: Tickets, Zugang und Familientipps",
+  "description": "Plane deinen BIOPARC-Besuch in Valencia: offizielle Ticketinformationen, Zeitbedarf, Anreise, Barrierefreiheit, Essensregeln und praktische Tipps für Familien.",
+  "keywords": [
+    "BIOPARC Valencia",
+    "Bioparc Valencia Tickets",
+    "Valencia Zoo",
+    "Bioparc Valencia mit Kindern"
+  ],
+  "date": "2026-07-20",
+  "lastUpdated": "2026-07-20",
+  "audiences": [
+    "families",
+    "mobility-needs",
+    "elderly",
+    "couples"
+  ],
+  "region": "Westliches Valencia",
+  "hubs": [
+    "attractions"
+  ],
+  "overview": {
+    "paragraphs": [
+      "BIOPARC Valencia liegt neben dem Parque de Cabecera am westlichen Ende der Turia-Gärten. Der Tierpark verbindet afrikanische Lebensräume durch Landschaftsgestaltung, Wasser, Felsen und gezielte Sichtachsen. So führt der Besuch durch zusammenhängende Umgebungen statt entlang einer Reihe einzelner Käfige.",
+      "Plane den BIOPARC als Hauptaktivität und nicht als kurzen Zwischenstopp. Laut offiziellen FAQs können die Tierlebensräume, das wechselnde Tagesprogramm, Restaurants und ein Kinderspielbereich einen ganzen Tag füllen. Tiere entscheiden selbst, wo sie sich in ihren Gehegen ausruhen. Deshalb siehst du je nach Tageszeit unterschiedliche Tiere.",
+      "Öffnungs- und Schließzeiten hängen vom Besuchsdatum und dem Tageslicht ab. Prüfe den offiziellen Kalender vor dem Ticketkauf, wähle das passende Einlasszeitfenster und verlasse dich nicht auf alte Preis- oder Öffnungszeitenangaben."
+    ],
+    "quickFacts": [
+      {
+        "label": "Besuchsdauer",
+        "value": "Ein halber bis ein ganzer Tag"
+      },
+      {
+        "label": "Öffnungszeiten",
+        "value": "Täglich geöffnet; Schließzeit variiert"
+      },
+      {
+        "label": "Barrierefreiheit",
+        "value": "Laut Betreiber vollständig barrierefrei"
+      },
+      {
+        "label": "Wiedereinlass",
+        "value": "Normalerweise nicht möglich"
+      }
+    ]
+  },
+  "highlights": [
+    {
+      "name": "Afrikanische Lebensräume",
+      "description": "Landschaftlich gestaltete Bereiche mit mehreren Tierarten bieten weite Einblicke. Es lohnt sich, später am Tag noch einmal zurückzukehren.",
+      "icon": "🦒",
+      "tip": "Nutze den aktuellen Parkplan und Veranstaltungskalender, statt den Rundgang nur einmal schnell abzugehen."
+    },
+    {
+      "name": "Tagesprogramm",
+      "description": "Das offizielle Programm ergänzt den Besuch um pädagogische Angebote über den Tag verteilt und kann je nach Datum wechseln.",
+      "icon": "📅",
+      "tip": "Prüfe das Programm, nachdem du dein Besuchsdatum ausgewählt hast."
+    },
+    {
+      "name": "Angebote für Familien",
+      "description": "Restaurants, Angebote für Kinder und ein Spielbereich ermöglichen einen längeren Besuch, ohne den Park verlassen zu müssen.",
+      "icon": "👨‍👩‍👧"
+    }
+  ],
+  "gettingThere": {
+    "summary": "BIOPARC liegt am Parque de Cabecera westlich der historischen Innenstadt. Plane den letzten Abschnitt der Anreise separat von einem Spaziergang durch Valencias Zentrum.",
+    "options": [
+      {
+        "mode": "metro",
+        "description": "Mit Metrovalencia kommst du aus zentralen Vierteln gut in die Nähe. Prüfe die passende Station und den anschließenden Fußweg auf der offiziellen Anreiseseite."
+      },
+      {
+        "mode": "bus",
+        "description": "EMT-Busse fahren in die Umgebung. Nutze die aktuelle Routenplanung für deinen Besuchstag."
+      },
+      {
+        "mode": "bike",
+        "description": "Durch die Turia-Gärten führt ein weitgehend vom Autoverkehr getrennter Weg aus dem Zentrum.",
+        "tip": "Fahrräder dürfen im Park nicht benutzt werden."
+      },
+      {
+        "mode": "car",
+        "description": "BIOPARC hat eine eigene Tiefgarage. Die aktuellen Bedingungen findest du in den offiziellen FAQs."
+      }
+    ],
+    "parkingNotes": "Die offiziellen FAQs nennen eine Tiefgarage für Fahrzeuge bis 2,20 Meter Höhe. Preise und Öffnungszeiten können sich ändern. Prüfe beide Angaben direkt beim Betreiber."
+  },
+  "bestTimeToVisit": {
+    "summary": "Komm nach Möglichkeit zur Öffnung, besonders bei heißem Wetter oder an Tagen mit vielen Familienbesuchern.",
+    "seasons": [
+      {
+        "season": "spring",
+        "description": "Angenehme Temperaturen erleichtern einen längeren Besuch im Freien. Prüfe die Nachfrage rund um Ostern und die Ticketbedingungen.",
+        "rating": 5
+      },
+      {
+        "season": "summer",
+        "description": "Beginne früh, plane Wasser und Schatten ein und versuche nicht, den gesamten Rundgang während der heißesten Stunden zu schaffen.",
+        "rating": 3
+      },
+      {
+        "season": "autumn",
+        "description": "Oft angenehm zum Gehen. Mit kürzeren Tagen schließt der Park auch früher.",
+        "rating": 5
+      },
+      {
+        "season": "winter",
+        "description": "Auch in der ruhigeren Jahreszeit ist ein Besuch möglich. Tageslicht und Wetter beeinflussen jedoch die Sicht auf die Tiere und die Schließzeit.",
+        "rating": 4
+      }
+    ]
+  },
+  "whatToBring": {
+    "bring": [
+      "Tickets für das gewählte Datum",
+      "Wasser in einem Behälter ohne Glas",
+      "Sonnenschutz",
+      "Bequeme Schuhe",
+      "Aktueller Parkplan"
+    ],
+    "dontBring": [
+      "Mitgebrachtes Essen außer erlaubter Babynahrung oder Snacks für kleine Kinder",
+      "Glasbehälter",
+      "Fahrräder oder Roller zur Nutzung im Park",
+      "Ausrüstung für Blitzfotografie"
+    ],
+    "rentInstead": [
+      "Kompakten Kinderwagen für kleine Kinder",
+      "Passende Mobilitätshilfe für einen langen Tag zu Fuß"
+    ]
+  },
+  "accessibility": {
+    "overallRating": 5,
+    "summary": "Die offiziellen BIOPARC-FAQs beschreiben den Park als vollständig barrierefrei. Wenn du bestimmte Unterstützung, Nachweise oder Regelungen für Begleitpersonen benötigst, bestätige die Details vor der Anreise.",
+    "wheelchairNotes": "Der öffentliche Rundgang wird als barrierefrei beschrieben. Kläre vorübergehende Sperrungen, benötigte Hilfsmittel oder Nachweise für Ermäßigungen direkt mit BIOPARC.",
+    "strollerNotes": "Der Park eignet sich für Kinderwagen, der Besuch kann jedoch viele Stunden dauern. Ein kompaktes Modell erleichtert den Wechsel zwischen Restaurants, Menschenmengen und Verkehrsmitteln.",
+    "publicTransportAccess": "Öffentliche Verkehrsmittel fahren in die Umgebung. Prüfe die offizielle Anreisebeschreibung und die aktuellen Informationen der Verkehrsbetreiber für den letzten Abschnitt."
+  },
+  "practicalTips": [
+    "Wähle im offiziellen Kalender dein Datum aus, bevor du dich auf Öffnungs- oder Schließzeiten verlässt.",
+    "Plane nicht, den Park zum Mittagessen zu verlassen und danach zurückzukehren. Ein regulärer Wiedereinlass ist nicht erlaubt.",
+    "Nach den aktuellen Regeln sind Wasser in Behältern ohne Glas, Babynahrung und bestimmte Snacks für kleine Kinder erlaubt, anderes mitgebrachtes Essen jedoch nicht.",
+    "Welche Tiere du siehst, verändert sich auf natürliche Weise. Kehre zu deinen Lieblingsbereichen zurück, statt zu erwarten, dass jedes Tier jederzeit sichtbar ist."
+  ],
+  "visitingHere": {
+    "summary": "BIOPARC eignet sich am besten als Hauptaktivität des Tages. Plane einen flexiblen Rundgang entsprechend dem offiziellen Programm, dem Wetter und dem Gehtempo deiner Gruppe.",
+    "idealDuration": "4–7 Stunden",
+    "bestTimeOfDay": "Zur Öffnung für kühlere Bedingungen und genügend Zeit für das Tagesprogramm",
+    "tips": [
+      "Speichere den aktuellen Parkplan, bevor du losgehst.",
+      "Plane Essens- und Ruhepausen ein, bevor die Kinder müde werden.",
+      "Verbinde den Besuch höchstens mit dem benachbarten Parque de Cabecera und nicht mit einer weiteren großen Attraktion am anderen Ende der Stadt."
+    ]
+  },
+  "productWidgets": [
+    {
+      "categorySlug": "baby-gear",
+      "heading": "Einen ganzen Tag mit der Familie geplant?",
+      "afterSection": "Accessibility"
+    },
+    {
+      "categorySlug": "mobility",
+      "heading": "Brauchst du Unterstützung für einen langen Rundgang?",
+      "afterSection": "Getting There"
+    }
+  ],
+  "relatedDestinations": [
+    "turia-gardens",
+    "valencia-historic-centre"
+  ],
+  "relatedBlogPosts": [
+    "valencia-with-kids-complete-guide",
+    "wheelchair-accessibility-valencia"
+  ],
+  "faqs": [
+    {
+      "question": "Wie viel Zeit brauche ich im BIOPARC Valencia?",
+      "answer": "Plane mindestens einen halben Tag ein. BIOPARC erklärt, dass die Tierlebensräume, das Tagesprogramm, Restaurants und Familienangebote einen ganzen Besuchstag füllen können."
+    },
+    {
+      "question": "Ist der BIOPARC Valencia barrierefrei?",
+      "answer": "Die offiziellen FAQs beschreiben den Park als vollständig barrierefrei. Bestätige wichtige Unterstützung, erforderliche Nachweise oder vorübergehende Einschränkungen auf dem Rundgang direkt vor deiner Anreise."
+    },
+    {
+      "question": "Darf ich Essen in den BIOPARC mitbringen?",
+      "answer": "Nach den aktuellen Regeln sind mitgebrachte Speisen und Getränke grundsätzlich nicht erlaubt. Ausnahmen gelten für Wasser in Behältern ohne Glas, Babynahrung und bestimmte Snacks für kleine Kinder."
+    },
+    {
+      "question": "Kann ich den BIOPARC verlassen und später wieder hineingehen?",
+      "answer": "Normalerweise nicht. Laut offiziellen FAQs ist ein Wiedereinlass nur mit einem neuen Ticket oder einer ausdrücklich vom Personal genehmigten Ausnahme möglich."
+    }
+  ]
+}

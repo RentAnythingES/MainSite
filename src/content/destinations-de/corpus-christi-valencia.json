@@ -1,0 +1,224 @@
+{
+  "slug": "corpus-christi-valencia",
+  "name": "Fronleichnam in Valencia",
+  "type": "event",
+  "tagline": "Historische Tänze, Festwagen und Prozessionen durch Valencias Altstadt",
+  "heroImage": "/discover/corpus-christi-valencia.jpg",
+  "heroImageAlt": "La Moma und eine kostümierte Figur bei Valencias Fronleichnamsumzug Cabalgata del Convite",
+  "heroImageProvenance": {
+    "status": "licensed",
+    "creator": "Rafa Esteve",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:2016-05-29_Corpus_Christi_Valencia_05.jpg",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "verifiedAt": "2026-07-20",
+    "modifications": "Resized to 1280 pixels wide by Wikimedia Commons."
+  },
+  "title": "Fronleichnam in Valencia: Prozession und Traditionen",
+  "description": "Plane Fronleichnam in Valencia: Cabalgata del Convite, La Moma, Rocas und die feierliche Prozession, mit Tipps zum Andrang und zum aktuellen Programm.",
+  "keywords": [
+    "Fronleichnam Valencia",
+    "Corpus Christi Valencia Prozession",
+    "La Moma Valencia",
+    "Fronleichnamsfest Valencia"
+  ],
+  "date": "2026-07-20",
+  "lastUpdated": "2026-07-20",
+  "audiences": [
+    "families",
+    "couples",
+    "elderly",
+    "mobility-needs",
+    "budget"
+  ],
+  "region": "Ciutat Vella, Valencia",
+  "hubs": [
+    "events"
+  ],
+  "eventInfo": {
+    "dates": "Jährliches bewegliches Fest; Hauptveranstaltungen am Sonntag nach Fronleichnam",
+    "frequency": "Jährliches religiöses und städtisches Fest",
+    "ticketsRequired": false,
+    "ticketUrl": "https://www.visitvalencia.com/en/events-valencia/festivities/corpus-christi-in-valencia",
+    "crowdLevel": "high",
+    "bookingAdvice": "Die Straßenveranstaltungen sind in der Regel kostenlos. Bestätige vor deinem Besuch aber Datum, Route und Zeiten im aktuellen offiziellen Programm.",
+    "whatToExpect": [
+      "Die Cabalgata del Convite mit Symbolfiguren, Tänzen, Riesen und der ausgelassenen Degolla",
+      "La Moma verkörpert die Tugend in einem rituellen Tanz gegen die sieben Todsünden",
+      "Die Rocas: historische Festwagen, die im städtischen Fronleichnamsmuseum aufbewahrt werden",
+      "Eine feierliche religiöse Prozession durch die Altstadt im späteren Tagesverlauf"
+    ],
+    "safetyTips": [
+      "Wähle einen Platz mit einem freien Ausgang statt der engsten Straße im Zentrum.",
+      "Rechne mit Lärm, Pferden, dichtem Gedränge und langen Stehzeiten.",
+      "Halte Kinder während der Degolla bei dir und vereinbart vor der Prozession einen Treffpunkt.",
+      "Prüfe am Veranstaltungstag Straßensperrungen, Umleitungen im Nahverkehr und das Wetter."
+    ],
+    "months": [
+      5,
+      6
+    ]
+  },
+  "overview": {
+    "paragraphs": [
+      "Fronleichnam ist eines der ältesten städtischen und religiösen Feste Valencias. Seine Ursprünge reichen bis 1263 zurück; die offizielle Prozession wurde 1355 eingeführt. Das Wochenende verbindet katholische Zeremonien mit Kostümen, Musik, Tanz, Symbolik und Straßentraditionen, die zum kulturellen Erbe der Stadt gehören.",
+      "Zu den markantesten öffentlichen Veranstaltungen zählen die Überführung und Durchfahrt der Rocas, die Mysterienspiele der Kinder, die Cabalgata del Convite und die feierliche Prozession. La Moma, ganz in Weiß gekleidet, stellt in einem moralischen Tanz die Tugend im Kampf gegen die sieben Todsünden dar.",
+      "Das Fest richtet sich nach dem Osterkalender, und das genaue Programm ändert sich jedes Jahr. Diese Seite erklärt dir die Teile des Festes. Bestätige anschließend das aktuelle Datum, die Route, die Startzeiten und die Zugangsregelungen im offiziellen Programm."
+    ],
+    "quickFacts": [
+      {
+        "label": "Ursprung",
+        "value": "In Valencia seit 1263 gefeiert"
+      },
+      {
+        "label": "Hauptbereich",
+        "value": "Ciutat Vella rund um die Plaza de la Virgen"
+      },
+      {
+        "label": "Eintritt",
+        "value": "Öffentliche Straßenveranstaltungen meist kostenlos"
+      },
+      {
+        "label": "Datum",
+        "value": "Verschiebt sich jedes Jahr mit dem Osterkalender"
+      }
+    ]
+  },
+  "highlights": [
+    {
+      "name": "Cabalgata del Convite",
+      "description": "Ein zeremonieller Einladungsumzug durch die Altstadt mit Riesen, Tänzen, Symbolfiguren, Musikern und der Degolla.",
+      "icon": "🎭",
+      "tip": "Die Stimmung kann ausgelassen und laut sein. Wähle mit Kindern einen breiteren Abschnitt der Route."
+    },
+    {
+      "name": "La Moma",
+      "description": "Die weiß gekleidete Figur der Tugend tanzt gegen die sieben Todsünden in einem der bekanntesten Rituale des Festes.",
+      "icon": "⚪",
+      "tip": "Komm vor dem angekündigten Beginn, wenn du unbedingt den Tanz sehen möchtest."
+    },
+    {
+      "name": "Die Rocas",
+      "description": "Historische hölzerne Festwagen in Schiffsform gehören zu den Prozessionen und werden in der Casa de las Rocas aufbewahrt.",
+      "icon": "⛵",
+      "tip": "Besuche das städtische Museum außerhalb der Festzeiten für einen ruhigeren Einblick."
+    },
+    {
+      "name": "Feierliche Prozession",
+      "description": "Die religiöse Prozession vereint historische Kirchengemeinden, biblische Figuren, die Stadtflagge und die Monstranz.",
+      "icon": "🕯️"
+    }
+  ],
+  "gettingThere": {
+    "summary": "Die wichtigsten Rituale finden in den Straßen rund um die Plaza de la Virgen und in der Altstadt statt. Veranstaltungssperrungen können den letzten Wegabschnitt verändern.",
+    "options": [
+      {
+        "mode": "metro",
+        "description": "Fahre zu einer zentralen Metrovalencia-Station und gehe den letzten Abschnitt zu Fuß. Prüfe mögliche Änderungen beim Zugang am Veranstaltungstag."
+      },
+      {
+        "mode": "bus",
+        "description": "EMT-Linien können um die Ciutat Vella herum umgeleitet werden. Prüfe vor dem Aufbruch die aktuellen Haltestellen."
+      },
+      {
+        "mode": "walk",
+        "description": "Innerhalb des Zentrums ist der Fußweg meist am einfachsten. Enge Straßen und Menschenmengen verlangsamen jedoch das Vorankommen."
+      }
+    ],
+    "parkingNotes": "Plane nicht mit einem Straßenparkplatz innerhalb der Ciutat Vella. Wegen Sperrungen und Prozessionsrouten sind öffentliche Verkehrsmittel oder ein weiter entfernter Parkplatz verlässlicher."
+  },
+  "bestTimeToVisit": {
+    "summary": "Wähle das Ritual aus, das dich am meisten interessiert, statt bei jedem Programmpunkt lange zu stehen. Im späten Frühling oder frühen Sommer kann es schon heiß sein.",
+    "seasons": [
+      {
+        "season": "spring",
+        "description": "Fronleichnam fällt oft in den späten Frühling. Rechne mit warmem Wetter und möglicherweise starker Sonne.",
+        "rating": 5
+      },
+      {
+        "season": "summer",
+        "description": "Liegt das Fest nahe am Sommer, sind Hitze und ausreichend Wasser besonders wichtig.",
+        "rating": 4
+      },
+      {
+        "season": "autumn",
+        "description": "Das Fest findet nicht im Herbst statt.",
+        "rating": 1
+      },
+      {
+        "season": "winter",
+        "description": "Das Fest findet nicht im Winter statt.",
+        "rating": 1
+      }
+    ]
+  },
+  "whatToBring": {
+    "bring": [
+      "Das aktuelle offizielle Programm",
+      "Wasser",
+      "Sonnenschutz",
+      "Bequeme Schuhe",
+      "Einen vereinbarten Treffpunkt"
+    ],
+    "dontBring": [
+      "Große Taschen",
+      "Glasbehälter",
+      "Ausrüstung, die enge Zuschauerbereiche blockiert"
+    ],
+    "rentInstead": [
+      "Einen kompakten Kinderwagen, wenn deine Route einen ruhigeren Zuschauerplatz vorsieht",
+      "Eine passende Mobilitätshilfe für längere Steh- und Gehzeiten"
+    ]
+  },
+  "accessibility": {
+    "overallRating": 2,
+    "summary": "Historisches Pflaster, enge Straßen, stehende Menschenmengen und Sperrungen machen die Zugänglichkeit stark vom gewählten Zuschauerplatz abhängig.",
+    "wheelchairNotes": "Bestätige im aktuellen offiziellen Programm, ob es einen ausgewiesenen barrierefreien Bereich gibt und wo dessen Eingang liegt. Komm, bevor Absperrungen das Vorankommen einschränken.",
+    "strollerNotes": "Ein kompakter Kinderwagen kann zwischen Veranstaltungen helfen, wird aber in den engsten, vollen Straßen unpraktisch. Wähle einen breiteren Abschnitt mit freiem Ausgang.",
+    "publicTransportAccess": "Das Zentrum ist mit öffentlichen Verkehrsmitteln erreichbar. Umleitungen und Besucherlenkung können jedoch den letzten Wegabschnitt verändern."
+  },
+  "visitingHere": {
+    "summary": "Wähle für deinen ersten Besuch die Cabalgata del Convite oder die feierliche Prozession als Hauptprogrammpunkt. Ergänze die Rocas oder einen Museumsbesuch, wenn die Zeiten passen.",
+    "idealDuration": "2–4 Stunden für einen Programmabschnitt",
+    "bestTimeOfDay": "Nach dem aktuellen Programm; komm früh für dein gewähltes Ritual",
+    "tips": [
+      "Wähle einen breiteren Zuschauerplatz, statt der gesamten Route zu folgen.",
+      "Besuche die Casa de las Rocas an einem anderen Tag für einen näheren Einblick.",
+      "Plane Zeit für Umleitungen und langsames Vorankommen durch Ciutat Vella ein."
+    ]
+  },
+  "practicalTips": [
+    "Prüfe das Programm des aktuellen Jahres, statt dich auf traditionelle ungefähre Uhrzeiten zu verlassen.",
+    "Entscheide dich zwischen der lebhafteren Cabalgata del Convite und der formelleren feierlichen Prozession.",
+    "Meide mit Kinderwagen oder Mobilitätshilfe die engsten Abschnitte der Route.",
+    "Respektiere beim Fotografieren und beim Weg durch die Menge den religiösen Charakter der feierlichen Prozession."
+  ],
+  "productWidgets": [],
+  "relatedDestinations": [
+    "valencia-historic-centre",
+    "central-market-la-lonja",
+    "el-carmen"
+  ],
+  "relatedBlogPosts": [
+    "valencia-with-kids-complete-guide",
+    "accessible-valencia-complete-guide"
+  ],
+  "faqs": [
+    {
+      "question": "Wann ist Fronleichnam in Valencia?",
+      "answer": "Das Fest richtet sich nach dem Osterkalender und wird rund um den Sonntag nach Fronleichnam gefeiert. Bestätige das genaue Datum und Programm über die aktuelle offizielle Quelle."
+    },
+    {
+      "question": "Was ist La Moma?",
+      "answer": "La Moma ist die weiß gekleidete Hauptfigur eines rituellen Tanzes. Sie verkörpert die Tugend im Kampf gegen die sieben Todsünden und gehört zu den Fronleichnamstraditionen."
+    },
+    {
+      "question": "Brauche ich Eintrittskarten für Fronleichnam?",
+      "answer": "Die wichtigsten Straßenumzüge und die Prozession kannst du in der Regel kostenlos ansehen. Einzelne Veranstaltungsorte oder reservierte Bereiche können eigene Bedingungen haben."
+    },
+    {
+      "question": "Ist Fronleichnam für Kinder geeignet?",
+      "answer": "Ja, besonders die farbenfrohe Cabalgata del Convite. Die Degolla, Pferde, Lärm und dichtes Gedränge erfordern aber enge Beaufsichtigung und einen sorgfältig gewählten Zuschauerplatz."
+    }
+  ]
+}

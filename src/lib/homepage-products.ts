@@ -10,6 +10,11 @@ const featuredProductSlots = [
 
 export async function getHomepageFeaturedProducts(locale: "en" | "es"): Promise<Product[]> {
   const products = await getProductsFromDB("valencia", locale);
+  return selectHomepageFeaturedProducts(products);
+}
+
+/** Keep the same merchandising slots across localized homepages. */
+export function selectHomepageFeaturedProducts(products: Product[]): Product[] {
   const productsBySlug = new Map(products.map((product) => [product.slug, product]));
 
   return featuredProductSlots

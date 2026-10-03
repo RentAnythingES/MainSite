@@ -1,3 +1,4 @@
+import { bundleRelatedProducts } from "@/lib/bundle-related-products";
 import BundleLandingPage from "@/components/BundleLandingPage";
 import { getProductsFromDB } from "@/lib/product-service";
 import ExplorerDetails from "@/components/ExplorerDetails";
@@ -47,9 +48,7 @@ export default async function SpanishBundlePage({ params }: Props) {
 
   const isExplorer = bundle.slug === "turia-beach-explorer";
   const products = await getProductsFromDB("valencia", "es");
-  const relatedProducts = bundle.relatedProductSlugs
-    .map((productSlug) => products.find((product) => product.slug === productSlug))
-    .filter((product): product is NonNullable<typeof product> => Boolean(product));
+  const relatedProducts = bundleRelatedProducts(bundle, products);
   const relatedGuides = bundle.relatedGuideSlugs
     .map((guideSlug) => getSpanishBlogPostBySlug(guideSlug))
     .filter((guide): guide is NonNullable<typeof guide> => Boolean(guide));

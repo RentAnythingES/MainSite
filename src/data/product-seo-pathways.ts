@@ -1,3 +1,4 @@
+import { germanProductSeoPathways } from "./product-seo-pathways-de";
 export interface ProductSeoPathway {
   eyebrow: string;
   title: string;
@@ -223,6 +224,6 @@ const productSeoPathways: Record<string, ProductSeoPathwaySet> = {
   },
 };
 
-export function getProductSeoPathways(categorySlug: string, locale: "en" | "es") {
-  return productSeoPathways[categorySlug]?.[locale] || [];
+export function getProductSeoPathways(categorySlug: string, locale: "en" | "es" | "de") {
+  return locale === "de" ? germanProductSeoPathways[categorySlug] || [] : productSeoPathways[categorySlug]?.[locale] || [];
 }

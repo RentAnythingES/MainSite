@@ -1,0 +1,247 @@
+{
+  "slug": "xativa",
+  "name": "Xàtiva",
+  "type": "day-trip",
+  "tagline": "Eindrucksvolle Burg auf dem Berg, Geschichte der Borgia und eine der schönsten Kleinstädte Spaniens",
+  "heroImage": "/discover/xativa-hero.webp",
+  "heroImageAlt": "Mauern und Türme der Burg Xàtiva entlang eines felsigen Bergkamms",
+  "heroImageProvenance": {
+    "status": "licensed",
+    "creator": "Manuel pino",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Castillo_de_x%C3%A1tiva_-_panoramio.jpg",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "verifiedAt": "2026-07-19",
+    "modifications": "Cropped and resized to 16:9 WebP."
+  },
+  "title": "Xàtiva: Tagesausflug ab Valencia zur Burg",
+  "description": "Plane deinen Tagesausflug von Valencia nach Xàtiva: Bahnanreise und praktische Tipps zu Burg, Borgia-Sehenswürdigkeiten und historischer Altstadt.",
+  "keywords": [
+    "Xàtiva Tagesausflug",
+    "Burg Xàtiva",
+    "Xàtiva ab Valencia",
+    "Familie Borgia",
+    "Tagesausflüge Valencia Spanien"
+  ],
+  "date": "2026-06-20",
+  "lastUpdated": "2026-06-20",
+  "audiences": [
+    "families",
+    "couples",
+    "budget"
+  ],
+  "region": "La Costera",
+  "distanceFromValencia": "60 km südlich, etwa eine Stunde",
+  "hubs": [
+    "day-trips"
+  ],
+  "overview": {
+    "paragraphs": [
+      "Xàtiva, ungefähr „Scha-ti-wa“ ausgesprochen, gehört zu den eindrucksvollsten Tagesausflügen ab Valencia. Die historische Stadt ist Geburtsort zweier Borgia-Päpste und war einst die zweite Stadt des Königreichs Valencia. Über ihr thront eine Burg, die sich über einen ganzen Bergkamm erstreckt – eine der markantesten Befestigungen Spaniens.",
+      "Die Burg allein lohnt die Fahrt, aber auch Xàtivas Altstadt ist sehenswert. Besuche die Basilika Colegiata, die zur Burg ansteigenden Straßen, das archäologische Museum Almodí in der historischen Getreidebörse und das Museum der schönen Künste in der Casa de l’Ensenyança. Im letzteren hängt das berühmte Porträt Philipps V. auf dem Kopf – ein Protest zur Erinnerung an seinen Befehl, die Stadt 1707 niederzubrennen.",
+      "Xàtiva liegt in einem fruchtbaren Tal zwischen Bergen, Orangenhainen und Reisfeldern. Die Stadt bietet ausgezeichnete Restaurants mit regionaler Küche, etwa dem für die Gegend typischen Dessert Arnadí, und ein angenehm ruhiges Tempo. Die Cercanías-Fahrt ab Valencia dauert etwa eine Stunde und kostet unter 6 € hin und zurück."
+    ],
+    "quickFacts": [
+      {
+        "label": "Entfernung",
+        "value": "60 km südlich, etwa eine Stunde mit dem Zug"
+      },
+      {
+        "label": "Bahn",
+        "value": "Cercanías C-2 ab Valencia Nord nach Xàtiva"
+      },
+      {
+        "label": "Kosten",
+        "value": "Aktuellen Bahntarif prüfen; Burgeintritt für Erwachsene 6 €"
+      },
+      {
+        "label": "Zeitbedarf",
+        "value": "Ein ganzer Tag empfohlen"
+      }
+    ]
+  },
+  "highlights": [
+    {
+      "name": "Burg Xàtiva",
+      "description": "Eine der eindrucksvollsten Burgen Spaniens: zwei verbundene Befestigungen, Castell Menor und Castell Major, entlang eines felsigen Kamms. Von den Mauern blickst du über die valencianische Ebene von den Bergen bis zum Meer. Hannibal soll hier vorbeigekommen sein, und die Borgias wurden in ihrem Schatten geboren.",
+      "icon": "🏰",
+      "tip": "Von der Altstadt führt ein steiler Aufstieg zur Burg. Prüfe aktuelle Touristenzug- oder Shuttle-Angebote und ihre Betriebsdaten, wenn du den ganzen Anstieg vermeiden möchtest. Starte im Sommer früh, plane wenig Schatten ein und bring Wasser mit.",
+      "googleMapsUrl": "https://maps.google.com/?q=Castillo+de+Xàtiva"
+    },
+    {
+      "name": "Das Porträt auf dem Kopf",
+      "description": "Im Museum der schönen Künste hängt ein Porträt König Philipps V. bewusst auf dem Kopf. Es ist ein einprägsamer Ausdruck von Xàtivas historischem Protest gegen seinen Befehl, die Stadt im Spanischen Erbfolgekrieg 1707 niederzubrennen.",
+      "icon": "🖼️",
+      "tip": "Das Porträt hängt im Museum der schönen Künste in der Casa de l’Ensenyança, nicht im archäologischen Museum Almodí. Frage das Personal nach seiner Geschichte und plane die beiden Museen als separate Gebäude."
+    },
+    {
+      "name": "Basilika Colegiata",
+      "description": "Eine große Renaissance-Basilika, die nie fertiggestellt wurde. Das geplante Kirchenschiff sollte das größte Spaniens sein. Auch der bestehende Bau ist imposant, mit schöner Apsis, gemeißeltem Stein und ruhigem Innenraum. Der Blick vom Platz davor ist reizvoll.",
+      "icon": "⛪",
+      "tip": "Kostenloser Eintritt. Die Basilika liegt auf dem Fußweg von der Stadt zur Burg und eignet sich als Ruhepause beim Aufstieg.",
+      "googleMapsUrl": "https://maps.google.com/?q=Colegiata+de+Xàtiva"
+    },
+    {
+      "name": "Altstadt und Brunnen",
+      "description": "Xàtiva ist für seine 25 historischen Brunnen in der Altstadt bekannt. Die Hauptstraße Calle Montcada ist von Adelshäusern gesäumt. Der Weg zur Burg führt durch zunehmend stimmungsvolle mittelalterliche Straßen.",
+      "icon": "⛲",
+      "tip": "Hole dir bei der Tourismusinformation eine Karte des Brunnenrundgangs. Die Fuente de los 25 Caños, der Brunnen mit 25 Ausläufen am Stadteingang, ist besonders fotogen."
+    }
+  ],
+  "gettingThere": {
+    "summary": "Cercanías fährt stündlich ab Valencia Nord. Eine einfache, angenehme und landschaftlich schöne Reise.",
+    "options": [
+      {
+        "mode": "train",
+        "description": "Cercanías C-2 ab Valencia Nord nach Xàtiva. Landschaftlich schöne Fahrt durch Orangenhaine und Reisfelder.",
+        "duration": "Eine Stunde",
+        "cost": "Aktuellen Renfe-Tarif für Hin- und Rückfahrt prüfen"
+      },
+      {
+        "mode": "car",
+        "description": "Auf der Autobahn A-7 nach Süden, dann über die CV-40 nach Xàtiva. Eine einfache Fahrt.",
+        "duration": "50 Minuten",
+        "cost": "Mautfrei"
+      }
+    ],
+    "parkingNotes": "Kostenlose Parkplätze nahe dem Alameda-Park am Fuß der Stadt. Die Altstadtstraßen sind eng – parke und gehe zu Fuß weiter."
+  },
+  "bestTimeToVisit": {
+    "summary": "Frühling und Herbst sind ideal. Im Sommer wird es sehr heiß – der Burgaufstieg in voller Sonne ist nach 11 Uhr anstrengend.",
+    "seasons": [
+      {
+        "season": "spring",
+        "description": "Ideal mit Wildblumen am Burghügel, angenehmen Temperaturen für den Aufstieg und Orangenblüten im Tal.",
+        "rating": 5
+      },
+      {
+        "season": "summer",
+        "description": "Sehr heiß, manchmal über 38 °C. Der Burgaufstieg ist ungeschützt. Prüfe Öffnungszeiten, starte früh und vermeide den Aufstieg mittags. Bestätige aktuelle Shuttle- oder Touristenzug-Angebote, statt ihre Verfügbarkeit vorauszusetzen.",
+        "rating": 2
+      },
+      {
+        "season": "autumn",
+        "description": "Sehr gut mit goldenem Licht, angenehmen Temperaturen und Erntezeit auf den umliegenden Feldern.",
+        "rating": 5
+      },
+      {
+        "season": "winter",
+        "description": "Mild mit 8–15 °C und klarem Blick von der Burg. Die Stadt ist ruhig und stimmungsvoll. Einige Restaurants schließen montags.",
+        "rating": 4
+      }
+    ]
+  },
+  "whatToBring": {
+    "bring": [
+      "Wasser, mindestens einen Liter pro Person",
+      "Bequeme Schuhe mit gutem Halt",
+      "Sonnenschutz im Sommer",
+      "Kamera"
+    ],
+    "dontBring": [
+      "Absätze oder Flipflops; der Burgweg ist uneben",
+      "Schwere Taschen"
+    ],
+    "rentInstead": [
+      "Kompakter Kinderwagen; nur in ebenen Altstadtbereichen praktisch, nicht an der Burg"
+    ]
+  },
+  "accessibility": {
+    "overallRating": 2,
+    "summary": "Die Burg ist nicht barrierefrei: Der Aufstieg ist steil und der Untergrund uneben. Die Hauptstraßen der Altstadt sind teilweise zugänglich. Der Touristenzug erleichtert Besuchern mit eingeschränkter Mobilität die Anfahrt zur Burg.",
+    "wheelchairNotes": "Die Burg ist nicht rollstuhlgerecht. Ebene Teile der Altstadt wie Calle Montcada und Plaça del Mercat sind eher bewältigbar. Der Touristenzug erreicht den Burgparkplatz. Ab dort ist das Burggelände uneben.",
+    "strollerNotes": "Die Altstadt ist mit einem kompakten Kinderwagen gut möglich. Versuche den Fußaufstieg zur Burg nicht mit einem Kinderwagen – er ist zu steil und uneben. Der Touristenzug ist eine Alternative.",
+    "publicTransportAccess": "Der Bahnhof Xàtiva ist stufenlos zugänglich. Der ebene Fußweg zur Altstadt dauert etwa zehn Minuten."
+  },
+  "foodAndDrink": {
+    "summary": "Xàtivas traditionelle Restaurants eignen sich gut, um nach der Burg regionale Reisgerichte und Desserts zu probieren. Öffnungstage unterscheiden sich. Reserviere oder bestätige die Küchenzeiten vor der Anreise.",
+    "recommendations": [
+      {
+        "name": "Casa La Abuela",
+        "type": "Traditionelle valencianische Küche",
+        "priceRange": "€€",
+        "tip": "Reserviere zum Mittagessen und frage, welche Spezialitäten aus Xàtiva an diesem Tag angeboten werden.",
+        "familyFriendly": true,
+        "sourceNote": "Xàtivas Tourismusinformation und aktuelle lokale Berichte bestätigen das Restaurant an der Reina 17, seine lange Geschichte und die Tradition des Arròs al forn.",
+        "sourceUrl": "https://xativaturismo.com/wp-content/uploads/2021/10/fira-gastro-quadrat.pdf",
+        "sourceCheckedAt": "2026-07-19"
+      },
+      {
+        "name": "El Cullerot",
+        "type": "Traditionelle mediterrane Küche und Reisgerichte",
+        "priceRange": "€€",
+        "tip": "Prüfe die begrenzten Öffnungstage und reserviere Reisgerichte im Voraus.",
+        "familyFriendly": true,
+        "sourceNote": "Die offizielle Restaurantwebsite bestätigt den Standort Plaça del Mercat 10, aktuelle Öffnungszeiten und die auf Reis ausgerichtete Speisekarte.",
+        "sourceUrl": "https://elcullerot.com/",
+        "sourceCheckedAt": "2026-07-19"
+      }
+    ],
+    "localSpeciality": "Arnadí: ein typisches Dessert aus Xàtiva mit Kürbis, Mandeln, Zucker und Ei, das du anderswo kaum findest. Probiere auch Coca de llanda, den einfachen Blechkuchen, den jede Bäckerei anbietet."
+  },
+  "visitingHere": {
+    "summary": "Starte früh, besonders im Sommer, besuche die Burg und gehe dann durch die Altstadt zum Mittagessen hinab. Der Touristenzug spart Kraft für die Burg selbst.",
+    "idealDuration": "5–7 Stunden, ein ganzer Tag",
+    "bestTimeOfDay": "Bis 10 Uhr ankommen, zuerst die Burg vor der Hitze, danach Altstadt und Mittagessen",
+    "tips": [
+      "Fahre mit dem Touristenzug, dem Trenecito, hinauf und gehe durch die Altstadt hinab. So bleibt mehr Kraft für die Burg selbst.",
+      "Die Burg hat zwei Bereiche: den stimmungsvollen, teilweise verfallenen Castell Menor und den restaurierten Castell Major mit Museum. Beide lohnen den Besuch.",
+      "Gehe durch die Altstadtstraßen statt auf der Straße hinab. Halte unterwegs an Colegiata und Museum.",
+      "Reserviere zum Mittagessen ein aktuell geöffnetes Altstadtrestaurant und frage, ob Arnadí oder ein anderes regionales Dessert angeboten wird."
+    ]
+  },
+  "practicalTips": [
+    "Die offizielle Burg-Ticketseite nennt 6 € für den regulären Eintritt, ermäßigte Tickets für 8- bis 16-Jährige und freien Eintritt bis einschließlich 7 Jahre. Bestätige aktuelle Preise und Ticketbedingungen. Touristische Verkehrsmittel haben eigene Tarife und Fahrpläne.",
+    "Die Burg öffnet im Winter von 10 bis 18 Uhr und im Sommer von 10 bis 19 Uhr. Montags geschlossen.",
+    "Bring mindestens einen Liter Wasser pro Person mit. An der Burg gibt es ein kleines Café mit Getränken und Snacks.",
+    "Vom Bahnhof zur Altstadt sind es etwa zehn Minuten auf ebenem Weg. Von der Altstadt zur Burg geht es etwa 30 Minuten bergauf.",
+    "Frage das Museumspersonal nach dem Porträt auf dem Kopf – es erzählt dessen Geschichte mit Stolz."
+  ],
+  "audienceTips": [
+    {
+      "audience": "families",
+      "tips": [
+        "Kinder mögen die große Burg, die sich erkunden lässt und wie ein Abenteuer wirkt. Die Aussicht hält ihr Interesse wach.",
+        "Die Fahrt mit dem Touristenzug macht Kindern Spaß und spart Kraft für die Erkundung der Burg.",
+        "Pack ein Picknick ein. Auf dem Burggelände gibt es Plätze mit Aussicht, an denen du essen kannst."
+      ]
+    },
+    {
+      "audience": "couples",
+      "tips": [
+        "Ein romantischer Tagesausflug ab Valencia. Die Burgblicke sind eindrucksvoll, die Altstadt ist stimmungsvoll.",
+        "Reserviere ein aktuell geöffnetes Altstadtrestaurant zum Mittagessen und lass genug Zeit für den Abstieg von der Burg.",
+        "Der Abstieg von der Burg durch die mittelalterlichen Straßen im Abendlicht ist wunderschön."
+      ]
+    }
+  ],
+  "productWidgets": [
+    {
+      "categorySlug": "baby-gear",
+      "heading": "Tagesausflug mit den Kleinen?",
+      "afterSection": "Practical Tips"
+    }
+  ],
+  "relatedDestinations": [
+    "sagunto",
+    "requena",
+    "albufera"
+  ],
+  "relatedBlogPosts": [
+    "valencia-with-kids-complete-guide"
+  ],
+  "faqs": [
+    {
+      "question": "Wie komme ich von Valencia nach Xàtiva?",
+      "answer": "Prüfe bei Renfe die aktuelle Cercanías-C-2-Verbindung ab Valencia Richtung Xàtiva. Die Fahrt dauert gewöhnlich etwa eine Stunde. Bestätige für dein Datum Abfahrtsbahnhof, Fahrplan, Tarif und die letzte Rückverbindung."
+    },
+    {
+      "question": "Lohnt sich ein Besuch der Burg Xàtiva?",
+      "answer": "Ja. Sie gehört zu Spaniens eindrucksvollsten Burgen. Die beiden Befestigungen erstrecken sich entlang eines ganzen Bergkamms mit Rundumblick von den Bergen bis zum Meer. Zusammen mit der reizvollen Altstadt und der Borgia-Geschichte ist sie ein besonders lohnender ganztägiger Ausflug ab Valencia."
+    },
+    {
+      "question": "Was hat es mit dem Porträt auf dem Kopf in Xàtiva auf sich?",
+      "answer": "Im Museum der schönen Künste in der Casa de l’Ensenyança hängt ein Porträt König Philipps V. auf dem Kopf. Es drückt Xàtivas historischen Protest gegen seinen Befehl aus, die Stadt im Spanischen Erbfolgekrieg 1707 niederzubrennen. Das Porträt hängt nicht im separaten archäologischen Museum Almodí."
+    }
+  ]
+}

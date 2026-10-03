@@ -1,0 +1,201 @@
+{
+  "slug": "cullera-day-trip",
+  "name": "Cullera",
+  "type": "day-trip",
+  "tagline": "Burg, Altstadt und breite Mittelmeerstrände bei einem gut planbaren Küstenausflug",
+  "heroImage": "/discover/cullera-day-trip.jpg",
+  "heroImageAlt": "Palmen am Strand San Antonio mit Culleras Küstenberg im Hintergrund",
+  "heroImageProvenance": {
+    "status": "licensed",
+    "creator": "velomartinez",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Cullera_-_panoramio.jpg",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "verifiedAt": "2026-07-20",
+    "modifications": "Resized to 1280 pixels wide by Wikimedia Commons."
+  },
+  "title": "Cullera: Tagesausflug ab Valencia mit Burg und Stränden",
+  "description": "Plane deinen Tagesausflug von Valencia nach Cullera: Burgzugang, Strandwahl, Wege ab dem Bahnhof, Barrierefreiheit und eine realistische Route für einen Tag.",
+  "keywords": [
+    "Cullera Tagesausflug",
+    "Cullera ab Valencia",
+    "Burg Cullera",
+    "Cullera Strände"
+  ],
+  "date": "2026-07-20",
+  "lastUpdated": "2026-07-20",
+  "audiences": [
+    "families",
+    "couples",
+    "elderly",
+    "mobility-needs"
+  ],
+  "region": "Ribera Baixa, Valencia",
+  "distanceFromValencia": "Etwa 45 km südlich von Valencia",
+  "hubs": [
+    "day-trips"
+  ],
+  "overview": {
+    "paragraphs": [
+      "Cullera verbindet eine historische Stadt am Hang mit einer langen Mittelmeerküste. Burg und Wallfahrtskirche blicken über das alte Zentrum, Reisfelder, den Júcar und die Bucht. Die elf benannten Strände reichen von städtischen Abschnitten mit Einrichtungen bis zu ruhigeren und naturnäheren Bereichen.",
+      "Wähle für einen ersten Tagesausflug zwei Hauptziele: die Burg und einen Strandbereich. San Antonio ist die einfachste städtische Option mit Einrichtungen und der örtlichen Tourismusinformation. Andere Strände passen besser, wenn du ruhigere Umgebung, Wassersport oder natürlichere Landschaft suchst.",
+      "Der Bahnhof liegt im Landesinneren, nicht direkt am Meer. Culleras offizielle Verkehrsseite nennt einen örtlichen Bus, der Bahnhof, Zentrum, Strände und den Leuchtturmbereich verbindet. Prüfe diesen Fahrplan, statt einen kurzen oder sofort möglichen Fußweg für den letzten Abschnitt vorauszusetzen."
+    ],
+    "quickFacts": [
+      {
+        "label": "Besonders geeignet für",
+        "value": "Burgblick und ein Nachmittag am Strand"
+      },
+      {
+        "label": "Besuch einplanen",
+        "value": "Ein ganzer Tag"
+      },
+      {
+        "label": "Küste",
+        "value": "Mehr als 15 km mit 11 Stränden"
+      },
+      {
+        "label": "Weiterfahrt ab Bahnhof",
+        "value": "Örtlichen Bus, Taxi oder einen langen Fußweg einplanen"
+      }
+    ]
+  },
+  "highlights": [
+    {
+      "name": "Burg Cullera",
+      "description": "Eine Festung islamischen Ursprungs mit einem städtischen Geschichts- und Archäologiemuseum, einer Wallfahrtskirche und Blick über Bucht und Reislandschaft.",
+      "icon": "🏰",
+      "tip": "Öffnungszeiten und Eintritt unterscheiden sich je nach Saison. Prüfe die offizielle Burgseite für dein Datum."
+    },
+    {
+      "name": "Strand San Antonio",
+      "description": "Der wichtigste Stadtstrand bietet eine Promenade, Einrichtungen in der Nähe und die einfachste Orientierung für den ersten Besuch.",
+      "icon": "🏖️",
+      "tip": "Er gehört zu den Stränden mit einem ausgewiesenen barrierefreien Zugangspunkt. Bestätige vor der Reise die saisonale Unterstützung."
+    },
+    {
+      "name": "Altstadt und Kalvarienweg",
+      "description": "Die historische Route steigt vom Barrio del Pou zur Burg hinauf und verbindet traditionelle Straßen mit der ehemaligen Stadtmauer.",
+      "icon": "🚶",
+      "tip": "Der Aufstieg ist steil. Nutze gegebenenfalls den Straßenzugang oder den Panoramalift, wenn dieser in Betrieb ist."
+    }
+  ],
+  "gettingThere": {
+    "summary": "Cullera hat eine direkte Bahnverbindung ab Valencia. Danach folgt eine separate Weiterfahrt zum Zentrum, zur Burg oder zum Strand.",
+    "options": [
+      {
+        "mode": "train",
+        "description": "Nutze Renfe Cercanías Richtung Gandia und bestätige den aktuellen Fahrplan, die Barrierefreiheit des Bahnhofs und die letzte Rückverbindung."
+      },
+      {
+        "mode": "bus",
+        "description": "Der offiziell aufgeführte örtliche Bus verbindet den Renfe-Bahnhof mit Zentrum, Stränden und Leuchtturmbereich. Prüfe aktuelle Betriebszeiten und saisonale Änderungen."
+      },
+      {
+        "mode": "car",
+        "description": "Mit dem Auto ist der Wechsel zwischen Burg und Strand einfacher. Im Sommer steigt aber der Parkdruck nahe der Küste."
+      }
+    ],
+    "parkingNotes": "Wähle den Parkplatz nach deinem ersten Ziel. Gehe nicht davon aus, dass ein einziger Stellplatz für Burg, Altstadt und Strand praktisch ist. Beachte die ausgeschilderten Beschränkungen an der Küste."
+  },
+  "bestTimeToVisit": {
+    "summary": "Im späten Frühling und frühen Herbst lassen sich Burgbesichtigung und Strandzeit gut verbinden. Im Sommer funktioniert ein früher Burgbesuch mit einem auf die Hitze abgestimmten Nachmittag am besten.",
+    "seasons": [
+      {
+        "season": "spring",
+        "description": "Angenehm für Burg und Altstadt. Strandzeit hängt von Wasser- und Wetterbedingungen ab.",
+        "rating": 5
+      },
+      {
+        "season": "summer",
+        "description": "Am besten zum Baden und für saisonale Einrichtungen. Hitze und Parken erfordern aber einen frühen Start.",
+        "rating": 4
+      },
+      {
+        "season": "autumn",
+        "description": "Im September können warmes Meer und angenehmere Besichtigungen zusammenkommen. Später im Herbst eignen sich historische Ziele und Spaziergänge.",
+        "rating": 5
+      },
+      {
+        "season": "winter",
+        "description": "Ein ruhigerer Ausflug zu Burg und Promenade, mit begrenzten Strandeinrichtungen und kürzerem Tageslicht.",
+        "rating": 3
+      }
+    ]
+  },
+  "whatToBring": {
+    "bring": [
+      "Aktuelle Bahn- und Ortsbusfahrpläne",
+      "Wasser",
+      "Sonnenschutz",
+      "Schuhe für den Burgaufstieg",
+      "Kenntnis der Badeflaggen"
+    ],
+    "dontBring": [
+      "Zu viel Strandausrüstung für eine Reise mit mehreren öffentlichen Verkehrsmitteln",
+      "Einen Plan, der von einem ungeprüften saisonalen Lift oder Touristenzug abhängt"
+    ],
+    "rentInstead": [
+      "Schattenspender für den Strand",
+      "Stühle oder Handtücher, wenn die Lieferregelungen zu deinem Aufenthalt passen",
+      "Eine geeignete Mobilitätshilfe nach Prüfung des Burgwegs"
+    ]
+  },
+  "accessibility": {
+    "overallRating": 3,
+    "summary": "Cullera bietet barrierefreie Ortsbusse, mehrere barrierefreie Strandzugänge und angepasste Burgparkplätze mit Panoramalift. Angebote sind aber saison- und wetterabhängig.",
+    "wheelchairNotes": "Die offizielle Burgseite nennt angepasste Parkplätze und einen Panoramalift, der bei Regen oder Wind nicht fährt. Bestätige vor der Anreise seine aktuellen Zeiten und die zugängliche Route.",
+    "strollerNotes": "Die Promenade ist unkompliziert. Der Kalvarienweg und der Aufstieg zur Burg sind dagegen steil. Nutze einen passenden Straßen- oder Liftzugang, statt den historischen Aufstieg zu erzwingen.",
+    "publicTransportAccess": "Der Ortsbus wird als barrierefrei beschrieben und verbindet den Bahnhof mit zentralen und küstennahen Bereichen. Prüfe den aktuellen Fahrplan und die Haltestelle für dein Ziel."
+  },
+  "visitingHere": {
+    "summary": "Besuche zuerst die Burg, iss in der Stadt oder nahe der Küste zu Mittag und wähle dann einen Strand für den Nachmittag. Das vermeidet wiederholte Ortswechsel und schützt die Besichtigung vor der Mittagshitze.",
+    "idealDuration": "8–10 Stunden einschließlich Anreise",
+    "bestTimeOfDay": "Burg am Morgen; Strand oder Promenade später",
+    "tips": [
+      "Prüfe die Öffnungszeiten der Burg für dein Datum, bevor du einen Zug wählst.",
+      "Wähle den Strand vor dem Aufbruch aus Valencia. Culleras Küste ist zu weitläufig, um sie als einen einzigen Halt zu behandeln.",
+      "Behalte die Weiterfahrt zwischen Bahnhof und Strand sowie den letzten Rückzug im Tagesplan."
+    ]
+  },
+  "practicalTips": [
+    "Gehe nicht davon aus, dass der Bahnhof neben dem Strand liegt. Plane die Weiterfahrt vor Ort.",
+    "Nutze die offiziellen Strandinformationen, um Einrichtungen, Barrierefreiheit und Atmosphäre auf deine Gruppe abzustimmen.",
+    "Prüfe bei der Ankunft die Badeflagge und die saisonalen Rettungsschwimmerzeiten.",
+    "Bestätige den Betrieb des Burglifts, wenn er für deinen Besuch unverzichtbar ist."
+  ],
+  "productWidgets": [
+    {
+      "categorySlug": "travel-outdoors",
+      "heading": "Gut vorbereitet für einen Strandtag in Cullera",
+      "afterSection": "Highlights"
+    }
+  ],
+  "relatedDestinations": [
+    "albufera",
+    "el-saler-beach",
+    "xativa"
+  ],
+  "relatedBlogPosts": [
+    "best-beaches-valencia-families",
+    "valencia-with-kids-complete-guide"
+  ],
+  "faqs": [
+    {
+      "question": "Kann ich Cullera ab Valencia ohne Auto besuchen?",
+      "answer": "Ja. Renfe Cercanías verbindet Valencia mit Cullera. Der offiziell aufgeführte Ortsbus verbindet den Bahnhof mit Zentrum, Stränden und Leuchtturmbereich. Bestätige beide Fahrpläne und die letzte Rückverbindung."
+    },
+    {
+      "question": "Welcher Strand in Cullera eignet sich für einen ersten Besuch?",
+      "answer": "San Antonio ist die einfachste städtische Wahl für Orientierung, Promenadenzugang und Einrichtungen in der Nähe. Cullera hat auch ruhigere, natürlichere und für Wassersport geeignete Strände. Wähle nach deiner Gruppe, statt mehrere besuchen zu wollen."
+    },
+    {
+      "question": "Ist die Burg Cullera barrierefrei?",
+      "answer": "Die Burg nennt angepasste Parkplätze und einen Panoramalift. Der Lift hat aber saisonale Betriebszeiten und fährt nicht bei Regen oder Wind. Bestätige vor der Anreise die aktuellen Bedingungen."
+    },
+    {
+      "question": "Kann ich Burg und Strand in Cullera an einem Tag verbinden?",
+      "answer": "Ja. Besuche morgens die Burg und fahre danach für Mittagessen und Nachmittag zu einem ausgewählten Strand. Plane die Weiterfahrt ab dem Bahnhof und den Rückzug ausdrücklich ein."
+    }
+  ]
+}

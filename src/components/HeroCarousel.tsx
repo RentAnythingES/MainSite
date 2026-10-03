@@ -9,7 +9,12 @@ const slides = [
   { src: "/hero/valencia-3.webp", alt: "Valencia beach promenade with palm trees at golden hour" },
 ];
 
-export default function HeroCarousel() {
+export default function HeroCarousel({ locale = "en" }: { locale?: "en" | "es" | "de" }) {
+  const localizedAlt = {
+    en: slides.map(slide => slide.alt),
+    es: ["Vista aérea del casco antiguo de Valencia al atardecer", "Atardecer sobre el Jardín del Turia y la Ciudad de las Artes y las Ciencias", "Paseo marítimo de Valencia con palmeras al atardecer"],
+    de: ["Luftaufnahme der Altstadt von Valencia im Abendlicht", "Sonnenuntergang über dem Turia-Park und der Stadt der Künste und Wissenschaften", "Valencias Strandpromenade mit Palmen im Abendlicht"],
+  };
   const [current, setCurrent] = useState(0);
 
   useEffect(() => {
@@ -25,7 +30,7 @@ export default function HeroCarousel() {
         <Image
           key={slide.src}
           src={slide.src}
-          alt={slide.alt}
+          alt={localizedAlt[locale][i]}
           fill
           className={`object-cover transition-opacity duration-1000 ${
             i === current ? "opacity-100" : "opacity-0"
@@ -44,7 +49,7 @@ export default function HeroCarousel() {
             className={`w-2 h-2 rounded-full transition-all duration-300 ${
               i === current ? "bg-white w-6" : "bg-white/50"
             }`}
-            aria-label={`Go to slide ${i + 1}`}
+            aria-label={`${locale === "de" ? "Bild anzeigen" : locale === "es" ? "Ir a la imagen" : "Go to slide"} ${i + 1}`}
           />
         ))}
       </div>

@@ -1,0 +1,256 @@
+{
+  "slug": "patacona-beach",
+  "name": "Strand Patacona",
+  "type": "beach",
+  "tagline": "Ein ruhigerer Strand mit örtlichem Flair bei Valencia – Familien, Volleyball und Paella am Abend",
+  "heroImage": "/discover/patacona-hero.webp",
+  "heroImageAlt": "Breiter Sandstrand Patacona mit bunten Strandhütten am Mittelmeer",
+  "heroImageProvenance": {
+    "status": "licensed",
+    "creator": "JaGa9480",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Playa_de_la_Patacona.jpg",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "verifiedAt": "2026-07-19",
+    "modifications": "Cropped and resized to 16:9 WebP."
+  },
+  "title": "Strand Patacona bei Valencia: Praktischer Reiseführer",
+  "description": "Plane deinen Tag am Strand Patacona bei Valencia: Zugänge, Einrichtungen, Besuche mit Kindern, Strandrestaurants und das benachbarte Malvarrosa.",
+  "keywords": [
+    "Strand Patacona Valencia",
+    "beste Strände Valencia",
+    "ruhiger Strand Valencia",
+    "Strand Alboraya",
+    "Valencia Strände Reiseführer"
+  ],
+  "date": "2026-06-20",
+  "lastUpdated": "2026-06-20",
+  "audiences": [
+    "families",
+    "couples",
+    "digital-nomads",
+    "budget"
+  ],
+  "region": "Alboraya / nördliche Küste",
+  "hubs": [
+    "beaches"
+  ],
+  "overview": {
+    "paragraphs": [
+      "Patacona ist der Strand, den Valencianer empfehlen, wenn Besucher nach einem Strandziel fragen. Er liegt direkt nördlich der großen Stadtstrände Las Arenas und Malvarrosa und gehört zur Gemeinde Alboraya. Die Verbindung ist nahtlos: Von Malvarrosa kannst du entlang der Promenade in 15 Minuten hierherlaufen.",
+      "Patacona bietet breiten Sand und eine ausgeprägt örtliche Atmosphäre. Familien bringen Kühlboxen und Strandspiele mit, Volleyball gehört zum Strandleben, und Chiringuitos sowie Reisrestaurants am Meer verbinden den Aufenthalt im Freien mit dem Mittagessen. Platz und Besucherandrang unterscheiden sich je nach Tag und Zugang.",
+      "Patacona ist eine gute Wahl für einen entspannten Strandtag nördlich der Stadtstrände. Die Mittelmeerküste ist dieselbe, Bedingungen und Hinweise zur Wasserqualität müssen aber für den konkreten Strand und Tag geprüft werden. Familien sollten Zugang, Einrichtungen und aktuelle Bedingungen passend zu ihrer Gruppe wählen."
+    ],
+    "quickFacts": [
+      {
+        "label": "Anreise",
+        "value": "Bus Richtung La Patacona oder Spaziergang ab Malvarrosa"
+      },
+      {
+        "label": "Besonders geeignet für",
+        "value": "Familien, Einheimische, Beachvolleyball und Paella"
+      },
+      {
+        "label": "Atmosphäre",
+        "value": "Entspannt, örtlich geprägt, viel Platz"
+      },
+      {
+        "label": "Einrichtungen",
+        "value": "Chiringuitos, Duschen, Rettungsschwimmer im Sommer"
+      }
+    ]
+  },
+  "highlights": [
+    {
+      "name": "Breiter Strand mit viel Platz",
+      "description": "Patacona bietet einen breiten Sandstrand. Wie viel Platz du findest, hängt von Saison und Zugang ab. Prüfe die aktuelle Flagge und die Bedingungen im Wasser. Flaches Wasser garantiert keine Sicherheit für Kinder. Sie brauchen ständige Aufsicht durch Erwachsene aus unmittelbarer Nähe.",
+      "icon": "🏖️",
+      "tip": "Gehe weiter entlang der Promenade, wenn der erste Zugang voll ist. Wähle aber einen Abschnitt mit den Einrichtungen, die deine Gruppe braucht."
+    },
+    {
+      "name": "Treffpunkt für Beachvolleyball",
+      "description": "Am südlichen Ende von Patacona gibt es feste Volleyballnetze. Der Strand gilt als örtlicher Treffpunkt für Beachvolleyball. Im Sommer entstehen abends spontane Spiele, bei denen du oft mitspielen kannst.",
+      "icon": "🏐",
+      "tip": "Die Abendspiele beginnen etwa zwischen 18 und 19 Uhr. Bring einen eigenen Ball mit oder frage, ob du mitspielen kannst – die regelmäßigen Spieler sind offen für neue Mitspieler."
+    },
+    {
+      "name": "Paella-Restaurants am Meer",
+      "description": "Reisrestaurants und mediterrane Terrassen säumen den Paseo Marítimo. Wenn du separat reservierst, lässt sich das Mittagessen gut mit einem Strandtag verbinden.",
+      "icon": "🥘",
+      "tip": "Casa Patacona und La Chipirona veröffentlichen aktuelle Informationen zu ihren Lokalen online. Reserviere Reisgerichte zum Mittagessen am Wochenende direkt."
+    },
+    {
+      "name": "Horchata in Alboraya",
+      "description": "Patacona gehört zu Alboraya, einer Gegend, die für Horchata und die auf ihren Feldern angebauten Erdmandeln, Chufas, bekannt ist. Traditionelle Horchaterías lohnen einen separaten Halt. Prüfe ihre Standorte, statt davon auszugehen, dass alle nahe am Strand liegen.",
+      "icon": "🥛",
+      "tip": "Die ursprüngliche Horchatería Daniel liegt an der Avenida de la Horchata 41 in Alboraya. Plane die separate Anreise und prüfe aktuelle Öffnungszeiten. Ein zehnminütiger Fußweg ab dem Strand ist nicht belegt."
+    }
+  ],
+  "gettingThere": {
+    "summary": "Gehe von Malvarrosa nach Norden, nutze einen Bus Richtung La Patacona oder fahre auf einer geplanten Route entlang der Küste Rad. Eine Straßenbahnfahrt erfordert eine Weiterverbindung ab Valencias Küste.",
+    "options": [
+      {
+        "mode": "tram",
+        "description": "Fahre mit Metrovalencia zur Küste von Valencia und plane anschließend den Spaziergang an der Promenade oder eine Busverbindung Richtung Patacona. Es gibt keine direkte Straßenbahnhaltestelle namens La Patacona. EMT-Linie 31 fährt in diese Richtung.",
+        "duration": "Gesamte Verbindung einschließlich Weiterfahrt prüfen",
+        "cost": "Aktuelle Tarife der Betreiber für deine Verbindung prüfen"
+      },
+      {
+        "mode": "walk",
+        "description": "Gehe vom Strand Malvarrosa entlang der Promenade nach Norden. Der Weg ist eben, befestigt und landschaftlich schön.",
+        "duration": "15 Minuten ab Malvarrosa"
+      },
+      {
+        "mode": "bike",
+        "description": "Fahre auf der erlaubten Route entlang der Küste. Prüfe vor dem Aufbruch das aktuelle Bediengebiet des Radverleihs und die Rückgabestation. Patacona liegt in Alboraya und nicht im Stadtgebiet von Valencia.",
+        "duration": "Abhängig von Ausgangspunkt und Route",
+        "cost": "Aktuellen Radverleihtarif prüfen"
+      }
+    ],
+    "parkingNotes": "Prüfe die Schilder in den Wohnstraßen hinter dem Strand. Beschränkungen, Gebühren und Verfügbarkeit unterscheiden sich. Gehe nicht davon aus, dass bei deiner Ankunft ein kostenloser Platz frei ist."
+  },
+  "bestTimeToVisit": {
+    "summary": "Juni bis September zum Baden. Im Mai und Oktober ist es oft noch warm genug für angenehme Strandtage mit weniger Andrang.",
+    "seasons": [
+      {
+        "season": "spring",
+        "description": "Ab Mai warm genug zum Sonnenbaden. Der Strand ist ruhig, das Wasser zum Baden noch kühl.",
+        "rating": 4
+      },
+      {
+        "season": "summer",
+        "description": "Hauptsaison. Wenn du früh kommst, hast du mehr Zeit, einen Zugang zu wählen und dich vor der Hitze einzurichten. Prüfe aktuelle Wasserbedingungen und Rettungsschwimmerzeiten.",
+        "rating": 5
+      },
+      {
+        "season": "autumn",
+        "description": "September und Oktober können warme Bedingungen und weniger Besucher bieten. Wetter, Wassertemperatur und saisonale Einrichtungen unterscheiden sich. Prüfe deshalb den Tag, statt mit einem leeren Strand zu rechnen.",
+        "rating": 5
+      },
+      {
+        "season": "winter",
+        "description": "Kühl, aber sonnig. Angenehm für Spaziergänge entlang der Promenade. Einige Chiringuitos schließen.",
+        "rating": 2
+      }
+    ]
+  },
+  "whatToBring": {
+    "bring": [
+      "Sonnencreme",
+      "Wasser und Snacks",
+      "Strandtuch",
+      "Bargeld für Chiringuitos"
+    ],
+    "dontBring": [
+      "Wertsachen; es gibt keine Schließfächer",
+      "Glasflaschen; beachte die von Alboraya ausgeschilderten Strandregeln"
+    ],
+    "rentInstead": [
+      "Set aus Sonnenschirm und Strandstühlen",
+      "Kinderwagen für die Promenade",
+      "Strandspielzeug für Kinder"
+    ]
+  },
+  "accessibility": {
+    "overallRating": 4,
+    "summary": "Die befestigte Promenade und saisonale Holzstege bieten zugängliche Wege. Bestätige den gewählten Eingang und den aktuellen Verlauf der Stege. Prüfe für öffentliche Verkehrsmittel die gesamte Verbindung und die verbleibende Entfernung, statt eine direkte Straßenbahnhaltestelle in Patacona vorauszusetzen.",
+    "wheelchairNotes": "Die Promenade ist sehr gut geeignet. Holzstege ermöglichen den Zugang bis zum Sand. Einige Chiringuitos bieten zugängliche Terrassen.",
+    "strollerNotes": "Die ebene Promenade und breiten befestigten Wege machen einen Kinderwagen praktisch. Prüfe den gewählten Zugang und vorübergehende Hindernisse. Gewöhnliche Räder sind auf losem Sand schwieriger zu nutzen.",
+    "publicTransportAccess": "Prüfe die aktuelle EMT- oder Metrovalencia-Verbindung, die Barrierefreiheit der Fahrzeuge und den letzten Weg zur Promenade. Patacona hat keine direkte Straßenbahnhaltestelle namens La Patacona."
+  },
+  "foodAndDrink": {
+    "summary": "An Pataconas Küste gibt es Reisrestaurants, Cafés und Terrassen nahe dem Strand. Reserviere ein Reisgericht zum Mittagessen separat von deiner Strandausrüstung und prüfe die aktuellen Küchenzeiten vor der Anreise.",
+    "recommendations": [
+      {
+        "name": "Casa Patacona",
+        "type": "Mediterranes Reisrestaurant",
+        "priceRange": "€€€",
+        "tip": "Reserviere Reisgerichte zum Mittagessen am Wochenende und bestätige die aktuelle Speisekarte direkt.",
+        "familyFriendly": true,
+        "sourceNote": "Die offizielle Website bestätigt den Standort Paseo Marítimo 14, die mediterrane Speisekarte und den Schwerpunkt auf valencianischen Reisgerichten.",
+        "sourceUrl": "https://casapatacona.com/",
+        "sourceCheckedAt": "2026-07-19"
+      },
+      {
+        "name": "La Chipirona",
+        "type": "Restaurant und Terrasse am Meer",
+        "priceRange": "€€€",
+        "tip": "Prüfe die aktuellen Küchenzeiten und reserviere, wenn die Terrasse für deine Pläne wichtig ist.",
+        "familyFriendly": true,
+        "sourceNote": "Die offizielle Website des Hauses bestätigt das betriebene Hotel und Restaurant am Strand La Patacona.",
+        "sourceUrl": "https://www.lachipirona.com/",
+        "sourceCheckedAt": "2026-07-19"
+      }
+    ],
+    "localSpeciality": "Arroz a banda: ein kräftiges Reisgericht mit Fischbrühe, bei dem der Fisch separat serviert wird. Das ursprünglich von dieser Küste stammende Fischergericht ist hier besonders gut."
+  },
+  "visitingHere": {
+    "summary": "Ein Strandtag in Patacona kann einen ganzen Tag füllen: am Vormittag ankommen, baden, Paella zum Mittagessen, Siesta im Sand und Getränke am Abend.",
+    "idealDuration": "Ein halber bis ganzer Tag",
+    "bestTimeOfDay": "Im Sommer bis 10 Uhr ankommen und bis zum Abend bleiben",
+    "tips": [
+      "Komm im Sommer früh, um einen geeigneten Platz zu wählen. Weiter nördlich kann es ruhiger sein. Andrang und Einrichtungen unterscheiden sich aber je nach Zugang.",
+      "Reserviere Paella zum Mittagessen am Meer für 13:30 bis 14 Uhr – die traditionelle Zeit.",
+      "Erwäge nach dem Mittagessen einen separaten Ausflug nach Alboraya für Horchata in der ursprünglichen Horchatería Daniel. Prüfe zuerst Route, Entfernung und Öffnungszeiten.",
+      "Bleib bis zum Sonnenuntergang. Patacona zeigt nach Osten, aber das Abendlicht auf dem Wasser ist wunderschön."
+    ]
+  },
+  "practicalTips": [
+    "Vermeide Glasbehälter und beachte die örtlich ausgeschilderten Strandregeln von Alboraya. Bring wiederverwendbare Behälter ohne Glas mit und nimm deinen Müll wieder mit.",
+    "Prüfe die aktuellen Termine und Zeiten der Rettungsschwimmer. Rot bedeutet Badeverbot, Gelb Vorsicht und Grün, dass Baden erlaubt ist. Grün garantiert keine Sicherheit.",
+    "Tiefe und Bedingungen unterscheiden sich. Auch in flachem Wasser brauchen Kinder ständige Aufsicht durch Erwachsene aus unmittelbarer Nähe. Beachte Flaggen und Hinweise der Rettungsschwimmer.",
+    "Im Spätsommer können gelegentlich Quallen auftreten. Prüfe die Flaggen an den Rettungsposten."
+  ],
+  "audienceTips": [
+    {
+      "audience": "families",
+      "tips": [
+        "Patacona kann Familien gefallen, die einen breiten Strand mit örtlicher Atmosphäre suchen. Wähle einen Abschnitt mit den benötigten Einrichtungen und prüfe aktuellen Andrang und Meerbedingungen.",
+        "Betrachte flaches Wasser nicht als sicher für kleine Kinder. Beaufsichtige sie ständig aus unmittelbarer Nähe und befolge die Hinweise der Rettungsschwimmer.",
+        "Mit einem gemieteten Strandset aus Sonnenschirm, Stühlen und Spielzeug bist du für den Tag ausgestattet."
+      ]
+    },
+    {
+      "audience": "digital-nomads",
+      "tips": [
+        "Morgens in einem Café in Alboraya arbeiten und nachmittags eine Strandpause in Patacona machen – ein schöner Tagesablauf für digitale Nomaden.",
+        "Einige Chiringuitos haben WLAN, das aber unzuverlässig sein kann. Bring für konzentrierte Arbeit einen eigenen Hotspot mit.",
+        "Vergleiche aktuelle Angebote für längere Aufenthalte in Patacona und Cabanyal, einschließlich Preis, Verkehrsanbindung, Lärm und Strandentfernung, statt eine Gegend grundsätzlich für günstiger zu halten."
+      ]
+    }
+  ],
+  "productWidgets": [
+    {
+      "categorySlug": "travel-outdoors",
+      "heading": "Alles für deinen Strandtag",
+      "afterSection": "Highlights"
+    },
+    {
+      "categorySlug": "baby-gear",
+      "heading": "Strandtag mit den Kleinen?",
+      "afterSection": "Practical Tips"
+    }
+  ],
+  "relatedDestinations": [
+    "malvarrosa-beach",
+    "cabanyal",
+    "turia-gardens"
+  ],
+  "relatedBlogPosts": [
+    "valencia-with-kids-complete-guide"
+  ],
+  "faqs": [
+    {
+      "question": "Ist der Strand Patacona besser als Malvarrosa?",
+      "answer": "Patacona kann Familien und Besuchern gefallen, die einen breiten Strand mit örtlicher Atmosphäre suchen. Malvarrosa kann für einen Besuch von der Stadt aus praktischer sein. Andrang und Wasserbedingungen unterscheiden sich. Wähle nach deinen Zugangsbedürfnissen und prüfe die aktuellen Informationen für den jeweiligen Strand."
+    },
+    {
+      "question": "Wie komme ich vom Zentrum Valencias nach Patacona?",
+      "answer": "Nutze eine aktuelle EMT-Verbindung Richtung La Patacona oder fahre mit Metrovalencia zur Küste von Valencia und plane die Weiterverbindung. Du kannst auch von Malvarrosa entlang der Promenade nach Norden gehen oder eine geplante Radroute nutzen. Prüfe die gesamte Verbindung ab deinem Ausgangspunkt."
+    },
+    {
+      "question": "Gibt es Restaurants am Strand Patacona?",
+      "answer": "Ja. An der Küste gibt es Reis- und Fischrestaurants, Cafés und Terrassen. Reserviere Reisgerichte zum Mittagessen direkt beim Lokal und bestätige vor der Anreise aktuelle Speisekarten und Küchenzeiten."
+    }
+  ]
+}

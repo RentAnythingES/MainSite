@@ -16,6 +16,10 @@ registerHooks({
     return next(specifier, context);
   },
   load(url, context, next) {
+    if (url.endsWith(".json") && url.startsWith(new URL("src/", root).href)) {
+      const data = JSON.parse(readFileSync(new URL(url), "utf8"));
+      return { format: "module", shortCircuit: true, source: "export default " + JSON.stringify(data) + ";" };
+    }
     if (url.endsWith(".ts") && !url.includes("node_modules")) {
       return { format: "module", shortCircuit: true, source: ts.transpileModule(readFileSync(new URL(url), "utf8"), {
         compilerOptions: { target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.ESNext },

@@ -1,0 +1,210 @@
+{
+  "hub": "beaches",
+  "hubName": "Valencia Beaches Guide",
+  "hubDescription": "Compare Valencia beaches for families, swimming, accessibility and quieter days, with practical transport advice and local beach guides.",
+  "metadata": {
+    "title": "Valencia Beaches Guide — Compare the Best Beaches",
+    "description": "Compare Valencia beaches for families, swimming, accessibility and quieter days, with practical transport advice and local beach guides.",
+    "alternates": {
+      "canonical": "https://rentandroll.com/discover/beaches",
+      "languages": {
+        "en": "https://rentandroll.com/discover/beaches",
+        "es": "https://rentandroll.com/es/discover/beaches",
+        "x-default": "https://rentandroll.com/discover/beaches"
+      }
+    },
+    "openGraph": {
+      "title": "Valencia Beaches Guide",
+      "description": "Compare Valencia beaches for families, swimming, accessibility and quieter days, with practical transport advice and local beach guides.",
+      "url": "https://rentandroll.com/discover/beaches",
+      "images": [
+        {
+          "url": "/discover/malvarrosa-beach.webp",
+          "alt": "Malvarrosa Beach in Valencia"
+        }
+      ]
+    }
+  },
+  "faqs": [
+    {
+      "question": "Which Valencia beach is easiest to reach from the city centre?",
+      "answer": "Malvarrosa and Las Arenas are the most straightforward urban-beach choices, with regular public transport and a long seafront promenade. Check current EMT and Metrovalencia routes for your exact starting point before travelling."
+    },
+    {
+      "question": "Is Malvarrosa or Patacona better for families?",
+      "answer": "Both can work well. Malvarrosa has broad urban-beach facilities and direct city connections, while Patacona often feels calmer and suits families who prefer a slightly less central seafront. Your accommodation location may be the deciding factor."
+    },
+    {
+      "question": "Do I need to bring beach equipment to Valencia?",
+      "answer": "Not necessarily. Towels and sun protection are essential, but larger items such as umbrellas, shelters, chairs, coolers and beach wagons can be rented in Valencia when buying and transporting them would be inconvenient."
+    },
+    {
+      "question": "Are Valencia beaches accessible?",
+      "answer": "Several beaches provide accessible routes and seasonal assisted-bathing services, but the available facilities and dates can change. Confirm the current service at the specific beach before your visit."
+    }
+  ],
+  "comparisons": [
+    {
+      "name": "Malvarrosa",
+      "bestFor": "First visits, city access and a broad promenade",
+      "feel": "Large, active urban beach",
+      "href": "/discover/malvarrosa-beach"
+    },
+    {
+      "name": "Patacona",
+      "bestFor": "A calmer beach day and northern accommodation areas",
+      "feel": "Relaxed continuation of the city seafront",
+      "href": "/discover/patacona-beach"
+    },
+    {
+      "name": "Pinedo",
+      "bestFor": "Accessible facilities and a quieter local beach",
+      "feel": "Semi-rural beach south of the port",
+      "href": "/discover/pinedo-beach"
+    },
+    {
+      "name": "El Saler",
+      "bestFor": "Dunes, nature and a planned full beach day",
+      "feel": "Long natural beach within the Albufera landscape",
+      "href": "/discover/el-saler-beach"
+    }
+  ],
+  "templateText": [
+    {
+      "kind": "text",
+      "value": "Home"
+    },
+    {
+      "kind": "text",
+      "value": "Discover"
+    },
+    {
+      "kind": "text",
+      "value": "Beaches"
+    },
+    {
+      "kind": "alt",
+      "value": "Wide sandy beach and Mediterranean sea in Valencia"
+    },
+    {
+      "kind": "text",
+      "value": "Local beach planning"
+    },
+    {
+      "kind": "text",
+      "value": "Valencia Beaches Guide"
+    },
+    {
+      "kind": "text",
+      "value": "Choose the right beach for your stay, understand the journey, and plan what you actually need for a comfortable day by the Mediterranean."
+    },
+    {
+      "kind": "text",
+      "value": "Choosing a beach in Valencia"
+    },
+    {
+      "kind": "text",
+      "value": "Valencia's coastline includes busy urban beaches, quieter stretches north of the city, and more natural beaches towards Albufera. The best choice depends on where you are staying, how much equipment you are carrying, and whether you need step-free routes or family facilities."
+    },
+    {
+      "kind": "text",
+      "value": "Malvarrosa is the simplest starting point for many first-time visitors. Patacona continues north with a calmer feel. South of the port, Pinedo combines local character with an established accessible point, while El Saler offers dunes, pine forest and a more natural day out that needs additional transport and equipment planning."
+    },
+    {
+      "kind": "text",
+      "value": "Plan around your stay"
+    },
+    {
+      "kind": "text",
+      "value": "Families:"
+    },
+    {
+      "kind": "text",
+      "value": "prioritise shade, toilets, food access, and the shortest equipment-carrying route."
+    },
+    {
+      "kind": "text",
+      "value": "Limited mobility:"
+    },
+    {
+      "kind": "text",
+      "value": "confirm current accessible entrances and seasonal support before travelling."
+    },
+    {
+      "kind": "text",
+      "value": "Long beach days:"
+    },
+    {
+      "kind": "text",
+      "value": "plan water, shade, seating, and safe food storage rather than relying on nearby purchases."
+    },
+    {
+      "kind": "text",
+      "value": "Compare Valencia city beaches"
+    },
+    {
+      "kind": "text",
+      "value": "Start with the practical difference between the two beach areas already covered in depth."
+    },
+    {
+      "kind": "text",
+      "value": "Best for"
+    },
+    {
+      "kind": "text",
+      "value": "Atmosphere"
+    },
+    {
+      "kind": "text",
+      "value": "Read the local guide →"
+    },
+    {
+      "kind": "text",
+      "value": "Detailed beach guides"
+    },
+    {
+      "kind": "text",
+      "value": "Explore the beach →"
+    },
+    {
+      "kind": "text",
+      "value": "Rent only what helps"
+    },
+    {
+      "kind": "text",
+      "value": "Beach equipment delivered in Valencia"
+    },
+    {
+      "kind": "text",
+      "value": "Browse umbrellas, shelters, towels, coolers, chairs, games and transport gear, then check availability for your exact dates."
+    },
+    {
+      "kind": "text",
+      "value": "Browse Beach & Outdoor equipment"
+    },
+    {
+      "kind": "text",
+      "value": "Planning for a family"
+    },
+    {
+      "kind": "text",
+      "value": "Build a complete family beach setup"
+    },
+    {
+      "kind": "text",
+      "value": "Use the Family Beach Kit as a planning checklist, then adapt it to your group, accommodation, and transport needs."
+    },
+    {
+      "kind": "text",
+      "value": "View the Family Beach Kit"
+    },
+    {
+      "kind": "text",
+      "value": "Family beach guide →"
+    },
+    {
+      "kind": "text",
+      "value": "Valencia beach questions"
+    }
+  ]
+}

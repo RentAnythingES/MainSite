@@ -1,0 +1,237 @@
+{
+  "slug": "sagunto",
+  "name": "Sagunto",
+  "type": "day-trip",
+  "tagline": "Historische Burg auf dem Hügel, römisches Theater und eine reizvolle Altstadt – 30 Minuten ab Valencia",
+  "heroImage": "/discover/sagunto-hero.webp",
+  "heroImageAlt": "Panoramablick von der Burg über Sagunto und die umliegenden Berge",
+  "heroImageProvenance": {
+    "status": "licensed",
+    "creator": "José Luis Filpo Cabana",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Sagunto._Panor%C3%A1mica.jpg",
+    "license": "CC BY 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/3.0/",
+    "verifiedAt": "2026-07-19",
+    "modifications": "Cropped and resized to 16:9 WebP."
+  },
+  "title": "Sagunto: Tagesausflug ab Valencia zu Burg und Theater",
+  "description": "Plane deinen Tagesausflug von Valencia nach Sagunto: Bahnanreise und praktische Tipps für die Burg auf dem Hügel, das römische Theater und die Altstadt.",
+  "keywords": [
+    "Sagunto Tagesausflug",
+    "Burg Sagunto",
+    "Sagunto ab Valencia",
+    "römisches Theater Sagunto",
+    "Tagesausflüge ab Valencia"
+  ],
+  "date": "2026-06-20",
+  "lastUpdated": "2026-06-20",
+  "audiences": [
+    "families",
+    "couples",
+    "budget"
+  ],
+  "region": "Camp de Morvedre",
+  "distanceFromValencia": "30 km nördlich",
+  "hubs": [
+    "day-trips"
+  ],
+  "overview": {
+    "paragraphs": [
+      "Sagunto ist ein einfacher und lohnender Tagesausflug ab Valencia. Die historische Stadt ist in etwa 30 Minuten mit dem Regionalzug Cercanías erreichbar und seit über 2.000 Jahren bewohnt. Die iberische Siedlung widerstand hier 219 v. Chr. Hannibals Belagerung, die den Zweiten Punischen Krieg zwischen Rom und Karthago auslöste. Diese Schichten der Geschichte sind überall sichtbar.",
+      "Über der Stadt liegt ihre Burg – genauer gesagt die weitläufigen Ruinen mehrerer Befestigungen, die Iberer, Römer, Mauren und Christen über zwei Jahrtausende errichteten. Die einen Kilometer langen Mauern bieten eindrucksvolle Rundumblicke auf Orangenhaine, Mittelmeerküste und Sierra Calderona. Unterhalb der Burg liegt das schön restaurierte römische Theater mit Sommeraufführungen.",
+      "Neben den Hauptsehenswürdigkeiten bietet Saguntos Altstadt ein reizvolles Gewirr enger Straßen, das mittelalterliche jüdische Viertel Judería, kleine Museen und örtliche Restaurants mit Paella zu etwa der Hälfte der Preise touristischer Lokale in Valencia. Eine spanische Kleinstadt mit ruhigem Tempo, erschwinglichen Angeboten und viel Atmosphäre."
+    ],
+    "quickFacts": [
+      {
+        "label": "Entfernung",
+        "value": "30 km nördlich von Valencia, etwa 30 Minuten mit dem Zug"
+      },
+      {
+        "label": "Bahn",
+        "value": "Cercanías C-5/C-6 ab Valencia Nord nach Sagunto"
+      },
+      {
+        "label": "Kosten",
+        "value": "Aktuellen Renfe-Tarif prüfen"
+      },
+      {
+        "label": "Zeitbedarf",
+        "value": "Ein halber Tag, 4–5 Stunden"
+      }
+    ]
+  },
+  "highlights": [
+    {
+      "name": "Burg Sagunto",
+      "description": "Eine große Befestigung auf dem Hügel, die sich fast einen Kilometer entlang des Kamms erstreckt. Über 2.000 Jahre von Iberern, Römern, Mauren und Christen errichtet und umgebaut. Von den Mauern reicht der außergewöhnliche Blick in alle Richtungen von der Küste bis zu den Bergen.",
+      "icon": "🏰",
+      "tip": "Beginne am römischen Theater und gehe hinauf. Der Aufstieg dauert etwa 15–20 Minuten. Bring Wasser mit und starte im Sommer früh – auf den Mauern fehlt Schatten.",
+      "googleMapsUrl": "https://maps.google.com/?q=Castillo+de+Sagunto"
+    },
+    {
+      "name": "Römisches Theater",
+      "description": "Ein schön restauriertes römisches Theater aus dem 1. Jahrhundert, in dem weiterhin Sommeraufführungen stattfinden, etwa das Festival Sagunt a Escena im August. Der halbkreisförmige Zuschauerraum fasst 4.000 Besucher vor einer eindrucksvollen Bergkulisse.",
+      "icon": "🏛️",
+      "tip": "Kostenloser Eintritt. Prüfe im August die Abendaufführungen – Theater in einer 2.000 Jahre alten Spielstätte ist unvergesslich.",
+      "googleMapsUrl": "https://maps.google.com/?q=Teatro+Romano+Sagunto"
+    },
+    {
+      "name": "Jüdisches Viertel Judería",
+      "description": "Eines der gut erhaltenen mittelalterlichen jüdischen Viertel Spaniens. Enge Gassen, gewölbte Durchgänge und die Überreste einer mittelalterlichen Mikwe, eines Ritualbads. Die jüdische Gemeinde gehörte zu den größten im mittelalterlichen Valencia.",
+      "icon": "✡️",
+      "tip": "Das Centro de Interpretación de la Judería bietet eine kleine, lohnende Ausstellung zur Geschichte der Gemeinde. Frage nach den mittelalterlichen hebräischen Inschriften."
+    },
+    {
+      "name": "Altstadt und Plaça Major",
+      "description": "Saguntos Altstadt vereint ruhige, stimmungsvolle Gassen, kleine Kirchen und örtliche Geschäfte. Die Caféterrassen an der Plaça Major eignen sich für Kaffee nach dem Burgbesuch. Das Museo Histórico zeigt archäologische Funde von iberischer bis maurischer Zeit.",
+      "icon": "🏘️",
+      "tip": "Iss in der Altstadt zu Mittag. Die Restaurants bieten ausgezeichnete regionale Küche zu deutlich niedrigeren Preisen als in Valencia. Probiere Arroz al horno, im Ofen gebackenen Reis."
+    }
+  ],
+  "gettingThere": {
+    "summary": "Cercanías ist eine praktische Option für Sagunto. Prüfe aktuellen Fahrplan, Tarif und Rückverbindung für dein Datum, statt von einem festen Takt auszugehen.",
+    "options": [
+      {
+        "mode": "train",
+        "description": "Cercanías C-5 oder C-6 ab Valencia Nord, Estació del Nord, zum Bahnhof Sagunto",
+        "duration": "30 Minuten",
+        "cost": "Aktuellen Renfe-Tarif für Hin- und Rückfahrt prüfen"
+      },
+      {
+        "mode": "car",
+        "description": "Über die Autobahn A-7 nach Norden. Kostenlose Parkplätze nahe der Altstadt verfügbar.",
+        "duration": "25–30 Minuten",
+        "cost": "Kostenlos, mautfreie Route"
+      }
+    ],
+    "parkingNotes": "Kostenlose Straßenparkplätze am Fuß der Altstadt. Nahe dem römischen Theater ist das Parken begrenzt, außerhalb von Sommerwochenenden findest du aber meist einen Platz."
+  },
+  "bestTimeToVisit": {
+    "summary": "Frühling und Herbst sind ideal. Im Sommer wird es auf den ungeschützten Burgmauern sehr heiß – komm früh am Morgen.",
+    "seasons": [
+      {
+        "season": "spring",
+        "description": "Ideal: Orangenblüten in den umliegenden Hainen und angenehme Temperaturen für den Burgaufstieg.",
+        "rating": 5
+      },
+      {
+        "season": "summer",
+        "description": "Sehr heiß, auch über 35 °C. An der Burg fehlt Schatten. Komm zur Öffnung um 10 Uhr und steige vor Mittag wieder hinab. Die Sommeraufführungen im römischen Theater sind besonders schön.",
+        "rating": 3
+      },
+      {
+        "season": "autumn",
+        "description": "Angenehmes Wetter, Orangenernte und weniger Besucher. Das goldene Licht auf den Burgmauern ist eindrucksvoll.",
+        "rating": 5
+      },
+      {
+        "season": "winter",
+        "description": "Mild, auf dem Burgkamm aber manchmal windig. Wenige Touristen und ein ruhiger, stimmungsvoller Besuch.",
+        "rating": 4
+      }
+    ]
+  },
+  "whatToBring": {
+    "bring": [
+      "Wasser – wichtig, da es keine Geschäfte auf dem Burghügel gibt",
+      "Bequeme Schuhe mit gutem Halt",
+      "Sonnenhut und Sonnencreme im Sommer",
+      "Kamera"
+    ],
+    "dontBring": [
+      "Absätze oder Sandalen; der Burgweg ist uneben",
+      "Schwere Taschen"
+    ],
+    "rentInstead": [
+      "Kompakter Kinderwagen; große Wagen sind wegen der Stufen in der Altstadt unpraktisch"
+    ]
+  },
+  "accessibility": {
+    "overallRating": 2,
+    "summary": "Burg und Altstadt sind für Rollstühle und schwere Kinderwagen schwierig. Der Burgaufstieg ist steil und uneben. Das römische Theater ist auf Bodenniveau zugänglich. Der Bahnhof ist eben.",
+    "wheelchairNotes": "Die Burg ist nicht rollstuhlgerecht: Der Weg ist steil, uneben und stellenweise unbefestigt. Das römische Theater und die Hauptstraßen der Altstadt sind teilweise zugänglich.",
+    "strollerNotes": "Ein kompakter, leichter Kinderwagen funktioniert in den Altstadtstraßen. Lass ihn vor dem Burgaufstieg am Theatereingang zurück. Der Weg hinauf ist zu steil und uneben.",
+    "publicTransportAccess": "Der Bahnhof Sagunto ist stufenlos zugänglich. Der ebene Fußweg zur Altstadt dauert etwa zehn Minuten. Der Burgaufstieg beginnt am Theater."
+  },
+  "foodAndDrink": {
+    "summary": "Sagunto verbindet unkomplizierte Altstadtcafés mit einigen gezielt besuchenswerten Restaurants. Entscheide vor der Anreise, ob du nach der Burg flexibel einkehren oder eine Mahlzeit vorab buchen möchtest.",
+    "recommendations": [
+      {
+        "name": "Arrels",
+        "type": "Zeitgemäße valencianische Degustationsmenüs",
+        "priceRange": "€€€",
+        "tip": "Ein reservierungspflichtiges Essen für einen besonderen Anlass, kein schneller Halt nach der Burg.",
+        "familyFriendly": true,
+        "sourceNote": "Die offizielle Restaurantwebsite und der Guide Michelin bestätigen den Standort Castell 18, Degustationsmenüs und die aktuellen Küchenzeiten.",
+        "sourceUrl": "https://www.restaurantarrels.com/",
+        "sourceCheckedAt": "2026-07-19"
+      },
+      {
+        "name": "Cafés rund um die Plaça Major",
+        "type": "Café und Terrasse",
+        "priceRange": "€",
+        "tip": "Nutze die Gegend für eine flexible Erfrischungspause und prüfe das gewählte Lokal bei der Ankunft.",
+        "familyFriendly": true,
+        "sourceNote": "Der Provinztourismus Valencia bestätigt Saguntos Altstadtgebiet und regionale Gastronomie. Dies ist ein Gebietshinweis und keine Empfehlung eines einzelnen Betriebs.",
+        "sourceUrl": "https://turisme.dival.es/en/destino/sagunto/",
+        "sourceCheckedAt": "2026-07-19"
+      }
+    ],
+    "localSpeciality": "Arroz al horno: im Ofen gebackener Reis mit Kichererbsen, Blutwurst und Schweinefleisch. Eine Spezialität des Camp de Morvedre, die du in Valencia-Stadt weniger leicht findest."
+  },
+  "visitingHere": {
+    "summary": "Ein halber Tag passt gut: morgens mit dem Zug fahren, zur Burg hinaufsteigen, das Theater besuchen, in der Altstadt zu Mittag essen und nachmittags zurückfahren.",
+    "idealDuration": "4–5 Stunden",
+    "bestTimeOfDay": "Morgens bis 10 Uhr ankommen und die Mittagshitze an der Burg vermeiden",
+    "tips": [
+      "Wähle einen morgendlichen Cercanías-Zug ab Valencia und plane Zeit für Fußweg und Aufstieg ein. Prüfe zuerst aktuellen Fahrplan und Öffnungszeiten der Denkmäler.",
+      "Besuche zuerst das kostenlose römische Theater und steige dann zur Burg hinauf, etwa 20 Minuten bergauf.",
+      "Gehe durch das jüdische Viertel und die Altstadt hinab. Iss an der Plaça Major zu Mittag.",
+      "Wähle vor dem Aufbruch aus Valencia die Rückverbindung am Nachmittag und plane Zeit für den Weg zum Bahnhof ein. Gehe nicht von einem festen Zugtakt alle fünfzehn Minuten aus."
+    ]
+  },
+  "practicalTips": [
+    "Der offizielle Tourismusfahrplan nennt kostenlosen Burgeintritt und Montagsschließung. Prüfe vor der Anreise aktuelle Zeiten und außerplanmäßige Schließungen.",
+    "Bring mindestens einen Liter Wasser pro Person mit. Auf dem Burghügel gibt es keine Einrichtungen.",
+    "Der etwa 20-minütige Burgaufstieg ist mäßig anstrengend, aber ungeschützt. Starte im Sommer früh, damit du nicht in voller Sonne hinaufgehen musst.",
+    "Vom Bahnhof dauert der ebene Fußweg zur Altstadt etwa zehn Minuten. Folge den Schildern zum Centro Histórico."
+  ],
+  "audienceTips": [
+    {
+      "audience": "families",
+      "tips": [
+        "Die Burg kann für Kinder wie ein Abenteuer wirken, ist aber eine historische Ruine und kein Spielplatz. Beaufsichtige Kinder aus der Nähe, beachte Absperrungen und meide ungeschützte Kanten.",
+        "Das römische Theater ist ein interessanter Halt für Familien. Beachte die Denkmalregeln und beaufsichtige Kinder, statt die archäologische Stätte als Platz zum Herumrennen zu behandeln.",
+        "Pack Snacks und Wasser ein. Auf dem Hügel gibt es keine Einkaufsmöglichkeiten."
+      ]
+    }
+  ],
+  "productWidgets": [
+    {
+      "categorySlug": "baby-gear",
+      "heading": "Tagesausflug mit den Kleinen?",
+      "afterSection": "Practical Tips"
+    }
+  ],
+  "relatedDestinations": [
+    "albufera",
+    "city-of-arts-and-sciences"
+  ],
+  "relatedBlogPosts": [
+    "valencia-with-kids-complete-guide"
+  ],
+  "faqs": [
+    {
+      "question": "Wie komme ich von Valencia nach Sagunto?",
+      "answer": "Prüfe Cercanías-Verbindungen ab Valencia Richtung Sagunto und bestätige bei Renfe aktuellen Abfahrtsbahnhof, Fahrplan und Tarif. Plane den Fußweg zur Altstadt und den separaten Burgaufstieg ein."
+    },
+    {
+      "question": "Lohnt sich ein Besuch der Burg Sagunto?",
+      "answer": "Ja. Die einen Kilometer langen Ruinen auf dem Hügel mit Rundumblick sind eindrucksvoll. Zusammen mit dem römischen Theater und der reizvollen Altstadt ist Sagunto ein besonders lohnender Halbtagesausflug ab Valencia."
+    },
+    {
+      "question": "Ist die Burg Sagunto kostenlos?",
+      "answer": "Der offizielle Tourismusfahrplan nennt kostenlosen Eintritt für Burg und römisches Theater sowie Montagsschließung. Prüfe vor deinem Besuch die aktuellen saisonalen Zeiten und außerplanmäßige Schließungen."
+    }
+  ]
+}

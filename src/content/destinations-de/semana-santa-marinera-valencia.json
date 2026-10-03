@@ -1,0 +1,239 @@
+{
+  "slug": "semana-santa-marinera-valencia",
+  "name": "Semana Santa Marinera",
+  "type": "event",
+  "tagline": "Valencias maritime Karwoche mit Prozessionen in den Vierteln und Seefahrtstraditionen",
+  "heroImage": "/discover/semana-santa-marinera.jpg",
+  "heroImageAlt": "Prozession der Semana Santa Marinera in Valencias maritimen Vierteln",
+  "heroImageProvenance": {
+    "status": "licensed",
+    "creator": "Jorge Sanz",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Semana_Santa_Marinera_(16997625666).jpg",
+    "license": "CC BY-SA 2.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0/",
+    "verifiedAt": "2026-07-20",
+    "modifications": "Resized to 1280 pixels wide by Wikimedia Commons."
+  },
+  "title": "Semana Santa Marinera Valencia: Reiseführer 2026",
+  "description": "Plane die Semana Santa Marinera in Valencia: Termine 2026, wichtige Prozessionen, Routen durch die maritimen Viertel sowie Tipps für Barrierefreiheit und Familien.",
+  "keywords": [
+    "Semana Santa Marinera Valencia",
+    "Karwoche Valencia",
+    "Valencia Osterprozessionen",
+    "Cabanyal Semana Santa"
+  ],
+  "date": "2026-07-20",
+  "lastUpdated": "2026-07-20",
+  "audiences": [
+    "families",
+    "mobility-needs",
+    "couples",
+    "elderly"
+  ],
+  "region": "Poblats Marítims, Valencia",
+  "hubs": [
+    "events"
+  ],
+  "eventInfo": {
+    "dates": "27. März–5. April 2026",
+    "frequency": "Jährlich; die Termine richten sich nach der Karwoche",
+    "ticketsRequired": false,
+    "ticketUrl": "https://www.valencia.es/cas/movilidad-y-urbanismo/agenda-de-la-ciudad/-/content/semana-santa-marinera-de-valencia-2026",
+    "crowdLevel": "high",
+    "bookingAdvice": "Die Straßenprozessionen sind kostenlos. Wähle die Veranstaltung und den Abschnitt des Viertels, den du sehen möchtest. Prüfe kurz vor der Anreise das offizielle Programm und Verkehrsbeschränkungen.",
+    "whatToExpect": [
+      "Prozessionen von 31 Bruderschaften, religiösen Vereinigungen und Korporationen in Valencias maritimen Stadtteilen",
+      "Drei große gemeinsame Veranstaltungen: Besuche bei den Heiligen Monumenten am Gründonnerstag, die feierliche Grablegungsprozession am Karfreitag und der Auferstehungsumzug am Ostersonntag",
+      "Biblische Figuren, religiöse Bildwerke, Musik und Traditionen, die eng mit Cabanyal, Canyamelar und Grau verbunden sind",
+      "Lange Routen, vorübergehende Straßensperrungen und dichtes Gedränge bei den Hauptprozessionen"
+    ],
+    "safetyTips": [
+      "Halte Prozessionswege frei und befolge an Querungen die Anweisungen von Ordnern oder Polizei.",
+      "Vereinbart mit Kindern oder einer Gruppe einen Treffpunkt abseits der Route.",
+      "Nimm Wasser und eine leichte zusätzliche Kleidungsschicht mit. Manche Veranstaltungen dauern bis in den Abend.",
+      "Nutze die offiziellen Informationen zur Inklusion und zu ausgewiesenen Zuschauerplätzen, wenn eingeschränkte Mobilität deine Planung beeinflusst."
+    ],
+    "months": [
+      3,
+      4
+    ]
+  },
+  "overview": {
+    "paragraphs": [
+      "Die Semana Santa Marinera ist Valencias besondere maritime Karwoche. Ihre Prozessionen konzentrieren sich nicht auf einen einzigen Platz, sondern ziehen durch die Poblats Marítims. Dort pflegen religiöse Bruderschaften und Nachbarschaftsgemeinschaften Traditionen mit Bezug zum Meer. Das Fest wurde 2011 als Fest von nationalem touristischem Interesse anerkannt.",
+      "Für die Planung wählst du am besten eine der drei gemeinsamen Veranstaltungen und bestätigst dann die aktuelle Route. Am Gründonnerstag stehen Besuche bei den Heiligen Monumenten im Mittelpunkt. Am Karfreitag folgt die feierliche Grablegungsprozession. Am Ostersonntag verändert der Auferstehungsumzug die Stimmung.",
+      "Dies ist gelebte Religionsausübung und keine inszenierte Attraktion. Besucher sind willkommen, sollten den Teilnehmern aber Platz lassen, Hauseingänge nicht blockieren und Privathäuser mit ausgestellten religiösen Bildwerken respektieren."
+    ],
+    "quickFacts": [
+      {
+        "label": "Termine 2026",
+        "value": "27. März–5. April"
+      },
+      {
+        "label": "Hauptbereich",
+        "value": "Cabanyal, Canyamelar und Grau"
+      },
+      {
+        "label": "Kosten",
+        "value": "Straßenprozessionen sind kostenlos"
+      },
+      {
+        "label": "Planung",
+        "value": "Das aktuelle offizielle Programm nutzen"
+      }
+    ]
+  },
+  "highlights": [
+    {
+      "name": "Grablegungsprozession am Karfreitag",
+      "description": "Die wichtigste feierliche gemeinsame Prozession vereint die maritimen Bruderschaften auf einer veröffentlichten Route.",
+      "icon": "🕯️",
+      "tip": "Wähle vor Beginn einen Zuschauerplatz, statt der gesamten Route folgen zu wollen."
+    },
+    {
+      "name": "Auferstehungsumzug",
+      "description": "Der Ostersonntag hat einen helleren, festlichen Charakter und ist für Familien oft die zugänglichste gemeinsame Veranstaltung.",
+      "icon": "🌿",
+      "tip": "Bestätige die aktuelle Startzeit und Route, da sich die Termine der Karwoche jährlich ändern."
+    },
+    {
+      "name": "Traditionen der maritimen Viertel",
+      "description": "Die Prozessionen führen durch bewohnte Straßen. Religiöse Bildwerke werden in Häusern beherbergt, und die Nachbarschaften wirken unmittelbar mit.",
+      "icon": "⚓"
+    },
+    {
+      "name": "Festmuseum",
+      "description": "Das Museo de la Semana Santa Marinera Salvador Caurín in der Calle Rosario 1 vermittelt das ganze Jahr über die Hintergründe des Festes.",
+      "icon": "🏛️",
+      "tip": "Prüfe die aktuellen Museumsöffnungszeiten getrennt vom Festprogramm."
+    }
+  ],
+  "gettingThere": {
+    "summary": "Die Prozessionen verteilen sich auf die maritimen Stadtteile. Die beste Haltestelle hängt daher von der aktuellen Route ab, nicht von einem einzigen Festivaleingang.",
+    "options": [
+      {
+        "mode": "tram",
+        "description": "Metrovalencia-Straßenbahnen verbinden die Stadt mit Cabanyal und der Küste. Prüfe Änderungen am Veranstaltungstag.",
+        "tip": "Wähle eine Haltestelle nahe deinem Routenabschnitt statt einfach am Strand."
+      },
+      {
+        "mode": "bus",
+        "description": "EMT-Linien bedienen die maritimen Viertel. Rund um die Prozessionen sind Umleitungen wahrscheinlich.",
+        "tip": "Nutze am selben Tag die aktuelle Reiseauskunft."
+      },
+      {
+        "mode": "bike",
+        "description": "Radfahren ist praktisch, bevor die Sperrungen zunehmen. Nimm Fahrräder aber nicht in dicht besetzte Zuschauerbereiche mit."
+      },
+      {
+        "mode": "walk",
+        "description": "Zwischen Cabanyal, Canyamelar und Grau kannst du zu Fuß gehen. Absperrungen können die Wege jedoch verlängern."
+      }
+    ],
+    "parkingNotes": "Verlasse dich nicht auf einen Straßenparkplatz im Prozessionsbereich. Sperrungen, beschränkte Zufahrt und Andrang machen öffentliche Verkehrsmittel besser planbar."
+  },
+  "bestTimeToVisit": {
+    "summary": "Wähle die Veranstaltung passend zu deiner Gruppe, statt jede Prozession als gleichwertig zu betrachten.",
+    "seasons": [
+      {
+        "season": "spring",
+        "description": "Das Fest findet rund um Ostern statt. Tagsüber ist es oft mild. Abendtemperaturen und Regen können aber unterschiedlich ausfallen.",
+        "rating": 5
+      },
+      {
+        "season": "summer",
+        "description": "Das Fest findet nicht im Sommer statt. Das Museum vermittelt seine Hintergründe das ganze Jahr über.",
+        "rating": 1
+      },
+      {
+        "season": "autumn",
+        "description": "Das Fest findet nicht im Herbst statt. Das Museum vermittelt seine Hintergründe das ganze Jahr über.",
+        "rating": 1
+      },
+      {
+        "season": "winter",
+        "description": "Vorbereitungen können vor Ort sichtbar sein. Das öffentliche Fest folgt aber der Karwoche im Frühling.",
+        "rating": 1
+      }
+    ]
+  },
+  "whatToBring": {
+    "bring": [
+      "Bequeme Schuhe zum Gehen",
+      "Wasser",
+      "Eine leichte zusätzliche Kleidungsschicht für den Abend",
+      "Die aktuelle Route offline gespeichert",
+      "Respektvolle Kleidung und rücksichtsvolles Verhalten"
+    ],
+    "dontBring": [
+      "Großes Gepäck",
+      "Fahrräder in dicht besetzten Zuschauerbereichen",
+      "Ausrüstung, die Gehwege blockiert"
+    ],
+    "rentInstead": [
+      "Einen kompakten Kinderwagen für jüngere Kinder",
+      "Eine passende Mobilitätshilfe für längere Fußwege"
+    ]
+  },
+  "accessibility": {
+    "overallRating": 3,
+    "summary": "Das Fest veröffentlicht Informationen zur Inklusion und ausgewiesenen Zuschauerplätzen für Menschen mit eingeschränkter Mobilität bei den Hauptveranstaltungen. Historische Straßen, Gedränge und Routenänderungen erfordern dennoch Vorbereitung.",
+    "wheelchairNotes": "Prüfe die offiziellen QR-Informationen zur Inklusion und die aktuellen ausgewiesenen Zuschauerbereiche. Bestätige vor der Anreise den genauen Ort und den Zugangsweg.",
+    "strollerNotes": "Ein kompakter Kinderwagen ist leichter zu handhaben als ein großes Reisesystem. Meide die dichtesten Bereiche und halte die Prozessionswege frei.",
+    "publicTransportAccess": "Barrierefreie Straßenbahn- und Busverbindungen erreichen das Gebiet. Umleitungen und Andrang können aber den letzten Wegabschnitt beeinflussen."
+  },
+  "practicalTips": [
+    "Lade das aktuelle offizielle Programm herunter. Routen und Uhrzeiten gelten für das jeweilige Jahr.",
+    "Wähle eine gemeinsame Veranstaltung und einen Zuschauerbereich, statt jeder Prozession folgen zu wollen.",
+    "Komm, bevor Straßensperrungen den letzten Wegabschnitt verlangsamen.",
+    "Sprich während feierlicher Prozessionen leise und frage, bevor du Personen aus nächster Nähe fotografierst."
+  ],
+  "visitingHere": {
+    "summary": "Ein gelungener Besuch verbindet eine Prozession mit Zeit in den maritimen Vierteln. Versuche nicht, jede Route zu queren oder jede Veranstaltung zu besuchen.",
+    "idealDuration": "2–4 Stunden für einen Prozessionsabschnitt",
+    "bestTimeOfDay": "Je nach offizieller Veranstaltung; tagsüber ist es mit kleinen Kindern meist einfacher",
+    "tips": [
+      "Wähle deinen Zuschauerabschnitt, bevor du deine Unterkunft verlässt.",
+      "Halte eine ruhigere Alternative nahe der Küste bereit, falls das Gedränge unangenehm wird.",
+      "Plane zusätzliche Zeit ein, um nach der Prozession Restaurants oder Verkehrsmittel zu erreichen."
+    ]
+  },
+  "productWidgets": [
+    {
+      "categorySlug": "baby-gear",
+      "heading": "Planst du die Karwoche mit Kindern?",
+      "afterSection": "Accessibility"
+    },
+    {
+      "categorySlug": "mobility",
+      "heading": "Brauchst du Unterstützung für längere Wege?",
+      "afterSection": "Getting There"
+    }
+  ],
+  "relatedDestinations": [
+    "cabanyal",
+    "malvarrosa-beach"
+  ],
+  "relatedBlogPosts": [
+    "valencia-with-kids-complete-guide",
+    "wheelchair-accessible-valencia"
+  ],
+  "faqs": [
+    {
+      "question": "Wann findet die Semana Santa Marinera 2026 statt?",
+      "answer": "Das offizielle Programm 2026 läuft vom 27. März bis zum 5. April. Prüfe die Zeiten und Routen einzelner Prozessionen auf der Veranstaltungsseite der Stadt Valencia."
+    },
+    {
+      "question": "Brauche ich Tickets für die Semana Santa Marinera?",
+      "answer": "Für die öffentlichen Straßenprozessionen ist keine Eintrittskarte erforderlich. Manche separaten Veranstaltungsorte oder Aktivitäten können eigene Zugangsbedingungen haben."
+    },
+    {
+      "question": "Welche Prozession sollten Familien wählen?",
+      "answer": "Der Auferstehungsumzug am Ostersonntag hat eine festlichere Atmosphäre. Wähle unabhängig von der Veranstaltung einen weniger vollen Routenabschnitt, nimm Wasser mit und vereinbart einen Treffpunkt."
+    },
+    {
+      "question": "Ist die Semana Santa Marinera barrierefrei?",
+      "answer": "Valencia veröffentlicht Informationen zur Inklusion und Hinweise zu ausgewiesenen Zuschauerplätzen für Menschen mit eingeschränkter Mobilität bei großen Veranstaltungen. Prüfe vor der Anreise die aktuellen Orte und Zugangsanweisungen."
+    }
+  ]
+}

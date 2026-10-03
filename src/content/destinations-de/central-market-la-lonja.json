@@ -1,0 +1,191 @@
+{
+  "slug": "central-market-la-lonja",
+  "name": "Zentralmarkt und La Lonja",
+  "type": "attraction",
+  "tagline": "Eine praktische Vormittagsroute durch Valencias bekannten Lebensmittelmarkt und die UNESCO-Seidenbörse",
+  "heroImage": "/discover/central-market-la-lonja.jpg",
+  "heroImageAlt": "Gotische Steinfassade der La Lonja de la Seda in Valencia",
+  "heroImageProvenance": {
+    "status": "licensed",
+    "creator": "Pamdelinaza",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Lonja_de_la_Seda,_Valencia,_Espa%C3%B1a.jpg",
+    "license": "CC0 1.0",
+    "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "verifiedAt": "2026-07-20",
+    "modifications": "Resized to 1280 pixels wide by Wikimedia Commons."
+  },
+  "title": "Zentralmarkt und La Lonja in Valencia: Reiseführer",
+  "description": "Zentralmarkt und La Lonja in Valencia besuchen: mit Routenplanung, historischem Hintergrund, Barrierefreiheit und Tipps für einen respektvollen Marktbesuch.",
+  "keywords": [
+    "Zentralmarkt Valencia",
+    "La Lonja Valencia",
+    "Mercado Central Valencia",
+    "Valencia historische Innenstadt"
+  ],
+  "date": "2026-07-20",
+  "lastUpdated": "2026-07-20",
+  "audiences": [
+    "families",
+    "couples",
+    "elderly",
+    "mobility-needs",
+    "budget"
+  ],
+  "region": "Historische Innenstadt, Valencia",
+  "distanceFromValencia": "Im Zentrum, an der Plaça del Mercat",
+  "hubs": [
+    "attractions"
+  ],
+  "overview": {
+    "paragraphs": [
+      "Valencias Zentralmarkt und La Lonja de la Seda liegen sich in der historischen Innenstadt gegenüber. Damit gehören sie zu den einfachsten Kombinationen lohnender Sehenswürdigkeiten in der Stadt. Der Markt ist eine aktive Lebensmittelhalle in einem bedeutenden Jugendstilgebäude. La Lonja ist ein UNESCO-geschütztes Meisterwerk spätgotischer Profanarchitektur.",
+      "Besuche zuerst den Markt, während der Handel in vollem Gange ist, und überquere anschließend die Plaça del Mercat zur La Lonja. Der Weg ist kurz, doch beide Orte verdienen Zeit: der Markt für lokale Esskultur und architektonische Details, La Lonja für ihre gedrehten Säulen, Handelsgeschichte und ruhigeren Innenräume.",
+      "Zugang und Öffnungszeiten von Markt und Baudenkmal können sich ändern. Prüfe kurz vor deinem Besuch die aktuellen offiziellen Zeiten, besonders an Sonntagen, Feiertagen und Tagen mit lokalen Veranstaltungen."
+    ],
+    "quickFacts": [
+      {
+        "label": "Beste Reihenfolge",
+        "value": "Zuerst Zentralmarkt, dann La Lonja"
+      },
+      {
+        "label": "Zeit einplanen",
+        "value": "Etwa 2–3 Stunden in entspanntem Tempo"
+      },
+      {
+        "label": "Architektur",
+        "value": "Jugendstilmarkt und gotisches Profanbauwerk"
+      },
+      {
+        "label": "Lage",
+        "value": "Gegenüberliegende Seiten der Plaça del Mercat"
+      }
+    ]
+  },
+  "highlights": [
+    {
+      "name": "Zentralmarkt",
+      "description": "Eine große Markthalle im Jugendstil mit Obst und Gemüse, Fisch, Fleisch, haltbaren Lebensmitteln und spezialisierten Ständen. Sie bleibt ein Arbeitsort und ist keine inszenierte Besucherattraktion.",
+      "icon": "🍊",
+      "tip": "Halte Gänge und Verkaufstheken frei, frage vor Nahaufnahmen von Verkäufern und erledige Einkäufe, ohne Stammkunden den Weg zu versperren."
+    },
+    {
+      "name": "Die Säulenhalle der La Lonja",
+      "description": "Hohe gedrehte Säulen und ein Gewölbe prägen die Haupthandelshalle. Sie zeigen die wirtschaftliche Bedeutung Valencias während des historischen Seidenhandels.",
+      "icon": "🏛️"
+    },
+    {
+      "name": "Plaça del Mercat",
+      "description": "Der Platz verbindet Markt, La Lonja und die Kirche Santos Juanes zu einem kompakten architektonischen Ensemble in der Altstadt.",
+      "icon": "📍"
+    }
+  ],
+  "gettingThere": {
+    "summary": "Die Sehenswürdigkeiten liegen im stark von Fußgängern genutzten historischen Zentrum. Zu Fuß und mit öffentlichen Verkehrsmitteln ist die Anreise meist einfacher als mit dem Auto.",
+    "options": [
+      {
+        "mode": "walk",
+        "description": "Die Route lässt sich gut mit El Carmen, der Plaça de la Reina und anderen zentralen Sehenswürdigkeiten verbinden.",
+        "duration": "Etwa 5–15 Minuten von den meisten Sehenswürdigkeiten der Altstadt"
+      },
+      {
+        "mode": "bus",
+        "description": "Mehrere EMT-Linien fahren ins Zentrum. Prüfe den aktuellen Routenplaner, da Umleitungen historische Straßen betreffen können."
+      },
+      {
+        "mode": "metro",
+        "description": "Àngel Guimerà, Xàtiva und Colón können je nach Ausgangspunkt praktisch sein; anschließend geht es zu Fuß weiter."
+      },
+      {
+        "mode": "bike",
+        "description": "Nutze ausgewiesene Fahrradstellplätze außerhalb des belebtesten Fußgängerbereichs und gehe zu Fuß weiter."
+      }
+    ],
+    "parkingNotes": "Verkehrsbeschränkungen und wenige Parkplätze machen das Auto im Zentrum unpraktisch. Prüfe Zugangsregeln und Höhenbegrenzungen, bevor du ein öffentliches Parkhaus nutzt."
+  },
+  "bestTimeToVisit": {
+    "summary": "Plane diese Route für den Vormittag, wenn der Markt in Betrieb ist. Frühere Besuche erleichtern meist die Fortbewegung und das Fotografieren.",
+    "seasons": [
+      {
+        "season": "spring",
+        "description": "Angenehmes Wetter, um die Innenräume mit einem ausgedehnteren Altstadtspaziergang zu verbinden.",
+        "rating": 5
+      },
+      {
+        "season": "summer",
+        "description": "Starte früh, nutze die Innenräume als Sonnenschutz und vermeide einen langen Spaziergang in der Mittagshitze.",
+        "rating": 4
+      },
+      {
+        "season": "autumn",
+        "description": "Eine gute Jahreszeit für Marktprodukte und angenehme Spaziergänge durch die historische Innenstadt.",
+        "rating": 5
+      },
+      {
+        "season": "winter",
+        "description": "Beide Innenräume eignen sich gut für kühlere Tage. Beachte mögliche Schließungen an Feiertagen.",
+        "rating": 4
+      }
+    ]
+  },
+  "accessibility": {
+    "overallRating": 4,
+    "summary": "Der Weg ist kurz und größtenteils eben. Volle Marktgänge, historischer Straßenbelag und die Eingänge des Baudenkmals benötigen aber mehr Aufmerksamkeit als eine moderne Sehenswürdigkeit.",
+    "wheelchairNotes": "Bestätige vor der Anreise den aktuellen stufenlosen Eingang beider Gebäude. Besuche den Markt früh, damit die Gänge freier sind und du mehr Platz zum Wenden hast.",
+    "strollerNotes": "Ein kompakter Kinderwagen ist im Markt einfacher zu handhaben. Halte beim Anhalten Abstand zum Gang und vermeide die größten Menschenansammlungen an beliebten Theken.",
+    "publicTransportAccess": "Bus- und Metroverbindungen ins Zentrum ersparen die Autofahrt durch den verkehrsbeschränkten Bereich. Das letzte Stück führt jedoch zu Fuß über unterschiedliche Stadtbeläge."
+  },
+  "visitingHere": {
+    "summary": "Besuche zuerst den zeitlich gebundenen Markt, überquere danach den Platz zur La Lonja und gehe bei passendem Wetter und ausreichend Energie weiter nach El Carmen oder zur Kathedrale von Valencia.",
+    "idealDuration": "2–3 Stunden",
+    "bestTimeOfDay": "Vormittags, während des Marktbetriebs",
+    "tips": [
+      "Prüfe die offiziellen Öffnungszeiten beider Gebäude, da sie unabhängig voneinander sind.",
+      "Halte Einkäufe überschaubar, wenn du danach weiter durch die Altstadt spazieren möchtest.",
+      "Behandle den Markt als Arbeitsplatz: Gehe zur Seite, bevor du anhältst, fotografierst oder eine Gruppe organisierst."
+    ]
+  },
+  "practicalTips": [
+    "Bring eine wiederverwendbare Tasche für Markteinkäufe mit und überlege, wie du verderbliche Lebensmittel aufbewahrst.",
+    "Lege keine feste Ankunftszeit anhand alter Onlineangaben fest; lokale Öffnungszeiten können sich ändern.",
+    "Kleine Gruppen bewegen sich leichter durch den Markt als eine große, eng zusammenstehende Gruppe.",
+    "Verbinde die Route mit El Carmen, statt am selben Vormittag quer durch die Stadt zu einer weiteren großen Sehenswürdigkeit zu fahren."
+  ],
+  "productWidgets": [
+    {
+      "categorySlug": "baby-gear",
+      "heading": "Mit Kindern die historische Innenstadt erkunden?",
+      "afterSection": "Highlights"
+    },
+    {
+      "categorySlug": "mobility",
+      "heading": "Brauchst du Mobilitätshilfen für deinen Stadtaufenthalt?",
+      "afterSection": "Accessibility"
+    }
+  ],
+  "relatedDestinations": [
+    "el-carmen",
+    "el-ensanche"
+  ],
+  "relatedBlogPosts": [
+    "valencia-with-kids-complete-guide",
+    "wheelchair-accessibility-valencia"
+  ],
+  "faqs": [
+    {
+      "question": "Sollte ich zuerst den Zentralmarkt oder La Lonja besuchen?",
+      "answer": "Besuche zuerst den Zentralmarkt, da dort am Vormittag gehandelt wird, und überquere dann den Platz zur La Lonja. Prüfe vor dem Aufbruch die aktuellen Öffnungszeiten beider Gebäude."
+    },
+    {
+      "question": "Wie viel Zeit brauche ich für beide?",
+      "answer": "Plane etwa zwei bis drei Stunden für einen entspannten Besuch ein: mit Zeit für die Marktstände, La Lonja und den Weg über die Plaça del Mercat."
+    },
+    {
+      "question": "Eignet sich der Zentralmarkt für Kinder?",
+      "answer": "Ja, aber er ist belebt und ein aktiver Arbeitsort. Behalte Kinder in deiner Nähe, nutze möglichst einen kompakten Kinderwagen und blockiere weder Gänge noch Theken."
+    },
+    {
+      "question": "Ist La Lonja de la Seda UNESCO-Welterbe?",
+      "answer": "Ja. La Lonja de la Seda ist als UNESCO-Welterbe eingetragen und gehört zu Europas bedeutenden Beispielen gotischer Profanarchitektur."
+    }
+  ]
+}

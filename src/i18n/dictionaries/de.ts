@@ -1,6 +1,6 @@
 import type { Dictionary } from "@/i18n/types";
 
-/** Draft for owner review. Registry keeps German unpublished. */
+/** German copy for the same page components and content as English and Spanish. */
 const de: Dictionary = {
   locale: "de",
   siteName: "Rent&Roll",
@@ -11,24 +11,24 @@ const de: Dictionary = {
   },
   home: {
     badge: "📍 Für deinen Aufenthalt in Valencia",
-    headline: "Reise mit leichtem Gepäck.", headlineAccent: "Miete, was du brauchst.",
-    subheadline: "Babyausstattung, Mobilitätshilfen und Ausstattung fürs Arbeiten – mit Lieferung zu deiner Unterkunft in Valencia.",
+    headline: "Reise mit leichtem Gepäck.", headlineAccent: "Miete alles, was du brauchst.",
+    subheadline: "Hochwertige Babyausstattung, Mobilitätshilfen, Ausstattung fürs Arbeiten und mehr – direkt zu deiner Unterkunft in Valencia geliefert. Kein schweres Gepäck, kein Stress.",
     ctaPrimary: "Mietartikel in Valencia entdecken", ctaSecondary: "So funktioniert’s",
     categoriesTitle: "Was brauchst du?",
     categoriesSubtitle: "Finde, was du für deinen Aufenthalt in Valencia brauchst.",
     trustStats: [
       { number: "Valencia", label: "Service vor Ort" },
-      { number: "Persönlich", label: "Hilfe bei der Auswahl" },
+      { number: "EN · ES · DE", label: "Mehrsprachige Unterstützung" },
       { number: "Flexibel", label: "Für kurze und längere Aufenthalte" },
       { number: "Vor Ort", label: "Abholung und Lieferung" },
     ],
-    featuredTitle: "Alles, was du für deinen Aufenthalt brauchst", featuredSubtitle: "Entdecke unsere Auswahl in Valencia",
+    featuredTitle: "Ausgewählte Mietartikel", featuredSubtitle: "Unsere beliebtesten Artikel in Valencia",
     viewAll: "Alle ansehen →", howItWorksTitle: "So funktioniert’s",
-    howItWorksSubtitle: "In drei Schritten zu deinen Mietartikeln.",
+    howItWorksSubtitle: "In drei einfachen Schritten zu einer entspannten Reise.",
     howItWorksSteps: [
-      { title: "Auswählen und buchen", description: "Wähle deine Mietartikel und deinen Mietzeitraum. Prüfe die Verfügbarkeit und buche online." },
-      { title: "Liefern lassen oder abholen", description: "Wähle bei der Buchung eine verfügbare Liefer- oder Abholoption für deinen Aufenthalt." },
-      { title: "Nutzen und zurückgeben", description: "Genieße deinen Aufenthalt und gib deine Mietartikel zum vereinbarten Termin zurück. Eine Abholung kannst du bei der Buchung auswählen, sofern sie angeboten wird." },
+      { title: "Auswählen und buchen", description: "Entdecke unsere Mietartikel, wähle deinen Mietzeitraum und prüfe vor der Zahlung die aktuelle Verfügbarkeit." },
+      { title: "Wir liefern", description: "Wir liefern direkt zu deinem Hotel, Airbnb oder Apartment. Alle Artikel werden gereinigt und auf Sicherheit geprüft." },
+      { title: "Nutzen und zurückgeben", description: "Genieße deinen Aufenthalt ohne Sorgen. Am Ende deiner Reise holen wir alles wieder ab. Du musst die Artikel nicht reinigen." },
     ],
     startBrowsing: "Alles zum Mieten →", ctaBannerTitle: "Bereit für weniger Gepäck?",
     ctaBannerSubtitle: "Finde passende Mietartikel für deinen Aufenthalt in Valencia und prüfe die Liefermöglichkeiten für deine Unterkunft.",

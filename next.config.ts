@@ -1,6 +1,7 @@
 import type { NextConfig } from "next";
 
 const productSlugReplacements = [
+  ["monitor-27", "32-inch-monitor-hdmi-cable"],
   ["Camping%20Kitchen", "outsunny-folding-camping-kitchen-a20-381v00gy"],
   ["car-seat-infant", "maxi-cosi-pebble-360-pro2-infant-car-seat"],
   ["infant-car-seat-0-15-months", "maxi-cosi-pebble-360-pro2-infant-car-seat"],
@@ -14,6 +15,7 @@ const productSlugReplacements = [
 
 const nextConfig: NextConfig = {
   turbopack: { root: __dirname },
+  experimental: { globalNotFound: true },
   async redirects() {
     return [
       ...productSlugReplacements.flatMap(([sourceSlug, destinationSlug]) => [
@@ -25,6 +27,11 @@ const nextConfig: NextConfig = {
         {
           source: `/es/product/${sourceSlug}`,
           destination: `/es/product/${destinationSlug}`,
+          permanent: true,
+        },
+        {
+          source: `/de/product/${sourceSlug}`,
+          destination: `/de/product/${destinationSlug}`,
           permanent: true,
         },
       ]),
@@ -68,6 +75,10 @@ const nextConfig: NextConfig = {
         destination: "/es/product/mobility-scooter-lightweight-foldable",
         permanent: true,
       },
+      { source: "/de/product/compact-stroller", destination: "/de/product/stroller-travel-compact", permanent: true },
+      { source: "/de/product/double-stroller", destination: "/de/product/stroller-double", permanent: true },
+      { source: "/de/product/portable-ac", destination: "/de/product/mobile-airconditioner-delonghi-pinguino-compact-classic", permanent: true },
+      { source: "/de/product/mobility-scooter-lightweight", destination: "/de/product/mobility-scooter-lightweight-foldable", permanent: true },
     ];
   },
   images: {

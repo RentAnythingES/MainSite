@@ -1,0 +1,202 @@
+{
+  "slug": "pinedo-beach",
+  "name": "Strand Pinedo",
+  "type": "beach",
+  "tagline": "Ein örtlicher Strand südlich des Hafens mit umfassenden barrierefreien Einrichtungen und ländlicher Umgebung",
+  "heroImage": "/discover/pinedo-beach.jpg",
+  "heroImageAlt": "Breiter Sandstrand Pinedo südlich von Valencia am Mittelmeer",
+  "heroImageProvenance": {
+    "status": "licensed",
+    "creator": "Boris Dzhingarov",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Playa_de_Pinedo,_Valencia,_Spain_(29813566664).jpg",
+    "license": "CC BY 2.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
+    "verifiedAt": "2026-07-20",
+    "modifications": "Resized to 1280 pixels wide by Wikimedia Commons."
+  },
+  "title": "Strand Pinedo bei Valencia: Barrierefreier Strandbesuch",
+  "description": "Plane deinen Besuch am Strand Pinedo bei Valencia: barrierefreie Einrichtungen, Anreise, Familientipps, saisonale Angebote und praktische Strandplanung.",
+  "keywords": [
+    "Strand Pinedo Valencia",
+    "barrierefreier Strand Valencia",
+    "ruhiger Strand Valencia",
+    "Strand Pinedo Reiseführer"
+  ],
+  "date": "2026-07-20",
+  "lastUpdated": "2026-07-20",
+  "audiences": [
+    "families",
+    "mobility-needs",
+    "elderly",
+    "couples"
+  ],
+  "region": "Poblats del Sud / südliches Valencia",
+  "distanceFromValencia": "Etwa 20–30 Minuten ab dem Zentrum von Valencia",
+  "hubs": [
+    "beaches"
+  ],
+  "overview": {
+    "paragraphs": [
+      "Pinedo ist der erste Strand südlich von Valencias Hafen und der nördliche Zugang zu den naturnäheren Stränden rund um die Albufera. Die städtische Leistungsbeschreibung nennt etwa 1,5 Kilometer feinen, goldenen Sand, mäßigen Besucherandrang und eine Umgebung, die weniger städtisch wirkt als Malvarrosa.",
+      "Besonders hervorzuheben ist der barrierefreie Bereich nahe Rettungsposten 1. Zu den veröffentlichten Einrichtungen zählen angepasste Stege, Toiletten, Umkleide- und Duschbereiche, reservierte Parkplätze, Informationen in Brailleschrift und saisonale Badeassistenz mit amphibischen Hilfsmitteln.",
+      "Pinedo eignet sich für Besucher, die einen örtlichen Strand mit Einrichtungen und weniger Trubel als im Stadtzentrum suchen. Planung bleibt wichtig: Bestätige vor der Anreise die aktuelle Verkehrsverbindung, die saisonalen Betriebszeiten und den genauen Zugang."
+    ],
+    "quickFacts": [
+      {
+        "label": "Strandlänge",
+        "value": "Etwa 1,5 km"
+      },
+      {
+        "label": "Umgebung",
+        "value": "Örtlicher Strand zwischen Hafen und Albufera-Küste"
+      },
+      {
+        "label": "Besonders geeignet für",
+        "value": "Barrierefreie Besuche, Familien und eine ruhigere Atmosphäre"
+      },
+      {
+        "label": "Barrierefreier Bereich",
+        "value": "Nahe Rettungsposten 1"
+      }
+    ]
+  },
+  "highlights": [
+    {
+      "name": "Eingerichteter barrierefreier Bereich",
+      "description": "Der barrierefreie Bereich umfasst angepasste Wege und Einrichtungen, reservierten Platz und saisonale Badeassistenz. Bestätige vor deinem Besuch die aktuellen Betriebszeiten.",
+      "icon": "♿"
+    },
+    {
+      "name": "Ruhigere, örtliche Atmosphäre",
+      "description": "Pinedo wirkt meist weniger städtisch als Valencias nördliche Strände und bietet dennoch öffentliche Einrichtungen und Lokale in der Nähe.",
+      "icon": "🏖️"
+    },
+    {
+      "name": "Ausgangspunkt für die südliche Küste",
+      "description": "Der Strand liegt vor der längeren Naturküste Richtung L’Arbre del Gos und El Saler. Damit ist er ein praktischer Vergleichspunkt für Strandpläne im Süden.",
+      "icon": "🧭"
+    }
+  ],
+  "gettingThere": {
+    "summary": "Pinedo ist mit Linienbus, Taxi, Fahrrad und Auto erreichbar. Prüfe vor dem Aufbruch die verbleibende Entfernung zu deinem gewählten Strandzugang.",
+    "options": [
+      {
+        "mode": "bus",
+        "description": "EMT bedient Pinedo. Nutze die aktuelle Verbindungsauskunft für die nächstgelegene Haltestelle zu Rettungsposten 1 oder deinem gewählten Zugang.",
+        "duration": "Meist 20–35 Minuten ab dem Zentrum von Valencia"
+      },
+      {
+        "mode": "bike",
+        "description": "Eine Radroute Richtung Süden ab Valencia ist möglich. Berücksichtige aber Sommerhitze und die Entfernung für die Rückfahrt.",
+        "duration": "Etwa 35–50 Minuten ab dem Zentrum"
+      },
+      {
+        "mode": "car",
+        "description": "Die städtischen Strandinformationen nennen öffentliche und angepasste Parkplätze. Zu stark besuchten Zeiten ist ein Stellplatz nicht garantiert."
+      }
+    ],
+    "parkingNotes": "Bestätige für einen barrierefreien Besuch die ausgewiesenen Parkplätze und den Weg zu Rettungsposten 1, statt dich auf eine allgemeine Kartenmarkierung zu verlassen."
+  },
+  "bestTimeToVisit": {
+    "summary": "Im Sommer stehen die meisten Einrichtungen zur Verfügung. Für längere Besuche sind Juni und September oft angenehmer als der August in der Hauptsaison.",
+    "seasons": [
+      {
+        "season": "spring",
+        "description": "Gut für Spaziergänge und ruhige Zeit im Freien. Baden und saisonale Angebote können eingeschränkt sein.",
+        "rating": 3
+      },
+      {
+        "season": "summer",
+        "description": "Warmes Wasser und Hauptsaison für die Einrichtungen. Komm früh und bestätige bei Bedarf die Zeiten der Badeassistenz.",
+        "rating": 5
+      },
+      {
+        "season": "autumn",
+        "description": "Im September kann es noch warm sein, bei weniger Besuchern. Der spätere Herbst eignet sich eher zum Spazierengehen als zum Baden.",
+        "rating": 4
+      },
+      {
+        "season": "winter",
+        "description": "Ruhig und ungeschützt, mit eingeschränkten Einrichtungen. Wähle stabiles Wetter für einen Spaziergang am Meer.",
+        "rating": 2
+      }
+    ]
+  },
+  "whatToBring": {
+    "bring": [
+      "Sonnenschutz",
+      "Wasser",
+      "Strandtuch",
+      "Persönliche Hilfsmittel oder Medikamente, die du benötigst"
+    ],
+    "dontBring": [
+      "Glasbehälter",
+      "Unnötige Wertsachen",
+      "Ausrüstung, die du zwischen Haltestelle oder Auto und Sand nicht bewältigen kannst"
+    ],
+    "rentInstead": [
+      "Schattenspender für den Strand",
+      "Stühle mit guter Unterstützung",
+      "Kühlbox",
+      "Transporthilfen für den Strand"
+    ]
+  },
+  "accessibility": {
+    "overallRating": 5,
+    "summary": "Pinedo gehört zu Valencias ausgewiesenen barrierefreien Stränden. Der veröffentlichte barrierefreie Bereich liegt bei Rettungsposten 1 und bietet angepasste Wege, Einrichtungen und saisonale Badeassistenz.",
+    "wheelchairNotes": "Die Leistungsbeschreibung nennt angepasste Stege, Toiletten, Umkleiden, Duschen, Parkplätze und amphibische Badehilfen. Bestätige Termine, Kapazität und ob eine Voranmeldung nötig ist.",
+    "strollerNotes": "Nutze die wichtigsten markierten Zugänge. Der Besuch lässt sich leichter planen als an einem vollständig naturbelassenen Strand. Loser Sand begrenzt aber weiterhin die Nutzung gewöhnlicher Kinderwagenräder.",
+    "publicTransportAccess": "Die Stadt nennt öffentliche und barrierefreie Verkehrsmittel zum Strand. Prüfe die aktuelle Verbindung und die Entfernung zum barrierefreien Bereich."
+  },
+  "visitingHere": {
+    "summary": "Pinedo eignet sich für einen kurzen Besuch in der Nähe oder einen ganzen Strandtag. Wenn du den barrierefreien Bereich nutzen möchtest, plane rund um Rettungsposten 1 und bestätige den Dienst vor der Abfahrt direkt.",
+    "idealDuration": "3–6 Stunden",
+    "bestTimeOfDay": "Am Morgen: weniger Hitze und ein einfacherer Start",
+    "tips": [
+      "Nutze Rettungsposten 1 als Orientierungspunkt für einen barrierefreien Besuch.",
+      "Bestätige die Zeiten von Rettungsschwimmern und Badeassistenz, da die Dienste saisonal sind.",
+      "Prüfe bei einem Besuch mit Hund, ob der separate saisonale Hundestrand geöffnet ist, und informiere dich über seine aktuellen Regeln."
+    ]
+  },
+  "practicalTips": [
+    "Prüfe vor dem Baden die Flagge für den Zustand des Meeres und befolge die Hinweise der Rettungsschwimmer.",
+    "Reserviere Badeassistenz vorab, wenn der aktuelle Dienst dies verlangt.",
+    "Gehe nicht davon aus, dass jeder Zugang dieselben Einrichtungen hat. Wähle deinen Ankunftspunkt bewusst.",
+    "Unterscheide den allgemeinen Strand klar von einem separat ausgewiesenen Bereich, in dem Hunde erlaubt sind."
+  ],
+  "productWidgets": [
+    {
+      "categorySlug": "travel-outdoors",
+      "heading": "Mach den Strandtag einfacher",
+      "afterSection": "Highlights"
+    },
+    {
+      "categorySlug": "mobility",
+      "heading": "Brauchst du zusätzliche Unterstützung bei der Mobilität?",
+      "afterSection": "Accessibility"
+    }
+  ],
+  "relatedDestinations": [
+    "el-saler-beach",
+    "malvarrosa-beach",
+    "albufera"
+  ],
+  "relatedBlogPosts": [
+    "wheelchair-accessibility-valencia",
+    "best-beaches-valencia-families"
+  ],
+  "faqs": [
+    {
+      "question": "Ist der Strand Pinedo barrierefrei?",
+      "answer": "Ja. Pinedo gehört zu Valencias ausgewiesenen barrierefreien Stränden. Der barrierefreie Bereich nahe Rettungsposten 1 bietet angepasste Einrichtungen und saisonale Badeassistenz. Bestätige vor der Anreise Termine und Anmeldebedingungen."
+    },
+    {
+      "question": "Wie erreiche ich den Strand Pinedo ab Valencia?",
+      "answer": "Die Anreise ist mit Linienbus, Taxi, Fahrrad und Auto möglich. Nutze die aktuelle EMT-Verbindungsauskunft und wähle den genauen Strandzugang vorab, besonders wenn du den barrierefreien Bereich brauchst."
+    },
+    {
+      "question": "Kann ich meinen Hund an den Strand Pinedo mitnehmen?",
+      "answer": "Valencia hat in Pinedo einen separat markierten saisonalen Hundestrand betrieben. Öffnungsdaten, Zeiten und Regeln können sich ändern. Bestätige deshalb die aktuellen städtischen Informationen, bevor du deinen Hund mitbringst."
+    }
+  ]
+}

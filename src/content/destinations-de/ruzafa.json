@@ -1,0 +1,328 @@
+{
+  "slug": "ruzafa",
+  "name": "Ruzafa",
+  "type": "neighbourhood",
+  "tagline": "Valencias kreatives Herz: Cafés, Galerien und hervorragender Brunch",
+  "heroImage": "/discover/ruzafa.webp",
+  "heroImageAlt": "Blick entlang des Carrer de Russafa, der zentralen Einkaufsstraße des Viertels in Valencia",
+  "heroImageProvenance": {
+    "status": "licensed",
+    "creator": "Joanbanjo",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Carrer_de_Russafa,_Val%C3%A8ncia.jpg",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "verifiedAt": "2026-07-19",
+    "modifications": "Cropped and resized to 16:9 WebP."
+  },
+  "title": "Ruzafa in Valencia: Reiseführer durch das Viertel",
+  "description": "Der vollständige Reiseführer zu Ruzafa, Valencias angesagtem Viertel: Restaurants, Coworking, Unternehmungen und praktische Tipps zum Erkunden.",
+  "keywords": [
+    "Ruzafa Valencia",
+    "Russafa",
+    "beste Stadtviertel Valencia",
+    "Ruzafa Restaurants",
+    "Ruzafa Reiseführer"
+  ],
+  "date": "2026-06-18",
+  "lastUpdated": "2026-06-18",
+  "audiences": [
+    "digital-nomads",
+    "couples",
+    "families"
+  ],
+  "region": "Stadt Valencia",
+  "hubs": [
+    "neighbourhoods"
+  ],
+  "overview": {
+    "paragraphs": [
+      "Ruzafa, vor Ort auch Russafa geschrieben, ist Valencias angesagtestes Viertel – und hat diesen Ruf verdient. In den rasterförmig angelegten, von Bäumen gesäumten Straßen findest du unabhängige Cafés, Galerien, Vintage-Läden und einige der besten Restaurants der Stadt. Das Viertel ist sicher, lässt sich gut zu Fuß erkunden und hat eine natürliche kreative Energie.",
+      "Aus dem früheren Arbeiterviertel ist im vergangenen Jahrzehnt Valencias Antwort auf Berlin-Kreuzberg oder Barcelonas Gràcia geworden. Der Unterschied: Es bleibt erschwinglich und spanisch geprägt, ohne von Ladenketten dominiert zu werden. Der Mercat de Russafa liegt neben Cocktailbars; ältere Bewohner kaufen Gemüse, während digitale Nomaden am Laptop sitzen.",
+      "Für Besucher ist Ruzafa eine ideale Basis. Das Viertel liegt zentral, etwa zehn Gehminuten von der Altstadt und zwanzig Minuten vom Strand entfernt, ist gut mit Metro und Bus angebunden und bietet eine besonders hohe Dichte an Restaurants und Nachtleben."
+    ],
+    "quickFacts": [
+      {
+        "label": "Besonders geeignet für",
+        "value": "Digitale Nomaden, Paare und Genießer"
+      },
+      {
+        "label": "Anreise",
+        "value": "Metrostation Bailén (L1), etwa 10 Min. zu Fuß ab Zentrum"
+      },
+      {
+        "label": "Atmosphäre",
+        "value": "Kreativ, unkonventionell und gut zu Fuß erkundbar"
+      },
+      {
+        "label": "Sicherheit",
+        "value": "Sehr sicher: eines von Valencias beliebtesten Vierteln"
+      }
+    ]
+  },
+  "highlights": [
+    {
+      "name": "Mercat de Russafa",
+      "description": "Das lebendige Herz des Viertels: eine überdachte Markthalle aus den 1950er-Jahren, in der Einheimische täglich frische Lebensmittel kaufen. Hier erlebst du mehr lokale Alltagsatmosphäre als im stärker touristisch geprägten Zentralmarkt. Komm vor Mittag für das volle Markterlebnis.",
+      "icon": "🏪",
+      "tip": "Am Donnerstagvormittag ist es am ruhigsten. Die Obststände im hinteren Bereich bieten besonders gute Preise."
+    },
+    {
+      "name": "Calle Literato Azorín",
+      "description": "Ruzafas zentrale Straße für Essen und Nachtleben. Entlang der gut zu Fuß erkundbaren Straße findest du Restaurantterrassen, Tapasbars und unabhängige Geschäfte. Ideal für einen abendlichen Paseo.",
+      "icon": "🚶"
+    },
+    {
+      "name": "Canalla Bistro",
+      "description": "Vom Michelin-Führer anerkanntes Bistro des Kochs Ricard Camarena. Kreative Fusionsküche in lebhafter Umgebung. Reserviere für das Abendessen vorab; mittags ist oft auch ein spontaner Besuch möglich.",
+      "icon": "⭐",
+      "tip": "Das Degustationsmenü bietet im Vergleich zu ähnlichen Restaurants in Barcelona oder Madrid ein gutes Preis-Leistungs-Verhältnis."
+    },
+    {
+      "name": "Bluebell Coffee",
+      "description": "Hervorragender Spezialitätenkaffee mit saisonalen Brunchmenüs und einem ruhigen Innenhof. Beliebt bei Menschen, die unterwegs arbeiten: gutes WLAN, entspannte Atmosphäre und gute Flat Whites.",
+      "icon": "☕",
+      "tip": "Am besten kommst du an einem Werktag vormittags. Am Wochenende kann die Wartezeit zum Brunch mehr als 30 Minuten betragen."
+    },
+    {
+      "name": "Streetart-Spaziergang",
+      "description": "Ruzafa bietet einige von Valencias besten Streetart-Motiven, besonders rund um die Calle Cuba und in den Straßen hinter dem Markt. Ein Spaziergang auf eigene Faust dauert etwa eine Stunde und kostet nichts.",
+      "icon": "🎨"
+    },
+    {
+      "name": "Ubik Café",
+      "description": "Eine besondere Mischung aus Café und Buchladen: Stöbere in gebrauchten Büchern, trinke ein Glas Wein und besuche gelegentliche Livemusik- oder Literaturveranstaltungen. Das Café bringt den kreativen Geist des Viertels gut zum Ausdruck.",
+      "icon": "📚"
+    }
+  ],
+  "gettingThere": {
+    "summary": "Ruzafa liegt zentral und ist aus vielen Teilen Valencias gut mit Metro, Bus oder zu Fuß erreichbar.",
+    "options": [
+      {
+        "mode": "metro",
+        "description": "Die Station Bailén an Linie 1 liegt am nördlichen Rand von Ruzafa. Xàtiva mit den Linien 3, 5, 7 und 9 erreichst du etwa fünf Minuten zu Fuß nach Norden.",
+        "duration": "Direkt ab Flughafen: etwa 25 Min.",
+        "cost": "1,50 € einzeln, 30–40 € für eine Monatskarte"
+      },
+      {
+        "mode": "walk",
+        "description": "Etwa zehn Minuten ab Plaza del Ayuntamiento, fünfzehn Minuten ab El Carmen in der Altstadt und fünfundzwanzig Minuten ab dem Strand Malvarrosa.",
+        "duration": "10–25 Min. je nach Ausgangspunkt"
+      },
+      {
+        "mode": "bus",
+        "description": "Mehrere EMT-Buslinien fahren durch Ruzafa. Besonders praktisch sind die Linien 7, 27 und 81.",
+        "cost": "1,50 € einzeln"
+      },
+      {
+        "mode": "bike",
+        "description": "Das flache Gelände eignet sich gut zum Radfahren. Im ganzen Viertel gibt es Valenbisi-Leihstationen.",
+        "cost": "30 € pro Jahr für Valenbisi"
+      }
+    ]
+  },
+  "bestTimeToVisit": {
+    "summary": "Ruzafa lohnt sich das ganze Jahr. Frühling und Herbst sind besonders angenehm: warm genug für Terrassen und kühl genug zum Spazieren.",
+    "seasons": [
+      {
+        "season": "spring",
+        "description": "Ideales Terrassenwetter bei etwa 18–25 °C. Das Viertel lebt vom Essen im Freien. Die Fallas im März bringen großen Andrang und viel Energie.",
+        "rating": 5
+      },
+      {
+        "season": "summer",
+        "description": "Heiß bei etwa 30–38 °C, aber abends werden die Terrassen lebendig. Viele Einheimische fahren im August weg, deshalb schließen manche Lokale. Gut für das Nachtleben.",
+        "rating": 3
+      },
+      {
+        "season": "autumn",
+        "description": "Warm und angenehm bei etwa 18–28 °C. Der sommerliche Andrang nimmt ab, die Einheimischen kehren zurück. Kulinarisch eine schöne Zeit mit neuen Menüs und saisonalen Zutaten.",
+        "rating": 5
+      },
+      {
+        "season": "winter",
+        "description": "Mild bei etwa 10–18 °C und gelegentlichem Regen. Cafés und Restaurants sind gemütlich, und an touristischen Orten gibt es kaum Warteschlangen.",
+        "rating": 3
+      }
+    ],
+    "avoidDates": "Meide Mitte März während der Fallas, wenn du großen Andrang und Lärm nicht magst. Die Fallas selbst sind allerdings ein Erlebnis, das sich mindestens einmal lohnt."
+  },
+  "accessibility": {
+    "overallRating": 4,
+    "summary": "Ruzafa gehört zu Valencias am besten zugänglichen Vierteln. Die Straßen sind flach, breit und überwiegend gut befestigt. In einigen älteren Bereichen sind die Gehwege schmal.",
+    "wheelchairNotes": "Das Straßennetz und das flache Gelände erleichtern die Fortbewegung mit dem Rollstuhl. Die meisten Restaurants haben ebenerdige Eingänge oder Rampen. Der Mercat de Russafa ist zugänglich.",
+    "strollerNotes": "Gut mit Kinderwagen: breite Gehwege, keine Hügel und viele abgesenkte Bordsteine. Die Fußgängerstraßen rund um die Literato Azorín sind besonders angenehm.",
+    "publicTransportAccess": "Die Metrostation Bailén hat Aufzüge. Alle EMT-Busse, die Ruzafa anfahren, haben Rampen und Rollstuhlplätze."
+  },
+  "foodAndDrink": {
+    "summary": "Ruzafa bietet Valencias höchste Dichte an guten Restaurants, von traditionellen valencianischen Reisgerichten bis zu japanischer Fusionsküche und Spezialitätenkaffee.",
+    "recommendations": [
+      {
+        "name": "Canalla Bistro",
+        "type": "Kreative Fusionsküche",
+        "priceRange": "€€€",
+        "tip": "Reserviere für das Abendessen vorab und prüfe die aktuelle Speisekarte.",
+        "familyFriendly": false,
+        "sourceNote": "Official site confirms the Ricard Camarena concept and Maestro José Serrano location.",
+        "sourceUrl": "https://www.canallabistro.com/en/home/",
+        "sourceCheckedAt": "2026-07-19"
+      },
+      {
+        "name": "Bluebell Coffee",
+        "type": "Spezialitätenkaffee und Brunch",
+        "priceRange": "€€",
+        "tip": "Ein praktischer Halt tagsüber. Die offizielle Website nennt derzeit Öffnungszeiten bis 16 Uhr.",
+        "familyFriendly": true,
+        "sourceNote": "Official venue site confirms the Buenos Aires 3 location and current daytime hours.",
+        "sourceUrl": "https://bluebellcoffeeco.com/contacto/",
+        "sourceCheckedAt": "2026-07-19"
+      },
+      {
+        "name": "Copenhagen",
+        "type": "Vegetarisches Restaurant",
+        "priceRange": "€€",
+        "tip": "Prüfe das wechselnde Mittagsmenü oder reserviere für das Abendessen telefonisch.",
+        "familyFriendly": true,
+        "sourceNote": "Official restaurant site confirms its plant-led menu and Literato Azorín location in Russafa.",
+        "sourceUrl": "https://restaurantecopenhagen.es/",
+        "sourceCheckedAt": "2026-07-19"
+      },
+      {
+        "name": "Nozomi Sushi Bar",
+        "type": "Japanische Küche",
+        "priceRange": "€€€",
+        "tip": "Eine Reservierung ist sinnvoll. Öffnungstage und Essenszeiten sind begrenzt.",
+        "familyFriendly": false,
+        "sourceNote": "Official venue site confirms the Pedro III El Grande location and current service schedule.",
+        "sourceUrl": "https://nozomisushibar.es/en/contact/",
+        "sourceCheckedAt": "2026-07-19"
+      },
+      {
+        "name": "Dulce de Leche",
+        "type": "Bäckerei und Kuchen",
+        "priceRange": "€",
+        "tip": "Plane zu beliebten Frühstückszeiten und am Wochenende zusätzliche Zeit ein.",
+        "familyFriendly": true,
+        "sourceNote": "Current business directory record confirms the Ruzafa venue at Pintor Gisbert 2.",
+        "sourceUrl": "https://www.paginasamarillas.es/f/valencia/dulce-de-leche-boutique-s-l-_225480516_000000001.html",
+        "sourceCheckedAt": "2026-07-19"
+      }
+    ],
+    "localSpeciality": "Bestelle auf einer Barterrasse Agua de Valencia, den typischen Cocktail der Stadt aus Orangensaft, Cava, Wodka und Gin. Er wurde in Valencia erfunden und lässt sich in Ruzafa besonders schön genießen."
+  },
+  "whereToStay": {
+    "summary": "Ruzafa ist eine gute Basis in Valencia: zentral, sicher und voller Restaurants. Es gibt viele Unterkünfte für kürzere Aufenthalte.",
+    "tips": [
+      "Suche Apartments nahe der Calle Sueca oder Calle Literato Azorín für eine besonders praktische Lage mit vielen Zielen in Gehweite.",
+      "Neuere Gebäude ab etwa 2006 haben meist eine bessere Schalldämmung. Ruzafa ist nachts lebhaft; frage nach dem Lärmpegel, wenn du leicht aufwachst.",
+      "Für eine möblierte Wohnung mit einem Schlafzimmer musst du mit etwa 800–1.200 € im Monat rechnen. Bei kurzen Aufenthalten von ein bis zwei Wochen liegt der Preis eher am oberen Ende.",
+      "Die Straßen zwischen Gran Vía und Markt sind stärker von Wohnhäusern geprägt und für Familien ruhiger."
+    ]
+  },
+  "stayingHere": {
+    "summary": "Ruzafa gehört zu Valencias besten Vierteln als Basis für deinen Aufenthalt. Es liegt zentral genug für viele Fußwege, ist lebhaft und bietet eine hervorragende Gastronomie direkt vor der Tür.",
+    "pros": [
+      "Besonders viele gute Restaurants und Cafés: jeden Tag gut essen, ohne das gleiche Lokal zu wählen",
+      "Etwa zehn Minuten zu Fuß zur Altstadt, zum Bahnhof und ins Zentrum",
+      "Zu jeder Tageszeit sicher und mit einem starken Gemeinschaftsgefühl",
+      "Gute Coworking-Angebote wie Wayco und Nostromo sowie viele Cafés für Menschen, die unterwegs arbeiten",
+      "Glasfaserinternet ist in den meisten Apartments üblich, häufig mit über 240 Mbit/s",
+      "Flaches Gelände, das Wege mit Kinderwagen, Rollstuhl und Gepäck erleichtert"
+    ],
+    "cons": [
+      "Nachts laut, besonders von Donnerstag bis Samstag. Frage nach oberen Etagen oder Zimmern zum Innenhof.",
+      "Parkplätze auf der Straße sind kaum zu finden. Nutze Parkhäuser an der Calle Sueca oder Gran Vía.",
+      "Im Sommer kann es heiß werden, teils über 35 °C. Prüfe vor der Buchung, ob die Wohnung eine Klimaanlage hat.",
+      "Das Viertel liegt nicht am Strand. Malvarrosa erreichst du etwa in 25 Minuten zu Fuß oder in 15 Minuten mit dem Bus."
+    ],
+    "gettingElsewhere": [
+      "Altstadt El Carmen: etwa 10 Min. zu Fuß oder eine Metrostation von Xàtiva nach Àngel Guimerà",
+      "Strand Malvarrosa: etwa 25 Min. zu Fuß, 15 Min. mit Bus 1 oder 2 ab Gran Vía oder 20 Min. mit dem Fahrrad durch die Turia-Gärten",
+      "Stadt der Künste und Wissenschaften: etwa 20 Min. zu Fuß durch die Turia-Gärten",
+      "Flughafen: etwa 25 Min. mit Metro L3/L5 ab Xàtiva, direkt für 5 €",
+      "Albufera: etwa 15 Min. mit Bus 25 ab Gran Vía"
+    ]
+  },
+  "visitingHere": {
+    "summary": "Auch ohne Unterkunft in Ruzafa lohnt sich ein Nachmittag oder Abend hier. Gastronomie, Streetart und Terrassenkultur gehören zum Besten in Valencia.",
+    "idealDuration": "3–5 Stunden, am besten vom Nachmittag bis in den Abend",
+    "bestTimeOfDay": "Später Nachmittag bis Abend. Beginne etwa um 17 Uhr mit Markt und Streetart und lass dich ab 20 Uhr für Tapas und Abendessen nieder.",
+    "tips": [
+      "Beginne am Mercat de Russafa. Er schließt werktags um 14 Uhr, also komm früher, wenn du den Markt besuchen möchtest. Erkunde anschließend die Streetart rund um die Literato Azorín.",
+      "Für einen kurzen Besuch: Calle Sueca, Markt, Literato Azorín und anschließend ein Getränk auf einer Terrasse. Etwa 90 Minuten reichen dafür.",
+      "In beliebten Lokalen wie Canalla Bistro und Nozomi solltest du für das Abendessen reservieren. Mittags ist ein spontaner Besuch eher möglich.",
+      "Nachts wird das Viertel besonders lebendig. Von Donnerstag bis Samstag sind die Terrassen ab etwa 22 Uhr voll."
+    ]
+  },
+  "audienceTips": [
+    {
+      "audience": "digital-nomads",
+      "tips": [
+        "Wayco Ruzafa ist ein führender Coworking-Space mit aktiver Gemeinschaft, guten Veranstaltungen und flexiblen Arbeitsplätzen für etwa 120–160 € im Monat.",
+        "Bluebell Coffee, Ubik Café und Federal Café haben gutes WLAN und akzeptieren Gäste mit Laptops.",
+        "Die meisten Apartments in Ruzafa haben Glasfaserinternet mit mehr als 240 Mbit/s. Bestätige die tatsächliche Verbindung vor Vertragsabschluss."
+      ]
+    },
+    {
+      "audience": "families",
+      "tips": [
+        "Ruzafa lässt sich mit Kindern sicher und gut zu Fuß erkunden. Die Straßen sind flach und kinderwagenfreundlich.",
+        "Für Spielplätze bieten sich der Jardín del Hospital in etwa zehn Minuten oder die Turia-Gärten in etwa fünfzehn Minuten Fußweg an.",
+        "Restaurants sind familienfreundlich: In Spanien sind Kinder auch am späteren Abend willkommen. Casa Baldo und Copenhagen haben Hochstühle."
+      ]
+    },
+    {
+      "audience": "couples",
+      "tips": [
+        "Reserviere für einen besonderen Abend im Canalla Bistro oder Nozomi. Anschließend kannst du in der Craftbeer-Bar Olhöps etwas trinken.",
+        "Ein Streetart-Spaziergang, der Mercat de Russafa und ein Mittagessen auf einer Terrasse ergeben einen schönen, entspannten Tag.",
+        "Ruzafa bietet eines der besten Nachtleben Valencias. Es beginnt spät, etwa um 23 Uhr, und geht am Wochenende bis 3 oder 4 Uhr morgens."
+      ]
+    }
+  ],
+  "practicalTips": [
+    "Ruzafa gilt zu jeder Tageszeit als sicher. Behalte auf vollen Terrassen wie in jedem belebten Viertel trotzdem deine Wertsachen im Blick.",
+    "Parkplätze auf der Straße sind kaum zu finden. Wenn du mit dem Auto kommst, nutze öffentliche Parkhäuser an der Calle Sueca oder Gran Vía.",
+    "Viele Geschäfte und Restaurants schließen von 14 bis 17 Uhr zur Siesta, Cafés oft nicht. Plane entsprechend.",
+    "Der Mercat de Russafa schließt um 14 Uhr und ist sonntags geschlossen. Komm vor dem frühen Nachmittag, wenn du einkaufen möchtest."
+  ],
+  "productWidgets": [
+    {
+      "categorySlug": "remote-work",
+      "heading": "Von Ruzafa aus arbeiten?",
+      "afterSection": "Staying Here"
+    },
+    {
+      "categorySlug": "mobility",
+      "heading": "Brauchst du Unterstützung bei der Mobilität?",
+      "afterSection": "Accessibility"
+    },
+    {
+      "categorySlug": "baby-gear",
+      "heading": "Mit Kindern unterwegs?",
+      "afterSection": "Where to Eat & Drink"
+    }
+  ],
+  "relatedDestinations": [],
+  "relatedBlogPosts": [
+    "digital-nomad-guide-valencia",
+    "valencia-with-kids-complete-guide"
+  ],
+  "faqs": [
+    {
+      "question": "Ist Ruzafa sicher?",
+      "answer": "Ja, Ruzafa gehört zu Valencias sichersten und beliebtesten Vierteln. Es ist gut beleuchtet, zu jeder Tageszeit belebt und hat ein starkes Gemeinschaftsgefühl. Die üblichen Vorsichtsmaßnahmen für Städte gelten trotzdem."
+    },
+    {
+      "question": "Eignet sich Ruzafa für Familien?",
+      "answer": "Ja. Die flachen Straßen eignen sich für Kinderwagen, Restaurants heißen Kinder auch spät willkommen und die Turia-Gärten liegen etwa fünfzehn Gehminuten entfernt. Nachts ist das Viertel lebhafter als reine Wohngegenden. Berücksichtige das, wenn ihr leicht aufwacht."
+    },
+    {
+      "question": "Welcher Coworking-Space in Ruzafa ist besonders gut?",
+      "answer": "Wayco Ruzafa ist besonders etabliert, mit professioneller Atmosphäre, Gemeinschaftsveranstaltungen und flexiblen Arbeitsplätzen für etwa 120–160 € im Monat. Für eine ruhigere Alternative bietet Nostromo Coworking eine kleinere, persönlichere Umgebung."
+    },
+    {
+      "question": "Wie komme ich von Ruzafa zum Strand?",
+      "answer": "Der Strand liegt etwa fünfundzwanzig Minuten zu Fuß oder fünfzehn Minuten mit Bus 1 oder 2 ab Gran Vía entfernt. Du kannst auch über den Radweg durch die Turia-Gärten fahren: Die Strecke ist flach und landschaftlich schön."
+    }
+  ]
+}

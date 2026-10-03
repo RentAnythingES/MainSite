@@ -1,0 +1,182 @@
+{
+  "slug": "albufera",
+  "name": "Naturpark Albufera",
+  "type": "day-trip",
+  "tagline": "Bootstouren im Abendlicht, Reisfelder und die Landschaft hinter der Paella – ein kurzer Ausflug südlich von Valencia",
+  "heroImage": "/discover/albufera.webp",
+  "heroImageAlt": "Blick vom Bug eines traditionellen Holzboots über die Lagune Albufera",
+  "heroImageProvenance": {
+    "status": "licensed",
+    "creator": "Co3lacanto",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Sunset_at_Albufera.JPG",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "verifiedAt": "2026-07-19",
+    "modifications": "Cropped and resized to 16:9 WebP."
+  },
+  "title": "Naturpark Albufera: Tagesausflug ab Valencia",
+  "description": "Besuche den Naturpark Albufera ab Valencia. Plane Bootstouren, Paella in El Palmar, Vogelbeobachtung und Sonnenuntergänge mit aktuellen Anreiseinformationen.",
+  "keywords": [
+    "Albufera Valencia",
+    "Albufera Bootstour",
+    "Naturpark Albufera",
+    "Tagesausflug ab Valencia"
+  ],
+  "date": "2026-06-18",
+  "lastUpdated": "2026-06-18",
+  "audiences": [
+    "families",
+    "couples",
+    "budget"
+  ],
+  "region": "Provinz Valencia",
+  "distanceFromValencia": "Südlich von Valencia; Reisezeit abhängig von der gewählten Haltestelle",
+  "hubs": [
+    "day-trips"
+  ],
+  "overview": {
+    "paragraphs": [
+      "Die Albufera gehört zu Spaniens wichtigsten Feuchtgebieten: eine große Süßwasserlagune, umgeben von Reisfeldern, nur etwa 10 km südlich der Stadt Valencia. Hier liegen die Ursprünge der Paella. Reisbauern kochten das Gericht über Holzfeuer mit den Zutaten, die gerade verfügbar waren.",
+      "Der größte Anziehungspunkt ist eine Bootstour bei Sonnenuntergang. Traditionelle Boote mit flachem Boden gleiten durch Schilfkanäle auf das offene Wasser, während der Himmel orange wird. Die etwa 40-minütige Fahrt ist wunderschön. Danach kannst du in einem der Restaurants in El Palmar essen, dem Dorf im Herzen der Lagune.",
+      "Der Park eignet sich außerdem hervorragend zur Vogelbeobachtung mit über 300 Arten und bietet mehrere Wanderwege durch Reisfelder und Pinienwälder. Er ist ein gut erreichbares Tagesausflugsziel ab Valencia. Der offizielle Tourismusführer unterscheidet Bus 24 Richtung El Palmar von Bus 25 Richtung El Perellonet. Prüfe die aktuelle EMT-Verbindung zu deinem gewählten Halt."
+    ],
+    "quickFacts": [
+      {
+        "label": "Entfernung",
+        "value": "Etwa 10 km südlich bis zum Park; El Palmar liegt weiter entlang der Route"
+      },
+      {
+        "label": "Bootstour",
+        "value": "Etwa 40 Minuten; Preis und Dauer abhängig vom Anbieter"
+      },
+      {
+        "label": "Beste Zeit",
+        "value": "Sonnenuntergang – eine Abendfahrt buchen"
+      },
+      {
+        "label": "Eintritt",
+        "value": "Park kostenlos, Bootstouren separat"
+      }
+    ]
+  },
+  "highlights": [
+    {
+      "name": "Bootstour bei Sonnenuntergang",
+      "description": "Das typische Erlebnis: Ein traditionelles Boot mit flachem Boden gleitet durch Schilfkanäle auf die offene Lagune, während die Sonne untergeht. Etwa 40 Minuten, ab El Palmar oder Gola de Pujol.",
+      "icon": "🚤",
+      "tip": "Wähle eine Abfahrt passend zum Sonnenuntergang an deinem Besuchstag. Bestätige aktuellen Preis und Dauer direkt beim Bootsanbieter."
+    },
+    {
+      "name": "Paella in El Palmar",
+      "description": "El Palmar liegt in der Landschaft, die eng mit den Ursprüngen der Paella verbunden ist. Restaurants wie Bon Aire und Mateu servieren valencianische Reisgerichte. Bestätige aktuelle Speisekarte, Zubereitung und Zutaten bei deinem gewählten Lokal.",
+      "icon": "🥘",
+      "tip": "Paella isst man traditionell mittags. Prüfe die Küchenzeiten des Restaurants und reserviere für ein Wochenende direkt."
+    },
+    {
+      "name": "Vogelbeobachtung",
+      "description": "Über 300 Arten nutzen die Feuchtgebiete der Albufera. Flamingos, Reiher und Rohrweihen sind häufig zu sehen. Das Besucherzentrum Racó de l’Olla bietet kostenlose Beobachtungsstände und Informationen.",
+      "icon": "🦩"
+    },
+    {
+      "name": "Spaziergänge an den Reisfeldern",
+      "description": "Wanderwege führen durch die Reislandschaft rund um die Lagune. Ihr Aussehen verändert sich mit Aussaat, Sommerwachstum, Ernte und saisonaler Überflutung. Folge markierten öffentlichen Wegen, statt bewirtschaftete Felder zu betreten.",
+      "icon": "🌾"
+    }
+  ],
+  "gettingThere": {
+    "summary": "Linienbusse bedienen das Gebiet Albufera. Die Reise hängt aber davon ab, ob du einen Aussichtspunkt an der Lagune, El Palmar oder die weiter südliche Küste wählst. Prüfe die gesamte Route und die Rückverbindung.",
+    "options": [
+      {
+        "mode": "bus",
+        "description": "Der offizielle Tourismusführer nennt EMT 24 Richtung El Palmar und EMT 25 Richtung El Perellonet. Bestätige bei EMT die aktuelle Verbindung, den Abfahrtsort und die Haltestelle.",
+        "duration": "Aktuellen Fahrplan prüfen; keine 15-Minuten-Fahrt nach El Palmar voraussetzen",
+        "cost": "Aktuellen EMT-Tarif prüfen",
+        "tip": "Prüfe vor der Buchung einer Bootstour am Abend die letzte praktisch passende Rückverbindung für deinen genauen Halt und Tag."
+      },
+      {
+        "mode": "car",
+        "description": "Fahre nach Süden auf einer aktuellen Route zum gewählten Parkeingang, Aussichtspunkt oder nach El Palmar. Prüfe ausgewiesene Parkplätze und Beschränkungen. Gehe nicht davon aus, dass jeder Zugang kostenlose Parkplätze hat.",
+        "duration": "Abhängig von Ziel und Verkehr"
+      },
+      {
+        "mode": "bike",
+        "description": "Ein ebener Radweg führt von der Stadt zum Parkeingang. Eine schöne Fahrt durch Orangenhaine.",
+        "duration": "40–50 Minuten"
+      }
+    ]
+  },
+  "bestTimeToVisit": {
+    "summary": "Sonnenuntergang ist das ganze Jahr ein Höhepunkt. Vogelbeobachtung und Reislandschaft verändern sich mit Jahreszeit und Anbauzyklus.",
+    "seasons": [
+      {
+        "season": "spring",
+        "description": "Angenehme Temperaturen und Brutzeit der Vögel. Die Reisfelder werden im Frühling vorbereitet; Aussaat und Überflutung folgen später. Erwarte nicht die ganze Saison über grünen Reis.",
+        "rating": 5
+      },
+      {
+        "season": "summer",
+        "description": "Heiß, aber das Wasser macht es etwas kühler als in der Stadt. Mücken können lästig sein – bring Insektenschutz mit.",
+        "rating": 3
+      },
+      {
+        "season": "autumn",
+        "description": "Eine lohnende Zeit zur Vogelbeobachtung, mit Reisernte und wechselnden Feldbedingungen. Spiegelungen auf überfluteten Feldern hängen vom Anbau und der Wasserbewirtschaftung ab.",
+        "rating": 5
+      },
+      {
+        "season": "winter",
+        "description": "Die ruhigste Saison. Kühl, aber schön. Weniger Bootstouren – Verfügbarkeit prüfen.",
+        "rating": 3
+      }
+    ]
+  },
+  "accessibility": {
+    "overallRating": 3,
+    "summary": "Das Besucherzentrum und die Hauptwege sind zugänglich. Die traditionellen Boote sind nicht rollstuhlgerecht: Du musst hinuntersteigen. Die Wege an den Reisfeldern sind eben, aber unbefestigt.",
+    "wheelchairNotes": "Das Besucherzentrum Racó de l’Olla ist vollständig zugänglich. Die wichtigsten Wege am See sind befestigt. Bei den Booten musst du vom Steg hinuntersteigen, was für die meisten Rollstuhlfahrer nicht geeignet ist.",
+    "strollerNotes": "Die Hauptwege rund um El Palmar und das Besucherzentrum eignen sich gut. Unbefestigte Wege an den Reisfeldern können nach Regen schlammig sein."
+  },
+  "practicalTips": [
+    "Bring im Sommer Insektenschutz mit – in den Feuchtgebieten gibt es viele Mücken.",
+    "Paella in El Palmar braucht etwa 30–40 Minuten zur Zubereitung. Bestelle bei der Ankunft, mache einen Spaziergang und iss danach.",
+    "Die Bootstour bei Sonnenuntergang ist ein Höhepunkt. Plane so, dass du auf dem Wasser bist, wenn die Sonne untergeht.",
+    "Bade nicht in der Lagune. Sie ist ein Süßwasserökosystem und kein Badesee."
+  ],
+  "visitingHere": {
+    "summary": "Die Albufera lässt sich am einfachsten als geplanter Halbtagesausflug rund um ein Haupterlebnis besuchen: eine Bootstour, ein Essen in El Palmar, Vogelbeobachtung oder eine Wanderroute. Alles zu verbinden erfordert sorgfältige Verkehrsplanung.",
+    "idealDuration": "4–6 Stunden",
+    "bestTimeOfDay": "Später Nachmittag, wenn der Sonnenuntergang wichtig ist; mittags für Paella in El Palmar",
+    "tips": [
+      "Prüfe die Rückverbindung, bevor du eine Bootstour bei Sonnenuntergang wählst, damit du nach der letzten praktischen Verbindung nicht festsitzt.",
+      "Buche Restaurants und Bootstouren separat, wenn du am Wochenende oder in Ferienzeiten kommst.",
+      "Nimm Wasser, Sonnenschutz und saisonalen Insektenschutz mit. Außerhalb des Dorfes gibt es wenig Schatten."
+    ]
+  },
+  "productWidgets": [
+    {
+      "categorySlug": "mobility",
+      "heading": "Brauchst du Unterstützung bei der Mobilität?",
+      "afterSection": "Accessibility"
+    }
+  ],
+  "relatedDestinations": [
+    "malvarrosa-beach"
+  ],
+  "relatedBlogPosts": [
+    "valencia-with-kids-complete-guide"
+  ],
+  "faqs": [
+    {
+      "question": "Was kostet eine Bootstour auf der Albufera?",
+      "answer": "Preis, Dauer und Kindertickets hängen von Anbieter und Tour ab. Viele traditionelle Lagunenfahrten dauern etwa 40 Minuten. Buche direkt bei deinem gewählten Anbieter in El Palmar oder Gola de Pujol und bestätige den genauen Treffpunkt."
+    },
+    {
+      "question": "Kann ich die Albufera ohne Auto besuchen?",
+      "answer": "Ja. EMT-Busse bedienen das Gebiet Albufera. Der offizielle Tourismusführer unterscheidet Linie 24 Richtung El Palmar von Linie 25 Richtung El Perellonet. Prüfe aktuelle Verbindung und Rückfahrt für deinen genauen Halt. Eine Fahrt nach El Palmar dauert ab dem Zentrum nicht garantiert nur 15–20 Minuten."
+    },
+    {
+      "question": "Lohnt sich ein Besuch der Albufera?",
+      "answer": "Ja, besonders für eine Bootstour bei Sonnenuntergang, Vogelbeobachtung oder Reis zum Mittagessen in El Palmar. Der Parkzugang ist kostenlos. Bootstouren und Restaurantmahlzeiten haben eigene Anbieterpreise. Wähle ein Haupterlebnis und plane Anreise und Reservierungen darum herum."
+    }
+  ]
+}

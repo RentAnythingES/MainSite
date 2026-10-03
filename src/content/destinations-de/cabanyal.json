@@ -1,0 +1,305 @@
+{
+  "slug": "cabanyal",
+  "name": "Cabanyal",
+  "type": "neighbourhood",
+  "tagline": "Valencias farbenfrohes Fischerviertel entwickelt sich zum angesagten Strandviertel",
+  "heroImage": "/discover/cabanyal-hero.webp",
+  "heroImageAlt": "Carrer de la Reina im historischen Fischerviertel Cabanyal in Valencia",
+  "heroImageProvenance": {
+    "status": "licensed",
+    "creator": "Joanbanjo",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Carrer_de_la_Reina,_Cabanyal,_Pa%C3%ADs_Valenci%C3%A0.JPG",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "verifiedAt": "2026-07-19",
+    "modifications": "Cropped and resized to 16:9 WebP."
+  },
+  "title": "Cabanyal in Valencia: Reiseführer durch das Strandviertel",
+  "description": "Entdecke Cabanyal, Valencias maritimes Viertel: bunte Fliesenfassaden, lokale Restaurants, den Strand Las Arenas und praktische Tipps für deinen Besuch.",
+  "keywords": [
+    "Cabanyal Valencia",
+    "Valencia Strandviertel",
+    "Cabanyal Reiseführer",
+    "Poblats Marítims Valencia",
+    "Las Arenas Strand"
+  ],
+  "date": "2026-06-20",
+  "lastUpdated": "2026-06-20",
+  "audiences": [
+    "families",
+    "couples",
+    "digital-nomads",
+    "budget"
+  ],
+  "region": "Valencias maritime Viertel",
+  "hubs": [
+    "neighbourhoods"
+  ],
+  "overview": {
+    "paragraphs": [
+      "Cabanyal ist Valencias historisches Fischerviertel: ein Raster aus Straßen mit niedrigen Häusern direkt hinter dem Strand Las Arenas, bekannt für seine spektakulären bunten Fliesenfassaden. Einst von Abrissplänen bedroht, wehrte sich das Viertel und erhielt Denkmalschutz. Heute gehört es zu Valencias spannendsten Gegenden: rau, authentisch und im Wandel, mit Craftbeer-Bars, unabhängigen Galerien und einigen der besten Fischrestaurants der Stadt.",
+      "Das Viertel fühlt sich wie ein Küstendorf mitten in der Stadt an. Die Straßen sind breit und flach und damit gut für Kinderwagen und Rollstühle geeignet. Auf dem Mercado del Cabanyal kaufen vor allem Einheimische ein, ohne die üblichen Touristenaufschläge. Von fast überall erreichst du den Strand in weniger als fünf Minuten zu Fuß. Mit der Straßenbahn bist du in etwa 15 Minuten im Zentrum.",
+      "Nach Cabanyal kommen Valencianer selbst zum Paellaessen. Die Restaurants am Strand, darunter La Pepica und Casa Carmela, sind Institutionen. In den Seitenstraßen findest du einige der preiswertesten guten Tapas der Stadt. Wenn du strandnah wie ein Einheimischer wohnen möchtest, bist du hier richtig."
+    ],
+    "quickFacts": [
+      {
+        "label": "Anreise",
+        "value": "Straßenbahn L4/L6 bis La Marina oder Eugenia Viñes, etwa 15 Min. ab Zentrum"
+      },
+      {
+        "label": "Besonders geeignet für",
+        "value": "Strandleben, Paella, Architektur und Familien"
+      },
+      {
+        "label": "Atmosphäre",
+        "value": "Unkonventionell, maritim und im Wandel"
+      },
+      {
+        "label": "Zum Strand",
+        "value": "Las Arenas, etwa 2–5 Min. zu Fuß"
+      }
+    ]
+  },
+  "highlights": [
+    {
+      "name": "Cabanyals Fliesenfassaden",
+      "description": "Das Markenzeichen des Viertels: Reihen von Fischerhäusern aus dem frühen 20. Jahrhundert mit leuchtenden Keramikfliesen. Jedes Haus hat sein eigenes Muster, von Jugendstil und Modernisme bis zu geometrischen und floralen Motiven. Besonders viele findest du in der Calle de la Reina und Calle de los Ángeles.",
+      "icon": "🎨",
+      "tip": "Der Abschnitt an der Calle de la Reina zwischen Calle San Pedro und Calle Padre Luis Navarro bietet besonders schöne Fotomotive."
+    },
+    {
+      "name": "Strand Las Arenas",
+      "description": "Valencias wichtigster Stadtstrand: breit, mit goldenem Sand und gut ausgestattet mit Strandbars, Duschen und Rettungsschwimmern im Sommer. Die Strandpromenade Paseo Marítimo erstreckt sich über drei Kilometer und ist barrierefrei.",
+      "icon": "🏖️",
+      "tip": "Komm im Juli und August vor 10 Uhr, um einen Platz zu finden. Nach Mittag wird es voll. Die Abendstimmung ist hier besonders schön.",
+      "googleMapsUrl": "https://maps.google.com/?q=Playa+Las+Arenas+Valencia"
+    },
+    {
+      "name": "Mercado del Cabanyal",
+      "description": "Ein echter Nachbarschaftsmarkt: keine Souvenirstände, sondern Einheimische beim Einkauf von fangfrischem Fisch, saisonalem Gemüse und Backwaren. Auch das Gebäude selbst ist ein sehenswertes Beispiel der Moderne aus den 1950er-Jahren.",
+      "icon": "🐟",
+      "tip": "Am Samstagvormittag ist die Atmosphäre besonders lebendig. Schau bei den Fischständen vorbei – frischere Meeresfrüchte findest du in Valencia kaum.",
+      "googleMapsUrl": "https://maps.google.com/?q=Mercado+del+Cabanyal+Valencia"
+    },
+    {
+      "name": "La Fábrica de Hielo",
+      "description": "Eine ehemalige Eisfabrik nahe dem Strand von Cabanyal dient heute als unabhängiger Kulturort mit Musik und weiteren Kunstformen. Prüfe vor deinem Besuch das aktuelle Programm.",
+      "icon": "🎵",
+      "tip": "Prüfe im offiziellen Veranstaltungskalender die aktuellen Auftritte und informiere dich über das Getränke- und Speisenangebot, bevor du deinen Abend planst."
+    }
+  ],
+  "gettingThere": {
+    "summary": "Die Straßenbahn ist die einfachste Wahl. Die Linien 4 und 6 verbinden Cabanyal in etwa 15 Minuten mit dem Zentrum.",
+    "options": [
+      {
+        "mode": "tram",
+        "description": "L4/L6 ab Pont de Fusta nahe den Turia-Gärten bis La Marina oder Eugenia Viñes",
+        "duration": "15 Min.",
+        "cost": "€1.50"
+      },
+      {
+        "mode": "bus",
+        "description": "Die Linien 1, 2, 19 und 32 fahren aus dem Zentrum zu verschiedenen Haltestellen in Cabanyal",
+        "duration": "20 Min.",
+        "cost": "€1.50"
+      },
+      {
+        "mode": "bike",
+        "description": "Flache, einfache Fahrt ab Zentrum über den Radweg durch die Turia-Gärten. Im ganzen Viertel gibt es Valenbisi-Leihstationen.",
+        "duration": "20 Min.",
+        "cost": "€2 (Valenbisi)"
+      },
+      {
+        "mode": "walk",
+        "description": "Gehe ab der Stadt der Künste und Wissenschaften entlang des Turia-Parks nach Osten. Ein angenehmer Spaziergang von etwa 30 Minuten.",
+        "duration": "30 Min."
+      }
+    ],
+    "parkingNotes": "Straßenparkplätze sind vorhanden, aber gebührenpflichtig und im Sommer schnell belegt. Das Parkhaus an der Marina Juan Carlos I bietet viel Platz für etwa 10–15 € pro Tag."
+  },
+  "bestTimeToVisit": {
+    "summary": "Im Sommer ist Strandsaison. Im Herbst erlebst du das Viertel besonders angenehm und ohne den großen Andrang.",
+    "seasons": [
+      {
+        "season": "spring",
+        "description": "Sehr angenehm: warm genug für Strandspaziergänge, geöffnete Terrassen und noch keine sommerlichen Besuchermengen.",
+        "rating": 5
+      },
+      {
+        "season": "summer",
+        "description": "Hochsaison am Strand. Heiß, teils über 35 °C, und volle Strände, aber eine lebhafte Atmosphäre. Komm früh oder spät.",
+        "rating": 4
+      },
+      {
+        "season": "autumn",
+        "description": "Ein Geheimtipp: Im September und Oktober ist es oft noch warm genug zum Baden. Die Strände sind leerer und wieder stärker von Einheimischen geprägt.",
+        "rating": 5
+      },
+      {
+        "season": "winter",
+        "description": "Ruhig und stimmungsvoll. Die Paellarestaurants bleiben geöffnet und am Strand kannst du entspannt spazieren.",
+        "rating": 3
+      }
+    ]
+  },
+  "whatToBring": {
+    "bring": [
+      "Badesachen und Handtuch",
+      "Sonnencreme",
+      "Kamera für die Fliesenhäuser",
+      "Appetit auf Paella"
+    ],
+    "dontBring": [
+      "Regenschirm – es regnet selten",
+      "Teuren Schmuck für den Strand"
+    ],
+    "rentInstead": [
+      "Strandset mit Sonnenschirm, Stühlen und Spielzeug",
+      "Kinderwagen für die Promenade",
+      "Tragbaren Ventilator für heiße Tage"
+    ]
+  },
+  "accessibility": {
+    "overallRating": 4,
+    "summary": "Cabanyal gehört zu Valencias am besten zugänglichen Vierteln. Die Straßen sind flach, breit und rasterförmig angelegt. Die Strandpromenade ist durchgehend befestigt und zugänglich. Die meisten Restaurants haben Sitzplätze im Erdgeschoss.",
+    "wheelchairNotes": "Auf den Hauptstraßen kommst du gut voran. Im Sommer führen Holzstege am Strand bis an den Wasserrand. Die Straßenbahn ist stufenlos zugänglich.",
+    "strollerNotes": "Mit jedem Kinderwagen gut machbar: flache Straßen, breite Gehwege und ein zugänglicher Strand. Eines der besten Viertel für Familien mit Kinderwagen.",
+    "publicTransportAccess": "Die Straßenbahnhaltestellen sind über Rampen zugänglich. Auf den Buslinien fahren Niederflurfahrzeuge."
+  },
+  "foodAndDrink": {
+    "summary": "Cabanyal ist in Valencia die Adresse für Paella und Meeresfrüchte. Die Restaurants am Strand sind Institutionen; an Wochenenden musst du mit Wartezeiten rechnen. In den Seitenstraßen gibt es hervorragende, preiswerte Tapas.",
+    "recommendations": [
+      {
+        "name": "Casa Carmela",
+        "type": "Traditionelles Paellarestaurant",
+        "priceRange": "€€€",
+        "tip": "Reserviere für ein Mittagessen mit Reisgerichten vom Holzfeuer vorab und prüfe die aktuellen Öffnungstage.",
+        "familyFriendly": true,
+        "sourceNote": "Official site confirms the Isabel de Villena location, wood-fired rice focus and current reservation details.",
+        "sourceUrl": "https://www.casa-carmela.com/es/",
+        "sourceCheckedAt": "2026-07-19"
+      },
+      {
+        "name": "La Pepica",
+        "type": "Historisches Restaurant für Reisgerichte und Meeresfrüchte",
+        "priceRange": "€€€",
+        "tip": "Reserviere zu beliebten Mittagszeiten und prüfe die aktuelle Speisekarte, bevor du ein Reisgericht auswählst.",
+        "familyFriendly": true,
+        "sourceNote": "Official site confirms the Avenida Neptuno location, 125-year history and current rice and seafood menu.",
+        "sourceUrl": "https://lapepica.com/menu/",
+        "sourceCheckedAt": "2026-07-19"
+      },
+      {
+        "name": "La Más Bonita",
+        "type": "Café am Strand und Brunch",
+        "priceRange": "€€",
+        "tip": "Prüfe die aktuellen Öffnungszeiten, wenn der Besuch ein fester Bestandteil deiner Planung und keine spontane Caféoption ist.",
+        "familyFriendly": true,
+        "sourceNote": "Official group site confirms the Valencia beachfront venue and current operating locations.",
+        "sourceUrl": "https://www.lamasbonita.es/",
+        "sourceCheckedAt": "2026-07-19"
+      },
+      {
+        "name": "Bodega Casa Montaña",
+        "type": "Weinbar und Tapas",
+        "priceRange": "€€€",
+        "tip": "Reserviere, wenn dir der Besuch wichtig ist. Die historischen Gasträume bieten nur begrenzt Platz.",
+        "familyFriendly": false,
+        "sourceNote": "Visit Valencia confirms the José Benlliure 69 location, extensive wine cellar and traditional tapas focus.",
+        "sourceUrl": "https://www.visitvalencia.com/que-hacer-valencia/gastronomia/restaurantes-valencia/bodega-casa-montana",
+        "sourceCheckedAt": "2026-07-19"
+      }
+    ],
+    "localSpeciality": "Paella Valenciana vom Holzfeuer: In diesem Viertel lebt die Tradition weiter. Das gemeinsame Paellamittagessen am Sonntag gehört in Valencia dazu."
+  },
+  "stayingHere": {
+    "summary": "Cabanyal verbindet beides: den Strand vor der Tür und das Zentrum etwa 15 Minuten mit der Straßenbahn entfernt. Unterkünfte sind meist günstiger als in der Altstadt, und das Viertel hat eine authentische lokale Atmosphäre.",
+    "pros": [
+      "Strand in 2–5 Minuten zu Fuß erreichbar",
+      "Flache, zugängliche Straßen",
+      "Hervorragende Paella",
+      "Meist günstiger als das Zentrum",
+      "Authentisches Nachbarschaftsgefühl"
+    ],
+    "cons": [
+      "15–20 Minuten bis zu den Sehenswürdigkeiten der Altstadt",
+      "An Sommerabenden kann es laut werden",
+      "Manche Straßen wirken noch etwas rau",
+      "Weniger Nachtleben als in El Carmen oder Ruzafa"
+    ],
+    "gettingElsewhere": [
+      "Straßenbahn ins Zentrum: 15 Min.",
+      "Zu Fuß zur Stadt der Künste: 25 Min.",
+      "Bus zum Flughafen: 40 Min."
+    ]
+  },
+  "visitingHere": {
+    "summary": "Ein halber Tag passt gut: vormittags Markt und Fliesenfassaden erkunden, mittags Paella essen und nachmittags an den Strand gehen.",
+    "idealDuration": "Ein halber Tag, etwa 4–5 Stunden",
+    "bestTimeOfDay": "Vormittags Architektur entdecken, mittags Paella essen, nachmittags an den Strand",
+    "tips": [
+      "Beginne bei den Fliesenfassaden in der Calle de la Reina. Das Licht ist vormittags am schönsten.",
+      "Reserviere bis spätestens mittags einen Tisch für Paella in der Casa Carmela oder La Pepica. Die Zubereitung dauert etwa 30 Minuten.",
+      "Verbringe den Nachmittag am Strand Las Arenas und besuche anschließend La Fábrica de Hielo, wenn das aktuelle Programm zu deinen Abendplänen passt."
+    ]
+  },
+  "practicalTips": [
+    "Paella ist in Valencia ein Mittagsgericht. Die meisten Restaurants servieren sie nur von 13 bis 15 Uhr. Wer abends danach fragt, fällt schnell als Tourist auf.",
+    "Das Viertel ist sicher, verändert sich aber durch Gentrifizierung. Einige Häuserblocks wirken noch rau. Achte wie in jeder Stadt auf deine Umgebung.",
+    "Im Sommer sind die Strandrestaurants schnell voll. Komm vor 13:30 Uhr oder reserviere.",
+    "Die Fliesenfassaden sind empfindliches Kulturerbe. Berühre sie nicht und lehne dich nicht dagegen."
+  ],
+  "audienceTips": [
+    {
+      "audience": "families",
+      "tips": [
+        "Am Strand Las Arenas gibt es saisonale Rettungsschwimmerdienste und einen allmählich abfallenden Uferbereich. Prüfe Flaggen und Dienstzeiten und beaufsichtige Kinder durchgehend. Flaches Wasser garantiert kein sicheres Baden.",
+        "Miete ein Strandset mit Sonnenschirm, Stühlen und Spielzeug, statt alles von der Unterkunft mitzuschleppen.",
+        "Die Promenade eignet sich gut für Roller, Dreiräder und Bewegung."
+      ]
+    },
+    {
+      "audience": "digital-nomads",
+      "tips": [
+        "La Más Bonita hat WLAN, ist aber eher ein Ort zum Zusammensitzen als zum Arbeiten.",
+        "Zum konzentrierten Arbeiten kannst du einen Coworking-Space im Zentrum nutzen, etwa 15 Minuten mit der Straßenbahn entfernt.",
+        "Im Viertel findest du gute Angebote für längere Apartmentaufenthalte: meist günstiger als Ruzafa und näher am Strand."
+      ]
+    }
+  ],
+  "productWidgets": [
+    {
+      "categorySlug": "travel-outdoors",
+      "heading": "Alles für deinen Strandtag",
+      "afterSection": "Highlights"
+    },
+    {
+      "categorySlug": "baby-gear",
+      "heading": "Strandurlaub mit kleinen Kindern?",
+      "afterSection": "Practical Tips"
+    }
+  ],
+  "relatedDestinations": [
+    "malvarrosa-beach",
+    "city-of-arts-and-sciences",
+    "ruzafa"
+  ],
+  "relatedBlogPosts": [
+    "valencia-with-kids-complete-guide",
+    "valencia-summer-guide"
+  ],
+  "faqs": [
+    {
+      "question": "Ist Cabanyal sicher?",
+      "answer": "Ja, und das Viertel hat sich in den letzten Jahren deutlich verändert. Die Hauptstraßen und die Strandseite sind belebt und sicher. Achte in ruhigeren Seitenstraßen, besonders nachts, wie in jeder Stadt auf deine Umgebung."
+    },
+    {
+      "question": "Wo gibt es die beste Paella in Valencia?",
+      "answer": "Viele Einheimische nennen die Casa Carmela in Cabanyal. Dort wird Paella traditionell über Holzfeuer zubereitet. Reserviere vorab: Das Restaurant ist bekannt und besonders sonntags schnell voll."
+    },
+    {
+      "question": "Kann man am Strand Las Arenas schwimmen?",
+      "answer": "Ja, ungefähr von Mai bis Oktober. Von Juni bis September ist das Wasser meist angenehm warm zum Schwimmen. In den Sommermonaten sind Rettungsschwimmer im Einsatz."
+    }
+  ]
+}

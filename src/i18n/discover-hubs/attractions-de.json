@@ -1,0 +1,127 @@
+{
+  "hub": "attractions",
+  "hubName": "Valencias Sehenswürdigkeiten und Attraktionen",
+  "hubDescription": "Praktische Reiseführer zu Valencias Sehenswürdigkeiten: Oceanogràfic, Stadt der Künste und Wissenschaften, Zentralmarkt, La Lonja und Turia-Gärten.",
+  "metadata": {
+    "title": "Valencias Sehenswürdigkeiten: Was du sehen kannst",
+    "description": "Praktische Reiseführer zu Valencias Sehenswürdigkeiten: Oceanogràfic, Stadt der Künste und Wissenschaften, Zentralmarkt, La Lonja und Turia-Gärten.",
+    "alternates": {
+      "canonical": "https://rentandroll.com/de/discover/attractions",
+      "languages": {
+        "en": "https://rentandroll.com/discover/attractions",
+        "es": "https://rentandroll.com/es/discover/attractions",
+        "x-default": "https://rentandroll.com/discover/attractions",
+        "de": "https://rentandroll.com/de/discover/attractions"
+      }
+    }
+  },
+  "editorial": {
+    "introTitle": "Plane Valencias Attraktionen mit realistischen Tagesplänen",
+    "intro": [
+      "Valencias wichtigste Sehenswürdigkeiten reichen von kompakten historischen Gebäuden bis zu großen Komplexen und einem neun Kilometer langen Park. Öffnungszeiten sind wichtig, aber auch Gehstrecken, Warteschlangen, Schatten, Bodenbeläge und die Frage, wie viel Zeit eine Attraktion an einem Tag sinnvoll einnehmen kann.",
+      "Wähle einen Hauptbereich und ergänze nahe gelegene Ziele. Die Stadt der Künste und Wissenschaften lässt sich gut mit den östlichen Turia-Gärten verbinden. Plane für die Altstadt lieber einen eigenen Rundgang, statt sie als schnellen Zusatz einzuquetschen."
+    ],
+    "choiceTitle": "Wähle nach dem Erlebnis, das du suchst",
+    "choices": [
+      {
+        "title": "Stadt der Künste und Wissenschaften",
+        "description": "Für Architektur, Wissenschaft, Meereslebewesen und einen ganzen Familientag mit mehreren Attraktionen mit Eintritt.",
+        "href": "/discover/city-of-arts-and-sciences"
+      },
+      {
+        "title": "Oceanogràfic",
+        "description": "Für einen Aquarientag mit geplanter Familienorganisation, langen Fußwegen und Aktivitäten passend zum Besuchsdatum.",
+        "href": "/discover/oceanografic-valencia"
+      },
+      {
+        "title": "Turia-Gärten",
+        "description": "Für Spaziergänge, Radfahren, Spielplätze, Grünflächen und eine flexible Route durch die Stadt.",
+        "href": "/discover/turia-gardens"
+      },
+      {
+        "title": "Zentralmarkt und La Lonja",
+        "description": "Für einen kompakten Vormittagsrundgang zu Valencias Esskultur und der zum UNESCO-Welterbe gehörenden Handelsgeschichte.",
+        "href": "/discover/central-market-la-lonja"
+      },
+      {
+        "title": "BIOPARC Valencia",
+        "description": "Für einen Tierparkbesuch mit vorab geplanter Ticketbuchung, Verpflegung, Barrierefreiheit und Familienorganisation.",
+        "href": "/discover/bioparc-valencia"
+      },
+      {
+        "title": "Historische Altstadt",
+        "description": "Für einen praktischen Rundgang von Serranos nach Quart mit ausgewählten Sehenswürdigkeiten statt einer übervollen Liste.",
+        "href": "/discover/valencia-historic-centre"
+      }
+    ],
+    "planningTitle": "Mach den Besuch angenehmer",
+    "planningPoints": [
+      "Prüfe aktuelle Öffnungszeiten und Zeitfenster für den Eintritt auf der offiziellen Website des Veranstaltungsorts.",
+      "Schätze die gesamte Gehstrecke innerhalb großer Komplexe ein, nicht nur den Weg dorthin.",
+      "Plane in heißen Monaten Schatten, Wasser und Pausen in Innenräumen ein.",
+      "Kläre bei Bedarf stufenlose Wege, barrierefreie Toiletten und Ausrüstungsregeln direkt mit dem Veranstaltungsort."
+    ],
+    "pathways": [
+      {
+        "title": "Mit Kindern unterwegs",
+        "description": "Plane Tempo, Mahlzeiten, Anreise, Mittagsschlaf und Ausrüstung rund um Valencias Familienattraktionen.",
+        "href": "/blog/valencia-with-kids-complete-guide",
+        "label": "Valencia mit Kindern lesen"
+      },
+      {
+        "title": "Mobilitätshilfen für deinen Aufenthalt",
+        "description": "Entdecke Rollstühle, Rollatoren, Elektromobile und weitere Hilfsmittel und prüfe dann die Verfügbarkeit für deine Mietdaten.",
+        "href": "/rental/mobility",
+        "label": "Mobilitätshilfen ansehen"
+      }
+    ],
+    "faqs": [
+      {
+        "question": "Welche Sehenswürdigkeiten in Valencia eignen sich für einen ersten Besuch?",
+        "answer": "Altstadt, Stadt der Künste und Wissenschaften, Turia-Gärten und Küste zeigen sehr unterschiedliche Seiten Valencias. Wähle nach Interessen und Bedürfnissen deiner Gruppe, statt jede große Sehenswürdigkeit in einen einzigen Tag zu packen."
+      },
+      {
+        "question": "Wie viel Zeit sollte ich für die Stadt der Künste und Wissenschaften einplanen?",
+        "answer": "Das Außengelände lässt sich relativ schnell erkunden. Attraktionen mit Eintritt wie das Oceanogràfic oder das Wissenschaftsmuseum können aber den größten Teil des Tages füllen. Entscheide vor Ticketkauf und weiterer Planung, welche Gebäude dir wichtig sind."
+      },
+      {
+        "question": "Sind Valencias Attraktionen für Rollstühle und Kinderwagen geeignet?",
+        "answer": "Viele wichtige Attraktionen bieten stufenlose Wege. Bodenbeläge, Eingänge, Aufzüge, Toiletten und vorübergehende Sperrungen unterscheiden sich jedoch. Nutze die Reiseführer zur Orientierung und bestätige unverzichtbare Zugangsvoraussetzungen beim offiziellen Veranstaltungsort."
+      },
+      {
+        "question": "Sollte ich Tickets für Valencias Attraktionen im Voraus buchen?",
+        "answer": "Für große Attraktionen mit Eintritt und beliebte Besuchstage kann eine Vorabbuchung sinnvoll sein. Bedingungen und Angebote ändern sich. Kaufe nach der Terminprüfung direkt bei der offiziellen Attraktion oder einem eindeutig autorisierten Anbieter."
+      }
+    ]
+  },
+  "templateText": [
+    {
+      "kind": "text",
+      "value": "Startseite"
+    },
+    {
+      "kind": "text",
+      "value": "Entdecken"
+    },
+    {
+      "kind": "text",
+      "value": "Sehenswürdigkeiten und Attraktionen"
+    },
+    {
+      "kind": "text",
+      "value": "Sehenswürdigkeiten und Attraktionen"
+    },
+    {
+      "kind": "text",
+      "value": "Von der futuristischen Stadt der Künste und Wissenschaften bis zu ruhigen Märkten in den Vierteln: die Orte, für die sich ein Besuch in Valencia lohnt."
+    },
+    {
+      "kind": "text",
+      "value": "Reiseführer lesen →"
+    },
+    {
+      "kind": "text",
+      "value": "Reiseführer zu den Attraktionen folgen in Kürze. Schau bald wieder vorbei."
+    }
+  ]
+}

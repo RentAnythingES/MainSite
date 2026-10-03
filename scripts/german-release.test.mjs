@@ -1,3 +1,6 @@
+import { getCategoryCollectionJsonLd } from "../src/lib/jsonld.ts";
+import { getDestinationsByHub } from "../src/content/destinations.ts";
+import { germanDestinations } from "../src/content/destinations-de.ts";
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { registerHooks } from 'node:module';
@@ -7,13 +10,14 @@ import { publicLocaleHref } from '../src/lib/public-routes.ts';
 import { customerTokenPath } from '../src/i18n/customer-path.ts';
 import { blankTranslation } from '../src/lib/translation-workflow.ts';
 import { productPageMetadata } from '../src/lib/product-page-metadata.ts';
-import { germanCommercialPaths, germanRouteCandidate } from '../src/i18n/german-paths.ts';
+import { germanCommercialPaths, germanEditorialPaths, germanRouteCandidate } from '../src/i18n/german-paths.ts';
 import { germanCategories } from '../src/content/german-categories.ts';
 import { germanInformation } from '../src/content/german-information.ts';
 import { germanRentalBundles } from '../src/data/bundles-de.ts';
 import { productFamilies } from '../src/data/product-families.ts';
 
 let rows = [], databaseError = null, contextError = null, calls = 0;
+globalThis.__germanReleaseSourceProduct = slug => rows.find(row => row.sourceProduct.slug === slug)?.sourceProduct;
 globalThis.__germanReleaseSeoStates = () => rows.map(row => ({ slug: row.sourceProduct.slug, indexableDe: row.seoIndexable !== false }));
 globalThis.__germanReleaseFixtureDb = { from(table) {
   calls++;
@@ -33,7 +37,7 @@ globalThis.__germanReleaseContext = () => {
 const hooks = registerHooks({ load(url, context, next) {
   if (url.endsWith('/src/lib/supabase.ts')) return { format: 'module', shortCircuit: true, source: 'export const supabase = globalThis.__germanReleaseFixtureDb;' };
   if (url.endsWith('/src/lib/market-context.ts')) return { format: 'module', shortCircuit: true, source: 'export async function resolveMarketContext() { return globalThis.__germanReleaseContext(); }' };
-  if (url.endsWith('/src/lib/product-service.ts')) return { format: 'module', shortCircuit: true, source: 'export const mapPublicProductSource = row => ({ ...row.sourceProduct }); export async function getIndexableProductsForSeo() { return globalThis.__germanReleaseSeoStates(); }' };
+  if (url.endsWith('/src/lib/product-service.ts')) return { format: 'module', shortCircuit: true, source: 'export const mapPublicProductSource = row => ({ ...row.sourceProduct }); export async function getProductsFromDB() { return globalThis.__germanReleaseSeoStates().map(state => globalThis.__germanReleaseSourceProduct(state.slug)); } export async function getProductsByCategoryFromDB() { return getProductsFromDB(); } export async function getIndexableProductsForSeo() { return globalThis.__germanReleaseSeoStates(); }' };
   return next(url, context);
 }});
 const { publishedGermanProducts, publishedGermanCategory } = await import('../src/lib/german-catalogue.ts');
@@ -53,7 +57,7 @@ async function enabled(fn) {
 }
 function product(slug, changes = {}) {
   const content = { ...blankTranslation(), name: 'Deutscher Mietartikel', short_description: 'Deutsche Beschreibung', detail_description: 'Details', includes_text: 'Artikel', constraints_text: 'Grenzen', delivery_setup_note: 'Abholung', care_note: 'Pflege', seo_title: 'Mietartikel in Valencia', seo_description: 'x'.repeat(140), image_alt_text: 'Mietartikel', features: ['Merkmal'], specs: { Gewicht: '5 kg' }, faqs: [1, 2, 3].map(n => ({ question: `Frage ${n}`, answer: 'Antwort' })) };
-  const sourceProduct = { id: slug, slug, categorySlug: 'baby-gear', subcategorySlug: 'strollers', name: 'English source', description: 'English source', pricing: [{ days: 1, perDay: 12 }], stockTotal: 3, stockAvailable: 2, image: '/products/test.png', brand: 'Model 123', city: 'valencia' };
+  const sourceProduct = { id: slug, slug, categorySlug: 'baby-gear', subcategorySlug: 'strollers', subcategory: 'Strollers', name: 'English source', description: 'English source', pricing: [{ days: 1, perDay: 12 }], stockTotal: 3, stockAvailable: 2, image: '/products/test.png', brand: 'Model 123', city: 'valencia' };
   return { content_status: 'content_ready', translation_source_revision: 4, sourceProduct,
     product_localizations: [{ locale: 'de', publication_status: 'published', source_revision: 4, translation_revision: 2, reviewed_revision: 2, reviewed_by: 'fixture-reviewer', reviewed_at: '2026-10-02T12:00:00Z', translation_content: content, ...changes }] };
 }
@@ -76,7 +80,7 @@ test('German inventory exactly names implemented commercial surfaces', () => {
   for (const key of Object.keys(germanCategories)) assert.ok(germanCommercialPaths.includes('/rental/' + key));
   for (const kit of germanRentalBundles) assert.ok(germanCommercialPaths.includes('/valencia/kits/' + kit.slug));
   for (const family of productFamilies.filter(item => item.published)) assert.ok(germanCommercialPaths.includes(`/rental/${family.categorySlug}/${family.slug}`));
-  for (const path of ['/blog/test', '/discover', '/hamburg', '/rental/mobility/unknown', '/product/INVALID']) assert.equal(germanRouteCandidate(path), false);
+  for (const path of ['/blog/test', '/discover/untranslated-guide', '/hamburg', '/rental/mobility/unknown', '/product/INVALID']) assert.equal(germanRouteCandidate(path), false);
 });
 test('public German navigation preserves equivalents, city and issued token destinations', async () => enabled(() => {
   assert.equal(publicLocaleHref('/es/product/test', 'de'), '/de/product/test');
@@ -110,7 +114,10 @@ test('German sitemap reciprocates only real equivalents and contains no private 
   assert.equal(variants.length, 3);
   assert.ok(variants.every(item => item.alternates.languages.de === 'https://rentandroll.com/de/product/good'));
   assert.deepEqual(variants[0].alternates, variants[2].alternates);
-  assert.ok(result.every(item => !item.url.includes('internal') && !item.url.includes('/de/blog/')));
+  assert.ok(result.every(item => !item.url.includes('internal') && !item.url.includes('/de/blog/english-only')));
+  for (const path of germanEditorialPaths()) assert.ok(result.some(item => item.url === 'https://rentandroll.com/de' + path));
+  assert.ok(germanRouteCandidate('/blog/home-office-setup-valencia-apartment'));
+  assert.equal(germanRouteCandidate('/blog/untranslated'), false);
   contextError = new Error('locale disabled');
   assert.deepEqual(await addGermanSitemap(existing), existing);
 }));
@@ -155,4 +162,89 @@ test('kit handoff translates customer labels and canonical selections without ch
     assert.deepEqual(selectedItems, bundle.includedItems.map(item => item.requestName));
     assert.throws(() => bundleRequestMessage({ locale: 'de', bundle, requestRef: 'TEST', startDate: '2026-12-01', endDate: '2026-12-07', area: 'Valencia', phone: null, selectedItems: ['unknown'], selectedAddons: [], notes: null }), /Missing translated/);
   }
+});
+
+
+test("German neighbourhood hub cannot hide an untranslated original guide", () => {
+  assert.ok(germanRouteCandidate("/discover/neighbourhoods"));
+  const original = getDestinationsByHub("neighbourhoods")[0];
+  const index = germanDestinations.findIndex(guide => guide.slug === original.slug);
+  assert.ok(index >= 0);
+  const [removed] = germanDestinations.splice(index, 1);
+  try {
+    assert.equal(germanRouteCandidate("/discover/neighbourhoods"), false);
+    assert.equal(germanRouteCandidate("/discover/" + original.slug), false);
+  } finally { germanDestinations.splice(index, 0, removed); }
+  assert.ok(germanRouteCandidate("/discover/neighbourhoods"));
+});
+
+
+test("German attractions hub requires every original attraction guide", () => {
+  assert.ok(germanRouteCandidate("/discover/attractions"));
+  const original = getDestinationsByHub("attractions")[0];
+  const index = germanDestinations.findIndex(guide => guide.slug === original.slug);
+  assert.ok(index >= 0);
+  const [removed] = germanDestinations.splice(index, 1);
+  try { assert.equal(germanRouteCandidate("/discover/attractions"), false); }
+  finally { germanDestinations.splice(index, 0, removed); }
+  assert.ok(germanRouteCandidate("/discover/attractions"));
+});
+
+
+test("German event calendar requires every original event translation", () => {
+  assert.ok(germanRouteCandidate("/discover/events"));
+  const index = germanDestinations.findIndex(guide => guide.slug === "fallas");
+  assert.ok(index >= 0);
+  const [removed] = germanDestinations.splice(index, 1);
+  try { assert.equal(germanRouteCandidate("/discover/events"), false); }
+  finally { germanDestinations.splice(index, 0, removed); }
+  assert.ok(germanRouteCandidate("/discover/events"));
+});
+
+
+test("German beach and day-trip hubs require every original member", () => {
+  for (const hub of ["beaches", "day-trips"]) {
+    assert.ok(germanRouteCandidate("/discover/" + hub));
+    const original = getDestinationsByHub(hub)[0];
+    const index = germanDestinations.findIndex(guide => guide.slug === original.slug);
+    assert.ok(index >= 0);
+    const [removed] = germanDestinations.splice(index, 1);
+    try { assert.equal(germanRouteCandidate("/discover/" + hub), false); }
+    finally { germanDestinations.splice(index, 0, removed); }
+  }
+});
+
+test("German Discover index requires every original guide and map member", () => {
+  assert.ok(germanRouteCandidate("/discover"));
+  const index = germanDestinations.findIndex(guide => guide.slug === "albufera");
+  assert.ok(index >= 0);
+  const [removed] = germanDestinations.splice(index, 1);
+  try { assert.equal(germanRouteCandidate("/discover"), false); }
+  finally { germanDestinations.splice(index, 0, removed); }
+  assert.ok(germanRouteCandidate("/discover"));
+});
+
+test('German product sections follow original source presence without English text fallback', async()=>enabled(async()=>{
+  const row=product('section-shape');row.sourceProduct.includesText='Original included items';
+  rows=[row];const [translated]=await publishedGermanProducts();
+  assert.equal(translated.includesText,'Artikel');
+  for(const field of ['detailDescription','constraintsText','deliverySetupNote','careNote']) assert.equal(translated[field],undefined);
+  assert.equal(translated.name,'Deutscher Mietartikel');
+  assert.equal(translated.category,'Babys und Kleinkinder');
+}));
+
+test('German category sorting does not reorder comparison or related-product cards', async()=>enabled(async()=>{
+  const beta=product('beta'),alpha=product('alpha');
+  beta.sourceProduct.name='Beta';alpha.sourceProduct.name='Alpha';
+  beta.product_localizations[0].translation_content.name='A auf Deutsch';
+  alpha.product_localizations[0].translation_content.name='Z auf Deutsch';
+  rows=[beta,alpha];
+  assert.deepEqual((await publishedGermanCategory('baby-gear')).map(p=>p.slug),['beta','alpha']);
+  assert.deepEqual((await publishedGermanCategory('baby-gear',true)).map(p=>p.slug),['alpha','beta']);
+}));
+
+test('German collection schema retains item count and links each item to its German equivalent',()=>{
+  const schema=getCategoryCollectionJsonLd({name:'Kinderwagen',description:'Vergleich',url:'https://rentandroll.com/de/rental/baby-gear',locale:'de',products:[product('stroller').sourceProduct]});
+  assert.equal(schema.inLanguage,'de');assert.equal(schema.mainEntity.numberOfItems,1);
+  assert.equal(schema.mainEntity.itemListElement[0].url,'https://rentandroll.com/de/product/stroller');
 });
