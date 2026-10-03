@@ -561,3 +561,9 @@ these schema/import operations; no application code changed in this checkpoint.
 
 Current receipts: F:/rentanything/agent-work/german-launch-2026-10-02/private-production-verification.json.
 Release checklist: F:/rentanything/agent-work/german-launch-2026-10-02/RELEASE-CHECKLIST.md.
+
+## German release configuration — 3 October 2026
+
+The owner reaffirmed launch authorization. vercel.json now uses the documented buildCommand override to run NEXT_PUBLIC_GERMAN_ENABLED=true npm run build through the existing Git deployment. This is a non-secret public release flag, compiled into Next.js bundles. No dashboard credentials or access-control changes are needed. The approved source manifest and database locale/market/revision guards remain required. Runtime secrets, cron configuration and EN/ES settings are preserved. Close the database visibility/booking/indexing gates for immediate withdrawal; changing a NEXT_PUBLIC flag requires a rebuild.
+
+Primary reference: https://vercel.com/docs/project-configuration/vercel-json. The official https://openapi.vercel.sh/vercel.json schema was saved in F:/rentanything/agent-work/german-launch-2026-10-02/vercel-configuration-schema.json. It confirms buildCommand is supported. The deprecated env/build.env properties were not introduced. This resolves the prior dashboard-login blocker through the already authorized Git release pipeline.
