@@ -17,3 +17,6 @@ Private booking/review/conversation/customer routes are excluded from the public
 Status: final production build passes (2026-10-03T22:32:02.724Z); 62 localization and eight routing/customer-access tests pass; changed-source lint passes. Fresh post-change crawl: all 205 pages pass; 615 unique sitemap URLs form 205 complete reciprocal EN/ES/DE groups. All 205 live translation repair pages passed original structure/classes/images comparison before these metadata-only changes. Five exact-product snippets improve type intent or omit an unverified monitor dimension. SEO deployment and independent production read-back pending.
 
 [Per-page German terminology and audit](./GERMAN_LOCALIZATION_PAGE_AUDIT_20261004.csv). Sources and limitations remain as above.
+
+
+Final customer-route metadata check: German booking success/cancel and unsubscribe pages inherited the shared English default description/social title. Localize the German root fallback and original social-image alternative text; retain original asset, robots, access checks and visible shared page templates. Public per-page metadata remains as audited. This correction is part of completing the customer-page translation scope.
