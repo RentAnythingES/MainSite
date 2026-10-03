@@ -1,5 +1,6 @@
 import type { MetadataRoute } from 'next';
 import { SITE_URL } from '@/config/site';
+import { publicLocaleHref } from './public-routes';
 import { germanCommercialPaths, germanEditorialPaths } from '@/i18n/german-paths';
 import { germanPublicContext, germanIndexingAllowed } from './german-publication';
 import { publishedGermanProducts } from './german-catalogue';
@@ -19,7 +20,7 @@ export async function addGermanSitemap(existing: MetadataRoute.Sitemap): Promise
   const groups = new Map<string, Record<string, string>>();
   const german: MetadataRoute.Sitemap = paths.map(path => {
     const en = `${SITE_URL}${path === '/' ? '' : path}`;
-    const es = `${SITE_URL}/es${path === '/' ? '' : path}`;
+    const es = `${SITE_URL}${publicLocaleHref(path, 'es')}`;
     const de = `${SITE_URL}/de${path === '/' ? '' : path}`;
     const languages: Record<string, string> = { de };
     if (existingUrls.has(en)) { languages.en = en; languages['x-default'] = en; }

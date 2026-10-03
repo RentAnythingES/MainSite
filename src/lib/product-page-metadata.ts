@@ -7,6 +7,7 @@ import type { ProductSeoState } from "./product-service";
 import { publicLocaleHref } from "./public-routes";
 import { getProductMetadataDescription, getProductMetadataTitle } from "./seo-metadata";
 import { SITE_URL } from "@/config/site";
+import { germanSeoOverrides } from "@/content/german-seo";
 
 /** Preserve the established EN/ES canonical contract while sharing its implementation. */
 export function productPageMetadata(
@@ -25,10 +26,11 @@ export function productPageMetadata(
     ? { en: englishUrl, es: spanishUrl, "x-default": englishUrl }
     : { en: englishUrl, "x-default": englishUrl };
   if (state?.indexableDe && localeRegistry.de.public) Object.assign(languages, { de: germanUrl });
-  const title = getProductMetadataTitle({ name: product.name, customTitle: product.seoTitle,
+  const seoOverride = locale === "de" ? germanSeoOverrides[`/product/${slug}`] : undefined;
+  const title = getProductMetadataTitle({ name: product.name, customTitle: seoOverride?.title || product.seoTitle,
     lowestPrice: product.pricing.at(-1)?.perDay, locale });
   const description = getProductMetadataDescription({ description: product.description,
-    customDescription: product.seoDescription, locale });
+    customDescription: seoOverride?.description || product.seoDescription, locale });
   return {
     title: locale === "de" ? { absolute: title } : title, description,
     alternates: locale === "es" && !indexable ? { canonical } : { canonical, languages },

@@ -1,5 +1,5 @@
 # Rent&Roll — SEO Strategy & Audit
-> **Last updated**: 2026-10-03 · **Canonical migration**: deployed · **Live sitemap URLs**: 568
+> **Last updated**: 2026-10-03 · **Canonical migration**: deployed · **Live sitemap URLs**: 615
 
 This is the **living SEO strategy document** for rentandroll.com. Updated after every SEO-related change. For prioritized fixes, see [SEO_ROADMAP.md](./SEO_ROADMAP.md).
 
@@ -501,3 +501,8 @@ German final local checkpoint (2026-10-03, 21:50 UTC): all 205 original public G
 ## Release-ready checkpoint — 2026-10-03T22:07:58.215Z
 
 Required final production build passes (2026-10-03T22:05:47.400Z). All 205 original public equivalence comparisons pass on the earlier body-equivalent build (2026-10-03T21:39:54.695Z); subsequent changes concern redirects, 404 routing and indexing rehearsal, not those page bodies. Final actual response checks pass: six representative legacy redirects, German booking success/cancel/unsubscribe privacy metadata, four malformed private-token 404s and unknown public German URL with full German document. Production indexing rehearsal: 615 unique sitemap URLs, all 205 German equivalents included. All 60 localization tests, four routing regressions and four conversation-access fixtures pass. Changed-source lint passes. Browser CLI fallback failed to produce a loaded DOM and remains unverified/quarantined; the earlier four-width homepage geometry receipt is the only browser acceptance. Thirteen committed catalogue corrections independently verified, all 128 current German products approved. Code is ready for the authorized repair deployment; publication and the subsequent German SEO audit are still pending.
+
+
+## German localization audit — 4 October 2026
+
+German publication adds full counterparts of all 205 original public owners. Production repair PR #29 merged and deployed; expected current sitemap total is 615 (205 per language), pending the retained live sitemap count. See [German localization audit](./GERMAN_LOCALIZATION_AUDIT_20261004.md) for vocabulary, full page coverage, fixes and validation limitations. No cluster ownership changes.

@@ -248,3 +248,37 @@ test('German collection schema retains item count and links each item to its Ger
   assert.equal(schema.inLanguage,'de');assert.equal(schema.mainEntity.numberOfItems,1);
   assert.equal(schema.mainEntity.itemListElement[0].url,'https://rentandroll.com/de/product/stroller');
 });
+
+
+test('German language annotations use real translated Spanish B2B peers', async () => enabled(async () => {
+  const { germanPageMetadata } = await import('../src/lib/german-publication.ts');
+  for (const [path, es] of [['/partners', '/es/colaboraciones'], ['/valencia/host-services', '/es/valencia/servicios-anfitriones']]) {
+    const metadata = germanPageMetadata(path, 'Fallback');
+    assert.equal(metadata.alternates.languages.es, 'https://rentandroll.com' + es);
+    assert.equal(metadata.alternates.languages.de, metadata.alternates.canonical);
+    assert.equal(metadata.alternates.languages.en, 'https://rentandroll.com' + path);
+    assert.notEqual(metadata.title.absolute, 'Fallback');
+    assert.ok(metadata.title.absolute.length <= 60);
+    assert.ok(metadata.description.length >= 130 && metadata.description.length <= 155);
+  }
+  const existing = ['/partners', '/es/colaboraciones', '/valencia/host-services', '/es/valencia/servicios-anfitriones'].map(path => ({url:'https://rentandroll.com' + path}));
+  const sitemap = await addGermanSitemap(existing);
+  for (const [path, es] of [['/partners', '/es/colaboraciones'], ['/valencia/host-services', '/es/valencia/servicios-anfitriones']]) {
+    const peers = [path, es, '/de' + path].map(path => sitemap.find(row => row.url === 'https://rentandroll.com' + path));
+    assert.ok(peers.every(Boolean));
+    assert.deepEqual(peers[0].alternates, peers[1].alternates);
+    assert.deepEqual(peers[1].alternates, peers[2].alternates);
+  }
+}));
+
+test('German exact-product snippets retain type intent without altering English metadata or unverified dimensions', async () => enabled(() => {
+  const state = {indexableEn:true,indexableEs:true,indexableDe:true};
+  const source = {...product('monitor-34').sourceProduct,seoTitle:'27-inch source title',seoDescription:'Original English source description'};
+  const en = productPageMetadata('monitor-34','en',source,state);
+  const de = productPageMetadata('monitor-34','de',source,state);
+  assert.equal(en.title,source.seoTitle);
+  assert.equal(de.title.absolute,'Desktop-Monitor mieten in Valencia');
+  assert.ok(!/27|34/.test(de.description));
+  assert.equal(source.seoTitle,'27-inch source title');
+  for(const [slug,type] of [['maxi-cosi-pebble-360-pro2-infant-car-seat','Babyschale'],['kinderkraft-i-spark-2-plus-i-size-car-seat','Kindersitz']])assert.ok(productPageMetadata(slug,'de',source,state).title.absolute.includes(type));
+}));
