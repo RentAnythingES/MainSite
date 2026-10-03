@@ -10,7 +10,7 @@ const GA_ID =
 
 export default function GoogleAnalytics() {
   const pathname = usePathname();
-  const privatePage = pathname.startsWith("/agent") && !pathname.startsWith("/agent-network") || pathname.startsWith("/booking/messages/") || pathname.startsWith("/admin");
+  const privatePage = pathname.startsWith("/agent") && !pathname.startsWith("/agent-network") || pathname.startsWith("/booking/messages/") || pathname.startsWith("/admin") || pathname.startsWith("/internal/");
   const consent = useSyncExternalStore(subscribeToAnalyticsConsent, readAnalyticsConsent, () => null);
 
   useEffect(() => {

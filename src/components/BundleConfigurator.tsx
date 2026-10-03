@@ -3,11 +3,15 @@
 import { FormEvent, useMemo, useState } from "react";
 import Link from "next/link";
 import type { RentalBundle } from "@/data/bundles";
+import { bundleConfiguratorCopy as copy } from "@/i18n/bundle-configurator";
+import { localeRegistry, type Locale } from "@/i18n/config";
 import { trackEvent } from "@/lib/analytics";
 
 interface BundleConfiguratorProps {
   bundle: RentalBundle;
-  locale?: "en" | "es";
+  locale?: Locale;
+  prefix?: string;
+  privatePreview?: boolean;
 }
 
 type AvailabilityResult = {
@@ -25,38 +29,22 @@ function todayIsoDate() {
   return new Date().toISOString().slice(0, 10);
 }
 
-const copy = {
-  en: {
-    badge: "Build your request", title: "Configure this kit", intro: "This is the first version of bundle configurability. It does not reserve inventory yet; it creates a structured request so we can confirm the best available setup directly.",
-    startDate: "Start date", endDate: "End date", area: "Accommodation area", areaPlaceholder: "e.g. Ruzafa, Patacona, Paterna, hotel name, Airbnb area",
-    included: "Included items", addons: "Optional add-ons", notes: "Anything we should know?", notesPlaceholder: "Child ages, lift access, apartment constraints, delivery timing, special requests...",
-    reply: "Where should we reply?", name: "Name", email: "Email", phone: "WhatsApp number", optional: "(optional)", consentBefore: "I agree that Rent&Roll may use these details to answer and manage my kit request. See our", privacy: "privacy policy",
-    summary: "Request summary", dates: "Dates", unsure: "Not sure yet", selected: "Items selected", includedCount: "included", addonCount: "add-ons", next: "Next step", nextText: "We confirm stock, substitutions, delivery/collection, and pricing directly.",
-    checking: "Checking inventory…", check: "Check known inventory", inventory: "Inventory check", available: "Known items available", unavailable: "Substitution needed", partial: "Partly confirmed", lineAvailable: "Available", lineUnavailable: "Unavailable", staffCheck: "Staff check",
-    estimate: "Known-item rental estimate", estimateNote: "Staff confirm alternatives, delivery and final kit pricing.", directWhatsapp: "If it continues, message us directly on WhatsApp.", saved: "Request saved as", saving: "Saving request…", submit: "Save request & open WhatsApp", footer: "We save your choices first, then open WhatsApp. No payment is taken until availability and pricing are confirmed.",
-    availabilityError: "Could not check availability", submitError: "Could not save your request",
-  },
-  es: {
-    badge: "Prepara tu solicitud", title: "Configura este kit", intro: "Esta primera versión no reserva el inventario. Guarda una solicitud estructurada para que podamos confirmar directamente la mejor combinación disponible.",
-    startDate: "Fecha de inicio", endDate: "Fecha de fin", area: "Zona del alojamiento", areaPlaceholder: "p. ej., Ruzafa, Patacona, Paterna, nombre del hotel o zona del apartamento",
-    included: "Artículos incluidos", addons: "Extras opcionales", notes: "¿Hay algo que debamos saber?", notesPlaceholder: "Edades, acceso en ascensor, limitaciones del alojamiento, horario o solicitudes especiales...",
-    reply: "¿Dónde debemos responder?", name: "Nombre", email: "Correo electrónico", phone: "Número de WhatsApp", optional: "(opcional)", consentBefore: "Acepto que Rent&Roll utilice estos datos para responder y gestionar mi solicitud. Consulta nuestra", privacy: "política de privacidad",
-    summary: "Resumen de la solicitud", dates: "Fechas", unsure: "Por confirmar", selected: "Artículos seleccionados", includedCount: "incluidos", addonCount: "extras", next: "Siguiente paso", nextText: "Confirmamos directamente el stock, las sustituciones, la entrega o recogida y el precio.",
-    checking: "Comprobando inventario…", check: "Comprobar inventario conocido", inventory: "Comprobación de inventario", available: "Artículos conocidos disponibles", unavailable: "Hace falta una sustitución", partial: "Confirmación parcial", lineAvailable: "Disponible", lineUnavailable: "No disponible", staffCheck: "Revisión manual",
-    estimate: "Estimación de artículos conocidos", estimateNote: "Nuestro equipo confirma alternativas, entrega y precio final del kit.", directWhatsapp: "Si continúa, escríbenos directamente por WhatsApp.", saved: "Solicitud guardada como", saving: "Guardando solicitud…", submit: "Guardar y abrir WhatsApp", footer: "Primero guardamos tus elecciones y después abrimos WhatsApp. No se cobra nada hasta confirmar disponibilidad y precio.",
-    availabilityError: "No se pudo comprobar la disponibilidad", submitError: "No se pudo guardar la solicitud",
-  },
-} as const;
 
-export default function BundleConfigurator({ bundle, locale = "en" }: BundleConfiguratorProps) {
+export default function BundleConfigurator({ bundle, locale = "en", prefix = localeRegistry[locale].prefix, privatePreview = false }: BundleConfiguratorProps) {
   const isExplorer = bundle.slug === "turia-beach-explorer";
-  const text = { ...copy[locale], ...(isExplorer ? (locale === "es" ? {
+  const text = { ...copy[locale], ...(isExplorer ? (locale === "de" ? {
+    badge: "Unverbindliche Anfrage", title: "Euren Familienausflug planen", intro: "Die Hauptartikel gehören zusammen. Wähle Ergänzungen und Termine und sag uns, wer Fahrrad fährt und wer im Anhänger mitfährt. Vor der Zahlung bestätigen wir Eignung und Gesamtpreis.",
+    included: "Artikel im Paket", notes: "Fahrende Person und Kinder", notesPlaceholder: "Körpergröße der fahrenden Person; Alter, ungefähre Größe und Gewicht der Kinder; bekannte Helmgrößen; gewünschte Lieferzeit …", submit: "Paket anfragen", footer: "Wir melden uns, um Artikel, Eignung und dein vollständiges Angebot zu bestätigen. Die Anfrage löst keine Zahlung und keine Reservierung aus.", nextText: "Wir prüfen Bestand, Fahrradgröße, Anhängereignung, Helme, Schloss und Platz für Ergänzungen. Danach erhältst du das vollständige Angebot."
+  } : locale === "es" ? {
     badge: "Solicitud sin compromiso", title: "Prepara vuestro día de paseo", intro: "El equipo principal va junto. Elige los extras, indica tus fechas y cuéntanos quién va a pedalear y quién viajará en el remolque. Confirmamos el precio completo y el ajuste antes del pago.",
     included: "Equipo del paquete", notes: "Ciclista y niños", notesPlaceholder: "Altura del ciclista; edades, alturas y pesos aproximados de los niños; tallas de casco si las sabes; horario de entrega...", submit: "Solicitar el paquete", footer: "Te responderemos para confirmar equipo, ajuste y presupuesto. No se cobra ni se reserva material al enviar la solicitud.", nextText: "Comprobamos disponibilidad, talla de bici, remolque, cascos, candado y transporte de los extras. Después recibes el presupuesto completo."
   } : {
     badge: "No-obligation request", title: "Plan your family day out", intro: "The core equipment comes together. Choose your extras, add your dates and tell us who is riding and who will travel in the trailer. We confirm the full price and fit before payment.",
     included: "Package equipment", notes: "Rider and children", notesPlaceholder: "Rider height; children’s ages, approximate heights and weights; helmet sizes if known; preferred delivery time...", submit: "Request the package", footer: "We will reply to confirm equipment, fit and your complete quote. Sending a request does not take payment or reserve equipment.", nextText: "We check supply, bike size, trailer suitability, helmets, lock and carrying space. Then you receive the complete quote."
-  }) : {}) };
+  }) : {}), ...(privatePreview ? {
+    submit: locale === "de" ? "Lokale Testanfrage speichern" : locale === "es" ? "Guardar solicitud de prueba local" : "Save local test request",
+    footer: locale === "de" ? "Privater Test: Die Anfrage wird nur lokal gespeichert. Es werden keine Nachrichten gesendet und WhatsApp wird nicht geöffnet." : locale === "es" ? "Prueba privada: solo se guarda localmente. No se envían mensajes ni se abre WhatsApp." : "Private test: saved locally only. No messages are sent and WhatsApp is not opened.", directWhatsapp: "",
+  } : {}) };
   const [startDate, setStartDate] = useState(todayIsoDate());
   const [endDate, setEndDate] = useState("");
   const [area, setArea] = useState("");
@@ -88,7 +76,7 @@ export default function BundleConfigurator({ bundle, locale = "en" }: BundleConf
   function displayAvailabilityName(name: string) {
     return bundle.includedItems.find((item) => (item.requestName || item.name) === name)?.name
       || bundle.addons.find((addon) => (addon.requestName || addon.name) === name)?.name
-      || name;
+      || (locale === "de" ? "Artikel zur persönlichen Prüfung" : name);
   }
 
   function toggleItem(itemName: string) {
@@ -129,6 +117,7 @@ export default function BundleConfigurator({ bundle, locale = "en" }: BundleConf
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           bundleSlug: bundle.slug,
+          locale,
           startDate,
           endDate,
           selectedItems: selectedItemNames,
@@ -143,8 +132,8 @@ export default function BundleConfigurator({ bundle, locale = "en" }: BundleConf
         bundle_slug: bundle.slug,
         result: data.status,
       });
-    } catch (error) {
-      setAvailabilityError(error instanceof Error ? error.message : text.availabilityError);
+    } catch {
+      setAvailabilityError(text.availabilityError);
     } finally {
       setCheckingAvailability(false);
     }
@@ -192,9 +181,9 @@ export default function BundleConfigurator({ bundle, locale = "en" }: BundleConf
         event_category: "bundle",
         bundle_slug: bundle.slug,
       });
-      if (!isExplorer) window.location.assign(data.whatsappUrl);
-    } catch (error) {
-      setSubmitError(error instanceof Error ? error.message : text.submitError);
+      if (!isExplorer && !privatePreview && !data.preview && data.whatsappUrl) window.location.assign(data.whatsappUrl);
+    } catch {
+      setSubmitError(text.submitError);
     } finally {
       setSubmitting(false);
     }
@@ -336,7 +325,7 @@ export default function BundleConfigurator({ bundle, locale = "en" }: BundleConf
               <label className="mt-5 flex items-start gap-3 text-sm text-neutral-600">
                 <input type="checkbox" checked={consentAccepted} onChange={(event) => setConsentAccepted(event.target.checked)} required className="mt-1 h-4 w-4 accent-brand" />
                 <span>
-                  {text.consentBefore} <Link href={locale === "es" ? "/es/privacy" : "/privacy"} className="font-semibold text-brand hover:underline">{text.privacy}</Link>.
+                  {text.consentBefore} <Link href={`${prefix}/privacy`} className="font-semibold text-brand hover:underline">{text.privacy}</Link>.
                 </span>
               </label>
               <label className="absolute -left-[10000px]" aria-hidden="true">
@@ -356,7 +345,7 @@ export default function BundleConfigurator({ bundle, locale = "en" }: BundleConf
                 </div>
                 <div>
                   <p className="font-semibold text-neutral-800">{text.selected}</p>
-                  <p className="text-neutral-500">{selectedItemNames.length} {text.includedCount} · {selectedAddonNames.length} {text.addonCount}</p>
+                  <p className="text-neutral-500">{selectedItemNames.length} {text.includedCount} · {selectedAddonNames.length} {locale === "de" && selectedAddonNames.length === 1 ? "Ergänzung" : text.addonCount}</p>
                 </div>
                 <div>
                   <p className="font-semibold text-neutral-800">{text.next}</p>
@@ -392,7 +381,7 @@ export default function BundleConfigurator({ bundle, locale = "en" }: BundleConf
                   </ul>
                   {availability.knownRentalSubtotalCents > 0 && (
                     <p className="mt-3 border-t border-neutral-100 pt-3 text-xs text-neutral-500">
-                      {text.estimate}: <strong className="text-neutral-700">€{(availability.knownRentalSubtotalCents / 100).toFixed(2)}</strong>. {text.estimateNote}
+                      {text.estimate}: <strong className="text-neutral-700">{new Intl.NumberFormat(localeRegistry[locale].format, { style: "currency", currency: "EUR" }).format(availability.knownRentalSubtotalCents / 100)}</strong>. {text.estimateNote}
                     </p>
                   )}
                 </div>

@@ -1,4 +1,6 @@
+import { storedBookingLocale } from "@/lib/booking-locale";
 import { getBookingProductName } from "@/lib/booking-operations";
+import { localeRegistry, type Locale } from "@/i18n/config";
 import { NextRequest, NextResponse } from "next/server";
 import { isCheckoutPaymentSettled } from "@/lib/checkout-payment-status";
 import { stripe, isStripeConfigured } from "@/lib/stripe";
@@ -6,16 +8,16 @@ import { createServiceClient } from "@/lib/supabase";
 import { buildGoogleCalendarUrl, buildGoogleMapsUrl } from "@/lib/calendar-links";
 import { getStoredFulfillmentFeeBreakdown } from "@/lib/booking-v2";
 
-function formatDateTime(value?: string | null): string {
+function formatDateTime(value: string | null | undefined, locale: Locale, timezone: string): string {
   if (!value) return "";
 
-  return new Date(value).toLocaleString("en-GB", {
+  return new Date(value).toLocaleString(localeRegistry[locale].format, {
     day: "numeric",
     month: "short",
     year: "numeric",
     hour: "2-digit",
     minute: "2-digit",
-    timeZone: "Europe/Madrid",
+    timeZone: timezone,
   });
 }
 
@@ -67,6 +69,8 @@ export async function GET(request: NextRequest) {
       inventoryBlockCount = count || 0;
     }
 
+    const locale = storedBookingLocale(bookingRecord?.locale ?? draftRecord?.locale);
+    const timezone = String(bookingRecord?.timezone || draftRecord?.timezone || "Europe/Madrid");
     const product = bookingRecord?.product as { name?: string; slug?: string } | undefined;
     const productName = getBookingProductName({ pricing_snapshot: bookingRecord?.pricing_snapshot, product });
     const paymentPaid = isCheckoutPaymentSettled(session);
@@ -77,7 +81,7 @@ export async function GET(request: NextRequest) {
     const bookingCalendarUrl = bookingCreated && bookingStart && bookingEnd
       ? buildGoogleCalendarUrl({
           title: productName,
-          description: `Booking ${bookingRecord?.booking_ref || ""}`,
+          description: `${locale === "de" ? "Buchung" : locale === "es" ? "Reserva" : "Booking"} ${bookingRecord?.booking_ref || ""}`,
           startDateTime: bookingStart,
           endDateTime: bookingEnd,
           location: bookingLocation,
@@ -85,10 +89,10 @@ export async function GET(request: NextRequest) {
       : null;
     const bookingMapsUrl = bookingLocation ? buildGoogleMapsUrl(bookingLocation) : null;
 
-    let fulfillmentStatus: "booking_confirmed" | "payment_pending" | "fulfillment_pending" | "payment_incomplete";
+    let fulfillmentStatus: "booking_confirmed" | "payment_pending" | "fulfillment_pending" | "payment_incomplete" | "approval_pending" | "booking_cancelled";
 
     if (bookingCreated) {
-      fulfillmentStatus = "booking_confirmed";
+      fulfillmentStatus = ["cancelled", "refunded"].includes(String(bookingRecord?.status)) ? "booking_cancelled" : bookingRecord?.confirmation_status === "pending" ? "approval_pending" : "booking_confirmed";
     } else if (paymentPaid) {
       fulfillmentStatus = "fulfillment_pending";
     } else if (session.payment_status === "unpaid" || session.payment_status === "no_payment_required") {
@@ -114,6 +118,7 @@ export async function GET(request: NextRequest) {
       : null;
 
     return NextResponse.json({
+      locale,
       session: {
         id: session.id,
         paymentStatus: session.payment_status,
@@ -127,9 +132,9 @@ export async function GET(request: NextRequest) {
             status: draftRecord.status,
             expiresAt: draftRecord.expires_at,
             inventoryHoldCount: inventoryBlockCount,
-            startDate: formatDateTime(draftRecord.rental_start_at as string),
-            endDate: formatDateTime(draftRecord.rental_end_at as string),
-            timeZone: "Europe/Madrid",
+            startDate: formatDateTime(draftRecord.rental_start_at as string, locale, timezone),
+            endDate: formatDateTime(draftRecord.rental_end_at as string, locale, timezone),
+            timeZone: timezone,
             deliveryType: draftRecord.delivery_type || "standard",
             fulfillmentMode: draftRecord.fulfillment_mode || "delivery_and_collection",
             fulfillmentBaseFeeCents: draftFees?.baseFeeCents || 0,
@@ -145,9 +150,9 @@ export async function GET(request: NextRequest) {
             productName,
             productSlug: product?.slug || "",
             quantity: bookingRecord.quantity || 1,
-            startDate: formatDateTime((bookingRecord.rental_start_at as string | null) || bookingRecord.start_date as string),
-            endDate: formatDateTime((bookingRecord.rental_end_at as string | null) || bookingRecord.end_date as string),
-            timeZone: "Europe/Madrid",
+            startDate: formatDateTime((bookingRecord.rental_start_at as string | null) || bookingRecord.start_date as string, locale, timezone),
+            endDate: formatDateTime((bookingRecord.rental_end_at as string | null) || bookingRecord.end_date as string, locale, timezone),
+            timeZone: timezone,
             deliveryType: bookingRecord.delivery_type || "standard",
             fulfillmentMode: bookingRecord.fulfillment_mode || "delivery_and_collection",
             fulfillmentBaseFeeCents: bookingFees?.baseFeeCents || 0,

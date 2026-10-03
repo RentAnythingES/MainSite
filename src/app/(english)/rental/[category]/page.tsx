@@ -1,0 +1,548 @@
+import { notFound } from "next/navigation";
+import type { Metadata } from "next";
+import { getProductsByCategoryFromDB } from "@/lib/product-service";
+import { getPublishedPosts } from "@/content/blog";
+import CategoryLandingPage from "@/components/CategoryLandingPage";
+import { getBreadcrumbJsonLd, getCategoryCollectionJsonLd, getFaqJsonLd } from "@/lib/jsonld";
+
+import type { CategoryContent } from "@/content/category-content";
+
+const categoryMeta: Record<string, CategoryContent> = {
+  "events-celebrations": {
+  "title": "Occasions & Events Equipment Rental in Valencia",
+  "description": "Rent pizza oven kits, slush machines, karaoke, games, tables and chairs for gatherings in Valencia. Choose your dates and check delivery options.",
+  "emoji": "🎉",
+  "image": "/categories/events-celebrations.webp",
+  "editorialHeading": "Make room for a celebration in Valencia",
+  "editorialParagraphs": [
+    "Plan a pizza evening at your holiday home, karaoke with friends or a family games afternoon. Each product page shows daily rental rates, included accessories and the space or power needed.",
+    "Equipment offered on request needs availability confirmed for your dates. For outdoor cooking, choose a suitable private space where the venue permits it. Games also appear in our Beach & Outdoor catalogue, so you can plan a picnic or an afternoon near the Turia Gardens."
+  ],
+  "blogTags": [],
+  "featuredHeading": "Plan your gathering",
+  "featuredDescription": "Choose the equipment, check your space and arrange the handover.",
+  "featuredPathways": [
+    {
+      "eyebrow": "Outdoor activities",
+      "title": "Beach & Outdoor equipment",
+      "description": "Find games, coolers and shade for your time outdoors.",
+      "href": "/rental/travel-outdoors"
+    },
+    {
+      "eyebrow": "Rental process",
+      "title": "Delivery, collection and booking",
+      "description": "See how to choose dates and arrange delivery or pickup.",
+      "href": "/how-it-works"
+    }
+  ],
+  "faqHeading": "Occasions & Events rental: FAQs",
+  "faqs": [
+    {
+      "question": "What can I rent for a gathering in Valencia?",
+      "answer": "Choose from pizza oven kits, slush machines, karaoke equipment, compact games, tables, chairs and coolers. Each listing explains the exact equipment, daily rates and booking options."
+    },
+    {
+      "question": "Do pizza rentals include accessories or a host?",
+      "answer": "The pizza kit listings specify the oven and accessories included. Fuel and ingredients are separate. These are equipment rentals; a chef, host or pizza-making experience is not included."
+    },
+    {
+      "question": "Can I book equipment that is offered on request?",
+      "answer": "Select your dates on the product page and contact us to confirm availability before arranging payment. A request is not a confirmed reservation."
+    },
+    {
+      "question": "Can I use the equipment at any venue?",
+      "answer": "Check with your host or venue that your planned activity is permitted and that the space, power and access are suitable. Follow the product’s outdoor-use and setup requirements."
+    }
+  ]
+},
+  "baby-gear": {
+    title: "Baby & Toddler Gear Rental in Valencia",
+    description: "Rent travel cots, strollers, high chairs, baby baths and toddler gear in Valencia, with pickup and delivery options shown for your booking.",
+    emoji: "👶",
+    editorialHeading: "Why Rent Baby Gear in Valencia?",
+    editorialParagraphs: [
+      "Travelling with a baby or toddler means deciding which familiar essentials must come from home and which bulky items can be arranged in Valencia before the trip. Product pages show the dimensions, age or weight guidance, included parts and current dates needed to make that decision.",
+      "Choose the products that fit the stay, then use the booking flow to review the pickup or delivery options offered for the address and dates. If access, timing, assembly or a specific accessory matters, confirm it before payment rather than relying on a general category promise.",
+      "Routes and accommodation access vary across Valencia. A wide lift, a compact taxi transfer, a paved seafront route and an older building with steps create different equipment needs, so check the exact journeys and spaces that matter for your family.",
+    ],
+    blogTags: ["family", "kids"],
+    familyHeading: "Need help comparing similar products?",
+    familyDescription: "The complete catalogue is shown above. These focused pages help with stroller, car-seat or sleep-equipment decisions when you want more detail.",
+    familyPathways: [
+      {
+        eyebrow: "Stroller collection",
+        title: "Compare Stroller Rentals in Valencia",
+        description: "Compare compact travel, all-terrain and double stroller options in one place.",
+        href: "/rental/baby-gear/strollers",
+      },
+      {
+        eyebrow: "Car seat collection",
+        title: "Compare Car Seat Rentals in Valencia",
+        description: "Compare infant, rotating, forward-facing and booster options in one place.",
+        href: "/rental/baby-gear/car-seats",
+      },
+      {
+        eyebrow: "Sleep collection",
+        title: "Compare Travel Cots and Cribs in Valencia",
+        description: "Browse current sleep options and check dimensions, inclusions, prices and dates.",
+        href: "/rental/baby-gear/travel-cots-cribs",
+      },
+    ],
+    featuredHeading: "Plan a Smoother Valencia Stay with a Baby",
+    featuredDescription: "Start with a complete arrival setup, choose a toddler-focused city kit, or use our family guide to plan around sleep, feeding and getting around.",
+    featuredPathways: [
+      {
+        eyebrow: "Baby arrival kit",
+        title: "Prepare Your Accommodation Before Arrival",
+        description: "Combine sleep, feeding, bathing and mobility essentials around your baby's routine and stay.",
+        href: "/valencia/kits/baby-arrival-kit",
+      },
+      {
+        eyebrow: "Toddler city kit",
+        title: "Configure a Toddler City Setup",
+        description: "Choose practical mobility, outing and play equipment for exploring Valencia with a toddler.",
+        href: "/valencia/kits/toddler-city-kit",
+      },
+      {
+        eyebrow: "Valencia guide",
+        title: "Plan Valencia with a Baby or Toddler",
+        description: "Compare neighbourhoods, family activities, transport and the bulky equipment worth arranging locally.",
+        href: "/blog/valencia-with-kids-complete-guide",
+      },
+      {
+        eyebrow: "Decision guide",
+        title: "Decide What to Bring, Rent or Buy",
+        description: "Use a practical item-by-item framework for your trip length, transport plan and accommodation.",
+        href: "/blog/rent-vs-buy-baby-gear-valencia",
+      },
+    ],
+    faqHeading: "Baby Equipment Rental in Valencia: FAQs",
+    faqs: [
+      { question: "Can I rent a stroller or travel cot in Valencia?", answer: "Yes. Choose the relevant product, enter your dates and review the available pickup or delivery options before payment. Product pages list dimensions, included parts and suitability details." },
+      { question: "Can baby equipment be delivered to my accommodation?", answer: "The booking flow shows the delivery and pickup options available for your address and dates. Access details, timing and any setup requirements can be confirmed before handover." },
+      { question: "How is rental baby equipment prepared between bookings?", answer: "Equipment is checked and prepared between rentals. Product-specific care, hygiene and safety information is shown on the relevant listing, and you can contact us with any suitability question before booking." },
+      { question: "Should I book individual items or a Baby Arrival Kit?", answer: "Choose individual products when you need one specific item. The Baby Arrival Kit is the simpler starting point when you need several sleep, feeding, bathing or mobility essentials for the same stay." },
+    ],
+  },
+  "kids-family": {
+    title: "Kids & Family Equipment Rental in Valencia",
+    description: "Rent balance bikes, toys and practical family equipment in Valencia. Flexible pickup and delivery options for your stay.",
+    emoji: "🧸",
+    image: "/discover/turia-gardens-hero.webp",
+    editorialHeading: "Useful Gear for Family Stays in Valencia",
+    editorialParagraphs: [
+      "Family holidays are easier when children have age-appropriate equipment without every bulky item travelling through the airport. Renting locally keeps luggage lighter and lets you choose what fits the stay rather than what fits the suitcase.",
+      "This collection covers practical equipment for older toddlers, children and shared family activities. Individual product pages explain the relevant size, age guidance, included parts and rental conditions so you can check suitability before booking.",
+      "Whether you are staying near the Turia Gardens, the beach or in a Valencia apartment, we can help coordinate pickup or delivery around your accommodation and rental dates.",
+    ],
+    blogTags: ["family", "kids"],
+    featuredHeading: "Plan a Family-Friendly Valencia Stay",
+    featuredDescription: "Connect individual equipment with a practical family kit or use our local guide to plan activities around your children and accommodation.",
+    featuredPathways: [
+      {
+        eyebrow: "Toddler kit",
+        title: "Configure a Toddler City Kit",
+        description: "Combine practical mobility, play and outing essentials for exploring Valencia with a toddler.",
+        href: "/valencia/kits/toddler-city-kit",
+      },
+      {
+        eyebrow: "Family beach kit",
+        title: "Build a Family Beach Setup",
+        description: "Bring together shade, carrying, cooling and play equipment for Valencia beach days.",
+        href: "/valencia/kits/family-beach-kit",
+      },
+      {
+        eyebrow: "Valencia guide",
+        title: "Plan Valencia with Children",
+        description: "Use our practical family guide to choose neighbourhoods, activities and useful equipment for your stay.",
+        href: "/blog/valencia-with-kids-complete-guide",
+      },
+    ],
+    faqHeading: "Kids & Family Equipment Rental in Valencia: FAQs",
+    faqs: [
+      {
+        question: "What children's equipment can I rent in Valencia?",
+        answer: "The published collection shows the balance bikes, activity equipment and other family items currently offered. Choose a product and enter your dates to check its live availability before payment.",
+      },
+      {
+        question: "How do I check whether an item suits my child?",
+        answer: "Use the age guidance, height or weight limits, dimensions and included parts on the individual product page. If the fit is unclear, contact us with your child's measurements before booking.",
+      },
+      {
+        question: "Can children's equipment be delivered to my accommodation?",
+        answer: "The booking flow shows the pickup and delivery options available for the selected product, address and dates. Any access, timing or handover details can be confirmed before delivery.",
+      },
+      {
+        question: "Should I choose one product or a family kit?",
+        answer: "Choose an individual product for one specific need. The Toddler City and Family Beach kits are useful planning starting points when you need several items; submit the configuration so the complete request can be reviewed.",
+      },
+    ],
+  },
+  "mobility": {
+    title: "Mobility Equipment Rental in Valencia",
+    description: "Rent wheelchairs, mobility scooters, walkers and daily aids in Valencia, with delivery and collection for your hotel or apartment.",
+    emoji: "♿",
+    editorialHeading: "Exploring Valencia with Mobility Equipment",
+    editorialParagraphs: [
+      "Valencia has many relatively level routes, broad promenades and step-free public spaces, but access still varies by street, building, transport stop and destination. Check the route that matters for your stay instead of assuming the whole city will work in the same way.",
+      "Renting locally can avoid taking bulky mobility equipment through an airport. Current pickup and delivery options are shown during booking, while steps, lifts, narrow doors and storage constraints can be checked before payment when they affect the handover.",
+      "Start with the type of support you need: a mobility scooter for suitable paved journeys, a wheelchair for seated mobility or a rollator for walking support. Each product page records the relevant fit, access, transport and use constraints.",
+    ],
+    blogTags: ["mobility", "accessibility"],
+    familyHeading: "Compare mobility equipment by type",
+    familyDescription: "The complete catalogue is shown above. Use the focused scooter or wheelchair pages when you want help comparing similar options.",
+    familyPathways: [
+      {
+        eyebrow: "Mobility scooters",
+        title: "Compare mobility scooters for Valencia",
+        description: "Compare transportability, turning space, user capacity, storage and route requirements before choosing.",
+        href: "/rental/mobility/mobility-scooters",
+      },
+      {
+        eyebrow: "Wheelchairs",
+        title: "Compare wheelchair rentals in Valencia",
+        description: "Browse current wheelchair options by propulsion, transport, dimensions and access needs.",
+        href: "/rental/mobility/wheelchairs",
+      },
+    ],
+    featuredHeading: "Plan Accessible Travel in Valencia",
+    featuredDescription: "Choose a focused accessibility setup, prepare for a visit with older relatives, or use our local guide to understand routes and facilities.",
+    featuredPathways: [
+      {
+        eyebrow: "Accessibility kit",
+        title: "Configure an Accessible Valencia Kit",
+        description: "Combine mobility equipment with practical bathroom and daily-living support for your accommodation.",
+        href: "/valencia/kits/accessible-valencia-kit",
+      },
+      {
+        eyebrow: "Family visit kit",
+        title: "Prepare for Grandparents Visiting",
+        description: "Build a tailored setup around walking support, comfort and Valencia's warmer conditions.",
+        href: "/valencia/kits/grandparents-visiting-kit",
+      },
+      {
+        eyebrow: "Accessibility guide",
+        title: "Explore Accessible Valencia",
+        description: "Plan transport, attractions, beaches and neighbourhood routes with practical accessibility context.",
+        href: "/blog/wheelchair-accessibility-valencia",
+      },
+    ],
+    faqHeading: "Mobility Equipment Rental in Valencia: FAQs",
+    faqs: [
+      { question: "Can I rent a wheelchair or mobility scooter in Valencia?", answer: "Yes. Published listings show the available wheelchair, scooter and walking-aid options. Enter your dates to check inventory and review pickup or delivery before payment." },
+      { question: "How do I choose between a wheelchair, rollator and scooter?", answer: "Consider walking ability, transfer needs, travel distance, storage, transport and the accommodation entrance. Each product page lists dimensions and key specifications; contact us if you need help comparing options." },
+      { question: "Can mobility equipment be delivered to a hotel or apartment?", answer: "Available delivery and pickup options are shown during booking. Tell us about steps, lifts, door widths or reception restrictions so the handover can be planned safely." },
+      { question: "Is Valencia suitable for wheelchair and scooter users?", answer: "Many central routes, the Turia Gardens and the seafront are relatively level, but surfaces and access vary. Use our accessibility guide to plan routes and verify current transport or venue information directly." },
+    ],
+  },
+  "remote-work": {
+    title: "Remote Work Equipment Rental in Valencia",
+    description: "Rent monitors, standing desks and ergonomic office equipment in Valencia, with delivery and collection for remote-work and longer stays.",
+    emoji: "💻",
+    editorialHeading: "Build a Practical Workspace in Your Valencia Apartment",
+    editorialParagraphs: [
+      "A temporary apartment may have reliable internet but still lack a comfortable place for focused work. Renting remote-work equipment in Valencia lets you add the screen, desk or chair you need without buying furniture for a short or medium-length stay.",
+      "Choose an individual monitor, height-adjustable desk or ergonomic chair according to your working pattern and available space. Each product page explains connections, dimensions, adjustability and compatibility so you can confirm that the equipment suits your laptop and accommodation before booking.",
+      "For a complete setup, the Remote Work Apartment Kit combines the core workstation items and optional add-ons in one request. Delivery and collection options are shown during booking, while access, placement and any assembly requirements can be confirmed with the apartment in advance.",
+    ],
+    blogTags: ["digital nomad", "remote work"],
+    featuredHeading: "Plan Your Valencia Work Setup",
+    featuredDescription: "Start with a complete apartment workstation or use our Valencia digital-nomad guide to plan where and how you want to work.",
+    featuredPathways: [
+      {
+        eyebrow: "Workspace kit",
+        title: "Configure a Remote Work Apartment Kit",
+        description: "Combine a monitor, desk, ergonomic seating and practical accessories around your stay.",
+        href: "/valencia/kits/remote-work-apartment-kit",
+      },
+      {
+        eyebrow: "Valencia guide",
+        title: "Plan a Remote-Work Stay in Valencia",
+        description: "Compare apartment working, coworking and neighbourhood considerations for a productive stay.",
+        href: "/blog/digital-nomad-guide-valencia",
+      },
+      {
+        eyebrow: "Setup checklist",
+        title: "Build a Reliable Apartment Workstation",
+        description: "Check internet, dimensions, light, noise and the minimum equipment before your first working day.",
+        href: "/blog/home-office-setup-valencia-apartment",
+      },
+    ],
+    faqHeading: "Remote Work Equipment Rental in Valencia: FAQs",
+    faqs: [
+      { question: "Can I rent a monitor in Valencia for a short stay?", answer: "Yes. Select a published monitor, enter your dates and check availability. The product page lists screen size, ports and included accessories so you can confirm compatibility first." },
+      { question: "Can you deliver office equipment to my apartment?", answer: "The booking flow shows available delivery and collection options for the address and rental window. Building access, lift dimensions and assembly needs can be confirmed before handover." },
+      { question: "What do I need for a temporary home office?", answer: "A monitor, suitable desk height and supportive chair are the core items. Laptop stands, input devices or hubs depend on your equipment and working pattern. The Remote Work Apartment Kit provides a combined starting point." },
+      { question: "Can I rent equipment for several weeks or months?", answer: "Enter the complete rental window on the product page. The pricing calculator applies the relevant duration tier and shows availability and the total before checkout." },
+    ],
+  },
+  "home-living": {
+    title: "Portable Air Conditioner Rental in Valencia",
+    description: "Rent portable air conditioners, air purifiers and apartment comfort equipment in Valencia, with delivery and collection for short and long stays.",
+    heading: "Apartment Comfort Rentals in Valencia",
+    introDescription: "Rent cooling, air-quality, cleaning and practical home equipment in Valencia, with delivery and collection for short and long stays.",
+    emoji: "🏠",
+    editorialHeading: "Make Your Valencia Apartment Work for Your Stay",
+    editorialParagraphs: [
+      "Holiday apartments and temporary homes do not always include the equipment needed for a comfortable Valencia stay. Portable cooling, air-quality equipment and practical apartment upgrades can solve a specific problem without buying, storing or disposing of a bulky appliance after the trip.",
+      "For summer stays, a portable air conditioner can make a bedroom or living area more comfortable when the property has limited cooling. These units need suitable window or balcony-door venting, so each product page explains room coverage, exhaust requirements, noise and setup considerations before availability is confirmed.",
+      "Air purifiers can support guests who are sensitive to dust, pollen or indoor air quality. Choose an individual item below or start with the Summer Apartment Kit for a tailored combination. Delivery and collection options are shown during booking, with final setup details confirmed for the accommodation.",
+    ],
+    blogTags: ["summer", "seasonal"],
+    featuredHeading: "Plan a More Comfortable Valencia Stay",
+    featuredDescription: "Start with a seasonal apartment kit or use our practical summer guide to decide which cooling and comfort equipment fits your accommodation.",
+    featuredPathways: [
+      {
+        eyebrow: "Apartment kit",
+        title: "Configure a Summer Apartment Kit",
+        description: "Combine suitable cooling and air-quality equipment for hot-weather stays in Valencia.",
+        href: "/valencia/kits/summer-apartment-survival-kit",
+      },
+      {
+        eyebrow: "Long-stay kit",
+        title: "Upgrade a Temporary Kitchen",
+        description: "Combine practical kitchen equipment for a longer apartment stay without buying bulky appliances.",
+        href: "/valencia/kits/long-stay-kitchen-upgrade-kit",
+      },
+      {
+        eyebrow: "Practical guide",
+        title: "Prepare for Summer in Valencia",
+        description: "Use local routines, apartment cooling strategies and beach timing to manage warmer days.",
+        href: "/blog/valencia-summer-survival-guide",
+      },
+    ],
+    faqHeading: "Portable AC and Apartment Equipment Rental: FAQs",
+    faqs: [
+      { question: "Can I rent a portable air conditioner in Valencia?", answer: "Yes, when a published unit is available for your dates. Check the product page for room guidance, exhaust requirements, dimensions and noise information before booking." },
+      { question: "Will a portable air conditioner work in my apartment?", answer: "The room needs a suitable window or balcony-door route for the exhaust hose and enough space around the unit. Review the listing and confirm the opening type with us if you are unsure." },
+      { question: "Do you deliver and collect portable air conditioners?", answer: "Available delivery and collection options, timing and fees are shown during booking. Access restrictions and placement can be confirmed before handover because portable units are bulky." },
+      { question: "Should I rent an air conditioner, fan or air purifier?", answer: "An air conditioner actively cools when it can vent outside. A fan moves air but does not lower room temperature. An air purifier addresses particles rather than heat. Choose according to the accommodation problem you need to solve." },
+    ],
+  },
+  "travel-outdoors": {
+    title: "Beach Equipment Rental in Valencia",
+    description: "Rent beach umbrellas, shelters and family beach shade in Valencia, with pickup or delivery options for Malvarrosa, Patacona and nearby stays.",
+    emoji: "🏖️",
+    editorialHeading: "Rent Beach Gear for Valencia Days by the Sea",
+    editorialParagraphs: [
+      "Beach umbrellas and shelters are awkward to pack, difficult to carry through an airport and rarely supplied by holiday apartments. Renting beach equipment in Valencia gives you reliable shade without buying bulky gear for a short stay.",
+      "Choose the product that fits your group and beach plans, from a traditional umbrella setup to a compact family shelter. Each product page records the verified dimensions, weight, included parts, setup guidance and important wind or care limitations before you check availability.",
+      "Pickup and delivery options make the equipment practical for stays near Malvarrosa, Patacona, Cabanyal and the city centre. Families who need more than shade can also start with the Family Beach Kit and request the combination that suits their dates.",
+    ],
+    blogTags: ["summer", "beach"],
+    featuredHeading: "Plan Your Valencia Beach Days",
+    featuredDescription: "Connect your equipment choice with a family kit or a practical guide to the beach nearest your accommodation.",
+    featuredPathways: [
+      {
+        eyebrow: "Beach kit",
+        title: "Build a Family Beach Setup",
+        description: "Combine shade with practical family add-ons for beach days during your Valencia stay.",
+        href: "/valencia/kits/family-beach-kit",
+      },
+      {
+        eyebrow: "Local guide",
+        title: "Plan a Day at Malvarrosa",
+        description: "Understand the promenade, family facilities and what to bring for Valencia's best-known urban beach.",
+        href: "/discover/malvarrosa-beach",
+      },
+      {
+        eyebrow: "Local guide",
+        title: "Explore Patacona Beach",
+        description: "Plan a slightly quieter beach day north of Malvarrosa and choose suitable equipment for your stay.",
+        href: "/discover/patacona-beach",
+      },
+    ],
+    searchIntentHeading: "Choose the Right Beach Setup",
+    searchIntentDescription: "Use one Valencia beach-equipment hub to compare the setup you need rather than searching across separate, overlapping rental pages.",
+    searchIntents: [
+      {
+        title: "Shade for a simple beach day",
+        description: "Compare umbrellas and compact shelters by covered area, packed size, setup method and wind guidance before checking your dates.",
+      },
+      {
+        title: "A complete family beach setup",
+        description: "Start with the Family Beach Kit when you need shade plus practical extras such as cooling, towels, toys or easier transport.",
+      },
+      {
+        title: "Equipment that is easier to carry",
+        description: "Browse coolers, beach wagons, folding furniture and other published gear for Malvarrosa, Patacona and stays near Valencia's coast.",
+      },
+    ],
+    faqHeading: "Beach Equipment Rental in Valencia: FAQs",
+    faqs: [
+      {
+        question: "Can I rent beach equipment in Valencia?",
+        answer: "Yes. Browse the published Beach & Outdoor catalogue, select your dates and check availability. Pickup or delivery options are shown during the booking flow before payment.",
+      },
+      {
+        question: "Do you deliver beach equipment to Malvarrosa or Patacona?",
+        answer: "Supported pickup and delivery options, timing and any applicable fee are shown for the address and dates entered during booking. Contact us if your accommodation sits outside the listed service areas.",
+      },
+      {
+        question: "What beach equipment can I rent?",
+        answer: "The published catalogue may include umbrellas, shelters, towels, coolers, wagons, folding furniture and beach games. Exact products and availability depend on your selected dates.",
+      },
+      {
+        question: "Should I choose a beach umbrella or a shelter?",
+        answer: "An umbrella is flexible and familiar for smaller groups. A shelter can provide a broader covered area for families. Compare dimensions, setup instructions and wind limitations on each product page.",
+      },
+      {
+        question: "Can I book beach gear for a single day?",
+        answer: "Enter your preferred start and end time on the relevant product page. The booking flow will show whether the item is available and calculate the applicable rental price for that period.",
+      },
+    ],
+  },
+  "fitness-wellness": {
+    title: "Sports Equipment Rental in Valencia",
+    description: "Rent sports, fitness and wellness equipment in Valencia for workouts, court sessions or longer stays, with pickup and delivery options shown when you book.",
+    emoji: "🎾",
+    image: "/categories/sports-wellness.webp",
+    editorialHeading: "Rent Sports Equipment for Your Valencia Stay",
+    editorialParagraphs: [
+      "Bulky sports and fitness equipment is rarely worth carrying through an airport or buying for a temporary stay. Renting locally lets you keep up a routine, plan a specific activity or make a longer visit more comfortable without adding it to your luggage.",
+      "Start with the activity and the space you will have available. Product pages show dimensions, included parts, setup details and pricing so you can decide what works in your accommodation, at a court or elsewhere in Valencia.",
+      "Choose the product you want, enter your dates and review the available pickup or delivery options before payment. If you plan to use equipment at a club or shared venue, check its access and equipment rules before booking.",
+    ],
+    blogTags: ["sports", "fitness", "wellness"],
+    featuredHeading: "Plan Sports Equipment Around Your Stay",
+    featuredDescription: "Check how rentals work, then use our local Valencia guidance to plan transport, timing and practical equipment around your activity.",
+    featuredPathways: [
+      {
+        eyebrow: "Rental process",
+        title: "Review Pickup, Delivery and Booking",
+        description: "Understand availability checks, payment, handover and collection before choosing your dates.",
+        href: "/how-it-works",
+      },
+      {
+        eyebrow: "Local guide",
+        title: "Explore the Turia Gardens",
+        description: "Plan a day around Valencia's long urban park, its activity areas and practical access considerations.",
+        href: "/discover/turia-gardens",
+      },
+    ],
+    searchIntentHeading: "Choose What Fits Your Plans",
+    searchIntentDescription: "Think about where you will use the equipment, how much space you have and whether you need to transport or set it up during your stay.",
+    searchIntents: [
+      {
+        title: "Training at your accommodation",
+        description: "Check the available floor space, noise, power requirements and whether the equipment can be carried through entrances or lifts.",
+      },
+      {
+        title: "Court or outdoor sessions",
+        description: "Confirm access and equipment rules with the venue, then review the product's packed size, included parts and transport needs.",
+      },
+      {
+        title: "Keeping active during a longer stay",
+        description: "Choose equipment that suits your normal routine and available space without buying and storing it for a temporary visit.",
+      },
+    ],
+    faqHeading: "Sports Equipment Rental in Valencia: FAQs",
+    faqs: [
+      {
+        question: "Can I rent sports or fitness equipment in Valencia?",
+        answer: "Yes. Browse the current Sports & Wellness catalogue, open the product you want and enter your dates to check availability, pricing and the pickup or delivery options offered for your booking.",
+      },
+      {
+        question: "Can sports equipment be delivered to my accommodation or a club?",
+        answer: "The booking flow shows the delivery options available for the address and dates you enter. If the destination is a club or shared venue, confirm that it can receive and permits the equipment before booking.",
+      },
+      {
+        question: "What should I check before choosing equipment?",
+        answer: "Review the dimensions, packed size, included parts, setup, power needs and any space or venue requirements shown on the product page. Contact us if you need help checking whether it will work for your plans.",
+      },
+      {
+        question: "Can I rent sports equipment for one day?",
+        answer: "Enter your preferred start and end time on the product page. The availability check will confirm whether the item can be booked and calculate the applicable price for that rental window.",
+      },
+    ],
+  },
+};
+
+interface Props {
+  params: Promise<{ category: string }>;
+}
+
+export async function generateStaticParams() {
+  return Object.keys(categoryMeta).map((category) => ({ category }));
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { category } = await params;
+  const meta = categoryMeta[category];
+  if (!meta) return { title: "Category Not Found" };
+  return {
+    title: meta.title,
+    description: meta.description,
+    alternates: {
+      canonical: `https://rentandroll.com/rental/${category}`,
+      languages: {
+        en: `https://rentandroll.com/rental/${category}`,
+        es: `https://rentandroll.com/es/rental/${category}`,
+        "x-default": `https://rentandroll.com/rental/${category}`,
+      },
+    },
+    openGraph: {
+      title: meta.title,
+      description: meta.description,
+      url: `https://rentandroll.com/rental/${category}`,
+      images: [{ url: meta.image ?? `/categories/${category}.webp`, alt: meta.title }],
+    },
+  };
+}
+
+export default async function CategoryPage({ params }: Props) {
+  const { category } = await params;
+  const meta = categoryMeta[category];
+  if (!meta) notFound();
+  const displayTitle = meta.heading ?? meta.title;
+  const displayDescription = meta.introDescription ?? meta.description;
+
+  const categoryProducts = await getProductsByCategoryFromDB(category);
+
+  // Find related blog posts
+  const relatedPosts = getPublishedPosts()
+    .filter((post) => post.tags.some((tag) => (meta.blogTags ?? []).includes(tag)))
+    .slice(0, 2);
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            getCategoryCollectionJsonLd({
+              name: displayTitle,
+              description: displayDescription,
+              url: `https://rentandroll.com/rental/${category}`,
+              locale: "en",
+              products: categoryProducts,
+            })
+          ),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            getBreadcrumbJsonLd([
+              { name: "Home", url: "https://rentandroll.com" },
+              { name: "Valencia", url: "https://rentandroll.com/valencia" },
+              { name: displayTitle, url: `https://rentandroll.com/rental/${category}` },
+            ])
+          ),
+        }}
+      />
+      {meta.faqs && meta.faqs.length > 0 && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(
+              getFaqJsonLd(meta.faqs.map((faq) => ({ q: faq.question, a: faq.answer })))
+            ),
+          }}
+        />
+      )}
+      <CategoryLandingPage meta={meta} products={categoryProducts} locale="en" relatedPosts={relatedPosts} />
+    </>
+  );
+}

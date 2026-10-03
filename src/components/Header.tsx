@@ -6,69 +6,34 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { indexableSeoCategoryClusters } from "@/data/seo-clusters";
 import { SITE_IDENTITY } from "@/config/site";
-
-const localizedRoutePairs = [
-  {
-    en: "/valencia/host-services",
-    es: "/es/valencia/servicios-anfitriones",
-  },
-  {
-    en: "/partners",
-    es: "/es/colaboraciones",
-  },
-] as const;
+import { siteContext } from "@/i18n/site-context";
+import { germanCategories } from "@/content/german-categories";
+import { publicLocales, localeRegistry } from "@/i18n/config";
+import { publicLocaleHref } from "@/lib/public-routes";
 
 export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [browseOpen, setBrowseOpen] = useState(false);
   const pathname = usePathname();
   if (pathname === "/agent" || (pathname.startsWith("/agent/") && pathname !== "/agent/login")) return null;
-  const isSpanish = pathname.startsWith("/es");
-  const prefix = isSpanish ? "/es" : "";
-  const explicitLocalePair = localizedRoutePairs.find(
-    (pair) => pair.en === pathname || pair.es === pathname,
-  );
-  const hasSpanishEquivalent =
-    Boolean(explicitLocalePair) ||
-    pathname === "/" ||
-    pathname === "/valencia" ||
-    pathname === "/blog" ||
-    pathname === "/blog/best-beaches-valencia-families" ||
-    pathname === "/blog/valencia-summer-survival-guide" ||
-    pathname === "/blog/valencia-with-kids-complete-guide" ||
-    pathname === "/blog/wheelchair-accessibility-valencia" ||
-    pathname === "/blog/digital-nomad-guide-valencia" ||
-    pathname === "/blog/best-day-trips-from-valencia" ||
-    pathname === "/faq" ||
-    pathname === "/how-it-works" ||
-    pathname === "/refunds" ||
-    pathname === "/about" ||
-    pathname === "/contact" ||
-    pathname === "/privacy" ||
-    pathname === "/terms" ||
-    pathname === "/cookies" ||
-    pathname.startsWith("/product/") ||
-    pathname.startsWith("/rental/") ||
-    pathname.startsWith("/valencia/kits");
+  const { locale, prefix, privatePreview } = siteContext(pathname);
+  const isSpanish = locale === "es";
+  const isGerman = locale === "de";
+  const languageLinks = privatePreview ? [{ locale: "en", href: "/", label: "English" }] : publicLocales.filter(target => target !== locale).map(target => ({ locale: target, href: publicLocaleHref(pathname, target), label: localeRegistry[target].name }));
 
-  const switchLocaleHref = explicitLocalePair
-    ? isSpanish
-      ? explicitLocalePair.en
-      : explicitLocalePair.es
-    : isSpanish
-      ? pathname.replace(/^\/es/, "") || "/"
-      : hasSpanishEquivalent
-        ? `/es${pathname === "/" ? "" : pathname}`
-        : "/es";
-  const switchLocaleLabel = isSpanish ? "EN 🇬🇧" : "ES 🇪🇸";
-
-  const categories = indexableSeoCategoryClusters.map((category) => ({
-    name: isSpanish ? category.nameEs : category.nameEn,
+  const categories = (privatePreview ? [] : indexableSeoCategoryClusters).map((category) => ({
+    name: isGerman ? germanCategories[category.slug]?.title || "Mietartikel" : isSpanish ? category.nameEs : category.nameEn,
     href: `${prefix}/rental/${category.slug}`,
     emoji: category.emoji,
   }));
 
-  const navLinks = [
+  const navLinks = isGerman ? [
+    { name: privatePreview ? "Mietartikel-Vorschau" : "Alles zum Mieten", href: prefix },
+    { name: "Mietpakete", href: `${prefix}/valencia/kits` },
+    { name: "So funktioniert’s", href: `${prefix}/how-it-works` },
+    { name: "Kontakt", href: `${prefix}/contact` },
+    { name: "Neuigkeiten", href: `${prefix}/newsletter` },
+  ] : [
     { name: "Kits", href: `${prefix}/valencia/kits` },
     { name: "Valencia", href: `${prefix}/valencia` },
     { name: isSpanish ? "Descubrir" : "Discover", href: `${prefix}/discover` },
@@ -78,10 +43,10 @@ export default function Header() {
     { name: "Blog", href: `${prefix}/blog` },
   ];
 
-  const ctaLabel = isSpanish ? "Reservar" : "Rent Now";
-  const ctaHref = `${prefix}/valencia`;
-  const categoriesLabel = isSpanish ? "Categorías" : "Categories";
-  const browseLabel = isSpanish ? "Explorar ▾" : "Browse ▾";
+  const ctaLabel = isGerman ? "Verfügbarkeit prüfen" : isSpanish ? "Reservar" : "Rent Now";
+  const ctaHref = isGerman ? prefix : `${prefix}/valencia`;
+  const categoriesLabel = isGerman ? "Kategorien" : isSpanish ? "Categorías" : "Categories";
+  const browseLabel = isGerman ? "Alles zum Mieten" : isSpanish ? "Explorar ▾" : "Browse ▾";
 
   return (
     <header className="sticky top-0 z-50 bg-white border-b border-border">
@@ -89,10 +54,10 @@ export default function Header() {
         <div className="flex items-center justify-between h-20 lg:h-[88px]">
           {/* Logo */}
           <Link
-            href={isSpanish ? "/es" : "/"}
+            href={prefix || "/"}
             className="flex items-center"
             id="header-logo"
-            aria-label={`${SITE_IDENTITY.brandName} home`}
+            aria-label={`${SITE_IDENTITY.brandName} ${isGerman ? "Startseite" : isSpanish ? "Inicio" : "home"}`}
           >
             <Image
               src={SITE_IDENTITY.headerLogoPath}
@@ -106,7 +71,7 @@ export default function Header() {
 
           {/* Desktop Navigation */}
           <nav className="hidden xl:flex items-center gap-1" id="desktop-nav">
-            <div
+            {categories.length > 0 && <div
               className="relative"
               onMouseEnter={() => setBrowseOpen(true)}
               onMouseLeave={() => setBrowseOpen(false)}
@@ -134,7 +99,7 @@ export default function Header() {
                   </div>
                 </div>
               )}
-            </div>
+            </div>}
 
             {navLinks.map((link) => (
               <Link
@@ -150,13 +115,7 @@ export default function Header() {
 
           {/* Right side: Language + CTA */}
           <div className="hidden xl:flex items-center gap-3">
-            <Link
-              href={switchLocaleHref}
-              className="px-2.5 py-1.5 text-xs font-semibold text-neutral-500 hover:text-brand border border-border rounded-md hover:border-brand transition-all"
-              id="lang-switch"
-            >
-              {switchLocaleLabel}
-            </Link>
+            {languageLinks.map(language => <Link key={language.locale} href={language.href} hrefLang={language.locale} className="px-2.5 py-1.5 text-xs font-semibold text-neutral-500 hover:text-brand border border-border rounded-md hover:border-brand transition-all" id={language.locale === "de" ? "lang-switch-de" : "lang-switch"}>{language.label}</Link>)}
             <Link
               href={ctaHref}
               className="btn btn-primary btn-sm"
@@ -170,7 +129,8 @@ export default function Header() {
           <button
             className="xl:hidden p-2 rounded-lg hover:bg-surface-muted transition-colors"
             onClick={() => setMobileOpen(!mobileOpen)}
-            aria-label="Toggle menu"
+            aria-label={isGerman ? "Menü öffnen oder schließen" : isSpanish ? "Abrir o cerrar menú" : "Toggle menu"}
+            aria-expanded={mobileOpen}
             id="mobile-menu-toggle"
           >
             <svg
@@ -204,7 +164,7 @@ export default function Header() {
                 </Link>
               ))}
             </div>
-            <div className="border-t border-border pt-4 mb-4">
+            {categories.length > 0 && <div className="border-t border-border pt-4 mb-4">
               <p className="px-3 text-xs font-semibold text-neutral-400 uppercase tracking-wider mb-2">
                 {categoriesLabel}
               </p>
@@ -219,11 +179,9 @@ export default function Header() {
                   {cat.name}
                 </Link>
               ))}
-            </div>
+            </div>}
             <div className="flex items-center gap-3 px-3">
-              <Link href={switchLocaleHref} className="px-3 py-2 text-sm font-medium text-neutral-500 border border-border rounded-md">
-                {switchLocaleLabel}
-              </Link>
+              {languageLinks.map(language => <Link key={language.locale} href={language.href} hrefLang={language.locale} className="px-3 py-2 text-sm font-medium text-neutral-500 border border-border rounded-md" onClick={() => setMobileOpen(false)}>{language.label}</Link>)}
               <Link href={ctaHref} className="btn btn-primary btn-sm flex-1 text-center" onClick={() => setMobileOpen(false)}>
                 {ctaLabel}
               </Link>

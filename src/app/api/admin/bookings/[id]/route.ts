@@ -344,6 +344,9 @@ export async function PUT(
     const emailSent = await sendBookingStatusUpdate(
       {
         bookingRef: b.booking_ref as string,
+        locale: b.locale as string | null,
+        timezone: b.timezone as string | null,
+        quantity: Number(b.quantity || 1),
         customerName: b.customer_name as string,
         customerEmail: b.customer_email as string,
         customerPhone: (b.customer_phone as string) || undefined,

@@ -536,3 +536,34 @@ Analytics event definitions live in `docs/ANALYTICS_SETUP.md`.
 Email templates are centralized in `src/lib/email.ts`; deliverability and lifecycle coverage are documented in `docs/EMAIL_DELIVERABILITY.md`.
 Newsletter consent records live in `newsletter_subscribers` and are created only through `/api/newsletter` using the server-side service role.
 Analytics loads only after explicit browser consent. Operational payment failures are recorded server-side in `system_incidents` and summarized by `/api/admin/health`.
+
+## German private production checkpoint — 2 October 2026
+
+The user explicitly authorized the seven prepared production migrations and private
+import by replying “yes proceed”. The earlier automatic approval rejection is
+resolved. All seven migrations are installed with matching checksum ledger entries.
+All 128 German product translations are saved as private drafts using actual current
+production source revisions; the final read-only verification matched every field
+against the prepared package. Eight committed batches have exact per-product receipts.
+
+English/Spanish content and anonymous reads, catalogue, prices, markets and bookings
+were unchanged across each migration/import transaction. Anonymous reads expose zero
+German translations, FAQs, locale rows or market-language rows; all German visibility,
+booking and indexing gates remain closed. Workflow execution is restricted to the
+service role. No real payment/message, push, deployment or publication occurred.
+
+The save events identify an explicitly documented automated import actor, not a
+human reviewer or an impersonated auth account. All production rows remain drafts
+with null review fields. Human admin attribution and revision-bound review, approved
+release manifest, remaining visual/email acceptance and authorized activation still
+remain before launch. The 52-test localization suite and final build passed before
+these schema/import operations; no application code changed in this checkpoint.
+
+Current receipts: F:/rentanything/agent-work/german-launch-2026-10-02/private-production-verification.json.
+Release checklist: F:/rentanything/agent-work/german-launch-2026-10-02/RELEASE-CHECKLIST.md.
+
+## German release configuration — 3 October 2026
+
+The owner reaffirmed launch authorization. vercel.json now uses the documented buildCommand override to run NEXT_PUBLIC_GERMAN_ENABLED=true npm run build through the existing Git deployment. This is a non-secret public release flag, compiled into Next.js bundles. No dashboard credentials or access-control changes are needed. The approved source manifest and database locale/market/revision guards remain required. Runtime secrets, cron configuration and EN/ES settings are preserved. Close the database visibility/booking/indexing gates for immediate withdrawal; changing a NEXT_PUBLIC flag requires a rebuild.
+
+Primary reference: https://vercel.com/docs/project-configuration/vercel-json. The official https://openapi.vercel.sh/vercel.json schema was saved in F:/rentanything/agent-work/german-launch-2026-10-02/vercel-configuration-schema.json. It confirms buildCommand is supported. The deprecated env/build.env properties were not introduced. This resolves the prior dashboard-login blocker through the already authorized Git release pipeline.

@@ -1,4 +1,4 @@
-type ProductMetadataLocale = "en" | "es";
+type ProductMetadataLocale = "en" | "es" | "de";
 
 const MAX_TITLE_LENGTH = 60;
 const MIN_DESCRIPTION_LENGTH = 100;
@@ -22,7 +22,7 @@ export function getProductMetadataTitle({
   lowestPrice?: number;
   locale: ProductMetadataLocale;
 }): string {
-  const candidates = locale === "es"
+  const candidates = locale === "de" ? [customTitle, `${name} mieten in Valencia`, `${name} · Valencia`] : locale === "es"
     ? [
         customTitle,
         lowestPrice === undefined ? undefined : `Alquiler ${name} Valencia — desde €${lowestPrice}/día`,
@@ -51,7 +51,7 @@ export function getProductMetadataDescription({
 }): string {
   let value = (customDescription || description).trim();
   if (value.length < MIN_DESCRIPTION_LENGTH) {
-    const suffix = locale === "es"
+    const suffix = locale === "de" ? " Prüfe Verfügbarkeit, Abholung und Lieferung für deinen Aufenthalt in Valencia." : locale === "es"
       ? " Consulta disponibilidad y opciones de recogida o entrega para tu estancia en Valencia."
       : " Check availability, pickup and delivery options for your Valencia stay.";
     value = `${value.replace(/[.!?]?$/, ".")}${suffix}`;

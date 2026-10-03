@@ -25,6 +25,8 @@
     "audit:discover-locales": "node scripts/discover-locale-audit.cjs",
     "smoke:booking": "node scripts/booking-api-smoke.cjs",
     "test:rental-dates": "node --experimental-strip-types --test scripts/rental-dates.test.mjs",
+    "test:localization": "node --import ./scripts/market-test-loader.mjs --test --test-concurrency=1 scripts/localization.test.mjs scripts/localization-database.test.mjs scripts/booking-locale.test.mjs scripts/transaction-localization.test.mjs scripts/translation-workflow.test.mjs scripts/product-translation.test.mjs scripts/outreach-localization.test.mjs scripts/german-information.test.mjs scripts/german-families.test.mjs scripts/bundle-localization.test.mjs scripts/private-quotes.test.mjs scripts/german-release.test.mjs",
+    "audit:locale-coverage": "node --import ./scripts/market-test-loader.mjs scripts/audit-locale-coverage.mjs",
     "test:market-context": "node --import ./scripts/market-test-loader.mjs --test scripts/market-context.test.mjs scripts/market-routes.test.mjs scripts/market-database.test.mjs",
     "test:market-offers": "node --import ./scripts/market-test-loader.mjs --test scripts/product-offer-service.test.mjs scripts/market-catalogue.test.mjs scripts/migration-checksum.test.mjs",
     "test:coupons": "node --experimental-strip-types --test scripts/coupons.test.mjs",

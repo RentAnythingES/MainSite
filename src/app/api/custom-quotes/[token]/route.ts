@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase-admin";
+import { storedBookingLocale } from "@/lib/booking-locale";
+import { germanCustomerAccess } from "@/lib/german-customer-access";
 
 const UUID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
@@ -14,7 +16,7 @@ export async function GET(
   const { data, error } = await supabase
     .from("booking_custom_quotes")
     .select(`
-      public_token, status, display_name, quantity, customer_name, customer_email, customer_phone,
+      public_token, status, display_name, quantity, customer_name, customer_email, customer_phone, locale,
       rental_start_at, rental_end_at, timezone, fulfillment_mode, delivery_address,
       collection_address, delivery_notes, collection_notes, currency, line_items,
       total_cents, customer_terms, expires_at,
@@ -31,6 +33,8 @@ export async function GET(
     return NextResponse.json({ error: "Could not load this quote" }, { status: 500 });
   }
   if (!data) return NextResponse.json({ error: "Quote not found" }, { status: 404 });
+  const locale = storedBookingLocale(data.locale);
+  if (locale === "de" && !germanCustomerAccess()) return NextResponse.json({ error: "Quote not found" }, { status: 404 });
 
   const expired = new Date(data.expires_at).getTime() <= Date.now();
   if (expired && data.status !== "paid" && data.status !== "cancelled") {
@@ -41,6 +45,7 @@ export async function GET(
   return NextResponse.json({
     quote: {
       ...data,
+      locale,
       customer_email: data.customer_email || "",
       customer_phone: data.customer_phone || "",
     },

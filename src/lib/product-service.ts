@@ -1,3 +1,5 @@
+import { localeRegistry } from "@/i18n/config";
+import { translationReadiness, type TranslationEntry } from "@/lib/translation-workflow";
 import { supabase } from "./supabase";
 import type { Product, ProductFAQ } from "@/data/products";
 import { products as staticProducts, getProductBySlug as staticGetBySlug, getProductsByCategory as staticGetByCategory } from "@/data/products";
@@ -11,6 +13,7 @@ import { resolveMarketContext } from "@/lib/market-context";
 import { getProductOffer, listProductOffers, offerProductRow } from "@/lib/product-offer-service";
 import type { ProductOfferProjection } from "@/lib/product-offer-service";
 import { catalogueParity, marketCatalogueMode, readMarketCatalogue } from "@/lib/market-catalogue-mode";
+import { isPublishedTranslation, type TranslationContent } from "@/lib/translation-workflow";
 
 /**
  * Product Service — Supabase-first with static fallback
@@ -47,6 +50,14 @@ function normalizeImageUrl(value: unknown): string {
 type ProductLocale = "en" | "es";
 
 type ProductLocalization = {
+  translated_name?: string;
+  translated_image_alt?: string;
+  publication_status?: string;
+  source_revision?: number | null;
+  translation_revision?: number;
+  reviewed_revision?: number | null;
+  reviewed_by?: string | null;
+  translation_content?: TranslationContent | null;
   product_id: string;
   locale: ProductLocale;
   short_description: string | null;
@@ -60,6 +71,7 @@ type ProductLocalization = {
 };
 
 type ProductFaqRow = {
+  publication_status?: string;
   product_id: string;
   locale: ProductLocale;
   question: string;
@@ -77,7 +89,12 @@ type ProductImage = {
 };
 
 type ProductSeoLocalization = {
-  locale: ProductLocale;
+  publication_status?: string;
+  source_revision?: number | null;
+  translation_revision?: number;
+  reviewed_revision?: number | null;
+  reviewed_by?: string | null;
+  locale: ProductLocale | "de";
   short_description: string | null;
   seo_title: string | null;
   seo_description: string | null;
@@ -89,6 +106,7 @@ type ProductSeoImage = {
 };
 
 type ProductSeoRow = {
+  translation_source_revision?: number;
   slug: string;
   name: string;
   description: string;
@@ -108,6 +126,7 @@ export type ProductSeoState = {
   updatedAt: string | null;
   indexableEn: boolean;
   indexableEs: boolean;
+  indexableDe?: boolean;
 };
 
 const governedFallbackSlugs = new Set([
@@ -137,7 +156,7 @@ function mapProductSeoState(row: ProductSeoRow): ProductSeoState {
     row.pricing_tiers.length > 0;
   const hasEditorialApproval = isLegacyProduct || row.content_status === "content_ready";
   const spanish = row.product_localizations.find(
-    (localization) => localization.locale === "es"
+    (localization) => localization.locale === "es" && isPublishedTranslation(localization, row.translation_source_revision)
   );
 
   const indexableEn =
@@ -155,7 +174,10 @@ function mapProductSeoState(row: ProductSeoRow): ProductSeoState {
     hasText(spanish.seo_description)
   );
 
+  const german = row.product_localizations.find(entry => entry.locale === "de") as unknown as TranslationEntry | undefined;
+  const indexableDe = !!(localeRegistry.de.public && indexableEn && german && Number.isSafeInteger(row.translation_source_revision) && translationReadiness(german, row.translation_source_revision!).published);
   return {
+    indexableDe,
     slug: row.slug,
     categorySlug: category?.slug || "",
     updatedAt: row.updated_at || null,
@@ -188,10 +210,11 @@ async function fetchProductSeoRows(slug?: string): Promise<ProductSeoRow[]> {
       image_url,
       is_active,
       content_status,
+      translation_source_revision,
       updated_at,
       category:categories!products_category_id_fkey (slug),
       pricing_tiers (min_days),
-      product_localizations (locale, short_description, seo_title, seo_description),
+      product_localizations (*),
       product_images (is_primary, rights_status)
     `)
     .eq("is_active", true);
@@ -224,6 +247,12 @@ function mergeProductEditorialContent(
 
   return {
     ...product,
+    name: localization?.translated_name || product.name,
+    ...(localization?.translation_content ? {
+      name: localization.translation_content.name,
+      features: localization.translation_content.features,
+      specs: localization.translation_content.specs,
+    } : {}),
     description: localization?.short_description?.trim() || product.description,
     detailDescription: localization?.detail_description?.trim() || undefined,
     includesText: localization?.includes_text?.trim() || undefined,
@@ -233,15 +262,15 @@ function mergeProductEditorialContent(
     seoTitle: localization?.seo_title?.trim() || undefined,
     seoDescription: localization?.seo_description?.trim() || undefined,
     image: canUseEditorialImage(primaryImage) ? normalizeImageUrl(primaryImage.image_url) : product.image,
-    imageAlt: canUseEditorialImage(primaryImage) ? primaryImage.alt_text?.trim() || product.name : product.name,
-    faqs: faqs.length > 0 ? faqs : product.faqs,
+    imageAlt: localization?.translated_image_alt || localization?.translation_content?.image_alt_text || (canUseEditorialImage(primaryImage) ? primaryImage.alt_text?.trim() || product.name : product.name),
+    faqs: localization?.translation_content?.faqs || (faqs.length > 0 ? faqs : product.faqs),
   };
 }
 
 /**
  * Map a Supabase product row + pricing to the frontend Product interface
  */
-function mapToProduct(row: Record<string, unknown>): Product {
+export function mapPublicProductSource(row: Record<string, unknown>): Product {
   const pricingTiers = (row.pricing_tiers as Array<{ min_days: number; per_day_cents: number }>) || [];
   const category = row.category as { slug: string; name: string } | null;
 
@@ -273,7 +302,7 @@ function mapToProduct(row: Record<string, unknown>): Product {
 }
 
 function mapEmbeddedProduct(row: Record<string, unknown>, locale: ProductLocale): Product {
-  const product = mapToProduct(row);
+  const product = mapPublicProductSource(row);
   const staticProduct = staticGetBySlug(product.slug);
   if (locale === "en" && staticProduct?.faqs) product.faqs = staticProduct.faqs;
 
@@ -281,9 +310,9 @@ function mapEmbeddedProduct(row: Record<string, unknown>, locale: ProductLocale)
   if (!canUseLocalizedContent) return product;
 
   const localization = ((row.product_localizations as ProductLocalization[] | undefined) || [])
-    .find((entry) => entry.locale === locale);
+    .find((entry) => entry.locale === locale && isPublishedTranslation(entry, row.translation_source_revision as number | undefined));
   const faqs = ((row.product_faqs as ProductFaqRow[] | undefined) || [])
-    .filter((entry) => entry.locale === locale)
+    .filter((entry) => entry.locale === locale && (!entry.publication_status || entry.publication_status === "published"))
     .sort((left, right) => (left.sort_order || 0) - (right.sort_order || 0));
   const primaryImage = ((row.product_images as ProductImage[] | undefined) || [])
     .filter((entry) => entry.is_primary !== false)
@@ -554,7 +583,9 @@ export async function getIndexableProductsForSeo(): Promise<ProductSeoState[]> {
 
   try {
     const rows = await fetchProductSeoRows();
-    return rows.map(mapProductSeoState).filter((product) => product.indexableEn);
+    const states = rows.map(mapProductSeoState).filter((product) => product.indexableEn);
+    const germanIndexable = localeRegistry.de.public && (await resolveMarketContext(supabase, { mode: "public", locale: "de" }).catch(() => null))?.isIndexable === true;
+    return states.map(state => ({ ...state, indexableDe: germanIndexable && state.indexableDe === true }));
   } catch (error) {
     console.warn("[product-service] Product SEO feed failed, using static English fallback:", error);
     return staticProducts
@@ -568,7 +599,10 @@ export async function getProductSeoState(slug: string): Promise<ProductSeoState 
 
   try {
     const rows = await fetchProductSeoRows(slug);
-    return rows[0] ? mapProductSeoState(rows[0]) : null;
+    if (!rows[0]) return null;
+    const state = mapProductSeoState(rows[0]);
+    const germanIndexable = localeRegistry.de.public && (await resolveMarketContext(supabase, { mode: "public", locale: "de" }).catch(() => null))?.isIndexable === true;
+    return { ...state, indexableDe: germanIndexable && state.indexableDe === true };
   } catch (error) {
     console.warn("[product-service] Product SEO state fetch failed:", slug, error);
     return staticProductSeoState(slug);

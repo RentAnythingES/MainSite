@@ -1,7 +1,14 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "crons": [
-    { "path": "/api/cron/operational-health", "schedule": "0 7 * * *" },
-    { "path": "/api/cron/due-date-reminders", "schedule": "0 6 * * *" }
-  ]
+    {
+      "path": "/api/cron/operational-health",
+      "schedule": "0 7 * * *"
+    },
+    {
+      "path": "/api/cron/due-date-reminders",
+      "schedule": "0 6 * * *"
+    }
+  ],
+  "buildCommand": "NEXT_PUBLIC_GERMAN_ENABLED=true npm run build"
 }

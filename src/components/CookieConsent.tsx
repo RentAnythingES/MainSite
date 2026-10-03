@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useSyncExternalStore } from "react";
+import { siteContext } from "@/i18n/site-context";
 
 export type AnalyticsConsent = "granted" | "denied";
 
@@ -31,12 +32,19 @@ export function subscribeToAnalyticsConsent(callback: () => void) {
 
 export default function CookieConsent() {
   const pathname = usePathname();
-  const isSpanish = pathname.startsWith("/es");
+  const { locale, prefix } = siteContext(pathname);
+  const isSpanish = locale === "es";
+  const isGerman = locale === "de";
   const consent = useSyncExternalStore(subscribeToAnalyticsConsent, readAnalyticsConsent, () => null);
   const [editing, setEditing] = useState(false);
   if (pathname === "/agent" || (pathname.startsWith("/agent/") && pathname !== "/agent/login")) return null;
 
-  const text = isSpanish
+  const text = isGerman ? {
+    settings: "Cookie-Einstellungen", aria: "Einstellungen für Analyse-Cookies",
+    title: "Deine Datenschutzeinstellungen",
+    body: "Wir verwenden optional Google Analytics, um zu verstehen, welche Seiten und Buchungsschritte hilfreich sind. Die Website und die Buchung funktionieren auch ohne Analyse.",
+    policy: "Cookie-Richtlinie", reject: "Analyse ablehnen", allow: "Analyse erlauben",
+  } : isSpanish
     ? {
         settings: "Configurar cookies",
         aria: "Preferencias de cookies de analítica",
@@ -69,7 +77,7 @@ export default function CookieConsent() {
 
   return <div className="fixed inset-x-3 bottom-3 z-50 mx-auto max-w-3xl rounded-2xl border border-neutral-200 bg-white p-5 shadow-2xl" role="dialog" aria-modal="true" aria-label={text.aria}>
     <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-      <div><p className="font-semibold text-neutral-900">{text.title}</p><p className="mt-1 text-sm leading-relaxed text-neutral-600">{text.body} {isSpanish ? "Consulta nuestra" : "Read our"} <Link href={isSpanish ? "/es/cookies" : "/cookies"} className="font-medium text-teal-700 underline">{text.policy}</Link>.</p></div>
+      <div><p className="font-semibold text-neutral-900">{text.title}</p><p className="mt-1 text-sm leading-relaxed text-neutral-600">{text.body} {isGerman ? "Mehr dazu in unserer" : isSpanish ? "Consulta nuestra" : "Read our"} <Link href={`${prefix}/cookies`} className="font-medium text-teal-700 underline">{text.policy}</Link>.</p></div>
       <div className="flex shrink-0 gap-2"><button type="button" onClick={() => save("denied")} className="rounded-xl border border-neutral-300 px-4 py-2 text-sm font-semibold text-neutral-700 hover:bg-neutral-50">{text.reject}</button><button type="button" onClick={() => save("granted")} className="rounded-xl bg-teal-700 px-4 py-2 text-sm font-semibold text-white hover:bg-teal-600">{text.allow}</button></div>
     </div>
   </div>;

@@ -3,6 +3,7 @@ import { verifyAdmin, unauthorizedResponse } from "@/lib/admin-auth";
 import { createAdminClient } from "@/lib/supabase-admin";
 import {
   getFulfillmentAmendmentUrl,
+  canAddTransport,
   isMissingFulfillmentAmendmentsTable,
 } from "@/lib/fulfillment-amendments";
 
@@ -67,9 +68,9 @@ export async function POST(
       { status: 409 },
     );
   }
-  if (!["confirmed", "paid"].includes(booking.status)) {
+  if (!canAddTransport(booking.status, booking.rental_start_at)) {
     return NextResponse.json(
-      { error: "Transport can only be added to confirmed or paid bookings before fulfillment starts" },
+      { error: "Transport can only be added to eligible bookings before the rental starts" },
       { status: 409 },
     );
   }

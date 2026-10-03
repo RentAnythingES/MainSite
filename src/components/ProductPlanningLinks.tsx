@@ -1,12 +1,15 @@
 import Link from "next/link";
 import { getProductSeoPathways } from "@/data/product-seo-pathways";
 import { getProductFamilyForProduct } from "@/data/product-families";
+import type { Locale } from "@/i18n/config";
+import { germanFamilies } from "@/content/german-families";
+import { customerPrefix } from "@/i18n/customer-path";
 
 interface ProductPlanningLinksProps {
   categoryName: string;
   categorySlug: string;
   productSlug?: string;
-  locale?: "en" | "es";
+  locale?: Locale;
 }
 
 export default function ProductPlanningLinks({
@@ -15,11 +18,17 @@ export default function ProductPlanningLinks({
   productSlug,
   locale = "en",
 }: ProductPlanningLinksProps) {
-  const pathways = getProductSeoPathways(categorySlug, locale);
+  const prefix = customerPrefix(locale);
+  const pathways = locale === "de" ? [{ eyebrow: "Für deinen Aufenthalt", title: "Mietpakete in Valencia", description: "Entdecke passende Kombinationen und prüfe, welche Artikel enthalten sind.", href: `${prefix}/valencia/kits` }] : getProductSeoPathways(categorySlug, locale);
   const family = productSlug ? getProductFamilyForProduct(productSlug) : undefined;
-  const familyContent = family?.content[locale];
-  const categoryHref = `${locale === "es" ? "/es" : ""}/rental/${categorySlug}`;
-  const copy = locale === "es"
+  const familyContent = locale === "de" ? (family ? germanFamilies[family.slug] : undefined) : family?.content[locale];
+  const categoryHref = `${prefix}/rental/${categorySlug}`;
+  const copy = locale === "de" ? {
+    heading: "Plane deine Miete in Valencia",
+    description: "Vergleiche weitere Mietartikel und finde eine passende Kombination für deinen Aufenthalt.",
+    categoryEyebrow: "Alle Artikel der Kategorie", categoryTitle: categoryName,
+    categoryDescription: "Vergleiche die verfügbaren Mietartikel und prüfe deine gewünschten Mietdaten.", action: "Möglichkeiten ansehen",
+  } : locale === "es"
     ? {
         heading: "Planifica tu alquiler en Valencia",
         description: "Compara más productos de esta categoría o completa tu estancia con un kit y una guía local.",
@@ -45,10 +54,10 @@ export default function ProductPlanningLinks({
       href: categoryHref,
     },
     ...(family && familyContent ? [{
-      eyebrow: locale === "es" ? "Comparar opciones" : "Compare options",
+      eyebrow: locale === "de" ? "Möglichkeiten vergleichen" : locale === "es" ? "Comparar opciones" : "Compare options",
       title: familyContent.productHeading,
       description: familyContent.productDescription,
-      href: `${locale === "es" ? "/es" : ""}/rental/${family.categorySlug}/${family.slug}`,
+      href: `${prefix}/rental/${family.categorySlug}/${family.slug}`,
     }] : []),
     ...pathways,
   ];

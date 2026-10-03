@@ -400,3 +400,71 @@ canonical bundle identifiers to the shared request and availability APIs.
 ### 2026-09-08 — Turia & Beach Explorer kit
 
 Added one kit to the existing data-driven catalogue (8 → 9 kits per language; two new EN/ES detail URLs). The kit indexes and sitemap inherit it from the canonical bundle lists. `/valencia/kits/turia-beach-explorer` and its `/es` counterpart own this specific family bike + trailer + beach shade package; related family/beach guides retain their existing ownership. Request-led, with no instant-stock Offer or unapproved discount claim. Original generated illustration is labelled as an illustration. No product activation. See `docs/releases/TURIA_BEACH_EXPLORER_2026-09-08.md` for validation and operational handoff.
+
+## German continuation checkpoint — 2 October 2026
+
+The owner reviewed the package and said to move forward. All 128 product drafts
+now contain required fields; three missing texts were completed from evidence.
+Read-only current-source reconciliation: 128/128 unchanged, no new/missing products.
+Normal catalogue rules are retained: active products with current complete reviewed
+published German translations can be browsed; sitemap inclusion additionally follows
+existing source SEO eligibility, including legacy exceptions. No extra content_ready
+condition is imposed on German browsing. EN/ES behaviour and facts are preserved.
+
+52 localization, 16 market-context and eight market-offer tests pass. Local workflow
+rehearsal saved/reviewed all 128 using actual local revisions and a synthetic local
+actor, preserving EN/ES and anonymous DE visibility zero. The 22-case mocked journey
+passes. Browser document navigation follows saved German even with an English URL
+hint; the temporary loopback provider override was restored exactly. No real payment
+or message was sent. Screenshot/email-client acceptance remains unverified.
+
+Offline and production translations remain drafts; owner continuation is recorded
+separately from revision-bound review. Production installation and private import
+are now complete under explicit authorization; see the checkpoint below. German
+release/environment/database gates remain closed. Public German URL count is zero.
+
+Current checklist and receipts:
+F:/rentanything/agent-work/german-launch-2026-10-02/RELEASE-CHECKLIST.md.
+
+## German private production checkpoint — 2 October 2026
+
+The user explicitly authorized the seven prepared production migrations and private
+import by replying “yes proceed”. The earlier automatic approval rejection is
+resolved. All seven migrations are installed with matching checksum ledger entries.
+All 128 German product translations are saved as private drafts using actual current
+production source revisions; the final read-only verification matched every field
+against the prepared package. Eight committed batches have exact per-product receipts.
+
+English/Spanish content and anonymous reads, catalogue, prices, markets and bookings
+were unchanged across each migration/import transaction. Anonymous reads expose zero
+German translations, FAQs, locale rows or market-language rows; all German visibility,
+booking and indexing gates remain closed. Workflow execution is restricted to the
+service role. No real payment/message, push, deployment or publication occurred.
+
+The save events identify an explicitly documented automated import actor, not a
+human reviewer or an impersonated auth account. All production rows remain drafts
+with null review fields. Human admin attribution and revision-bound review, approved
+release manifest, remaining visual/email acceptance and authorized activation still
+remain before launch. The 52-test localization suite and final build passed before
+these schema/import operations; no application code changed in this checkpoint.
+
+Current receipts: F:/rentanything/agent-work/german-launch-2026-10-02/private-production-verification.json.
+Release checklist: F:/rentanything/agent-work/german-launch-2026-10-02/RELEASE-CHECKLIST.md.
+
+## German release acceptance checkpoint — 2 October 2026
+
+All 128 translated product pages, 33 commercial routes and five route boundaries passed isolated local HTTP checks. The local publication fixture sitemap contained 160 German URLs (32 commercial and 128 products), with correct reciprocal alternates and no unsupported German entries. These are local acceptance results; production German remains hidden.
+
+At 390 × 844, German product navigation, availability, booking-form labels, category, kit and contact pages passed DOM/geometry checks. The long mobility category heading now shrinks/wraps within its hero row. Delivery before a server quote shows “Noch zu berechnen” and “Zwischensumme”; confirmed free delivery/pickup retains its free label. EN/ES receive equivalent pending-price labels. Pricing and booking eligibility are unchanged. No payment form was submitted or message sent. Screenshots and actual email-client rendering remain unverified; the stalled screenshot/upload mechanism remains quarantined.
+
+The temporary release manifest was restored byte-for-byte, local publication/review/indexing gates restored, viewport reset and preview closed. The final 52-test localization suite, focused presentation lint and npx next build passed with closed release gates and placeholder local services. Fresh read-only production verification confirms seven migration receipts and 128 exact, complete, current private drafts, null review fields and zero anonymous German rows. English/Spanish and business data remain unchanged.
+
+Automatic approval review rejected marking production drafts as reviewed because “continue” did not explicitly authorize production approval-status changes or an automated recorder of human approval. No review statuses changed. The concrete proposed action is eight workflow review batches of 16 against the exact current source/translation revisions, documenting an automated recorder without impersonating a human auth account. It keeps all visibility, booking, indexing and deployment gates closed. Explicit authorization remains required before that action.
+
+Exact candidate: F:/rentanything/agent-work/german-launch-2026-10-02/release-candidate.json. Current checklist: F:/rentanything/agent-work/german-launch-2026-10-02/RELEASE-CHECKLIST.md.
+
+## Authorized German launch — 2 October 2026
+
+The owner explicitly requested updating the site to support German after the exact release candidate and delegated approval-recording action were presented. All 128 current translations are now revision-bound reviewed through the workflow. The documented automated recorder 0aa81312-9694-42b3-a3e4-81381c519b1f records that chat approval; no human auth account was created or impersonated. All seven migration checksums, 128 review events and translation contents were verified read-only. English/Spanish and business data remain unchanged; anonymous German records and open gates remain zero.
+
+The release manifest now binds owner approval at 2026-10-02T19:03:59.972Z to source SHA256 56dc2923e0e647feb34aab169e1ddb505feaa064bc96d0707a0749d02c839bc3. Draft SHA256: 4d7b37d56e24fda3e635ee23d93f73414d092d12b45180b6dada2db09ffae45a. Environment and database gates still determine publication. The latest four production operations commits are integrated, with snapshot-aware product-name conflicts resolved to preserve German booking labels, custom quotes, driver dispatch and asset-accounting filters. Production activation awaits Vercel project access and the final merged-release checks. Screenshots and actual email-client rendering remain unverified; known unreliable mechanisms stay quarantined. Exact authorization/reviews: F:/rentanything/agent-work/german-launch-2026-10-02/launch-authorization.json and production-reviewed-verification.json.

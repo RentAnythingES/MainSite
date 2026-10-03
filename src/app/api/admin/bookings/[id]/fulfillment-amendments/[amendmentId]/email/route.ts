@@ -3,6 +3,8 @@ import { verifyAdmin, unauthorizedResponse } from "@/lib/admin-auth";
 import { createAdminClient } from "@/lib/supabase-admin";
 import { getFulfillmentAmendmentUrl } from "@/lib/fulfillment-amendments";
 import { sendFulfillmentAmendmentQuote } from "@/lib/email";
+import { storedBookingLocale } from "@/lib/booking-locale";
+import { quoteProductName } from "@/lib/private-quote-locale";
 
 export async function POST(
   request: NextRequest,
@@ -19,9 +21,11 @@ export async function POST(
       *,
       booking:bookings!inner (
         booking_ref,
+        locale,
+        pricing_snapshot,
         customer_name,
         customer_email,
-        product:products (name)
+        product:products (name, slug)
       )
     `)
     .eq("id", amendmentId)
@@ -42,16 +46,17 @@ export async function POST(
     booking_ref: string;
     customer_name: string;
     customer_email: string;
-    product: { name?: string } | null;
+    locale: unknown;
+    pricing_snapshot?: { displayName?: string };
+    product: { name: string; slug: string } | null;
   };
   const emailSent = await sendFulfillmentAmendmentQuote({
+    locale: storedBookingLocale(booking.locale),
     customerName: booking.customer_name,
     customerEmail: booking.customer_email,
     bookingRef: booking.booking_ref,
-    productName: booking.product?.name || "Rental equipment",
-    serviceLabel: amendment.fulfillment_mode === "delivery_and_collection"
-      ? "Delivery and collection"
-      : "Delivery only",
+    productName: await quoteProductName(booking.product, storedBookingLocale(booking.locale), booking.pricing_snapshot?.displayName),
+    fulfillmentMode: amendment.fulfillment_mode,
     deliveryAddress: amendment.delivery_address,
     collectionAddress: amendment.collection_address,
     totalCents: amendment.delivery_fee_cents + amendment.collection_fee_cents,

@@ -5,14 +5,23 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { indexableSeoCategoryClusters } from "@/data/seo-clusters";
 import { SITE_IDENTITY } from "@/config/site";
+import { siteContext } from "@/i18n/site-context";
 
 export default function Footer() {
   const pathname = usePathname();
   if (pathname === "/agent" || (pathname.startsWith("/agent/") && pathname !== "/agent/login")) return null;
-  const isSpanish = pathname.startsWith("/es");
-  const prefix = isSpanish ? "/es" : "";
+  const { locale, prefix, privatePreview } = siteContext(pathname);
+  const isSpanish = locale === "es";
+  const isGerman = locale === "de";
 
-  const footerLinks = {
+  const footerLinks: Record<string, { name: string; href: string; disabled?: boolean }[]> = isGerman ? {
+    "Informationen und Hilfe": [
+      { name: "So funktioniert’s", href: `${prefix}/how-it-works` },
+      { name: "Kontakt", href: `${prefix}/contact` },
+      { name: "Neuigkeiten", href: `${prefix}/newsletter` },
+    ],
+    "Mietartikel": [{ name: privatePreview ? "Private Produktvorschau" : "Alles zum Mieten", href: prefix }, { name: "Mietpakete", href: `${prefix}/valencia/kits` }],
+  } : {
     [isSpanish ? "Información" : "Info & Help"]: [
       { name: isSpanish ? "Cómo Funciona" : "How It Works", href: `${prefix}/how-it-works` },
       { name: isSpanish ? "Descubrir Valencia" : "Discover Valencia", href: `${prefix}/discover` },
@@ -46,18 +55,18 @@ export default function Footer() {
   };
 
   const legalLinks = [
-    { name: isSpanish ? "Privacidad" : "Privacy Policy", href: `${prefix}/privacy` },
+    { name: isGerman ? "Datenschutz" : isSpanish ? "Privacidad" : "Privacy Policy", href: `${prefix}/privacy` },
     { name: "Cookies", href: `${prefix}/cookies` },
-    { name: isSpanish ? "Condiciones" : "T&Cs", href: `${prefix}/terms` },
-    { name: isSpanish ? "Devoluciones" : "Refunds & Cancellations", href: `${prefix}/refunds` },
-    { name: "Hojas de Reclamaciones", href: "https://www.hojasderereclamaciones.com/", external: true },
+    { name: isGerman ? "Mietbedingungen" : isSpanish ? "Condiciones" : "T&Cs", href: `${prefix}/terms` },
+    { name: isGerman ? "Erstattungen und Stornierungen" : isSpanish ? "Devoluciones" : "Refunds & Cancellations", href: `${prefix}/refunds` },
+    { name: isGerman ? "Beschwerdeformulare (Spanisch)" : "Hojas de Reclamaciones", href: "https://www.hojasderereclamaciones.com/", external: true },
   ];
 
-  const tagline = isSpanish
+  const tagline = isGerman ? "Reise mit leichtem Gepäck. Mietartikel und Mietpakete für deinen Aufenthalt in Valencia." : isSpanish
     ? `${SITE_IDENTITY.taglineEs} Equipamiento práctico entregado en Valencia.`
     : `${SITE_IDENTITY.tagline} Practical rental kits and individual items delivered in Valencia.`;
 
-  const soonLabel = isSpanish ? "Pronto" : "Soon";
+  const soonLabel = isGerman ? "Demnächst" : isSpanish ? "Pronto" : "Soon";
 
   return (
     <footer className="bg-neutral-900 text-neutral-300 mt-auto" id="site-footer">
@@ -65,7 +74,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 py-16">
           {/* Brand Column */}
           <div className="lg:col-span-1">
-            <Link href={isSpanish ? "/es" : "/"} className="inline-block mb-4">
+            <Link href={prefix || "/"} className="inline-block mb-4">
               <Image
                 src={SITE_IDENTITY.lightWordmarkPath}
                 alt={SITE_IDENTITY.brandName}
@@ -79,7 +88,7 @@ export default function Footer() {
             </p>
             <div className="flex items-center gap-3">
               <a
-                href="https://wa.me/34684708013?text=Hi!%20I%27m%20interested%20in%20renting%20equipment%20in%20Valencia"
+                href={`https://wa.me/34684708013?text=${encodeURIComponent(isGerman ? "Hallo! Ich möchte etwas für meinen Aufenthalt in Valencia mieten." : isSpanish ? "¡Hola! Quiero alquilar artículos para mi estancia en Valencia." : "Hi! I'm interested in renting equipment in Valencia")}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-10 h-10 rounded-full bg-neutral-800 hover:bg-[#25D366] flex items-center justify-center transition-colors"
@@ -125,7 +134,7 @@ export default function Footer() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="flex flex-wrap gap-5 pb-6 text-sm"><Link className="hover:text-white" href={isSpanish ? "/es/agent-network" : "/agent-network"}>{isSpanish ? "Únete a nuestra red de agentes" : "Join our Agent Network"}</Link><a className="hover:text-white" href="/agent/login">{isSpanish ? "Acceso para agentes" : "Agent login"}</a></div>
+        {!isGerman && <div className="flex flex-wrap gap-5 pb-6 text-sm"><Link className="hover:text-white" href={isSpanish ? "/es/agent-network" : "/agent-network"}>{isSpanish ? "Únete a nuestra red de agentes" : "Join our Agent Network"}</Link><a className="hover:text-white" href="/agent/login">{isSpanish ? "Acceso para agentes" : "Agent login"}</a></div>}
         <div className="border-t border-neutral-800 py-6">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
             <p className="text-xs text-neutral-500">

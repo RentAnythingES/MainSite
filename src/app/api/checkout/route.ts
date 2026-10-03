@@ -1,3 +1,4 @@
+import { transactionCopy } from "@/i18n/transaction";
 import { NextRequest, NextResponse } from "next/server";
 import { stripe, isStripeConfigured } from "@/lib/stripe";
 import { createServiceClient } from "@/lib/supabase";
@@ -13,6 +14,11 @@ import {
 import type { BookingDraft, CustomQuoteLineItem } from "@/lib/types";
 import { getIncidentErrorMessage, recordSystemIncident } from "@/lib/system-incidents";
 import type Stripe from "stripe";
+import { transactionPath } from "@/lib/transaction-path";
+import { storedBookingLocale } from "@/lib/booking-locale";
+import { localeRegistry } from "@/i18n/config";
+import { germanCustomerAccess } from "@/lib/german-customer-access";
+import { bookingProductName } from "@/lib/booking-product-name";
 
 /**
  * POST /api/checkout — Create a Stripe Checkout Session
@@ -45,7 +51,7 @@ export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
 
-    const { draftId, locale } = body;
+    const { draftId } = body;
 
     if (typeof draftId !== "string" || !draftId.trim()) {
       return NextResponse.json(
@@ -55,7 +61,6 @@ export async function POST(request: NextRequest) {
     }
 
     const supabase = createServiceClient();
-    await cleanupExpiredBookingDrafts(supabase);
     const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || request.headers.get("origin") || "https://rentandroll.com";
 
     if (draftId) {
@@ -71,6 +76,12 @@ export async function POST(request: NextRequest) {
       }
 
       const bookingDraft = draft as BookingDraft;
+      const locale = storedBookingLocale(bookingDraft.locale);
+      if (locale === "de" && !germanCustomerAccess()) {
+        return NextResponse.json({ error: "Booking draft not found" }, { status: 404 });
+      }
+      await cleanupExpiredBookingDrafts(supabase);
+      const t = transactionCopy[locale];
 
       if (new Date(bookingDraft.expires_at).getTime() <= Date.now()) {
         await supabase.from("booking_drafts").update({ status: "expired" }).eq("id", bookingDraft.id);
@@ -179,12 +190,12 @@ export async function POST(request: NextRequest) {
         customQuoteToken = customQuote.public_token;
       }
 
-      const formattedStart = new Date(bookingDraft.rental_start_at).toLocaleString("en-GB", {
+      const formattedStart = new Date(bookingDraft.rental_start_at).toLocaleString(localeRegistry[locale].format, {
         dateStyle: "medium",
         timeStyle: "short",
         timeZone: bookingDraft.timezone,
       });
-      const formattedEnd = new Date(bookingDraft.rental_end_at).toLocaleString("en-GB", {
+      const formattedEnd = new Date(bookingDraft.rental_end_at).toLocaleString(localeRegistry[locale].format, {
         dateStyle: "medium",
         timeStyle: "short",
         timeZone: bookingDraft.timezone,
@@ -194,7 +205,7 @@ export async function POST(request: NextRequest) {
       const cancelParams = new URLSearchParams({
         draft_id: bookingDraft.id,
         slug: resolvedProduct.slug,
-        locale: locale === "es" ? "es" : "en",
+        locale,
       });
       if (customQuoteToken) cancelParams.set("quote_token", customQuoteToken);
       const stripeLineItems: Stripe.Checkout.SessionCreateParams.LineItem[] = customQuoteToken
@@ -204,7 +215,7 @@ export async function POST(request: NextRequest) {
               unit_amount: line.amountCents,
               product_data: {
                 name: line.description,
-                description: index === 0 ? `${formattedStart} to ${formattedEnd}` : undefined,
+                description: index === 0 ? `${formattedStart} ${t.to} ${formattedEnd}` : undefined,
               },
             },
             quantity: 1,
@@ -215,8 +226,8 @@ export async function POST(request: NextRequest) {
                 currency: bookingDraft.currency,
                 unit_amount: bookingDraft.rental_subtotal_cents,
                 product_data: {
-                  name: `${resolvedProduct.name} rental`,
-                  description: `${formattedStart} to ${formattedEnd} · ${bookingDraft.quantity} unit(s)`,
+                  name: `${bookingProductName(bookingDraft.pricing_snapshot, resolvedProduct.name)} · ${t.rental}`,
+                  description: `${formattedStart} ${t.to} ${formattedEnd} · ${bookingDraft.quantity} ${t.unit}`,
                 },
               },
               quantity: 1,
@@ -228,10 +239,10 @@ export async function POST(request: NextRequest) {
                     unit_amount: fulfillmentFees.baseFeeCents,
                     product_data: {
                       name: bookingDraft.delivery_type === "express"
-                        ? "Express delivery"
+                        ? t.express
                         : bookingDraft.fulfillment_mode === "delivery_and_collection"
-                        ? "Delivery and collection"
-                        : "Delivery",
+                        ? t.roundtrip
+                        : t.delivery,
                     },
                   },
                   quantity: 1,
@@ -242,7 +253,7 @@ export async function POST(request: NextRequest) {
                   price_data: {
                     currency: bookingDraft.currency,
                     unit_amount: fulfillmentFees.expressSurchargeCents,
-                    product_data: { name: "Same-day Express surcharge" },
+                    product_data: { name: t.surcharge },
                   },
                   quantity: 1,
                 }]
@@ -254,8 +265,8 @@ export async function POST(request: NextRequest) {
                     unit_amount: bookingDraft.extra_services_fee_cents,
                     product_data: {
                       name: (bookingDraft.extra_services || [])
-                        .map((service) => service.serviceType === "assembly" ? "Assembly & set-up" : "Disassembly")
-                        .join(" + ") || "Extra services",
+                        .map((service) => service.serviceType === "assembly" ? t.assembly : t.disassembly)
+                        .join(" + ") || t.extra,
                     },
                   },
                   quantity: 1,
@@ -269,13 +280,15 @@ export async function POST(request: NextRequest) {
           expires_at: checkoutExpiresAt,
           customer_email: bookingDraft.customer_email || undefined,
           line_items: stripeLineItems,
+          locale,
           metadata: {
             booking_draft_id: bookingDraft.id,
+            locale,
             product_id: bookingDraft.product_id,
             quantity: String(bookingDraft.quantity),
           },
-          success_url: `${baseUrl}/booking/success?session_id={CHECKOUT_SESSION_ID}`,
-          cancel_url: `${baseUrl}/booking/cancel?${cancelParams.toString()}`,
+          success_url: `${baseUrl}${transactionPath(locale, "/booking/success")}?session_id={CHECKOUT_SESSION_ID}&locale=${locale}`,
+          cancel_url: `${baseUrl}${transactionPath(locale, "/booking/cancel")}?${cancelParams.toString()}`,
         },
         { idempotencyKey: `booking-draft-${bookingDraft.id}-${requestFingerprint}` }
       );

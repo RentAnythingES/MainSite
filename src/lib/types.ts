@@ -167,6 +167,7 @@ interface InventoryLocationRow {
 }
 
 interface BookingRow {
+  locale?: string | null;
   id: string;
   booking_ref: string;
   customer_name: string;
@@ -288,6 +289,7 @@ interface PickupLocationRow {
 }
 
 interface CustomBookingQuoteRow {
+  locale?: string | null;
   id: string;
   public_token: string;
   status: CustomBookingQuoteStatus;
@@ -354,6 +356,7 @@ interface ServiceZoneRow {
 }
 
 interface BookingDraftRow {
+  locale?: string | null;
   id: string;
   product_id: string;
   quantity: number;
@@ -477,6 +480,16 @@ interface BookingDocumentRow {
 export interface Database {
   public: {
     Tables: {
+      locales: {
+        Row: { code: string; name: string; is_public: boolean };
+        Insert: { code: string; name: string; is_public?: boolean };
+        Update: { name?: string; is_public?: boolean };
+      };
+      market_locales: {
+        Row: { market_id: string; locale: string; is_public: boolean; is_booking_enabled: boolean; is_indexable: boolean };
+        Insert: { market_id: string; locale: string; is_public?: boolean; is_booking_enabled?: boolean; is_indexable?: boolean };
+        Update: { is_public?: boolean; is_booking_enabled?: boolean; is_indexable?: boolean };
+      };
       categories: {
         Row: CategoryRow;
         Insert: Omit<CategoryRow, "id" | "created_at" | "updated_at">;

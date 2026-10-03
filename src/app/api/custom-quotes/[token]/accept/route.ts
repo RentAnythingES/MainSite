@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase-admin";
+import { privateQuoteLocale } from "@/lib/private-quote-locale";
+import { quoteCopy } from "@/i18n/private-quotes";
 
 const UUID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
@@ -14,6 +16,9 @@ export async function POST(
 ) {
   const { token } = await context.params;
   if (!UUID_PATTERN.test(token)) return NextResponse.json({ error: "Quote not found" }, { status: 404 });
+  const locale = await privateQuoteLocale("custom", token);
+  if (!locale) return NextResponse.json({ error: "Quote not found" }, { status: 404 });
+  const text = quoteCopy[locale];
 
   try {
     const body = await request.json();
@@ -38,13 +43,13 @@ export async function POST(
     if (error || !data) {
       const message = error?.message || "Could not accept this quote";
       const status = /not found/i.test(message) ? 404 : /expired|cancelled|paid|available|required/i.test(message) ? 409 : 500;
-      return NextResponse.json({ error: message }, { status });
+      return NextResponse.json({ error: locale === "en" ? message : text.reserve }, { status });
     }
 
     return NextResponse.json({ draftId: data }, { headers: { "Cache-Control": "no-store" } });
   } catch (error) {
     return NextResponse.json(
-      { error: error instanceof Error ? error.message : "Could not accept this quote" },
+      { error: locale === "en" && error instanceof Error ? error.message : text.reserve },
       { status: 400 },
     );
   }

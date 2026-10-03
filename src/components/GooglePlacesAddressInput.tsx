@@ -1,8 +1,11 @@
 "use client";
 
 import { useEffect, useId, useRef, useState } from "react";
+import type { Locale } from "@/i18n/config";
 
 interface GooglePlacesAddressInputProps {
+  locale?: Locale;
+  unavailableMessage?: string;
   value: string;
   onChange: (value: string) => void;
   placeholder?: string;
@@ -39,7 +42,10 @@ export default function GooglePlacesAddressInput({
   label,
   required = false,
   autoComplete = "street-address",
+  locale = "en",
+  unavailableMessage,
 }: GooglePlacesAddressInputProps) {
+  const unavailableText = unavailableMessage ?? ({ en: "Google Maps suggestions are unavailable right now.", es: "Las sugerencias de Google Maps no están disponibles ahora.", de: "Adressvorschläge von Google Maps sind momentan nicht verfügbar." }[locale]);
   const inputRef = useRef<HTMLInputElement>(null);
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -50,13 +56,13 @@ export default function GooglePlacesAddressInput({
 
     const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
     if (!apiKey) {
-      setLoaded(true);
-      return;
+      const frame = window.requestAnimationFrame(() => setLoaded(true));
+      return () => window.cancelAnimationFrame(frame);
     }
 
     if (window.google?.maps?.places) {
-      setLoaded(true);
-      return;
+      const frame = window.requestAnimationFrame(() => setLoaded(true));
+      return () => window.cancelAnimationFrame(frame);
     }
 
     const existingScript = document.getElementById("google-maps-places-script");
@@ -67,13 +73,13 @@ export default function GooglePlacesAddressInput({
 
     const script = document.createElement("script");
     script.id = "google-maps-places-script";
-    script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&libraries=places&language=en`;
+    script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&libraries=places&language=${locale}`;
     script.async = true;
     script.defer = true;
     script.onload = () => setLoaded(true);
-    script.onerror = () => setError("Google Maps suggestions are unavailable right now.");
+    script.onerror = () => setError(unavailableText);
     document.head.appendChild(script);
-  }, []);
+  }, [unavailableText, locale]);
 
   useEffect(() => {
     if (!loaded || !inputRef.current || !window.google?.maps?.places) return;
@@ -83,7 +89,7 @@ export default function GooglePlacesAddressInput({
       fields: ["formatted_address"],
     });
 
-    const listener = autocomplete.addListener("place_changed", () => {
+    autocomplete.addListener("place_changed", () => {
       const place = autocomplete.getPlace();
       if (place.formatted_address) {
         onChange(place.formatted_address);

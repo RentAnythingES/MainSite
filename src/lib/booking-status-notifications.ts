@@ -1,3 +1,5 @@
+import { storedBookingLocale } from "./booking-locale";
+import { bookingProductName } from "./booking-product-name";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { createBookingReviewInvitation } from "@/lib/booking-reviews";
 import { sendBookingStatusUpdate } from "@/lib/email";
@@ -78,16 +80,20 @@ export async function sendBookingLifecycleNotification(
           supabase,
           booking.id as string,
           (booking.product_id as string) || null,
+          storedBookingLocale(booking.locale),
         )
       : null;
 
   return sendBookingStatusUpdate(
     {
       bookingRef: booking.booking_ref as string,
+      locale: booking.locale as string | null,
+      timezone: booking.timezone as string | null,
+      quantity: Number(booking.quantity || 1),
       customerName: booking.customer_name as string,
       customerEmail: booking.customer_email as string,
       customerPhone: (booking.customer_phone as string) || undefined,
-      productName: product?.name || "Rental equipment",
+      productName: bookingProductName(booking.pricing_snapshot, product?.name || "Rental equipment"),
       startDate: booking.start_date as string,
       endDate: booking.end_date as string,
       rentalStartAt: (booking.rental_start_at as string) || null,

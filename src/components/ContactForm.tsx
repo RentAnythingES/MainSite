@@ -1,7 +1,9 @@
 "use client";
+import { customerPrefix } from "@/i18n/customer-path";
 
 import { useState } from "react";
 import Link from "next/link";
+import type { Locale } from "@/i18n/config";
 
 const copy = {
   en: {
@@ -40,12 +42,25 @@ const copy = {
     privacy: "Política de privacidad",
     error: "No hemos podido enviar el mensaje. Inténtalo de nuevo o contáctanos por correo o WhatsApp.",
   },
+  de: {
+    sentTitle: "Nachricht gesendet",
+    sentBody: "Wir haben deine Nachricht erhalten und melden uns so bald wie möglich.",
+    sendAnother: "Weitere Nachricht senden",
+    name: "Name", namePlaceholder: "Dein Name", email: "E-Mail-Adresse",
+    subject: "Betreff", selectTopic: "Thema auswählen…",
+    topics: ["Frage zur Buchung", "Frage zu einem Mietartikel", "Unternehmen oder Partnerschaft", "Hilfe oder Problem", "Sonstiges"],
+    message: "Nachricht", messagePlaceholder: "Wie können wir dir helfen?",
+    sending: "Wird gesendet…", submit: "Nachricht senden",
+    consentPrefix: "Mit dem Absenden akzeptierst du unsere", privacy: "Datenschutzerklärung",
+    error: "Deine Nachricht konnte nicht gesendet werden. Versuche es erneut oder kontaktiere uns per E-Mail oder WhatsApp.",
+  },
 } as const;
 
-export default function ContactForm({ locale = "en" }: { locale?: "en" | "es" }) {
+export default function ContactForm({ locale = "en" }: { locale?: Locale }) {
   const text = copy[locale];
   const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
   const [errorMsg, setErrorMsg] = useState("");
+  const [preview, setPreview] = useState(false);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -73,11 +88,13 @@ export default function ContactForm({ locale = "en" }: { locale?: "en" | "es" })
         throw new Error(text.error);
       }
 
+      const result = await res.json();
+      setPreview(result.preview === true);
       setStatus("success");
       form.reset();
     } catch (err) {
       setStatus("error");
-      setErrorMsg(err instanceof Error ? err.message : text.error);
+      setErrorMsg(text.error);
     }
   }
 
@@ -85,9 +102,9 @@ export default function ContactForm({ locale = "en" }: { locale?: "en" | "es" })
     return (
       <div className="text-center py-12">
         <span className="text-5xl block mb-4">✅</span>
-        <h3 className="text-xl font-bold mb-2">{text.sentTitle}</h3>
+        <h3 className="text-xl font-bold mb-2">{preview ? ({ en: "Local test completed", es: "Prueba local completada", de: "Lokaler Test abgeschlossen" }[locale]) : text.sentTitle}</h3>
         <p className="text-neutral-500 mb-6">
-          {text.sentBody}
+          {preview ? ({ en: "Local test completed. No message was sent.", es: "Prueba local completada. No se ha enviado ningún mensaje.", de: "Lokaler Test abgeschlossen. Es wurde keine Nachricht gesendet." }[locale]) : text.sentBody}
         </p>
         <button
           onClick={() => setStatus("idle")}
@@ -163,7 +180,7 @@ export default function ContactForm({ locale = "en" }: { locale?: "en" | "es" })
         {status === "sending" ? text.sending : text.submit}
       </button>
       <p className="text-xs text-neutral-400 text-center">
-        {text.consentPrefix} <Link href={locale === "es" ? "/es/privacy" : "/privacy"} className="underline hover:text-brand">{text.privacy}</Link>.
+        {text.consentPrefix} <Link href={`${customerPrefix(locale)}/privacy`} className="underline hover:text-brand">{text.privacy}</Link>.
       </p>
     </form>
   );

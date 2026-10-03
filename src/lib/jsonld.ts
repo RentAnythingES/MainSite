@@ -92,7 +92,7 @@ export function getHubCollectionJsonLd({
 }
 
 type ProductJsonLdOptions = {
-  locale?: "en" | "es";
+  locale?: "en" | "es" | "de";
   availability?: "InStock" | "OutOfStock" | "LimitedAvailability";
 };
 
@@ -105,7 +105,7 @@ export function getProductJsonLd(
   const lowestPrice = product.pricing.at(-1)?.perDay;
   const highestPrice = product.pricing[0]?.perDay;
   const productUrl = absoluteUrl(
-    `${locale === "es" ? "/es" : ""}/product/${product.slug}`,
+    `${locale === "de" ? "/de" : locale === "es" ? "/es" : ""}/product/${product.slug}`,
   );
 
   return {

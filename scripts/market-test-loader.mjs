@@ -7,6 +7,7 @@ const root = new URL("../", import.meta.url);
 registerHooks({
   resolve(specifier, context, next) {
     if (specifier === "next/server") return next("next/server.js", context);
+    if (specifier === "next/cache") return next("next/cache.js", context);
     if (specifier.startsWith("@/")) specifier = new URL(`src/${specifier.slice(2)}`, root).href;
     if (specifier.startsWith(".") || specifier.startsWith("file:")) {
       const url = new URL(specifier, context.parentURL ?? root);

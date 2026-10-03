@@ -1,9 +1,19 @@
 # Rent&Roll — Frontend Guide
+> Shared language registry, route switching and German draft boundaries: [Localization](LOCALIZATION.md). German is not public; adding a dictionary does not enable a new customer journey.
 > Catalogue detail/category services now accept an optional third city argument while preserving existing locale arguments. See [offer reader modes](releases/MARKET_OFFER_READS_2026-09-27.md); no new city routes are published by this change.
 > `/admin/markets` provides private city setup, revision-conflict recovery and immutable city slugs. New cities remain unpublished. See [release notes](releases/PRIVATE_CITY_SETUP_2026-09-27.md).
 > **Last updated**: 2026-08-18
 
 ## Routing
+Page source files now sit in `(english)`, `(spanish)` and `(german)` route groups
+under `src/app`. These groups do not change URLs. Each root layout supplies its
+language to shared `SiteDocument`; public pages remain prerenderable. German
+children exist only under the guarded `/internal/localization/de` preview. API
+handlers and top-level metadata assets retain their original paths. Run
+`node scripts/verify-locale-roots.mjs` after a production build to verify public
+HTML languages and representative static routes. Locale changes cross root
+layouts and load a new document.
+
 App Router with static generation (`generateStaticParams`). Prefix-based i18n (`/es/` for Spanish).
 `src/proxy.ts` adds `Content-Language` and forwards `x-pathname` for server-layout
 route handling while excluding APIs and static assets.
@@ -315,3 +325,19 @@ This layer does not reserve inventory or create Checkout sessions yet.
 ### Landscape photos in category cards (12 September 2026)
 
 The Kids & Family source is a 1920×1080 landscape photo. With `object-cover`, its source-width requirement is driven by the card height: `max(cardWidth, cardHeight × 16/9)`, plus display pixel density. At a 1280 px viewport, the Valencia 290×387 card previously downloaded only 256×144 pixels and enlarged the crop about 2.7×. The EN/ES home and Valencia category cards now supply crop-aware responsive sizes for this image (700 px desktop source-width slot in the portrait grid; 480 px in the wider home grid). Photography, CSS, crop, ordering and other category-image settings are unchanged.
+
+## German public routes (prepared, disabled) — 2 October 2026
+
+The (german)/de layout is dynamic, guards public market/language access and permits
+historical approved German customer tokens after new sales are closed. Catch-all
+rendering uses the strict publishedGermanProducts/publishedGermanCategory readers
+and shared product/category/family/kit/information templates. Root /de and customer
+documents render lang=de. /de/valencia redirects to /de; unsupported blog/discovery
+equivalents are not invented. Customer prefixes use the release manifest so issued
+links retain their approved root. /internal/localization/de stays local-only with
+synthetic fixtures, test payments and no messages. Never use private fixtures for
+production rendering. See LOCALIZATION.md for gates and verification.
+
+## German acceptance presentation fixes — 2 October 2026
+
+CategoryLandingPage hero text uses min-w-0 and break-words so long German headings wrap inside the mobile flex row. BookingWidget uses fulfillmentPending/subtotalLabel before a delivery quote in all three languages; customer pickup and confirmed zero-fee quotes retain the free label. This changes presentation only. Mobile DOM/geometry, focused lint, the 52 localization tests and npx next build pass. The temporary local public release fixture was restored exactly; production remains hidden.

@@ -2,23 +2,28 @@ import Image from "next/image";
 import Link from "next/link";
 import type { Product } from "@/data/products";
 import type { ProductFamilyContent, ProductFamilyDefinition, ProductFamilyLocale } from "@/data/product-families";
+import type { Locale } from "@/i18n/config";
 
 type ProductFamilyLandingPageProps = {
   family: ProductFamilyDefinition;
-  locale: ProductFamilyLocale;
+  locale: Locale;
   products: Product[];
+  content?: ProductFamilyContent;
+  prefix?: string;
 };
 
 function ProductOptionCard({
   product,
   content,
   locale,
+  prefix,
 }: {
   product: Product;
   content: ProductFamilyContent;
-  locale: ProductFamilyLocale;
+  locale: Locale;
+  prefix: string;
 }) {
-  const href = `${locale === "es" ? "/es" : ""}/product/${product.slug}`;
+  const href = `${prefix}/product/${product.slug}`;
   const lowestTier = product.pricing.at(-1);
 
   return (
@@ -41,7 +46,7 @@ function ProductOptionCard({
         {lowestTier && (
           <p className="mt-4 text-sm text-neutral-500">
             {content.priceFrom}{" "}
-            <span className="text-lg font-bold text-brand">€{lowestTier.perDay}</span>{" "}
+            <span className="text-lg font-bold text-brand">{new Intl.NumberFormat(locale, { style: "currency", currency: "EUR" }).format(lowestTier.perDay)}</span>{" "}
             {content.priceUnit}
           </p>
         )}
@@ -53,19 +58,20 @@ function ProductOptionCard({
   );
 }
 
-export default function ProductFamilyLandingPage({ family, locale, products }: ProductFamilyLandingPageProps) {
-  const content = family.content[locale];
-  const homeHref = locale === "es" ? "/es" : "/";
-  const valenciaHref = locale === "es" ? "/es/valencia" : "/valencia";
-  const categoryHref = `${locale === "es" ? "/es" : ""}/rental/${family.categorySlug}`;
+export default function ProductFamilyLandingPage({ family, locale, products, content: suppliedContent, prefix = locale === "es" ? "/es" : "" }: ProductFamilyLandingPageProps) {
+  const content = suppliedContent ?? (locale === "de" ? undefined : family.content[locale as ProductFamilyLocale]);
+  if (!content || (locale === "de" && !prefix)) throw new Error("German family previews require explicit content and route prefix");
+  const homeHref = prefix || "/";
+  const valenciaHref = locale === "de" ? homeHref : `${prefix}/valencia`;
+  const categoryHref = `${prefix}/rental/${family.categorySlug}`;
   const categoryLabel = content.categoryLabel;
 
   return (
     <>
-      <nav className="border-b border-border bg-neutral-50 py-3" aria-label={locale === "es" ? "Migas de pan" : "Breadcrumb"}>
+      <nav className="border-b border-border bg-neutral-50 py-3" aria-label={locale === "de" ? "Brotkrümelnavigation" : locale === "es" ? "Migas de pan" : "Breadcrumb"}>
         <div className="container-site">
           <ol className="flex flex-wrap items-center gap-2 text-sm text-neutral-500">
-            <li><Link href={homeHref} className="hover:text-brand">{locale === "es" ? "Inicio" : "Home"}</Link></li>
+            <li><Link href={homeHref} className="hover:text-brand">{locale === "de" ? "Startseite" : locale === "es" ? "Inicio" : "Home"}</Link></li>
             <li aria-hidden="true">/</li>
             <li><Link href={valenciaHref} className="hover:text-brand">Valencia</Link></li>
             <li aria-hidden="true">/</li>
@@ -92,7 +98,7 @@ export default function ProductFamilyLandingPage({ family, locale, products }: P
           </div>
           <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
             {products.map((product) => (
-              <ProductOptionCard key={product.slug} product={product} content={content} locale={locale} />
+              <ProductOptionCard key={product.slug} product={product} content={content} locale={locale} prefix={prefix} />
             ))}
           </div>
         </div>

@@ -11,6 +11,10 @@ const setup = { slug: "hamburg", name: "Hamburg", country_code: "DE", timezone: 
 function client(body, status = 200, calls = []) {
   return createClient("http://127.0.0.1:9999", "test", { global: { fetch: async url => {
     calls.push(new URL(url));
+    if (new URL(url).pathname.endsWith('/market_locales')) {
+      const locale = new URL(url).searchParams.get('locale').slice(3);
+      return new Response(JSON.stringify([{ market_id:id, locale, is_public:true, is_booking_enabled:true, is_indexable:true, language:{code:locale,is_public:true} }]), {headers:{'Content-Type':'application/json'}});
+    }
     return new Response(JSON.stringify(body), { status, headers: { "Content-Type": "application/json" } });
   } } });
 }
@@ -57,4 +61,22 @@ test("fulfillment queries require city IDs, preserve filters on fallback and omi
       if (reader === fetchActiveServiceZones) assert.equal(url.searchParams.get("automatic_checkout_enabled"), "eq.true");
     }
   }
+});
+
+test('public locale gates apply to privileged reads; errors never fall back', async()=>{
+ const entry={market_id:id,locale:'en',is_public:true,is_booking_enabled:true,is_indexable:true,language:{code:'en',is_public:true}};
+ const db=(rows,error)=>createClient('http://127.0.0.1:9999','test',{global:{fetch:async url=>{
+  const path=new URL(url).pathname;
+  assert.ok(['/rest/v1/markets','/rest/v1/market_locales'].includes(path));
+  return new Response(JSON.stringify(path.endsWith('/markets')?[city]:error??rows),{status:path.endsWith('/market_locales')&&error?400:200,headers:{'Content-Type':'application/json'}});
+ }}});
+ for(const rows of [[],[entry,entry],[{...entry,is_public:false}],[{...entry,language:{code:'en',is_public:false}}],[{...entry,market_id:'wrong'}]])
+  await assert.rejects(resolveDefaultMarketContext(db(rows)),{code:'unsupported_locale'});
+ for(const code of ['42P01','PGRST205','57014'])
+  await assert.rejects(resolveDefaultMarketContext(db(null,{code})),{code:'locale_unavailable'});
+ await assert.rejects(resolveDefaultMarketContext(db([{...entry,is_booking_enabled:false}])),{code:'booking_disabled'});
+ const browse=await resolveMarketContext(db([{...entry,is_booking_enabled:false,is_indexable:false}]),{mode:'public'});
+ assert.equal(browse.isBookingEnabled,false);assert.equal(browse.isIndexable,false);
+ const historical=await resolveMarketContext(db(null,{code:'42P01'}),{mode:'historical',marketId:id,locale:'de'});
+ assert.equal(historical.locale,'de');
 });

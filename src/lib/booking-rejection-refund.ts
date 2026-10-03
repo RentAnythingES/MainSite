@@ -1,3 +1,4 @@
+import { bookingProductName } from "./booking-product-name";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { stripe } from "@/lib/stripe";
 import { recordBookingPaymentEvent } from "@/lib/payment-ledger";
@@ -112,7 +113,7 @@ export async function rejectBookingWithStripeRefund(
   const refundDocument = await createBookingDocumentForPaymentEvent(supabase, {
     booking,
     paymentEvent,
-    productName: booking.product?.name || "Rental equipment",
+    productName: bookingProductName(booking.pricing_snapshot, booking.product?.name || "Rental equipment"),
   });
   const refundUrl = getCustomerDocumentUrl(refundDocument);
   if (!refundDocument || !refundUrl) {
@@ -149,10 +150,13 @@ export async function rejectBookingWithStripeRefund(
   const emailSent = await sendBookingStatusUpdate(
     {
       bookingRef: booking.booking_ref as string,
+      locale: booking.locale as string | null,
+      timezone: booking.timezone as string | null,
+      quantity: Number(booking.quantity || 1),
       customerName: booking.customer_name as string,
       customerEmail: booking.customer_email as string,
       customerPhone: (booking.customer_phone as string) || undefined,
-      productName: booking.product?.name || "Rental equipment",
+      productName: bookingProductName(booking.pricing_snapshot, booking.product?.name || "Rental equipment"),
       startDate: booking.start_date as string,
       endDate: booking.end_date as string,
       rentalStartAt: (booking.rental_start_at as string) || null,

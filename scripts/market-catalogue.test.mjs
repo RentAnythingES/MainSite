@@ -44,6 +44,9 @@ test("integrated catalogue: city/locale/cache isolation, category deduplication 
     if (url.pathname.endsWith("/markets")) {
       const city = p.get("slug") === "eq.hamburg" ? "hamburg" : "valencia";
       data = [{ id: city === "hamburg" ? hamburg : valencia, slug: city, name: city, country_code: "ES", currency: "eur", timezone: "Europe/Madrid", default_locale: "en", supported_locales: ["en", "es"], is_active: true, is_public: city !== "hamburg" || !hidden, is_booking_enabled: true, is_indexable: true }];
+    } else if (url.pathname.endsWith("/market_locales")) {
+      const locale = p.get("locale").slice(3);
+      data = [{market_id:p.get("market_id").slice(3),locale,is_public:true,is_booking_enabled:true,is_indexable:true,language:{code:locale,is_public:true}}];
     } else if (url.pathname.endsWith("/categories")) data = { id: categoryId };
     else if (url.pathname.endsWith("/product_category_memberships")) data = [{ product_id: productId }, { product_id: productId }];
     else if (url.pathname.endsWith("/product_offers")) {
